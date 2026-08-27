@@ -1,0 +1,309 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1154744271550206506
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5792517056783674746}
+  - component: {fileID: 1662015388889481594}
+  - component: {fileID: 606703233680039338}
+  - component: {fileID: -6105593648208787834}
+  - component: {fileID: -519380334172516184}
+  - component: {fileID: -1813431250314135127}
+  - component: {fileID: 3882477383901842239}
+  - component: {fileID: -1031628348926636374}
+  - component: {fileID: -780934474060022012}
+  - component: {fileID: 3762271180498303708}
+  - component: {fileID: 7160743858829985033}
+  - component: {fileID: 7044750039090838037}
+  m_Layer: 0
+  m_Name: AttackProfessionRuntime
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5792517056783674746
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154744271550206506}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -18.8, y: 1.5255984, z: -34.02}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1662015388889481594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154744271550206506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 1831329283
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 606703233680039338}
+  - {fileID: -519380334172516184}
+  - {fileID: -1813431250314135127}
+  - {fileID: 3882477383901842239}
+  - {fileID: 3762271180498303708}
+  - {fileID: 7160743858829985033}
+--- !u!114 &606703233680039338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154744271550206506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b24b27a9139d186439f15608f22168ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabProfession: 1
+  debugRuntime: 1
+  _OwnerPlayerObject: {fileID: 0}
+  _RuntimeProfession: 1
+--- !u!114 &-6105593648208787834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154744271550206506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 232f57f0b223df84087ebb969465bbc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aimController: {fileID: 0}
+  focusAbility: {fileID: 0}
+  weaponController: {fileID: 0}
+  attackRifle: {fileID: 0}
+  quickMelee: {fileID: 0}
+  grappleMarkAbility: {fileID: 0}
+  debugAttackRuntime: 1
+--- !u!114 &-519380334172516184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154744271550206506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e60ea721b8d80645b43fae56aeaa419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aimEnterDuration: 0.15
+  aimExitDuration: 0.12
+  aimedWorldFov: 35
+  aimedWeaponFov: 20
+  aimFovChannels: -1
+  aimFovPriority: 1000
+  actionGate: {fileID: 0}
+  debugAim: 1
+  _CurrentAimPhase: 0
+--- !u!114 &-1813431250314135127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154744271550206506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 852b97d5cadfe6b40966ce8c917a8b97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movement: {fileID: 0}
+  worldGunshotCue: {fileID: 11400000, guid: 8d13aa70762832b4290597c2e7747c22, type: 2}
+  worldGunshotVolumeScale: 0.5
+  magazineCapacity: 30
+  ammoSupplyMode: 1
+  startingReserveAmmo: 180
+  reloadDuration: 1.987
+  autoReloadWhenEmpty: 1
+  baseFireRate: 13
+  maxShotDistance: 200
+  shotOriginHeight: 1.6
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 513
+  useSubtickAccuracy: 1
+  allowPhysicsFallback: 1
+  baseDamage: 20
+  damageFalloffStartDistance: 30
+  damageFalloffEndDistance: 150
+  minimumDamageMultiplier: 0.85
+  headshotMultiplier: 2
+  recoilPitchPerShot: -0.4
+  recoilYawPerShot: 0.15
+  recoilRecoveryDelay: 0.15
+  recoilRecoverySpeed: 20
+  bulletTracerLineDrawer: {fileID: 0}
+  tracerMuzzlePoint: {fileID: 0}
+  debugRifle: 0
+  drawShotRay: 1
+  _MagazineAmmo: 0
+  _ReserveAmmo: 0
+  _IsReloading:
+    _value: 0
+  _ShotSequence: 0
+  _RuntimeFireRateMultiplier: 0
+--- !u!114 &3882477383901842239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154744271550206506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: affe1faad10b4f8408fba637b34615f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profession: {fileID: 0}
+  stateMachine: {fileID: 0}
+  attackRifle: {fileID: 0}
+  aimController: {fileID: 0}
+  maximumFocusDuration: 5
+  focusCooldownAfterFire: 3
+  focusAmmoCost: 1
+  focusDamageMultiplier: 1
+  focusLockDistance: 150
+  focusLockAngle: 8
+  preserveDirectCrosshairHit: 1
+  useSubtickAccuracy: 1
+  targetRayPadding: 0.2
+  allowPhysicsFallback: 1
+  debugFocus: 1
+  drawAutoLockRay: 1
+  _CurrentPhase: 0
+  _LastEndReason: 0
+--- !u!114 &-1031628348926636374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154744271550206506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b813416207140349b0810e9fbbc2033, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profession: {fileID: 0}
+  actionGate: {fileID: 0}
+  attackRifle: {fileID: 0}
+  attackFocusAbility: {fileID: 0}
+  supportSMG: {fileID: 0}
+--- !u!114 &-780934474060022012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154744271550206506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8048c09f0dc11dd43ad9b7c3411042c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableTracer: 0
+  tracerMaterial: {fileID: 0}
+  tracerColor: {r: 1, g: 0.5151677, b: 0, a: 1}
+  startWidth: 0.05
+  endWidth: 0.05
+  tracerLength: 1
+  visibleDuration: 0
+  fadeDuration: 0
+  animateTravel: 1
+  travelSpeed: 5000
+  passThroughDistance: 3
+  hideAfterPassingHitPoint: 1
+  tracerRoot: {fileID: 0}
+  debugTracer: 0
+--- !u!114 &3762271180498303708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154744271550206506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f68db226f103d48a321926b86149e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startupDuration: 0.133
+  activeDuration: 0
+  recoveryDuration: 0.505
+  meleeDamage: 35
+  maximumTargets: 3
+  meleeOrigin: {fileID: 0}
+  originHeight: 1.1
+  meleeRange: 4
+  searchRadius: 2
+  maximumAttackAngle: 120
+  meleeHitMask:
+    serializedVersion: 2
+    m_Bits: 512
+  useSubtickAccuracy: 1
+  includePhysX: 1
+  requireLineOfSight: 1
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 0
+  obstructionRayStartOffset: 0.05
+  debugQuickMelee: 1
+  debugDrawMelee: 1
+  debugDrawDuration: 0.5
+--- !u!114 &7160743858829985033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154744271550206506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df550b7156e2b1a43b243e4a93fb406b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerPlayer: {fileID: 0}
+  interactionController: {fileID: 0}
+  markDuration: 5
+  debugMarkAbility: 1
+--- !u!114 &7044750039090838037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154744271550206506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82240d782946ea44c8d7a9a446656701, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackRifle: {fileID: 0}
+  weaponIcon: {fileID: 21300000, guid: a0495727e3eca63498a5a4009c5b7716, type: 3}
+  reloadReminderBelowAmmo: 5

@@ -1,0 +1,333 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7974580411196709816
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4197945595406427132}
+  - component: {fileID: 3834334851400098046}
+  - component: {fileID: 4987952553977646451}
+  - component: {fileID: 1178035714201354297}
+  - component: {fileID: 6460569706477738544}
+  - component: {fileID: 400024891662209625}
+  - component: {fileID: 7292478476412354774}
+  - component: {fileID: 3974578582575902556}
+  - component: {fileID: 1020799938839905582}
+  - component: {fileID: 7720810666594363418}
+  m_Layer: 0
+  m_Name: TankProfessionRuntime
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4197945595406427132
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7974580411196709816}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -18.8, y: 1.5255984, z: -34.02}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3834334851400098046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7974580411196709816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 2347137282
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 4987952553977646451}
+  - {fileID: 6460569706477738544}
+  - {fileID: 400024891662209625}
+  - {fileID: 7292478476412354774}
+  - {fileID: 3974578582575902556}
+  - {fileID: 1020799938839905582}
+--- !u!114 &4987952553977646451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7974580411196709816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b24b27a9139d186439f15608f22168ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabProfession: 2
+  debugRuntime: 1
+  _OwnerPlayerObject: {fileID: 0}
+  _RuntimeProfession: 2
+--- !u!114 &1178035714201354297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7974580411196709816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1657d4a976dbdc947a837797629d7930, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meleeCombo: {fileID: 0}
+  guardAbility: {fileID: 0}
+  airDashAbility: {fileID: 0}
+  grappleGatherAbility: {fileID: 0}
+  quickDashAbility: {fileID: 0}
+  debugTankRuntime: 1
+--- !u!114 &6460569706477738544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7974580411196709816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cb551a4f3eb0d94293f4f3598990298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerPlayer: {fileID: 0}
+  lightAttack1:
+    StartupDuration: 0.167
+    ActiveDuration: 0
+    RecoveryDuration: 0.631
+    Damage: 35
+    MaximumTargets: 0
+    Range: 6
+    SearchRadius: 10
+    FullAttackAngle: 120
+  lightAttack2:
+    StartupDuration: 0.167
+    ActiveDuration: 0
+    RecoveryDuration: 0.631
+    Damage: 35
+    MaximumTargets: 0
+    Range: 6
+    SearchRadius: 10
+    FullAttackAngle: 120
+  heavyAttack:
+    StartupDuration: 0.271
+    ActiveDuration: 0.271
+    RecoveryDuration: 0.762
+    Damage: 70
+    MaximumTargets: 0
+    Range: 6
+    SearchRadius: 10
+    FullAttackAngle: 160
+  comboResetDuration: 1.4
+  allowAttackInputBuffer: 1
+  light1WorldSwingCue: {fileID: 11400000, guid: dc6fbc449bc42b64b9aea7d9f6155b05,
+    type: 2}
+  light2WorldSwingCue: {fileID: 11400000, guid: c5d97de4809f34e40bc1b1b9ab2df78b,
+    type: 2}
+  heavyWorldSwingCue: {fileID: 11400000, guid: 47a7f8ec8d0ed94459516de4d4d1cef7, type: 2}
+  worldSwingVolumeScale: 1
+  defaultForcedHeavyDuration: 3
+  originHeight: 1.1
+  meleeHitMask:
+    serializedVersion: 2
+    m_Bits: 576
+  useSubtickAccuracy: 1
+  includePhysX: 1
+  requireLineOfSight: 1
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 0
+  obstructionRayStartOffset: 0.05
+  debugTankMelee: 1
+  debugDrawAttack: 1
+  debugDrawDuration: 0.5
+  _CurrentStep: 0
+  _NextComboStep: 0
+  _CurrentPhase: 0
+  _AttackSequence: 0
+--- !u!114 &400024891662209625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7974580411196709816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fb9599fab404a34e91e91864857fbff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerPlayer: {fileID: 0}
+  guardMovementInputMultiplier: 0.3
+  maximumGuardStamina: 100
+  guardDamageReduction: 0.7
+  staminaRecoveryDelay: 3
+  staminaRecoveryFractionPerSecond: 0.25
+  brokenCooldownDuration: 10
+  debugGuard: 1
+  _CurrentPhase: 0
+  _CurrentStamina: 0
+--- !u!114 &7292478476412354774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7974580411196709816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4771e21b17db0ce44937988e68e18ef0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerPlayer: {fileID: 0}
+  enemyDashCooldownDuration: 0
+  worldDashCooldownDuration: 3
+  enemyArrivalDamage: 1000
+  enemyArrivalRange: 10
+  enemyArrivalSearchRadius: 10
+  enemyArrivalFullAttackAngle: 240
+  enemyArrivalOriginHeight: 0
+  enemyArrivalHitMask:
+    serializedVersion: 2
+    m_Bits: 512
+  enemyArrivalRequireLineOfSight: 0
+  enemyArrivalObstructionMask:
+    serializedVersion: 2
+    m_Bits: 0
+  enemyArrivalObstructionRayStartOffset: 0.05
+  airStrikeWorldImpactCue: {fileID: 11400000, guid: 2b9fc954838b1f046ae8142d772e15e5,
+    type: 2}
+  airStrikeWorldImpactVolumeScale: 1
+  aimOriginHeight: 1.6
+  aimOriginForwardOffset: 0.1
+  enemySearchDistance: 70
+  enemySearchAngle: 15
+  enemySearchMask:
+    serializedVersion: 2
+    m_Bits: 512
+  enemySearchBufferSize: 64
+  enemyVisibilityMask:
+    serializedVersion: 2
+    m_Bits: 512
+  enemyVisibilityPadding: 0.2
+  worldSearchDistance: 100
+  worldSearchMask:
+    serializedVersion: 2
+    m_Bits: 0
+  debugTargetSelection: 1
+  drawTargetDebug: 1
+  debugDrawDuration: 1
+  _AirDashSequence: 0
+  _CurrentPhase: 0
+  _ActiveDashTargetType: 0
+  enemyDashSpeed: 300
+  enemyStopDistance: 0
+  enemyTargetHeightOffset: 0
+  worldDashSpeed: 300
+  worldStopDistance: 1
+  dashArrivalDistance: 4
+  minimumDashTravelDistance: 10
+  maximumDashDuration: 5
+--- !u!114 &3974578582575902556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7974580411196709816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad855a0ea41cf364c9aa08d5659f1499, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerPlayer: {fileID: 0}
+  gatherSearchRadius: 8
+  maximumGatherTargets: 3
+  gatherEnemyMask:
+    serializedVersion: 2
+    m_Bits: 512
+  useSubtickAccuracy: 1
+  includePhysX: 1
+  cancelGrappleOnGather: 1
+  playRetractAnimation: 0
+  playerGatherDashSpeed: 300
+  playerGatherDashStopDistance: 2
+  playerGatherDashArrivalDistance: 2.2
+  minimumPlayerGatherDashDistance: 5
+  maximumPlayerGatherDashDuration: 5
+  debugGather: 1
+  debugDrawSelectedTargets: 1
+  debugDrawDuration: 1.5
+--- !u!114 &1020799938839905582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7974580411196709816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e931a79cf9a9fe49b7d16e0faa98a76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerPlayer: {fileID: 0}
+  maximumCharges: 1
+  rechargeDuration: 5
+  dashSpeed: 100
+  dashDistance: 20
+  quickDashWorldStartCue: {fileID: 11400000, guid: 2bc3344b3b33332439f72e7b7781e366,
+    type: 2}
+  quickDashWorldStartVolumeScale: 1
+  dashDamage: 30
+  dashDamageWidth: 1.4
+  dashDamageHeight: 1.8
+  dashDamageForwardPadding: 0.15
+  dashHitMask:
+    serializedVersion: 2
+    m_Bits: 512
+  useSubtickAccuracy: 1
+  includePhysX: 1
+  requireLineOfSight: 1
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 0
+  obstructionRayStartOffset: 0.05
+  debugQuickDash: 1
+  debugDrawDash: 1
+  debugDrawDuration: 0.3
+  postDashRecoveryDuration: 0.5
+  _CurrentCharges: 0
+--- !u!114 &7720810666594363418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7974580411196709816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93003fa19ca44a940bd7fae103380645, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tankMeleeCombo: {fileID: 0}
+  weaponIcon: {fileID: 21300000, guid: a13c040013eb25144803b10d8a8e843d, type: 3}
+  maximumCombo: 3

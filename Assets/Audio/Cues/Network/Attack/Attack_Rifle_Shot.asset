@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fc0d95d8b6364349aa666fb50892c12, type: 3}
+  m_Name: Attack_Rifle_Shot
+  m_EditorClassIdentifier: 
+  networkId: 1
+  networkDelivery: 0
+  clips:
+  - {fileID: 8300000, guid: e520ac5f979517845ab9cb59bf75f721, type: 3}
+  - {fileID: 8300000, guid: c98349543b571b44f9e9e0f4a1cff5fa, type: 3}
+  - {fileID: 8300000, guid: 3d04cf1cebc44a9408866543de7c5479, type: 3}
+  - {fileID: 8300000, guid: da903a72b73fc454d8ec81ee7027fa1c, type: 3}
+  - {fileID: 8300000, guid: b1609769e557b8b438fa6c6b5a10d61b, type: 3}
+  - {fileID: 8300000, guid: 3b553cd306c51094c9c1d5d40ce97a56, type: 3}
+  volume: 0.5
+  minimumPitch: 0.98
+  maximumPitch: 1.02
+  outputMixerGroup: {fileID: -2305752944303880011, guid: 7533ecc1f215ca047b8742ddc76965e2,
+    type: 2}
+  worldSpatialBlend: 1
+  worldRolloffMode: 0
+  worldMinimumDistance: 4
+  worldMaximumDistance: 60
+  worldDopplerLevel: 0
