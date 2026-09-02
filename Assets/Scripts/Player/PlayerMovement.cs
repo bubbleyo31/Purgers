@@ -42,12 +42,7 @@ public class PlayerMovement : MonoBehaviour
         /// 正規化後的 WASD 輸入。
         /// </summary>
         public Vector2 RawMoveInput;
-
-        /// <summary>
-        /// 本 Tick 是否按住跑步。
-        /// </summary>
-        public bool SprintHeld;
-
+        
         /// <summary>
         /// 本 Tick 是否成功執行地面跳躍。
         /// </summary>
@@ -57,6 +52,15 @@ public class PlayerMovement : MonoBehaviour
         /// 本 Tick 是否成功執行二段跳。
         /// </summary>
         public bool DoubleJumped;
+
+        /// <summary>
+        /// 本 Tick 是否處於已鎖定的 Sprint 狀態。
+        ///
+        /// 欄位名稱保留 SprintHeld 是為了避免本階段擴大相依修改；
+        /// 實際值由 PlayerSprintLatchController 提供，
+        /// 不再等於實體 Shift Held。
+        /// </summary>
+        public bool SprintHeld;
     }
 
     #endregion
@@ -104,7 +108,11 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     [Range(0f, 1f)]
-    [Tooltip("按住 Sprint 時傳給 KCC 的移動輸入倍率。通常使用 1。")]
+    [Tooltip(
+        "Sprint 加速完成後傳給 KCC 的完整跑步輸入倍率。\n\n" +
+        "玩家剛按下 Shift 時不會立即使用此值，" +
+        "而是由 PlayerSprintLatchController 的 Ramp Progress " +
+        "從 Walk Input Scale 逐步內插到此倍率。")]
     private float runInputScale = 1f;
 
     #endregion
@@ -241,6 +249,8 @@ public class PlayerMovement : MonoBehaviour
     public FrameResult Simulate(
         NetInput input,
         NetworkButtons previousButtons,
+        bool sprintActive,
+        float sprintRampProgress,
         bool grappleControlActive,
         float externalMovementInfluence
     )
@@ -269,14 +279,27 @@ public class PlayerMovement : MonoBehaviour
             rawMoveInput.Normalize();
         }
 
-        bool sprintHeld =
-            input.Buttons.IsSet(
-                InputButton.Sprint
-            );
+        /*
+        * Sprint 是否成立與目前兩秒加速進度，
+        * 已經由具備 Networked State 的 PlayerSprintLatchController 決定。
+        *
+        * PlayerMovement 只負責把進度換算成最終 KCC Input Scale，
+        * 不再直接把 Shift Held 當作跑步狀態。
+        */
+        float clampedSprintProgress =
+            sprintActive
+                ? Mathf.Clamp01(
+                    sprintRampProgress
+                )
+                : 0f;
 
         float inputScale =
-            sprintHeld
-                ? runInputScale
+            sprintActive
+                ? Mathf.Lerp(
+                    walkInputScale,
+                    runInputScale,
+                    clampedSprintProgress
+                )
                 : walkInputScale;
 
         /*
@@ -362,7 +385,7 @@ public class PlayerMovement : MonoBehaviour
             rawMoveInput;
 
         result.SprintHeld =
-            sprintHeld;
+            sprintActive;
 
         result.GroundJumped =
             groundJumped;
@@ -550,10 +573,31 @@ public class PlayerMovement : MonoBehaviour
         {
             return false;
         }
+        
+        /*
+        * 這不是一般玩家 Jump State，而是 Grapple Attached 的離地衝量。
+        *
+        * 若使用 kcc.Jump()，JumpImpulse 仍要等 EnvironmentProcessor 階段才套用；
+        * 而該 Tick 的 FixedData 可能仍是 Grounded，導致新的向上衝量立刻受到
+        * Dynamic Ground Friction 大幅衰減。
+        *
+        * 這裡直接把既有 jumpImpulse 寫入 DynamicVelocity Y，
+        * 再由 PlayerGrappleKCCProtectionProcessor 保護該 Grounded Tick。
+        *
+        * 不修改 Transform、不使用 Rigidbody，也不通知普通 Jump State。
+        */
+        Vector3 attachVelocity =
+            kcc.Data.DynamicVelocity;
 
-        // 使用 Advanced KCC 正式的 Jump API，
-        // 不直接修改 Transform，也不使用 Rigidbody。
-        kcc.Jump(Vector3.up * attachJumpImpulse);
+        attachVelocity.y =
+            Mathf.Max(
+                attachVelocity.y,
+                attachJumpImpulse
+            );
+
+        kcc.SetDynamicVelocity(
+            attachVelocity
+        );
 
         return true;
     }

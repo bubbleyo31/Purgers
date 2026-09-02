@@ -55,7 +55,7 @@ public enum PlayerMovementState : byte
     /// 玩家結束勾索後尚未碰到地面。
     ///
     /// 即使玩家正在下降，
-/// 只要還沒碰地都會維持此狀態。
+    /// 只要還沒碰地都會維持此狀態。
     /// </summary>
     GrappleAirborne = 6,
 
@@ -63,11 +63,23 @@ public enum PlayerMovementState : byte
     /// 一般空中狀態。
     ///
     /// 包含：
-/// 1. 跳躍到達頂點後下落。
-/// 2. 從邊緣直接掉落。
-/// 3. 非勾索造成的滯空。
+    /// 1. 跳躍到達頂點後下落。
+    /// 2. 從邊緣直接掉落。
+    /// 3. 非勾索造成的滯空。
     /// </summary>
-    Airborne = 7
+    Airborne = 7,
+
+    /// <summary>
+    /// 玩家正使用縮短後的蹲下 Capsule，
+    /// 但目前沒有由滑鏟速度接管地面移動。
+    /// </summary>
+    Crouching = 8,
+
+    /// <summary>
+    /// 玩家位於地面，並由 PlayerSlideController
+    /// 保留與衰減水平滑鏟動量。
+    /// </summary>
+    Sliding = 9
 }
 
 /// <summary>
@@ -310,6 +322,8 @@ public class PlayerStateMachine : NetworkBehaviour
         Vector2 moveInput,
         bool sprintHeld,
         bool grappleControlActive,
+        bool isCrouched,
+        bool isSliding,
         bool groundJumpedThisTick,
         bool doubleJumpedThisTick,
         float verticalVelocity,
@@ -370,6 +384,23 @@ public class PlayerStateMachine : NetworkBehaviour
         }
 
         // -------------------------------------------------------------
+        // 地面滑鏟
+        // -------------------------------------------------------------
+
+        /*
+        * 優先級低於本 Tick 跳躍與 Attached Grapple，
+        * 但高於普通 Idle / Walk / Run。
+        */
+        if (isSliding)
+        {
+            SetState(
+                PlayerMovementState.Sliding
+            );
+
+            return;
+        }
+
+        // -------------------------------------------------------------
         // 地面狀態
         // -------------------------------------------------------------
 
@@ -386,6 +417,21 @@ public class PlayerStateMachine : NetworkBehaviour
 
             GrappleAirbornePending =
                 false;
+
+            /*
+            * 蹲著移動仍統一標記為 Crouching。
+            * 未來動畫可以另外讀取 CurrentHorizontalSpeed，
+            * 決定播放 Crouch Idle 或 Crouch Walk，
+            * 不需要再增加會爆量的組合狀態。
+            */
+            if (isCrouched)
+            {
+                SetState(
+                    PlayerMovementState.Crouching
+                );
+
+                return;
+            }
 
             bool hasMovementInput =
                 moveInput.sqrMagnitude >

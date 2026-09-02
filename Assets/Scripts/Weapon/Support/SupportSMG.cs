@@ -1333,9 +1333,7 @@ public class SupportSMG :
          * 所以普通與特殊模式都只會在真正射出一發時發聲。
          * 空彈或射速尚未 Ready 的輸入不會製造假槍聲。
          */
-        TryPlayWorldGunshot(
-            shotOrigin
-        );
+        TryPlayWorldGunshot();
 
 
         Vector3 shotDirection =
@@ -1461,21 +1459,11 @@ public class SupportSMG :
     /// <summary>
     /// 由 SupportSMG 的 State Authority 發送一次 3D 世界槍聲。
     ///
-    /// 這個方法不自行建立 AudioSource，也不自行發 RPC；
-    /// 所有網路傳送與本機播放仍統一交給
-    /// Player Root 的 NetworkPlayerAudioEmitter。
+    /// 普通與 Support 空中特殊射擊都共用這條路徑。
+    /// 每一發音檔都會在結束前跟隨 Player Audio Origin。
     /// </summary>
-    /// <param name="worldPosition">
-    /// 射擊成立瞬間的 Gameplay Shot Origin 位置快照。
-    /// </param>
-    private void TryPlayWorldGunshot(
-        Vector3 worldPosition
-    )
+    private void TryPlayWorldGunshot()
     {
-        /*
-         * Client Prediction 會跑同一份武器模擬，
-         * 但世界音效只允許 State Authority 廣播一次。
-         */
         if (Object == null ||
             Object.IsValid == false ||
             Object.HasStateAuthority == false)
@@ -1483,17 +1471,11 @@ public class SupportSMG :
             return;
         }
 
-
         if (worldGunshotCue == null)
         {
             return;
         }
 
-
-        /*
-         * 正常流程已在 BindOwnerPlayer() 快取。
-         * 這裡只對舊 Prefab 或短暫執行順序問題做安全恢復。
-         */
         if (networkAudioEmitter == null &&
             ownerPlayer != null)
         {
@@ -1503,17 +1485,14 @@ public class SupportSMG :
                 >();
         }
 
-
         if (networkAudioEmitter == null)
         {
             return;
         }
 
-
         networkAudioEmitter
-            .PlayWorldOneShotFromStateAuthority(
+            .PlayFollowingWorldOneShotFromStateAuthority(
                 worldGunshotCue,
-                worldPosition,
                 worldGunshotVolumeScale
             );
     }

@@ -171,9 +171,13 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
 
     [SerializeField]
     [Tooltip(
-        "AttackRifle 正式射擊成功時，由 State Authority 透過 Player Root 的 NetworkPlayerAudioEmitter 傳給所有 Client 的 3D 世界槍聲。\n\n" +
-        "這裡必須指定 Network ID 大於 0 的 GameplayAudioCue，並且同一個 Cue 必須已加入 Player 使用的 GameplayAudioCatalog。\n\n" +
-        "不要放第一人稱換彈、拉槍機等本機細節 Cue；那些聲音不應透過這條世界 RPC 傳送。")]
+        "AttackRifle 正式射擊成功時，由 State Authority 透過 Player Root " +
+        "的 NetworkPlayerAudioEmitter 傳給所有 Client 的 3D 世界槍聲。\n\n" +
+        "槍聲在音檔結束前會跟隨發聲玩家的 Audio Origin，" +
+        "不會留在開槍瞬間的舊座標。\n\n" +
+        "必須指定 Network ID 大於 0 的 GameplayAudioCue，" +
+        "並加入 Player 使用的 GameplayAudioCatalog。\n\n" +
+        "不要放第一人稱換彈、拉槍機等本機細節 Cue。")]
     private GameplayAudioCue worldGunshotCue;
 
     [SerializeField]
@@ -1311,9 +1315,7 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
          * 但 TryPlayWorldGunshot() 只允許 State Authority 發 RPC，
          * 所以同一發不會被預測端重複廣播。
          */
-        TryPlayWorldGunshot(
-            shotOrigin
-        );
+        TryPlayWorldGunshot();
 
         /*
         * 正常情況：
@@ -1440,18 +1442,11 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
     /// <summary>
     /// 由 AttackRifle 的 State Authority 發送一次 3D 世界槍聲。
     ///
-    /// 這裡只負責把已確認成立的射擊事件交給
-    /// Player Root 的 NetworkPlayerAudioEmitter；
-    /// Clip 變體、Pitch、RPC 可靠度、Catalog 解析與 AudioSource Pool
-    /// 都仍由上一階段的聲音核心統一處理。
+    /// 槍聲在音檔播完前會持續跟隨
+    /// 每個 Client 所看到的 Player Audio Origin，
+    /// 不會留在射擊瞬間的舊世界座標。
     /// </summary>
-    /// <param name="worldPosition">
-    /// 射擊成立瞬間的 Gameplay Shot Origin。
-    /// 使用位置快照，而不是讓短促槍聲持續跟著玩家移動。
-    /// </param>
-    private void TryPlayWorldGunshot(
-        Vector3 worldPosition
-    )
+    private void TryPlayWorldGunshot()
     {
         /*
          * AttackRifle 會同時在預測端與 State Authority 模擬。
@@ -1464,22 +1459,11 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
             return;
         }
 
-        /*
-         * Cue 未指定屬於 Inspector 設定問題。
-         * 不讓它阻斷槍械傷害、彈藥或射擊動畫。
-         */
         if (worldGunshotCue == null)
         {
             return;
         }
 
-        /*
-         * 正常情況已在 BindOwnerPlayer() 完成快取。
-         * 這裡只做一次安全恢復，避免 Script 執行順序或
-         * 舊 Prefab 遷移期間漏掉 Binding 就永久失去聲音。
-         *
-         * 這不是全場搜尋，只會查 Owner Player Root。
-         */
         if (networkAudioEmitter == null &&
             ownerPlayer != null)
         {
@@ -1495,9 +1479,8 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
         }
 
         networkAudioEmitter
-            .PlayWorldOneShotFromStateAuthority(
+            .PlayFollowingWorldOneShotFromStateAuthority(
                 worldGunshotCue,
-                worldPosition,
                 worldGunshotVolumeScale
             );
     }

@@ -61,7 +61,9 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerProfessionRuntimeManager))]
 [RequireComponent(typeof(SupportGrapplePlayerPullReceiver))]
 [RequireComponent(typeof(PlayerIncomingDamageModifierBridge))]
+[RequireComponent(typeof(PlayerSlideController))]
 [RequireComponent(typeof(PlayerHealth))]
+[RequireComponent(typeof(PlayerSprintLatchController))]
 
 public class Player :
     NetworkBehaviour
@@ -74,6 +76,20 @@ public class Player :
     [SerializeField]
     [Tooltip("玩家共用移動模組。若留空會自動取得。")]
     private PlayerMovement movement;
+
+    [SerializeField]
+    [Tooltip(
+        "玩家共用的 Sprint 鎖定與兩秒加速控制器。\n\n" +
+        "Shift 只啟動 Sprint；停止 WASD 才解除。\n\n" +
+        "若留空會自動取得。")]
+    private PlayerSprintLatchController sprintController;
+
+    [SerializeField]
+    [Tooltip(
+        "玩家共用的蹲下與動量滑鏟控制器。\n\n" +
+        "負責 KCC 蹲姿高度、滑鏟速度、坡面物理與第一人稱鏡頭高度。\n\n" +
+        "若留空會自動取得。")]
+    private PlayerSlideController slideController;
 
     [SerializeField]
     [Tooltip("玩家共用狀態機。若留空會自動取得。")]
@@ -136,6 +152,9 @@ public class Player :
 
     public PlayerMovement Movement =>
         movement;
+
+    public PlayerSlideController SlideController =>
+        slideController;
 
     public PlayerStateMachine StateMachine =>
         stateMachine;
@@ -212,6 +231,18 @@ public class Player :
         {
             movement =
                 GetComponent<PlayerMovement>();
+        }
+
+        if (slideController == null)
+        {
+            slideController =
+                GetComponent<PlayerSlideController>();
+        }
+
+        if (sprintController == null)
+        {
+            sprintController =
+                GetComponent<PlayerSprintLatchController>();
         }
 
         if (stateMachine == null)
@@ -363,15 +394,21 @@ public class Player :
         }
 
         /*
-         * 普通 PlayerMovement 最終使用的倍率：
-         *
-         * Grapple 自己的封鎖
-         * ×
-         * 其他外部系統的封鎖。
-         */
+        * SlideController 對普通 PlayerMovement 的影響：
+        *
+        * Normal    = 1
+        * Crouching = Inspector 設定的蹲走倍率
+        * Sliding   = 0，由 Slide Processor 接管水平 Kinematic Velocity
+        */
+        float slideMovementInfluence =
+            slideController != null
+                ? slideController.MovementInputInfluence
+                : 1f;
+
         float externalMovementInfluence =
             grapple.MovementInputInfluence *
-            nonGrappleMovementInfluence;
+            nonGrappleMovementInfluence *
+            slideMovementInfluence;
 
 
         // =========================================================
@@ -385,6 +422,45 @@ public class Player :
         bool externalMovementControlActive = 
             grapple.IsGrappleControlActive;
         
+        /*
+        * 蹲下或滑鏟期間不允許 Sprint Ramp 在背景累積。
+        *
+        * 特別注意：
+        * Crouching 的 MovementInputInfluence 通常不是 0，
+        * 所以只檢查 externalMovementInfluence > 0 仍會偷偷累積。
+        * 必須另外明確排除 IsCrouched 與 IsSliding。
+        */
+        bool crouchOrSlideActive =
+            slideController != null &&
+            (slideController.IsCrouched ||
+            slideController.IsSliding);
+
+        bool normalMovementCanAccelerate =
+            externalMovementControlActive == false &&
+            externalMovementInfluence > 0.0001f &&
+            crouchOrSlideActive == false;
+
+        if (sprintController != null)
+        {
+            sprintController.Simulate(
+                input,
+                PreviousButtons,
+                normalMovementCanAccelerate
+            );
+        }
+
+        bool sprintActive =
+            sprintController != null
+                ? sprintController.IsSprintActive
+                : input.Buttons.IsSet(
+                    InputButton.Sprint
+                );
+
+        float sprintRampProgress =
+            sprintController != null
+                ? sprintController.SprintRampProgress
+                : 1f;
+
         /* 
          * [詳細註解] 
          * 若您的 SupportGrapplePlayerPullReceiver 也有類似「強制接管位移」的狀態（例如 IsBeingPulled），
@@ -399,11 +475,13 @@ public class Player :
 
         PlayerMovement.FrameResult movementResult =
             movement.Simulate(
-                input,
-                PreviousButtons,
-                externalMovementControlActive,
-                externalMovementInfluence
-            );
+            input,
+            PreviousButtons,
+            sprintActive,
+            sprintRampProgress,
+            externalMovementControlActive,
+            externalMovementInfluence
+        );
 
         // -------------------------------------------------------------
         // 4. Jump 與 Grapple Momentum
@@ -436,6 +514,29 @@ public class Player :
                 InputButton.Aim
             );
 
+        /*
+        * 順序不能任意移動：
+        *
+        * PlayerMovement.Simulate
+        * → PlayerSlideController.Simulate
+        * → PlayerGrapple.Simulate
+        *
+        * 原因是 GrappleAirborne Momentum 碰地時，
+        * PlayerGrapple 原本會結束 Momentum 並清除水平 DynamicVelocity。
+        * SlideController 必須先擷取該速度，才能把高速安全交接成滑鏟速度。
+        */
+        if (slideController != null)
+        {
+            slideController.Simulate(
+                input,
+                movementResult.GroundJumped ||
+                movementResult.DoubleJumped,
+                grapplePressed,
+                grapple.IsGrappleControlActive,
+                nonGrappleMovementInfluence > 0.0001f
+            );
+        }
+        
         grapple.Simulate(
             grapplePressed,
             aimPressed,
@@ -536,6 +637,10 @@ public class Player :
             movementResult.RawMoveInput,
             movementResult.SprintHeld,
             grapple.IsGrappleControlActive,
+            slideController != null &&
+            slideController.IsCrouched,
+            slideController != null &&
+            slideController.IsSliding,
             movementResult.GroundJumped,
             movementResult.DoubleJumped,
             movement.VerticalVelocity,

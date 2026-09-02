@@ -127,7 +127,15 @@ public enum GrappleCancelReason : byte
     ///
     /// 此判斷不使用玩家速度作為觸發條件。
     /// </summary>
-    AutoReleaseSwingAngle = 10
+    AutoReleaseSwingAngle = 10,
+
+    /// <summary>
+    /// 普通地形 Grapple Attached 期間，
+    /// 玩家確實離地後再次接觸地面，因此自動釋放。
+    ///
+    /// Support Interaction Tether 不使用此原因。
+    /// </summary>
+    AutoReleaseGrounded = 11
 }
 
 /// <summary>
@@ -443,6 +451,16 @@ public class PlayerGrapple : NetworkBehaviour
     [Tooltip("玩家曾經朝目標接近後，開始以此速度遠離目標時，判定為已飛過最近點。")]
     private float grappleReleaseAwaySpeed = 0.1f;
 
+    [SerializeField]
+    [Tooltip(
+        "開啟後，普通地形 Grapple Attached 的玩家" +
+        "只要曾經確實離地，之後再次接觸地面就立即自動收繩。\n\n" +
+        "不影響 Support 拉 Enemy／Player 的 Interaction Tether。\n\n" +
+        "落地釋放不額外建立 Release Momentum，" +
+        "避免玩家已經落地後又被水平速度再次推出。")]
+    private bool releaseNormalGrappleOnLanding =
+        true;
+
     #endregion
 
     // =====================================================================
@@ -499,6 +517,36 @@ public class PlayerGrapple : NetworkBehaviour
     [SerializeField]
     [Tooltip("Momentum 前方哪些 Layer 被視為障礙物。務必排除 Player。")]
     private LayerMask releaseObstacleMask = ~0;
+
+    [SerializeField]
+    [Tooltip(
+        "開啟後，GrappleAirborne Momentum 的前方 SphereCast " +
+        "若判定為擦過側牆，不會清空水平速度，" +
+        "而是把方向投影到牆面切線繼續滑行。\n\n" +
+        "接近正面撞牆時仍會停止。")]
+    private bool enableReleaseMomentumWallSlide =
+        true;
+
+
+    [SerializeField]
+    [Range(0f, 1f)]
+    [Tooltip(
+        "Momentum 方向與牆面反向法線的 Dot 大於此值時，" +
+        "視為接近正面撞牆並停止 Momentum。\n\n" +
+        "0.75 約代表撞擊角度在牆面法線 41 度內。\n" +
+        "數值越高，越容易沿牆滑行；數值越低，越容易停止。")]
+    private float releaseMomentumHeadOnStopDot =
+        0.75f;
+
+
+    [SerializeField]
+    [Range(0f, 1f)]
+    [Tooltip(
+        "Momentum 擦過側牆並轉成牆面切線方向時，保留的速度倍率。\n\n" +
+        "0.92 = 每次確認側牆滑行時保留 92%。\n" +
+        "1 = 完整保留；第一輪建議先用 1，避免同一面牆連續檢查時反覆扣速。")]
+    private float releaseMomentumWallSlideRetention =
+        1f;
 
     #endregion
 
@@ -569,6 +617,22 @@ public class PlayerGrapple : NetworkBehaviour
 
     [Networked]
     private NetworkBool HasApproachedPoint { get; set; }
+
+    /// <summary>
+    /// 本次普通 Attached 是否已經至少有一個 Tick 確認玩家離地。
+    ///
+    /// 不能只看當前 IsGrounded：
+    /// BeginAttached 發生時，附著起跳衝量可能剛送入 KCC，
+    /// 當 Tick 或下一個模擬入口仍可能暫時保留 Grounded。
+    ///
+    /// 只有先確認離地，再確認落地，才屬於真正的 Landing Release。
+    /// </summary>
+    [Networked]
+    private NetworkBool HasBeenAirborneDuringAttached
+    {
+        get;
+        set;
+    }
 
     /// <summary>
     /// 本次鈎索確認命中成功時，玩家的水平視角角度。
@@ -662,6 +726,19 @@ public class PlayerGrapple : NetworkBehaviour
 
     [Networked]
     private Vector3 GrapplePointVelocity { get; set; }
+
+    /// <summary>
+    /// 普通地形 Grapple Attached 在本 Tick 明確要求的 DynamicVelocity。
+    ///
+    /// PlayerGrappleKCCProtectionProcessor 只會在 KCC 上一 Tick 仍是
+    /// Grounded 時，用這個值抵消不該套在 Grapple 拉力上的地面摩擦。
+    /// </summary>
+    [Networked]
+    private Vector3 ProtectedAttachedDynamicVelocity
+    {
+        get;
+        set;
+    }
 
     /// <summary>
     /// 這次 Grapple Raycast 真正命中的 NetworkObject。
@@ -815,6 +892,39 @@ public class PlayerGrapple : NetworkBehaviour
             GrapplePhase.Attached &&
         SupportInteractionTetherActive ==
             false;
+
+    /// <summary>
+    /// 普通地形 Grapple 是否需要保護 Attached DynamicVelocity。
+    ///
+    /// Support 拉 Enemy／Player 的 Tether 不會拉動自己，因此必須排除。
+    /// </summary>
+    public bool ShouldProtectAttachedVelocity =>
+        IsNormalPlayerPullAttached;
+
+
+    /// <summary>
+    /// 提供給 PlayerGrappleKCCProtectionProcessor 的唯讀速度快照。
+    /// </summary>
+    public bool TryGetProtectedAttachedDynamicVelocity(
+        out Vector3 velocity
+    )
+    {
+        velocity =
+            ProtectedAttachedDynamicVelocity;
+
+        if (ShouldProtectAttachedVelocity ==
+                false ||
+            velocity.sqrMagnitude <=
+                0.000001f)
+        {
+            velocity =
+                default;
+
+            return false;
+        }
+
+        return true;
+    }
 
     /// <summary>
     /// 是否正在執行勾索釋放 Momentum。
@@ -1983,14 +2093,37 @@ public class PlayerGrapple : NetworkBehaviour
                     break;
                 }
 
+                // =============================================================
+                // 普通地形 Grapple：落地自動釋放
+                // =============================================================
 
-                // =============================================================
-                // Normal Grapple
-                // =============================================================
+                /*
+                * Support Tether 已在上方 Return / Break，
+                * 所以走到這裡的一定是拉動玩家本人的普通地形 Grapple。
+                */
+                if (kcc.Data.IsGrounded == false)
+                {
+                    HasBeenAirborneDuringAttached =
+                        true;
+                }
+                else if (releaseNormalGrappleOnLanding &&
+                        HasBeenAirborneDuringAttached)
+                {
+                    /*
+                    * 必須在 RecordRecentSpeed() 與 PullTowardPoint() 以前釋放，
+                    * 避免落地這個 Tick 又多施加一次 Grapple 拉力。
+                    *
+                    * AutoReleaseGrounded 沒有被列入 StartReleaseMomentum 分支，
+                    * 所以只會正常收繩，不會在地面再送一份水平推進速度。
+                    */
+                    BeginRetract(
+                        GrappleCancelReason.AutoReleaseGrounded
+                    );
+
+                    break;
+                }
 
                 RecordRecentSpeed();
-
-
                 PullTowardPoint();
 
                 break;
@@ -2093,9 +2226,21 @@ public class PlayerGrapple : NetworkBehaviour
         // =============================================================
         // 1. 正式進入 Attached
         // =============================================================
+        ProtectedAttachedDynamicVelocity =
+            default;
 
         CurrentPhase =
             GrapplePhase.Attached;
+
+        /*
+        * 空中發射並命中的 Grapple，Attached 成立時可能已經離地，
+        * 因此直接保存目前狀態。
+        *
+        * 地面發射則先保持 false，等待附著起跳真正讓 KCC 離地。
+        */
+        HasBeenAirborneDuringAttached =
+            kcc != null &&
+            kcc.Data.IsGrounded == false;
 
         PhaseTimer =
             TickTimer.None;
@@ -2340,6 +2485,17 @@ public class PlayerGrapple : NetworkBehaviour
                 movement.TryApplyGrappleAttachJumpImpulse();
 
             /*
+            * TryApplyGrappleAttachJumpImpulse 已把離地衝量寫入 DynamicVelocity。
+            * 先保存，讓 Grounded Tick 的 KCC Processor 不會把它摩擦掉。
+            */
+            if (appliedAttachJump)
+            {
+                SetProtectedAttachedDynamicVelocity(
+                    kcc.Data.DynamicVelocity
+                );
+            }
+
+            /*
              * [修正 CS0103 錯誤 2]
              * 將 debugLogs 更改為 debugGrapple。
              * 這是腳本頂端 [Header("除錯設定")] 中宣告的變數名稱。
@@ -2420,6 +2576,9 @@ public class PlayerGrapple : NetworkBehaviour
 
         GrapplePhase phaseBeforeRetract =
             CurrentPhase;
+
+        HasBeenAirborneDuringAttached =
+            false;
 
         /*
         * 方向只允許存活到本次 Grapple 釋放。
@@ -2682,6 +2841,13 @@ public class PlayerGrapple : NetworkBehaviour
                 distanceAutoReleaseUseLookDirection
             );
         }
+
+        /*
+        * Release Momentum 已經完成速度擷取，
+        * Attached 專用的地面摩擦保護到此結束。
+        */
+        ProtectedAttachedDynamicVelocity =
+            default;
 
         ExtensionAtRetractStart =
             GetCurrentRopeExtension();
@@ -3650,12 +3816,31 @@ public class PlayerGrapple : NetworkBehaviour
         * 只修改向內張力與固定切線上的分量。
         * 其他由重力、Jump Impulse、碰撞或外力造成的速度仍保留。
         */
-        kcc.SetDynamicVelocity(
+        SetProtectedAttachedDynamicVelocity(
             relativeVelocity +
             GrapplePointVelocity
         );
 
         return true;
+    }
+
+    /// <summary>
+    /// 同時保存本 Tick 普通 Attached 所要求的速度，
+    /// 並正式寫入 Advanced KCC。
+    ///
+    /// 所有普通 Attached 拉動速度都必須經過這個方法，
+    /// 否則 Grounded Tick 的保護 Processor 會拿到過期資料。
+    /// </summary>
+    private void SetProtectedAttachedDynamicVelocity(
+        Vector3 velocity
+    )
+    {
+        ProtectedAttachedDynamicVelocity =
+            velocity;
+
+        kcc.SetDynamicVelocity(
+            velocity
+        );
     }
 
     private void PullTowardPoint()
@@ -3820,7 +4005,7 @@ public class PlayerGrapple : NetworkBehaviour
         * 會從 DynamicVelocity 擷取這個完整合成速度，
         * 而不是使用上一個 Tick 尚未完成側移加速的舊速度。
         */
-        kcc.SetDynamicVelocity(
+        SetProtectedAttachedDynamicVelocity(
             newVelocity
         );
 
@@ -4159,15 +4344,6 @@ public class PlayerGrapple : NetworkBehaviour
             return;
         }
 
-        if (HasReleaseObstacleAhead())
-        {
-            StopReleaseMomentum(
-                true
-            );
-
-            return;
-        }
-
         /*
         * Support Aerial Ability、Support Pull
         * 或其他職業狀態如果正在封鎖主動移動，
@@ -4186,6 +4362,19 @@ public class PlayerGrapple : NetworkBehaviour
         UpdateReleaseMomentumDirectionFromInput(
             moveInput
         );
+
+        /*
+        * 必須先套用本 Tick 主動 WASD 方向，再處理牆面。
+        * 否則牆面剛把方向投影成切線，後面的 WASD 又會立刻把速度轉回牆內。
+        */
+        if (ResolveReleaseMomentumObstacle())
+        {
+            StopReleaseMomentum(
+                true
+            );
+
+            return;
+        }
 
         float baseMovementSpeed =
             Mathf.Max(
@@ -4425,16 +4614,31 @@ public class PlayerGrapple : NetworkBehaviour
         }
     }
 
-    private bool HasReleaseObstacleAhead()
+    /// <summary>
+    /// 處理 GrappleAirborne Momentum 前方障礙。
+    /// </summary>
+    /// <returns>
+    /// true：接近正面撞擊，呼叫端應停止 Momentum。
+    /// false：沒有障礙，或已經成功改成沿側牆滑行。
+    /// </returns>
+    private bool ResolveReleaseMomentumObstacle()
     {
         PhysicsScene physicsScene =
             Runner.GetPhysicsScene();
 
         if (physicsScene.IsValid() == false)
+        {
             return false;
+        }
 
         Vector3 direction =
             ReleaseMomentumDirection.normalized;
+
+        if (direction.sqrMagnitude <=
+            0.0001f)
+        {
+            return true;
+        }
 
         Vector3 origin =
             kcc.Data.TargetPosition +
@@ -4458,27 +4662,105 @@ public class PlayerGrapple : NetworkBehaviour
                 QueryTriggerInteraction.Ignore
             );
 
-        if (hasHit == false)
+        if (hasHit == false ||
+            hit.collider == null)
+        {
             return false;
+        }
 
         NetworkObject hitNetworkObject =
             hit.collider
                 .GetComponentInParent<NetworkObject>();
 
         if (hitNetworkObject == Object)
+        {
             return false;
+        }
+
+        Vector3 hitNormal =
+            hit.normal;
+
+        if (hitNormal.sqrMagnitude <=
+            0.0001f)
+        {
+            return true;
+        }
+
+        hitNormal.Normalize();
+
+        float headOnDot =
+            Mathf.Clamp01(
+                Vector3.Dot(
+                    direction,
+                    -hitNormal
+                )
+            );
+
+        float stopDot =
+            Mathf.Clamp01(
+                releaseMomentumHeadOnStopDot
+            );
+
+        bool shouldStop =
+            enableReleaseMomentumWallSlide ==
+                false ||
+            headOnDot >= stopDot;
+
+        if (shouldStop)
+        {
+            if (debugMomentum)
+            {
+                Debug.Log(
+                    $"[勾索 Momentum] 正面障礙，停止。" +
+                    $"\n物件：{hit.collider.name}" +
+                    $"\nHead On Dot：{headOnDot:F2}" +
+                    $"\n距離：{hit.distance:F2}",
+                    hit.collider
+                );
+            }
+
+            return true;
+        }
+
+        Vector3 wallSlideDirection =
+            Vector3.ProjectOnPlane(
+                direction,
+                hitNormal
+            );
+
+        wallSlideDirection =
+            Vector3.ProjectOnPlane(
+                wallSlideDirection,
+                Vector3.up
+            );
+
+        if (wallSlideDirection.sqrMagnitude <=
+            0.0001f)
+        {
+            return true;
+        }
+
+        ReleaseMomentumDirection =
+            wallSlideDirection.normalized;
+
+        ReleaseMomentumSpeed *=
+            Mathf.Clamp01(
+                releaseMomentumWallSlideRetention
+            );
 
         if (debugMomentum)
         {
             Debug.Log(
-                $"[勾索 Momentum] 前方障礙物。" +
+                $"[勾索 Momentum] 擦過側牆，改為沿牆滑行。" +
                 $"\n物件：{hit.collider.name}" +
-                $"\n距離：{hit.distance:F2}",
+                $"\nHead On Dot：{headOnDot:F2}" +
+                $"\n新方向：{ReleaseMomentumDirection}" +
+                $"\n保留速度：{ReleaseMomentumSpeed:F2}",
                 hit.collider
             );
         }
 
-        return true;
+        return false;
     }
 
     /// <summary>

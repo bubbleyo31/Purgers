@@ -120,15 +120,60 @@ public class NetworkPlayerAudioEmitter :
     }
 
     /// <summary>
-    /// 在指定世界位置播放 Network World OneShot。
+    /// 在指定世界座標播放 Network World OneShot。
     ///
-    /// 位置使用事件發生瞬間的 Snapshot；
-    /// 玩家之後繼續移動不會把已發出的短音拖著走。
+    /// 這是固定座標版本；
+    /// 發聲後不會跟隨 Player 移動。
     /// </summary>
     public bool PlayWorldOneShotFromStateAuthority(
         GameplayAudioCue cue,
         Vector3 worldPosition,
         float volumeScale = 1f
+    )
+    {
+        return TrySendWorldOneShot(
+            cue,
+            worldPosition,
+            volumeScale,
+            false
+        );
+    }
+
+    /// <summary>
+    /// 播放一次在音檔結束前，
+    /// 持續跟隨這名 Player Audio Origin 的 3D 世界聲。
+    ///
+    /// 只適合槍聲、玩家叫聲等「發聲者本體」的聲音。
+    /// </summary>
+    public bool PlayFollowingWorldOneShotFromStateAuthority(
+        GameplayAudioCue cue,
+        float volumeScale = 1f
+    )
+    {
+        Vector3 fallbackPosition =
+            defaultWorldAudioOrigin != null
+                ? defaultWorldAudioOrigin.position
+                : transform.position;
+
+        return TrySendWorldOneShot(
+            cue,
+            fallbackPosition,
+            volumeScale,
+            true
+        );
+    }
+
+    /// <summary>
+    /// State Authority 世界 One Shot 的唯一發送入口。
+    ///
+    /// followEmitter = false：使用 RPC 內的固定世界座標。
+    /// followEmitter = true：每個 Client 改用自己所看到的該 Player Audio Origin。
+    /// </summary>
+    private bool TrySendWorldOneShot(
+        GameplayAudioCue cue,
+        Vector3 fallbackWorldPosition,
+        float volumeScale,
+        NetworkBool followEmitter
     )
     {
         if (Object == null ||
@@ -200,8 +245,9 @@ public class NetworkPlayerAudioEmitter :
                 cue.NetworkId,
                 variantIndex,
                 selectedPitch,
-                worldPosition,
-                safeVolumeScale
+                fallbackWorldPosition,
+                safeVolumeScale,
+                followEmitter
             );
         }
         else
@@ -210,8 +256,9 @@ public class NetworkPlayerAudioEmitter :
                 cue.NetworkId,
                 variantIndex,
                 selectedPitch,
-                worldPosition,
-                safeVolumeScale
+                fallbackWorldPosition,
+                safeVolumeScale,
+                followEmitter
             );
         }
 
@@ -235,7 +282,8 @@ public class NetworkPlayerAudioEmitter :
         byte variantIndex,
         float selectedPitch,
         Vector3 worldPosition,
-        float volumeScale
+        float volumeScale,
+        NetworkBool followEmitter
     )
     {
         PlayReceivedWorldOneShot(
@@ -243,7 +291,8 @@ public class NetworkPlayerAudioEmitter :
             variantIndex,
             selectedPitch,
             worldPosition,
-            volumeScale
+            volumeScale,
+            followEmitter
         );
     }
 
@@ -259,7 +308,8 @@ public class NetworkPlayerAudioEmitter :
         byte variantIndex,
         float selectedPitch,
         Vector3 worldPosition,
-        float volumeScale
+        float volumeScale,
+        NetworkBool followEmitter
     )
     {
         PlayReceivedWorldOneShot(
@@ -267,7 +317,8 @@ public class NetworkPlayerAudioEmitter :
             variantIndex,
             selectedPitch,
             worldPosition,
-            volumeScale
+            volumeScale,
+            followEmitter
         );
     }
 
@@ -276,7 +327,8 @@ public class NetworkPlayerAudioEmitter :
         byte variantIndex,
         float selectedPitch,
         Vector3 worldPosition,
-        float volumeScale
+        float volumeScale,
+        NetworkBool followEmitter
     )
     {
         if (audioCatalog == null ||
@@ -308,6 +360,33 @@ public class NetworkPlayerAudioEmitter :
             return;
         }
 
+        if (followEmitter)
+        {
+            Transform followTarget =
+                defaultWorldAudioOrigin != null
+                    ? defaultWorldAudioOrigin
+                    : transform;
+
+            if (followTarget != null)
+            {
+                audioService
+                    .PlayWorldOneShotFollowingTransform(
+                        cue,
+                        variantIndex,
+                        selectedPitch,
+                        followTarget,
+                        volumeScale
+                    );
+
+                return;
+            }
+        }
+
+        /*
+         * 非 Following 聲音，
+         * 或 Follow Target 因 Despawn 而不存在時，
+         * 保留原本的固定世界位置路徑。
+         */
         audioService.PlayWorldOneShot(
             cue,
             variantIndex,

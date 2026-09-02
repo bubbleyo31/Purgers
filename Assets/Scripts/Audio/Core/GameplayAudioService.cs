@@ -132,6 +132,31 @@ public class GameplayAudioService :
         public float BasePitch;
     }
 
+    /// <summary>
+    /// 正在播放並且需要跟隨某個 Transform 的世界 One Shot。
+    ///
+    /// AudioSource 仍然屬於 GameplayAudioService Pool，
+    /// 不會重新 Parent 到 Player 底下。
+    ///
+    /// 這麼做可以避免 Player Despawn 時，
+    /// 把池化 AudioSource 一起 Destroy。
+    /// </summary>
+    private sealed class ActiveFollowingOneShot
+    {
+        public AudioSource Source;
+        public Transform FollowTarget;
+    }
+
+
+    /// <summary>
+    /// 目前尚在跟隨發聲者的世界 One Shot。
+    ///
+    /// 數量最多不會超過 maximumOneShotVoices。
+    /// </summary>
+    private readonly List<ActiveFollowingOneShot>
+        activeFollowingOneShots =
+            new List<ActiveFollowingOneShot>(32);
+
     #endregion
 
     // =====================================================================
@@ -196,6 +221,60 @@ public class GameplayAudioService :
                     $"OneShotVoice_{i:00}"
                 )
             );
+        }
+    }
+
+    private void LateUpdate()
+    {
+        /*
+         * 從後往前移除，
+         * 避免 RemoveAt 後尚未檢查的 Index 發生偏移。
+         */
+        for (int i =
+                activeFollowingOneShots.Count - 1;
+             i >= 0;
+             i--)
+        {
+            ActiveFollowingOneShot active =
+                activeFollowingOneShots[i];
+
+            if (active == null ||
+                active.Source == null)
+            {
+                activeFollowingOneShots.RemoveAt(i);
+
+                continue;
+            }
+
+            /*
+             * 音檔播完後只取消跟隨記錄。
+             * AudioSource 仍留在 OneShot Pool，
+             * 下次 Acquire 時才會 Reset 並重用。
+             */
+            if (active.Source.isPlaying == false)
+            {
+                activeFollowingOneShots.RemoveAt(i);
+
+                continue;
+            }
+
+            /*
+             * Player 如果在音檔結束前 Despawn，
+             * 不要報 NullReferenceException，
+             * 也不要突然停掉音檔。
+             *
+             * 只取消跟隨，
+             * 讓剩餘音檔停在最後一個合法位置播完。
+             */
+            if (active.FollowTarget == null)
+            {
+                activeFollowingOneShots.RemoveAt(i);
+
+                continue;
+            }
+
+            active.Source.transform.position =
+                active.FollowTarget.position;
         }
     }
 
@@ -335,6 +414,78 @@ public class GameplayAudioService :
             false,
             selectedPitch,
             volumeScale
+        );
+
+        source.Play();
+
+        return true;
+    }
+
+    /// <summary>
+    /// 播放一次會在音檔結束前持續跟隨 Transform 的世界 3D One Shot。
+    ///
+    /// 適用於：
+    ///
+    /// 槍聲、玩家叫聲、玩家本體發出的能力聲。
+    ///
+    /// 不適用於：
+    ///
+    /// 爆炸點、命中點、已離開玩家的世界事件。
+    /// </summary>
+    /// <param name="cue">已由 Network Catalog 解析完成的 Cue。</param>
+    /// <param name="variantIndex">State Authority 選定的 Clip Index。</param>
+    /// <param name="selectedPitch">State Authority 選定的 Pitch。</param>
+    /// <param name="followTarget">音檔播放期間要跟隨的 Transform。</param>
+    /// <param name="volumeScale">這次播放額外乘上的音量倍率。</param>
+    public bool PlayWorldOneShotFollowingTransform(
+        GameplayAudioCue cue,
+        byte variantIndex,
+        float selectedPitch,
+        Transform followTarget,
+        float volumeScale = 1f
+    )
+    {
+        if (cue == null ||
+            followTarget == null)
+        {
+            return false;
+        }
+
+        AudioClip clip =
+            cue.GetClip(
+                variantIndex
+            );
+
+        if (clip == null)
+        {
+            return false;
+        }
+
+        AudioSource source =
+            AcquireOneShotVoice();
+
+        if (source == null)
+        {
+            return false;
+        }
+
+        ConfigureSource(
+            source,
+            cue,
+            clip,
+            followTarget.position,
+            false,
+            false,
+            selectedPitch,
+            volumeScale
+        );
+
+        activeFollowingOneShots.Add(
+            new ActiveFollowingOneShot
+            {
+                Source = source,
+                FollowTarget = followTarget
+            }
         );
 
         source.Play();
@@ -683,6 +834,39 @@ public class GameplayAudioService :
         return -1;
     }
 
+    /// <summary>
+    /// AudioSource 被回收或重用前，
+    /// 移除它之前可能留下的跟隨記錄。
+    ///
+    /// 這可防止舊音檔與新音檔共用同一個 Pool Source 時，
+    /// 舊 Target 又在 LateUpdate 把新聲音拉回舊位置。
+    /// </summary>
+    private void RemoveFollowingOneShot(
+        AudioSource source
+    )
+    {
+        if (source == null)
+        {
+            return;
+        }
+
+        for (int i =
+                activeFollowingOneShots.Count - 1;
+             i >= 0;
+             i--)
+        {
+            ActiveFollowingOneShot active =
+                activeFollowingOneShots[i];
+
+            if (active == null ||
+                active.Source == null ||
+                active.Source == source)
+            {
+                activeFollowingOneShots.RemoveAt(i);
+            }
+        }
+    }
+
     #endregion
 
     // =====================================================================
@@ -789,6 +973,10 @@ public class GameplayAudioService :
             return;
         }
 
+        RemoveFollowingOneShot(
+            source
+        );
+        
         source.Stop();
 
         source.clip =

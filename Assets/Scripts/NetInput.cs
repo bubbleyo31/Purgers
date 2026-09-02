@@ -102,7 +102,18 @@ public enum InputButton
      * Tank   → Quick Dash
      * Support→ 未來能力
      */
-    QuickAction = 8
+    QuickAction = 8,
+
+    /// <summary>
+    /// 玩家蹲下／滑鏟輸入。
+    ///
+    /// 目前綁定：
+    /// Left Control。
+    ///
+    /// 這是持續按住型輸入：
+    /// 按住時保持蹲下，符合速度與地面條件時進入滑鏟。
+    /// </summary>
+    Crouch = 9
 }
 
 /// <summary>
