@@ -264,6 +264,75 @@ public class PlayerSlideController :
 
 
     // =====================================================================
+    #region Slide Jump Settings
+
+
+    [Header("滑鏟跳躍")]
+
+
+    [SerializeField]
+    [Min(0f)]
+    [Tooltip(
+        "成功進入滑鏟後，至少要經過多少秒才允許執行 Slide Jump。\n\n" +
+        "這能防止玩家在同一個瞬間按下蹲下與跳躍，" +
+        "還沒形成滑行節奏就直接取得完整水平動量。\n\n" +
+        "Apex 風格第一輪建議 0.10 秒；" +
+        "設為 0 則滑鏟成立後可立即跳躍。")]
+    private float minimumSlideTimeBeforeJump =
+        0.10f;
+
+
+    [SerializeField]
+    [Min(0f)]
+    [Tooltip(
+        "玩家在 Slide Jump 尚未解鎖時提早按下跳躍，" +
+        "這次輸入最多保留多少秒。\n\n" +
+        "若解鎖時間在 Buffer 到期前抵達，會自動執行 Slide Jump，" +
+        "減少網路 Tick 與人類按鍵誤差造成的 Dead Slide。\n\n" +
+        "第一輪建議 0.12 秒；設為 0 代表不保留過早輸入。")]
+    private float slideJumpInputBufferDuration =
+        0.12f;
+
+
+    [SerializeField]
+    [Min(0f)]
+    [Tooltip(
+        "Slide Jump 離地時保留多少水平滑鏟速度。\n\n" +
+        "1 = 完整保留當下 Slide Velocity。\n" +
+        "0.9 = 離地時損失 10% 水平速度。\n" +
+        "大於 1 會讓每次滑跳製造額外能量，不建議。\n\n" +
+        "第一輪建議 1。")]
+    private float slideJumpHorizontalMomentumRetention =
+        1f;
+
+
+    [SerializeField]
+    [Min(0f)]
+    [Tooltip(
+        "Slide Jump 成功時，沿目前滑鏟方向額外增加的固定水平速度。\n\n" +
+        "這不是倍率，單位與 KCC 速度相同。\n" +
+        "0 = 不憑空製造速度，只承接原有滑鏟動量。\n\n" +
+        "為避免普通滑跳或鈎索高速滑跳持續膨脹，第一輪建議保持 0。")]
+    private float slideJumpAdditionalHorizontalSpeed =
+        0f;
+
+
+    [SerializeField]
+    [Tooltip(
+        "開啟後，Slide Jump 成功的同一個 Fusion Tick 會立即解除蹲下。\n\n" +
+        "即使玩家仍按住 Left Control，也會暫時忽略這顆蹲下輸入，" +
+        "直到玩家真正放開一次後，下一次按下才可再次蹲下。\n\n" +
+        "這可防止鏟跳離地後下一個 Tick 又立刻縮回蹲下 Capsule。\n\n" +
+        "若頭上空間不足，仍會保留蹲下並持續嘗試安全站起，" +
+        "不會把站立 Capsule 強行穿進天花板。")]
+    private bool standUpImmediatelyAfterSlideJump =
+        true;
+
+
+    #endregion
+
+
+    // =====================================================================
     #region Slide Physics
 
 
@@ -511,6 +580,50 @@ public class PlayerSlideController :
     }
 
 
+    /// <summary>
+    /// 本次滑鏟要經過多久才允許轉成 Slide Jump。
+    ///
+    /// 使用 Fusion TickTimer，確保 Host、Client Prediction
+    /// 與 Resimulation 都依相同 Tick 得到結果。
+    /// </summary>
+    [Networked]
+    private TickTimer SlideJumpUnlockTimer
+    {
+        get;
+        set;
+    }
+
+
+    /// <summary>
+    /// 玩家過早按下 Jump 時暫存輸入的有效期限。
+    ///
+    /// Buffer 只屬於目前這次滑鏟；滑鏟結束時一定清除。
+    /// </summary>
+    [Networked]
+    private TickTimer SlideJumpBufferTimer
+    {
+        get;
+        set;
+    }
+
+
+    /// <summary>
+    /// Slide Jump 成功後，是否正在等待玩家把實體蹲下鍵放開。
+    ///
+    /// true 時即使 Left Control 仍維持按住，
+    /// PlayerSlideController 也會把本 Tick 視為沒有蹲下輸入。
+    ///
+    /// 這會影響 Capsule 與移動狀態，因此必須參與
+    /// Fusion Prediction / Resimulation。
+    /// </summary>
+    [Networked]
+    private NetworkBool IgnoreCrouchUntilReleasedAfterSlideJump
+    {
+        get;
+        set;
+    }
+
+
     #endregion
 
 
@@ -643,6 +756,15 @@ public class PlayerSlideController :
 
             GrapplePreLandingSlideArmed =
                 false;
+
+            SlideJumpUnlockTimer =
+                default;
+
+            SlideJumpBufferTimer =
+                default;
+
+            IgnoreCrouchUntilReleasedAfterSlideJump =
+                false;
         }
 
         ApplyCapsuleHeight(
@@ -734,6 +856,30 @@ public class PlayerSlideController :
                 0f,
                 entrySpeedRetention
             );
+
+        minimumSlideTimeBeforeJump =
+            Mathf.Max(
+                0f,
+                minimumSlideTimeBeforeJump
+            );
+
+        slideJumpInputBufferDuration =
+            Mathf.Max(
+                0f,
+                slideJumpInputBufferDuration
+            );
+
+        slideJumpHorizontalMomentumRetention =
+            Mathf.Max(
+                0f,
+                slideJumpHorizontalMomentumRetention
+            );
+
+        slideJumpAdditionalHorizontalSpeed =
+            Mathf.Max(
+                0f,
+                slideJumpAdditionalHorizontalSpeed
+            );
     }
 
 
@@ -742,6 +888,150 @@ public class PlayerSlideController :
 
     // =====================================================================
     #region Main Simulation
+
+
+    /// <summary>
+    /// 在 PlayerMovement 處理普通 Jump 之前，先判斷本 Tick 的 Jump
+    /// 是否應該由目前滑鏟接管。
+    ///
+    /// 重要責任分工：
+    /// - 本方法只判斷時間與 Input Buffer。
+    /// - 真正的 KCC.Jump 仍只由 PlayerMovement 執行。
+    /// - 成功跳躍後，再由 Simulate() 結束滑鏟並交接水平動量。
+    ///
+    /// 這能避免 PlayerMovement 與 PlayerSlideController
+    /// 在同一個 Fusion Tick 各自施加一次跳躍。
+    /// </summary>
+    /// <param name="input">本 Tick Fusion Input。</param>
+    /// <param name="previousButtons">上一 Tick 的 NetworkButtons。</param>
+    /// <param name="slideJumpAllowed">
+    /// false 代表 Grapple Attached、Support Pull 或職業能力等
+    /// 高優先系統禁止本 Tick 的 Slide Jump。
+    /// </param>
+    /// <param name="slideOwnsGroundJumpInput">
+    /// true 代表目前正在合法地面滑鏟，普通 Ground Jump 必須暫停，
+    /// 等本控制器決定立即執行或暫存這次 Jump。
+    /// </param>
+    /// <returns>true 代表本 Tick 應由 PlayerMovement 執行一次 Ground Jump。</returns>
+    public bool EvaluateSlideJumpInput(
+        NetInput input,
+        NetworkButtons previousButtons,
+        bool slideJumpAllowed,
+        out bool slideOwnsGroundJumpInput
+    )
+    {
+        slideOwnsGroundJumpInput =
+            false;
+
+        if (kcc == null ||
+            IsSliding == false)
+        {
+            SlideJumpBufferTimer =
+                default;
+
+            return false;
+        }
+
+        /*
+         * IsSliding 可能在玩家滑出地面邊緣後，多保留到本 Tick 的
+         * PlayerSlideController.Simulate() 才正式結束。
+         *
+         * 這種情況不能攔截空中的 Jump，否則會誤吃掉二段跳輸入。
+         */
+        if (kcc.Data.IsGrounded == false)
+        {
+            SlideJumpBufferTimer =
+                default;
+
+            return false;
+        }
+
+        slideOwnsGroundJumpInput =
+            true;
+
+        /*
+         * 滑鏟仍然要持有 Ground Jump 輸入，
+         * 但高優先移動鎖定時不能把它轉成 Slide Jump。
+         *
+         * 否則 PlayerMovement 會比本元件的 Simulate() 更早執行，
+         * 有機會先跳起來，之後才被 Higher Priority Movement 結束滑鏟。
+         */
+        if (slideJumpAllowed == false)
+        {
+            SlideJumpBufferTimer =
+                default;
+
+            return false;
+        }
+
+        bool crouchHeld =
+            input.Buttons.IsSet(
+                InputButton.Crouch
+            );
+
+        if (crouchHeld == false)
+        {
+            SlideJumpBufferTimer =
+                default;
+
+            return false;
+        }
+
+        bool jumpPressed =
+            input.Buttons.WasPressed(
+                previousButtons,
+                InputButton.Jump
+            );
+
+        if (jumpPressed)
+        {
+            float bufferDuration =
+                Mathf.Max(
+                    0f,
+                    slideJumpInputBufferDuration
+                );
+
+            SlideJumpBufferTimer =
+                bufferDuration > 0.0001f
+                    ? TickTimer.CreateFromSeconds(
+                        Runner,
+                        bufferDuration
+                    )
+                    : default;
+
+            if (debugSlide)
+            {
+                Debug.Log(
+                    "[Player Slide] 收到 Slide Jump 輸入。" +
+                    $"\nBuffer Duration：{bufferDuration:F3}",
+                    this
+                );
+            }
+        }
+
+        bool jumpUnlocked =
+            SlideJumpUnlockTimer
+                .ExpiredOrNotRunning(
+                    Runner
+                );
+
+        bool bufferedJumpAvailable =
+            SlideJumpBufferTimer
+                .ExpiredOrNotRunning(
+                    Runner
+                ) == false;
+
+        if (jumpUnlocked &&
+            (jumpPressed || bufferedJumpAvailable))
+        {
+            SlideJumpBufferTimer =
+                default;
+
+            return true;
+        }
+
+        return false;
+    }
 
 
     /// <summary>
@@ -777,10 +1067,34 @@ public class PlayerSlideController :
             TryRegisterProcessor();
         }
 
-        bool crouchHeld =
+        bool physicalCrouchHeld =
             input.Buttons.IsSet(
                 InputButton.Crouch
             );
+
+        bool crouchHeld =
+            physicalCrouchHeld;
+
+        /*
+         * Slide Jump 成功後不能只把 IsCrouched 關閉一次。
+         * 玩家通常仍按住 Left Control；若不建立 Release Latch，
+         * 下一個 Tick 就會再次被 EnsureCrouched() 拉回蹲下。
+         *
+         * 因此鏟跳後持續忽略舊的 Hold，直到偵測到真正放開一次。
+         */
+        if (IgnoreCrouchUntilReleasedAfterSlideJump)
+        {
+            if (physicalCrouchHeld == false)
+            {
+                IgnoreCrouchUntilReleasedAfterSlideJump =
+                    false;
+            }
+            else
+            {
+                crouchHeld =
+                    false;
+            }
+        }
 
         bool movementHardLocked =
             hardMovementControlActive ||
@@ -821,11 +1135,32 @@ public class PlayerSlideController :
             else if (jumpedThisTick ||
                      grapplePressedThisTick)
             {
+                if (jumpedThisTick &&
+                    standUpImmediatelyAfterSlideJump)
+                {
+                    IgnoreCrouchUntilReleasedAfterSlideJump =
+                        true;
+
+                    /*
+                     * 本 Tick 的 crouchHeld 已在方法前段計算完成，
+                     * 所以除了建立跨 Tick Latch，還必須立即改成本地 false，
+                     * 才能在下方 Crouch Stance 階段馬上嘗試站起。
+                     */
+                    crouchHeld =
+                        false;
+                }
+
                 EndSlide(
                     true,
                     jumpedThisTick
                         ? "Slide Jump"
-                        : "Grapple Started"
+                        : "Grapple Started",
+                    jumpedThisTick
+                        ? slideJumpHorizontalMomentumRetention
+                        : 1f,
+                    jumpedThisTick
+                        ? slideJumpAdditionalHorizontalSpeed
+                        : 0f
                 );
             }
             else if (crouchHeld == false)
@@ -1049,6 +1384,23 @@ public class PlayerSlideController :
         IsSliding =
             true;
 
+        float slideJumpUnlockDelay =
+            Mathf.Max(
+                0f,
+                minimumSlideTimeBeforeJump
+            );
+
+        SlideJumpUnlockTimer =
+            slideJumpUnlockDelay > 0.0001f
+                ? TickTimer.CreateFromSeconds(
+                    Runner,
+                    slideJumpUnlockDelay
+                )
+                : default;
+
+        SlideJumpBufferTimer =
+            default;
+
         EnsureCrouched();
 
         kcc.SetKinematicVelocity(
@@ -1065,7 +1417,9 @@ public class PlayerSlideController :
                 $"\nFrom Grapple Momentum：" +
                 $"{enteredFromGrappleMomentum}" +
                 $"\nGrapple Pre-Landing Bypass：" +
-                $"{forceGrappleLandingSlide}",
+                $"{forceGrappleLandingSlide}" +
+                $"\nSlide Jump Unlock Delay：" +
+                $"{slideJumpUnlockDelay:F3}",
                 this
             );
         }
@@ -1437,7 +1791,9 @@ public class PlayerSlideController :
 
     private void EndSlide(
         bool preserveHorizontalVelocity,
-        string reason
+        string reason,
+        float horizontalVelocityRetention = 1f,
+        float additionalHorizontalSpeed = 0f
     )
     {
         if (IsSliding == false)
@@ -1448,20 +1804,58 @@ public class PlayerSlideController :
         Vector3 finalVelocity =
             SlideVelocity;
 
+        if (preserveHorizontalVelocity)
+        {
+            finalVelocity *=
+                Mathf.Max(
+                    0f,
+                    horizontalVelocityRetention
+                );
+
+            float additionalSpeed =
+                Mathf.Max(
+                    0f,
+                    additionalHorizontalSpeed
+                );
+
+            if (additionalSpeed > 0.0001f &&
+                finalVelocity.sqrMagnitude >
+                    0.0001f)
+            {
+                finalVelocity +=
+                    finalVelocity.normalized *
+                    additionalSpeed;
+            }
+
+            finalVelocity =
+                ClampToAbsoluteSafetySpeed(
+                    finalVelocity
+                );
+        }
+        else
+        {
+            finalVelocity =
+                Vector3.zero;
+        }
+
         IsSliding =
             false;
 
         SlideVelocity =
             Vector3.zero;
 
+        SlideJumpUnlockTimer =
+            default;
+
+        SlideJumpBufferTimer =
+            default;
+
         kcc.SetInputDirection(
             Vector3.zero
         );
 
         kcc.SetKinematicVelocity(
-            preserveHorizontalVelocity
-                ? finalVelocity
-                : Vector3.zero
+            finalVelocity
         );
 
         if (debugSlide)
@@ -1470,6 +1864,8 @@ public class PlayerSlideController :
                 $"[Player Slide] End" +
                 $"\nReason：{reason}" +
                 $"\nPreserve Velocity：{preserveHorizontalVelocity}" +
+                $"\nRetention：{horizontalVelocityRetention:F2}" +
+                $"\nAdditional Speed：{additionalHorizontalSpeed:F2}" +
                 $"\nFinal Speed：{finalVelocity.magnitude:F2}",
                 this
             );

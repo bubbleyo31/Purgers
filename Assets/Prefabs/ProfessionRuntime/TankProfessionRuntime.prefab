@@ -111,18 +111,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ownerPlayer: {fileID: 0}
   lightAttack1:
-    StartupDuration: 0.167
+    StartupDuration: 0.09
     ActiveDuration: 0
-    RecoveryDuration: 0.631
+    RecoveryDuration: 0.328
     Damage: 35
     MaximumTargets: 0
     Range: 6
     SearchRadius: 10
     FullAttackAngle: 120
   lightAttack2:
-    StartupDuration: 0.167
+    StartupDuration: 0.09
     ActiveDuration: 0
-    RecoveryDuration: 0.631
+    RecoveryDuration: 0.328
     Damage: 35
     MaximumTargets: 0
     Range: 6
@@ -131,14 +131,14 @@ MonoBehaviour:
   heavyAttack:
     StartupDuration: 0.271
     ActiveDuration: 0.271
-    RecoveryDuration: 0.762
+    RecoveryDuration: 0.72
     Damage: 70
     MaximumTargets: 0
     Range: 6
     SearchRadius: 10
     FullAttackAngle: 160
   comboResetDuration: 1.4
-  allowAttackInputBuffer: 1
+  allowAttackInputBuffer: 0
   light1WorldSwingCue: {fileID: 11400000, guid: dc6fbc449bc42b64b9aea7d9f6155b05,
     type: 2}
   light2WorldSwingCue: {fileID: 11400000, guid: c5d97de4809f34e40bc1b1b9ab2df78b,
@@ -291,7 +291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ownerPlayer: {fileID: 0}
   maximumCharges: 1
-  rechargeDuration: 5
+  rechargeDuration: 3
   dashSpeed: 100
   dashDistance: 20
   quickDashWorldStartCue: {fileID: 11400000, guid: 2bc3344b3b33332439f72e7b7781e366,

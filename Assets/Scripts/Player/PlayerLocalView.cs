@@ -186,6 +186,21 @@ public class PlayerLocalView : NetworkBehaviour
         }
 
         // -------------------------------------------------------------
+        // 可滑鏟速度提示
+        // -------------------------------------------------------------
+
+        /*
+        * 使用獨立的 ParticleSystem 與獨立水平速度門檻。
+        * 不會影響原本的 FirstPersonMovementEffects。
+        */
+        if (FirstPersonSlideReadySpeedLines.Singleton != null)
+        {
+            FirstPersonSlideReadySpeedLines.Singleton.SetTarget(
+                player
+            );
+        }
+
+        // -------------------------------------------------------------
         // 勾索 FOV
         // -------------------------------------------------------------
 
@@ -268,6 +283,18 @@ public class PlayerLocalView : NetworkBehaviour
             player != null)
         {
             FirstPersonMovementEffects.Singleton.ClearTarget(
+                player
+            );
+        }
+
+        // -------------------------------------------------------------
+        // 可滑鏟速度提示
+        // -------------------------------------------------------------
+
+        if (FirstPersonSlideReadySpeedLines.Singleton != null &&
+            player != null)
+        {
+            FirstPersonSlideReadySpeedLines.Singleton.ClearTarget(
                 player
             );
         }

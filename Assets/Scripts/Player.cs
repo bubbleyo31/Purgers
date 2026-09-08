@@ -472,6 +472,34 @@ public class Player :
         // }
         // =========================================================
 
+        /*
+        * Slide Jump 的時間門檻與 Input Buffer
+        * 必須在 PlayerMovement 處理普通 Jump 之前先判斷。
+        *
+        * PlayerSlideController 只決定：
+        * 1. 本 Tick 的 Ground Jump 是否由滑鏟接管。
+        * 2. 本 Tick 是否已符合 Slide Jump 執行條件。
+        *
+        * 真正的 KCC.Jump 仍只交給 PlayerMovement，
+        * 避免兩套系統同一 Tick 重複施加跳躍。
+        */
+        bool slideOwnsGroundJumpInput =
+            false;
+
+        bool slideJumpRequested =
+            false;
+
+        if (slideController != null)
+        {
+            slideJumpRequested =
+                slideController.EvaluateSlideJumpInput(
+                    input,
+                    PreviousButtons,
+                    externalMovementControlActive == false &&
+                    nonGrappleMovementInfluence > 0.0001f,
+                    out slideOwnsGroundJumpInput
+                );
+        }
 
         PlayerMovement.FrameResult movementResult =
             movement.Simulate(
@@ -480,7 +508,9 @@ public class Player :
             sprintActive,
             sprintRampProgress,
             externalMovementControlActive,
-            externalMovementInfluence
+            externalMovementInfluence,
+            slideOwnsGroundJumpInput,
+            slideJumpRequested
         );
 
         // -------------------------------------------------------------

@@ -15,15 +15,16 @@ MonoBehaviour:
   networkId: 1
   networkDelivery: 0
   clips:
-  - {fileID: 8300000, guid: e520ac5f979517845ab9cb59bf75f721, type: 3}
-  - {fileID: 8300000, guid: c98349543b571b44f9e9e0f4a1cff5fa, type: 3}
-  - {fileID: 8300000, guid: 3d04cf1cebc44a9408866543de7c5479, type: 3}
-  - {fileID: 8300000, guid: da903a72b73fc454d8ec81ee7027fa1c, type: 3}
-  - {fileID: 8300000, guid: b1609769e557b8b438fa6c6b5a10d61b, type: 3}
-  - {fileID: 8300000, guid: 3b553cd306c51094c9c1d5d40ce97a56, type: 3}
-  volume: 0.5
-  minimumPitch: 0.98
-  maximumPitch: 1.02
+  - {fileID: 8300000, guid: 5e1dc19fe34cf6f47821a3f5e5029000, type: 3}
+  - {fileID: 8300000, guid: f858b709c08f44f48bd8d5418b4263ec, type: 3}
+  - {fileID: 8300000, guid: 579703dd517d7904aa724f6d4528b59c, type: 3}
+  - {fileID: 8300000, guid: 4a3ed01dffa11bd4296acb636e2e8d0d, type: 3}
+  - {fileID: 8300000, guid: 357fc76508172d14cbe28b07bff17730, type: 3}
+  - {fileID: 8300000, guid: 8c97a5c83a7666c45aef98bcfe3e858e, type: 3}
+  - {fileID: 8300000, guid: 68d8106e39a8bdb4da90acaa03dc28ce, type: 3}
+  volume: 1
+  minimumPitch: 0.88
+  maximumPitch: 0.92
   outputMixerGroup: {fileID: -2305752944303880011, guid: 7533ecc1f215ca047b8742ddc76965e2,
     type: 2}
   worldSpatialBlend: 1

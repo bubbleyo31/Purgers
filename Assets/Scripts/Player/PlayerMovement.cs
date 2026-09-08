@@ -139,6 +139,27 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     // =====================================================================
+    #region 鏟跳設定
+
+    [Header("鏟跳設定")]
+
+    [SerializeField]
+    [Min(0f)]
+    [Tooltip(
+        "玩家成功通過 PlayerSlideController 的最短滑行時間與" +
+        " Input Buffer 判定後，Slide Jump 使用的獨立向上衝量。\n\n" +
+        "這個值只影響成功的鏟跳：\n" +
+        "- 普通地面跳仍使用 Jump Impulse。\n" +
+        "- 空中二段跳仍使用 Double Jump Impulse。\n" +
+        "- 鈎索附著時用來讓玩家離地的小跳仍使用原本 Jump Impulse。\n\n" +
+        "設為 6 代表先與普通跳躍高度相同；" +
+        "若希望鏟跳較低、飛行距離更偏向水平，可先測試 4.5～5.5。")]
+    private float slideJumpImpulse =
+        6f;
+
+    #endregion
+
+    // =====================================================================
     #region 公開資料
 
     /// <summary>
@@ -246,13 +267,27 @@ public class PlayerMovement : MonoBehaviour
     /// 0 = 不允許 WASD
     /// 1 = 完整 WASD
     /// </param>
+    /// <param name="slideOwnsGroundJumpInput">
+    /// true 代表玩家目前正在合法地面滑鏟，
+    /// 普通 Ground Jump 必須先交給 PlayerSlideController
+    /// 處理最短滑行時間與輸入緩衝。
+    /// </param>
+    /// <param name="slideJumpRequested">
+    /// true 代表 PlayerSlideController 已確認本 Tick
+    /// 可以執行一次 Slide Jump。
+    ///
+    /// 即使實體 Jump 是稍早的 Tick 按下，
+    /// 也能透過網路化 Input Buffer 在本 Tick 正式跳躍。
+    /// </param>
     public FrameResult Simulate(
         NetInput input,
         NetworkButtons previousButtons,
         bool sprintActive,
         float sprintRampProgress,
         bool grappleControlActive,
-        float externalMovementInfluence
+        float externalMovementInfluence,
+        bool slideOwnsGroundJumpInput,
+        bool slideJumpRequested
     )
     {
         FrameResult result =
@@ -336,11 +371,26 @@ public class PlayerMovement : MonoBehaviour
         // Jump
         // -------------------------------------------------------------
 
-        bool jumpPressed =
+        bool rawJumpPressed =
             input.Buttons.WasPressed(
                 previousButtons,
                 InputButton.Jump
             );
+
+        /*
+         * 滑鏟期間不能讓普通 Jump 與 Slide Jump 同時處理同一顆按鍵。
+         *
+         * slideOwnsGroundJumpInput = true：
+         * - 過早輸入由 PlayerSlideController 暫存。
+         * - 解鎖後由 slideJumpRequested 重新送回來。
+         *
+         * 非滑鏟狀態仍完全使用原本的 rawJumpPressed，
+         * 不影響普通跳躍與空中二段跳。
+         */
+        bool jumpPressed =
+            slideJumpRequested ||
+            (rawJumpPressed &&
+             slideOwnsGroundJumpInput == false);
 
         bool canProcessJump =
             allowJumpDuringGrapple ||
@@ -357,9 +407,29 @@ public class PlayerMovement : MonoBehaviour
         {
             if (kcc.Data.IsGrounded)
             {
+                /*
+                 * Slide Jump 已經由 PlayerSlideController 完成：
+                 * 1. 最短滑行時間判定。
+                 * 2. 過早 Jump Input Buffer。
+                 * 3. 水平 Slide Velocity 保留。
+                 *
+                 * PlayerMovement 在這裡只選擇正確的向上衝量，
+                 * 並維持 KCC.Jump 的唯一執行權。
+                 */
+                float selectedGroundJumpImpulse =
+                    slideJumpRequested
+                        ? Mathf.Max(
+                            0f,
+                            slideJumpImpulse
+                        )
+                        : Mathf.Max(
+                            0f,
+                            jumpImpulse
+                        );
+
                 kcc.Jump(
                     Vector3.up *
-                    jumpImpulse
+                    selectedGroundJumpImpulse
                 );
 
                 stateMachine.NotifyGroundJump();

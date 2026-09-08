@@ -16,7 +16,7 @@ MonoBehaviour:
   networkDelivery: 0
   clips:
   - {fileID: 8300000, guid: facc7798d3cba0f4398d573f48f1a198, type: 3}
-  volume: 0.25
+  volume: 0.1
   minimumPitch: 1
   maximumPitch: 1
   outputMixerGroup: {fileID: 0}

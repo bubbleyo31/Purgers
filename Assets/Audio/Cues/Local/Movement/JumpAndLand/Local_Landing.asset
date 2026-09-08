@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fc0d95d8b6364349aa666fb50892c12, type: 3}
+  m_Name: Local_Landing
+  m_EditorClassIdentifier: 
+  networkId: 0
+  networkDelivery: 0
+  clips:
+  - {fileID: 8300000, guid: c287f0860b0e2a347aed11b08e53c6ff, type: 3}
+  volume: 1
+  minimumPitch: 1
+  maximumPitch: 1
+  outputMixerGroup: {fileID: 0}
+  worldSpatialBlend: 1
+  worldRolloffMode: 0
+  worldMinimumDistance: 4
+  worldMaximumDistance: 60
+  worldDopplerLevel: 0
