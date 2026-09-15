@@ -17,8 +17,8 @@ MonoBehaviour:
   clips:
   - {fileID: 8300000, guid: 1d7ad03f272946e4ba2194765840d415, type: 3}
   volume: 0.25
-  minimumPitch: 0.98
-  maximumPitch: 1.02
+  minimumPitch: 0.9
+  maximumPitch: 0.9
   outputMixerGroup: {fileID: 0}
   worldSpatialBlend: 1
   worldRolloffMode: 0

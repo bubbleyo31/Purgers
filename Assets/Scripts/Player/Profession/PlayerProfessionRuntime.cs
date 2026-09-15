@@ -1,4 +1,5 @@
 using Fusion;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -138,6 +139,21 @@ public class PlayerProfessionRuntime :
     /// </summary>
     private bool driverBound;
 
+    /// <summary>
+    /// 掛在 Runtime Root、可跨職業重用的共用 Gameplay Module。
+    ///
+    /// 只在 Spawned 時掃描一次，避免每個 Tick 重複 GetComponents。
+    /// 使用 MonoBehaviour 保存，才能正確套用 Unity Destroy Null 判定。
+    /// </summary>
+    private readonly List<MonoBehaviour>
+        sharedRuntimeModuleBehaviours =
+            new List<MonoBehaviour>(4);
+
+    /// <summary>
+    /// 共用 Runtime Module 是否已綁定正式 Owner Player。
+    /// </summary>
+    private bool sharedRuntimeModulesBound;
+
     #endregion
 
     // =====================================================================
@@ -269,6 +285,8 @@ public class PlayerProfessionRuntime :
         * OnBeforeSpawned / InitializeBeforeSpawn
         * 寫入 Networked Property。
         */
+        ResolveSharedRuntimeModules();
+
         ResolveRuntimeDriver();
     }
 
@@ -277,6 +295,12 @@ public class PlayerProfessionRuntime :
         bool hasState
     )
     {
+        sharedRuntimeModulesBound =
+            false;
+
+        sharedRuntimeModuleBehaviours
+            .Clear();
+
         if (debugRuntime)
         {
             Debug.Log(
@@ -360,7 +384,112 @@ public class PlayerProfessionRuntime :
                 this
             );
 
+        if (driverBound)
+        {
+            TryBindSharedRuntimeModules();
+        }
+
         return driverBound;
+    }
+
+    /// <summary>
+    /// 掃描 Runtime Root 上所有可跨職業重用的 Gameplay Module。
+    ///
+    /// 只掃描同一個 Root，不向子 NetworkObject 延伸，避免未來 Runtime
+    /// 內含其他網路物件時誤把別人的模組綁給目前 Player。
+    /// </summary>
+    private void ResolveSharedRuntimeModules()
+    {
+        sharedRuntimeModuleBehaviours
+            .Clear();
+
+        sharedRuntimeModulesBound =
+            false;
+
+        MonoBehaviour[] behaviours =
+            GetComponents<MonoBehaviour>();
+
+        for (int i = 0;
+            i < behaviours.Length;
+            i++)
+        {
+            MonoBehaviour behaviour =
+                behaviours[i];
+
+            if (behaviour is
+                IPlayerProfessionRuntimeModule)
+            {
+                sharedRuntimeModuleBehaviours
+                    .Add(
+                        behaviour
+                    );
+            }
+        }
+    }
+
+    /// <summary>
+    /// 將所有共用 Runtime Module 綁定到真正 Player Core。
+    /// </summary>
+    private bool TryBindSharedRuntimeModules()
+    {
+        Player ownerPlayer =
+            OwnerPlayer;
+
+        if (ownerPlayer == null)
+        {
+            return false;
+        }
+
+        for (int i = 0;
+            i < sharedRuntimeModuleBehaviours.Count;
+            i++)
+        {
+            MonoBehaviour behaviour =
+                sharedRuntimeModuleBehaviours[i];
+
+            if (behaviour is
+                IPlayerProfessionRuntimeModule module)
+            {
+                module.BindOwnerPlayer(
+                    ownerPlayer
+                );
+            }
+        }
+
+        sharedRuntimeModulesBound =
+            true;
+
+        return true;
+    }
+
+    /// <summary>
+    /// 在職業專屬 Driver 以前執行所有已啟用的共用 Runtime Module。
+    /// </summary>
+    private void SimulateSharedRuntimeModules(
+        NetInput input
+    )
+    {
+        for (int i = 0;
+            i < sharedRuntimeModuleBehaviours.Count;
+            i++)
+        {
+            MonoBehaviour behaviour =
+                sharedRuntimeModuleBehaviours[i];
+
+            if (behaviour == null ||
+                behaviour.isActiveAndEnabled == false)
+            {
+                continue;
+            }
+
+            if (behaviour is
+                IPlayerProfessionRuntimeModule module)
+            {
+                module.Simulate(
+                    input
+                );
+            }
+        }
     }
 
     /// <summary>
@@ -382,6 +511,22 @@ public class PlayerProfessionRuntime :
                 return;
             }
         }
+
+        if (sharedRuntimeModulesBound == false &&
+            TryBindSharedRuntimeModules() == false)
+        {
+            return;
+        }
+
+        /*
+         * 共用模組先執行。
+         *
+         * 例如 SupportAerialAbility 可在同一 Tick 先切換特殊模式，
+         * 後面的 Support Driver / Weapon 才會讀到正確狀態。
+         */
+        SimulateSharedRuntimeModules(
+            input
+        );
 
         runtimeDriver.Simulate(
             input,

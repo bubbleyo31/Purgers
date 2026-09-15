@@ -135,7 +135,16 @@ public enum GrappleCancelReason : byte
     ///
     /// Support Interaction Tether 不使用此原因。
     /// </summary>
-    AutoReleaseGrounded = 11
+    AutoReleaseGrounded = 11,
+
+    /// <summary>
+    /// 已開啟按住維持模式，
+    /// 玩家在 PreFire、Shooting 或 Attached 期間放開鈎索鍵。
+    ///
+    /// 與 ManualToggle 分開保存原因，
+    /// 避免未來輸入模式、音效或動畫需要分流時失去判斷依據。
+    /// </summary>
+    ManualHoldReleased = 12
 }
 
 /// <summary>
@@ -196,8 +205,12 @@ public class PlayerGrapple : NetworkBehaviour
     private PlayerGrappleInteractionController grappleInteractionController;
 
     [SerializeField]
-    [Tooltip("玩家目前職業資料。PlayerGrapple 會用它判斷是否為 Support，只有 Support 會額外開啟 Support Additional Grapple Mask，例如其他玩家的 Hitbox Layer。若留空會自動取得。")]
+    [Tooltip("玩家目前職業資料。只保留給尚未完成 Ability Loadout 資產遷移的舊 Prefab 相容路徑；正式額外 Target Mask 由已裝備能力決定。若留空會自動取得。")]
     private PlayerProfession profession;
+
+    [SerializeField]
+    [Tooltip("玩家獨立能力 Runtime 管理器。用來判斷目前已裝備能力是否需要額外 Grapple Target Layer。若留空會自動取得。")]
+    private PlayerAbilityRuntimeManager abilityRuntimeManager;
 
     #endregion
 
@@ -221,7 +234,7 @@ public class PlayerGrapple : NetworkBehaviour
     private LayerMask grappleMask = ~0;
 
     [SerializeField]
-    [Tooltip("只有 Support 職業會額外加入的勾索 Layer。建議只放其他玩家可被勾索命中的 Fusion Hitbox 或 Player Hitbox Layer。Support 實際射線 Mask 會是 Grapple Mask 與此 Mask 的聯集；Attack 與 Tank 完全不受這個設定影響。")]
+    [Tooltip("只有目前已裝備能力明確要求時才加入的額外勾索 Layer。建議放其他玩家的 Fusion Hitbox／Player Hitbox Layer；一般世界勾索仍使用 Grapple Mask。欄位名稱暫時保留 Support 前綴以維持既有 Prefab 序列化資料。")]
     private LayerMask supportAdditionalGrappleMask = 0;
 
     #endregion
@@ -286,6 +299,28 @@ public class PlayerGrapple : NetworkBehaviour
     #endregion
 
     // =====================================================================
+    // Grapple Input Mode
+    // =====================================================================
+
+    [Header("鈎索輸入模式")]
+
+    [SerializeField]
+    [Tooltip(
+        "決定普通鈎索使用切換模式或按住模式。\n\n" +
+        "關閉：維持原本操作。按一下 Q 發射，再按一次 Q 釋放。\n\n" +
+        "開啟：按下 Q 發射並啟用鈎索；" +
+        "PreFire、Shooting 或 Attached 期間必須持續按住 Q，" +
+        "放開 Q 就會立刻進入收繩。\n\n" +
+        "射線沒有合法目標時不會發射，也不會消耗充能。\n" +
+        "Aim 主動斷繩、自動距離釋放、落地釋放、遮蔽釋放與" +
+        "固定擺盪角度釋放仍維持原本規則。\n\n" +
+        "按住模式下，如果鈎索已因 Aim 或其他原因釋放，" +
+        "即使 Q 仍按住也不會自動再次發射；" +
+        "玩家必須放開 Q 後重新按下。")]
+    private bool useHoldToMaintainGrappleInput =
+        false;
+
+    // =====================================================================
     #region 拉動設定
 
     [Header("勾索拉動設定")]
@@ -299,6 +334,26 @@ public class PlayerGrapple : NetworkBehaviour
     [Min(0f)]
     [Tooltip("沿勾索方向的最大拉動速度。依目前測試可以設定為 150。")]
     private float grappleMaxSpeed = 150f;
+
+    [Header("鈎索成功附著垂直回正")]
+
+    [SerializeField]
+    [Min(0f)]
+    [Tooltip(
+        "玩家已在空中並成功進入普通 Grapple Attached 時，" +
+        "一次減少多少向下的 DynamicVelocity Y，單位為世界單位/秒。\n\n" +
+        "計算方式：新的 Y 速度 = Min(0, 原本 Y 速度 + 此數值)。\n" +
+        "例如目前 Y = -20、此值 = 12，附著後會變成 -8；" +
+        "目前 Y = -6 時會回到 0，但不會變成向上 +6。\n\n" +
+        "只修正向下速度，不影響原本已存在的向上速度，" +
+        "因此連續成功鈎索能逐次拉回接近水平，" +
+        "但不能靠快速連鈎無限堆疊向上速度。\n" +
+        "地面成功附著仍使用 PlayerMovement 原有的 Jump Impulse；" +
+        "Attack 標記與 Support 特殊 Tether 不套用此修正。\n\n" +
+        "依目前 KCC Gravity Y = -40，第一輪建議使用 12，" +
+        "約抵消 0.3 秒自由落體累積的向下速度。設為 0 代表停用。")]
+    private float grappleAttachDownwardSpeedRecovery =
+        12f;
     
     // =====================================================================
     // Grapple Fixed-Plane Swing
@@ -1197,19 +1252,23 @@ public class PlayerGrapple : NetworkBehaviour
     }
 
     /// <summary>
-    /// 取得目前職業真正使用的 Grapple LayerMask。
-    ///
-    /// 一般職業只使用 Grapple Mask；
-    /// Support 額外加入 Support Additional Grapple Mask。
+    /// 取得目前 Loadout 真正使用的 Grapple LayerMask。
+    /// 只有已裝備且目前職業允許的能力要求時，才加入額外目標 Layer。
     /// </summary>
     private int GetActiveGrappleMask()
     {
         int activeGrappleMask =
             grappleMask.value;
 
-        if (profession != null &&
-            profession.CurrentProfession ==
-                PlayerProfessionType.Support)
+        bool requiresAdditionalMask =
+            abilityRuntimeManager != null
+                ? abilityRuntimeManager
+                    .RequiresAdditionalGrappleTargetMask()
+                : profession != null &&
+                    profession.CurrentProfession ==
+                        PlayerProfessionType.Support;
+
+        if (requiresAdditionalMask)
         {
             activeGrappleMask |=
                 supportAdditionalGrappleMask.value;
@@ -1235,6 +1294,14 @@ public class PlayerGrapple : NetworkBehaviour
         {
             movement =
                 GetComponent<PlayerMovement>();
+        }
+
+        if (abilityRuntimeManager == null)
+        {
+            abilityRuntimeManager =
+                GetComponent<
+                    PlayerAbilityRuntimeManager
+                >();
         }
 
         if (stateMachine == null)
@@ -1283,8 +1350,9 @@ public class PlayerGrapple : NetworkBehaviour
     /// 例如 Support 空中特殊能力或被 Support 拉取時會是 0。
     /// 這時 Momentum 暫停衰退與方向更新，避免繞過外部移動封鎖。
     /// </param>
-    public void Simulate(
+        public void Simulate(
         bool grapplePressed,
+        bool grappleHeld,
         bool aimPressed,
         bool aimHeld,
         Vector2 moveInput,
@@ -1316,10 +1384,11 @@ public class PlayerGrapple : NetworkBehaviour
         if (canReleaseWithAim)
         {
             /*
-             * 必須先建立 Aim 消耗鎖，再改變 Grapple Phase。
-             * 後面的 Profession Runtime 會在同一 Tick 讀取這個狀態，
-             * 防止同一顆 Aim 同時斷繩並啟動職業技能。
-             */
+            * Aim 主動斷繩的優先序仍然最高。
+            *
+            * 即使開啟按住 Q 模式，
+            * Attached 期間按下 Aim 仍會立即釋放。
+            */
             AimConsumedUntilReleased =
                 true;
 
@@ -1327,13 +1396,26 @@ public class PlayerGrapple : NetworkBehaviour
                 GrappleCancelReason.AimRelease
             );
         }
+        else if (useHoldToMaintainGrappleInput)
+        {
+            /*
+            * 按住模式：
+            *
+            * Q 剛按下時發射；
+            * Q 持續按住時維持；
+            * Q 放開時收繩。
+            */
+            HandleHoldToMaintainInput(
+                grapplePressed,
+                grappleHeld
+            );
+        }
         else if (grapplePressed)
         {
             /*
-             * Aim Release 優先於 Q Toggle。
-             * 如果同一 Tick 同時按 Q 與 Aim，只執行 Aim Release，
-             * 不重複呼叫兩次 BeginRetract()。
-             */
+            * 關閉按住模式時，
+            * 完整保留原本的 Q Toggle 操作。
+            */
             HandleToggle();
         }
 
@@ -1395,6 +1477,70 @@ public class PlayerGrapple : NetworkBehaviour
     }
 
     #endregion
+
+    /// <summary>
+    /// 處理「按住 Q 維持鈎索、放開 Q 釋放」模式。
+    ///
+    /// Idle：
+    /// 只有 Q 剛按下時才嘗試發射。
+    ///
+    /// PreFire／Shooting／Attached：
+    /// Q 持續按住便維持目前流程；
+    /// Q 放開便立即進入收繩。
+    ///
+    /// Retracting：
+    /// 不接受再次發射，必須等待收繩完成，
+    /// 並要求玩家重新放開、按下 Q。
+    /// </summary>
+    private void HandleHoldToMaintainInput(
+        bool grapplePressed,
+        bool grappleHeld
+    )
+    {
+        if (CurrentPhase ==
+            GrapplePhase.Idle)
+        {
+            /*
+            * 不能只檢查 grappleHeld。
+            *
+            * 否則鈎索因 Aim 或自動條件收回後，
+            * 玩家仍按住 Q 就會在回到 Idle 時自動連射。
+            */
+            if (grapplePressed)
+            {
+                TryStartGrapple();
+            }
+
+            return;
+        }
+
+        /*
+        * PreFire、Shooting、Attached
+        * 都包含在 IsGrappleControlActive。
+        *
+        * Q 還按著時不做任何事，
+        * 讓原本的 Grapple Phase 正常推進。
+        */
+        if (grappleHeld ||
+            IsGrappleControlActive == false)
+        {
+            return;
+        }
+
+        /*
+        * 玩家已放開 Q。
+        *
+        * BeginRetract 會自行處理：
+        * - Pending Interaction 取消
+        * - Support Tether 結束
+        * - Attached Momentum
+        * - 狀態機通知
+        * - 收繩動畫
+        */
+        BeginRetract(
+            GrappleCancelReason.ManualHoldReleased
+        );
+    }
 
     // =====================================================================
     #region 切換式勾索
@@ -2508,6 +2654,19 @@ public class PlayerGrapple : NetworkBehaviour
             }
         }
 
+        /*
+         * 每次成功進入會拉動玩家的普通 Attached 時，
+         * 只把既有的向下速度往 0 拉回一段固定量。
+         *
+         * 地面 Attached 已由上面的 Jump Impulse 負責離地，
+         * 本修正只處理已經在空中的玩家；
+         * 向上速度永遠不會因連續鈎索而額外增加。
+         *
+         * Attack Mark 與 Support Tether 已在前面的特殊分流 Return，
+         * 因此不會進到這裡。
+         */
+        TryApplyGrappleAttachVerticalRecovery();
+
         
         // =============================================================
         // 6. 一般 Grapple
@@ -2725,18 +2884,25 @@ public class PlayerGrapple : NetworkBehaviour
 
 
         /*
-        * Q2 主動取消：
+        * 兩種 Q 主動釋放都使用相同 Momentum：
         *
-        * 玩家在 Attached 期間再次按下鈎索鍵。
+        * Toggle 模式：
+        * 再按一次 Q。
         *
-        * 這次不再把保留速度重新轉向玩家目前的觀看方向，
-        * 而是沿用釋放前的實際水平移動方向，
-        * 之後交給既有 GrappleAirborne Momentum 依重力逐步衰退。
+        * Hold 模式：
+        * 放開 Q。
+        *
+        * 兩者都保留釋放前實際水平速度，
+        * 不重新導向目前準心方向。
         */
-        bool manualToggleRelease =
+        bool manualInputRelease =
             isNormalAttachedPlayerGrapple &&
-            cancelReason ==
-                GrappleCancelReason.ManualToggle;
+            (
+                cancelReason ==
+                    GrappleCancelReason.ManualToggle ||
+                cancelReason ==
+                    GrappleCancelReason.ManualHoldReleased
+            );
 
 
         /*
@@ -2794,7 +2960,7 @@ public class PlayerGrapple : NetworkBehaviour
         * 優先使用玩家釋放前的實際水平移動方向，
         * 不把速度重新轉向準心方向。
         */
-        if (manualToggleRelease)
+        if (manualInputRelease)
         {
             StartReleaseMomentum(
                 1f,
@@ -3841,6 +4007,69 @@ public class PlayerGrapple : NetworkBehaviour
         kcc.SetDynamicVelocity(
             velocity
         );
+    }
+
+    /// <summary>
+    /// 普通 Grapple 在空中成功 Attached 時，
+    /// 將既有向下速度往水平的 0 拉回一段固定量。
+    ///
+    /// 這是一次性的成功命中回正，不是持續抗重力：
+    /// - 不修改 Environment Processor 的 Gravity。
+    /// - 不影響 Release Momentum 的水平重力衰退。
+    /// - 不改寫既有向上速度。
+    /// - 回正後的 Y 最大只會是 0，不能靠連鈎堆疊升空。
+    /// </summary>
+    private void TryApplyGrappleAttachVerticalRecovery()
+    {
+        if (kcc == null ||
+            kcc.Data.IsGrounded)
+        {
+            return;
+        }
+
+        float recoveryAmount =
+            Mathf.Max(
+                0f,
+                grappleAttachDownwardSpeedRecovery
+            );
+
+        if (recoveryAmount <= 0f)
+        {
+            return;
+        }
+
+        Vector3 velocity =
+            kcc.Data.DynamicVelocity;
+
+        float previousVerticalSpeed =
+            velocity.y;
+
+        if (previousVerticalSpeed >= 0f)
+        {
+            return;
+        }
+
+        velocity.y =
+            Mathf.Min(
+                0f,
+                previousVerticalSpeed +
+                recoveryAmount
+            );
+
+        SetProtectedAttachedDynamicVelocity(
+            velocity
+        );
+
+        if (debugGrapple)
+        {
+            Debug.Log(
+                $"[PlayerGrapple] 空中成功 Attached，已修正向下速度。" +
+                $"\n原本 Y：{previousVerticalSpeed:F2}" +
+                $"\n修正後 Y：{velocity.y:F2}" +
+                $"\n本次回正量：{recoveryAmount:F2}",
+                this
+            );
+        }
     }
 
     private void PullTowardPoint()

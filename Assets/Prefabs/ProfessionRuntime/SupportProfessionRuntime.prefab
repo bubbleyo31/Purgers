@@ -17,8 +17,6 @@ GameObject:
   - component: {fileID: 5849318573046818429}
   - component: {fileID: 2213391127302456029}
   - component: {fileID: 2319066986831710684}
-  - component: {fileID: 6400840670176172184}
-  - component: {fileID: 7427034152802166414}
   - component: {fileID: 7402294517011457340}
   m_Layer: 0
   m_Name: SupportProfessionRuntime
@@ -63,8 +61,6 @@ MonoBehaviour:
   - {fileID: 6749300105770966226}
   - {fileID: 2764086653346086409}
   - {fileID: 2319066986831710684}
-  - {fileID: 6400840670176172184}
-  - {fileID: 7427034152802166414}
 --- !u!114 &-2827192830297900321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,7 +92,6 @@ MonoBehaviour:
   supportSMG: {fileID: 0}
   weaponController: {fileID: 0}
   aimController: {fileID: 0}
-  aerialAbility: {fileID: 0}
   quickMelee: {fileID: 0}
   grapplePullAbility: {fileID: 0}
   debugSupportRuntime: 1
@@ -142,7 +137,7 @@ MonoBehaviour:
   reloadDuration: 1.122
   autoReloadWhenEmpty: 1
   baseFireRate: 20
-  baseSpecialFireRate: 7
+  baseSpecialFireRate: 15
   maxShotDistance: 200
   shotOriginHeight: 1.6
   hitMask:
@@ -252,40 +247,6 @@ MonoBehaviour:
   debugQuickMelee: 1
   debugDrawMelee: 1
   debugDrawDuration: 0.5
---- !u!114 &6400840670176172184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7775360870651738227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51f270f2e4c72674e8b35c95957f4842, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactionController: {fileID: 0}
-  ownerGrapple: {fileID: 0}
-  debugPullAbility: 1
---- !u!114 &7427034152802166414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7775360870651738227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96ee383cf9541724fae541261014aec0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maximumActiveDuration: 2
-  cooldownDuration: 5
-  activeVelocityMultiplier: 0.1
-  supportSMG: {fileID: 0}
-  debugAbility: 1
-  _AbilityActive:
-    _value: 0
 --- !u!114 &7402294517011457340
 MonoBehaviour:
   m_ObjectHideFlags: 0

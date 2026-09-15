@@ -27,8 +27,6 @@ using UnityEngine;
 [DisallowMultipleComponent]
 [RequireComponent(typeof(TankMeleeCombo))]
 [RequireComponent(typeof(TankGuardAbility))]
-[RequireComponent(typeof(TankAirDashAbility))]
-[RequireComponent(typeof(TankGrappleGatherAbility))]
 [RequireComponent(typeof(TankQuickDashAbility))]
 public class TankProfessionRuntimeDriver :
     PlayerProfessionRuntimeDriver
@@ -202,6 +200,8 @@ public class TankProfessionRuntimeDriver :
             return;
         }
 
+        RefreshLoadoutAbilityReferences();
+
         if (OwnerProfession.CurrentProfession !=
             PlayerProfessionType.Tank)
         {
@@ -312,6 +312,51 @@ public class TankProfessionRuntimeDriver :
                 input,
                 previousButtons
             );
+        }
+    }
+
+
+    /// <summary>
+    /// Air Dash 與 Gather 已屬玩家 Loadout；每 Tick 重新查詢可處理
+    /// Loadout 同數量換裝與 Runtime 延後同步。Guard、Melee、Quick Dash
+    /// 仍然只取 Tank Profession Runtime，不會被此查詢開放。
+    /// </summary>
+    private void RefreshLoadoutAbilityReferences()
+    {
+        PlayerAbilityRuntimeManager manager =
+            OwnerPlayer != null
+                ? OwnerPlayer.AbilityRuntimeManager
+                : null;
+
+        if (manager == null)
+        {
+            return;
+        }
+
+        if (manager.TryGetActiveModule(
+                out TankAirDashAbility loadoutAirDash
+            ))
+        {
+            airDashAbility =
+                loadoutAirDash;
+        }
+        else
+        {
+            airDashAbility =
+                GetComponent<TankAirDashAbility>();
+        }
+
+        if (manager.TryGetActiveModule(
+                out TankGrappleGatherAbility loadoutGather
+            ))
+        {
+            grappleGatherAbility =
+                loadoutGather;
+        }
+        else
+        {
+            grappleGatherAbility =
+                GetComponent<TankGrappleGatherAbility>();
         }
     }
 

@@ -22,7 +22,7 @@ MonoBehaviour:
   rollRotationMultiplier: 3
   idleMotionMultiplier: 5
   walkMotionMultiplier: 3
-  runMotionMultiplier: 7
+  runMotionMultiplier: 3
   airMotionMultiplier: 1
   grappleMotionMultiplier: 0
   grappleForwardMotionMultiplier: 0

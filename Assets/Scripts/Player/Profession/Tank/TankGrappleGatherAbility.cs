@@ -43,8 +43,15 @@ using UnityEngine;
 /// </summary>
 [DisallowMultipleComponent]
 public class TankGrappleGatherAbility :
-    NetworkBehaviour
+    NetworkBehaviour,
+    IPlayerAbilityRuntimeModule
 {
+    /// <summary>
+    /// 此能力在鈎索正式命中並 Attached 後執行。
+    /// </summary>
+    public PlayerAbilityCategory AbilityCategory =>
+        PlayerAbilityCategory.GrappleHit;
+
     // =====================================================================
     #region Owner Player Binding
 
@@ -321,6 +328,9 @@ public class TankGrappleGatherAbility :
     /// TankGatherAnchorDetected。
     /// </summary>
     private bool isSubscribed;
+
+    private bool professionAvailable =
+        true;
 
     #endregion
 
@@ -611,6 +621,11 @@ public class TankGrappleGatherAbility :
             return;
         }
 
+        if (professionAvailable == false)
+        {
+            return;
+        }
+
         if (Object == null ||
             Object.HasStateAuthority == false)
         {
@@ -687,6 +702,11 @@ public class TankGrappleGatherAbility :
         GrappleInteractionContext context
     )
     {
+        if (professionAvailable == false)
+        {
+            return;
+        }
+
         // =============================================================
         // State Authority
         // =============================================================
@@ -708,16 +728,6 @@ public class TankGrappleGatherAbility :
 
         if (context.SourcePlayer !=
             ownerPlayerNetworkObject.InputAuthority)
-        {
-            return;
-        }
-
-        // =============================================================
-        // Profession Validation
-        // =============================================================
-
-        if (context.SourceProfession !=
-            PlayerProfessionType.Tank)
         {
             return;
         }
@@ -1923,6 +1933,43 @@ public class TankGrappleGatherAbility :
                 ? anchorObject
                 : this
         );
+    }
+
+
+    public void SimulateAbility(
+        NetInput input,
+        NetworkButtons previousButtons
+    )
+    {
+        // GrappleHit 類別由 Attached Event 驅動；Gather Dash 由本元件的
+        // FixedUpdateNetwork 推進。
+    }
+
+
+    public void SetProfessionAvailable(
+        bool isAvailable
+    )
+    {
+        professionAvailable =
+            isAvailable;
+
+        if (isAvailable)
+        {
+            TrySubscribe();
+
+            return;
+        }
+
+        Unsubscribe();
+
+        if (Object != null &&
+            Object.HasStateAuthority &&
+            PlayerGatherDashActive)
+        {
+            CompletePlayerGatherDash(
+                "Profession Restricted"
+            );
+        }
     }
 
     #endregion

@@ -70,8 +70,6 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerWeaponController))]
 [RequireComponent(typeof(PlayerAimController))]
 [RequireComponent(typeof(SupportQuickMelee))]
-[RequireComponent(typeof(SupportGrapplePullAbility))]
-[RequireComponent(typeof(SupportAerialAbility))]
 public class SupportProfessionRuntimeDriver :
     PlayerProfessionRuntimeDriver
 {
@@ -101,11 +99,6 @@ public class SupportProfessionRuntimeDriver :
     [Tooltip("Support 使用的共用 ADS 控制器。負責右鍵瞄準與 ADS Gameplay。Support 與 Attack 共用 PlayerAimController，但 Support 不會因此取得 AttackFocusAbility。若留空會從 Support Profession Runtime Root 自動取得。")]
     private PlayerAimController
         aimController;
-
-    [SerializeField]
-    [Tooltip("Support 的 GrappleAirborne 空中特殊能力。只有在 GrappleAirborne 按住 Aim 且冷卻完成時才會啟動；最多持續 5 秒，放開 Aim 或落地會提前結束，結束後才開始完整 15 秒冷卻。第一階段只負責 KCC 慢速飄落。若留空會從 Support Profession Runtime Root 自動取得。")]
-    private SupportAerialAbility
-        aerialAbility;
 
     [SerializeField]
     [Tooltip("Support 使用的 F 快速近戰。這顆 Ability 的 Profession 必須固定為 Support，讓 PlayerQuickActionController 能從目前 Support Runtime 正確找到它。若留空會從 Support Profession Runtime Root 自動取得。")]
@@ -240,10 +233,6 @@ public class SupportProfessionRuntimeDriver :
             GetComponent<SupportQuickMelee>();
 
 
-        aerialAbility =
-            GetComponent<SupportAerialAbility>();
-
-
         grapplePullAbility = 
             GetComponent<SupportGrapplePullAbility>();
 
@@ -258,27 +247,6 @@ public class SupportProfessionRuntimeDriver :
         if (aimController != null)
         {
             aimController.BindOwnerPlayer(
-                OwnerPlayer
-            );
-        }
-
-        // =============================================================
-        // Support Aerial Ability Owner Binding
-        // =============================================================
-
-        /*
-        * SupportAerialAbility 存在 Profession Runtime，
-        * 但真正控制的是 Player Core 上的：
-        *
-        * PlayerMovement
-        * PlayerStateMachine
-        * Advanced KCC。
-        *
-        * 所以必須先綁定真正 Owner Player。
-        */
-        if (aerialAbility != null)
-        {
-            aerialAbility.BindOwnerPlayer(
                 OwnerPlayer
             );
         }
@@ -389,7 +357,6 @@ public class SupportProfessionRuntimeDriver :
                 $"{(OwnerProfession != null ? OwnerProfession.CurrentProfession.ToString() : "NULL")}" +
                 $"\nSupportSMG：{(supportSMG != null)}" +
                 $"\nAim：{(aimController != null)}" +
-                $"\nAerial Ability：{(aerialAbility != null)}" +
                 $"\nWeapon Controller：{(weaponController != null)}" +
                 $"\nQuick Melee：{(quickMelee != null)}",
                 this
@@ -457,22 +424,6 @@ public class SupportProfessionRuntimeDriver :
                 $"[{nameof(SupportProfessionRuntimeDriver)}] " +
                 $"Support Profession Runtime Root 找不到 " +
                 $"{nameof(PlayerAimController)}。",
-                this
-            );
-        }
-
-        // =============================================================
-        // Support Aerial Ability
-        // =============================================================
-
-        if (aerialAbility == null)
-        {
-            Debug.LogError(
-                $"[{nameof(SupportProfessionRuntimeDriver)}] " +
-                $"Support Profession Runtime Root 找不到 " +
-                $"{nameof(SupportAerialAbility)}。" +
-                $"\n請確認 SupportAerialAbility 與 Driver " +
-                $"存在同一個 Runtime Root GameObject。",
                 this
             );
         }
@@ -672,40 +623,7 @@ public class SupportProfessionRuntimeDriver :
 
 
         // =============================================================
-        // 2. Support Aerial Ability
-        // =============================================================
-
-        /*
-        * 執行順序必須是：
-        *
-        * Aim
-        * ↓
-        * Aerial Ability
-        * ↓
-        * Weapon。
-        *
-        * ------------------------------------------------------------
-        *
-        * Aim 先更新，Ability 才能在同一 Tick 讀到最新 IsAiming。
-        *
-        * Ability 排在 Weapon 前面，是為下一階段接入 SupportSMG
-        * Special Mode 預留正確順序；本階段不會修改 SupportSMG。
-        */
-        if (aerialAbility != null)
-        {
-            bool isAimActive =
-                aimController != null &&
-                aimController.IsAiming;
-
-
-            aerialAbility.Simulate(
-                isAimActive
-            );
-        }
-
-
-        // =============================================================
-        // 3. Weapon
+        // 2. Weapon
         // =============================================================
 
         /*

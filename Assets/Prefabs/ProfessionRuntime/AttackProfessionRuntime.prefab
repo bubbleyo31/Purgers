@@ -18,8 +18,8 @@ GameObject:
   - component: {fileID: -1031628348926636374}
   - component: {fileID: -780934474060022012}
   - component: {fileID: 3762271180498303708}
-  - component: {fileID: 7160743858829985033}
   - component: {fileID: 7044750039090838037}
+  - component: {fileID: 7248724440112972391}
   m_Layer: 0
   m_Name: AttackProfessionRuntime
   m_TagString: Untagged
@@ -64,7 +64,7 @@ MonoBehaviour:
   - {fileID: -1813431250314135127}
   - {fileID: 3882477383901842239}
   - {fileID: 3762271180498303708}
-  - {fileID: 7160743858829985033}
+  - {fileID: 7248724440112972391}
 --- !u!114 &606703233680039338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,22 +276,6 @@ MonoBehaviour:
   debugQuickMelee: 1
   debugDrawMelee: 1
   debugDrawDuration: 0.5
---- !u!114 &7160743858829985033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1154744271550206506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df550b7156e2b1a43b243e4a93fb406b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ownerPlayer: {fileID: 0}
-  interactionController: {fileID: 0}
-  markDuration: 5
-  debugMarkAbility: 1
 --- !u!114 &7044750039090838037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,3 +291,22 @@ MonoBehaviour:
   attackRifle: {fileID: 0}
   weaponIcon: {fileID: 21300000, guid: a0495727e3eca63498a5a4009c5b7716, type: 3}
   reloadReminderBelowAmmo: 5
+--- !u!114 &7248724440112972391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154744271550206506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96ee383cf9541724fae541261014aec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maximumActiveDuration: 1
+  cooldownDuration: 0
+  activeVelocityMultiplier: 0.1
+  supportSMG: {fileID: 0}
+  debugAbility: 1
+  _AbilityActive:
+    _value: 0

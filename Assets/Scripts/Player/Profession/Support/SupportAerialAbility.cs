@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// Support 在 GrappleAirborne 階段可使用的空中特殊能力。
+/// 可掛在任一 Profession Runtime 的 GrappleAirborne 空中特殊能力。
 ///
 /// ====================================================================
 ///
@@ -19,9 +19,9 @@ using UnityEngine;
 /// 7. 啟動瞬間記錄完整 KCC DynamicVelocity。
 /// 8. Active 期間將記錄速度依倍率壓縮，形成整體慢動作飄移。
 /// 9. Active 期間封鎖 KCC WASD Input Direction，但不封鎖 Look。
-/// 10. Active 期間啟用 SupportSMG Special Mode。
+/// 10. 同 Runtime 若有 SupportSMG，Active 期間啟用其 Special Mode。
 /// 11. 能力結束時完整返還啟動瞬間記錄的 DynamicVelocity。
-/// 12. 能力結束時關閉 SupportSMG Special Mode。
+/// 12. 能力結束時關閉可選的 SupportSMG Special Mode。
 ///
 /// ====================================================================
 ///
@@ -48,11 +48,18 @@ using UnityEngine;
 /// SupportSMG 特殊治療量。
 /// </summary>
 [DisallowMultipleComponent]
-[RequireComponent(typeof(SupportSMG))]
 public class SupportAerialAbility :
     NetworkBehaviour,
+    IPlayerProfessionRuntimeModule,
+    IPlayerAbilityRuntimeModule,
     IPlayerMovementInputModifier
 {
+    /// <summary>
+    /// 此能力由 GrappleAirborne 專注輸入管線驅動。
+    /// </summary>
+    public PlayerAbilityCategory AbilityCategory =>
+        PlayerAbilityCategory.GrappleFocus;
+
     // =====================================================================
     #region Ability Timing
 
@@ -98,11 +105,11 @@ public class SupportAerialAbility :
     #region Support Weapon
 
 
-    [Header("Support 武器")]
+    [Header("可選的 Support 武器連動")]
 
 
     [SerializeField]
-    [Tooltip("同一顆 Support Profession Runtime Root 上的正式 SupportSMG。能力啟動時會呼叫 SetSpecialModeActive(true)，統一啟用特殊射速、特殊治療量、無限彈匣與零新增後座力；能力結束時會立即切回 false。若留空會自動從同一個 Runtime Root 取得。")]
+    [Tooltip("可選連動：同一顆 Profession Runtime Root 若存在 SupportSMG，能力啟動時會開啟其特殊射速、特殊治療量、無限彈匣與零新增後座力，能力結束時切回普通模式。其他職業不需要 SupportSMG；留空會嘗試從同一個 Runtime Root 取得，找不到也不會阻止空中能力運作。")]
     private SupportSMG supportSMG;
 
 
@@ -219,6 +226,23 @@ public class SupportAerialAbility :
     /// 能力只允許在 GrappleAirborne 啟動與維持。
     /// </summary>
     private PlayerStateMachine ownerStateMachine;
+
+
+    /// <summary>
+    /// Owner Player 的統一操作封鎖管理器。
+    ///
+    /// 共用能力直接讀 NetInput 的 Aim，因此仍要尊重 Action Gate 對 Aim
+    /// 的封鎖，避免換彈、Quick Action 或其他高權限行為期間誤啟動。
+    /// </summary>
+    private PlayerActionGate ownerActionGate;
+
+
+    /// <summary>
+    /// Ability Definition 的職業限制是否允許目前職業使用。
+    /// 預設 true 讓尚未搬離舊 Profession Runtime 的場景保持相容。
+    /// </summary>
+    private bool professionAvailable =
+        true;
 
 
     /// <summary>
@@ -387,6 +411,15 @@ public class SupportAerialAbility :
         bool hasState
     )
     {
+        if (hasState &&
+            AbilityActive)
+        {
+            EndAbility(
+                "Ability Runtime Despawned"
+            );
+        }
+
+
         fusionSpawned =
             false;
 
@@ -401,6 +434,10 @@ public class SupportAerialAbility :
 
         ownerStateMachine =
             null;
+
+
+        ownerActionGate =
+            null;
     }
 
 
@@ -412,8 +449,8 @@ public class SupportAerialAbility :
 
 
     /// <summary>
-    /// 由 SupportProfessionRuntimeDriver
-    /// 將這顆 Runtime Ability 綁定到真正 Player Core。
+    /// 由 PlayerProfessionRuntime 自動將這顆共用 Runtime Ability
+    /// 綁定到真正 Player Core。
     /// </summary>
     public void BindOwnerPlayer(
         Player newOwnerPlayer
@@ -431,6 +468,10 @@ public class SupportAerialAbility :
             null;
 
 
+        ownerActionGate =
+            null;
+
+
         if (ownerPlayer == null)
         {
             return;
@@ -443,6 +484,10 @@ public class SupportAerialAbility :
 
         ownerStateMachine =
             ownerPlayer.StateMachine;
+
+
+        ownerActionGate =
+            ownerPlayer.GetComponent<PlayerActionGate>();
 
 
         if (ownerMovement == null ||
@@ -476,16 +521,8 @@ public class SupportAerialAbility :
         }
 
 
-        if (supportSMG == null)
-        {
-            Debug.LogError(
-                $"[{nameof(SupportAerialAbility)}] " +
-                $"Support Profession Runtime Root 找不到 " +
-                $"{nameof(SupportSMG)}，" +
-                $"無法切換特殊射速、特殊治療量與無限彈匣。",
-                this
-            );
-        }
+        // SupportSMG 是可選連動，不是能力成立條件。
+        // Attack、Tank 或未來職業只要掛上本元件即可使用空中能力。
     }
 
 
@@ -497,24 +534,30 @@ public class SupportAerialAbility :
 
 
     /// <summary>
-    /// 每個 Fusion Tick 由 SupportProfessionRuntimeDriver 呼叫。
-    ///
-    /// Driver 必須先執行 PlayerAimController.Simulate(input)，
-    /// 再把該 Tick 最新的 IsAiming 傳入這裡。
-    ///
-    /// 這樣玩家同 Tick 按下或放開 Aim 時，
-    /// 能力不會晚一個 Tick 才反應。
+    /// 每個 Fusion Tick 由 PlayerProfessionRuntime 自動呼叫。
+    /// 直接讀取同一 Tick 的 Aim Input，因此任何職業 Runtime 只要掛上
+    /// 此元件，不需要再修改自己的 Driver。
     /// </summary>
-    /// <param name="isAimActive">
-    /// PlayerAimController 在本 Tick 更新完成後的正式 Aim 狀態。
-    /// </param>
     public void Simulate(
-        bool isAimActive
+        NetInput input
     )
     {
         if (fusionSpawned == false ||
             Object.HasStateAuthority == false)
         {
+            return;
+        }
+
+
+        if (professionAvailable == false)
+        {
+            if (AbilityActive)
+            {
+                EndAbility(
+                    "Profession Restricted"
+                );
+            }
+
             return;
         }
 
@@ -528,6 +571,12 @@ public class SupportAerialAbility :
 
 
         ClearExpiredCooldown();
+
+
+        bool isAimActive =
+            IsAimInputActive(
+                input
+            );
 
 
         // =============================================================
@@ -565,6 +614,67 @@ public class SupportAerialAbility :
          * 不多等一個 Fusion Tick。
          */
         ApplyCompressedVelocity();
+    }
+
+
+    /// <summary>
+    /// 獨立 Ability Runtime 的統一 Tick 入口。
+    /// </summary>
+    public void SimulateAbility(
+        NetInput input,
+        NetworkButtons previousButtons
+    )
+    {
+        Simulate(
+            input
+        );
+    }
+
+
+    /// <summary>
+    /// 切到不允許的職業時安全關閉能力；裝備與既有冷卻仍保留。
+    /// </summary>
+    public void SetProfessionAvailable(
+        bool isAvailable
+    )
+    {
+        professionAvailable =
+            isAvailable;
+
+        if (isAvailable == false &&
+            fusionSpawned &&
+            Object != null &&
+            Object.HasStateAuthority &&
+            AbilityActive)
+        {
+            EndAbility(
+                "Profession Restricted"
+            );
+        }
+    }
+
+
+    /// <summary>
+    /// 取得本 Tick 是否允許將 Aim 視為能力 Hold 輸入。
+    ///
+    /// 不依賴某一職業是否配置 PlayerAimController，才能維持真正的
+    /// 掛載即用；同時仍尊重 PlayerActionGate 的 Aim 封鎖。
+    /// </summary>
+    private bool IsAimInputActive(
+        NetInput input
+    )
+    {
+        bool aimBlocked =
+            ownerActionGate != null &&
+            ownerActionGate.IsBlocked(
+                PlayerActionBlockMask.Aim
+            );
+
+        return
+            aimBlocked == false &&
+            input.Buttons.IsSet(
+                InputButton.Aim
+            );
     }
 
 
@@ -742,11 +852,11 @@ public class SupportAerialAbility :
         // =============================================================
 
         /*
-         * SupportProfessionRuntimeDriver 的順序必須保持：
+         * PlayerProfessionRuntime 的順序必須保持：
          *
-         * Aim
-         * ↓
          * SupportAerialAbility
+         * ↓
+         * Profession Runtime Driver
          * ↓
          * Weapon。
          *

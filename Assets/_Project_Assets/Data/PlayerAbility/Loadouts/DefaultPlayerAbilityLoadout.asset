@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08aca53674704e588d2c72bacf9c18ff, type: 3}
+  m_Name: DefaultPlayerAbilityLoadout
+  m_EditorClassIdentifier: 
+  slotLayout: {fileID: 11400000, guid: eb5577741e04fc44fa081cf9f5484734, type: 2}
+  equippedAbilities:
+  - {fileID: 11400000, guid: d58a3d1bc46e89e41a1e20107808e7aa, type: 2}
+  - {fileID: 11400000, guid: 800e711b4848ab3439c6c22380045715, type: 2}

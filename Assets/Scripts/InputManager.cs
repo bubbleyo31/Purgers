@@ -211,19 +211,31 @@ public class InputManager :
         // =============================================================
 
         /*
-         * 勾索正式改為 Q。
-         *
-         * 這是一次性按下事件。
-         *
-         * 第一次按：
-         * 啟動勾索。
-         *
-         * 再次按：
-         * PlayerGrapple 判定為 ManualToggle 取消。
-         */
+        * 鈎索按鍵必須保存 Q 目前是否持續按住。
+        *
+        * 不能使用 Input.GetKeyDown：
+        * GetKeyDown 只有按下當幀是 true，
+        * 下一個 Fusion Tick 就會錯誤判定玩家已經放開 Q。
+        *
+        * 使用 GetKey 後：
+        *
+        * Player.cs 的 WasPressed
+        * → 仍然只在 Q 從 false 變成 true 時觸發一次。
+        *
+        * Player.cs 的 IsSet
+        * → Q 持續按住期間，每個 Tick 都會維持 true。
+        *
+        * 因此同一份 NetInput 可以同時支援：
+        *
+        * Toggle 模式：
+        * 第一次按下啟動，第二次按下釋放。
+        *
+        * Hold 模式：
+        * 按住啟動並維持，放開釋放。
+        */
         currentButtons.Set(
             InputButton.Grapple,
-            Input.GetKeyDown(
+            Input.GetKey(
                 KeyCode.Q
             )
         );

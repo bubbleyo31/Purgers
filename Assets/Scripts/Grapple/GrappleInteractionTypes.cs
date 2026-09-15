@@ -1,4 +1,5 @@
 using Fusion;
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -166,4 +167,22 @@ public struct GrappleInteractionContext
     /// 這次命中最後被路由成哪一種職業互動。
     /// </summary>
     public GrappleProfessionInteractionType InteractionType;
+}
+
+
+/// <summary>
+/// 同一次 Grapple Attached 實際找到的命中能力集合。
+///
+/// 舊的 GrappleProfessionInteractionType 仍保留給 PlayerGrapple 的繩索
+/// 後續策略與既有能力 Context；這個 Mask 才能表示未來合法共存的多個
+/// GrappleHit 能力。
+/// </summary>
+[Flags]
+public enum GrappleAbilityInteractionMask : byte
+{
+    None = 0,
+    AttackMark = 1 << 0,
+    TankGather = 1 << 1,
+    SupportEnemyPull = 1 << 2,
+    SupportPlayerPull = 1 << 3
 }

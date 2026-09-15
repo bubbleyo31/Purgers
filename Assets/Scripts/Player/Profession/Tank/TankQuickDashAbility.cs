@@ -683,6 +683,30 @@ public class TankQuickDashAbility :
                 TankGrappleGatherAbility
             >();
 
+        /*
+         * Air Dash / Gather 已可由玩家 Loadout 獨立生成，不一定與
+         * Tank Quick Dash 位於同一個 Profession Runtime。只有找不到
+         * 舊同 Root 元件時才查 Loadout，維持資產遷移前的相容。
+         */
+        PlayerAbilityRuntimeManager abilityManager =
+            ownerPlayer.AbilityRuntimeManager;
+
+        if (airDashAbility == null &&
+            abilityManager != null)
+        {
+            abilityManager.TryGetActiveModule(
+                out airDashAbility
+            );
+        }
+
+        if (grappleGatherAbility == null &&
+            abilityManager != null)
+        {
+            abilityManager.TryGetActiveModule(
+                out grappleGatherAbility
+            );
+        }
+
 
         if (ownerMovement == null)
         {
@@ -807,6 +831,28 @@ public class TankQuickDashAbility :
             ownerStateMachine == null)
         {
             return false;
+        }
+
+        PlayerAbilityRuntimeManager abilityManager =
+            ownerPlayer.AbilityRuntimeManager;
+
+        if (abilityManager != null)
+        {
+            if (abilityManager.TryGetActiveModule(
+                    out TankAirDashAbility loadoutAirDash
+                ))
+            {
+                airDashAbility =
+                    loadoutAirDash;
+            }
+
+            if (abilityManager.TryGetActiveModule(
+                    out TankGrappleGatherAbility loadoutGather
+                ))
+            {
+                grappleGatherAbility =
+                    loadoutGather;
+            }
         }
 
         // -------------------------------------------------------------

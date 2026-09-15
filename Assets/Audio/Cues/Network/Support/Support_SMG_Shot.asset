@@ -15,10 +15,11 @@ MonoBehaviour:
   networkId: 2
   networkDelivery: 0
   clips:
-  - {fileID: 8300000, guid: b55018b638c1509489c3a9bab647d022, type: 3}
-  volume: 1
-  minimumPitch: 0.98
-  maximumPitch: 1.02
+  - {fileID: 8300000, guid: a061449cdda3b6243a4668dc2f352055, type: 3}
+  - {fileID: 8300000, guid: 52288702fb185d14aa992d6f1208c3c8, type: 3}
+  volume: 0.3
+  minimumPitch: 2
+  maximumPitch: 2
   outputMixerGroup: {fileID: -2305752944303880011, guid: 7533ecc1f215ca047b8742ddc76965e2,
     type: 2}
   worldSpatialBlend: 1

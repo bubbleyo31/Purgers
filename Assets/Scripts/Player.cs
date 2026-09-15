@@ -54,11 +54,13 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerProfession))]
 [RequireComponent(typeof(PlayerGrapple))]
 [RequireComponent(typeof(PlayerGrappleCharges))]
+[RequireComponent(typeof(PlayerGrappleMomentumEnergy))]
 [RequireComponent(typeof(PlayerGrappleVisual))]
 [RequireComponent(typeof(PlayerLocalView))]
 [RequireComponent(typeof(PlayerActionGate))]
 [RequireComponent(typeof(PlayerQuickActionController))]
 [RequireComponent(typeof(PlayerProfessionRuntimeManager))]
+[RequireComponent(typeof(PlayerAbilityRuntimeManager))]
 [RequireComponent(typeof(SupportGrapplePlayerPullReceiver))]
 [RequireComponent(typeof(PlayerIncomingDamageModifierBridge))]
 [RequireComponent(typeof(PlayerSlideController))]
@@ -108,12 +110,20 @@ public class Player :
     private PlayerGrappleCharges grappleCharges;
 
     [SerializeField]
+    [Tooltip("鈎索速度能量與傷害倍率模組。若留空會自動取得。")]
+    private PlayerGrappleMomentumEnergy grappleMomentumEnergy;
+
+    [SerializeField]
     [Tooltip("玩家共用 F Quick Action Slot 控制器。若留空會自動取得。")]
     private PlayerQuickActionController quickActionController;
 
     [SerializeField]
     [Tooltip("目前職業 Runtime 管理器。Player 不再直接驅動 Attack Aim、Focus 或 Weapon，而是把 NetInput 交給這個 Manager 的 Current Runtime。若留空會自動取得。")]
     private PlayerProfessionRuntimeManager professionRuntimeManager;
+
+    [SerializeField]
+    [Tooltip("玩家可選能力 Runtime 管理器。它獨立於 Profession Runtime，因此切換 F1/F2/F3 不會重建能力或重置冷卻。若留空會自動取得。")]
+    private PlayerAbilityRuntimeManager abilityRuntimeManager;
 
     [SerializeField]
     [Tooltip("玩家作為 Support Grapple 目標時使用的 KCC Pull Receiver。任何職業的玩家都可能被 Support 勾中，因此這顆屬於 Player Core，而不是 Support Profession Runtime。若留空會自動取得。")]
@@ -168,8 +178,14 @@ public class Player :
     public PlayerGrappleCharges GrappleCharges =>
         grappleCharges;
 
+    public PlayerGrappleMomentumEnergy GrappleMomentumEnergy =>
+        grappleMomentumEnergy;
+
     public PlayerProfessionRuntimeManager ProfessionRuntimeManager =>
         professionRuntimeManager;
+
+    public PlayerAbilityRuntimeManager AbilityRuntimeManager =>
+        abilityRuntimeManager;
     
     /// <summary>
     /// 玩家作為 Support Grapple Target
@@ -269,6 +285,12 @@ public class Player :
                 GetComponent<PlayerGrappleCharges>();
         }
 
+        if (grappleMomentumEnergy == null)
+        {
+            grappleMomentumEnergy =
+                GetComponent<PlayerGrappleMomentumEnergy>();
+        }
+
         if (quickActionController == null)
         {
             quickActionController =
@@ -280,6 +302,14 @@ public class Player :
             professionRuntimeManager =
                 GetComponent<
                     PlayerProfessionRuntimeManager
+                >();
+        }
+
+        if (abilityRuntimeManager == null)
+        {
+            abilityRuntimeManager =
+                GetComponent<
+                    PlayerAbilityRuntimeManager
                 >();
         }
 
@@ -316,6 +346,12 @@ public class Player :
         // -------------------------------------------------------------
 
         grappleCharges.TickRecharge();
+
+        if (grappleMomentumEnergy != null)
+        {
+            grappleMomentumEnergy
+                .TickSimulation();
+        }
 
         // -------------------------------------------------------------
         // 2. 共用 Quick Action Slot
@@ -389,6 +425,15 @@ public class Player :
             nonGrappleMovementInfluence *=
                 professionRuntimeManager
                     .GetCurrentMovementInputMultiplier(
+                        input
+                    );
+        }
+
+        if (abilityRuntimeManager != null)
+        {
+            nonGrappleMovementInfluence *=
+                abilityRuntimeManager
+                    .GetMovementInputMultiplier(
                         input
                     );
         }
@@ -532,6 +577,19 @@ public class Player :
                 PreviousButtons,
                 InputButton.Grapple
             );
+        /*
+        * 鈎索按鍵目前是否持續按住。
+        *
+        * grapplePressed：
+        * 只在 Q 剛按下的 Tick 為 true。
+        *
+        * grappleHeld：
+        * 只要 Q 尚未放開，每個 Tick 都是 true。
+        */
+        bool grappleHeld =
+            input.Buttons.IsSet(
+                InputButton.Grapple
+            );
 
         bool aimPressed =
             input.Buttons.WasPressed(
@@ -569,6 +627,7 @@ public class Player :
         
         grapple.Simulate(
             grapplePressed,
+            grappleHeld,
             aimPressed,
             aimHeld,
             input.Direction,
@@ -599,7 +658,27 @@ public class Player :
         }
 
         // -------------------------------------------------------------
-        // 6. 目前職業 Gameplay
+        // 6. 玩家自行裝備的能力 Gameplay
+        // -------------------------------------------------------------
+
+        /*
+         * Ability Runtime 與 Profession Runtime 分離。
+         *
+         * 因此玩家切換 F1 / F2 / F3 時：
+         * - 武器與職業 Runtime 照常替換。
+         * - 已裝備能力、Active 狀態與 Cooldown 不會被重建。
+         */
+        if (abilityRuntimeManager != null)
+        {
+            abilityRuntimeManager
+                .SimulateActiveAbilities(
+                    professionInput,
+                    PreviousButtons
+                );
+        }
+
+        // -------------------------------------------------------------
+        // 7. 目前職業 Gameplay
         // -------------------------------------------------------------
 
         /*
@@ -626,7 +705,7 @@ public class Player :
         }
 
         // -------------------------------------------------------------
-        // 7. Support Grapple Player Pull
+        // 8. Support Grapple Player Pull
         // -------------------------------------------------------------
 
         /*
@@ -659,7 +738,7 @@ public class Player :
         }
 
         // -------------------------------------------------------------
-        // 7. 共用 Player State Machine
+        // 9. 共用 Player State Machine
         // -------------------------------------------------------------
 
         stateMachine.TickState(
@@ -678,7 +757,7 @@ public class Player :
         );
 
         // -------------------------------------------------------------
-        // 8. 保存按鍵歷史
+        // 10. 保存按鍵歷史
         // -------------------------------------------------------------
 
         PreviousButtons =

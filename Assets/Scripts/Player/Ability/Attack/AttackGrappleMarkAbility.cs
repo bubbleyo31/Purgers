@@ -60,8 +60,15 @@ using UnityEngine;
 /// </summary>
 [DisallowMultipleComponent]
 public class AttackGrappleMarkAbility :
-    NetworkBehaviour
+    NetworkBehaviour,
+    IPlayerAbilityRuntimeModule
 {
+    /// <summary>
+    /// 此能力在鈎索正式命中並 Attached 後執行。
+    /// </summary>
+    public PlayerAbilityCategory AbilityCategory =>
+        PlayerAbilityCategory.GrappleHit;
+
     // =====================================================================
     #region Owner Player Binding
 
@@ -87,6 +94,9 @@ public class AttackGrappleMarkAbility :
     /// </summary>
     private NetworkObject
         ownerPlayerNetworkObject;
+
+    private bool professionAvailable =
+        true;
 
     /// <summary>
     /// 目前 Attack Runtime 所屬的 Player。
@@ -406,6 +416,11 @@ public class AttackGrappleMarkAbility :
             return;
         }
 
+        if (professionAvailable == false)
+        {
+            return;
+        }
+
         // =============================================================
         // Runtime 尚未正式 Spawn
         // =============================================================
@@ -516,6 +531,11 @@ public class AttackGrappleMarkAbility :
         GrappleInteractionContext context
     )
     {
+        if (professionAvailable == false)
+        {
+            return;
+        }
+
         // =============================================================
         // State Authority Only
         // =============================================================
@@ -571,16 +591,6 @@ public class AttackGrappleMarkAbility :
                 );
             }
 
-            return;
-        }
-
-        // =============================================================
-        // Profession
-        // =============================================================
-
-        if (context.SourceProfession !=
-            PlayerProfessionType.Attack)
-        {
             return;
         }
 
@@ -694,6 +704,33 @@ public class AttackGrappleMarkAbility :
                 $"\nApplied：{applied}",
                 targetNetworkObject
             );
+        }
+    }
+
+
+    public void SimulateAbility(
+        NetInput input,
+        NetworkButtons previousButtons
+    )
+    {
+        // GrappleHit 類別由 Attached Event 驅動，不需要逐 Tick 執行。
+    }
+
+
+    public void SetProfessionAvailable(
+        bool isAvailable
+    )
+    {
+        professionAvailable =
+            isAvailable;
+
+        if (isAvailable)
+        {
+            TrySubscribe();
+        }
+        else
+        {
+            Unsubscribe();
         }
     }
 

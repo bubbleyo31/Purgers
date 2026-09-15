@@ -52,8 +52,15 @@ using UnityEngine;
 /// </summary>
 [DisallowMultipleComponent]
 public class SupportGrapplePullAbility :
-    NetworkBehaviour
+    NetworkBehaviour,
+    IPlayerAbilityRuntimeModule
 {
+    /// <summary>
+    /// 此能力在鈎索正式命中並 Attached 後執行。
+    /// </summary>
+    public PlayerAbilityCategory AbilityCategory =>
+        PlayerAbilityCategory.GrappleHit;
+
     // =====================================================================
     #region Owner References
 
@@ -149,6 +156,10 @@ public class SupportGrapplePullAbility :
     /// 是否已經訂閱 Owner Interaction Controller。
     /// </summary>
     private bool isSubscribed;
+
+
+    private bool professionAvailable =
+        true;
 
 
     #endregion
@@ -463,6 +474,11 @@ public class SupportGrapplePullAbility :
 
     private void Subscribe()
     {
+        if (professionAvailable == false)
+        {
+            return;
+        }
+
         if (isSubscribed)
         {
             return;
@@ -544,23 +560,17 @@ public class SupportGrapplePullAbility :
         GrappleInteractionContext context
     )
     {
+        if (professionAvailable == false)
+        {
+            return;
+        }
+
         // =============================================================
         // Authority
         // =============================================================
 
         if (Object == null ||
             Object.HasStateAuthority == false)
-        {
-            return;
-        }
-
-
-        // =============================================================
-        // Profession
-        // =============================================================
-
-        if (context.SourceProfession !=
-            PlayerProfessionType.Support)
         {
             return;
         }
@@ -726,23 +736,17 @@ public class SupportGrapplePullAbility :
         GrappleInteractionContext context
     )
     {
+        if (professionAvailable == false)
+        {
+            return;
+        }
+
         // =============================================================
         // Authority
         // =============================================================
 
         if (Object == null ||
             Object.HasStateAuthority == false)
-        {
-            return;
-        }
-
-
-        // =============================================================
-        // Profession
-        // =============================================================
-
-        if (context.SourceProfession !=
-            PlayerProfessionType.Support)
         {
             return;
         }
@@ -1017,6 +1021,43 @@ public class SupportGrapplePullAbility :
 
         ActivePullTargetIsPlayer =
             false;
+    }
+
+
+    public void SimulateAbility(
+        NetInput input,
+        NetworkButtons previousButtons
+    )
+    {
+        // GrappleHit 類別由 Attached Event 驅動；持續 Pull 由本元件的
+        // FixedUpdateNetwork 推進。
+    }
+
+
+    public void SetProfessionAvailable(
+        bool isAvailable
+    )
+    {
+        professionAvailable =
+            isAvailable;
+
+        if (isAvailable)
+        {
+            Subscribe();
+
+            return;
+        }
+
+        Unsubscribe();
+
+        if (Object != null &&
+            Object.HasStateAuthority &&
+            ActivePullTarget != null)
+        {
+            CancelActiveReceiver();
+            FinishSupportTether();
+            ClearActivePullTarget();
+        }
     }
 
     #endregion

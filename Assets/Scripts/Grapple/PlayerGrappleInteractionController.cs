@@ -15,9 +15,9 @@ using UnityEngine;
 /// ↓
 /// 命中 GrappleInteractionTarget
 /// ↓
-/// 讀取 PlayerProfession
+/// 檢查目前實際載入的 GrappleHit 能力訂閱
 /// ↓
-/// 根據職業與 Target Capability
+/// 根據能力與 Target Capability
 /// ↓
 /// 路由給對應職業技能。
 ///
@@ -57,7 +57,7 @@ public class PlayerGrappleInteractionController :
     [Header("玩家引用")]
 
     [SerializeField]
-    [Tooltip("玩家職業資料。Grapple Interaction Controller 會依照 Current Profession 選擇 Attack、Tank 或 Support 的職業勾索互動。若留空會自動取得。")]
+    [Tooltip("玩家職業資料只寫入 Grapple Context，供 Ability Definition 限制與除錯使用；不再直接決定命中能力。若留空會自動取得。")]
     private PlayerProfession profession;
 
     #endregion
@@ -240,27 +240,23 @@ public class PlayerGrappleInteractionController :
                 GrappleProfessionInteractionType.None;
         }
 
-        // =============================================================
-        // Profession
-        // =============================================================
-
-        if (profession == null)
-        {
-            return
-                GrappleProfessionInteractionType.None;
-        }
-
         PlayerProfessionType currentProfession =
-            profession.CurrentProfession;
+            profession != null
+                ? profession.CurrentProfession
+                : PlayerProfessionType.None;
 
         // =============================================================
-        // Route
+        // Route：依目前真正載入的能力，而不是目前職業
         // =============================================================
+
+        GrappleAbilityInteractionMask interactionMask =
+            ResolveInteractionMask(
+                target
+            );
 
         GrappleProfessionInteractionType interactionType =
-            ResolveInteractionType(
-                currentProfession,
-                target
+            ResolvePrimaryInteractionType(
+                interactionMask
             );
 
         // =============================================================
@@ -345,6 +341,9 @@ public class PlayerGrappleInteractionController :
 
         hasPendingInteraction =
             true;
+
+        pendingInteractionMask =
+            interactionMask;
         
         // =============================================================
         // Debug
@@ -442,6 +441,9 @@ public class PlayerGrappleInteractionController :
         GrappleInteractionContext context =
             pendingInteraction;
 
+        GrappleAbilityInteractionMask interactionMask =
+            pendingInteractionMask;
+
         ClearPendingInteraction();
 
         // =============================================================
@@ -508,8 +510,9 @@ public class PlayerGrappleInteractionController :
         * Support：
         * → SupportEnemyDetected / SupportPlayerDetected
         */
-        DispatchProfessionEvent(
-            context
+        DispatchAbilityEvents(
+            context,
+            interactionMask
         );
 
         // =============================================================
@@ -532,8 +535,9 @@ public class PlayerGrappleInteractionController :
         // 回傳真正執行的 Interaction
         // =============================================================
 
-        return
-            context.InteractionType;
+        return ResolvePrimaryInteractionType(
+            interactionMask
+        );
     }
 
     /// <summary>
@@ -561,6 +565,9 @@ public class PlayerGrappleInteractionController :
 
         pendingInteraction =
             default;
+
+        pendingInteractionMask =
+            GrappleAbilityInteractionMask.None;
     }
 
     #endregion
@@ -569,122 +576,90 @@ public class PlayerGrappleInteractionController :
     #region Interaction Routing
 
     /// <summary>
-    /// 根據玩家職業與 Target Capability
-    /// 決定這次 Grapple Hit 應該變成什麼職業互動。
+    /// 根據 Target Capability 與目前是否真的有對應能力訂閱，
+    /// 決定這次 Grapple Hit 要準備哪些能力。
     /// </summary>
-    private GrappleProfessionInteractionType ResolveInteractionType(
-        PlayerProfessionType professionType,
+    private GrappleAbilityInteractionMask ResolveInteractionMask(
         GrappleInteractionTarget target
     )
     {
         if (target == null)
         {
-            return
-                GrappleProfessionInteractionType.None;
+            return GrappleAbilityInteractionMask.None;
         }
 
-        switch (professionType)
+        GrappleAbilityInteractionMask result =
+            GrappleAbilityInteractionMask.None;
+
+        if (target.TargetType ==
+            GrappleInteractionTargetType.Enemy)
         {
-            // =========================================================
-            // Attack
-            // =========================================================
-
-            case PlayerProfessionType.Attack:
+            if (target.CanReceiveAttackMark &&
+                AttackEnemyDetected != null)
             {
-                /*
-                 * Attack 目前只有勾中 Enemy
-                 * 才產生五秒獵殺標記候選。
-                 */
-                if (target.TargetType ==
-                        GrappleInteractionTargetType.Enemy &&
-                    target.CanReceiveAttackMark)
-                {
-                    return
-                        GrappleProfessionInteractionType
-                            .AttackMarkCandidate;
-                }
-
-                break;
+                result |=
+                    GrappleAbilityInteractionMask.AttackMark;
             }
 
-            // =========================================================
-            // Tank
-            // =========================================================
-
-            case PlayerProfessionType.Tank:
+            if (target.CanActAsTankGatherAnchor &&
+                TankGatherAnchorDetected != null)
             {
-                /*
-                 * Tank 直接勾中的 Enemy A
-                 * 必須允許成為 Gather Anchor。
-                 *
-                 * CanBeTankGathered
-                 * 是之後搜尋附近 B、C、D 時使用，
-                 * 不是這裡判斷 A 的條件。
-                 */
-                if (target.TargetType ==
-                        GrappleInteractionTargetType.Enemy &&
-                    target.CanActAsTankGatherAnchor)
-                {
-                    return
-                        GrappleProfessionInteractionType
-                            .TankGatherAnchorCandidate;
-                }
-
-                break;
+                result |=
+                    GrappleAbilityInteractionMask.TankGather;
             }
 
-            // =========================================================
-            // Support
-            // =========================================================
-
-            case PlayerProfessionType.Support:
+            if (target.CanBeSupportPulled &&
+                SupportEnemyDetected != null)
             {
-                if (target.CanBeSupportPulled ==
-                    false)
-                {
-                    break;
-                }
-
-                // -----------------------------------------------------
-                // Enemy
-                // -----------------------------------------------------
-
-                if (target.TargetType ==
-                    GrappleInteractionTargetType.Enemy)
-                {
-                    return
-                        GrappleProfessionInteractionType
-                            .SupportEnemyPullCandidate;
-                }
-
-                // -----------------------------------------------------
-                // Player
-                // -----------------------------------------------------
-
-                if (target.TargetType ==
-                    GrappleInteractionTargetType.Player)
-                {
-                    return
-                        GrappleProfessionInteractionType
-                            .SupportPlayerPullCandidate;
-                }
-
-                break;
-            }
-
-            // =========================================================
-            // None
-            // =========================================================
-
-            case PlayerProfessionType.None:
-            default:
-            {
-                break;
+                result |=
+                    GrappleAbilityInteractionMask.SupportEnemyPull;
             }
         }
 
-        return
-            GrappleProfessionInteractionType.None;
+        if (target.TargetType ==
+                GrappleInteractionTargetType.Player &&
+            target.CanBeSupportPulled &&
+            SupportPlayerDetected != null)
+        {
+            result |=
+                GrappleAbilityInteractionMask.SupportPlayerPull;
+        }
+
+        return result;
+    }
+
+
+    /// <summary>
+    /// PlayerGrapple 目前仍需要一個主要 Interaction 決定繩索後續。
+    /// Support Pull 必須保持繩索，因此優先於立即收繩型效果。
+    /// 現有三種命中能力會在 Definition 中設為互斥；此優先順序是
+    /// 配置失誤時的安全退路，不是拿來取代互斥驗證。
+    /// </summary>
+    private GrappleProfessionInteractionType ResolvePrimaryInteractionType(
+        GrappleAbilityInteractionMask mask
+    )
+    {
+        if ((mask & GrappleAbilityInteractionMask.SupportPlayerPull) != 0)
+        {
+            return GrappleProfessionInteractionType.SupportPlayerPullCandidate;
+        }
+
+        if ((mask & GrappleAbilityInteractionMask.SupportEnemyPull) != 0)
+        {
+            return GrappleProfessionInteractionType.SupportEnemyPullCandidate;
+        }
+
+        if ((mask & GrappleAbilityInteractionMask.AttackMark) != 0)
+        {
+            return GrappleProfessionInteractionType.AttackMarkCandidate;
+        }
+
+        if ((mask & GrappleAbilityInteractionMask.TankGather) != 0)
+        {
+            return GrappleProfessionInteractionType.TankGatherAnchorCandidate;
+        }
+
+        return GrappleProfessionInteractionType.None;
     }
 
     #endregion
@@ -698,51 +673,49 @@ public class PlayerGrappleInteractionController :
     /// PlayerGrappleInteractionController
     /// 不需要知道未來能力元件的實際類型。
     /// </summary>
-    private void DispatchProfessionEvent(
-        GrappleInteractionContext context
+    private void DispatchAbilityEvents(
+        GrappleInteractionContext context,
+        GrappleAbilityInteractionMask mask
     )
     {
-        switch (context.InteractionType)
+        if ((mask & GrappleAbilityInteractionMask.AttackMark) != 0)
         {
-            case GrappleProfessionInteractionType
-                .AttackMarkCandidate:
-            {
-                AttackEnemyDetected?.Invoke(
-                    context
-                );
+            context.InteractionType =
+                GrappleProfessionInteractionType.AttackMarkCandidate;
 
-                break;
-            }
+            AttackEnemyDetected?.Invoke(
+                context
+            );
+        }
 
-            case GrappleProfessionInteractionType
-                .TankGatherAnchorCandidate:
-            {
-                TankGatherAnchorDetected?.Invoke(
-                    context
-                );
+        if ((mask & GrappleAbilityInteractionMask.TankGather) != 0)
+        {
+            context.InteractionType =
+                GrappleProfessionInteractionType.TankGatherAnchorCandidate;
 
-                break;
-            }
+            TankGatherAnchorDetected?.Invoke(
+                context
+            );
+        }
 
-            case GrappleProfessionInteractionType
-                .SupportEnemyPullCandidate:
-            {
-                SupportEnemyDetected?.Invoke(
-                    context
-                );
+        if ((mask & GrappleAbilityInteractionMask.SupportEnemyPull) != 0)
+        {
+            context.InteractionType =
+                GrappleProfessionInteractionType.SupportEnemyPullCandidate;
 
-                break;
-            }
+            SupportEnemyDetected?.Invoke(
+                context
+            );
+        }
 
-            case GrappleProfessionInteractionType
-                .SupportPlayerPullCandidate:
-            {
-                SupportPlayerDetected?.Invoke(
-                    context
-                );
+        if ((mask & GrappleAbilityInteractionMask.SupportPlayerPull) != 0)
+        {
+            context.InteractionType =
+                GrappleProfessionInteractionType.SupportPlayerPullCandidate;
 
-                break;
-            }
+            SupportPlayerDetected?.Invoke(
+                context
+            );
         }
     }
 
@@ -764,6 +737,12 @@ public class PlayerGrappleInteractionController :
     /// </summary>
     private GrappleInteractionContext
         pendingInteraction;
+
+    /// <summary>
+    /// 同一筆 Pending Hit 準備執行的能力集合。
+    /// </summary>
+    private GrappleAbilityInteractionMask
+        pendingInteractionMask;
 
     #endregion
 }

@@ -929,6 +929,39 @@ public static class DamageReceiverUtility
         DamageRequest resolvedRequest =
             request;
 
+        MonoBehaviour[] sourceBehaviours =
+    GetOutgoingSourceBehaviours(
+        resolvedRequest
+    );
+
+    for (int i = 0;
+        i < sourceBehaviours.Length;
+        i++)
+    {
+        MonoBehaviour behaviour =
+            sourceBehaviours[i];
+
+        if (behaviour == null ||
+            behaviour.isActiveAndEnabled == false)
+        {
+            continue;
+        }
+
+        if (behaviour is
+            IOutgoingDamageModifier modifier)
+        {
+            modifier.ModifyOutgoingDamage(
+                ref resolvedRequest
+            );
+
+            resolvedRequest.RequestedDamage =
+                Mathf.Max(
+                    0f,
+                    resolvedRequest.RequestedDamage
+                );
+        }
+    }
+
         /*
         * 現在只有確定：
         *
@@ -1019,6 +1052,11 @@ public static class DamageReceiverUtility
                     wasImmune: false
                 );
 
+            NotifyOutgoingDamageResolved(
+                sourceBehaviours,
+                result
+            );
+
             return true;
         }
 
@@ -1074,6 +1112,56 @@ public static class DamageReceiverUtility
 
         return true;
     }
+
+    private static MonoBehaviour[]
+        GetOutgoingSourceBehaviours(
+            in DamageRequest request
+        )
+    {
+        GameObject sourceObject =
+            request.SourceNetworkObject != null
+                ? request.SourceNetworkObject.gameObject
+                : request.SourceObject;
+
+        if (sourceObject == null)
+        {
+            return
+                System.Array.Empty<MonoBehaviour>();
+        }
+
+        return sourceObject
+            .GetComponentsInParent<MonoBehaviour>(
+                true
+            );
+    }
+
+    private static void NotifyOutgoingDamageResolved(
+        MonoBehaviour[] sourceBehaviours,
+        in DamageResult result
+    )
+    {
+        for (int i = 0;
+            i < sourceBehaviours.Length;
+            i++)
+        {
+            MonoBehaviour behaviour =
+                sourceBehaviours[i];
+
+            if (behaviour == null ||
+                behaviour.isActiveAndEnabled == false)
+            {
+                continue;
+            }
+
+            if (behaviour is
+                IOutgoingDamageResultListener listener)
+            {
+                listener.OnOutgoingDamageResolved(
+                    result
+                );
+            }
+        }
+    }
 }
 
 /// <summary>
@@ -1117,5 +1205,27 @@ public interface IDamageRequestModifier
     /// </summary>
     void ModifyDamageRequest(
         ref DamageRequest request
+    );
+}
+
+/// <summary>
+/// 修改攻擊者送出的傷害。
+/// 不應修改 BaseDamage，只修改 RequestedDamage。
+/// </summary>
+public interface IOutgoingDamageModifier
+{
+    void ModifyOutgoingDamage(
+        ref DamageRequest request
+    );
+}
+
+/// <summary>
+/// 接收攻擊者送出的最終傷害結果。
+/// 預留給擊殺、吸血、冷卻縮減等系統。
+/// </summary>
+public interface IOutgoingDamageResultListener
+{
+    void OnOutgoingDamageResolved(
+        in DamageResult result
     );
 }

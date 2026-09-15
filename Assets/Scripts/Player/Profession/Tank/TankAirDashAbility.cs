@@ -126,8 +126,15 @@ public enum TankAirDashCompletionReason : byte
 [DisallowMultipleComponent]
 public class TankAirDashAbility :
     NetworkBehaviour,
+    IPlayerAbilityRuntimeModule,
     ICombatDamageFeedbackSource
 {
+    /// <summary>
+    /// 此能力由 GrappleAirborne 專注輸入管線驅動。
+    /// </summary>
+    public PlayerAbilityCategory AbilityCategory =>
+        PlayerAbilityCategory.GrappleFocus;
+
     // =====================================================================
     #region Owner Player
 
@@ -169,6 +176,12 @@ public class TankAirDashAbility :
     /// </summary>
     private NetworkPlayerAudioEmitter
         networkAudioEmitter;
+
+    /// <summary>
+    /// Ability Definition 的職業規則是否允許目前職業。
+    /// </summary>
+    private bool professionAvailable =
+        true;
 
     /// <summary>
     /// 綁定真正 Owner Player。
@@ -654,6 +667,40 @@ public class TankAirDashAbility :
     }
 
     /// <summary>
+    /// Enemy Dash 鎖定瞬間，
+    /// 真正命中的 Hitbox / Collider 表面點，
+    /// 轉換成 Enemy NetworkObject Root 的 Local Position。
+    ///
+    /// ------------------------------------------------------------
+    ///
+    /// 為什麼不直接只保存世界座標？
+    ///
+    /// 因為 Enemy 在 Dash 過程中可能繼續移動。
+    ///
+    /// 如果只保存世界座標：
+    /// Enemy 跑掉後 Tank 還是會衝向舊位置。
+    ///
+    /// ------------------------------------------------------------
+    ///
+    /// 因此保存：
+    ///
+    /// World Hit Point
+    /// ↓
+    /// Enemy Root.InverseTransformPoint()
+    /// ↓
+    /// Local Hit Point
+    ///
+    /// Dash 過程中再用 TransformPoint()
+    /// 還原目前的世界位置。
+    /// </summary>
+    [Networked]
+    private Vector3 ActiveEnemyTargetLocalPoint
+    {
+        get;
+        set;
+    }
+
+    /// <summary>
     /// Dash 啟動瞬間的接近方向。
     ///
     /// ------------------------------------------------------------
@@ -820,6 +867,18 @@ public class TankAirDashAbility :
             return;
         }
 
+        if (professionAvailable == false)
+        {
+            if (IsDashing)
+            {
+                CompleteDash(
+                    TankAirDashCompletionReason.InvalidTarget
+                );
+            }
+
+            return;
+        }
+
         // =============================================================
         // 1. 已經正在 Dash
         // =============================================================
@@ -931,6 +990,35 @@ public class TankAirDashAbility :
         StartDashFromResolvedTarget();
     }
 
+    public void SimulateAbility(
+        NetInput input,
+        NetworkButtons previousButtons
+    )
+    {
+        Simulate(
+            input,
+            previousButtons
+        );
+    }
+
+    public void SetProfessionAvailable(
+        bool isAvailable
+    )
+    {
+        professionAvailable =
+            isAvailable;
+
+        if (isAvailable == false &&
+            Object != null &&
+            Object.HasStateAuthority &&
+            IsDashing)
+        {
+            CompleteDash(
+                TankAirDashCompletionReason.InvalidTarget
+            );
+        }
+    }
+
     #endregion
 
     // =====================================================================
@@ -998,6 +1086,38 @@ public class TankAirDashAbility :
                             NetworkObject
                         >();
             }
+        }
+
+        // =============================================================
+        // Enemy 真正 Hit Point
+        // =============================================================
+
+        ActiveEnemyTargetLocalPoint =
+            Vector3.zero;
+
+        if (ActiveDashTargetType ==
+                TankAirDashTargetType.Enemy &&
+            ActiveEnemyNetworkObject != null &&
+            ActiveEnemyNetworkObject.IsValid)
+        {
+            /*
+            * LastTargetPoint 現在已經是：
+            *
+            * Fusion Raycast 真正撞到
+            * Enemy Hitbox / Collider 表面的 hit.Point。
+            *
+            * --------------------------------------------------------
+            *
+            * 將世界座標轉成 Enemy Root Local Position，
+            * 讓 Enemy 在 Dash 過程中移動時，
+            * 這個命中位置也可以跟著 Enemy 移動。
+            */
+            ActiveEnemyTargetLocalPoint =
+                ActiveEnemyNetworkObject
+                    .transform
+                    .InverseTransformPoint(
+                        LastTargetPoint
+                    );
         }
 
         // =============================================================
@@ -1903,7 +2023,8 @@ public class TankAirDashAbility :
                     origin,
                     candidatePoint,
                     distance,
-                    target
+                    target,
+                    out Vector3 visibleHitPoint
                 ) == false)
             {
                 continue;
@@ -1940,8 +2061,16 @@ public class TankAirDashAbility :
             selectedTarget =
                 target;
 
+            /*
+            * Candidate Point：
+            * 用來判斷這顆 Hitbox 跟準心的角度。
+            *
+            * Visible Hit Point：
+            * 才是 Ray 真正撞到 Collider / Hitbox 的位置，
+            * 因此正式 Dash Target 必須保存這個位置。
+            */
             selectedPoint =
-                candidatePoint;
+                visibleHitPoint;
 
             selectedAngle =
                 angle;
@@ -1993,6 +2122,9 @@ public class TankAirDashAbility :
             ActiveDashTargetPoint =
                 Vector3.zero;
 
+            ActiveEnemyTargetLocalPoint =
+                Vector3.zero;
+
             ActiveEnemyNetworkObject =
                 null;
 
@@ -2019,49 +2151,30 @@ public class TankAirDashAbility :
     #region Enemy Visibility
 
     /// <summary>
-    /// 確認 Enemy 沒有被牆壁擋住。
+    /// 確認指定 Enemy 是否真的可以從玩家位置看到。
     ///
-    /// ====================================================================
-    ///
-    /// 使用 Fusion Lag Compensation Raycast。
-    ///
-    /// Raycast 同時允許：
-    ///
-    /// Fusion Hitbox
-    /// +
-    /// PhysX World Collider。
-    ///
-    /// ====================================================================
-    ///
-    /// 因此可以判斷：
-    ///
-    /// Player
-    /// ↓
-    /// Enemy
-    /// ↓
-    /// Wall
-    ///
-    /// 第一個命中是 Enemy
-    /// → 可見。
+    /// 除了確認第一個碰撞目標就是 expectedTarget，
+    /// 同時回傳射線真正撞到 Hitbox / Collider 表面的世界座標。
     ///
     /// ------------------------------------------------------------
     ///
-    /// Player
-    /// ↓
-    /// Wall
-    /// ↓
-    /// Enemy
+    /// candidatePoint：
+    /// 只負責「往哪顆 Enemy Hitbox 檢查」。
     ///
-    /// 第一個命中是 Wall
-    /// → 不可見。
+    /// visibleHitPoint：
+    /// 才是真正要拿來當作 Dash Target 的表面位置。
     /// </summary>
     private bool CanSeeEnemyTarget(
         Vector3 origin,
         Vector3 candidatePoint,
         float candidateDistance,
-        GrappleInteractionTarget expectedTarget
+        GrappleInteractionTarget expectedTarget,
+        out Vector3 visibleHitPoint
     )
     {
+        visibleHitPoint =
+            default;
+
         if (Runner == null ||
             Runner.LagCompensation == null ||
             ownerPlayerNetworkObject == null ||
@@ -2133,13 +2246,36 @@ public class TankAirDashAbility :
                     GrappleInteractionTarget
                 >();
 
+        // =============================================================
+        // 第一個碰撞到的 Enemy 必須就是目前 Candidate
+        // =============================================================
+
+        if (hitTarget !=
+            expectedTarget)
+        {
+            return false;
+        }
+
+        // =============================================================
+        // ★ 真正 Collider / Hitbox 表面命中位置
+        // =============================================================
+
         /*
-        * 第一個被看到的 Gameplay Enemy
-        * 必須就是我們正在檢查的 Candidate。
+        * 這裡非常重要。
+        *
+        * 不使用：
+        *
+        * hitObject.transform.position
+        * expectedTarget.transform.position
+        * Enemy NetworkObject Root.position
+        *
+        * 而是使用 Fusion Raycast
+        * 真正撞到表面的座標。
         */
-        return
-            hitTarget ==
-            expectedTarget;
+        visibleHitPoint =
+            hit.Point;
+
+        return true;
     }
 
     #endregion
@@ -2404,6 +2540,13 @@ public class TankAirDashAbility :
 
     /// <summary>
     /// 取得這一次 Dash 現在真正追蹤的 Target Anchor。
+    ///
+    /// Enemy：
+    /// 使用鎖定瞬間真正撞到 Hitbox / Collider 的表面位置，
+    /// 並讓該位置跟著 Enemy Root 移動。
+    ///
+    /// World：
+    /// 使用施放瞬間的 World Raycast Hit Point。
     /// </summary>
     private Vector3 GetCurrentDashTargetAnchor()
     {
@@ -2417,19 +2560,22 @@ public class TankAirDashAbility :
             ActiveEnemyNetworkObject.IsValid)
         {
             /*
-            * Enemy Search 時用 Hitbox
-            * 判斷「玩家正在瞄誰」。
+            * ★ 不再使用 Enemy Root.position。
             *
-            * 真正飛行則改用 Enemy Root，
-            * 避免某顆胸口 Hitbox
-            * 讓 Player KCC Root 飛到過高的位置。
+            * ActiveEnemyTargetLocalPoint
+            * 是鎖定瞬間真正 Hit Point
+            * 相對於 Enemy Root 的 Local Position。
+            *
+            * Enemy 移動 / 旋轉後，
+            * TransformPoint 可以重新得到
+            * 現在對應的世界位置。
             */
             return
                 ActiveEnemyNetworkObject
                     .transform
-                    .position +
-                Vector3.up *
-                    enemyTargetHeightOffset;
+                    .TransformPoint(
+                        ActiveEnemyTargetLocalPoint
+                    );
         }
 
         // =============================================================
@@ -2576,6 +2722,9 @@ public class TankAirDashAbility :
         ActiveDashTargetPoint =
             Vector3.zero;
 
+        ActiveEnemyTargetLocalPoint =
+            Vector3.zero;
+
         ActiveEnemyNetworkObject =
             null;
 
@@ -2624,6 +2773,9 @@ public class TankAirDashAbility :
             TankAirDashTargetType.None;
 
         ActiveDashTargetPoint =
+            Vector3.zero;
+
+        ActiveEnemyTargetLocalPoint =
             Vector3.zero;
 
         ActiveEnemyNetworkObject =

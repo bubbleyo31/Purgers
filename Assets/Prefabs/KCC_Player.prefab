@@ -16,7 +16,7 @@ PrefabInstance:
     - target: {fileID: -1029249225945322823, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
       propertyPath: NetworkedBehaviours.Array.size
-      value: 22
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: -1029249225945322823, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
@@ -37,25 +37,35 @@ PrefabInstance:
         type: 3}
       propertyPath: NetworkedBehaviours.Array.data[17]
       value: 
-      objectReference: {fileID: 1606778984757575678}
+      objectReference: {fileID: 4078681066127507488}
     - target: {fileID: -1029249225945322823, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
       propertyPath: NetworkedBehaviours.Array.data[18]
       value: 
-      objectReference: {fileID: 513649602679721312}
+      objectReference: {fileID: 8430248040629416009}
     - target: {fileID: -1029249225945322823, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
       propertyPath: NetworkedBehaviours.Array.data[19]
       value: 
-      objectReference: {fileID: -2449163945274941978}
+      objectReference: {fileID: 1606778984757575678}
     - target: {fileID: -1029249225945322823, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
       propertyPath: NetworkedBehaviours.Array.data[20]
       value: 
-      objectReference: {fileID: 2902942822941736436}
+      objectReference: {fileID: 513649602679721312}
     - target: {fileID: -1029249225945322823, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
       propertyPath: NetworkedBehaviours.Array.data[21]
+      value: 
+      objectReference: {fileID: -2449163945274941978}
+    - target: {fileID: -1029249225945322823, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+        type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[22]
+      value: 
+      objectReference: {fileID: 2902942822941736436}
+    - target: {fileID: -1029249225945322823, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+        type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[23]
       value: 
       objectReference: {fileID: -5750972657235461838}
     - target: {fileID: 293761205225825258, guid: 9d631177f90b9ba49bc00a53b3478fa2,
@@ -71,12 +81,12 @@ PrefabInstance:
     - target: {fileID: 2251634029581067438, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
       propertyPath: grappleDistance
-      value: 50
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 2251634029581067438, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
       propertyPath: grappleMaxSpeed
-      value: 150
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 2251634029581067438, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
@@ -86,7 +96,7 @@ PrefabInstance:
     - target: {fileID: 2251634029581067438, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
       propertyPath: grappleAcceleration
-      value: 150
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 2251634029581067438, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
@@ -96,7 +106,7 @@ PrefabInstance:
     - target: {fileID: 2251634029581067438, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
       propertyPath: enableGrappleLeftSwing
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2251634029581067438, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
@@ -106,6 +116,11 @@ PrefabInstance:
     - target: {fileID: 2251634029581067438, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
       propertyPath: releaseSpeedMultiplier
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2251634029581067438, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+        type: 3}
+      propertyPath: enableGrappleRightSwing
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2251634029581067438, guid: 9d631177f90b9ba49bc00a53b3478fa2,
@@ -126,7 +141,7 @@ PrefabInstance:
     - target: {fileID: 2251634029581067438, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
       propertyPath: ropeShootMinimumDuration
-      value: 0.05
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2251634029581067438, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
@@ -150,13 +165,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2251634029581067438, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
+      propertyPath: ropeRetractMinimumDuration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2251634029581067438, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+        type: 3}
       propertyPath: ropeShootTimeAtMaxDistance
-      value: 0.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2251634029581067438, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
       propertyPath: cancelReleaseMomentumOnJump
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2251634029581067438, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+        type: 3}
+      propertyPath: ropeRetractTimeAtMaxDistance
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2251634029581067438, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
@@ -166,6 +191,11 @@ PrefabInstance:
     - target: {fileID: 2251634029581067438, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
       propertyPath: releaseMovementInputInfluence
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2251634029581067438, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+        type: 3}
+      propertyPath: useHoldToMaintainGrappleInput
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2251634029581067438, guid: 9d631177f90b9ba49bc00a53b3478fa2,
@@ -182,6 +212,11 @@ PrefabInstance:
         type: 3}
       propertyPath: grapplePostHitYawIntentThreshold
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2251634029581067438, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+        type: 3}
+      propertyPath: grappleAttachDownwardSpeedRecovery
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 2251634029581067438, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
@@ -223,6 +258,12 @@ PrefabInstance:
       propertyPath: grappleLateralLaunchMinimumLateralSpeed
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 2456636898108746958, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+        type: 3}
+      propertyPath: startingLoadout
+      value: 
+      objectReference: {fileID: 11400000, guid: b6e1bf13c5dfd654e9ab069670617e26,
+        type: 2}
     - target: {fileID: 3467749930922983645, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
       propertyPath: m_Name
@@ -239,10 +280,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -4482008786431314172, guid: fe40d5a41cf376247834340cb73d1aef,
         type: 3}
+    - target: {fileID: 5374368473783314886, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.361
+      objectReference: {fileID: 0}
+    - target: {fileID: 5374368473783314886, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.121
+      objectReference: {fileID: 0}
     - target: {fileID: 7111555615348642720, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111555615348642720, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+        type: 3}
+      propertyPath: crouchingHeight
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 7111555615348642720, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
@@ -334,6 +390,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7958873203070327975, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+        type: 3}
+      propertyPath: fullChargeDuration
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7958873203070327975, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+        type: 3}
+      propertyPath: requiredChargeSpeed
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 8224380449614372671, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
       propertyPath: runInputScale
@@ -349,6 +415,11 @@ PrefabInstance:
       propertyPath: doubleJumpImpulse
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 8358015731637810199, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+        type: 3}
+      propertyPath: ropeOrigin
+      value: 
+      objectReference: {fileID: 5771450098176116008}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -357,6 +428,10 @@ PrefabInstance:
         type: 3}
       insertIndex: 3
       addedObject: {fileID: 4770367681950386064}
+    - targetCorrespondingSourceObject: {fileID: 3467749930922983645, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7890226075612795761}
     - targetCorrespondingSourceObject: {fileID: 3467749930922983645, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
       insertIndex: -1
@@ -447,6 +522,23 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!114 &-7890226075612795761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3067572431356636211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 024d7bef77dbe394e8f1333eeb47f2ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showDebugHUD: 1
+  panelPosition: {x: 20, y: 20}
+  panelWidth: 390
+  panelHeight: 205
+  previewBaseDamage: 100
 --- !u!114 &1606778984757575678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,6 +666,18 @@ MonoBehaviour:
   debugWorldSpeed: 0
   debugSlideLoopFade: 0
   debugGrappleWindFade: 0
+--- !u!114 &4078681066127507488 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2456636898108746958, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1913423941322927342}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3067572431356636211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82f2880268b4277ac1489e894cb6461, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4638466611789479212 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6544570427681755586, guid: 9d631177f90b9ba49bc00a53b3478fa2,
@@ -654,6 +758,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zoneType: 0
   damageMultiplier: 1
+--- !u!4 &5771450098176116008 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5374368473783314886, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1913423941322927342}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8430248040629416009 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7958873203070327975, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1913423941322927342}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3067572431356636211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e57e8b6b3f7b55645b47a90de2f353df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8663952377336676174 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7111555615348642720, guid: 9d631177f90b9ba49bc00a53b3478fa2,

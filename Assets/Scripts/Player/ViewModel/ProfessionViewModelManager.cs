@@ -181,6 +181,13 @@ public class ProfessionViewModelManager :
         targetRuntimeManager;
 
     /// <summary>
+    /// 本地玩家的獨立能力 Loadout Runtime Manager。
+    /// Tank Air Dash 等可選能力不再保證存在於 Profession Runtime。
+    /// </summary>
+    private PlayerAbilityRuntimeManager
+        targetAbilityRuntimeManager;
+
+    /// <summary>
     /// 目前 ViewModel 正在綁定的 AttackRifle。
     ///
     /// ------------------------------------------------------------
@@ -311,6 +318,13 @@ public class ProfessionViewModelManager :
 /// 被誤判成「沒有改變」。
     /// </summary>
     private bool runtimeObservationInitialized;
+
+    /// <summary>
+    /// 上一次已綁定的能力 Loadout 版本；即使職業 Runtime 沒換，
+    /// 玩家換裝能力後仍要重新解析可選動畫來源。
+    /// </summary>
+    private int observedAbilityLoadoutRevision =
+        -1;
 
     #endregion
 
@@ -623,6 +637,9 @@ public class ProfessionViewModelManager :
         targetRuntimeManager =
             null;
 
+        targetAbilityRuntimeManager =
+            null;
+
         targetAttackRifle =
             null;
 
@@ -679,6 +696,12 @@ public class ProfessionViewModelManager :
             );
         }
 
+        targetAbilityRuntimeManager =
+            targetProfession
+                .GetComponent<
+                    PlayerAbilityRuntimeManager
+                >();
+
         // =============================================================
         // Player Quick Action
         // =============================================================
@@ -734,6 +757,9 @@ public class ProfessionViewModelManager :
             null;
 
         targetRuntimeManager =
+            null;
+
+        targetAbilityRuntimeManager =
             null;
 
         targetAttackRifle =
@@ -1031,6 +1057,13 @@ public class ProfessionViewModelManager :
                     currentRuntimeObject
                 );
 
+        int currentAbilityLoadoutRevision =
+            targetAbilityRuntimeManager != null &&
+            targetAbilityRuntimeManager.Object != null &&
+            targetAbilityRuntimeManager.Object.IsValid
+                ? targetAbilityRuntimeManager.LoadoutRevision
+                : -1;
+
 
         // =============================================================
         // Runtime 沒有改變
@@ -1041,7 +1074,9 @@ public class ProfessionViewModelManager :
             observedRuntimeObject ==
                 currentRuntimeObject &&
             observedRuntimeProfession ==
-                currentRuntimeProfession)
+                currentRuntimeProfession &&
+            observedAbilityLoadoutRevision ==
+                currentAbilityLoadoutRevision)
         {
             return;
         }
@@ -1092,6 +1127,9 @@ public class ProfessionViewModelManager :
 
         observedRuntimeProfession =
             currentRuntimeProfession;
+
+        observedAbilityLoadoutRevision =
+            currentAbilityLoadoutRevision;
 
 
         runtimeObservationInitialized =
@@ -1243,9 +1281,17 @@ public class ProfessionViewModelManager :
                             true
                         );
 
+                if (targetTankAirDashAbility == null &&
+                    targetAbilityRuntimeManager != null)
+                {
+                    targetAbilityRuntimeManager
+                        .TryGetActiveModule(
+                            out targetTankAirDashAbility
+                        );
+                }
+
                 if (targetTankMeleeCombo == null ||
-                    targetTankGuardAbility == null ||
-                    targetTankAirDashAbility == null)
+                    targetTankGuardAbility == null)
                 {
                     Debug.LogError(
                         $"[{nameof(ProfessionViewModelManager)}] " +
@@ -1255,8 +1301,8 @@ public class ProfessionViewModelManager :
                         $"{(targetTankMeleeCombo != null ? "OK" : "Missing")}" +
                         $"\nGuardAbility：" +
                         $"{(targetTankGuardAbility != null ? "OK" : "Missing")}" +
-                        $"\nAirDashAbility：" +
-                        $"{(targetTankAirDashAbility != null ? "OK" : "Missing")}",
+                        $"\nAirDashAbility（可選 Loadout）：" +
+                        $"{(targetTankAirDashAbility != null ? "Equipped" : "Not Equipped")}",
                         currentRuntimeObject
                     );
                 }
@@ -1623,6 +1669,9 @@ public class ProfessionViewModelManager :
 
         observedRuntimeProfession =
             PlayerProfessionType.None;
+
+        observedAbilityLoadoutRevision =
+            -1;
 
 
         runtimeObservationInitialized =

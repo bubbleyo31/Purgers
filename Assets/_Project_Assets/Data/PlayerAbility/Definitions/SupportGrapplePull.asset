@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64685ede09754009a27fe299844a5caa, type: 3}
+  m_Name: SupportGrapplePull
+  m_EditorClassIdentifier: 
+  abilityId: grapple.hit.pull
+  displayName: "\u920E\u7D22\u547D\u4E2D\u62C9\u53D6"
+  category: 2
+  runtimePrefab: {fileID: 8987989162901536377, guid: 39fbf2d474ed1594e81cb1fdded569c4,
+    type: 3}
+  includeAdditionalGrappleTargetMask: 1
+  professionRule:
+    restrictProfession: 0
+    allowedProfessions: 7
+  allowDuplicateEquip: 0
+  exclusiveGroupIds:
+  - GrappleHitRopeAuthority
+  incompatibleAbilities: []
+  executionPriority: 220

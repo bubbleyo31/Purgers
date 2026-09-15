@@ -283,6 +283,8 @@ GameObject:
   - component: {fileID: 1837276451847896363}
   - component: {fileID: 7111555615348642720}
   - component: {fileID: 4844220660382763055}
+  - component: {fileID: 2456636898108746958}
+  - component: {fileID: 7958873203070327975}
   m_Layer: 0
   m_Name: KCC
   m_TagString: Untagged
@@ -343,6 +345,8 @@ MonoBehaviour:
   - {fileID: 1837276451847896363}
   - {fileID: 7111555615348642720}
   - {fileID: 4844220660382763055}
+  - {fileID: 2456636898108746958}
+  - {fileID: 7958873203070327975}
 --- !u!54 &293761205225825258
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -534,8 +538,10 @@ MonoBehaviour:
   profession: {fileID: 6326962726135421216}
   grapple: {fileID: 2251634029581067438}
   grappleCharges: {fileID: 751234282532382688}
+  grappleMomentumEnergy: {fileID: 0}
   quickActionController: {fileID: 0}
   professionRuntimeManager: {fileID: 0}
+  abilityRuntimeManager: {fileID: 0}
   supportGrapplePlayerPullReceiver: {fileID: 0}
   health: {fileID: 0}
 --- !u!114 &5994311865734452171
@@ -578,6 +584,7 @@ MonoBehaviour:
   jumpImpulse: 6
   doubleJumpImpulse: 6
   allowJumpDuringGrapple: 0
+  slideJumpImpulse: 6
 --- !u!114 &751234282532382688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -611,6 +618,7 @@ MonoBehaviour:
   charges: {fileID: 751234282532382688}
   grappleInteractionController: {fileID: 0}
   profession: {fileID: 0}
+  abilityRuntimeManager: {fileID: 0}
   rayOriginHeight: 1.6
   grappleDistance: 100
   grappleMask:
@@ -672,8 +680,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  useHoldToMaintainGrappleInput: 0
   grappleAcceleration: 150
   grappleMaxSpeed: 150
+  grappleAttachDownwardSpeedRecovery: 12
   grappleSwingInwardAcceleration: 45
   grappleSwingMaximumInwardSpeed: 12
   grappleSwingTangentialAcceleration: 90
@@ -692,6 +702,7 @@ MonoBehaviour:
   grappleReleaseDistance: 10
   grappleApproachSpeedThreshold: 0.5
   grappleReleaseAwaySpeed: 0.1
+  releaseNormalGrappleOnLanding: 1
   releasePeakSampleWindow: 0.12
   releaseSpeedMultiplier: 1
   releaseMaximumSpeed: 30
@@ -988,6 +999,7 @@ MonoBehaviour:
   movement: {fileID: 0}
   stateMachine: {fileID: 0}
   grapple: {fileID: 0}
+  sprintController: {fileID: 0}
   auxiliaryRootCapsule: {fileID: 0}
   crouchingHeight: 1.2
   crouchMovementInputMultiplier: 0.45
@@ -997,6 +1009,14 @@ MonoBehaviour:
   minimumExitSpeedMultiplier: 0.45
   entrySpeedRetention: 1
   absoluteSafetyMaximumSpeed: 100
+  requireSprintRechargeAfterSlide: 1
+  minimumSprintRechargeForNextSlide: 1
+  allowGrapplePreLandingSlide: 1
+  minimumSlideTimeBeforeJump: 0.1
+  slideJumpInputBufferDuration: 0.12
+  slideJumpHorizontalMomentumRetention: 1
+  slideJumpAdditionalHorizontalSpeed: 0
+  standUpImmediatelyAfterSlideJump: 1
   flatSlideFriction: 3.5
   downhillGravityMultiplier: 1
   uphillGravityMultiplier: 1.15
@@ -1008,6 +1028,9 @@ MonoBehaviour:
   crouchCameraDrop: 0.55
   cameraTransitionSmoothTime: 0.1
   debugSlide: 0
+  protectGrappleVelocityFromGroundFriction: 1
+  suppressStepUpWhileGrappleAttached: 1
+  debugGrappleKCCProtection: 0
   _IsCrouched:
     _value: 0
   _IsSliding:
@@ -1031,6 +1054,42 @@ MonoBehaviour:
   _IsSprintActive:
     _value: 0
   _SprintRampProgress: 0
+--- !u!114 &2456636898108746958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3467749930922983645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82f2880268b4277ac1489e894cb6461, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingLoadout: {fileID: 0}
+  debugLoadout: 1
+  _LoadoutRevision: 0
+--- !u!114 &7958873203070327975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3467749930922983645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e57e8b6b3f7b55645b47a90de2f353df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chargeWhileGrappleAttached: 1
+  chargeWhileReleaseMomentum: 1
+  requiredChargeSpeed: 100
+  fullChargeDuration: 10
+  stationarySpeedThreshold: 0.1
+  fastDecayDuration: 2
+  slowDecayDuration: 6
+  maximumDamageMultiplier: 2
+  _NormalizedEnergy: 0
 --- !u!1 &3717351522105032772
 GameObject:
   m_ObjectHideFlags: 0
