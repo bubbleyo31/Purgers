@@ -1,8 +1,8 @@
 # 《除草機》專案架構文件
 
 > 建立日期：2026-09-14  
-> 最後核對：2026-09-15  
-> 原始碼快照：`M:/UnityProject/Purgers/Assets/Scripts`，149 支 C#。
+> 最後核對：2026-09-18（局部核對：安全屋 Phase 2；完整索引另見 02）  
+> 原始碼快照：`M:/UnityProject/Purgers/Assets/Scripts`，176 支 C#。
 
 這個資料夾可整份複製到 Unity 專案：
 
@@ -22,6 +22,7 @@ M:/UnityProject/Purgers/Documentation/ProjectArchitecture
 - [10_網路連線與輸入.md](10_網路連線與輸入.md)
 - [20_玩家核心移動與狀態.md](20_玩家核心移動與狀態.md)
 - [30_鈎索系統.md](30_鈎索系統.md)
+- [31_鈎索動能與傷害倍率.md](31_鈎索動能與傷害倍率.md)
 - [40_職業與特殊能力.md](40_職業與特殊能力.md)
 - [41_玩家能力Loadout.md](41_玩家能力Loadout.md)
 - [50_武器瞄準與射擊.md](50_武器瞄準與射擊.md)
@@ -32,6 +33,10 @@ M:/UnityProject/Purgers/Documentation/ProjectArchitecture
 - [91_敵人攻擊表現與生成.md](91_敵人攻擊表現與生成.md)
 - [100_UI觀戰與聊天.md](100_UI觀戰與聊天.md)
 - [110_場景工具與選單.md](110_場景工具與選單.md)
+- [130_回歸驗證與審查狀態.md](130_回歸驗證與審查狀態.md)
+- [140_遊戲流程存檔關卡成長與長期藍圖.md](140_遊戲流程存檔關卡成長與長期藍圖.md)
+- [141_Phase1B_Menu存檔手動配置與驗證.md](141_Phase1B_Menu存檔手動配置與驗證.md)
+- [142_Phase2_安全屋灰盒配置與驗證.md](142_Phase2_安全屋灰盒配置與驗證.md)
 
 ## 使用方式
 

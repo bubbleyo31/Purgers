@@ -80,9 +80,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96ee383cf9541724fae541261014aec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximumActiveDuration: 2
-  cooldownDuration: 5
-  activeVelocityMultiplier: 0.4
+  maximumActiveDuration: 1
+  cooldownDuration: 1
+  activeVelocityMultiplier: 0.1
   supportSMG: {fileID: 0}
   debugAbility: 1
   _AbilityActive:

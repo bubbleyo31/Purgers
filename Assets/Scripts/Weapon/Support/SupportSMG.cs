@@ -1648,73 +1648,11 @@ public class SupportSMG :
     /// 找出最近且不是 Owner 自己的命中。
     /// </summary>
     private bool TryGetNearestValidHit(
-        List<LagCompensatedHit> hits,
-        out LagCompensatedHit nearestHit
-    )
+        System.Collections.Generic.List<LagCompensatedHit> hits,
+        out LagCompensatedHit nearestHit)
     {
-        nearestHit =
-            default;
-
-
-        bool found =
-            false;
-
-
-        float nearestDistance =
-            float.MaxValue;
-
-
-        for (int i = 0;
-             i < hits.Count;
-             i++)
-        {
-            LagCompensatedHit hit =
-                hits[i];
-
-
-            if (hit.GameObject == null)
-            {
-                continue;
-            }
-
-
-            NetworkObject hitNetworkObject =
-                hit.GameObject
-                    .GetComponentInParent<
-                        NetworkObject
-                    >();
-
-
-            if (IsOwnerPlayerObject(
-                    hitNetworkObject
-                ))
-            {
-                continue;
-            }
-
-
-            if (hit.Distance >=
-                nearestDistance)
-            {
-                continue;
-            }
-
-
-            nearestDistance =
-                hit.Distance;
-
-
-            nearestHit =
-                hit;
-
-
-            found =
-                true;
-        }
-
-
-        return
-            found;
+        return WeaponHitUtility.TryGetNearestValidHit(
+            hits, GetOwnerPlayerNetworkObject(), out nearestHit);
     }
 
 
@@ -2243,41 +2181,11 @@ public class SupportSMG :
     }
 
 
-    private float CalculateDistanceDamageMultiplier(
-        float distance
-    )
+    private float CalculateDistanceDamageMultiplier(float distance)
     {
-        if (distance <=
-            damageFalloffStartDistance)
-        {
-            return
-                1f;
-        }
-
-
-        float validEndDistance =
-            Mathf.Max(
-                damageFalloffStartDistance +
-                0.01f,
-
-                damageFalloffEndDistance
-            );
-
-
-        float progress =
-            Mathf.InverseLerp(
-                damageFalloffStartDistance,
-                validEndDistance,
-                distance
-            );
-
-
-        return
-            Mathf.Lerp(
-                1f,
-                minimumDamageMultiplier,
-                progress
-            );
+        return WeaponHitUtility.CalculateDistanceDamageMultiplier(
+            distance, damageFalloffStartDistance,
+            damageFalloffEndDistance, minimumDamageMultiplier);
     }
 
 

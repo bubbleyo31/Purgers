@@ -422,12 +422,6 @@ public class TankAirDashAbility :
     private LayerMask enemySearchMask =
         ~0;
 
-    [SerializeField]
-    [Min(8)]
-    [Tooltip("一次 Enemy OverlapSphere 最多暫存多少個 Collider。這不是最多敵人數，因為一隻 Enemy 可能有很多 Hitbox。一般使用 64 已足夠。")]
-    private int enemySearchBufferSize =
-        64;
-
     #endregion
 
     // =====================================================================
@@ -814,12 +808,6 @@ public class TankAirDashAbility :
 
     private void OnValidate()
     {
-        enemySearchBufferSize =
-            Mathf.Max(
-                8,
-                enemySearchBufferSize
-            );
-
         enemySearchDistance =
             Mathf.Max(
                 0.1f,
@@ -2428,11 +2416,6 @@ public class TankAirDashAbility :
     [Tooltip("Tank Enemy Dash 最後會停在 Enemy 前方多少距離。這個距離要替下一步的大範圍近戰留下空間。第一輪建議先使用 1.6。")]
     private float enemyStopDistance =
         1.6f;
-
-    [SerializeField]
-    [Tooltip("Enemy Dash 目前以 Enemy NetworkObject Root 作為真正到達基準。如果某類敵人的 Root 在腳底或其他特殊位置，可以使用這個 Y 偏移修正 Dash 到達高度。一般敵人先保持 0。")]
-    private float enemyTargetHeightOffset =
-        0f;
 
 
     [Header("World Dash 位移")]

@@ -305,6 +305,11 @@ PrefabInstance:
       propertyPath: NetworkedBehaviours.Array.data[17]
       value: 
       objectReference: {fileID: 4036655574258559457}
+    - target: {fileID: 7289299079362300785, guid: c076e2eaedb126a45936a2d47daa0e84,
+        type: 3}
+      propertyPath: maxHealth
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 7625015452899495101, guid: c076e2eaedb126a45936a2d47daa0e84,
         type: 3}
       propertyPath: m_IsActive

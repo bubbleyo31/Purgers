@@ -71,23 +71,46 @@ public sealed class EnemyIdlePatrolBrain : NetworkBehaviour
     private bool configurationReady;
     public bool IsFusionSpawned => spawned && Object != null && Object.IsValid;
     public float PatrolArrivalDistance => patrolArrivalDistance;
+    public EnemyPatrolArea PatrolArea => patrolArea;
+
+    /// <summary>
+    /// 由 State Authority 在 Runner.Spawn 的 onBeforeSpawned 階段呼叫，
+    /// 直接指定敵人本次生成所使用的 Patrol Area。
+    /// </summary>
+    public bool TryInitializePatrolAreaBeforeSpawn(
+        EnemyPatrolArea runtimePatrolArea)
+    {
+        if (spawned || runtimePatrolArea == null)
+            return false;
+
+        patrolArea = runtimePatrolArea;
+        return true;
+    }
 
     public override void Spawned()
     {
         Resolve();
         spawned = true;
-        if (patrolArea == null)
+        if (HasStateAuthority && patrolArea == null)
         {
+            float nearestDistanceSquared =
+                float.PositiveInfinity;
+
             foreach (EnemyPatrolArea candidate in FindObjectsOfType<EnemyPatrolArea>())
             {
                 if (candidate.gameObject.scene != gameObject.scene || candidate.AreaId != patrolAreaId) continue;
-                if (patrolArea != null)
+
+                float distanceSquared =
+                    (candidate.transform.position - transform.position)
+                    .sqrMagnitude;
+
+                if (distanceSquared >= nearestDistanceSquared)
                 {
-                    Debug.LogError("[Enemy Patrol] 同場景 Patrol Area ID 重複，請明確指定場景引用。", this);
-                    patrolArea = null;
-                    break;
+                    continue;
                 }
+
                 patrolArea = candidate;
+                nearestDistanceSquared = distanceSquared;
             }
         }
         configurationReady = navigator != null && enemyActor != null &&

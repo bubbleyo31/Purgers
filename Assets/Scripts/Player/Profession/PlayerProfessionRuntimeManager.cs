@@ -241,7 +241,7 @@ public class PlayerProfessionRuntimeManager :
     /// </summary>
     private void Update()
     {
-        if (enableTestHotkeys == false)
+        if (!DevelopmentToolsPolicy.IsEnabled || enableTestHotkeys == false)
         {
             return;
         }
@@ -386,13 +386,16 @@ public class PlayerProfessionRuntimeManager :
     ///
     /// ------------------------------------------------------------
     ///
-    /// 未來飛船選角 UI
-    /// 也可以呼叫這個入口。
+    /// 此入口目前只供開發測試。未來正式選角 UI 必須接入
+    /// State Authority 的選角階段規則，不可開放此測試 RPC。
     /// </summary>
     public void RequestProfessionChange(
         PlayerProfessionType newProfession
     )
     {
+        if (!DevelopmentToolsPolicy.IsEnabled || !enableTestHotkeys)
+            return;
+
         if (IsValidProfession(
                 newProfession
             ) == false)
@@ -450,6 +453,10 @@ public class PlayerProfessionRuntimeManager :
         RpcInfo info = default
     )
     {
+        // 不能只停用本地按鍵：正式版的 State Authority 也必須拒絕測試 RPC。
+        if (!DevelopmentToolsPolicy.IsEnabled || !enableTestHotkeys)
+            return;
+
         PlayerProfessionType requestedProfession =
             (PlayerProfessionType)professionValue;
 

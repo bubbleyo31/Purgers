@@ -1110,6 +1110,13 @@ public static class DamageReceiverUtility
                     >();
         }
 
+        // Receiver 接受或拒絕的結果都已結算完成，統一通知一次。
+        // NoReceiver 不會進入此處；FullyBlocked 已在上方通知後返回。
+        NotifyOutgoingDamageResolved(
+            sourceBehaviours,
+            result
+        );
+
         return true;
     }
 

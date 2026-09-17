@@ -1,7 +1,7 @@
 # 《除草機》ChatGPT 專案架構快速讀取
 
-> 文件基線：2026-09-15  
-> 核對來源：`M:/UnityProject/Purgers/Assets/Scripts`，共 149 支 C#。  
+> 文件基線：2026-09-18（局部核對：本輪修正、動能、地圖原型與安全屋 Phase 2；完整索引另見 02）  
+> 核對來源：`M:/UnityProject/Purgers/Assets/Scripts`，共 176 支 C#。  
 > 用途：新對話先讀本檔，再依任務讀對應模組文件；本檔不是原始碼的替代品。
 
 ## 1. 專案技術與權威原則
@@ -9,6 +9,7 @@
 - Unity 2022.3 LTS。
 - Photon Fusion 網路同步；玩家、敵人、投射物、測試生成器等使用 `NetworkObject`／`NetworkBehaviour`。
 - 會改變遊戲結果的操作由 `State Authority` 決定：生成、傷害、生命、死亡、Enemy AI、技能正式狀態。
+- 長期存檔只由 Host 本機建立與寫回；Client 經 Party Menu 加入並讀取 Host 同步的權威 Runtime State，不直接讀寫該存檔。
 - `Input Authority`／本機玩家負責採集輸入與第一人稱呈現，不得各自 `Instantiate` 網路敵人或自行確定傷害。
 - `[Networked]` 屬性只能在對應 `NetworkBehaviour.Spawned()` 後存取。切換職業或 ViewModel 時，表現層必須先檢查 `Object != null && Object.IsValid`。
 - 本地表現（ViewModel、HUD、相機、速度線、本地細節音效）和世界結果（傷害、世界槍聲、敵人狀態）分開。
@@ -50,13 +51,13 @@ PlayerProfession + ProfessionDefinition
 ```
 
 - Attack 職業 Runtime：`AttackRifle`、`AttackQuickMelee`、武器用 `AttackFocusAbility`。
-- Support 職業 Runtime：`SupportSMG`、`SupportQuickMelee`、`SupportRifleHealingAbility`。
+- Support 職業 Runtime：`SupportSMG`（含治療射擊）、`SupportQuickMelee`；`SupportRifleHealingAbility` 是保留的 Rifle Hit Override 模組，非目前 Prefab 的必要掛件。
 - Tank 職業 Runtime：`TankMeleeCombo`、`TankQuickDashAbility`、`TankGuardAbility`。
 - 玩家 Loadout：`SupportAerialAbility`、`TankAirDashAbility` 屬 GrappleFocus；Mark／Pull／Gather 屬 GrappleHit。
 - `PlayerQuickActionController` 只調度實作 `IPlayerQuickActionAbility` 的當前職業能力。
 - 槽位容量由 `PlayerAbilitySlotLayoutDefinition` 設為 0～N；Fusion 八格只是技術上限。每個 Definition 均可自行開關職業限制與互斥群組。
 - `SupportAerialAbility` 已是跨職業 GrappleFocus 能力，冷卻從能力關閉後起算，且不強制依賴 `SupportSMG`。
-- 原始碼已支援新 Loadout，但獨立 Definition／Runtime Prefab 要先執行一次 Unity 遷移選單才會建立；遷移完成前仍是舊 Prefab 掛載狀態，不可誤判為資產已搬完。
+- 預設 Loadout、五組能力 Definition／Runtime Prefab 已建立並完成設定檢查，KCC_Player 已指向起始 Loadout；Play Mode 與多人連線仍須分開驗證。
 
 ## 5. 鈎索資料流
 
@@ -108,8 +109,8 @@ EnemyActor（組裝根）
 └─ Presentation Drivers（只讀狀態驅動動畫／材質／Line）
 ```
 
-- 地面與飛行路徑分流：Ground 使用 NavMesh；Flying 使用自由飛行探測。
-- `EnemyPatrolArea` 是人工節點集合，不是球形隨機點。
+- 地面與飛行路徑分流：Ground 使用 `NavMesh.SamplePosition`／`CalculatePath` 與 Fusion Tick 位移，不掛 `NavMeshAgent`；Flying 使用自由飛行探測。
+- 場景 `EnemyPatrolArea` 可保留人工節點；MapChunk Prefab 保存預先烘焙的 `NavMeshSurface/NavMeshData`，Runtime 依 Chunk 位置與旋轉載入並用雙向 NavMesh Link 接合。阻擋屋用 Carving `NavMeshObstacle` 封閉未使用入口，再依 Connector 邊界自動取樣、篩選最大可連通集合並為每個 Chunk 建立地面巡邏區。
 - `EnemyAlertDirector` 負責群體呼喚節流，避免同區同時播放發現動作與音效。
 - 攻擊實作繼承 `EnemyCombatOption`：近戰揮砍、近戰 Dash、遠程投射物、遠程 Beam。
 - `EnemyMovementOwnership` 必須在 Patrol、Chase、Dash、Grapple Control 間維持單一位移寫入者。
@@ -142,6 +143,9 @@ EnemyActor（組裝根）
 | Enemy 攻擊、死亡表現、測試生成 | `91_敵人攻擊表現與生成.md` |
 | HUD、聊天、觀戰 | `100_UI觀戰與聊天.md` |
 | 連線、選單、場景工具 | `10_網路連線與輸入.md`、`110_場景工具與選單.md` |
+| Phase 1-B Continue 按鈕、Overlay、Row Prefab 實際配置與驗證 | `141_Phase1B_Menu存檔手動配置與驗證.md` |
+| Phase 2 安全屋灰盒、開始裝置、Ready Check 與 Host／Client 驗證 | `142_Phase2_安全屋灰盒配置與驗證.md` |
+| 長期遊戲流程、存檔、安全屋、關卡循環、成長與裝備遷移 | `140_遊戲流程存檔關卡成長與長期藍圖.md` |
 
 ## 10. 新對話工作規則
 
@@ -151,3 +155,12 @@ EnemyActor（組裝根）
 4. 改動跨模組公開介面、控制權或資料流時，同步更新本檔、對應模組文件與 `02_程式職責總表.md`。
 5. 不因類名不漂亮就建立第二套平行系統；先確認既有仲裁層與遷移成本。
 6. 新增 Networked 欄位、RPC 或 Spawn 流程時，明確標示 State Authority、Input Authority、Render 三者的責任。
+
+## 2026-09-17 局部核對與架構補充
+
+`DevelopmentToolsPolicy` 統一開發入口：F1–F3 職業切換與敵人測試生成在正式非 Development Build 停用，客戶端及權威入口皆檢查。離線地圖 Marker、F9 與 N 鍵入口遇任何 NetworkRunner 即不執行；Fusion 模式每個 Host Runner 產生一次 Run Seed，從四個入口隨機固定本輪出生點與不同出口，並從候選池抽選、對齊唯一一個第二 Chunk。同一輪死亡重生沿用入口。兩個 Chunk 對齊後，可為除了接合出口／入口以外的六個 Connector 生成阻擋屋；玩家出生入口也會封閉。第二 Chunk 與阻擋屋目前不是 NetworkObject，不提供 Client 同步或第三塊生成。`WeaponHitUtility` 共用最近命中與距離衰減。動能增傷與回歸驗證分別見 [31](31_鈎索動能與傷害倍率.md)、[130](130_回歸驗證與審查狀態.md)。
+
+`Progression/Save` 已有 Host 本機 JSON 存檔、永久／循環進度分界、版本 1 驗證、存檔清單、原子取代寫入、循環失敗重設，以及掛在各自 NetworkRunner 的 Host／Client 存取 Context；不得改回 process-global static，否則 Multi-Peer 會互相覆蓋。`MenuConnection` 已把 Quick Play 固定為新存檔 Host，並會把 PlayerPrefs 中已失效的舊場景選擇校正為 MenuConfig 第一個有效場景；Client Join 不具本機寫檔權。`SafeHouse` 灰盒 Scene、四個出生點、Host 近距離 E 互動、World Space 提示、全員 Ready HUD 與 State Authority 驗證已完成。Host 單機已實測 `_Menu → SafeHouse → Game`，切場後維持一個 Runner、GameLogic 與 Player；獨立 Client 與 `Game → SafeHouse` 回程仍待後續 Phase 驗證。規格與操作見 [140](140_遊戲流程存檔關卡成長與長期藍圖.md)、[142](142_Phase2_安全屋灰盒配置與驗證.md)。
+
+
+- 2026-09-17：同步本輪局部修正、資產設定與驗證邊界。

@@ -10,7 +10,7 @@ using UnityEngine;
 /// 本地玩家按下測試熱鍵後，由指定 Scene NetworkObject 的 State Authority
 /// 正式呼叫 Runner.Spawn；Client 不會自行 Instantiate Enemy。
 ///
-/// 生成位置只取自指定 EnemyPatrolArea 的人工巡邏節點，
+/// 生成位置取自手動指定或 Runtime 地圖規劃器建立的 EnemyPatrolArea 節點，
 /// 不會在球形範圍內隨機猜座標，也不會在設定錯誤時退回世界原點。
 ///
 /// 這是開發期測試工具。正式關卡波次、房間清除與生成預算
@@ -61,10 +61,18 @@ public sealed class EnemyPatrolAreaTestSpawner : NetworkBehaviour
 
     [SerializeField]
     [Tooltip(
-        "Enemy 生成位置來源。只會使用此 EnemyPatrolArea 的人工節點。\n\n" +
-        "注意：Enemy Prefab 內 EnemyIdlePatrolBrain 的 Patrol Area Id，" +
-        "仍必須與此物件的 Area Id 相同，生成後才會在同一區域巡邏。")]
+        "手動 Patrol Area 與 Runtime Area 尚未建立時的備援來源。" +
+        "關閉 Use Runtime Generated Ground Patrol Areas 時，固定使用此 Area。\n\n" +
+        "生成器會在 Runner.Spawn 完成前把這個實際 Area 直接綁定到 EnemyIdlePatrolBrain，" +
+        "因此不依賴 Prefab 內 Patrol Area Id 猜測場景物件。")]
     private EnemyPatrolArea patrolArea;
+
+    [SerializeField]
+    [Tooltip(
+        "啟用後，State Authority 每次測試生成會依序使用目前場景中" +
+        "由 Runtime 地圖規劃器建立的 Ground Patrol Area。" +
+        "尚未建立時沿用上方手動指定的 Patrol Area。")]
+    private bool useRuntimeGeneratedGroundPatrolAreas = true;
 
     [SerializeField]
     [Tooltip(
@@ -152,10 +160,12 @@ public sealed class EnemyPatrolAreaTestSpawner : NetworkBehaviour
     private int nextPrefabIndex;
     private float nextAllowedRequestTime;
     private bool fusionSpawned;
+    private int nextRuntimePatrolAreaIndex;
 
     private void Update()
     {
-        if (!enableSpawnHotkey ||
+        if (!DevelopmentToolsPolicy.IsEnabled ||
+            !enableSpawnHotkey ||
             !fusionSpawned ||
             Object == null ||
             !Object.IsValid ||
@@ -217,7 +227,8 @@ public sealed class EnemyPatrolAreaTestSpawner : NetworkBehaviour
         RpcInfo info = default
     )
     {
-        if (!Object.HasStateAuthority ||
+        if (!DevelopmentToolsPolicy.IsEnabled ||
+            !Object.HasStateAuthority ||
             !allowClientSpawnRequests)
         {
             return;
@@ -232,7 +243,7 @@ public sealed class EnemyPatrolAreaTestSpawner : NetworkBehaviour
     /// </summary>
     private void TrySpawnOne(PlayerRef requestedBy)
     {
-        if (!Object.HasStateAuthority)
+        if (!DevelopmentToolsPolicy.IsEnabled || !Object.HasStateAuthority)
         {
             return;
         }
@@ -248,6 +259,8 @@ public sealed class EnemyPatrolAreaTestSpawner : NetworkBehaviour
             minimumSecondsBetweenRequests;
 
         RemoveInvalidSpawnedReferences();
+
+        SelectRuntimeGeneratedPatrolArea();
 
         if (maximumAliveFromThisSpawner > 0 &&
             spawnedEnemies.Count >= maximumAliveFromThisSpawner)
@@ -294,7 +307,30 @@ public sealed class EnemyPatrolAreaTestSpawner : NetworkBehaviour
             selectedPrefab,
             spawnPosition,
             rotation,
-            PlayerRef.None
+            PlayerRef.None,
+            (spawnRunner, spawnedObject) =>
+            {
+                EnemyIdlePatrolBrain patrolBrain =
+                    spawnedObject.GetComponentInChildren<
+                        EnemyIdlePatrolBrain>(true);
+
+                if (patrolBrain == null)
+                {
+                    Debug.LogError(
+                        "[Enemy Test Spawner] Enemy Prefab 缺少 EnemyIdlePatrolBrain，" +
+                        "無法在 Spawned 前綁定 Patrol Area。",
+                        spawnedObject);
+                    return;
+                }
+
+                if (!patrolBrain.TryInitializePatrolAreaBeforeSpawn(
+                        patrolArea))
+                {
+                    Debug.LogError(
+                        "[Enemy Test Spawner] Patrol Area 出生前綁定失敗。",
+                        spawnedObject);
+                }
+            }
         );
 
         if (spawned == null)
@@ -323,6 +359,44 @@ public sealed class EnemyPatrolAreaTestSpawner : NetworkBehaviour
                 spawned
             );
         }
+    }
+
+    private void SelectRuntimeGeneratedPatrolArea()
+    {
+        if (!useRuntimeGeneratedGroundPatrolAreas)
+            return;
+
+        EnemyPatrolArea[] allAreas =
+            FindObjectsOfType<EnemyPatrolArea>();
+
+        var runtimeAreas =
+            new List<EnemyPatrolArea>();
+
+        foreach (EnemyPatrolArea candidate in allAreas)
+        {
+            if (candidate != null &&
+                candidate.IsRuntimeGenerated &&
+                candidate.gameObject.scene == gameObject.scene)
+            {
+                runtimeAreas.Add(candidate);
+            }
+        }
+
+        if (runtimeAreas.Count == 0)
+            return;
+
+        runtimeAreas.Sort(
+            (left, right) =>
+                string.CompareOrdinal(
+                    left.name,
+                    right.name));
+
+        int selectedIndex =
+            Mathf.Abs(nextRuntimePatrolAreaIndex) %
+            runtimeAreas.Count;
+
+        patrolArea = runtimeAreas[selectedIndex];
+        nextRuntimePatrolAreaIndex++;
     }
 
     private bool TrySelectEnemyPrefab(
@@ -393,7 +467,8 @@ public sealed class EnemyPatrolAreaTestSpawner : NetworkBehaviour
         if (pointCount <= 0)
         {
             failureDetail =
-                "Patrol Area 沒有任何人工節點；請檢查 Patrol Points Parent 的直接子物件。";
+                "Patrol Area 沒有任何巡邏節點；請檢查 Patrol Points Parent 的直接子物件，" +
+                "或確認 Runtime 地圖規劃已成功。";
             return false;
         }
 

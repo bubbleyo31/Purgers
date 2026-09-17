@@ -349,6 +349,10 @@ public sealed class MeleeDamageResolver
         MeleeDamageSummary summary =
             default;
 
+        // 輸出只代表本次查詢；設定或 Runner 無效時也不能留下上一刀結果。
+        resolvedResults?.Clear();
+        confirmedResults?.Clear();
+
         // =============================================================
         // 基本檢查
         // =============================================================
@@ -377,9 +381,6 @@ public sealed class MeleeDamageResolver
         overlapHits.Clear();
         candidates.Clear();
         uniqueReceivers.Clear();
-
-        resolvedResults?.Clear();
-        confirmedResults?.Clear();
 
         // =============================================================
         // Forward

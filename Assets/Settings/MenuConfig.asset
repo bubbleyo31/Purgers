@@ -22,8 +22,8 @@ MonoBehaviour:
   - eu
   - sa
   _availableScenes:
-  - Name: Game
-    ScenePath: Assets/Scenes/Game.unity
+  - Name: SafeHouse
+    ScenePath: Assets/Scenes/SafeHouse.unity
     Preview: {fileID: 0}
   _machineId: {fileID: -755480892457977500, guid: 14d0ba76e6402554fb21eb7d976871ff,
     type: 3}

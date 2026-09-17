@@ -6334,7 +6334,7 @@ PrefabInstance:
     - target: {fileID: 7289299079362300785, guid: c076e2eaedb126a45936a2d47daa0e84,
         type: 3}
       propertyPath: maxHealth
-      value: 100
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 7314213914782265981, guid: c076e2eaedb126a45936a2d47daa0e84,
         type: 3}
@@ -8697,7 +8697,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 112ed5970ac6e704b9a0972c0a27cc93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseSpeed: 4
+  chaseSpeed: 10
   rotationSpeed: 240
   obstacleMask:
     serializedVersion: 2

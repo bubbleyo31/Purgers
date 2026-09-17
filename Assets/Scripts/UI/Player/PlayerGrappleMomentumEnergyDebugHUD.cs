@@ -61,10 +61,8 @@ public sealed class
 
     private void OnGUI()
     {
-#if !UNITY_EDITOR && !DEVELOPMENT_BUILD
-        return;
-#else
-        if (showDebugHUD == false ||
+        if (!DevelopmentToolsPolicy.IsEnabled ||
+            showDebugHUD == false ||
             energySystem == null ||
             energySystem.Object == null ||
             energySystem.Object.HasInputAuthority ==
@@ -129,7 +127,6 @@ public sealed class
         );
 
         GUILayout.EndArea();
-#endif
     }
 
     private void DrawEnergyBar()

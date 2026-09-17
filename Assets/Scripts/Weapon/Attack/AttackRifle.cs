@@ -1644,76 +1644,10 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
     /// </summary>
     private bool TryGetNearestValidHit(
         System.Collections.Generic.List<LagCompensatedHit> hits,
-        out LagCompensatedHit nearestHit
-    )
+        out LagCompensatedHit nearestHit)
     {
-        nearestHit =
-            default;
-
-        bool found =
-            false;
-
-        float nearestDistance =
-            float.MaxValue;
-
-        for (int i = 0;
-             i < hits.Count;
-             i++)
-        {
-            LagCompensatedHit hit =
-                hits[i];
-
-            if (hit.GameObject == null)
-                continue;
-
-            /*
-             * IgnoreInputAuthority 會排除 Fusion Hitbox，
-             * 但 IncludePhysX 仍可能包含一般 Collider。
-             *
-             * 因此再做一次自己的 NetworkObject 防呆。
-             */
-            NetworkObject hitNetworkObject =
-                hit.GameObject
-                    .GetComponentInParent<NetworkObject>();
-
-            /*
-            * 注意：
-            *
-            * AttackRifle 未來的 Object
-            * 是 AttackProfessionRuntime，
-            *
-            * 不是 Player NetworkObject。
-            *
-            * 因此不能再使用：
-            *
-            * hitNetworkObject == Object
-            *
-            * 來判斷自己。
-            */
-            if (IsOwnerPlayerObject(
-                    hitNetworkObject
-                ))
-            {
-                continue;
-            }
-
-            if (hit.Distance >=
-                nearestDistance)
-            {
-                continue;
-            }
-
-            nearestDistance =
-                hit.Distance;
-
-            nearestHit =
-                hit;
-
-            found =
-                true;
-        }
-
-        return found;
+        return WeaponHitUtility.TryGetNearestValidHit(
+            hits, GetOwnerPlayerNetworkObject(), out nearestHit);
     }
 
     #endregion
@@ -2119,36 +2053,11 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
     /// Start 之前 = 1。
 /// End 之後 = Minimum Damage Multiplier。
     /// </summary>
-    private float CalculateDistanceDamageMultiplier(
-        float distance
-    )
+    private float CalculateDistanceDamageMultiplier(float distance)
     {
-        if (distance <=
-            damageFalloffStartDistance)
-        {
-            return 1f;
-        }
-
-        float validEndDistance =
-            Mathf.Max(
-                damageFalloffStartDistance +
-                0.01f,
-
-                damageFalloffEndDistance
-            );
-
-        float progress =
-            Mathf.InverseLerp(
-                damageFalloffStartDistance,
-                validEndDistance,
-                distance
-            );
-
-        return Mathf.Lerp(
-            1f,
-            minimumDamageMultiplier,
-            progress
-        );
+        return WeaponHitUtility.CalculateDistanceDamageMultiplier(
+            distance, damageFalloffStartDistance,
+            damageFalloffEndDistance, minimumDamageMultiplier);
     }
 
     #endregion

@@ -33,8 +33,13 @@ using UnityEngine;
 public class GameLogic :
     NetworkBehaviour,
     IPlayerJoined,
-    IPlayerLeft
+    IPlayerLeft,
+    ISceneLoadDone
 {
+    private static readonly Dictionary<NetworkRunner, GameLogic>
+        primaryByRunner =
+            new Dictionary<NetworkRunner, GameLogic>();
+
     // =====================================================================
     #region Player Prefab
 
@@ -67,6 +72,15 @@ public class GameLogic :
         "正常正式場景應完整設定 Spawn Point；此欄位只用來避免設定錯誤時完全無法生成玩家。")]
     private Vector3 fallbackSpawnPosition =
         Vector3.up;
+
+
+
+    [Header("MapRunSelectionPrototype")]
+    [SerializeField]
+    [Tooltip(
+        "可選的開發測試入口來源。由 Host 套用至所有玩家首次出生；" +
+        "死亡重生仍使用原出生點。留空、停用或設定無效時沿用既有流程。")]
+    private MapRunSelectionPrototype initialSpawnPrototype;
 
     #endregion
 
@@ -204,12 +218,39 @@ public class GameLogic :
     // =====================================================================
     #region Fusion Lifecycle
 
+    [RuntimeInitializeOnLoadMethod(
+        RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetPrimaryRegistry()
+    {
+        primaryByRunner.Clear();
+    }
+
     public override void Spawned()
     {
+        if (primaryByRunner.TryGetValue(
+                Runner,
+                out GameLogic existingPrimary) &&
+            existingPrimary != null &&
+            existingPrimary != this)
+        {
+            if (Object.HasStateAuthority)
+            {
+                existingPrimary.AdoptSceneConfigurationFrom(this);
+                Runner.Despawn(Object);
+            }
+
+            return;
+        }
+
+        primaryByRunner[Runner] = this;
+        Runner.MakeDontDestroyOnLoad(gameObject);
+
         if (Object.HasStateAuthority == false)
         {
             return;
         }
+
+        ReconcileConnectedPlayers();
 
         /*
          * 一般流程中，PlayerJoined() 會在每個玩家加入時建立訂閱。
@@ -248,11 +289,36 @@ public class GameLogic :
         ProcessExpiredRespawnTimers();
     }
 
+    public void SceneLoadDone(in SceneLoadDoneArgs sceneInfo)
+    {
+        if (Object.HasStateAuthority == false ||
+            !primaryByRunner.TryGetValue(Runner, out GameLogic primary) ||
+            primary != this)
+        {
+            return;
+        }
+
+        /*
+         * 場景切換會移除舊場景中的 Player NetworkObject，但連線中的
+         * PlayerRef 仍然存在。等新場景物件完成 Spawn、出生設定也完成
+         * 接管後，再補齊缺少的 Player，避免使用上一個場景的出生點。
+         */
+        ReconcileConnectedPlayers();
+    }
+
     public override void Despawned(
         NetworkRunner runner,
         bool hasState
     )
     {
+        if (primaryByRunner.TryGetValue(
+                runner,
+                out GameLogic primary) &&
+            primary == this)
+        {
+            primaryByRunner.Remove(runner);
+        }
+
         UnsubscribeAllPlayerDeaths();
 
         pendingDeathPlayers.Clear();
@@ -273,6 +339,9 @@ public class GameLogic :
         {
             return;
         }
+
+        if (TryAdoptExistingPlayer(player))
+            return;
 
         /*
          * 同一 PlayerRef 若仍殘留 Respawn Timer，
@@ -365,6 +434,58 @@ public class GameLogic :
     // =====================================================================
     #region Player Spawn
 
+    private void AdoptSceneConfigurationFrom(GameLogic sceneGameLogic)
+    {
+        if (sceneGameLogic == null || sceneGameLogic == this)
+            return;
+
+        playerSpawnPoints = sceneGameLogic.playerSpawnPoints != null
+            ? (Transform[])sceneGameLogic.playerSpawnPoints.Clone()
+            : Array.Empty<Transform>();
+        fallbackSpawnPosition = sceneGameLogic.fallbackSpawnPosition;
+        initialSpawnPrototype = sceneGameLogic.initialSpawnPrototype;
+
+        if (debugPlayerLifecycle)
+        {
+            Debug.Log(
+                $"[GameLogic] 已接管場景 '{sceneGameLogic.gameObject.scene.name}' 的出生設定。",
+                this);
+        }
+    }
+
+    private void ReconcileConnectedPlayers()
+    {
+        foreach (PlayerRef player in Runner.ActivePlayers)
+        {
+            if (!TryAdoptExistingPlayer(player) &&
+                !RespawnTimers.ContainsKey(player))
+            {
+                SpawnPlayer(player, isRespawn: false);
+            }
+        }
+    }
+
+    private bool TryAdoptExistingPlayer(PlayerRef player)
+    {
+        if (!Runner.TryGetPlayerObject(
+                player,
+                out NetworkObject playerObject) ||
+            playerObject == null ||
+            !playerObject.IsValid)
+        {
+            return false;
+        }
+
+        Player playerBehaviour = playerObject.GetComponent<Player>();
+        if (playerBehaviour == null)
+            return false;
+
+        Players.Set(player, playerBehaviour);
+        SubscribeToPlayerDeath(player, playerBehaviour.Health);
+        SavePlayerProfession(player, playerBehaviour.Profession);
+        return true;
+    }
+
     /// <summary>
     /// 由 State Authority 生成一個新的 Player NetworkObject。
     ///
@@ -408,11 +529,31 @@ public class GameLogic :
             );
         }
 
-        ResolveNextSpawnPose(
-            out Vector3 spawnPosition,
-            out Quaternion spawnRotation,
-            out int spawnPointIndex
-        );
+        Vector3 spawnPosition;
+        Quaternion spawnRotation;
+        int spawnPointIndex;
+
+        if (initialSpawnPrototype != null &&
+        initialSpawnPrototype.gameObject.scene == gameObject.scene &&
+        initialSpawnPrototype.TryGetInitialSpawnPose(
+            Runner,
+            out Pose entryPose
+        ))
+        {
+            spawnPosition = entryPose.position;
+            spawnRotation = entryPose.rotation;
+
+            // -2 代表使用本輪固定抽中的入口。
+            spawnPointIndex = -2;
+        }
+        else
+        {
+            ResolveNextSpawnPose(
+                out spawnPosition,
+                out spawnRotation,
+                out spawnPointIndex
+            );
+        }
 
         PlayerProfessionType professionToRestore =
             PlayerProfessionType.None;

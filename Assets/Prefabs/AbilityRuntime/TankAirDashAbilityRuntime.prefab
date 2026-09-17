@@ -106,7 +106,6 @@ MonoBehaviour:
   enemySearchMask:
     serializedVersion: 2
     m_Bits: 512
-  enemySearchBufferSize: 64
   enemyVisibilityMask:
     serializedVersion: 2
     m_Bits: 512
@@ -123,7 +122,6 @@ MonoBehaviour:
   _ActiveDashTargetType: 0
   enemyDashSpeed: 300
   enemyStopDistance: 0
-  enemyTargetHeightOffset: 0
   worldDashSpeed: 300
   worldStopDistance: 1
   dashArrivalDistance: 4

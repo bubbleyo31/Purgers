@@ -1,6 +1,6 @@
 # 玩家能力 Loadout 架構
 
-> 最後核對：2026-09-15  
+> 最後核對：2026-09-17（局部核對：本輪修正與下方補充；其餘內容沿用 2026-09-15 基線）
 > 核對來源：`Assets/Scripts/Player/Ability/Loadout`、五個初始鈎索能力、`Player.cs`、`PlayerGrapple.cs`、`PlayerGrappleInteractionController.cs`  
 > 相關文件：`20_玩家核心移動與狀態.md`、`30_鈎索系統.md`、`40_職業與特殊能力.md`
 
@@ -10,7 +10,7 @@
 |---|---|
 | Loadout、槽位、職業限制、互斥與 Runtime 原始碼 | 已完成並通過 Runtime／Editor 編譯 |
 | Unity Editor 資產遷移工具 | 已提供 |
-| Definition、獨立 Runtime Prefab、預設 Loadout 實際建立 | 尚待在目前 Unity 專案執行遷移選單 |
+| Definition、獨立 Runtime Prefab、預設 Loadout 實際建立 | 已建立：預設 Loadout、五組 Definition／Runtime Prefab；設定檢查通過，KCC_Player 已掛起始 Loadout |
 | Play Mode／多人連線行為驗證 | 尚未完成 |
 
 文件不得省略後兩列，否則會把已完成的程式架構誤報成已完成的 Prefab 與連線驗證。
@@ -169,6 +169,12 @@ Tools → Player Ability → 建立初始能力 Runtime 與 Loadout
 7. 若會修改移動、傷害或 Action，接入既有 Modifier／Gate，不另建平行仲裁。
 8. 以單機 State Authority、Host／Client、切職業、換 Loadout、能力中途取消與冷卻延續逐項驗證。
 
+## 2026-09-17 局部核對與架構補充
+
+目前資產設定通過驗證；不需為了更新文件再次執行遷移選單。GameLogic 目前重生保存職業，能力使用 startingLoadout；未建立玩家自訂 Loadout 的跨死亡保存規則。此為後續選裝系統的架構邊界，不可宣稱已有持久化。
+
 ## 變更紀錄
 
 - 2026-09-15：建立玩家能力 Loadout 專用文件；記錄可變槽位、職業規則、互斥、Fusion Runtime、鈎索路由、SupportAerial 冷卻與資產遷移狀態。
+
+- 2026-09-17：同步本輪局部修正、資產設定與驗證邊界。

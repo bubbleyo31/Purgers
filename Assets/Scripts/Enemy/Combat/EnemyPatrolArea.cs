@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum EnemyPatrolPointQueryResult : byte
@@ -95,6 +96,8 @@ public sealed class EnemyPatrolArea : MonoBehaviour
 
     public string AreaId => areaId;
 
+    public bool IsRuntimeGenerated { get; private set; }
+
     public int PointCount
     {
         get
@@ -102,6 +105,46 @@ public sealed class EnemyPatrolArea : MonoBehaviour
             EnsurePatrolPointsCache();
             return patrolPoints.Length;
         }
+    }
+
+
+    /// <summary>
+    /// 由 Runtime 地圖規劃器建立巡邏點後設定。
+    /// 場景手工 Patrol Area 不需要呼叫。
+    /// </summary>
+    public void ConfigureRuntime(
+        string runtimeAreaId,
+        Transform runtimePatrolPointsParent,
+        float runtimeMaximumPointDistance)
+    {
+        if (!Application.isPlaying)
+        {
+            throw new InvalidOperationException(
+                "EnemyPatrolArea Runtime 設定只能在 Play Mode 執行。");
+        }
+
+        if (string.IsNullOrWhiteSpace(runtimeAreaId))
+        {
+            throw new ArgumentException(
+                "Runtime Patrol Area ID 不可為空。",
+                nameof(runtimeAreaId));
+        }
+
+        if (runtimePatrolPointsParent == null ||
+            !runtimePatrolPointsParent.IsChildOf(transform))
+        {
+            throw new ArgumentException(
+                "Runtime Patrol Points Parent 必須位於 EnemyPatrolArea 階層下。",
+                nameof(runtimePatrolPointsParent));
+        }
+
+        areaId = runtimeAreaId;
+        patrolPointsParent = runtimePatrolPointsParent;
+        maximumPointDistance =
+            Mathf.Max(0f, runtimeMaximumPointDistance);
+        IsRuntimeGenerated = true;
+
+        RebuildPatrolPointsCache();
     }
 
 

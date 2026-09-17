@@ -1,6 +1,8 @@
 using Fusion;
 using Fusion.Menu;
 using Fusion.Photon.Realtime;
+using Purgers.Progression;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,10 +13,15 @@ namespace MultiClimb.Menu
 {
     public class MenuConnection : IFusionMenuConnection
     {
-        public MenuConnection(IFusionMenuConfig config, NetworkRunner runnerPrefab)
+        public MenuConnection(
+            IFusionMenuConfig config,
+            NetworkRunner runnerPrefab,
+            IGameSaveRepository saveRepository)
         {
             _config = config;
             _runnerPrefab = runnerPrefab;
+            _saveRepository = saveRepository ??
+                throw new ArgumentNullException(nameof(saveRepository));
         }
 
         public string SessionName { get; private set; }
@@ -28,70 +35,146 @@ namespace MultiClimb.Menu
         private NetworkRunner _runnerPrefab;
         private NetworkRunner _runner;
         private IFusionMenuConfig _config;
+        private readonly IGameSaveRepository _saveRepository;
+        private GameSaveData _selectedHostSave;
         private bool _connectingSafeCheck;
         private CancellationTokenSource _cancellationTokenSource;
         private CancellationToken _cancellationToken;
 
         public async Task<ConnectResult> ConnectAsync(IFusionMenuConnectArgs connectArgs)
         {
-            // Safety
-            if (_connectingSafeCheck) return new ConnectResult() { CustomResultHandling = true, Success = false, FailReason = ConnectFailReason.None };
+            if (_connectingSafeCheck)
+            {
+                return CreateFailedResult(
+                    "目前已有連線流程正在執行。",
+                    ConnectFailReason.None,
+                    true);
+            }
 
             _connectingSafeCheck = true;
-            if (_runner && _runner.IsRunning)
+            string newlyCreatedSaveId = null;
+
+            try
             {
-                await _runner.Shutdown();
+                if (!TryResolveLaunchScene(connectArgs, out string sceneError))
+                    return CreateFailedResult(sceneError);
+
+                if (!TryPrepareSaveContext(
+                        connectArgs,
+                        out bool forceHost,
+                        out GameSaveAccessMode accessMode,
+                        out GameSaveData launchSave,
+                        out newlyCreatedSaveId,
+                        out string saveError))
+                {
+                    return CreateFailedResult(saveError);
+                }
+
+                if (_runner && _runner.IsRunning)
+                    await _runner.Shutdown();
+
+                _runner = CreateRunner();
+                GameSaveRuntimeContext saveContext =
+                    GetOrAddSaveContext(_runner);
+
+                if (accessMode == GameSaveAccessMode.HostWritable)
+                    saveContext.InitializeHost(_saveRepository, launchSave);
+                else
+                    saveContext.InitializeClientReadOnly();
+
+                var sceneManager =
+                    _runner.gameObject.AddComponent<NetworkSceneManagerDefault>();
+                sceneManager.IsSceneTakeOverEnabled = false;
+
+                FusionAppSettings appSettings = CopyAppSettings(connectArgs);
+
+                var args = new StartGameArgs
+                {
+                    CustomPhotonAppSettings = appSettings,
+                    GameMode = ResolveGameMode(connectArgs, forceHost),
+                    SessionName = SessionName = connectArgs.Session,
+                    PlayerCount = MaxPlayerCount = connectArgs.MaxPlayerCount
+                };
+
+                var sceneInfo = new NetworkSceneInfo();
+                sceneInfo.AddSceneRef(
+                    sceneManager.GetSceneRef(connectArgs.Scene.ScenePath),
+                    LoadSceneMode.Additive);
+                args.Scene = sceneInfo;
+
+                _cancellationTokenSource?.Dispose();
+                _cancellationTokenSource = new CancellationTokenSource();
+                _cancellationToken = _cancellationTokenSource.Token;
+                args.StartGameCancellationToken = _cancellationToken;
+
+                int regionIndex =
+                    _config.AvailableRegions.IndexOf(connectArgs.Region);
+                args.SessionNameGenerator = () =>
+                    _config.CodeGenerator.EncodeRegion(
+                        _config.CodeGenerator.Create(),
+                        regionIndex);
+
+                StartGameResult startGameResult =
+                    await _runner.StartGame(args);
+                var connectResult = new ConnectResult
+                {
+                    Success = startGameResult.Ok,
+                    FailReason = ResolveConnectFailReason(
+                        startGameResult.ShutdownReason),
+                    DebugMessage = startGameResult.Ok
+                        ? string.Empty
+                        : $"Fusion 啟動失敗：{startGameResult.ShutdownReason}"
+                };
+
+                if (connectResult.Success)
+                {
+                    SessionName = _runner.SessionInfo.Name;
+                    _selectedHostSave = null;
+                }
+                else
+                {
+                    RollbackSaveLaunch(newlyCreatedSaveId);
+                }
+
+                return connectResult;
             }
-
-            // Create and prepare Runner object
-            _runner = CreateRunner();
-            var sceneManager = _runner.gameObject.AddComponent<NetworkSceneManagerDefault>();
-            sceneManager.IsSceneTakeOverEnabled = false;
-
-            // Copy and update AppSettings
-            var appSettings = CopyAppSettings(connectArgs);
-
-            // Solve StartGameArgs
-            var args = new StartGameArgs();
-            args.CustomPhotonAppSettings = appSettings;
-            args.GameMode = ResolveGameMode(connectArgs);
-            args.SessionName = SessionName = connectArgs.Session;
-            args.PlayerCount = MaxPlayerCount = connectArgs.MaxPlayerCount;
-
-            // Scene info
-            var sceneInfo = new NetworkSceneInfo();
-            sceneInfo.AddSceneRef(sceneManager.GetSceneRef(connectArgs.Scene.ScenePath), LoadSceneMode.Additive);
-            args.Scene = sceneInfo;
-
-            // Cancellation Token
-            _cancellationTokenSource?.Dispose();
-            _cancellationTokenSource = new CancellationTokenSource();
-            _cancellationToken = _cancellationTokenSource.Token;
-            args.StartGameCancellationToken = _cancellationToken;
-
-            var regionIndex = _config.AvailableRegions.IndexOf(connectArgs.Region);
-            args.SessionNameGenerator = () => _config.CodeGenerator.EncodeRegion(_config.CodeGenerator.Create(), regionIndex);
-            var startGameResult = default(StartGameResult);
-            var connectResult = new ConnectResult();
-            startGameResult = await _runner.StartGame(args);
-
-            connectResult.Success = startGameResult.Ok;
-            connectResult.FailReason = ResolveConnectFailReason(startGameResult.ShutdownReason);
-            _connectingSafeCheck = false;
-
-            if (connectResult.Success)
+            catch (Exception exception)
             {
-                SessionName = _runner.SessionInfo.Name;
+                RollbackSaveLaunch(newlyCreatedSaveId);
+                Debug.LogException(exception);
+                return CreateFailedResult(
+                    $"連線流程發生例外：{exception.Message}");
             }
-
-            return connectResult;
+            finally
+            {
+                _connectingSafeCheck = false;
+            }
         }
 
         public async Task DisconnectAsync(int reason)
         {
+            if (!_runner)
+            {
+                _selectedHostSave = null;
+                return;
+            }
+
             var peerMode = _runner.Config?.PeerMode;
-            _cancellationTokenSource.Cancel();
-            await _runner.Shutdown(shutdownReason: ResolveShutdownReason(reason));
+            _cancellationTokenSource?.Cancel();
+
+            if (_runner.IsRunning)
+            {
+                await _runner.Shutdown(
+                    shutdownReason: ResolveShutdownReason(reason));
+            }
+
+            if (_runner.TryGetComponent(
+                    out GameSaveRuntimeContext saveContext))
+            {
+                saveContext.Clear();
+            }
+
+            _selectedHostSave = null;
 
             if (peerMode is NetworkProjectConfig.PeerModes.Multiple) return;
 
@@ -112,9 +195,43 @@ namespace MultiClimb.Menu
             Usernames = usernames;
         }
 
-        private GameMode ResolveGameMode(IFusionMenuConnectArgs args)
+        public void SelectHostSave(GameSaveData save)
+        {
+            _selectedHostSave = save ??
+                throw new ArgumentNullException(nameof(save));
+        }
+
+        public void ClearSelectedHostSave()
+        {
+            _selectedHostSave = null;
+        }
+
+        private bool TryResolveLaunchScene(
+            IFusionMenuConnectArgs connectArgs,
+            out string error)
+        {
+            if (!MenuSceneLaunchPolicy.TryResolve(
+                    connectArgs.Scene,
+                    _config.AvailableScenes,
+                    out PhotonMenuSceneInfo resolvedScene))
+            {
+                error = "Fusion Menu 尚未設定可進入的場景。";
+                return false;
+            }
+
+            connectArgs.Scene = resolvedScene;
+            error = string.Empty;
+            return true;
+        }
+
+        private GameMode ResolveGameMode(
+            IFusionMenuConnectArgs args,
+            bool forceHost)
         {
             bool isSharedSession = args.Scene.SceneName.Contains("Shared");
+            if (forceHost)
+                return isSharedSession ? GameMode.Shared : GameMode.Host;
+
             if (args.Creating)
             {
                 // Create session
@@ -129,6 +246,103 @@ namespace MultiClimb.Menu
 
             // Join session
             return isSharedSession ? GameMode.Shared : GameMode.Client;
+        }
+
+        private bool TryPrepareSaveContext(
+            IFusionMenuConnectArgs connectArgs,
+            out bool forceHost,
+            out GameSaveAccessMode accessMode,
+            out GameSaveData launchSave,
+            out string newlyCreatedSaveId,
+            out string error)
+        {
+            forceHost = false;
+            accessMode = GameSaveAccessMode.None;
+            launchSave = null;
+            newlyCreatedSaveId = null;
+            error = string.Empty;
+
+            MenuSaveLaunchKind launchKind = MenuSaveLaunchPolicy.Resolve(
+                connectArgs.Creating,
+                connectArgs.Session,
+                _selectedHostSave != null);
+
+            if (launchKind == MenuSaveLaunchKind.ClientJoin)
+            {
+                accessMode = GameSaveAccessMode.ClientReadOnly;
+                _selectedHostSave = null;
+                Debug.Log(
+                    "[MenuConnection] Prepared ClientJoin with read-only " +
+                    "save context.");
+                return true;
+            }
+
+            forceHost = true;
+            if (launchKind == MenuSaveLaunchKind.ContinueHost)
+            {
+                accessMode = GameSaveAccessMode.HostWritable;
+                launchSave = _selectedHostSave;
+                Debug.Log(
+                    "[MenuConnection] Prepared ContinueHost for save " +
+                    $"'{launchSave.SaveId}'.");
+                return true;
+            }
+
+            GameSaveRepositoryResult<GameSaveData> createResult =
+                _saveRepository.CreateNew(string.Empty);
+
+            if (!createResult.Success)
+            {
+                _selectedHostSave = null;
+                error = $"建立新存檔失敗：{createResult.Error}";
+                return false;
+            }
+
+            newlyCreatedSaveId = createResult.Value.SaveId;
+            accessMode = GameSaveAccessMode.HostWritable;
+            launchSave = createResult.Value;
+            Debug.Log(
+                $"[MenuConnection] Prepared {launchKind} with new save " +
+                $"'{launchSave.SaveId}' in '{_saveRepository.RootDirectory}'.");
+            return true;
+        }
+
+        private void RollbackSaveLaunch(string newlyCreatedSaveId)
+        {
+            if (!string.IsNullOrEmpty(newlyCreatedSaveId))
+            {
+                GameSaveRepositoryResult<bool> deleteResult =
+                    _saveRepository.Delete(newlyCreatedSaveId);
+
+                if (!deleteResult.Success)
+                {
+                    Debug.LogError(
+                        "[MenuConnection] 新 Host Session 建立失敗，" +
+                        $"且無法刪除未啟用存檔：{deleteResult.Error}");
+                }
+            }
+
+            if (_runner && _runner.TryGetComponent(
+                    out GameSaveRuntimeContext saveContext))
+            {
+                saveContext.Clear();
+            }
+
+            _selectedHostSave = null;
+        }
+
+        private static ConnectResult CreateFailedResult(
+            string message,
+            int failReason = ConnectFailReason.Disconnect,
+            bool customHandling = false)
+        {
+            return new ConnectResult
+            {
+                Success = false,
+                FailReason = failReason,
+                DebugMessage = message,
+                CustomResultHandling = customHandling
+            };
         }
 
         private ShutdownReason ResolveShutdownReason(int reason)
@@ -163,7 +377,23 @@ namespace MultiClimb.Menu
 
         private NetworkRunner CreateRunner()
         {
-            return _runnerPrefab ? UnityEngine.Object.Instantiate(_runnerPrefab) : new GameObject("NetworkRunner", typeof(NetworkRunner)).GetComponent<NetworkRunner>();
+            if (_runnerPrefab)
+                return UnityEngine.Object.Instantiate(_runnerPrefab);
+
+            var runnerObject = new GameObject("NetworkRunner");
+            return runnerObject.AddComponent<NetworkRunner>();
+        }
+
+        private static GameSaveRuntimeContext GetOrAddSaveContext(
+            NetworkRunner runner)
+        {
+            if (runner.TryGetComponent(
+                    out GameSaveRuntimeContext existingContext))
+            {
+                return existingContext;
+            }
+
+            return runner.gameObject.AddComponent<GameSaveRuntimeContext>();
         }
 
         private FusionAppSettings CopyAppSettings(IFusionMenuConnectArgs connectArgs)
