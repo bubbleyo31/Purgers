@@ -46,7 +46,7 @@ public class PlayerSprintLatchController :
     #region Settings
 
 
-    [Header("Sprint 鎖定設定")]
+    [Header("衝刺鎖定設定")]
 
 
     [SerializeField]

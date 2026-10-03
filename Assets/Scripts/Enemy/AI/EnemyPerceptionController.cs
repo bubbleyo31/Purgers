@@ -33,24 +33,27 @@ public sealed class EnemyPerceptionController : NetworkBehaviour
     [Header("掃描與記憶")]
     [SerializeField, Min(0.02f), Tooltip("視野掃描間隔秒數。建議 0.1；初次掃描會分散，降低整群一起 Raycast 的尖峰。")]
     private float scanIntervalSeconds = 0.1f;
-    [SerializeField, Min(0.02f), Tooltip("最後一次看見或收到新情報後保留目標幾秒。遮擋期間只保存舊位置，不追蹤牆後玩家的即時位置。")]
+    [SerializeField, Min(0.02f), Tooltip("一般目標記憶秒數。未取得鎖定保留資格時，只保存最後看見／同伴分享的舊位置；已親眼鎖定者另受保留秒數與半徑限制。")]
     private float targetMemorySeconds = 3f;
     [SerializeField, Tooltip(
-        "啟用後，這隻敵人只要曾經親眼看見目前玩家，玩家留在『鎖定保留半徑』內時，" +
-        "就算離開視角或被牆遮住，敵人仍會取得玩家的即時位置並持續追逐。\n\n" +
-        "同伴分享的目標不會直接取得此資格；這隻敵人仍必須至少親眼確認一次。\n" +
-        "此規則只延長追逐，不會把 Has Direct Sight 改成 true，因此要求直接視線的攻擊不會穿牆發動。")]
+        "啟用後，親眼看見的目前玩家離開扇形或被遮擋時，會在保留秒數與半徑內繼續提供即時位置。\n" +
+        "超時或超出半徑就解除鎖定；重新親眼看見才重設倒數。同伴情報不能延長此倒數。\n" +
+        "扇形外但沒有牆壁遮擋時仍可轉向攻擊；遮擋期間只有位置情報，不授予攻擊視線。")]
     private bool enableLockedTargetRetention = true;
+    [SerializeField, Min(0.02f), Tooltip(
+        "最後一次在正常視野內親眼看見後，保留即時位置幾秒，預設 3，最小 0.02。\n" +
+        "增加可容忍更久的高速繞背；減少則較容易甩開。仍受保留半徑限制，不會因持續追蹤自行續期。")]
+    private float lockedTargetRetentionSeconds = 3f;
     [SerializeField, Min(0.1f), Tooltip(
-        "曾親眼鎖定的目前玩家，只要與敵人 Root 的直線距離沒有超過此值，就不受視野角度與遮擋限制並持續被追蹤。\n\n" +
-        "這是『不脫戰半徑』，不是初次發現距離；初次發現仍使用 Sight Distance、視角與 Occlusion Mask。")]
+        "離開正常視野後，玩家胸口觀測點與敵人 Root 的最大保留距離，公尺；最小 0.1。\n" +
+        "超過此半徑立即停止保留即時位置。初次發現仍使用 Sight Distance、視角與 Occlusion Mask。")]
     private float lockedTargetRetentionRadius = 25f;
     [SerializeField, Range(0f, 10f), Tooltip("選擇玩家時，從目前目標的距離評分扣除此值，降低頻繁切換目標。")]
     private float currentTargetPreference = 2f;
     [SerializeField, Tooltip("輸出目標切換與失去視線訊息。")]
     private bool debugPerception = false;
 
-    [Header("鎖定保留 Gizmos")]
+    [Header("鎖定保留 視覺輔助線")]
     [SerializeField, Tooltip("選取敵人時顯示鎖定保留半徑。此球不是初次發現範圍。")]
     private bool drawLockedTargetRetentionGizmo = true;
     [SerializeField, Tooltip("鎖定保留半徑 Gizmo 顏色。")]
@@ -64,6 +67,8 @@ public sealed class EnemyPerceptionController : NetworkBehaviour
     [Networked] public TickTimer TargetMemoryTimer { get; private set; }
     [Networked] public bool CurrentTargetWasDirectlySeen { get; private set; }
     [Networked] public bool IsInsideLockedTargetRetention { get; private set; }
+    [Networked] public TickTimer LockedTargetRetentionTimer { get; private set; }
+    [Networked] public bool HasRetainedLineOfSight { get; private set; }
     [Networked] public int TargetChangedSequence { get; private set; }
     [Networked] public int DirectSightAcquiredSequence { get; private set; }
     [Networked] private TickTimer ScanTimer { get; set; }
@@ -71,6 +76,9 @@ public sealed class EnemyPerceptionController : NetworkBehaviour
     private bool spawned;
     public bool IsFusionSpawned => spawned && Object != null && Object.IsValid;
     public bool HasTarget => IsFusionSpawned && CurrentTarget != null && CurrentTarget.IsValid;
+    /// <summary>正常視線或有限保留期間的無遮擋視線；單純共享情報不能授予。</summary>
+    public bool HasCombatSight => IsFusionSpawned && HasTarget &&
+        (HasDirectSight || (IsInsideLockedTargetRetention && HasRetainedLineOfSight));
     public Vector3 EyePosition => eyePoint != null ? eyePoint.position :
         transform.position + Vector3.up * fallbackEyeHeight;
     public Vector3 GetPlayerObservationPosition(NetworkObject player) =>
@@ -90,6 +98,8 @@ public sealed class EnemyPerceptionController : NetworkBehaviour
         IsInsideLockedTargetRetention = false;
         LastKnownTargetPosition = transform.position;
         TargetMemoryTimer = TickTimer.None;
+        LockedTargetRetentionTimer = TickTimer.None;
+        HasRetainedLineOfSight = false;
         TargetChangedSequence = 0;
         DirectSightAcquiredSequence = 0;
         ScanTimer = TickTimer.CreateFromSeconds(Runner,
@@ -120,8 +130,7 @@ public sealed class EnemyPerceptionController : NetworkBehaviour
             ScanPlayers();
         }
 
-        // 親眼確認過的目前目標只要仍在保留半徑內，就追蹤即時位置。
-        // 這裡刻意不修改 HasDirectSight，避免近戰／遠程攻擊隔牆啟動。
+        // 保留只提供有限時間的即時位置，不能自行延長親眼確認的期限。
         UpdateLockedTargetRetention();
 
         if (!HasDirectSight &&
@@ -170,6 +179,8 @@ public sealed class EnemyPerceptionController : NetworkBehaviour
         CurrentTargetWasDirectlySeen = false;
         IsInsideLockedTargetRetention = false;
         TargetMemoryTimer = TickTimer.None;
+        LockedTargetRetentionTimer = TickTimer.None;
+        HasRetainedLineOfSight = false;
         if (clearLastPosition) HasLastKnownPosition = false;
     }
 
@@ -178,6 +189,7 @@ public sealed class EnemyPerceptionController : NetworkBehaviour
 
     private void ScanPlayers()
     {
+        HasRetainedLineOfSight = false;
         // 已親眼鎖定的玩家若仍在保留半徑內，這輪掃描只重新檢查該玩家的真正視線，
         // 不因另一名玩家剛好走入視野就切換目標。
         if (IsCurrentTargetWithinLockedRetention(
@@ -200,6 +212,7 @@ public sealed class EnemyPerceptionController : NetworkBehaviour
             else
             {
                 HasDirectSight = false;
+                HasRetainedLineOfSight = HasClearLineOfSight(CurrentTarget, retainedTargetPosition);
             }
 
             return;
@@ -240,6 +253,15 @@ public sealed class EnemyPerceptionController : NetworkBehaviour
             Vector3.Angle(forward, flat) > horizontalFieldOfView * 0.5f) return false;
         float elevation = Mathf.Atan2(Mathf.Abs(offset.y), flat.magnitude) * Mathf.Rad2Deg;
         if (elevation > verticalFieldOfView * 0.5f) return false;
+        return HasClearLineOfSight(player, position);
+    }
+
+    private bool HasClearLineOfSight(NetworkObject player, Vector3 position)
+    {
+        if (occlusionMask.value == 0) return false;
+        Vector3 offset = position - EyePosition;
+        float distance = offset.magnitude;
+        if (distance < 0.001f) return true;
         if (Runner.GetPhysicsScene().Raycast(EyePosition, offset / distance, out RaycastHit hit,
                 distance, occlusionMask, QueryTriggerInteraction.Ignore))
             return hit.transform != null && hit.transform.IsChildOf(player.transform);
@@ -252,6 +274,10 @@ public sealed class EnemyPerceptionController : NetworkBehaviour
         bool acquired = seen && (!HasDirectSight || changed);
         CurrentTarget = target;
         HasDirectSight = seen;
+        HasRetainedLineOfSight = false;
+        if (changed) LockedTargetRetentionTimer = TickTimer.None;
+        if (seen)
+            LockedTargetRetentionTimer = TickTimer.CreateFromSeconds(Runner, lockedTargetRetentionSeconds);
 
         // 換成共享情報目標時必須重新親眼確認，不能繼承上一名玩家的穿牆追蹤資格。
         if (changed)
@@ -269,58 +295,40 @@ public sealed class EnemyPerceptionController : NetworkBehaviour
             Debug.Log($"[Enemy Perception] 目標：{target.name}，直接視線：{seen}", this);
     }
 
-    /// <summary>
-    /// 對「這隻敵人曾親眼確認過的目前目標」套用近距離不脫戰規則。
-    /// 半徑內允許無視 FOV 與遮擋更新即時位置，但不偽造直接視線。
-    /// </summary>
+    /// <summary>倒數只由正常視野的親眼觀測重設。超時／超距後保留舊位置供 Investigate。</summary>
     private void UpdateLockedTargetRetention()
     {
         IsInsideLockedTargetRetention = false;
-
-        if (!IsCurrentTargetWithinLockedRetention(
-                out Vector3 targetPosition
-            ))
+        if (!IsCurrentTargetWithinLockedRetention(out Vector3 targetPosition))
         {
+            HasRetainedLineOfSight = false;
+            if (enableLockedTargetRetention && HasTarget &&
+                CurrentTargetWasDirectlySeen && !HasDirectSight)
+                ForgetTarget(false);
             return;
         }
 
         IsInsideLockedTargetRetention = true;
         LastKnownTargetPosition = targetPosition;
         HasLastKnownPosition = true;
-
-        // 玩家仍在半徑內時持續刷新一般記憶。
-        // 離開半徑後仍會保留最後位置 targetMemorySeconds，接著才真正忘記。
-        TargetMemoryTimer = TickTimer.CreateFromSeconds(
-            Runner,
-            targetMemorySeconds
-        );
     }
 
-    /// <summary>
-    /// 即時確認目前目標是否擁有「曾親眼看見」資格，且仍位於鎖定保留半徑內。
-    /// 不依賴上一 Tick 的 IsInsideLockedTargetRetention，避免掃描與群體情報在同 Tick 搶走目標。
-    /// </summary>
-    private bool IsCurrentTargetWithinLockedRetention(
-        out Vector3 targetPosition
-    )
+    private bool IsCurrentTargetWithinLockedRetention(out Vector3 targetPosition)
     {
         targetPosition = default;
-
-        if (!enableLockedTargetRetention ||
-            !HasTarget ||
-            !CurrentTargetWasDirectlySeen)
-        {
-            return false;
-        }
-
+        if (!HasTarget) return false;
         targetPosition = GetPlayerObservationPosition(CurrentTarget);
-        float radiusSqr =
-            lockedTargetRetentionRadius *
-            lockedTargetRetentionRadius;
-
-        return (targetPosition - transform.position).sqrMagnitude <= radiusSqr;
+        return CanRetainTarget(enableLockedTargetRetention, CurrentTargetWasDirectlySeen,
+            LockedTargetRetentionTimer.RemainingTime(Runner) ?? 0f,
+            (targetPosition - transform.position).sqrMagnitude, lockedTargetRetentionRadius);
     }
 
+    internal static bool CanRetainTarget(bool enabled, bool directlySeen,
+        float remainingSeconds, float distanceSquared, float radius)
+    {
+        return enabled && directlySeen && remainingSeconds > 0f &&
+            distanceSquared <= radius * radius;
+    }
     private void Resolve()
     {
         if (enemyActor == null) enemyActor = GetComponent<EnemyActor>();
@@ -331,6 +339,7 @@ public sealed class EnemyPerceptionController : NetworkBehaviour
         sightDistance = Mathf.Max(0.1f, sightDistance);
         scanIntervalSeconds = Mathf.Max(0.02f, scanIntervalSeconds);
         targetMemorySeconds = Mathf.Max(0.02f, targetMemorySeconds);
+        lockedTargetRetentionSeconds = Mathf.Max(0.02f, lockedTargetRetentionSeconds);
         lockedTargetRetentionRadius = Mathf.Max(0.1f, lockedTargetRetentionRadius);
     }
     private void OnDrawGizmosSelected()

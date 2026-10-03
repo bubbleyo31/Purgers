@@ -293,6 +293,14 @@ public class PlayerMovement : MonoBehaviour
         FrameResult result =
             default;
 
+        bool movementLocked = Purgers.GameFlow.Control.PlayerControlLocks.BlocksMovement(input.BlockedControls);
+        Purgers.GameFlow.Control.PlayerControlLocks.Filter(ref input, input.BlockedControls);
+        if (movementLocked)
+        {
+            sprintActive = false;
+            slideJumpRequested = false;
+        }
+
         // -------------------------------------------------------------
         // Look
         // -------------------------------------------------------------

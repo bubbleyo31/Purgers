@@ -78,7 +78,7 @@ public class CombatDeathHandler :
     // =====================================================================
     #region Unity Collider
 
-    [Header("死亡後停用的 Unity Collider")]
+    [Header("死亡後停用的 Unity 碰撞體")]
 
     [SerializeField]
     [Tooltip("死亡後需要停止碰撞與普通 Physics Raycast 的 Collider。請只放真正需要死亡後失效的碰撞體。例如敵人的 Body、Head 命中 Collider。若你未來希望屍體仍然具有物理碰撞，就不要把屍體碰撞 Collider 放進這個陣列。")]
@@ -89,7 +89,7 @@ public class CombatDeathHandler :
     // =====================================================================
     #region Photon Fusion Hitbox
 
-    [Header("死亡後停用的 Fusion Hitbox")]
+    [Header("死亡後停用的 Fusion 命中盒")]
 
     [SerializeField]
     [Tooltip("死亡後要停止 Photon Fusion Lag Compensation 命中的 HitboxRoot。系統會透過 HitboxRootActive 控制，而不是 Destroy Hitbox。正式傷害判定使用 Fusion Hitbox 時，建議將敵人的 HitboxRoot 放進這裡。")]
@@ -100,7 +100,7 @@ public class CombatDeathHandler :
     // =====================================================================
     #region Behaviour
 
-    [Header("死亡後停用的 Behaviour")]
+    [Header("死亡後停用的行為元件")]
 
     [SerializeField]
     [Tooltip("死亡後需要停用的 MonoBehaviour 或其他 Behaviour。建議目前放入 FocusTarget；未來可以加入 EnemyAI、攻擊控制器、移動控制器等。不要放 TestDamageReceiver、CombatDeathHandler、NetworkObject、NetworkTransform 或其他維持網路狀態所需的核心元件。")]

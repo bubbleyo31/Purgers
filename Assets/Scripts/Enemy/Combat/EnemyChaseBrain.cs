@@ -104,7 +104,7 @@ public sealed class EnemyChaseBrain :
     [Tooltip("開啟後輸出近戰 B 重整開始、抵達、失敗與結束原因。大量敵人時建議關閉。")]
     private bool debugMeleeBReposition;
 
-    [Header("追逐 Runtime Gizmos")]
+    [Header("追逐 執行階段 視覺輔助線")]
 
     [SerializeField]
     [Tooltip("Play Mode 選取敵人時，顯示目前追逐目的地與 Root 之間的連線。")]

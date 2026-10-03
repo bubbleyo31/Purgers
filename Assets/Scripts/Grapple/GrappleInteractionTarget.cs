@@ -72,7 +72,7 @@ public class GrappleInteractionTarget :
     // =====================================================================
     #region Attack
 
-    [Header("Attack 勾索能力")]
+    [Header("攻擊 勾索能力")]
 
     [SerializeField]
     [Tooltip("這個目標是否允許受到 Attack 職業的勾索標記。下一階段 Attack 勾中這種敵人後，會由施加標記的 Attack 玩家在五秒內把自己對此目標造成的傷害視為暴頭效果。")]
@@ -84,7 +84,7 @@ public class GrappleInteractionTarget :
     // =====================================================================
     #region Tank
 
-    [Header("Tank 勾索能力")]
+    [Header("坦克 勾索能力")]
 
     [SerializeField]
     [Tooltip("這個敵人是否可以成為 Tank 聚怪技能的中心目標。Tank 直接勾中的敵人 A 就是 Gather Anchor，玩家之後會往這個敵人移動。")]
@@ -101,7 +101,7 @@ public class GrappleInteractionTarget :
     // =====================================================================
     #region Support
 
-    [Header("Support 勾索能力")]
+    [Header("支援 勾索能力")]
 
     [SerializeField]
     [Tooltip("這個目標是否允許被 Support 勾索拉向 Support 玩家面前。普通敵人與玩家可以開啟，Boss 或特殊不可位移敵人可以關閉。")]

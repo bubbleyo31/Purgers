@@ -9,8 +9,15 @@ namespace MultiClimb.Menu
     {
         [SerializeField] private FusionMenuConfig config;
         [Space]
-        [Header("Provide a NetworkRunner prefab to be instantiated.\nIf no prefab is provided, a simple one will be created.")]
+        [Header("NetworkRunner 預置物：未指定時會建立簡易執行器。")]
         [SerializeField] private NetworkRunner networkRunnerPrefab;
+
+        [Header("新存檔規則")]
+        [Tooltip(
+            "Quick Play 建立新存檔時固定寫入的 CycleLength。" +
+            "既有 Continue 存檔保留自己的 Snapshot，不會被此值改寫。")]
+        [SerializeField, Min(1)] private int newSaveCycleLength =
+            GameSaveSchema.DefaultCycleLength;
 
         private IGameSaveRepository saveRepository;
 
@@ -28,7 +35,8 @@ namespace MultiClimb.Menu
             return new MenuConnection(
                 config,
                 networkRunnerPrefab,
-                SaveRepository);
+                SaveRepository,
+                newSaveCycleLength);
         }
 
         public bool TrySelectHostSave(

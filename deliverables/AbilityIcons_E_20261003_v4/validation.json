@@ -1,0 +1,72 @@
+[
+  {
+    "File": "01_ExplosiveGrenade.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": 0
+  },
+  {
+    "File": "02_PiercingCannon.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": 0
+  },
+  {
+    "File": "03_ImpactFanWave.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": 0
+  },
+  {
+    "File": "04_QuickShield.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": 0
+  },
+  {
+    "File": "05_HealingPack.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": 0
+  },
+  {
+    "File": "06_RicochetBullet.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": 0
+  },
+  {
+    "File": "07_ExperienceBoost.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": 0
+  },
+  {
+    "File": "08_Blink.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": 0
+  },
+  {
+    "File": "09_BulletTime.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": 0
+  },
+  {
+    "File": "10_PrecisionLock.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": 0
+  }
+]

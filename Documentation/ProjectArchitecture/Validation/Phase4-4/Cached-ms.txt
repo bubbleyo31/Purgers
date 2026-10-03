@@ -1,0 +1,1 @@
+Cached UpdateView average ms=0.007549; terrain cells rebuilt=0; stationary RevealAround ms=2.060235

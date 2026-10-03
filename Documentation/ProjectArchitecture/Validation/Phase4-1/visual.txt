@@ -1,0 +1,2 @@
+timeScale=0, fadeAlpha=0, fading=False, inputBlocked=True, enabledEventSystems=0
+fadeOutAlpha=1, fading=False, pendingCleared=True, restoredEventSystems=1, outstandingLocks=0

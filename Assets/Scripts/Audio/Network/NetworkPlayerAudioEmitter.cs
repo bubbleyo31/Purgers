@@ -40,7 +40,7 @@ public class NetworkPlayerAudioEmitter :
     // =====================================================================
     #region References
 
-    [Header("Network Audio Catalog")]
+    [Header("網路音效目錄")]
 
     [SerializeField]
     [Tooltip(

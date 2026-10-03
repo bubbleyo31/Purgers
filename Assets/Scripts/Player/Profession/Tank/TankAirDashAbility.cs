@@ -138,7 +138,7 @@ public class TankAirDashAbility :
     // =====================================================================
     #region Owner Player
 
-    [Header("Owner Player Binding")]
+    [Header("擁有者玩家綁定")]
 
     [SerializeField]
     [Tooltip("這個 Tank Air Dash Ability 真正所屬的 Player Core。正常情況不需要手動指定，由 TankProfessionRuntimeDriver 在 Runtime Spawn 後自動綁定。")]
@@ -299,7 +299,7 @@ public class TankAirDashAbility :
     // =====================================================================
     #region Enemy Dash 到達攻擊
 
-    [Header("Enemy Dash 到達攻擊")]
+    [Header("敵人衝刺到達攻擊")]
 
     [SerializeField]
     [Min(0f)]
@@ -337,7 +337,7 @@ public class TankAirDashAbility :
         ~0;
 
 
-    [Header("Enemy Dash AOE 障礙物")]
+    [Header("敵人衝刺範圍障礙物")]
 
     [SerializeField]
     [Tooltip("開啟後，Enemy Dash AOE 不可以隔著牆壁傷害敵人。建議保持開啟。")]
@@ -360,7 +360,7 @@ public class TankAirDashAbility :
     // =====================================================================
     #region Air Strike World Audio
 
-    [Header("Air Strike 世界聲音")]
+    [Header("空中打擊 世界聲音")]
 
     [SerializeField]
     [Tooltip(
@@ -384,7 +384,7 @@ public class TankAirDashAbility :
     // =====================================================================
     #region 瞄準起點
 
-    [Header("Gameplay Aim Origin")]
+    [Header("遊戲邏輯瞄準原點")]
 
     [SerializeField]
     [Min(0f)]
@@ -403,7 +403,7 @@ public class TankAirDashAbility :
     // =====================================================================
     #region Enemy 搜尋
 
-    [Header("Enemy 寬鬆搜尋")]
+    [Header("敵人寬鬆搜尋")]
 
     [SerializeField]
     [Min(0.1f)]
@@ -427,7 +427,7 @@ public class TankAirDashAbility :
     // =====================================================================
     #region Enemy 可見性
 
-    [Header("Enemy 可見性")]
+    [Header("敵人可見性")]
 
     [SerializeField]
     [Tooltip("用來檢查玩家到 Enemy 之間是否被牆壁或其他場景物件擋住的 Layer。這個 Mask 應該同時包含 Enemy Hitbox 與會遮擋 Dash 的 World Layer，否則無法確認第一個射線命中的是不是候選 Enemy。")]
@@ -445,7 +445,7 @@ public class TankAirDashAbility :
     // =====================================================================
     #region World 搜尋
 
-    [Header("World Dash Target")]
+    [Header("世界衝刺目標")]
 
     [SerializeField]
     [Min(0.1f)]
@@ -907,13 +907,13 @@ public class TankAirDashAbility :
         }
 
         // =============================================================
-        // 2. 右鍵剛按下
+        // 2. E 鍵剛按下
         // =============================================================
 
         bool specialPressed =
             input.Buttons.WasPressed(
                 previousButtons,
-                InputButton.Aim
+                InputButton.Ability1
             );
 
         if (specialPressed == false)
@@ -2403,7 +2403,7 @@ public class TankAirDashAbility :
     // =====================================================================
     #region Dash 位移設定
 
-    [Header("Enemy Dash 位移")]
+    [Header("敵人衝刺位移")]
 
     [SerializeField]
     [Min(0.1f)]
@@ -2418,7 +2418,7 @@ public class TankAirDashAbility :
         1.6f;
 
 
-    [Header("World Dash 位移")]
+    [Header("世界 衝刺 位移")]
 
     [SerializeField]
     [Min(0.1f)]
@@ -2433,7 +2433,7 @@ public class TankAirDashAbility :
         0.65f;
 
 
-    [Header("Dash 結束判定")]
+    [Header("衝刺 結束判定")]
 
     [SerializeField]
     [Min(0.01f)]

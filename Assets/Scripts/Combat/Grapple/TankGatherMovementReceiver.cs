@@ -89,7 +89,7 @@ public class TankGatherMovementReceiver :
     // =====================================================================
     #region Gather Movement
 
-    [Header("Tank Gather 位移")]
+    [Header("坦克 聚集 位移")]
 
     [SerializeField]
     [Min(0.1f)]
@@ -130,7 +130,7 @@ public class TankGatherMovementReceiver :
     // =====================================================================
     #region 重複 Gather
 
-    [Header("重複 Gather 控制")]
+    [Header("重複 聚集 控制")]
 
     [SerializeField]
     [Tooltip("開啟後，Enemy 已經正在被另一個 Tank Gather 拉動時，可以被新的 Gather 重新指定 Anchor。第一版建議關閉，避免兩個 Tank 同時把同一隻怪往不同方向拉。")]
@@ -143,7 +143,7 @@ public class TankGatherMovementReceiver :
     // =====================================================================
     #region Rigidbody
 
-    [Header("Rigidbody 相容設定")]
+    [Header("剛體相容設定")]
 
     [SerializeField]
     [Tooltip("如果 Enemy Root 上有 Rigidbody，Gather 時優先使用 Rigidbody.MovePosition 而不是直接修改 Transform。這能比較安全地與物理 Enemy 共存。沒有 Rigidbody 的 Enemy 會自動使用 Transform 位移。")]

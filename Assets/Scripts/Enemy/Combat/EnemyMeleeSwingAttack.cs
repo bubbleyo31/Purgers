@@ -106,7 +106,7 @@ public sealed class EnemyMeleeSwingAttack :
     [Tooltip("命中玩家時造成的基礎近戰傷害。同一次揮擊最多成功套用一次。")]
     private float damage = 18f;
 
-    [Header("近戰 A Gizmos")]
+    [Header("近戰 A 視覺輔助線")]
 
     [SerializeField]
     [Tooltip("選取敵人時顯示 Weapon Base、Weapon Tip、劍刃膠囊半徑與 Damage Origin。")]

@@ -77,7 +77,7 @@ public class SupportProfessionRuntimeDriver :
     #region Support Runtime Modules
 
 
-    [Header("Support 武器模組")]
+    [Header("支援 武器模組")]
 
 
     [SerializeField]
@@ -92,7 +92,7 @@ public class SupportProfessionRuntimeDriver :
         weaponController;
 
 
-    [Header("Support 共用戰鬥模組")]
+    [Header("支援 共用戰鬥模組")]
 
 
     [SerializeField]

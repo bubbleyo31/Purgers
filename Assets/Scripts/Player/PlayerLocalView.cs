@@ -67,6 +67,10 @@ public class PlayerLocalView : NetworkBehaviour
     /// </summary>
     private bool localPlayerBound;
 
+    private CameraFollow boundCamera;
+    public bool IsLocalViewReady => localPlayerBound && movement != null &&
+        movement.CamTarget != null && boundCamera != null && boundCamera == CameraFollow.Singleton;
+
     #endregion
 
     // =====================================================================
@@ -103,6 +107,12 @@ public class PlayerLocalView : NetworkBehaviour
     {
         if (localPlayerBound == false)
             return;
+
+        if (CameraFollow.Singleton != null && boundCamera != CameraFollow.Singleton && movement.CamTarget != null)
+        {
+            boundCamera = CameraFollow.Singleton;
+            boundCamera.SetTarget(movement.CamTarget);
+        }
 
         /*
          * Camera Target 只在本地視覺 LateUpdate 更新一次。
@@ -164,6 +174,7 @@ public class PlayerLocalView : NetworkBehaviour
             CameraFollow.Singleton.SetTarget(
                 movement.CamTarget
             );
+            boundCamera = CameraFollow.Singleton;
         }
         else if (CameraFollow.Singleton == null)
         {
@@ -252,6 +263,7 @@ public class PlayerLocalView : NetworkBehaviour
 
         localPlayerBound =
             false;
+        boundCamera = null;
 
         // -------------------------------------------------------------
         // 勾索 Visual

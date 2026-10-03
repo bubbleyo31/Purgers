@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 using Fusion;
+using Purgers.GameFlow.Stage;
+using Purgers.Progression;
 
 public enum PlacementMode
 {
@@ -20,12 +22,18 @@ public sealed class MapRunSelectionPrototype : MonoBehaviour
         ConnectorSide.West
     };
 
-    [Header("Scene References")]
+    [Header("場景參考")]
 
     [Tooltip(
         "本輪遊戲開始時使用的第一個 Map Chunk。")]
     [SerializeField]
     private MapChunk startingChunk;
+
+    [Tooltip(
+        "Boss 關專用 MapChunk Prefab。只由 StageRuntimePlan 的 DedicatedBossChunk route 使用；" +
+        "Prefab 不可包含 NetworkObject，且必須具備四向 Connector、出生點、Cartography 與預烘焙 NavMesh。")]
+    [SerializeField]
+    private MapChunk bossChunkPrefab;
 
     [Tooltip(
         "用來驗證出生位置的非網路測試物件。" +
@@ -40,7 +48,7 @@ public sealed class MapRunSelectionPrototype : MonoBehaviour
     private ConnectorAlignmentPrototype nextChunkAlignment;
 
 
-    [Header("Deterministic Selection")]
+    [Header("決定性抽選")]
 
     [Tooltip(
         "入口與出口抽選使用的固定 Seed。" +
@@ -74,16 +82,19 @@ public sealed class MapRunSelectionPrototype : MonoBehaviour
     private PlacementMode placementMode = PlacementMode.Marker;
 
     [Tooltip(
-        "啟用後，Host 第一次固定本輪入口／出口時自動生成一個第二 Chunk。" +
-        "本選項不會生成第三個 Chunk，也不負責 Client 同步。")]
+        "啟用後，Host 第一次固定本輪入口／出口時，依 Phase 4-A 拓撲生成" +
+        "StageRules 要求的完整 Chunk 鏈。Level 1／5 不新增、Level 2 新增一塊、" +
+        "Level 3 新增兩塊；Boss 關不走此流程。")]
     [SerializeField]
     private bool spawnSecondChunkOnHost = true;
 
     private NetworkRunner selectionRunner;
     private bool selectionAttempted;
     private bool selectionReady;
+    private bool mapPreparationReady;
     private Pose initialSpawnPose;
     private int activeRunSeed;
+    private MapChunk activeStartingChunk;
 
     public ConnectorSide CurrentEntrySide { get; private set; }
 
@@ -91,6 +102,18 @@ public sealed class MapRunSelectionPrototype : MonoBehaviour
 
     public int ActiveRunSeed =>
         activeRunSeed;
+
+    public bool IsSelectionReady =>
+        selectionReady;
+
+    public bool IsMapPreparationReady =>
+        selectionReady && mapPreparationReady;
+
+    public MapChunk StartingChunk => activeStartingChunk != null
+        ? activeStartingChunk
+        : startingChunk;
+    public ConnectorAlignmentPrototype Alignment => nextChunkAlignment;
+    public StageRuntimePlan RuntimePlan { get; private set; }
 
     private void Start()
     {
@@ -104,6 +127,7 @@ public sealed class MapRunSelectionPrototype : MonoBehaviour
     {
         if (placementMode != PlacementMode.Marker ||
             !DevelopmentToolsPolicy.CanRunLocalMapPrototype ||
+            Purgers.GameFlow.Control.LocalPlayerControl.AllInputBlocked ||
             !Input.GetKeyDown(rerollKey))
             return;
 
@@ -115,8 +139,7 @@ public sealed class MapRunSelectionPrototype : MonoBehaviour
     {
         pose = default;
 
-        if (!DevelopmentToolsPolicy.IsEnabled ||
-            !Application.isPlaying ||
+        if (!Application.isPlaying ||
             !isActiveAndEnabled ||
             placementMode != PlacementMode.FusionInitialSpawn ||
             runner == null ||
@@ -129,6 +152,8 @@ public sealed class MapRunSelectionPrototype : MonoBehaviour
             selectionRunner = runner;
             selectionAttempted = false;
             selectionReady = false;
+            mapPreparationReady = false;
+            activeStartingChunk = startingChunk;
             activeRunSeed = randomizeRunSeedOnHost
                 ? CreateRunSeed()
                 : seed;
@@ -139,6 +164,14 @@ public sealed class MapRunSelectionPrototype : MonoBehaviour
         if (!selectionAttempted)
         {
             selectionAttempted = true;
+
+            RuntimePlan = StageRules.ResolveRuntimePlan(
+                ResolveStageLevel(runner),
+                ResolveCycleLength(runner));
+
+            if (!TryPrepareStartingChunkForPlan(RuntimePlan))
+                return false;
+
             selectionReady = TrySelectSpawnPose(
                 activeRunSeed,
                 out initialSpawnPose);
@@ -152,29 +185,134 @@ public sealed class MapRunSelectionPrototype : MonoBehaviour
                     $"\nPosition: {initialSpawnPose.position}",
                     this);
 
-                if (spawnSecondChunkOnHost)
+                if (RuntimePlan.MapRoute == StageMapRoute.Unsupported)
                 {
-                    if (nextChunkAlignment == null)
-                    {
-                        Debug.LogWarning(
-                            "[MapRunSelection] 已啟用 Host 第二 Chunk 自動生成，" +
-                            "但尚未指定 Next Chunk Alignment。",
-                            this);
-                    }
-                    else
-                    {
-                        nextChunkAlignment.TrySpawnAndAlignForHost(
+                    Debug.LogError(
+                        "[MapRunSelection] 普通關最多支援兩個新增 Chunk；" +
+                        $"StageLevel {RuntimePlan.StageLevel}、CycleLength " +
+                        $"{RuntimePlan.CycleLength} 要求 {RuntimePlan.AdditionalChunkCount}。",
+                        this);
+                }
+                else if (nextChunkAlignment == null)
+                {
+                    Debug.LogWarning(
+                        "[MapRunSelection] 尚未指定 Next Chunk Alignment，" +
+                        "無法建立 Phase 4-B 地圖。",
+                        this);
+                }
+                else if (RuntimePlan.MapRoute == StageMapRoute.OrdinaryTopology &&
+                         RuntimePlan.AdditionalChunkCount > 0 &&
+                         !spawnSecondChunkOnHost)
+                {
+                    Debug.LogWarning(
+                        "[MapRunSelection] Host 多 Chunk 生成已停用，" +
+                        "Level 2～3 地圖不會進入 Ready。",
+                        this);
+                }
+                else
+                {
+                    mapPreparationReady =
+                        nextChunkAlignment.TryBuildTopologyForHost(
                             runner,
-                            startingChunk,
+                            StartingChunk,
+                            CurrentEntrySide,
                             CurrentExitSide,
-                            activeRunSeed);
-                    }
+                            activeRunSeed,
+                            RuntimePlan.AdditionalChunkCount);
+                }
+
+                if (!mapPreparationReady)
+                {
+                    Debug.LogError(
+                        "[MapRunSelection] 入口抽選成功，但本輪地圖準備失敗；" +
+                        "StageFlow 不會開始計時。",
+                        this);
                 }
             }
         }
 
         pose = initialSpawnPose;
         return selectionReady;
+    }
+
+    public bool TryAdoptReplicaStartingChunk(MapChunk replacement)
+    {
+        if (replacement == null || startingChunk == null)
+            return false;
+
+        if (activeStartingChunk != null &&
+            activeStartingChunk != startingChunk &&
+            activeStartingChunk != replacement)
+        {
+            Destroy(activeStartingChunk.gameObject);
+        }
+
+        startingChunk.gameObject.SetActive(false);
+        activeStartingChunk = replacement;
+        return true;
+    }
+
+    private bool TryPrepareStartingChunkForPlan(StageRuntimePlan plan)
+    {
+        activeStartingChunk = startingChunk;
+
+        if (plan.MapRoute != StageMapRoute.DedicatedBossChunk)
+            return true;
+
+        if (startingChunk == null || bossChunkPrefab == null)
+        {
+            Debug.LogError(
+                "[MapRunSelection] Boss route 缺少 Starting Chunk 或 Boss Chunk Prefab。",
+                this);
+            return false;
+        }
+
+        if (bossChunkPrefab.GetComponentInChildren<NetworkObject>(true) != null)
+        {
+            Debug.LogError(
+                "[MapRunSelection] Boss Chunk Prefab 不可包含 NetworkObject；" +
+                "Boss 敵人必須由 State Authority 另行 Spawn。",
+                bossChunkPrefab);
+            return false;
+        }
+
+        MapChunk created = Instantiate(
+            bossChunkPrefab,
+            startingChunk.transform.position,
+            startingChunk.transform.rotation,
+            startingChunk.transform.parent);
+
+        if (created.gameObject.scene != startingChunk.gameObject.scene)
+        {
+            UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(
+                created.gameObject,
+                startingChunk.gameObject.scene);
+        }
+
+        created.name = bossChunkPrefab.name + "_Host_Boss";
+        startingChunk.gameObject.SetActive(false);
+        activeStartingChunk = created;
+        return true;
+    }
+
+    private static int ResolveStageLevel(NetworkRunner runner)
+    {
+        GameSaveRuntimeContext context =
+            runner.GetComponent<GameSaveRuntimeContext>();
+
+        return context?.ActiveSave?.RunProgression != null
+            ? Mathf.Max(1, context.ActiveSave.RunProgression.StageLevel)
+            : 1;
+    }
+
+    private static int ResolveCycleLength(NetworkRunner runner)
+    {
+        GameSaveRuntimeContext context =
+            runner.GetComponent<GameSaveRuntimeContext>();
+
+        return context?.ActiveSave != null
+            ? Mathf.Max(1, context.ActiveSave.CycleLengthSnapshot)
+            : GameSaveSchema.DefaultCycleLength;
     }
 
     private static int CreateRunSeed()
@@ -226,10 +364,10 @@ public sealed class MapRunSelectionPrototype : MonoBehaviour
 
         ResetConnectorRoles();
 
-        startingChunk.GetConnector(CurrentEntrySide)
+        StartingChunk.GetConnector(CurrentEntrySide)
             .SetPrototypeRole(ConnectorPrototypeRole.Entrance);
 
-        startingChunk.GetConnector(CurrentExitSide)
+        StartingChunk.GetConnector(CurrentExitSide)
             .SetPrototypeRole(ConnectorPrototypeRole.Exit);
 
         prototypePlayerMarker.SetPositionAndRotation(
@@ -245,9 +383,10 @@ public sealed class MapRunSelectionPrototype : MonoBehaviour
     {
         pose = default;
 
-        if (startingChunk == null ||
-            !startingChunk.gameObject.activeInHierarchy ||
-            startingChunk.gameObject.scene != gameObject.scene)
+        MapChunk runtimeStartingChunk = StartingChunk;
+        if (runtimeStartingChunk == null ||
+            !runtimeStartingChunk.gameObject.activeInHierarchy ||
+            runtimeStartingChunk.gameObject.scene != gameObject.scene)
         {
             Debug.LogWarning(
                 "[MapRunSelection] Starting Chunk 無效或不在同一場景；使用既有出生流程。",
@@ -260,7 +399,7 @@ public sealed class MapRunSelectionPrototype : MonoBehaviour
             // GetConnector 會對缺少或重複方向拋出例外。
             // 完整驗證後才提交本次結果。
             foreach (ConnectorSide side in AllSides)
-                startingChunk.GetConnector(side);
+                runtimeStartingChunk.GetConnector(side);
 
             var random = new System.Random(selectedSeed);
             int entryIndex = random.Next(0, AllSides.Length);
@@ -269,7 +408,7 @@ public sealed class MapRunSelectionPrototype : MonoBehaviour
             if (exitIndex >= entryIndex)
                 exitIndex++;
 
-            var entrance = startingChunk.GetConnector(AllSides[entryIndex]);
+            var entrance = runtimeStartingChunk.GetConnector(AllSides[entryIndex]);
             Transform spawnPoint = entrance.PlayerSpawnPoint;
 
             if (spawnPoint == null || !spawnPoint.gameObject.activeInHierarchy)
@@ -298,10 +437,11 @@ public sealed class MapRunSelectionPrototype : MonoBehaviour
 
     private void ResetConnectorRoles()
     {
+        MapChunk runtimeStartingChunk = StartingChunk;
         foreach (ConnectorSide side in AllSides)
         {
             MapConnector connector =
-                startingChunk.GetConnector(side);
+                runtimeStartingChunk.GetConnector(side);
 
             connector.SetPrototypeRole(
                 ConnectorPrototypeRole.None);

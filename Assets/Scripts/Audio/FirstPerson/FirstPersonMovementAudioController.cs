@@ -94,7 +94,7 @@ public class FirstPersonMovementAudioController :
     #region Footstep Cues
 
 
-    [Header("走路與跑步腳步聲（Local OneShot）")]
+    [Header("走路與跑步腳步聲（本機單次播放）")]
 
 
     [SerializeField]
@@ -168,7 +168,7 @@ public class FirstPersonMovementAudioController :
     #region Jump And Landing Cues
 
 
-    [Header("跳躍與落地（Local OneShot）")]
+    [Header("跳躍與落地（本機單次播放）")]
 
 
     [SerializeField]
@@ -219,7 +219,7 @@ public class FirstPersonMovementAudioController :
     #region Slide Cues
 
 
-    [Header("滑鏟（Local OneShot / Loop）")]
+    [Header("滑鏟（本機單次播放／循環播放）")]
 
 
     [SerializeField]
@@ -312,7 +312,7 @@ public class FirstPersonMovementAudioController :
     #region Grapple Wind Cue
 
 
-    [Header("鈎索風聲（Local Loop）")]
+    [Header("勾索風聲（本機循環播放）")]
 
 
     [SerializeField]

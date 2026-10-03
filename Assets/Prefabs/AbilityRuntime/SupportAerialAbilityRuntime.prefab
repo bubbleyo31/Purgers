@@ -81,8 +81,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maximumActiveDuration: 1
-  cooldownDuration: 1
-  activeVelocityMultiplier: 0.1
+  cooldownDuration: 5
+  activeVelocityMultiplier: 0.5
   supportSMG: {fileID: 0}
   debugAbility: 1
   _AbilityActive:

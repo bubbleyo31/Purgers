@@ -1,0 +1,2 @@
+minimap on sampled frame ms=11.9799849693663
+minimap off sampled frame ms=12.0045437011868

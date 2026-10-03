@@ -5,7 +5,7 @@ namespace Purgers.Progression
 {
     public static class GameSaveSchema
     {
-        public const int CurrentVersion = 1;
+        public const int CurrentVersion = 3;
         public const int DefaultCycleLength = 4;
         public const string HostPlayerId = "host";
     }
@@ -22,7 +22,11 @@ namespace Purgers.Progression
         public PermanentProgressionData PermanentProgression = new PermanentProgressionData();
         public RunProgressionData RunProgression = RunProgressionData.CreateDefault();
 
-        public static GameSaveData CreateNew(string saveId, string displayName, DateTime utcNow)
+        public static GameSaveData CreateNew(
+            string saveId,
+            string displayName,
+            DateTime utcNow,
+            int cycleLength = GameSaveSchema.DefaultCycleLength)
         {
             string timestamp = utcNow.ToUniversalTime().ToString("O");
             return new GameSaveData
@@ -32,7 +36,7 @@ namespace Purgers.Progression
                 DisplayName = displayName,
                 CreatedUtc = timestamp,
                 LastPlayedUtc = timestamp,
-                CycleLengthSnapshot = GameSaveSchema.DefaultCycleLength,
+                CycleLengthSnapshot = Math.Max(1, cycleLength),
                 PermanentProgression = new PermanentProgressionData(),
                 RunProgression = RunProgressionData.CreateDefault()
             };
@@ -122,6 +126,9 @@ namespace Purgers.Progression
         public string StablePlayerId = string.Empty;
         public int PlayerLevel = 1;
         public int CurrentExperience;
+        public int PendingRewardCount;
+        public List<string> PendingRewardCandidateIds = new List<string>();
+        public List<string> AcquiredRewardIds = new List<string>();
         public string EquippedGrappleHitId = string.Empty;
         public string EquippedGrappleFocusId = string.Empty;
         public string EquippedWeaponId = string.Empty;
@@ -136,7 +143,8 @@ namespace Purgers.Progression
             {
                 StablePlayerId = stablePlayerId,
                 PlayerLevel = 1,
-                CurrentExperience = 0
+                CurrentExperience = 0,
+                PendingRewardCount = 0
             };
         }
 
@@ -145,6 +153,10 @@ namespace Purgers.Progression
             StablePlayerId = StablePlayerId ?? string.Empty;
             PlayerLevel = Math.Max(1, PlayerLevel);
             CurrentExperience = Math.Max(0, CurrentExperience);
+            PendingRewardCount = Math.Max(0, PendingRewardCount);
+            PendingRewardCandidateIds = PendingRewardCandidateIds ??
+                new List<string>();
+            AcquiredRewardIds = AcquiredRewardIds ?? new List<string>();
             EquippedGrappleHitId = EquippedGrappleHitId ?? string.Empty;
             EquippedGrappleFocusId = EquippedGrappleFocusId ?? string.Empty;
             EquippedWeaponId = EquippedWeaponId ?? string.Empty;

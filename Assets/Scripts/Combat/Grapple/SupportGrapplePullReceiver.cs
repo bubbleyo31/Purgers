@@ -97,7 +97,7 @@ public class SupportGrapplePullReceiver :
     #region Timing
 
 
-    [Header("Support Grapple Pull 時間")]
+    [Header("支援勾索拉取時間")]
 
 
     [SerializeField]
@@ -132,7 +132,7 @@ public class SupportGrapplePullReceiver :
     #region Destination
 
 
-    [Header("Support 面前目的地")]
+    [Header("支援 面前目的地")]
 
 
     [SerializeField]
@@ -156,7 +156,7 @@ public class SupportGrapplePullReceiver :
     #region Rigidbody
 
 
-    [Header("Enemy Rigidbody 相容")]
+    [Header("敵人剛體相容")]
 
 
     [SerializeField]

@@ -57,7 +57,7 @@ public readonly struct PlayerWeaponHUDSnapshot
     /// <summary>
     /// 右側數值。
     ///
-    /// Ammunition：備用彈藥。
+    /// Ammunition：最大彈匣容量。
     /// Combo：最高 Combo。
     /// </summary>
     public int SecondaryValue
@@ -78,7 +78,7 @@ public readonly struct PlayerWeaponHUDSnapshot
     /// <summary>
     /// 右側是否應顯示無限符號。
     ///
-    /// 目前用於 Attack / Support Infinite Reserve。
+    /// 保留給非彈藥容量的特殊數值模式；彈匣容量不會無限。
     /// </summary>
     public bool IsSecondaryValueInfinite
     {
@@ -96,6 +96,11 @@ public readonly struct PlayerWeaponHUDSnapshot
         get;
     }
 
+    public bool IsReloading { get; }
+
+    /// <summary>換彈已完成比例，0 到 1；取消或完成後不再顯示。</summary>
+    public float ReloadProgress { get; }
+
     public PlayerWeaponHUDSnapshot(
         Sprite weaponIcon,
         PlayerWeaponHUDValueMode valueMode,
@@ -103,7 +108,9 @@ public readonly struct PlayerWeaponHUDSnapshot
         int secondaryValue,
         bool isCurrentValueInfinite,
         bool isSecondaryValueInfinite,
-        bool showReloadReminder
+        bool showReloadReminder,
+        bool isReloading = false,
+        float reloadProgress = 0f
     )
     {
         WeaponIcon =
@@ -126,6 +133,9 @@ public readonly struct PlayerWeaponHUDSnapshot
 
         ShowReloadReminder =
             showReloadReminder;
+
+        IsReloading = isReloading;
+        ReloadProgress = Mathf.Clamp01(reloadProgress);
     }
 }
 

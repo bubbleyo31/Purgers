@@ -1,0 +1,11 @@
+Generator: built-in image_gen
+Output: Purgers_MenuPanel_1080x1080.png
+Generated square PNG resampled to exactly 1080x1080; alpha preserved.
+Reference: Documentation/ProjectArchitecture/UI設計參考圖/03_獎勵選擇.png
+
+Use case: ui-mockup.
+Create ONE finished raster game-menu PANEL BACKGROUND asset for the current indie FPS game 《除草機》 / Purgers. Requested delivery canvas: exactly 1080 x 1080 pixels, square PNG.
+The supplied reference is a STYLE REFERENCE ONLY: current game's HUD uses bright sky blue #2FA8EF, pale cool lavender gray #CBBFCB, simple angular energy bars and hexagonal brackets, clean geometric silhouettes. Do not reproduce the screenshot or its text.
+Create a premium yet restrained menu panel using this visual language: nearly full-canvas square panel, softly clipped corners, cool dark slate-blue opaque interior with a very subtle smooth gradient, fine pale gray inner rim, thin sky-blue accent edges, restrained geometric chamfered corner brackets reminiscent of the existing HUD. Very small angular layered plates along the outer edges, clean and flat with only delicate depth. Broad blank central content area covering at least 80% of width and height, uniform enough to overlay actual game menu buttons and readable white text. Keep all decorative details within the outermost 8% of the panel. Symmetric balanced professional game UI asset, crisp front-facing orthographic view, no perspective.
+A small transparent margin OUTSIDE the silhouette only, real alpha transparency at the outer corners, no visible checkerboard.
+No text at all, no letters, no numbers, no logos, no button labels, no baked-in buttons, no title, no characters, no landscape, no lawn mower machinery, no icons floating in the middle. No busy cyberpunk circuitry, no gritty scratches, no heavy glow, no drop shadow outside the silhouette, no mockup board. One standalone usable Panel texture, filling the square canvas.

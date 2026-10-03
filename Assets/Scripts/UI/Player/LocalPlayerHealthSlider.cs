@@ -48,7 +48,7 @@ public class LocalPlayerHealthSlider :
     // =====================================================================
     #region Runner
 
-    [Header("Fusion Runner")]
+    [Header("Fusion 執行器")]
 
     [SerializeField]
     [Tooltip(
@@ -62,7 +62,7 @@ public class LocalPlayerHealthSlider :
     // =====================================================================
     #region Slider
 
-    [Header("血量 Slider")]
+    [Header("血量滑桿")]
 
     [SerializeField]
     [Tooltip(

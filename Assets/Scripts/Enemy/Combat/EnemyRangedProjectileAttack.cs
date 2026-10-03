@@ -159,7 +159,7 @@ public sealed class EnemyRangedProjectileAttack :
         if (context.Controller.CurrentActionPhase ==
             EnemyCombatActionPhase.Startup)
         {
-            if (context.Perception.HasDirectSight == false)
+            if (context.Perception.HasCombatSight == false)
             {
                 StartCooldown();
                 return EnemyCombatOptionTickResult.Cancelled;

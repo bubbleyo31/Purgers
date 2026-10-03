@@ -1,0 +1,30 @@
+{
+  "source_sha256": "eee7a034c79f5acdc47b8465d5a0b5d13f2b78e507ac1fbb8a2047b9ee1f642c",
+  "bones": 63,
+  "actions": {
+    "idle": [
+      1.0,
+      61.0
+    ],
+    "Opening the scope": [
+      1.0,
+      4.0
+    ],
+    "Opening the scope shoot": [
+      1.0,
+      2.0
+    ],
+    "Reload": [
+      1.0,
+      36.0
+    ],
+    "shoot": [
+      1.0,
+      2.0
+    ]
+  },
+  "meshes": 18,
+  "vertices": 50302,
+  "triangles": 99476,
+  "unity_output_validation": "not executed"
+}

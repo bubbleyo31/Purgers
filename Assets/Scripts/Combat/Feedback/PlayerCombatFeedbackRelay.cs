@@ -222,7 +222,7 @@ public class PlayerCombatFeedbackRelay :
     // =====================================================================
     #region Player Core 引用
 
-    [Header("Player Core 引用")]
+    [Header("玩家核心 引用")]
 
     [SerializeField]
     [Tooltip("玩家目前正式職業。主要用於遷移階段判斷目前是否應該搜尋 Player Root 上尚未搬走的 Attack 傷害來源。若留空會自動取得。")]
@@ -238,7 +238,7 @@ public class PlayerCombatFeedbackRelay :
     // =====================================================================
     #region 遷移階段設定
 
-    [Header("Attack Runtime 遷移階段")]
+    [Header("攻擊 執行階段 遷移階段")]
 
     [SerializeField]
     [Tooltip("開啟後，如果目前玩家是 Attack，除了搜尋 Attack Profession Runtime，也會暫時搜尋 Player Root 上的 ICombatDamageFeedbackSource。這是因為 AttackRifle 與 AttackQuickMelee 目前尚未真正搬進 Runtime。等搬家完成後會關閉並刪除這個相容功能。")]

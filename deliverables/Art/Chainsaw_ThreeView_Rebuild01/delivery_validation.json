@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "errors": [],
+  "source_unchanged": true,
+  "source_hand_geometry_exact": true,
+  "source_hand_weights_exact": true,
+  "source_hand_vertices": 1900,
+  "real_relief_vertices": 305450,
+  "mushrooms": [],
+  "meshes_with_missing_uv": [],
+  "fbx_sha256": "6c8899f0e207d78aa71cd30eee59e9a7eb9493b24c72a6808ffb71b010c6dd3c",
+  "unity_output_imported": false,
+  "scope": "geometry/weights, reference relief and file integrity; does not claim Unity or collision-free animation"
+}

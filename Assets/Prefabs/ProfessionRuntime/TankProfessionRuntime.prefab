@@ -234,5 +234,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tankMeleeCombo: {fileID: 0}
-  weaponIcon: {fileID: 21300000, guid: a13c040013eb25144803b10d8a8e843d, type: 3}
+  weaponIcon: {fileID: 21300000, guid: ddfe9f76c39ffe249a37127bc335c23b, type: 3}
   maximumCombo: 3

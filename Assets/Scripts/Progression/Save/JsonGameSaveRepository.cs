@@ -39,7 +39,9 @@ namespace Purgers.Progression
 
         public string RootDirectory { get; }
 
-        public GameSaveRepositoryResult<GameSaveData> CreateNew(string displayName)
+        public GameSaveRepositoryResult<GameSaveData> CreateNew(
+            string displayName,
+            int cycleLength = GameSaveSchema.DefaultCycleLength)
         {
             DateTime utcNow = utcNowProvider().ToUniversalTime();
             string saveId = Guid.NewGuid().ToString("N");
@@ -48,7 +50,11 @@ namespace Purgers.Progression
                 : displayName.Trim();
 
             GameSaveData save =
-                GameSaveData.CreateNew(saveId, resolvedDisplayName, utcNow);
+                GameSaveData.CreateNew(
+                    saveId,
+                    resolvedDisplayName,
+                    utcNow,
+                    cycleLength);
             return Write(save);
         }
 
@@ -255,6 +261,8 @@ namespace Purgers.Progression
                 switch (header.SaveVersion)
                 {
                     case 1:
+                    case 2:
+                    case 3:
                     {
                         GameSaveData save =
                             JsonUtility.FromJson<GameSaveData>(json);
@@ -265,6 +273,8 @@ namespace Purgers.Progression
                         }
 
                         save.Normalize();
+                        // Older saves acquire the current optional reward fields.
+                        save.SaveVersion = GameSaveSchema.CurrentVersion;
                         string error = ValidateLoadedData(save);
                         return string.IsNullOrEmpty(error)
                             ? GameSaveRepositoryResult<GameSaveData>.Succeeded(save)

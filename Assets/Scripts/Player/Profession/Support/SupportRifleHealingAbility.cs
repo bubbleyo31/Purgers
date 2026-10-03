@@ -66,7 +66,7 @@ public class SupportRifleHealingAbility :
     // =====================================================================
     #region Healing 設定
 
-    [Header("Support Rifle 治療設定")]
+    [Header("支援 步槍 治療設定")]
 
     [SerializeField]
     [Min(0f)]

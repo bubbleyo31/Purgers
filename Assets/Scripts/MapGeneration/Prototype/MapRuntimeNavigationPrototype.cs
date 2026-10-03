@@ -16,7 +16,7 @@ public sealed class MapRuntimeNavigationPrototype : MonoBehaviour
         ConnectorSide.West
     };
 
-    [Header("Chunk NavMesh")]
+    [Header("區塊導航網格")]
 
     [SerializeField, Tooltip(
         "Runtime NavMesh 使用的 Agent Type ID。Humanoid 通常為 0，" +
@@ -36,7 +36,7 @@ public sealed class MapRuntimeNavigationPrototype : MonoBehaviour
         "跨 Chunk NavMesh Link 的寬度。0 代表單一路徑點。")]
     private float connectionLinkWidth = 4f;
 
-    [Header("Ground Patrol Planning")]
+    [Header("地面巡邏規劃")]
 
     [SerializeField, Min(3), Tooltip(
         "每個 Chunk 在 X 與 Z 軸建立多少個候選取樣格。" +
@@ -86,14 +86,99 @@ public sealed class MapRuntimeNavigationPrototype : MonoBehaviour
 
     private readonly List<EnemyPatrolArea> generatedGroundAreas =
         new List<EnemyPatrolArea>();
+    private readonly List<NavMeshLinkInstance> connectionLinks =
+        new List<NavMeshLinkInstance>();
 
     private GameObject runtimeMapRoot;
-    private NavMeshLinkInstance connectionLink;
     private bool buildAttempted;
 
     public bool IsReady { get; private set; }
     public IReadOnlyList<EnemyPatrolArea> GeneratedGroundAreas =>
         generatedGroundAreas;
+
+    /// <summary>使用與現有地面導航相同的 Agent Type 投影 Encounter 出生候選點。</summary>
+    public bool TrySampleGroundPosition(
+        Vector3 candidate,
+        float maximumDistance,
+        out Vector3 position)
+    {
+        position = default;
+        if (!IsReady || maximumDistance <= 0f)
+            return false;
+
+        var filter = new NavMeshQueryFilter
+        {
+            agentTypeID = agentTypeId,
+            areaMask = NavMesh.AllAreas
+        };
+        if (!NavMesh.SamplePosition(candidate, out NavMeshHit hit, maximumDistance, filter))
+            return false;
+
+        position = hit.position;
+        return true;
+    }
+
+    public bool TryResolveCompleteGroundPath(
+        Vector3 start,
+        Vector3 destination,
+        float sampleDistance,
+        out Vector3 sampledDestination)
+    {
+        sampledDestination = default;
+
+        if (!IsReady)
+            return false;
+
+        var filter = new NavMeshQueryFilter
+        {
+            agentTypeID = agentTypeId,
+            areaMask = NavMesh.AllAreas
+        };
+        float safeSampleDistance = Mathf.Max(0.01f, sampleDistance);
+
+        if (!NavMesh.SamplePosition(
+                start,
+                out NavMeshHit sampledStart,
+                safeSampleDistance,
+                filter) ||
+            !NavMesh.SamplePosition(
+                destination,
+                out NavMeshHit sampledEnd,
+                safeSampleDistance,
+                filter))
+        {
+            return false;
+        }
+
+        var path = new NavMeshPath();
+        if (!NavMesh.CalculatePath(
+                sampledStart.position,
+                sampledEnd.position,
+                filter,
+                path) ||
+            path.status != NavMeshPathStatus.PathComplete)
+        {
+            return false;
+        }
+
+        sampledDestination = sampledEnd.position;
+        return true;
+    }
+
+    /// <summary>
+    /// Level 1 單一 Chunk 流程：載入預烘焙 NavMesh 並規劃巡邏區，
+    /// 不建立跨 Chunk Link。
+    /// </summary>
+    public bool TryLoadAndPlanSingleChunk(
+        MapChunk chunk,
+        int runSeed)
+    {
+        return TryBuildAndPlanLayout(
+            new[] { chunk },
+            Array.Empty<MapConnector>(),
+            Array.Empty<MapConnector>(),
+            runSeed);
+    }
 
     /// <summary>
     /// 只由已完成 Host 權威檢查的地圖生成流程呼叫。
@@ -106,8 +191,24 @@ public sealed class MapRuntimeNavigationPrototype : MonoBehaviour
         MapConnector secondConnectedConnector,
         int runSeed)
     {
-        if (!DevelopmentToolsPolicy.IsEnabled ||
-            !Application.isPlaying ||
+        return TryBuildAndPlanLayout(
+            new[] { firstChunk, secondChunk },
+            new[] { firstConnectedConnector },
+            new[] { secondConnectedConnector },
+            runSeed);
+    }
+
+    /// <summary>
+    /// Phase 4-B 共用導航入口。每個 Chunk 只重掛自己預烘焙的 NavMeshData，
+    /// 每個相鄰接縫建立一條 Link，且每個 Chunk 仍各自擁有巡邏區。
+    /// </summary>
+    public bool TryBuildAndPlanLayout(
+        IReadOnlyList<MapChunk> chunks,
+        IReadOnlyList<MapConnector> sourceConnectors,
+        IReadOnlyList<MapConnector> entryConnectors,
+        int runSeed)
+    {
+        if (!Application.isPlaying ||
             !isActiveAndEnabled)
         {
             return false;
@@ -124,53 +225,65 @@ public sealed class MapRuntimeNavigationPrototype : MonoBehaviour
         buildAttempted = true;
         IsReady = false;
 
-        if (firstChunk == null ||
-            firstConnectedConnector == null ||
-            secondChunk == null ||
-            secondConnectedConnector == null)
+        if (chunks == null || chunks.Count == 0 ||
+            sourceConnectors == null || entryConnectors == null ||
+            sourceConnectors.Count != chunks.Count - 1 ||
+            entryConnectors.Count != chunks.Count - 1)
         {
             Debug.LogError(
-                "[MapRuntimeNavigation] First 或 Second Chunk 為 Null。",
+                "[MapRuntimeNavigation] Chunk 或 Connector 鏈長度無效。",
                 this);
             return false;
         }
 
-        if (firstChunk.gameObject.scene != secondChunk.gameObject.scene)
+        Scene targetScene = chunks[0] != null
+            ? chunks[0].gameObject.scene
+            : default;
+
+        for (int index = 0; index < chunks.Count; index++)
         {
-            Debug.LogError(
-                "[MapRuntimeNavigation] 兩個 Chunk 必須位於同一個 Unity Scene。",
-                this);
-            return false;
+            if (chunks[index] == null || chunks[index].gameObject.scene != targetScene)
+            {
+                Debug.LogError(
+                    "[MapRuntimeNavigation] 所有 Chunk 必須有效且位於同一個 Unity Scene。",
+                    this);
+                return false;
+            }
         }
 
-        EnemyPatrolArea pendingFirstArea = null;
-        EnemyPatrolArea pendingSecondArea = null;
+        var surfaces = new List<NavMeshSurface>(chunks.Count);
+        var pendingAreas = new List<EnemyPatrolArea>(chunks.Count);
 
         try
         {
-            PrepareRuntimeRoot(firstChunk, secondChunk);
-
-            if (!TryGetBakedSurface(
-                    firstChunk,
-                    out NavMeshSurface firstSurface) ||
-                !TryGetBakedSurface(
-                    secondChunk,
-                    out NavMeshSurface secondSurface))
+            for (int index = 0; index < chunks.Count; index++)
             {
-                return false;
+                if (!TryGetBakedSurface(chunks[index], out NavMeshSurface surface))
+                    return false;
+                surfaces.Add(surface);
             }
 
-            firstSurface.RemoveData();
-            secondSurface.RemoveData();
+            PrepareRuntimeRoot(chunks);
 
-            firstSurface.AddData();
-            secondSurface.AddData();
-
-            if (!TryCreateConnectionLink(
-                    firstConnectedConnector,
-                    secondConnectedConnector))
+            foreach (NavMeshSurface surface in surfaces)
             {
-                return false;
+                surface.RemoveData();
+                surface.AddData();
+            }
+
+            for (int index = 0; index < sourceConnectors.Count; index++)
+            {
+                if (sourceConnectors[index] == null || entryConnectors[index] == null ||
+                    !TryCreateConnectionLink(
+                        sourceConnectors[index],
+                        entryConnectors[index],
+                        out NavMeshLinkInstance link))
+                {
+                    CleanupPendingNavigation(pendingAreas);
+                    return false;
+                }
+
+                connectionLinks.Add(link);
             }
 
             NavMeshTriangulation triangulation =
@@ -183,47 +296,37 @@ public sealed class MapRuntimeNavigationPrototype : MonoBehaviour
                     "[MapRuntimeNavigation] 預先烘焙的 Chunk NavMesh 沒有載入任何頂點。" +
                     "請檢查 MapChunk Prefab 的 NavMeshSurface 與 NavMeshData。",
                     this);
+                CleanupPendingNavigation(pendingAreas);
                 return false;
             }
 
-            bool firstAreaCreated =
-                TryCreateGroundPatrolArea(
-                    firstChunk,
-                    runSeed,
-                    0,
-                    out pendingFirstArea);
-
-            bool secondAreaCreated =
-                firstAreaCreated &&
-                TryCreateGroundPatrolArea(
-                    secondChunk,
-                    runSeed,
-                    1,
-                    out pendingSecondArea);
-
-            if (!firstAreaCreated || !secondAreaCreated)
+            for (int index = 0; index < chunks.Count; index++)
             {
-                DestroyRuntimeArea(pendingFirstArea);
-                DestroyRuntimeArea(pendingSecondArea);
+                if (!TryCreateGroundPatrolArea(
+                        chunks[index],
+                        runSeed,
+                        index,
+                        out EnemyPatrolArea pendingArea))
+                {
+                    DestroyRuntimeArea(pendingArea);
+                    CleanupPendingNavigation(pendingAreas);
+                    return false;
+                }
 
-                if (connectionLink.valid)
-                    connectionLink.Remove();
-
-                return false;
+                pendingAreas.Add(pendingArea);
             }
 
-            generatedGroundAreas.Add(pendingFirstArea);
-            generatedGroundAreas.Add(pendingSecondArea);
+            generatedGroundAreas.AddRange(pendingAreas);
             IsReady = true;
 
             if (debugRuntimeNavigation)
             {
                 Debug.Log(
-                    "[MapRuntimeNavigation] Chunk NavMesh、接合 Link 與巡邏區已就緒。" +
+                    "[MapRuntimeNavigation] 多 Chunk NavMesh、接合 Link 與巡邏區已就緒。" +
+                    $"\nChunks: {chunks.Count}" +
+                    $"\nLinks: {connectionLinks.Count}" +
                     $"\nNavMesh Vertices: {triangulation.vertices.Length}" +
-                    $"\nNavMesh Triangles: {triangulation.indices.Length / 3}" +
-                    $"\nFirst Points: {pendingFirstArea.PointCount}" +
-                    $"\nSecond Points: {pendingSecondArea.PointCount}",
+                    $"\nNavMesh Triangles: {triangulation.indices.Length / 3}",
                     this);
             }
 
@@ -234,11 +337,7 @@ public sealed class MapRuntimeNavigationPrototype : MonoBehaviour
             exception is InvalidOperationException ||
             exception is ArgumentException)
         {
-            DestroyRuntimeArea(pendingFirstArea);
-            DestroyRuntimeArea(pendingSecondArea);
-
-            if (connectionLink.valid)
-                connectionLink.Remove();
+            CleanupPendingNavigation(pendingAreas);
 
             Debug.LogError(
                 $"[MapRuntimeNavigation] 建置失敗。\n{exception.Message}",
@@ -247,10 +346,11 @@ public sealed class MapRuntimeNavigationPrototype : MonoBehaviour
         }
     }
 
-    private void PrepareRuntimeRoot(
-        MapChunk firstChunk,
-        MapChunk secondChunk)
+    private void PrepareRuntimeRoot(IReadOnlyList<MapChunk> chunks)
     {
+        MapChunk firstChunk = chunks[0];
+        Transform sceneRoot = firstChunk.transform.parent;
+
         runtimeMapRoot = new GameObject("RuntimeGeneratedMapRoot");
 
         Scene targetScene = firstChunk.gameObject.scene;
@@ -258,17 +358,22 @@ public sealed class MapRuntimeNavigationPrototype : MonoBehaviour
             runtimeMapRoot,
             targetScene);
 
+        // Multiple Peer 模式會以 Fusion 的場景根管理 Single 切場時的銷毀。
+        // 只移進同一個 Unity Scene 仍會成為最外層物件，無法跟著 [Game] 卸載。
+        // 先保留起始 Chunk 所屬的 Fusion 場景根，再把執行期地圖掛回該根。
+        if (sceneRoot != null)
+        {
+            runtimeMapRoot.transform.SetParent(
+                sceneRoot,
+                true);
+        }
+
         runtimeMapRoot.transform.SetPositionAndRotation(
             Vector3.zero,
             Quaternion.identity);
 
-        firstChunk.transform.SetParent(
-            runtimeMapRoot.transform,
-            true);
-
-        secondChunk.transform.SetParent(
-            runtimeMapRoot.transform,
-            true);
+        foreach (MapChunk chunk in chunks)
+            chunk.transform.SetParent(runtimeMapRoot.transform, true);
 
     }
 
@@ -316,8 +421,10 @@ public sealed class MapRuntimeNavigationPrototype : MonoBehaviour
 
     private bool TryCreateConnectionLink(
         MapConnector firstConnector,
-        MapConnector secondConnector)
+        MapConnector secondConnector,
+        out NavMeshLinkInstance connectionLink)
     {
+        connectionLink = default;
         Vector3 firstCandidate =
             firstConnector.transform.position -
             firstConnector.transform.forward *
@@ -369,6 +476,24 @@ public sealed class MapRuntimeNavigationPrototype : MonoBehaviour
 
         connectionLink.owner = this;
         return true;
+    }
+
+    private void CleanupPendingNavigation(
+        IReadOnlyList<EnemyPatrolArea> pendingAreas)
+    {
+        if (pendingAreas != null)
+        {
+            foreach (EnemyPatrolArea area in pendingAreas)
+                DestroyRuntimeArea(area);
+        }
+
+        foreach (NavMeshLinkInstance link in connectionLinks)
+        {
+            if (link.valid)
+                link.Remove();
+        }
+
+        connectionLinks.Clear();
     }
 
     private bool TryCreateGroundPatrolArea(
@@ -725,7 +850,12 @@ public sealed class MapRuntimeNavigationPrototype : MonoBehaviour
 
     private void OnDisable()
     {
-        if (connectionLink.valid)
-            connectionLink.Remove();
+        foreach (NavMeshLinkInstance link in connectionLinks)
+        {
+            if (link.valid)
+                link.Remove();
+        }
+
+        connectionLinks.Clear();
     }
 }

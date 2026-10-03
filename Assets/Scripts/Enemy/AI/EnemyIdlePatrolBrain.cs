@@ -47,7 +47,7 @@ public sealed class EnemyIdlePatrolBrain : NetworkBehaviour
     [SerializeField, Tooltip("輸出巡邏目的地、路徑失敗與待機轉向。")]
     private bool debugIdlePatrol = false;
 
-    [Header("巡邏 Runtime Gizmos")]
+    [Header("巡邏 執行階段 視覺輔助線")]
     [SerializeField, Tooltip("Play Mode 選取敵人時，顯示這隻敵人目前採用的巡邏目的地與連線。")]
     private bool drawCurrentPatrolDestination = true;
     [SerializeField, Min(0.01f), Tooltip("目前巡邏目的地 Gizmos 球體半徑，公尺。")]

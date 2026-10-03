@@ -22,7 +22,7 @@ public sealed class EnemyMovementOwnership : MonoBehaviour
           (actor.ActionGate != null && actor.ActionGate.IsFusionSpawned &&
            actor.ActionGate.GetLocks(EnemyActionLockSource.ExternalMovement) != EnemyActionLockFlags.None)));
 
-    public bool CanMove => Ready && !IsExternallyMoved &&
+    public bool CanMove => Ready && !actor.IsStationary && !IsExternallyMoved &&
         actor.StateController.CanRunBrain &&
         !actor.StateController.IsUsingAction &&
         actor.ActionGate.CanMove && actor.ActionGate.CanNavigate;

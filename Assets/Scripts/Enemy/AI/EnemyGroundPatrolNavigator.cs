@@ -10,7 +10,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(EnemyMovementOwnership))]
 public sealed class EnemyGroundPatrolNavigator : EnemyPatrolNavigator
 {
-    [Header("地面 NavMesh")]
+    [Header("地面 導航網格")]
     [SerializeField, Tooltip("NavMesh 的 Agent Type ID，預設 Humanoid 為 0。必須與烘焙的 Agent Type 一致。")]
     private int agentTypeId = 0;
     [SerializeField, Min(0.01f), Tooltip("從 Root 腳底／巡邏節點搜尋最近 NavMesh 的最大距離。建議 0.3，避免投影到另一層樓。")]
@@ -24,7 +24,7 @@ public sealed class EnemyGroundPatrolNavigator : EnemyPatrolNavigator
     [SerializeField, Min(0.001f), Tooltip("離地小於這個距離時視為已落地，公尺。")]
     private float groundedProbeDistance = 0.08f;
 
-    [Header("地面巡邏碰撞 Gizmos")]
+    [Header("地面巡邏碰撞 視覺輔助線")]
     [SerializeField, Tooltip(
         "選取敵人時顯示實際用於 OverlapCapsule／CapsuleCast 的碰撞膠囊。\n" +
         "尺寸直接使用 Body Radius、Body Height 與 Collision Skin，不需要另外填一套 Gizmo 尺寸。")]

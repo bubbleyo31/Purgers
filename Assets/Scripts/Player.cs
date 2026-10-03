@@ -73,7 +73,7 @@ public class Player :
     // =====================================================================
     #region Player Core 引用
 
-    [Header("Player Core 模組引用")]
+    [Header("玩家核心 模組引用")]
 
     [SerializeField]
     [Tooltip("玩家共用移動模組。若留空會自動取得。")]
@@ -335,6 +335,9 @@ public class Player :
 
     public override void FixedUpdateNetwork()
     {
+        // 正式等級由 Host 同步；即使這個 Tick 沒有輸入，也必須處理升級與初始容量。
+        grappleCharges.SynchronizeLevelStateAuthority();
+
         if (GetInput(out NetInput input) ==
             false)
         {
@@ -345,7 +348,9 @@ public class Player :
         // 1. 共用勾索充能
         // -------------------------------------------------------------
 
-        grappleCharges.TickRecharge();
+        // Never read a process-local lock here: this also simulates remote players.
+        Purgers.GameFlow.Control.PlayerControlLocks.Filter(ref input, input.BlockedControls);
+        bool movementLocked = Purgers.GameFlow.Control.PlayerControlLocks.BlocksMovement(input.BlockedControls);
 
         if (grappleMomentumEnergy != null)
         {
@@ -410,7 +415,7 @@ public class Player :
          * 繞過 Support Ability、Support Pull 或職業移動封鎖。
          */
         float nonGrappleMovementInfluence =
-            1f;
+            movementLocked ? 0f : 1f;
 
         if (supportGrapplePlayerPullReceiver !=
             null)
@@ -649,12 +654,20 @@ public class Player :
         NetInput professionInput =
             input;
 
+        // Tank/Support RMB can start displacement abilities. Ordinary Attack ADS stays available.
+        if (movementLocked && profession.CurrentProfession != PlayerProfessionType.Attack)
+        {
+            professionInput.Buttons.Set(InputButton.Aim, false);
+            professionInput.Buttons.Set(InputButton.Ability1, false);
+        }
+
         if (grapple.BlocksProfessionAimInput)
         {
             professionInput.Buttons.Set(
                 InputButton.Aim,
                 false
             );
+            professionInput.Buttons.Set(InputButton.Ability1, false);
         }
 
         // -------------------------------------------------------------

@@ -2,611 +2,132 @@ using Fusion;
 using UnityEngine;
 
 /// <summary>
-/// 玩家勾索充能與逐格恢復系統。
-///
-/// 負責：
-/// 1. 讀取 PlayerProfession。
-/// 2. 取得 ProfessionDefinition。
-/// 3. 最大勾索充能。
-/// 4. 目前勾索充能。
-/// 5. 每格恢復計時。
-/// 6. 擊殺回充。
-/// 7. 提供未來 UI 所需資料。
-///
-/// 不負責：
-/// 1. 勾索射線。
-/// 2. 勾索拉動。
-/// 3. LineRenderer。
-/// 4. Momentum。
+/// 鈎索使用能量的唯一持有者。保留舊類名及元件 GUID，避免破壞玩家 Prefab 引用。
+/// 上限讀取主要 GameLogic 的玩家等級；Host 初始化／升級補充，既有玩家 Simulation 預測消耗。
+/// 不控制鈎索物理，不處理左下動能增傷，也不自然恢復或擊殺回充。
 /// </summary>
 [DisallowMultipleComponent]
-[RequireComponent(typeof(PlayerProfession))]
 public class PlayerGrappleCharges : NetworkBehaviour
 {
-    // =====================================================================
-    #region 引用
+    // 舊 Prefab 的序列化引用保留供相容；能量不再讀取職業設定。
+    [SerializeField, HideInInspector] private PlayerProfession playerProfession;
 
-    [Header("職業引用")]
+    [Header("玩家等級與鈎索能量")]
+    [SerializeField, Min(0f), Tooltip("1 級的最大鈎索能量，單位：點；有效值至少 0。預設 50，0 代表 1 級無法發射。生成及正式切場時補滿。")]
+    private float levelOneEnergy = 50f;
+    [SerializeField, Min(0f), Tooltip("每提升 1 級增加的最大能量，單位：點／級；有效值至少 0。上限＝1 級能量＋(等級－1)×此值。預設 25，因此 2 級 75、3 級 100。")]
+    private float energyPerLevel = 25f;
+    [SerializeField, Tooltip("升級增加上限時的補充方式：補滿至新上限，或只增加新舊上限差額。預設補滿；切換不會立即補充，下一次容量增加才生效。Host 設定決定正式結果。")]
+    private GrappleEnergyLevelUpMode levelUpMode = GrappleEnergyLevelUpMode.RefillToMaximum;
 
-    [SerializeField]
-    [Tooltip("玩家職業資料。最大充能與冷卻時間會從目前職業的 ProfessionDefinition 取得。若留空會自動取得。")]
-    private PlayerProfession playerProfession;
-
-    #endregion
-
-    // =====================================================================
-    #region 除錯
+    [Header("鈎索消耗")]
+    [SerializeField, Min(0f), Tooltip("每次確認合法鈎點並正式發射所扣的能量，單位：點；有效值至少 0，預設 1。打空不扣。必須足額且仍有能量才能發射；0 只免除發射費。")]
+    private float launchEnergyCost = 1f;
+    [SerializeField, Min(0f), Tooltip("鈎索尚未釋放且實際拉動玩家自己時，每秒扣除的能量；有效值至少 0，預設 1。按 Fusion DeltaTime 連續扣除。跳躍、釋放後 Momentum、拉其他目標不扣；歸零不會中斷本次拉動。")]
+    private float pullEnergyPerSecond = 1f;
 
     [Header("除錯設定")]
-
-    [SerializeField]
-    [Tooltip("開啟後會顯示勾索充能消耗、自然恢復、初始化與擊殺回充資訊。")]
+    [SerializeField, Tooltip("輸出初始化、升級補充與發射消耗；不逐 Tick 輸出拉動扣點。")]
     private bool debugCharges = true;
 
-    #endregion
+    [Networked] public float CurrentEnergy { get; private set; }
+    [Networked] public float MaximumEnergy { get; private set; }
+    [Networked] public int AppliedPlayerLevel { get; private set; }
+    [Networked] private NetworkBool IsInitialized { get; set; }
 
-    // =====================================================================
-    #region Fusion 狀態
+    private bool hasSpawned;
+    private bool HasValidState => hasSpawned && Object != null && Object.IsValid && Runner != null;
+    private bool CanSimulate => HasValidState && (Object.HasStateAuthority || Object.HasInputAuthority);
+    public bool HasCharge => HasValidState && IsInitialized && GrappleEnergyRules.CanLaunch(CurrentEnergy, LaunchEnergyCost);
+    public float NormalizedEnergy => HasValidState && IsInitialized && MaximumEnergy > 0f
+        ? Mathf.Clamp01(CurrentEnergy / MaximumEnergy) : 0f;
+    public float LaunchEnergyCost => Mathf.Max(0f, launchEnergyCost);
+    public float PullEnergyPerSecond => Mathf.Max(0f, pullEnergyPerSecond);
+    public GrappleEnergyLevelUpMode LevelUpMode => levelUpMode;
 
-    /// <summary>
-    /// 玩家目前剩餘勾索充能。
-    /// </summary>
-    [Networked]
-    public int CurrentCharges { get; private set; }
+    // 舊公開介面保留為唯讀相容層；正式 HUD 使用浮點能量，避免把尾數截斷。
+    public int CurrentCharges => HasValidState ? Mathf.FloorToInt(CurrentEnergy) : 0;
+    public int MaxCharges => HasValidState ? Mathf.FloorToInt(MaximumEnergy) : 0;
+    public float RechargeDuration => 0f;
+    public bool IsRecharging => false;
+    public float RechargeRemainingSeconds => 0f;
+    public float RechargeProgress => 0f;
 
-    /// <summary>
-    /// 是否已經依照職業完成初始化。
-    /// </summary>
-    [Networked]
-    private NetworkBool IsInitialized { get; set; }
-
-    /// <summary>
-    /// 上一次初始化時使用的職業。
-    ///
-    /// 若未來戰鬥途中允許切換職業，
-    /// 可以偵測職業變化。
-    /// </summary>
-    [Networked]
-    private PlayerProfessionType InitializedProfession { get; set; }
-
-    /// <summary>
-    /// 正在恢復的下一格充能計時器。
-    /// </summary>
-    [Networked]
-    private TickTimer RechargeTimer { get; set; }
-
-    /// <summary>
-    /// 是否正在恢復下一格。
-    /// </summary>
-    [Networked]
-    private NetworkBool RechargeActive { get; set; }
-
-    #endregion
-
-    // =====================================================================
-    #region 公開資料
-
-    /// <summary>
-    /// 目前職業的勾索最大充能。
-    /// </summary>
-    public int MaxCharges
+    public override void Spawned()
     {
-        get
-        {
-            if (playerProfession == null)
-                return 0;
+        hasSpawned = true;
+        if (!Object.HasStateAuthority) return;
+        IsInitialized = false;
+        CurrentEnergy = 0f;
+        MaximumEnergy = 0f;
+        AppliedPlayerLevel = 0;
+        SynchronizeLevelStateAuthority();
+    }
 
-            return Mathf.Max(
-                0,
-                playerProfession.GrappleMaxCharges
-            );
-        }
+    public override void Despawned(NetworkRunner runner, bool hasState)
+    {
+        hasSpawned = false;
     }
 
     /// <summary>
-    /// 目前職業每恢復一格所需時間。
+    /// 在 Player 取輸入之前由 Host 同步等級，沒有輸入的 Tick 也能處理升級。
+    /// 等待正式等級資料，不用臨時的 1 級覆蓋存檔或晚加入狀態。
     /// </summary>
-    public float RechargeDuration
+    public void SynchronizeLevelStateAuthority()
     {
-        get
-        {
-            if (playerProfession == null)
-                return 0f;
+        if (!HasValidState || !Object.HasStateAuthority) return;
+        GameLogic logic = GameLogic.GetPrimaryForRunner(Runner);
+        if (logic == null || !logic.TryGetPlayerExperience(Object.InputAuthority, out var experience)) return;
 
-            return Mathf.Max(
-                0f,
-                playerProfession.GrappleRechargeDuration
-            );
-        }
+        int level = Mathf.Max(1, experience.Level);
+        float maximum = GrappleEnergyRules.MaximumEnergyForLevel(level, levelOneEnergy, energyPerLevel);
+        if (IsInitialized && AppliedPlayerLevel == level && MaximumEnergy == maximum) return;
+
+        CurrentEnergy = IsInitialized
+            ? GrappleEnergyRules.ApplyCapacityIncrease(CurrentEnergy, MaximumEnergy, maximum,
+                levelUpMode == GrappleEnergyLevelUpMode.RefillToMaximum)
+            : maximum;
+        MaximumEnergy = maximum;
+        AppliedPlayerLevel = level;
+        IsInitialized = true;
+        if (debugCharges) Debug.Log($"[鈎索能量] 等級 {level}：{CurrentEnergy:F2}/{MaximumEnergy:F2}，升級補充：{levelUpMode}", this);
     }
 
-    /// <summary>
-    /// 是否至少還有 1 格可以使用。
-    /// </summary>
-    public bool HasCharge =>
-        IsInitialized &&
-        CurrentCharges > 0;
-
-    /// <summary>
-    /// 是否正在自然恢復下一格。
-    /// </summary>
-    public bool IsRecharging =>
-        RechargeActive;
-
-    /// <summary>
-    /// 下一格剩餘恢復秒數。
-    /// </summary>
-    public float RechargeRemainingSeconds
-    {
-        get
-        {
-            if (Runner == null ||
-                RechargeActive == false)
-            {
-                return 0f;
-            }
-
-            return RechargeTimer
-                .RemainingTime(Runner) ?? 0f;
-        }
-    }
-
-    /// <summary>
-    /// 下一格充能目前恢復進度。
-    ///
-    /// 0 = 剛開始。
-/// 1 = 即將完成。
-    /// </summary>
-    public float RechargeProgress
-    {
-        get
-        {
-            if (RechargeActive == false ||
-                Runner == null)
-            {
-                return 0f;
-            }
-
-            float duration =
-                RechargeDuration;
-
-            if (duration <= 0f)
-                return 1f;
-
-            float remaining =
-                RechargeTimer
-                    .RemainingTime(Runner) ?? 0f;
-
-            return 1f -
-                   Mathf.Clamp01(
-                       remaining /
-                       duration
-                   );
-        }
-    }
-
-    #endregion
-
-    // =====================================================================
-    #region Unity 生命週期
-
-    private void Awake()
-    {
-        if (playerProfession == null)
-        {
-            playerProfession =
-                GetComponent<PlayerProfession>();
-        }
-    }
-
-    #endregion
-
-    // =====================================================================
-    #region 每 Tick 更新
-
-    /// <summary>
-    /// 每個 Fusion Tick 由 Player 根控制器呼叫。
-    /// </summary>
-    public void TickRecharge()
-    {
-        /*
-         * PlayerProfession 可能在 NetworkObject Spawn 後
-         * 才正式同步職業。
-         *
-         * 所以不要依賴 NetworkBehaviour.Spawned() 的腳本順序，
-         * 而是在 Tick 裡確認職業已準備好。
-         */
-        if (EnsureInitialized() == false)
-        {
-            return;
-        }
-
-        int maxCharges =
-            MaxCharges;
-
-        if (maxCharges <= 0)
-        {
-            CurrentCharges =
-                0;
-
-            StopRechargeTimer();
-
-            return;
-        }
-
-        /*
-         * 未來如果戰鬥途中更換職業，
-         * 目前先採用「重新滿充能」規則。
-         *
-         * 如果之後真的允許戰鬥換職，
-         * 我們再另外決定要保留比例還是保留格數。
-         */
-        if (InitializedProfession !=
-            playerProfession.CurrentProfession)
-        {
-            InitializeFromCurrentProfession();
-            return;
-        }
-
-        CurrentCharges =
-            Mathf.Clamp(
-                CurrentCharges,
-                0,
-                maxCharges
-            );
-
-        // -------------------------------------------------------------
-        // 已滿格
-        // -------------------------------------------------------------
-
-        if (CurrentCharges >= maxCharges)
-        {
-            StopRechargeTimer();
-            return;
-        }
-
-        // -------------------------------------------------------------
-        // 尚未開始恢復
-        // -------------------------------------------------------------
-
-        if (RechargeActive == false)
-        {
-            StartRechargeIfNeeded();
-            return;
-        }
-
-        // -------------------------------------------------------------
-        // 還沒恢復完成
-        // -------------------------------------------------------------
-
-        if (RechargeTimer.Expired(Runner) == false)
-        {
-            return;
-        }
-
-        // -------------------------------------------------------------
-        // 恢復一格
-        // -------------------------------------------------------------
-
-        CurrentCharges =
-            Mathf.Min(
-                maxCharges,
-                CurrentCharges + 1
-            );
-
-        if (debugCharges)
-        {
-            Debug.Log(
-                $"[勾索充能] 自然恢復 1 格。" +
-                $"\n職業：{playerProfession.CurrentProfession}" +
-                $"\n目前：{CurrentCharges}/{maxCharges}",
-                this
-            );
-        }
-
-        /*
-         * 還沒滿就接著恢復下一格。
-         */
-        if (CurrentCharges < maxCharges)
-        {
-            StartRechargeTimer();
-        }
-        else
-        {
-            StopRechargeTimer();
-        }
-    }
-
-    #endregion
-
-    // =====================================================================
-    #region 初始化
-
-    /// <summary>
-    /// 確認目前職業資料是否已準備完成。
-    /// </summary>
-    private bool EnsureInitialized()
-    {
-        if (playerProfession == null)
-            return false;
-
-        if (playerProfession.CurrentProfession ==
-            PlayerProfessionType.None)
-        {
-            return false;
-        }
-
-        if (playerProfession.CurrentDefinition == null)
-        {
-            return false;
-        }
-
-        if (IsInitialized == false)
-        {
-            InitializeFromCurrentProfession();
-        }
-
-        return true;
-    }
-
-    /// <summary>
-    /// 根據目前職業重新初始化。
-    ///
-    /// 玩家第一次生成時直接滿格。
-    /// </summary>
-    private void InitializeFromCurrentProfession()
-    {
-        int maxCharges =
-            MaxCharges;
-
-        CurrentCharges =
-            Mathf.Max(
-                0,
-                maxCharges
-            );
-
-        InitializedProfession =
-            playerProfession.CurrentProfession;
-
-        IsInitialized =
-            true;
-
-        StopRechargeTimer();
-
-        if (debugCharges)
-        {
-            Debug.Log(
-                $"[勾索充能] 初始化完成。" +
-                $"\n職業：{InitializedProfession}" +
-                $"\n充能：{CurrentCharges}/{maxCharges}" +
-                $"\n每格恢復：{RechargeDuration:F2} 秒",
-                this
-            );
-        }
-    }
-
-    #endregion
-
-    // =====================================================================
-    #region 消耗充能
-
-    /// <summary>
-    /// 嘗試消耗 1 格勾索充能。
-    ///
-    /// 勾索只有真正命中有效目標後才應呼叫。
-    /// </summary>
+    /// <summary>合法鈎點確認後沿用原本出鈎交易入口；Client 只做本機預測，Host 校正正式結果。</summary>
     public bool ConsumeCharge()
     {
-        if (EnsureInitialized() == false)
-            return false;
-
-        if (CurrentCharges <= 0)
-        {
-            if (debugCharges)
-            {
-                Debug.Log(
-                    $"[勾索充能] 沒有剩餘充能。" +
-                    $"\n目前：{CurrentCharges}/{MaxCharges}",
-                    this
-                );
-            }
-
-            return false;
-        }
-
-        CurrentCharges--;
-
-        CurrentCharges =
-            Mathf.Max(
-                0,
-                CurrentCharges
-            );
-
-        /*
-         * 如果原本滿格，
-         * 第一次消耗後會開始第一格冷卻。
-         *
-         * 如果本來就在冷卻，
-         * 不重置目前進度。
-         */
-        StartRechargeIfNeeded();
-
-        if (debugCharges)
-        {
-            Debug.Log(
-                $"[勾索充能] 消耗 1 格。" +
-                $"\n職業：{playerProfession.CurrentProfession}" +
-                $"\n目前：{CurrentCharges}/{MaxCharges}",
-                this
-            );
-        }
-
+        if (!CanSimulate || !IsInitialized ||
+            !GrappleEnergyRules.TryConsumeLaunch(CurrentEnergy, LaunchEnergyCost, out float remaining)) return false;
+        CurrentEnergy = remaining;
+        if (debugCharges) Debug.Log($"[鈎索能量] 發射後：{CurrentEnergy:F2}/{MaximumEnergy:F2}", this);
         return true;
     }
 
-    #endregion
-
-    // =====================================================================
-    #region 恢復充能
-
-    /// <summary>
-    /// 立即恢復指定數量充能。
-    ///
-    /// 不會重置原本正在跑的自然冷卻進度。
-    ///
-    /// 例如：
-/// 0 / 3
-/// 自然冷卻已跑 7 / 10 秒
-/// 擊殺 +1
-/// → 1 / 3
-/// 原本冷卻仍只剩 3 秒。
-    /// </summary>
-    public void RestoreCharge(
-        int amount
-    )
+    /// <summary>只由 PlayerGrapple 實際完成普通拉動的 Tick 呼叫；不以能量歸零停止該次拉動。</summary>
+    public void ConsumePullEnergy(float deltaTime)
     {
-        if (amount <= 0)
-            return;
-
-        if (EnsureInitialized() == false)
-            return;
-
-        int maxCharges =
-            MaxCharges;
-
-        int previous =
-            CurrentCharges;
-
-        CurrentCharges =
-            Mathf.Clamp(
-                CurrentCharges + amount,
-                0,
-                maxCharges
-            );
-
-        if (debugCharges)
-        {
-            Debug.Log(
-                $"[勾索充能] 立即回復。" +
-                $"\n回復數量：{amount}" +
-                $"\n之前：{previous}/{maxCharges}" +
-                $"\n現在：{CurrentCharges}/{maxCharges}",
-                this
-            );
-        }
-
-        if (CurrentCharges >= maxCharges)
-        {
-            StopRechargeTimer();
-        }
-        else
-        {
-            /*
-             * 若原本有冷卻：
-             * 不重置。
-             *
-             * 若原本沒有：
-             * 補啟動。
-             */
-            StartRechargeIfNeeded();
-        }
+        if (!CanSimulate || !IsInitialized) return;
+        CurrentEnergy = GrappleEnergyRules.ConsumePull(CurrentEnergy, PullEnergyPerSecond, deltaTime);
     }
 
-    /// <summary>
-    /// 依目前職業設定執行一次「擊殺回充」。
-    /// </summary>
-    public void RestoreChargeFromKill()
+    /// <summary>主要 GameLogic 完成正式切場後呼叫，包含沿用原 Player 的場景流程。</summary>
+    public void RefillForSceneTransitionStateAuthority()
     {
-        if (playerProfession == null)
-            return;
-
-        int amount =
-            playerProfession.GrappleRestoreOnKill;
-
-        if (amount <= 0)
-            return;
-
-        RestoreCharge(
-            amount
-        );
+        if (!HasValidState || !Object.HasStateAuthority) return;
+        SynchronizeLevelStateAuthority();
+        if (IsInitialized) CurrentEnergy = MaximumEnergy;
     }
 
-    #endregion
+    /// <summary>相容入口只同步等級；已停用自然回充。</summary>
+    public void TickRecharge() => SynchronizeLevelStateAuthority();
 
-    // =====================================================================
-    #region 冷卻計時
-
-    /// <summary>
-    /// 若尚未滿格且目前沒有計時，
-    /// 啟動下一格恢復。
-    /// </summary>
-    private void StartRechargeIfNeeded()
+    /// <summary>保留明確手動補能量入口；沒有自然／擊殺呼叫方，只有 State Authority 可寫入。</summary>
+    public void RestoreCharge(int amount)
     {
-        if (CurrentCharges >= MaxCharges)
-        {
-            StopRechargeTimer();
-            return;
-        }
-
-        if (RechargeActive)
-        {
-            /*
-             * 已在恢復中，不重置目前進度。
-             */
-            return;
-        }
-
-        StartRechargeTimer();
+        if (!HasValidState || !Object.HasStateAuthority || !IsInitialized || amount <= 0) return;
+        CurrentEnergy = Mathf.Clamp(CurrentEnergy + amount, 0f, MaximumEnergy);
     }
 
-    /// <summary>
-    /// 正式開始下一格恢復計時。
-    /// </summary>
-    private void StartRechargeTimer()
-    {
-        float duration =
-            RechargeDuration;
-
-        if (duration <= 0f)
-        {
-            CurrentCharges =
-                MaxCharges;
-
-            StopRechargeTimer();
-            return;
-        }
-
-        RechargeTimer =
-            TickTimer.CreateFromSeconds(
-                Runner,
-                duration
-            );
-
-        RechargeActive =
-            true;
-
-        if (debugCharges)
-        {
-            Debug.Log(
-                $"[勾索充能] 開始恢復下一格。" +
-                $"\n目前：{CurrentCharges}/{MaxCharges}" +
-                $"\n需要：{duration:F2} 秒",
-                this
-            );
-        }
-    }
-
-    /// <summary>
-    /// 停止目前恢復計時。
-    /// </summary>
-    private void StopRechargeTimer()
-    {
-        RechargeTimer =
-            TickTimer.None;
-
-        RechargeActive =
-            false;
-    }
-
-    #endregion
+    /// <summary>擊殺回充暫停；保留舊入口避免既有呼叫方或 UnityEvent 引用中斷。</summary>
+    public void RestoreChargeFromKill() { }
 }

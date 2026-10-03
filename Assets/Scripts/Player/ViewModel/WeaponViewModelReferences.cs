@@ -40,7 +40,7 @@ public class WeaponViewModelReferences :
     #region ADS Animation References
 
 
-    [Header("ADS 動畫引用")]
+    [Header("瞄準動畫引用")]
 
 
     [SerializeField]

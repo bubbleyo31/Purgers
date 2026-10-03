@@ -1,0 +1,134 @@
+[
+  {
+    "name": "A_BriarHeart",
+    "lodCount": 3,
+    "missingScripts": 0,
+    "meshes": [
+      {
+        "mesh": "ThornSurface",
+        "vertices": 12663,
+        "triangles": 17718,
+        "bounds": [
+          0.0281849317,
+          0.0272516087,
+          0.0248488
+        ],
+        "submeshes": 1
+      },
+      {
+        "mesh": "ThornSurface",
+        "vertices": 6873,
+        "triangles": 7441,
+        "bounds": [
+          0.0281841233,
+          0.0272390153,
+          0.0248351712
+        ],
+        "submeshes": 1
+      },
+      {
+        "mesh": "ThornSurface",
+        "vertices": 3011,
+        "triangles": 2657,
+        "bounds": [
+          0.0281872824,
+          0.0272409581,
+          0.02419824
+        ],
+        "submeshes": 1
+      }
+    ],
+    "colliderCount": 0,
+    "shader": "Universal Render Pipeline/Lit",
+    "texture": "Thorn_BaseColor",
+    "instancing": true
+  },
+  {
+    "name": "B_GnarledKnot",
+    "lodCount": 3,
+    "missingScripts": 0,
+    "meshes": [
+      {
+        "mesh": "ThornSurface",
+        "vertices": 14444,
+        "triangles": 20176,
+        "bounds": [
+          0.0296696573,
+          0.0270664282,
+          0.02365039
+        ],
+        "submeshes": 1
+      },
+      {
+        "mesh": "ThornSurface",
+        "vertices": 7657,
+        "triangles": 8472,
+        "bounds": [
+          0.0296648853,
+          0.0270421579,
+          0.0236387216
+        ],
+        "submeshes": 1
+      },
+      {
+        "mesh": "ThornSurface",
+        "vertices": 3302,
+        "triangles": 3026,
+        "bounds": [
+          0.02965474,
+          0.0259093344,
+          0.0236387216
+        ],
+        "submeshes": 1
+      }
+    ],
+    "colliderCount": 0,
+    "shader": "Universal Render Pipeline/Lit",
+    "texture": "Thorn_BaseColor",
+    "instancing": true
+  },
+  {
+    "name": "C_SplitCrown",
+    "lodCount": 3,
+    "missingScripts": 0,
+    "meshes": [
+      {
+        "mesh": "ThornSurface",
+        "vertices": 11504,
+        "triangles": 16262,
+        "bounds": [
+          0.02708455,
+          0.027506534,
+          0.02809465
+        ],
+        "submeshes": 1
+      },
+      {
+        "mesh": "ThornSurface",
+        "vertices": 6114,
+        "triangles": 6830,
+        "bounds": [
+          0.02707034,
+          0.0274915136,
+          0.0280761216
+        ],
+        "submeshes": 1
+      },
+      {
+        "mesh": "ThornSurface",
+        "vertices": 2646,
+        "triangles": 2439,
+        "bounds": [
+          0.0267034583,
+          0.0273213238,
+          0.0280761216
+        ],
+        "submeshes": 1
+      }
+    ],
+    "colliderCount": 0,
+    "shader": "Universal Render Pipeline/Lit",
+    "texture": "Thorn_BaseColor",
+    "instancing": true
+  }
+]

@@ -1,0 +1,41 @@
+[
+  {
+    "variant": "A_BriarHeart",
+    "sizeMetres": [
+      2.81849313,
+      2.48488,
+      2.72516084
+    ],
+    "rootScale": [
+      1.0,
+      1.0,
+      1.0
+    ]
+  },
+  {
+    "variant": "B_GnarledKnot",
+    "sizeMetres": [
+      2.96696568,
+      2.36503887,
+      2.70664287
+    ],
+    "rootScale": [
+      1.0,
+      1.0,
+      1.0
+    ]
+  },
+  {
+    "variant": "C_SplitCrown",
+    "sizeMetres": [
+      2.708455,
+      2.809465,
+      2.75065351
+    ],
+    "rootScale": [
+      1.0,
+      1.0,
+      1.0
+    ]
+  }
+]

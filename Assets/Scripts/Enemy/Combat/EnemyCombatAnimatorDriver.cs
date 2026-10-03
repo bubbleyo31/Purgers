@@ -24,7 +24,7 @@ public sealed class EnemyCombatAnimatorDriver :
     [Tooltip("模型 Animator。留空在本物件與子物件尋找。Apply Root Motion 必須關閉。")]
     private Animator animator;
 
-    [Header("Animator 參數")]
+    [Header("動畫控制器 參數")]
 
     [SerializeField]
     [Tooltip("Float：追逐的實際速度，公尺／秒。預設 ChaseSpeed。")]
@@ -76,9 +76,8 @@ public sealed class EnemyCombatAnimatorDriver :
     private void LateUpdate()
     {
         if (combatDecision == null ||
-            chaseBrain == null ||
             combatDecision.IsFusionSpawned == false ||
-            chaseBrain.IsFusionSpawned == false ||
+            (chaseBrain != null && chaseBrain.IsFusionSpawned == false) ||
             animator == null ||
             parametersCached == false)
         {
@@ -90,7 +89,7 @@ public sealed class EnemyCombatAnimatorDriver :
 
         animator.SetFloat(
             chaseSpeedHash,
-            chaseBrain.MoveSpeed
+            chaseBrain != null ? chaseBrain.MoveSpeed : 0f
         );
 
         animator.SetBool(

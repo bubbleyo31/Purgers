@@ -16,7 +16,7 @@ PrefabInstance:
     - target: {fileID: -1029249225945322823, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
       propertyPath: NetworkedBehaviours.Array.size
-      value: 24
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: -1029249225945322823, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
@@ -68,6 +68,11 @@ PrefabInstance:
       propertyPath: NetworkedBehaviours.Array.data[23]
       value: 
       objectReference: {fileID: -5750972657235461838}
+    - target: {fileID: -1029249225945322823, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+        type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[24]
+      value: 
+      objectReference: {fileID: 7856496747728660206}
     - target: {fileID: 293761205225825258, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
       propertyPath: m_CollisionDetection
@@ -452,6 +457,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: -5750972657235461838}
+    - targetCorrespondingSourceObject: {fileID: 3467749930922983645, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7856496747728660206}
     - targetCorrespondingSourceObject: {fileID: 6760109522964943658, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
       insertIndex: -1
@@ -534,7 +543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 024d7bef77dbe394e8f1333eeb47f2ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showDebugHUD: 1
+  showDebugHUD: 0
   panelPosition: {x: 20, y: 20}
   panelWidth: 390
   panelHeight: 205
@@ -666,6 +675,19 @@ MonoBehaviour:
   debugWorldSpeed: 0
   debugSlideLoopFade: 0
   debugGrappleWindFade: 0
+--- !u!114 &7856496747728660206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3067572431356636211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4766d9c1990cc46a977dc7d70ca66b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: b5a8f4bbf0c5cf442b31294af7376614, type: 2}
 --- !u!114 &4078681066127507488 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2456636898108746958, guid: 9d631177f90b9ba49bc00a53b3478fa2,

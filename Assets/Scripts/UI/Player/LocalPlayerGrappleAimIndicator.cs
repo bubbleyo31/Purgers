@@ -72,7 +72,7 @@ public class LocalPlayerGrappleAimIndicator :
     // =====================================================================
     #region Runner
 
-    [Header("Fusion Runner")]
+    [Header("Fusion 執行器")]
 
     [SerializeField]
     [Tooltip(
@@ -111,7 +111,7 @@ public class LocalPlayerGrappleAimIndicator :
     // =====================================================================
     #region Enemy Classification
 
-    [Header("Enemy HitMask 分類")]
+    [Header("敵人命中遮罩分類")]
 
     [SerializeField]
     [Tooltip(

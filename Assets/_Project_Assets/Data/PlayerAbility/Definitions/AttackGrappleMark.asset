@@ -14,13 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityId: grapple.hit.mark
   displayName: "\u920E\u7D22\u547D\u4E2D\u6A19\u8A18"
+  hudIcon: {fileID: 21300000, guid: af571f86ae26f0341afe187861244456, type: 3}
   category: 2
   runtimePrefab: {fileID: 260098027975786171, guid: f41ffec042371a44faabce97e7fe273b,
     type: 3}
   includeAdditionalGrappleTargetMask: 0
   professionRule:
     restrictProfession: 0
-    allowedProfessions: 7
+    allowedProfessions: 255
   allowDuplicateEquip: 0
   exclusiveGroupIds:
   - GrappleHitRopeAuthority

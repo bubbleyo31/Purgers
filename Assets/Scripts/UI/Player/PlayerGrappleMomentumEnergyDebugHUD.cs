@@ -18,8 +18,9 @@ public sealed class
     [Header("顯示設定")]
 
     [SerializeField]
+    [Tooltip("額外的開發診斷面板，預設關閉。正式速度／增傷顯示由 LocalPlayerSpeedSlider 負責。")]
     private bool showDebugHUD =
-        true;
+        false;
 
     [SerializeField]
     private Vector2 panelPosition =
@@ -61,10 +62,15 @@ public sealed class
 
     private void OnGUI()
     {
+        // IMGUI is rendered above overlay canvases; keep development HUD out of the black screen.
+        if (Purgers.GameFlow.Control.LocalPlayerControl.AllInputBlocked ||
+            Purgers.GameFlow.Transition.ScreenFadeLayer.IsCoveringScreen)
+            return;
         if (!DevelopmentToolsPolicy.IsEnabled ||
             showDebugHUD == false ||
             energySystem == null ||
             energySystem.Object == null ||
+            !energySystem.Object.IsValid ||
             energySystem.Object.HasInputAuthority ==
                 false)
         {
@@ -210,6 +216,12 @@ public sealed class
 
     private string ResolveFlowLabel()
     {
+        if (energySystem.IsMaximumBoostActive)
+        {
+            return
+                $"最高強化 {energySystem.RemainingMaximumBoostSeconds:0.0} 秒";
+        }
+
         if (energySystem.IsChargingNow)
         {
             if (energySystem.FullChargeDuration <=
@@ -255,6 +267,17 @@ public sealed class
 
     private Color ResolveFlowColor()
     {
+        if (energySystem.IsMaximumBoostActive)
+        {
+            return
+                new Color(
+                    1f,
+                    0.82f,
+                    0.2f,
+                    1f
+                );
+        }
+
         if (energySystem.IsChargingNow)
         {
             return

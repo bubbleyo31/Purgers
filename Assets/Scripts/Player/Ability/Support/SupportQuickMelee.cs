@@ -79,7 +79,7 @@ public class SupportQuickMelee :
     #region Quick Action Time
 
 
-    [Header("Support 快速近戰時間")]
+    [Header("支援 快速近戰時間")]
 
 
     [SerializeField]
@@ -110,7 +110,7 @@ public class SupportQuickMelee :
     #region Damage
 
 
-    [Header("Support 快速近戰傷害")]
+    [Header("支援 快速近戰傷害")]
 
 
     [SerializeField]
@@ -134,7 +134,7 @@ public class SupportQuickMelee :
     #region Search
 
 
-    [Header("Support 快速近戰搜尋")]
+    [Header("支援 快速近戰搜尋")]
 
 
     [SerializeField]
@@ -183,7 +183,7 @@ public class SupportQuickMelee :
     #region Lag Compensation
 
 
-    [Header("Photon Fusion Lag Compensation")]
+    [Header("Photon Fusion 延遲補償")]
 
 
     [SerializeField]

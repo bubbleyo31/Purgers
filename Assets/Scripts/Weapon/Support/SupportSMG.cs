@@ -205,6 +205,8 @@ public class SupportSMG :
     public Player OwnerPlayer =>
         ownerPlayer;
 
+    private PlayerWeaponImpactEffects impactEffects;
+
 
     /// <summary>
     /// 將 SupportSMG
@@ -216,6 +218,8 @@ public class SupportSMG :
     {
         ownerPlayer =
             newOwnerPlayer;
+
+        impactEffects = ownerPlayer != null ? ownerPlayer.GetComponent<PlayerWeaponImpactEffects>() : null;
 
 
         if (ownerPlayer == null)
@@ -481,7 +485,7 @@ public class SupportSMG :
     #region Hitscan
 
 
-    [Header("Hitscan 設定")]
+    [Header("即時射線命中設定")]
 
 
     [SerializeField]
@@ -592,11 +596,11 @@ public class SupportSMG :
     #region Gameplay Recoil
 
 
-    [Header("普通 Gameplay 後座力")]
+    [Header("普通 遊戲邏輯 後座力")]
 
 
     [SerializeField]
-    [Tooltip("普通狀態每發子彈加入 KCC Look Pitch 的角度。負值通常代表讓視角向上抬。特殊技能 Active 時不會新增這個 Recoil。")]
+    [Tooltip("普通狀態每發子彈最終施加到 KCC Look Pitch 的總角度；可由 Recoil Application Duration 分段施加。負值通常代表讓視角向上抬。特殊技能 Active 時不會新增這個 Recoil。")]
     private float recoilPitchPerShot =
         -0.8f;
 
@@ -607,6 +611,13 @@ public class SupportSMG :
     private float recoilYawPerShot =
         0.25f;
 
+
+    [Header("後座力施加設定")]
+
+    [SerializeField]
+    [Min(0f)]
+    [Tooltip("普通射擊每發後座力分段施加到 KCC 視角的時間，單位秒，需大於等於 0。0 為原本的瞬間抬槍；特殊模式不新增後座力。")]
+    private float recoilApplicationDuration = 0.06f;
 
     [Header("後座力回正設定")]
 
@@ -817,6 +828,10 @@ public class SupportSMG :
         set;
     }
 
+    [Networked] private float PendingRecoilPitch { get; set; }
+    [Networked] private float PendingRecoilYaw { get; set; }
+    [Networked] private float RecoilApplicationSecondsRemaining { get; set; }
+
 
     #endregion
 
@@ -897,6 +912,8 @@ public class SupportSMG :
             1,
             magazineCapacity
         );
+
+    public float ReloadDurationSeconds => Mathf.Max(0f, reloadDuration);
 
 
     public bool HasInfiniteReserveAmmo =>
@@ -1130,6 +1147,9 @@ public class SupportSMG :
 
         RecoilRecoveryTimer =
             TickTimer.None;
+        PendingRecoilPitch = 0f;
+        PendingRecoilYaw = 0f;
+        RecoilApplicationSecondsRemaining = 0f;
 
 
         IsInitialized =
@@ -1205,6 +1225,7 @@ public class SupportSMG :
 
         if (fireHeld == false)
         {
+            ApplyPendingRecoil();
             return false;
         }
 
@@ -1227,6 +1248,7 @@ public class SupportSMG :
         }
 
 
+        ApplyPendingRecoil();
         return
             fired;
     }
@@ -1692,6 +1714,10 @@ public class SupportSMG :
         {
             return;
         }
+
+        // 表面視覺與治療／傷害分離，Layer 設定可排除 Player、Enemy。
+        if (impactEffects != null)
+            impactEffects.PublishConfirmedHit(Object, ShotSequence, hit.GameObject, hit.Point, hit.Normal);
 
 
         // =============================================================
@@ -2261,43 +2287,37 @@ public class SupportSMG :
     private void ApplyGameplayRecoil()
     {
         if (movement == null)
-        {
             return;
-        }
 
-
-        float horizontalSign =
-            ShotSequence % 2 == 0
-                ? 1f
-                : -1f;
-
-
-        float yawRecoil =
-            recoilYawPerShot *
-            horizontalSign;
-
-
-        movement.AddLookRotationImpulse(
-            recoilPitchPerShot,
-            yawRecoil
-        );
-
-
-        AccumulatedRecoilPitch +=
-            recoilPitchPerShot;
-
-
-        RecoilRecoveryTimer =
-            TickTimer.CreateFromSeconds(
-                Runner,
-                recoilRecoveryDelay
-            );
-
-
-        LastAimPitch +=
-            recoilPitchPerShot;
+        float horizontalSign = ShotSequence % 2 == 0 ? 1f : -1f;
+        PendingRecoilPitch += recoilPitchPerShot;
+        PendingRecoilYaw += recoilYawPerShot * horizontalSign;
+        RecoilApplicationSecondsRemaining = Mathf.Max(0f, recoilApplicationDuration);
+        RecoilRecoveryTimer = TickTimer.CreateFromSeconds(Runner, recoilRecoveryDelay);
     }
 
+    /// <summary>每 Tick 僅施加一次待處理角度；實際施加量才列入回正池。</summary>
+    private void ApplyPendingRecoil()
+    {
+        if (movement == null)
+            return;
+
+        float pendingPitch = PendingRecoilPitch;
+        float pendingYaw = PendingRecoilYaw;
+        float secondsRemaining = RecoilApplicationSecondsRemaining;
+        Vector2 applied = WeaponRecoilApplication.Step(
+            ref pendingPitch, ref pendingYaw, ref secondsRemaining, Runner.DeltaTime);
+        PendingRecoilPitch = pendingPitch;
+        PendingRecoilYaw = pendingYaw;
+        RecoilApplicationSecondsRemaining = secondsRemaining;
+
+        if (applied == Vector2.zero)
+            return;
+
+        movement.AddLookRotationImpulse(applied.x, applied.y);
+        AccumulatedRecoilPitch += applied.x;
+        LastAimPitch += applied.x;
+    }
 
     private void ProcessRecoilRecovery()
     {
@@ -2366,6 +2386,7 @@ public class SupportSMG :
         // =============================================================
 
         if (AccumulatedRecoilPitch < 0f &&
+            PendingRecoilPitch == 0f && PendingRecoilYaw == 0f &&
             RecoilRecoveryTimer
                 .ExpiredOrNotRunning(
                     Runner

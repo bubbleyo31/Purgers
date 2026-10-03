@@ -67,7 +67,7 @@ public class PlayerWeaponController :
     #region Player Core References
 
 
-    [Header("Player Core 引用")]
+    [Header("玩家核心 引用")]
 
 
     [SerializeField]
@@ -87,7 +87,7 @@ public class PlayerWeaponController :
     #region Attack Weapon
 
 
-    [Header("Attack 武器")]
+    [Header("攻擊 武器")]
 
 
     [SerializeField]
@@ -107,7 +107,7 @@ public class PlayerWeaponController :
     #region Support Weapon
 
 
-    [Header("Support 武器")]
+    [Header("支援 武器")]
 
 
     [SerializeField]

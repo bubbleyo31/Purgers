@@ -13,7 +13,7 @@ namespace Purgers.GameFlow.SafeHouse
         IPlayerJoined,
         IPlayerLeft
     {
-        [Header("Start Terminal")]
+        [Header("開始遊戲終端機")]
         [Tooltip(
             "Host 必須靠近這個位置才能按 E 發起 Ready Check。" +
             "State Authority 會再次驗證距離，Client 無法只靠 RPC 繞過。")]
@@ -22,13 +22,19 @@ namespace Purgers.GameFlow.SafeHouse
         [Tooltip("允許 Host 發起 Ready Check 的水平與垂直直線距離。")]
         [SerializeField, Min(0.5f)] private float interactionDistance = 3.5f;
 
-        [Header("Stage Scene")]
+        [Header("關卡場景")]
         [Tooltip(
             "全員準備後由 Scene Authority 載入的 Build Settings 場景名稱。" +
             "Phase 2 預設為 Game。")]
         [SerializeField] private string gameplaySceneName = "Game";
 
-        [Header("Diagnostics")]
+        [Tooltip("全員準備後，Host 等待多久才切入關卡。")]
+        [SerializeField, Min(0.1f)] private float countdownDurationSeconds = 3f;
+
+        [Tooltip("Host 開啟投票後，超過這段時間仍未進場就自動取消。")]
+        [SerializeField, Min(0.1f)] private float readyCheckTimeoutSeconds = 7f;
+
+        [Header("除錯資訊")]
         [Tooltip("輸出 Ready Check 開啟、玩家確認與場景載入紀錄。")]
         [SerializeField] private bool debugFlow = true;
 
@@ -38,9 +44,24 @@ namespace Purgers.GameFlow.SafeHouse
         [Networked]
         public int StageLevel { get; private set; }
 
+        [Networked]
+        public int CycleLength { get; private set; }
+
+        [Networked]
+        public int CycleStage { get; private set; }
+
+        [Networked]
+        public NetworkBool IsBossStage { get; private set; }
+
         [Networked, Capacity(12)]
         private NetworkDictionary<PlayerRef, NetworkBool>
             ReadyByPlayer => default;
+
+        [Networked]
+        private TickTimer StageStartCountdown { get; set; }
+
+        [Networked]
+        private TickTimer ReadyCheckTimeout { get; set; }
 
         private readonly List<PlayerRef> connectedPlayers =
             new List<PlayerRef>(12);
@@ -77,19 +98,27 @@ namespace Purgers.GameFlow.SafeHouse
                 if (!IsNetworkReady)
                     return 0;
 
-                int count = 0;
-
-                foreach (
-                    KeyValuePair<PlayerRef, NetworkBool> pair
-                        in ReadyByPlayer)
-                {
-                    if (pair.Value)
-                        count++;
-                }
-
-                return count;
+                CollectConnectedPlayers();
+                return CountConnectedReadyPlayers();
             }
         }
+
+        public int UnreadyPlayerCount =>
+            Mathf.Max(0, ConnectedPlayerCount - ReadyPlayerCount);
+
+        public float RemainingCountdownSeconds =>
+            IsNetworkReady && StageStartCountdown.IsRunning
+                ? Mathf.Max(
+                    0f,
+                    StageStartCountdown.RemainingTime(Runner) ?? 0f)
+                : 0f;
+
+        public float RemainingReadyCheckSeconds =>
+            IsNetworkReady && ReadyCheckTimeout.IsRunning
+                ? Mathf.Max(
+                    0f,
+                    ReadyCheckTimeout.RemainingTime(Runner) ?? 0f)
+                : 0f;
 
         public bool IsLocalPlayerReady
         {
@@ -109,13 +138,23 @@ namespace Purgers.GameFlow.SafeHouse
                 return;
 
             Phase = SafeHousePhase.WaitingForHost;
-            StageLevel = ResolveHostStageLevel();
+            Purgers.GameFlow.Stage.StageRuntimePlan runtimePlan =
+                Purgers.GameFlow.Stage.StageRules.ResolveRuntimePlan(
+                    ResolveHostStageLevel(),
+                    ResolveCycleLength());
+            StageLevel = runtimePlan.StageLevel;
+            CycleLength = runtimePlan.CycleLength;
+            CycleStage = runtimePlan.CycleStage;
+            IsBossStage = runtimePlan.IsBossStage;
+            StageStartCountdown = TickTimer.None;
+            ReadyCheckTimeout = TickTimer.None;
             ReconcileReadyPlayers();
 
             if (debugFlow)
             {
                 Debug.Log(
-                    $"[SafeHouseFlow] SafeHouse ready. StageLevel={StageLevel}",
+                    $"[SafeHouseFlow] SafeHouse ready. StageLevel={StageLevel}, " +
+                    $"CycleStage={CycleStage}/{CycleLength}, Boss={IsBossStage}",
                     this);
             }
         }
@@ -127,20 +166,42 @@ namespace Purgers.GameFlow.SafeHouse
 
             ReconcileReadyPlayers();
 
-            if (Phase != SafeHousePhase.ReadyCheck)
-                return;
-
-            int connectedCount = connectedPlayers.Count;
-            int readyCount = CountConnectedReadyPlayers();
-
-            if (!SafeHouseReadyRules.AreAllPlayersReady(
-                    connectedCount,
-                    readyCount))
+            if (Phase != SafeHousePhase.ReadyCheck &&
+                Phase != SafeHousePhase.Countdown)
             {
                 return;
             }
 
-            BeginStageLoad();
+            if (SafeHouseReadyRules.ShouldCancelExpiredReadyCheck(
+                    Phase,
+                    ReadyCheckTimeout.Expired(Runner)))
+            {
+                CancelReadyCheck("投票逾時");
+                return;
+            }
+
+            int connectedCount = connectedPlayers.Count;
+            int readyCount = CountConnectedReadyPlayers();
+
+            SafeHouseReadyCountdownDecision decision =
+                SafeHouseReadyRules.EvaluateCountdown(
+                    Phase,
+                    connectedCount,
+                    readyCount,
+                    StageStartCountdown.Expired(Runner));
+
+            switch (decision)
+            {
+                case SafeHouseReadyCountdownDecision.Start:
+                    StartCountdown();
+                    break;
+                case SafeHouseReadyCountdownDecision.Cancel:
+                    CancelCountdown();
+                    break;
+                case SafeHouseReadyCountdownDecision.Load:
+                    BeginStageLoad();
+                    break;
+            }
         }
 
         public void PlayerJoined(PlayerRef player)
@@ -149,6 +210,9 @@ namespace Purgers.GameFlow.SafeHouse
                 return;
 
             ReadyByPlayer.Set(player, false);
+
+            if (Phase == SafeHousePhase.Countdown)
+                CancelCountdown();
 
             if (debugFlow)
             {
@@ -175,6 +239,8 @@ namespace Purgers.GameFlow.SafeHouse
 
         public bool CanLocalHostOpenReadyCheck()
         {
+            if (Purgers.GameFlow.Control.LocalPlayerControl.AllInputBlocked)
+                return false;
             if (!IsNetworkReady)
                 return false;
 
@@ -221,22 +287,42 @@ namespace Purgers.GameFlow.SafeHouse
             RPC_RequestOpenReadyCheck();
         }
 
-        public void RequestLocalReady()
+        public void RequestToggleLocalReady()
         {
+            if (Purgers.GameFlow.Control.LocalPlayerControl.AllInputBlocked)
+                return;
             if (!IsNetworkReady ||
-                Phase != SafeHousePhase.ReadyCheck ||
-                IsLocalPlayerReady)
+                !SafeHouseReadyRules.CanAcceptReady(
+                    Phase,
+                    IsLocalPlayerReady))
             {
                 return;
             }
 
             if (Object.HasStateAuthority)
             {
-                TryMarkPlayerReady(Runner.LocalPlayer);
+                TryTogglePlayerReady(Runner.LocalPlayer);
                 return;
             }
 
-            RPC_RequestReady();
+            RPC_RequestToggleReady();
+        }
+
+        public void RequestCancelLocalReadyCheck()
+        {
+            if (Purgers.GameFlow.Control.LocalPlayerControl.AllInputBlocked ||
+                !IsNetworkReady)
+            {
+                return;
+            }
+
+            if (Object.HasStateAuthority)
+            {
+                TryCancelReadyCheck(Runner.LocalPlayer);
+                return;
+            }
+
+            RPC_RequestCancelReadyCheck();
         }
 
         [Rpc(
@@ -255,10 +341,21 @@ namespace Purgers.GameFlow.SafeHouse
             RpcTargets.StateAuthority,
             Channel = RpcChannel.Reliable,
             TickAligned = false)]
-        private void RPC_RequestReady(
+        private void RPC_RequestToggleReady(
             RpcInfo info = default)
         {
-            TryMarkPlayerReady(info.Source);
+            TryTogglePlayerReady(info.Source);
+        }
+
+        [Rpc(
+            RpcSources.All,
+            RpcTargets.StateAuthority,
+            Channel = RpcChannel.Reliable,
+            TickAligned = false)]
+        private void RPC_RequestCancelReadyCheck(
+            RpcInfo info = default)
+        {
+            TryCancelReadyCheck(info.Source);
         }
 
         private void TryOpenReadyCheck(PlayerRef requester)
@@ -285,6 +382,10 @@ namespace Purgers.GameFlow.SafeHouse
             for (int i = 0; i < connectedPlayers.Count; i++)
                 ReadyByPlayer.Set(connectedPlayers[i], false);
 
+            StageStartCountdown = TickTimer.None;
+            ReadyCheckTimeout = TickTimer.CreateFromSeconds(
+                Runner,
+                Mathf.Max(0.1f, readyCheckTimeoutSeconds));
             Phase = SafeHousePhase.ReadyCheck;
 
             if (debugFlow)
@@ -295,7 +396,7 @@ namespace Purgers.GameFlow.SafeHouse
             }
         }
 
-        private void TryMarkPlayerReady(PlayerRef requester)
+        private void TryTogglePlayerReady(PlayerRef requester)
         {
             if (!Object.HasStateAuthority ||
                 !IsConnectedPlayer(requester))
@@ -316,14 +417,88 @@ namespace Purgers.GameFlow.SafeHouse
                 return;
             }
 
-            ReadyByPlayer.Set(requester, true);
+            bool nextReady = !alreadyReady;
+            ReadyByPlayer.Set(requester, nextReady);
+
+            if (!nextReady && Phase == SafeHousePhase.Countdown)
+                CancelCountdown();
 
             if (debugFlow)
             {
                 Debug.Log(
-                    $"[SafeHouseFlow] Player ready: {requester}",
+                    $"[SafeHouseFlow] Player ready changed: {requester}={nextReady}",
                     this);
             }
+        }
+
+        private void TryCancelReadyCheck(PlayerRef requester)
+        {
+            if (!Object.HasStateAuthority)
+                return;
+
+            bool requesterIsConnected = IsConnectedPlayer(requester);
+
+            if (!SafeHouseReadyRules.CanCancelReadyCheck(
+                    Phase,
+                    requesterIsConnected))
+            {
+                return;
+            }
+
+            CancelReadyCheck($"玩家 {requester} 取消");
+        }
+
+        private void CancelReadyCheck(string reason)
+        {
+            if (!Object.HasStateAuthority ||
+                (Phase != SafeHousePhase.ReadyCheck &&
+                 Phase != SafeHousePhase.Countdown))
+            {
+                return;
+            }
+
+            ReconcileReadyPlayers();
+
+            for (int i = 0; i < connectedPlayers.Count; i++)
+                ReadyByPlayer.Set(connectedPlayers[i], false);
+
+            StageStartCountdown = TickTimer.None;
+            ReadyCheckTimeout = TickTimer.None;
+            Phase = SafeHousePhase.WaitingForHost;
+
+            if (debugFlow)
+                Debug.Log($"[SafeHouseFlow] Ready vote cancelled: {reason}.", this);
+        }
+
+        private void StartCountdown()
+        {
+            if (!Object.HasStateAuthority || !Runner.IsServer)
+                return;
+
+            Phase = SafeHousePhase.Countdown;
+            StageStartCountdown = TickTimer.CreateFromSeconds(
+                Runner,
+                Mathf.Max(0.1f, countdownDurationSeconds));
+
+            if (debugFlow)
+            {
+                Debug.Log(
+                    $"[SafeHouseFlow] All players ready. " +
+                    $"Starting {countdownDurationSeconds:0.0}s countdown.",
+                    this);
+            }
+        }
+
+        private void CancelCountdown()
+        {
+            if (!Object.HasStateAuthority || Phase != SafeHousePhase.Countdown)
+                return;
+
+            StageStartCountdown = TickTimer.None;
+            Phase = SafeHousePhase.ReadyCheck;
+
+            if (debugFlow)
+                Debug.Log("[SafeHouseFlow] Ready countdown cancelled.", this);
         }
 
         private void BeginStageLoad()
@@ -344,6 +519,13 @@ namespace Purgers.GameFlow.SafeHouse
             }
 
             Phase = SafeHousePhase.LoadingStage;
+            StageStartCountdown = TickTimer.None;
+            ReadyCheckTimeout = TickTimer.None;
+
+            // Use the existing lifecycle hook for both directions of travel.
+            GameLogic gameLogic = FindObjectOfType<GameLogic>();
+            if (gameLogic != null)
+                gameLogic.PrepareForAuthoritativeSceneTransition();
 
             if (debugFlow)
             {
@@ -373,6 +555,16 @@ namespace Purgers.GameFlow.SafeHouse
             }
 
             return 1;
+        }
+
+        private int ResolveCycleLength()
+        {
+            GameSaveRuntimeContext context =
+                Runner.GetComponent<GameSaveRuntimeContext>();
+
+            return context?.ActiveSave != null
+                ? Mathf.Max(1, context.ActiveSave.CycleLengthSnapshot)
+                : GameSaveSchema.DefaultCycleLength;
         }
 
         private void ReconcileReadyPlayers()
@@ -428,6 +620,32 @@ namespace Purgers.GameFlow.SafeHouse
             }
 
             return count;
+        }
+
+        public void CopyConnectedReadyStates(
+            List<SafeHousePlayerReadyState> destination)
+        {
+            if (destination == null)
+                throw new System.ArgumentNullException(nameof(destination));
+
+            destination.Clear();
+
+            if (!IsNetworkReady)
+                return;
+
+            CollectConnectedPlayers();
+            connectedPlayers.Sort(
+                (left, right) => left.AsIndex.CompareTo(right.AsIndex));
+
+            for (int i = 0; i < connectedPlayers.Count; i++)
+            {
+                PlayerRef player = connectedPlayers[i];
+                bool isReady = ReadyByPlayer.TryGet(
+                    player,
+                    out NetworkBool ready) && ready;
+                destination.Add(
+                    new SafeHousePlayerReadyState(player, isReady));
+            }
         }
 
         private bool IsConnectedPlayer(PlayerRef player)

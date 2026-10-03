@@ -1,0 +1,27 @@
+{
+  "jsonrpc": "2.0",
+  "id": 10,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"playing\":false,\"compiling\":false,\"failed\":false,\"dirty\":false,\"probeObjects\":0},\"compiler\":\"codedom\"}}"
+      }
+    ],
+    "structuredContent": {
+      "success": true,
+      "message": "Code executed successfully.",
+      "data": {
+        "result": {
+          "playing": false,
+          "compiling": false,
+          "failed": false,
+          "dirty": false,
+          "probeObjects": 0
+        },
+        "compiler": "codedom"
+      }
+    },
+    "isError": false
+  }
+}

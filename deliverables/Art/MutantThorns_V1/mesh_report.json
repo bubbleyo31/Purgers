@@ -1,0 +1,29 @@
+[
+  {
+    "variant": "A_BriarHeart",
+    "thorns": 123,
+    "lod_triangles": [
+      17718,
+      7441,
+      2657
+    ]
+  },
+  {
+    "variant": "B_GnarledKnot",
+    "thorns": 124,
+    "lod_triangles": [
+      20176,
+      8472,
+      3026
+    ]
+  },
+  {
+    "variant": "C_SplitCrown",
+    "thorns": 99,
+    "lod_triangles": [
+      16262,
+      6830,
+      2439
+    ]
+  }
+]

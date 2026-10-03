@@ -96,7 +96,7 @@ public class ContinuousDamageZone :
     // =====================================================================
     #region Damage Request
 
-    [Header("Damage Request 設定")]
+    [Header("傷害請求設定")]
 
     [SerializeField]
     [Tooltip("這個區域造成的 DamageType。一般場景傷害建議使用 Environment；如果未來是燃燒、毒素之類持續狀態則可以使用 DamageOverTime。")]

@@ -1,0 +1,1 @@
+indexed cache init ms=4.9417; max 8192-cell batch ms=1.4451; batches=21; stationary RevealAround ms=0.746225

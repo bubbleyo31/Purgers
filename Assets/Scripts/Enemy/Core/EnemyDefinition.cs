@@ -19,7 +19,8 @@ public enum EnemyCombatFamily : byte
 public enum EnemyVariant : byte
 {
     A = 0,
-    B = 1
+    B = 1,
+    C = 2
 }
 
 
@@ -59,12 +60,13 @@ public enum EnemyChaseKind : byte
 ///
 /// ====================================================================
 ///
-/// 目前四種 Enemy Definition：
+/// 目前 Enemy Definition 類型：
 ///
 /// Melee A
 /// Melee B
 /// Ranged A
 /// Ranged B
+/// Ranged C Projectile / Beam（Stationary）
 ///
 /// ====================================================================
 ///
@@ -138,7 +140,7 @@ public sealed class EnemyDefinition :
 
     [SerializeField]
     [Tooltip(
-        "同一戰鬥家族中的 A／B 變體。\n\n" +
+        "同一戰鬥家族中的 A／B／C 變體。\n\n" +
         "此欄只描述身分；實際能力仍由 Prefab 上的 Ability Component 決定。")]
     private EnemyVariant variant =
         EnemyVariant.A;
@@ -148,7 +150,7 @@ public sealed class EnemyDefinition :
         "敵人的主要移動類型。\n\n" +
         "Ground：地面導航。\n" +
         "Free Flying：自由 XYZ 飛行。\n" +
-        "Stationary：不主動移動。\n\n" +
+        "Stationary：定點怪，不掛巡邏／追逐 Brain 或 Navigator，不需要巡邏區；攻擊仍可原地旋轉。\n\n" +
         "EnemyActor 只用它驗證組合，不會直接依 Enum 執行移動。")]
     private EnemyLocomotionKind locomotionKind =
         EnemyLocomotionKind.Ground;
@@ -157,9 +159,14 @@ public sealed class EnemyDefinition :
     [Tooltip(
         "敵人的主要追逐策略。\n\n" +
         "Chase A：接近玩家並加入近戰包圍。\n" +
-        "Chase B：保持視線、理想射程與安全距離。")]
+        "Chase B：保持視線、理想射程與安全距離。Stationary 不讀此欄，無須指定地面／飛行追逐。")]
     private EnemyChaseKind chaseKind =
         EnemyChaseKind.ChaseA;
+
+    [Header("玩家經驗")]
+    [SerializeField, Min(0)]
+    [Tooltip("正式擊殺此種敵人時，所有當下存活隊友各取得的基礎經驗。擊殺者另有共用規則加成；0 代表不給經驗。Phase 5 完成前不讀 Enemy Level。")]
+    private int baseKillExperience = 1;
 
     #endregion
 
@@ -191,6 +198,9 @@ public sealed class EnemyDefinition :
     public EnemyChaseKind ChaseKind =>
         chaseKind;
 
+    public int BaseKillExperience =>
+        Mathf.Max(0, baseKillExperience);
+
     #endregion
 
     // =====================================================================
@@ -198,6 +208,7 @@ public sealed class EnemyDefinition :
 
     private void OnValidate()
     {
+        baseKillExperience = Mathf.Max(0, baseKillExperience);
         if (enemyId != null)
         {
             enemyId =

@@ -111,7 +111,7 @@ public class GameplayAudioCue :
     // =====================================================================
     #region Volume / Pitch
 
-    [Header("音量與 Pitch")]
+    [Header("音量與音高")]
 
     [SerializeField]
     [Range(0f, 1f)]
@@ -149,7 +149,7 @@ public class GameplayAudioCue :
     // =====================================================================
     #region World 3D
 
-    [Header("World 3D 設定")]
+    [Header("世界三維設定")]
 
     [SerializeField]
     [Range(0f, 1f)]

@@ -1,0 +1,27 @@
+Phase 4-2 follow-up verification
+
+Editor Host + independent Windows Development Client.
+Session: phase42-vote-review-1789752531
+
+Verified on both peers:
+- Opening the ready vote did not acquire Gameplay or AllInput; LocalPlayerControl mask was None while interactive.
+- The authoritative configurable vote timer started at 7 seconds and returned both peers to WaitingForHost when it expired.
+- Client whole-vote cancellation used the same local entry point as ESC, reached Host State Authority through RPC, and synchronized both peers back to WaitingForHost.
+- Client ready request and ready cancellation synchronized through Host authority.
+- Host and Client ready started the authoritative three-second launch countdown.
+- Client cancellation during launch countdown immediately returned both peers to ReadyCheck.
+- Re-ready restarted countdown and both peers transitioned to Game.
+- HUD showed 2 LED glyphs for 2 connected players, correct ready/unready counts, vote time, top-left third-row layout, and no input lock.
+
+Phase 4-1 transition regression check:
+- Actual FusionMenuUIMain Quick Play path was exercised with an isolated temporary save repository.
+- FusionMenuUILoading remained active while LocalSceneTransition was running.
+- Transition fade stayed transparent (alpha 0.00) for the entire period where the connect UI was visible.
+- After FusionMenuUILoading became inactive, the local scene fade resumed and SafeHouse was loaded.
+- Result: PASS visible=True, visibleLongEnough=True, transitionWhileVisible=True, transparentForEntireVisibleTransition=True, hiddenAfter=True, safeHouseLoaded=True.
+
+ClientPlayer.log search for Exception|Error|Assert|FAIL: 0 matches.
+Editor Console Error/Warning after multiplayer run: 0 entries.
+PurgersRegression EditMode: 59/59 passed, job d3dc55e21bd748cc99277204c05f1c8b.
+Complete EditMode: 65/65 passed, job 2815b071619347aab00d7d407679849b.
+Final clean Windows Development build: build-a3d47159ab, 0 errors, 0 warnings.

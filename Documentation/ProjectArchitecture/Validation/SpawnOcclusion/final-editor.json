@@ -1,0 +1,35 @@
+{
+  "jsonrpc": "2.0",
+  "id": 10,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"compiling\":false,\"failed\":false,\"playing\":false,\"dirty\":false,\"defaults\":[\"EnemySpawnZone:requireOcclusion=True\",\"EnemySpawnZone (1):requireOcclusion=True\",\"EnemySpawnZone (2):requireOcclusion=True\",\"EnemySpawnZone (3):requireOcclusion=True\",\"EnemySpawnZone (4):requireOcclusion=True\",\"EnemySpawnZone (5):requireOcclusion=True\",\"EnemySpawnZone (6):requireOcclusion=True\"]},\"compiler\":\"codedom\"}}"
+      }
+    ],
+    "structuredContent": {
+      "success": true,
+      "message": "Code executed successfully.",
+      "data": {
+        "result": {
+          "compiling": false,
+          "failed": false,
+          "playing": false,
+          "dirty": false,
+          "defaults": [
+            "EnemySpawnZone:requireOcclusion=True",
+            "EnemySpawnZone (1):requireOcclusion=True",
+            "EnemySpawnZone (2):requireOcclusion=True",
+            "EnemySpawnZone (3):requireOcclusion=True",
+            "EnemySpawnZone (4):requireOcclusion=True",
+            "EnemySpawnZone (5):requireOcclusion=True",
+            "EnemySpawnZone (6):requireOcclusion=True"
+          ]
+        },
+        "compiler": "codedom"
+      }
+    },
+    "isError": false
+  }
+}

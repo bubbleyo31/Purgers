@@ -1,0 +1,1 @@
+PASS SafeHouse death/respawn old=[Id:1110] new=[Id:1114] gapObserved=True elapsed=1.21 health=100 transition=False alpha=0 locks=0

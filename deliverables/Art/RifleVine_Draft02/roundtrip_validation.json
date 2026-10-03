@@ -1,0 +1,485 @@
+{
+  "passed": true,
+  "errors": [],
+  "compared_bone_positions": 10395,
+  "max_bone_position_delta_m": 8.074174633111993e-07,
+  "worst_sample": [
+    "Reload.001:60",
+    "骨骼.013.l.001_end"
+  ],
+  "source_bones": 63,
+  "output_bones": 63,
+  "source_actions": {
+    "Appear": [
+      1.0,
+      11.0
+    ],
+    "idle": [
+      1.0,
+      61.0
+    ],
+    "melee": [
+      1.0,
+      24.0
+    ],
+    "Opening the scope": [
+      1.0,
+      4.0
+    ],
+    "Reload.001": [
+      1.0,
+      63.0
+    ],
+    "shoot": [
+      1.0,
+      2.0
+    ]
+  },
+  "output_actions": {
+    "Appear": [
+      1.0,
+      11.0
+    ],
+    "idle": [
+      1.0,
+      61.0
+    ],
+    "melee": [
+      1.0,
+      24.0
+    ],
+    "Opening the scope": [
+      1.0,
+      4.0
+    ],
+    "Reload.001": [
+      1.0,
+      63.0
+    ],
+    "shoot": [
+      1.0,
+      2.0
+    ]
+  },
+  "meshes": [
+    {
+      "name": "ACOG_Trim_BrushedSteel_R2",
+      "vertices": 360,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "立方体.022",
+      "vertices": 56,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "立方体.021",
+      "vertices": 124,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "Detail_weapon_Vine_Olive_R2",
+      "vertices": 10328,
+      "uv_layers": 2,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "Detail_arms_Trim_BrushedSteel_R2",
+      "vertices": 2296,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "ACOG_Rubber_Soot_R2",
+      "vertices": 1512,
+      "uv_layers": 2,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "柱体.001",
+      "vertices": 136,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "立方体.024",
+      "vertices": 200,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "立方体.023",
+      "vertices": 128,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "Detail_weapon_Trim_BrushedSteel_R2",
+      "vertices": 1576,
+      "uv_layers": 3,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "Detail_arms_Rubber_Soot_R2",
+      "vertices": 640,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "ACOG_Optic_Anodized_R2",
+      "vertices": 6112,
+      "uv_layers": 2,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "ACOG_Optic_Fiber_Red_R2",
+      "vertices": 384,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "柱体.003",
+      "vertices": 72,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "立方体.026",
+      "vertices": 56,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "立方体.025",
+      "vertices": 76,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "Detail_weapon_Core_Charcoal",
+      "vertices": 140,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "Detail_arms_Bracer_Graphite",
+      "vertices": 336,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "ACOG_Optic_CoatedGlass_R2",
+      "vertices": 256,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "立方体.020",
+      "vertices": 374,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "立方体.004",
+      "vertices": 7596,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 5,
+      "armature_modifier": true
+    },
+    {
+      "name": "Detail_weapon_Bark_Walnut",
+      "vertices": 1300,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "Detail_weapon_Rubber_Soot_R2",
+      "vertices": 21,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "Detail_arms_Seam_Thread_R2",
+      "vertices": 672,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    }
+  ],
+  "texture_paths": [
+    {
+      "name": "Bark_Walnut_BaseColor.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Bark_Walnut_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Bark_Walnut_BaseColor.002",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Bark_Walnut_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Bark_Walnut_Normal.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Bark_Walnut_Normal.png",
+      "exists": true
+    },
+    {
+      "name": "Bark_Walnut_Roughness.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Bark_Walnut_Roughness.png",
+      "exists": true
+    },
+    {
+      "name": "Bracer_Graphite_BaseColor.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Bracer_Graphite_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Bracer_Graphite_BaseColor.002",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Bracer_Graphite_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Bracer_Graphite_Normal.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Bracer_Graphite_Normal.png",
+      "exists": true
+    },
+    {
+      "name": "Bracer_Graphite_Roughness.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Bracer_Graphite_Roughness.png",
+      "exists": true
+    },
+    {
+      "name": "Core_Charcoal_BaseColor.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Core_Charcoal_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Core_Charcoal_BaseColor.002",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Core_Charcoal_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Core_Charcoal_Normal.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Core_Charcoal_Normal.png",
+      "exists": true
+    },
+    {
+      "name": "Core_Charcoal_Roughness.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Core_Charcoal_Roughness.png",
+      "exists": true
+    },
+    {
+      "name": "Glove_Forest_BaseColor.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Glove_Forest_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Glove_Forest_BaseColor.002",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Glove_Forest_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Glove_Forest_Normal.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Glove_Forest_Normal.png",
+      "exists": true
+    },
+    {
+      "name": "Glove_Forest_Roughness.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Glove_Forest_Roughness.png",
+      "exists": true
+    },
+    {
+      "name": "Optic_Anodized_BaseColor",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Optic_Anodized_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Optic_Anodized_BaseColor.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Optic_Anodized_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Optic_Anodized_Normal",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Optic_Anodized_Normal.png",
+      "exists": true
+    },
+    {
+      "name": "Optic_Anodized_Roughness",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Optic_Anodized_Roughness.png",
+      "exists": true
+    },
+    {
+      "name": "Rubber_Soot_BaseColor.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Rubber_Soot_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Rubber_Soot_BaseColor.002",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Rubber_Soot_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Rubber_Soot_Normal.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Rubber_Soot_Normal.png",
+      "exists": true
+    },
+    {
+      "name": "Rubber_Soot_Roughness.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Rubber_Soot_Roughness.png",
+      "exists": true
+    },
+    {
+      "name": "Seam_Thread_BaseColor",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Seam_Thread_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Seam_Thread_BaseColor.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Seam_Thread_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Seam_Thread_Normal",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Seam_Thread_Normal.png",
+      "exists": true
+    },
+    {
+      "name": "Seam_Thread_Roughness",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Seam_Thread_Roughness.png",
+      "exists": true
+    },
+    {
+      "name": "Sleeve_Ochre_BaseColor.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Sleeve_Ochre_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Sleeve_Ochre_BaseColor.002",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Sleeve_Ochre_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Sleeve_Ochre_Normal.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Sleeve_Ochre_Normal.png",
+      "exists": true
+    },
+    {
+      "name": "Sleeve_Ochre_Roughness.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Sleeve_Ochre_Roughness.png",
+      "exists": true
+    },
+    {
+      "name": "Trim_BrushedSteel_BaseColor.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Trim_BrushedSteel_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Trim_BrushedSteel_BaseColor.002",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Trim_BrushedSteel_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Trim_BrushedSteel_Normal.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Trim_BrushedSteel_Normal.png",
+      "exists": true
+    },
+    {
+      "name": "Trim_BrushedSteel_Roughness.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Trim_BrushedSteel_Roughness.png",
+      "exists": true
+    },
+    {
+      "name": "Vine_Olive_BaseColor.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Vine_Olive_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Vine_Olive_BaseColor.002",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Vine_Olive_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Vine_Olive_Normal.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Vine_Olive_Normal.png",
+      "exists": true
+    },
+    {
+      "name": "Vine_Olive_Roughness.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\RifleVine_Draft02\\RifleVine_Arms_Draft02.fbm\\Vine_Olive_Roughness.png",
+      "exists": true
+    }
+  ],
+  "scope": "Blender FBX round-trip only. Does not verify Unity import, runtime animation blending, material conversion or collision-free animation."
+}

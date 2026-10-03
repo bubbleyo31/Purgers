@@ -90,7 +90,7 @@ public class FirstPersonDamageFeedbackAudio :
     #region Local Feedback Cues
 
 
-    [Header("Local 傷害回饋 Cue")]
+    [Header("本機傷害回饋音效提示")]
 
 
     [SerializeField]
@@ -129,7 +129,7 @@ public class FirstPersonDamageFeedbackAudio :
     #region Volume Scale
 
 
-    [Header("Local 回饋音量倍率")]
+    [Header("本機 回饋音量倍率")]
 
 
     [SerializeField]

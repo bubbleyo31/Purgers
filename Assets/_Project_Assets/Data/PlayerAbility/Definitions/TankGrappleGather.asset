@@ -14,13 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityId: grapple.hit.gather
   displayName: "\u920E\u7D22\u547D\u4E2D\u805A\u602A"
+  hudIcon: {fileID: -1378655423360560352, guid: 0b87c06ca18b93b4d9ec5af85e2ef05e,
+    type: 3}
   category: 2
   runtimePrefab: {fileID: 643797422708088361, guid: d12127781fd7bdf4b848354ce053bfe6,
     type: 3}
   includeAdditionalGrappleTargetMask: 0
   professionRule:
     restrictProfession: 0
-    allowedProfessions: 7
+    allowedProfessions: 255
   allowDuplicateEquip: 0
   exclusiveGroupIds:
   - GrappleHitRopeAuthority

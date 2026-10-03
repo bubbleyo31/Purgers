@@ -1,0 +1,29 @@
+Phase 4-3 HUD verification, 2026-09-19 Asia/Taipei
+
+RED: c9c365153f434c4d9a2a2922f587a015, 10 expected failures.
+GREEN: b60d60281c6e4a6fa18470297fd014e9, 10/10 passed.
+Final PurgersRegression: 1e926f2c37214b8bb7b8c23eef9d0991, 70/70 passed.
+An earlier zero-test invocation was rejected and rerun after forced refresh.
+Final Windows Development build: build-0a3d5bba31, 0 errors, 0 warnings.
+Network run build: build-f5a76a9c08; subsequent changes only add probe sampling delay and a source comment.
+
+Host/Client session: phase43-final-0919.
+Ready timeout, whole-vote cancellation, ready/unready, countdown cancellation/restart, Game transition passed.
+Both peers: local Input Authority binding, bottom-center Canvas parent, damage text passed.
+Client numeric timer PASS 09:59; Host initial pre-Update sample was blank, later PASS 09:12.
+Probe now waits 0.5 seconds for presentation after the stage becomes active.
+Host screenshots checked at 1920x1080 and 1366x768.
+Client at 1280x720 passed data/anchor checks; hidden-window captures are not visual evidence.
+Full black overlay obscures all HUD.
+Controlled presentation check: energy 0.75 -> multiplier 1.75 -> damage +75%.
+Natural stationary decay: speed 0 -> multiplier 1 -> damage +0%.
+
+Game/SafeHouse/_Menu: missingScripts=0, brokenReferences=0 each.
+Final Editor Console: 0 Error, 0 Warning.
+Client: 8 Fusion same-tick spawn/despawn warnings during transition, from unchanged Player/profession/ability lifecycle.
+These warnings are unresolved; runtime is not claimed warning-free.
+Successful Player-Final.log contains no Exception/Error.
+Initial sandbox launches failed on PlayerPrefs/network restrictions; allowed test process connected.
+One final-session launch preceded room creation (GameNotFound); restart succeeded. Raw Client.txt retains this failure.
+An exploratory gameplay-menu call without MenuConnection caused test-only exceptions; the probe now only hides the main menu.
+No late-join/reconnect or physical-key injection coverage is claimed.

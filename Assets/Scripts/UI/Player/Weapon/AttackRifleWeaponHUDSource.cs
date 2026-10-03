@@ -15,7 +15,7 @@ public class AttackRifleWeaponHUDSource :
     // =====================================================================
     #region References
 
-    [Header("Attack Rifle HUD 資料來源")]
+    [Header("攻擊步槍抬頭顯示資料來源")]
 
     [SerializeField]
     [Tooltip(
@@ -28,7 +28,7 @@ public class AttackRifleWeaponHUDSource :
     // =====================================================================
     #region Presentation Data
 
-    [Header("Attack 武器 HUD 顯示")]
+    [Header("攻擊武器抬頭顯示")]
 
     [SerializeField]
     [Tooltip(
@@ -104,14 +104,11 @@ public class AttackRifleWeaponHUDSource :
                 attackRifle.MagazineAmmo
             );
 
-        int reserveAmmo =
-            Mathf.Max(
-                0,
-                attackRifle.ReserveAmmo
-            );
-
-        bool infiniteReserve =
-            attackRifle.HasInfiniteReserveAmmo;
+        int magazineCapacity = attackRifle.MagazineCapacity;
+        bool isReloading = attackRifle.IsReloading;
+        float reloadProgress = isReloading && attackRifle.ReloadDurationSeconds > 0f
+            ? 1f - attackRifle.ReloadRemainingSeconds / attackRifle.ReloadDurationSeconds
+            : 0f;
 
         bool showReloadReminder =
             currentAmmo <
@@ -125,10 +122,12 @@ public class AttackRifleWeaponHUDSource :
                 weaponIcon,
                 PlayerWeaponHUDValueMode.Ammunition,
                 currentAmmo,
-                reserveAmmo,
+                magazineCapacity,
                 false,
-                infiniteReserve,
-                showReloadReminder
+                false,
+                showReloadReminder,
+                isReloading,
+                reloadProgress
             );
 
         return true;

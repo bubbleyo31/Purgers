@@ -1,0 +1,62 @@
+{
+  "source_sha256": "30dd4097b6e421d9d812b992ea3d203d21472a11826b6d15a4bbe9e758d44349",
+  "meshes": 19,
+  "vertices": 17887,
+  "triangles": 35528,
+  "bones": 63,
+  "actions": [
+    {
+      "name": "Appear",
+      "frames": [
+        1.0,
+        11.0
+      ],
+      "curves": 509
+    },
+    {
+      "name": "idle",
+      "frames": [
+        1.0,
+        61.0
+      ],
+      "curves": 509
+    },
+    {
+      "name": "melee",
+      "frames": [
+        1.0,
+        24.0
+      ],
+      "curves": 509
+    },
+    {
+      "name": "Opening the scope",
+      "frames": [
+        1.0,
+        4.0
+      ],
+      "curves": 509
+    },
+    {
+      "name": "Reload.001",
+      "frames": [
+        1.0,
+        63.0
+      ],
+      "curves": 509
+    },
+    {
+      "name": "shoot",
+      "frames": [
+        1.0,
+        2.0
+      ],
+      "curves": 509
+    }
+  ],
+  "notes": [
+    "Procedural draft textures, not final hand-painted art",
+    "Unity MCP unavailable; no Unity runtime acceptance",
+    "Original Unity assets unchanged"
+  ]
+}

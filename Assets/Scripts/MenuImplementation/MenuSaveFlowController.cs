@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Fusion.Menu;
 using Purgers.Progression;
@@ -10,7 +10,7 @@ namespace MultiClimb.Menu
 {
     public sealed class MenuSaveFlowController : MonoBehaviour
     {
-        [Header("Fusion Menu")]
+        [Header("Fusion 選單")]
         [Tooltip(
             "指定場景中的 FusionMenuUIMain。Controller 會沿用它的 " +
             "ConnectionArgs、Connection 與 Loading／Popup 畫面。")]
@@ -21,7 +21,7 @@ namespace MultiClimb.Menu
             "所選存檔交給真正建立 NetworkRunner 的 MenuConnection。")]
         [SerializeField] private MenuConnectionBehaviour menuConnection;
 
-        [Header("Continue Overlay")]
+        [Header("繼續遊戲覆蓋選單")]
         [Tooltip("主選單右側的繼續遊戲按鈕。Awake 會接管它的點擊事件。")]
         [SerializeField] private Button continueButton;
 
@@ -46,7 +46,11 @@ namespace MultiClimb.Menu
         [Tooltip("關閉繼續遊戲選單並返回主選單的按鈕。")]
         [SerializeField] private Button backButton;
 
-        [Header("Delete Confirmation")]
+        [Header("選取摘要")]
+        [Tooltip("右側摘要與存檔數量，只顯示目前選取資料；可留空，不影響既有存檔功能。")]
+        [SerializeField] private MenuSaveSummaryView selectionSummary;
+
+        [Header("刪除確認")]
         [Tooltip("刪除確認視窗根物件；必須位於 Continue Overlay 最上層。")]
         [SerializeField] private GameObject deleteConfirmationRoot;
 
@@ -140,6 +144,7 @@ namespace MultiClimb.Menu
             SelectRow(null);
 
             GameSaveCatalog catalog = menuConnection.SaveRepository.List();
+            if (selectionSummary) selectionSummary.SetCount(catalog.Summaries.Count);
 
             for (int i = 0; i < catalog.Summaries.Count; i++)
             {
@@ -317,6 +322,7 @@ namespace MultiClimb.Menu
             if (selectedRow)
                 selectedRow.SetSelected(true);
 
+            if (selectionSummary) selectionSummary.Show(selectedRow ? selectedRow.Summary : null);
             SetStartInteractable(selectedRow != null && !isConnecting);
         }
 

@@ -52,7 +52,7 @@ public class FirstPersonTankViewModelAnimator :
     // =====================================================================
     #region Animator Reference
 
-    [Header("Animator 引用")]
+    [Header("動畫控制器 引用")]
 
     [SerializeField]
     [Tooltip("Tank 第一人稱 ViewModel 使用的 Animator。正常情況就是本元件所在物件上的 Animator；留空時會在 Awake 自動取得。")]
@@ -63,7 +63,7 @@ public class FirstPersonTankViewModelAnimator :
     // =====================================================================
     #region Animator Parameter Names
 
-    [Header("Animator Parameter 名稱")]
+    [Header("動畫控制器 參數 名稱")]
 
     [SerializeField]
     [Tooltip("播放第一段普通攻擊 Light1 使用的 Trigger 名稱。Tank Animator Controller 必須建立同名 Trigger。預設：TankAttack1。")]
@@ -105,7 +105,7 @@ public class FirstPersonTankViewModelAnimator :
     // =====================================================================
     #region Debug
 
-    [Header("Debug")]
+    [Header("除錯設定")]
 
     [SerializeField]
     [Tooltip("開啟後會在 Console 顯示 Tank Runtime 綁定，以及普通攻擊、快速近戰、防禦、滯空特殊能力與進場動畫事件。功能確認後可以關閉。")]

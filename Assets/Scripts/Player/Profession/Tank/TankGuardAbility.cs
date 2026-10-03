@@ -76,7 +76,7 @@ public class TankGuardAbility :
     // =====================================================================
     #region Owner Player
 
-    [Header("Owner Player Binding")]
+    [Header("擁有者玩家綁定")]
 
     [SerializeField]
     [Tooltip("這個 Tank Guard Runtime 真正所屬的 Player Core。正常情況不需要手動指定，Tank Profession Runtime Driver 會在 Runtime Spawn 後自動綁定。")]
@@ -120,7 +120,7 @@ public class TankGuardAbility :
     // =====================================================================
     #region Guard 移動設定
 
-    [Header("Guard 移動設定")]
+    [Header("防禦 移動設定")]
 
     [SerializeField]
     [Range(0f, 1f)]
@@ -133,7 +133,7 @@ public class TankGuardAbility :
     // =====================================================================
     #region Guard 耐力設定
 
-    [Header("Guard 耐力設定")]
+    [Header("防禦 耐力設定")]
 
     [SerializeField]
     [Min(1f)]

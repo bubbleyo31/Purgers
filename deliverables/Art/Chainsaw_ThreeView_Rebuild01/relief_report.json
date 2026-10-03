@@ -1,0 +1,32 @@
+{
+  "ReferenceRelief_blade_-1": {
+    "vertices": 99758,
+    "faces": 88904,
+    "height_m": 0.0009,
+    "source_plane": "blade"
+  },
+  "ReferenceRelief_blade_1": {
+    "vertices": 97217,
+    "faces": 87211,
+    "height_m": 0.0009,
+    "source_plane": "blade"
+  },
+  "ReferenceRelief_case_-1": {
+    "vertices": 46039,
+    "faces": 41382,
+    "height_m": 0.0017,
+    "source_plane": "case"
+  },
+  "ReferenceRelief_case_1": {
+    "vertices": 45629,
+    "faces": 41014,
+    "height_m": 0.0017,
+    "source_plane": "case"
+  },
+  "ReferenceRelief_top_1": {
+    "vertices": 16807,
+    "faces": 15209,
+    "height_m": 0.0017,
+    "source_plane": "top"
+  }
+}

@@ -1,0 +1,77 @@
+2026-09-18T18:09:57.7112343Z [Host] snapshot step=0 peers=1 phase=none ready=0 remaining=0 vote=0 locks=AllInput
+2026-09-18T18:09:58.6629178Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=AllInput
+2026-09-18T18:09:59.6650517Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:00.6717598Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:01.6744830Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:02.6774446Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:03.6837628Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:04.6879996Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:05.6938810Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:06.6997475Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:07.7054257Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:08.7079822Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:09.7126325Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:10.7138245Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:11.7141334Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:12.7156657Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:13.3078072Z [Host] StartGame=True, reason=Ok
+2026-09-18T18:10:13.7197671Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:14.7213512Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:15.7272597Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:16.7311899Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:17.7320880Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:18.7383496Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:19.7453668Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:20.7472960Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:21.7562919Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:22.7576459Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:23.7631542Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:24.7710364Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:25.7707398Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:26.7713363Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:27.7713841Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:29.6241198Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:30.6195434Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:31.6237140Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:32.6259430Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:33.6297825Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:34.6327702Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:35.6345996Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:36.6374189Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:37.6396079Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:38.6418321Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:39.6495178Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:40.6492661Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:41.6516154Z [Host] snapshot step=0 peers=1 phase=WaitingForHost ready=0 remaining=0.00 vote=0.00 locks=None
+2026-09-18T18:10:41.8027532Z [Host] PASS Host opened Ready Check
+2026-09-18T18:10:42.6527189Z [Host] snapshot step=1 peers=2 phase=ReadyCheck ready=0 remaining=0.00 vote=6.13 locks=None
+2026-09-18T18:10:43.6574633Z [Host] snapshot step=1 peers=2 phase=ReadyCheck ready=0 remaining=0.00 vote=5.13 locks=None
+2026-09-18T18:10:44.6634383Z [Host] snapshot step=1 peers=2 phase=ReadyCheck ready=0 remaining=0.00 vote=4.13 locks=None
+2026-09-18T18:10:45.6706711Z [Host] snapshot step=1 peers=2 phase=ReadyCheck ready=0 remaining=0.00 vote=3.11 locks=None
+2026-09-18T18:10:46.6769865Z [Host] snapshot step=1 peers=2 phase=ReadyCheck ready=0 remaining=0.00 vote=2.11 locks=None
+2026-09-18T18:10:47.6819712Z [Host] snapshot step=1 peers=2 phase=ReadyCheck ready=0 remaining=0.00 vote=1.09 locks=None
+2026-09-18T18:10:48.6863658Z [Host] snapshot step=1 peers=2 phase=ReadyCheck ready=0 remaining=0.00 vote=0.09 locks=None
+2026-09-18T18:10:48.7794449Z [Host] PASS Host observed seven-second ready vote timeout at 7.00s
+2026-09-18T18:10:48.8124739Z [Host] PASS Host observed Client cancel whole ready vote
+2026-09-18T18:10:48.8515100Z [Host] PASS HUD LEDs/counts/top-left-third-row/no-input-lock leds=2 connected=2 counts=True row=True lock=None
+2026-09-18T18:10:48.8515100Z [Host] PASS Host observed Client ready through RPC
+2026-09-18T18:10:49.6016418Z [Host] PASS Host observed Client cancel through RPC
+2026-09-18T18:10:49.6336565Z [Host] PASS HUD LEDs/counts/top-left-third-row/no-input-lock leds=2 connected=2 counts=True row=True lock=None
+2026-09-18T18:10:49.6347509Z [Host] PASS Host started three-second countdown
+2026-09-18T18:10:49.6894021Z [Host] snapshot step=6 peers=2 phase=Countdown ready=2 remaining=2.94 vote=6.13 locks=None
+2026-09-18T18:10:50.6955188Z [Host] snapshot step=6 peers=2 phase=Countdown ready=2 remaining=1.94 vote=5.13 locks=None
+2026-09-18T18:10:51.1018894Z [Host] PASS HUD LEDs/counts/top-left-third-row/no-input-lock leds=2 connected=2 counts=True row=True lock=None
+2026-09-18T18:10:51.1028900Z [Host] PASS Host cancelled countdown after Client unready
+2026-09-18T18:10:51.5764201Z [Host] PASS Host restarted countdown after all ready
+2026-09-18T18:10:51.7020692Z [Host] snapshot step=8 peers=2 phase=Countdown ready=2 remaining=2.88 vote=4.11 locks=None
+2026-09-18T18:10:53.4733662Z [Host] snapshot step=8 peers=2 phase=Countdown ready=2 remaining=1.16 vote=2.39 locks=None
+2026-09-18T18:10:54.4682121Z [Host] snapshot step=8 peers=2 phase=Countdown ready=2 remaining=0.16 vote=1.39 locks=None
+2026-09-18T18:10:55.4840688Z [Host] snapshot step=8 peers=2 phase=none ready=0 remaining=0 vote=0 locks=AllInput
+2026-09-18T18:10:56.6181365Z [Host] snapshot step=8 peers=2 phase=none ready=0 remaining=0 vote=0 locks=AllInput
+2026-09-18T18:10:56.6542832Z [Host] PASS transition reached Game; step=8, expected=8, stage phase=Active
+2026-09-18T18:10:56.6552407Z [Host] FAIL numeric stage timer=
+2026-09-18T18:10:56.6562679Z [Host] PASS local speed/bonus HUD bottom-center, label=傷害 +0%
+2026-09-18T18:11:46.1343834Z [Host] snapshot step=8 peers=2 phase=none ready=0 remaining=0 vote=0 locks=None
+2026-09-18T18:11:46.1353840Z [Host] PASS transition reached Game; step=8, expected=8, stage phase=Active
+2026-09-18T18:11:46.1363853Z [Host] PASS numeric stage timer=09:12
+2026-09-18T18:11:46.1363853Z [Host] PASS local speed/bonus HUD bottom-center, label=傷害 +0%

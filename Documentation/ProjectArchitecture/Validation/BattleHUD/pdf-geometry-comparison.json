@@ -1,0 +1,31 @@
+{
+  "reference": "UI.pdf page 1 rendered 1440x810",
+  "actual": "normal-1440x810.png",
+  "note": "Threshold comparison only; text, content and alpha blending are not pixel-equivalence gates.",
+  "regions": {
+    "minimap": {
+      "blue_mask_iou": 0.99443
+    },
+    "panel": {
+      "blue_mask_iou": 0.94926
+    },
+    "momentum": {
+      "blue_mask_iou": 0.98967
+    },
+    "health": {
+      "blue_mask_iou": 0.97094
+    },
+    "experience": {
+      "blue_mask_iou": 0.97074
+    },
+    "grapple": {
+      "blue_mask_iou": 0.93618
+    },
+    "skills": {
+      "blue_mask_iou": 0.95467
+    },
+    "crosshair": {
+      "blue_mask_iou": 0.875
+    }
+  }
+}

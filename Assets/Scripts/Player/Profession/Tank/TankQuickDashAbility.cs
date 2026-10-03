@@ -82,7 +82,7 @@ public class TankQuickDashAbility :
     #region Owner Player
 
 
-    [Header("Owner Player Binding")]
+    [Header("擁有者玩家綁定")]
 
 
     [SerializeField]
@@ -176,7 +176,7 @@ public class TankQuickDashAbility :
     #region Charge
 
 
-    [Header("F Dash 充能")]
+    [Header("F 鍵衝刺充能")]
 
 
     [SerializeField]
@@ -200,7 +200,7 @@ public class TankQuickDashAbility :
     #region Dash Movement
 
 
-    [Header("F Dash 位移")]
+    [Header("F 鍵衝刺位移")]
 
 
     [SerializeField]
@@ -222,7 +222,7 @@ public class TankQuickDashAbility :
     // =====================================================================
     #region Quick Dash World Audio
 
-    [Header("Quick Dash 世界聲音")]
+    [Header("快速衝刺世界聲音")]
 
     [SerializeField]
     [Tooltip(
@@ -248,7 +248,7 @@ public class TankQuickDashAbility :
     #region Dash Damage
 
 
-    [Header("F Dash 衝撞傷害")]
+    [Header("F 鍵衝刺衝撞傷害")]
 
 
     [SerializeField]
@@ -292,7 +292,7 @@ public class TankQuickDashAbility :
     #region Lag Compensation
 
 
-    [Header("Fusion Hit Detection")]
+    [Header("Fusion 命中偵測")]
 
 
     [SerializeField]
@@ -370,7 +370,7 @@ public class TankQuickDashAbility :
     // =====================================================================
     #region Post Dash Recovery
 
-    [Header("Dash 結束後僵直")]
+    [Header("衝刺 結束後僵直")]
 
     [SerializeField]
     [Min(0f)]

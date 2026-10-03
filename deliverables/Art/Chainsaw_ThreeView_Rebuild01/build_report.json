@@ -1,0 +1,85 @@
+{
+  "source_sha256": "90783ec2fbb781a88cba3078c2b5818a867ed02d78bf20b0a18960d57b606644",
+  "bones": 58,
+  "actions": {
+    "attack1": [
+      1.0,
+      26.0
+    ],
+    "attack2": [
+      1.0,
+      26.0
+    ],
+    "attack3.001": [
+      1.0,
+      26.0
+    ],
+    "attack4": [
+      1.0,
+      21.0
+    ],
+    "idle": [
+      1.0,
+      3.0
+    ],
+    "melee": [
+      1.0,
+      24.0
+    ],
+    "partition": [
+      1.0,
+      7.0
+    ]
+  },
+  "fps": 24,
+  "meshes": 8,
+  "vertices": 311103,
+  "triangles": 622648,
+  "materials": {
+    "Housing_Burgundy": {
+      "material": "Housing_Burgundy_TV01",
+      "metallic": 0.03,
+      "roughness": 0.82,
+      "resolution": 2048
+    },
+    "Blade_PaleSteel": {
+      "material": "Blade_PaleSteel_TV01",
+      "metallic": 0.35,
+      "roughness": 0.7,
+      "resolution": 2048
+    },
+    "Handle_Charcoal": {
+      "material": "Handle_Charcoal_TV01",
+      "metallic": 0.2,
+      "roughness": 0.62,
+      "resolution": 1024
+    },
+    "Thorn_Deadwood": {
+      "material": "Thorn_Deadwood_TV01",
+      "metallic": 0,
+      "roughness": 0.89,
+      "resolution": 1024
+    },
+    "Blade_Mycelium_Ridge": {
+      "material": "Blade_Mycelium_Ridge_TV01",
+      "metallic": 0,
+      "roughness": 0.86,
+      "resolution": 1024
+    },
+    "Case_Mycelium_Ridge": {
+      "material": "Case_Mycelium_Ridge_TV01",
+      "metallic": 0,
+      "roughness": 0.86,
+      "resolution": 1024
+    },
+    "Clamp_WornSteel": {
+      "material": "Clamp_WornSteel_TV01",
+      "metallic": 0.65,
+      "roughness": 0.49,
+      "resolution": 1024
+    }
+  },
+  "reference": "new three-view image",
+  "chain_motion": "all weapon parts follow original Root; no new independent chain animation",
+  "unity_output_validation": "not executed"
+}

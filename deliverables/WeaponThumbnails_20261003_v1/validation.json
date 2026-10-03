@@ -1,0 +1,23 @@
+[
+  {
+    "File": "01_Attack_Rifle.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": 0
+  },
+  {
+    "File": "02_Support_SMG.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": 0
+  },
+  {
+    "File": "03_Tank_Chainsaw.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": 0
+  }
+]

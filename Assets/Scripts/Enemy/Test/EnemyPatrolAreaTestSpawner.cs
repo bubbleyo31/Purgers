@@ -10,7 +10,7 @@ using UnityEngine;
 /// 本地玩家按下測試熱鍵後，由指定 Scene NetworkObject 的 State Authority
 /// 正式呼叫 Runner.Spawn；Client 不會自行 Instantiate Enemy。
 ///
-/// 生成位置取自手動指定或 Runtime 地圖規劃器建立的 EnemyPatrolArea 節點，
+/// 移動怪生成位置取自 EnemyPatrolArea 節點；定點怪使用人工指定 Transform，
 /// 不會在球形範圍內隨機猜座標，也不會在設定錯誤時退回世界原點。
 ///
 /// 這是開發期測試工具。正式關卡波次、房間清除與生成預算
@@ -57,7 +57,7 @@ public sealed class EnemyPatrolAreaTestSpawner : NetworkBehaviour
         "這是全域防連點，不是每位玩家各自計時；0 代表不限制。")]
     private float minimumSecondsBetweenRequests = 0.15f;
 
-    [Header("生成區域與 Prefab")]
+    [Header("生成區域與 預置物")]
 
     [SerializeField]
     [Tooltip(
@@ -66,6 +66,7 @@ public sealed class EnemyPatrolAreaTestSpawner : NetworkBehaviour
         "生成器會在 Runner.Spawn 完成前把這個實際 Area 直接綁定到 EnemyIdlePatrolBrain，" +
         "因此不依賴 Prefab 內 Patrol Area Id 猜測場景物件。")]
     private EnemyPatrolArea patrolArea;
+
 
     [SerializeField]
     [Tooltip(
@@ -90,7 +91,7 @@ public sealed class EnemyPatrolAreaTestSpawner : NetworkBehaviour
 
     [SerializeField]
     [Tooltip(
-        "Patrol Area Forward：使用 Patrol Area 的水平朝向。\n" +
+        "Patrol Area Forward：使用 Patrol Area 的水平朝向；Stationary 則用 Stationary Spawn Point 的水平朝向。\n" +
         "Random Yaw：每次只隨機世界 Y 軸角度，不傾斜 Enemy Root。")]
     private SpawnRotationMode spawnRotation =
         SpawnRotationMode.RandomYaw;
@@ -100,6 +101,10 @@ public sealed class EnemyPatrolAreaTestSpawner : NetworkBehaviour
         "加入巡邏節點世界座標的生成偏移。\n" +
         "地面 Enemy 通常維持 (0,0,0)；如果 Prefab Root Pivot 不在腳底才調整 Y。")]
     private Vector3 spawnPositionOffset = Vector3.zero;
+
+    [Header("定點怪出生位置")]
+    [SerializeField, Tooltip("只供 EnemyDefinition 為 Stationary 的怪物使用。指定同 Scene 的人工位置；不讀 Patrol Area 或 Runtime Ground Area。留空拒絕生成。位置另加 Spawn Position Offset，朝向仍由 Spawn Rotation 選項決定。")]
+    private Transform stationarySpawnPoint;
 
     [Header("生成點占用檢查")]
 
@@ -131,7 +136,7 @@ public sealed class EnemyPatrolAreaTestSpawner : NetworkBehaviour
         "只統計由本元件生成的 NetworkObject；0 代表不限制。建議測試時保留 20，避免誤按產生過多敵人。")]
     private int maximumAliveFromThisSpawner = 20;
 
-    [Header("除錯與 Gizmos")]
+    [Header("除錯與 視覺輔助線")]
 
     [SerializeField]
     [Tooltip("輸出按鍵來源、Prefab、巡邏節點 Index、生成座標及拒絕原因。")]
@@ -169,6 +174,7 @@ public sealed class EnemyPatrolAreaTestSpawner : NetworkBehaviour
             !fusionSpawned ||
             Object == null ||
             !Object.IsValid ||
+            Purgers.GameFlow.Control.LocalPlayerControl.AllInputBlocked ||
             !Input.GetKeyDown(spawnKey))
         {
             return;
@@ -260,8 +266,6 @@ public sealed class EnemyPatrolAreaTestSpawner : NetworkBehaviour
 
         RemoveInvalidSpawnedReferences();
 
-        SelectRuntimeGeneratedPatrolArea();
-
         if (maximumAliveFromThisSpawner > 0 &&
             spawnedEnemies.Count >= maximumAliveFromThisSpawner)
         {
@@ -286,14 +290,36 @@ public sealed class EnemyPatrolAreaTestSpawner : NetworkBehaviour
             return;
         }
 
-        if (!TrySelectSpawnPoint(
-                out Vector3 spawnPosition,
-                out int pointIndex,
-                out string failureDetail
-            ))
+        // 先讀候選 Prefab 的靜態分類；不可為了判斷定點而先生成網路物件。
+        EnemyActor prefabActor;
+        try
+        {
+            NetworkPrefabId id = Runner.Prefabs.GetId((NetworkObjectGuid)selectedPrefab);
+            NetworkObject asset = id.IsValid ? Runner.Prefabs.Load(id, true) : null;
+            prefabActor = asset != null ? asset.GetComponent<EnemyActor>() : null;
+        }
+        catch (Exception exception) when (exception is ArgumentException || exception is InvalidOperationException)
+        {
+            Debug.LogError("[Enemy Test Spawner] 無法讀取候選 Prefab：" + exception.Message, this);
+            return;
+        }
+        if (prefabActor == null || prefabActor.Definition == null)
+        {
+            Debug.LogError("[Enemy Test Spawner] 候選缺少 EnemyActor／Definition。", this);
+            return;
+        }
+        bool stationary = prefabActor.IsStationary;
+        if (!stationary) SelectRuntimeGeneratedPatrolArea();
+        Vector3 spawnPosition;
+        int pointIndex = -1;
+        string failureDetail;
+        bool pointFound = stationary
+            ? TrySelectStationarySpawnPoint(out spawnPosition, out failureDetail)
+            : TrySelectSpawnPoint(out spawnPosition, out pointIndex, out failureDetail);
+        if (!pointFound)
         {
             Debug.LogWarning(
-                "[Enemy Test Spawner] 找不到可使用的 Patrol Area 生成節點。" +
+                "[Enemy Test Spawner] 找不到可使用的生成位置。" +
                 $"\nArea={(patrolArea != null ? patrolArea.AreaId : "null")}" +
                 $"\nDetail={failureDetail}",
                 this
@@ -301,7 +327,8 @@ public sealed class EnemyPatrolAreaTestSpawner : NetworkBehaviour
             return;
         }
 
-        Quaternion rotation = ResolveSpawnRotation();
+        Quaternion rotation = ResolveSpawnRotation(stationary ? stationarySpawnPoint : patrolArea.transform);
+        bool setupValid = true;
 
         NetworkObject spawned = Runner.Spawn(
             selectedPrefab,
@@ -310,26 +337,10 @@ public sealed class EnemyPatrolAreaTestSpawner : NetworkBehaviour
             PlayerRef.None,
             (spawnRunner, spawnedObject) =>
             {
-                EnemyIdlePatrolBrain patrolBrain =
-                    spawnedObject.GetComponentInChildren<
-                        EnemyIdlePatrolBrain>(true);
-
-                if (patrolBrain == null)
-                {
-                    Debug.LogError(
-                        "[Enemy Test Spawner] Enemy Prefab 缺少 EnemyIdlePatrolBrain，" +
-                        "無法在 Spawned 前綁定 Patrol Area。",
-                        spawnedObject);
-                    return;
-                }
-
-                if (!patrolBrain.TryInitializePatrolAreaBeforeSpawn(
-                        patrolArea))
-                {
-                    Debug.LogError(
-                        "[Enemy Test Spawner] Patrol Area 出生前綁定失敗。",
-                        spawnedObject);
-                }
+                var actor = spawnedObject.GetComponent<EnemyActor>();
+                setupValid = actor != null && actor.TryInitializePatrolBeforeSpawn(stationary ? null : patrolArea);
+                if (!setupValid)
+                    Debug.LogError("[Enemy Test Spawner] 出生前巡邏契約無效；Stationary 不得殘留移動元件。", spawnedObject);
             }
         );
 
@@ -344,6 +355,11 @@ public sealed class EnemyPatrolAreaTestSpawner : NetworkBehaviour
             return;
         }
 
+        if (!setupValid)
+        {
+            Runner.Despawn(spawned);
+            return;
+        }
         spawnedEnemies.Add(spawned);
 
         if (debugTestSpawner)
@@ -352,7 +368,7 @@ public sealed class EnemyPatrolAreaTestSpawner : NetworkBehaviour
                 "[Enemy Test Spawner] 生成成功。" +
                 $"\nRequested By={requestedBy}" +
                 $"\nPrefab Index={prefabIndex}" +
-                $"\nArea={patrolArea.AreaId}" +
+                $"\nArea={(stationary ? "Stationary" : patrolArea.AreaId)}" +
                 $"\nPoint Index={pointIndex}" +
                 $"\nPosition={spawnPosition:F3}" +
                 $"\nAlive From This Spawner={spawnedEnemies.Count}",
@@ -444,6 +460,22 @@ public sealed class EnemyPatrolAreaTestSpawner : NetworkBehaviour
         }
 
         return false;
+    }
+
+    private bool TrySelectStationarySpawnPoint(out Vector3 position, out string failure)
+    {
+        position = default;
+        failure = "Stationary Spawn Point 未指定、未啟用或不在同 Scene。";
+        if (stationarySpawnPoint == null || !stationarySpawnPoint.gameObject.activeInHierarchy ||
+            stationarySpawnPoint.gameObject.scene != gameObject.scene) return false;
+        position = stationarySpawnPoint.position + spawnPositionOffset;
+        if (IsSpawnPointOccupied(position))
+        {
+            failure = "定點出生位置已被占用。";
+            return false;
+        }
+        failure = string.Empty;
+        return true;
     }
 
     private bool TrySelectSpawnPoint(
@@ -545,7 +577,7 @@ public sealed class EnemyPatrolAreaTestSpawner : NetworkBehaviour
         ) > 0;
     }
 
-    private Quaternion ResolveSpawnRotation()
+    private Quaternion ResolveSpawnRotation(Transform source)
     {
         if (spawnRotation == SpawnRotationMode.RandomYaw)
         {
@@ -557,9 +589,9 @@ public sealed class EnemyPatrolAreaTestSpawner : NetworkBehaviour
         }
 
         Vector3 forward =
-            patrolArea != null
+            source != null
                 ? Vector3.ProjectOnPlane(
-                    patrolArea.transform.forward,
+                    source.forward,
                     Vector3.up
                 )
                 : Vector3.forward;
@@ -605,6 +637,12 @@ public sealed class EnemyPatrolAreaTestSpawner : NetworkBehaviour
 
     private void OnDrawGizmosSelected()
     {
+        if (drawSpawnPointGizmos && stationarySpawnPoint != null)
+        {
+            Gizmos.color = spawnPointGizmoColor;
+            Gizmos.DrawWireSphere(stationarySpawnPoint.position + spawnPositionOffset +
+                Vector3.up * spawnOccupancyCenterHeight, spawnOccupancyRadius);
+        }
         if (!drawSpawnPointGizmos ||
             patrolArea == null)
         {

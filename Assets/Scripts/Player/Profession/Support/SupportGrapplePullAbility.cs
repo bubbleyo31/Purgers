@@ -65,7 +65,7 @@ public class SupportGrapplePullAbility :
     #region Owner References
 
 
-    [Header("Owner Player 引用")]
+    [Header("擁有者玩家 引用")]
 
 
     [SerializeField]

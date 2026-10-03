@@ -152,13 +152,19 @@ public class PlayerAbilityRuntimeManager :
     /// State Authority 套用一份已知 Loadout。
     /// 未來 UI / 存檔應先用穩定 Ability ID 解析成 Definition，再呼叫此入口。
     /// </summary>
-    public bool TryApplyLoadoutStateAuthority(
-        PlayerAbilityLoadoutDefinition loadout,
-        out string failureReason
-    )
+    public bool TryApplyLoadoutStateAuthority(PlayerAbilityLoadoutDefinition loadout, out string failureReason)
     {
-        failureReason =
-            string.Empty;
+        if (loadout == null)
+        {
+            failureReason = "Loadout 是 Null。";
+            return false;
+        }
+        return TryApplyDefinitionsStateAuthority(loadout.SlotLayout, loadout.EquippedAbilities, out failureReason);
+    }
+
+    public bool TryApplyDefinitionsStateAuthority(PlayerAbilitySlotLayoutDefinition slotLayout, IReadOnlyList<PlayerAbilityDefinition> abilities, out string failureReason)
+    {
+        failureReason = string.Empty;
 
         if (Object == null ||
             Object.HasStateAuthority == false)
@@ -168,26 +174,10 @@ public class PlayerAbilityRuntimeManager :
 
             return false;
         }
-
-        if (loadout == null)
-        {
-            failureReason =
-                "Loadout 是 Null。";
-
+        if (!PlayerAbilityLoadoutDefinition.TryValidateEntries(slotLayout, abilities, MaximumAbilityRuntimeSlots, out failureReason))
             return false;
-        }
 
-        if (loadout.TryValidate(
-                MaximumAbilityRuntimeSlots,
-                out failureReason
-            ) == false)
-        {
-            return false;
-        }
-
-        BuildAndSortSpawnPlan(
-            loadout
-        );
+        BuildAndSortSpawnPlan(abilities);
 
         for (int i = 0;
             i < spawnPlan.Count;
@@ -269,7 +259,7 @@ public class PlayerAbilityRuntimeManager :
             Debug.Log(
                 $"[Player Ability Loadout] 已套用。" +
                 $"\nPlayer：{Object.InputAuthority}" +
-                $"\nLoadout：{loadout.name}" +
+                $"\n來源：權威能力清單" +
                 $"\n能力數：{spawnPlan.Count}",
                 this
             );
@@ -279,6 +269,86 @@ public class PlayerAbilityRuntimeManager :
     }
 
 
+public bool TryEquipRewardAbilityStateAuthority(PlayerAbilityDefinition selected, out string failureReason)
+    {
+        failureReason = string.Empty;
+        if (Object == null || !Object.HasStateAuthority ||
+            !StartingLoadoutApplied || LoadoutRevision <= 0)
+        {
+            failureReason = "能力 Loadout 尚未由 State Authority 初始化。";
+            return false;
+        }
+        if (selected == null || startingLoadout == null ||
+            startingLoadout.SlotLayout == null)
+        {
+            failureReason = "獎勵能力或槽位配置不存在。";
+            return false;
+        }
+
+        var definitions = new List<PlayerAbilityDefinition>();
+        int replacementIndex = -1;
+        for (int slot = 0; slot < MaximumAbilityRuntimeSlots; slot++)
+        {
+            if (!ActiveAbilityRuntimeObjects.TryGet(slot, out NetworkObject runtimeObject) ||
+                runtimeObject == null || !runtimeObject.IsValid)
+                continue;
+            PlayerAbilityRuntime runtime = runtimeObject.GetComponent<PlayerAbilityRuntime>();
+            if (runtime == null || runtime.Definition == null)
+            {
+                failureReason = "目前能力 Runtime 缺少 Definition。";
+                return false;
+            }
+            if (runtime.Definition.Category == selected.Category)
+                replacementIndex = definitions.Count;
+            definitions.Add(runtime.Definition);
+        }
+
+        if (replacementIndex >= 0)
+        {
+            if (definitions[replacementIndex] == selected)
+                return true;
+            definitions[replacementIndex] = selected;
+        }
+        else
+        {
+            definitions.Add(selected);
+        }
+
+        return TryApplyDefinitionsStateAuthority(
+            startingLoadout.SlotLayout, definitions, out failureReason);
+    }
+
+public string[] GetEquippedAbilityIds()
+    {
+        var ids = new List<string>();
+        if (Object == null || !Object.IsValid || LoadoutRevision <= 0)
+            return ids.ToArray();
+
+        for (int slot = 0; slot < MaximumAbilityRuntimeSlots; slot++)
+        {
+            if (!ActiveAbilityRuntimeObjects.TryGet(slot, out NetworkObject runtimeObject) ||
+                runtimeObject == null || !runtimeObject.IsValid)
+                continue;
+            PlayerAbilityRuntime runtime = runtimeObject.GetComponent<PlayerAbilityRuntime>();
+            if (runtime != null && runtime.Definition != null &&
+                !string.IsNullOrWhiteSpace(runtime.Definition.AbilityId))
+                ids.Add(runtime.Definition.AbilityId);
+        }
+        return ids.ToArray();
+    }
+
+
+    /// <summary>供本地 HUD 讀取指定槽位；不改動 Loadout 或網路狀態。</summary>
+    public PlayerAbilityRuntime GetEquippedRuntimeAtSlot(int slot)
+    {
+        if (slot < 0 || slot >= MaximumAbilityRuntimeSlots ||
+            Object == null || !Object.IsValid || LoadoutRevision <= 0 ||
+            !ActiveAbilityRuntimeObjects.TryGet(slot, out NetworkObject runtimeObject) ||
+            runtimeObject == null || !runtimeObject.IsValid)
+            return null;
+
+        return runtimeObject.GetComponent<PlayerAbilityRuntime>();
+    }
     public void SimulateActiveAbilities(
         NetInput input,
         NetworkButtons previousButtons
@@ -411,14 +481,9 @@ public class PlayerAbilityRuntimeManager :
     }
 
 
-    private void BuildAndSortSpawnPlan(
-        PlayerAbilityLoadoutDefinition loadout
-    )
+    private void BuildAndSortSpawnPlan(IReadOnlyList<PlayerAbilityDefinition> abilities)
     {
         spawnPlan.Clear();
-
-        IReadOnlyList<PlayerAbilityDefinition> abilities =
-            loadout.EquippedAbilities;
 
         for (int i = 0;
             i < abilities.Count;

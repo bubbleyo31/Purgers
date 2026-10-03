@@ -1,0 +1,16 @@
+{
+  "missing_review_links": [],
+  "source_unchanged": true,
+  "final_model_sha256": "3ef6f0dd816a5af040b5c73df1fcb80cc44a14455820c359e77fb0b735fe637e",
+  "lens_alpha_roundtrip": 0.12999999523162842,
+  "source_unity_readonly_inspection": {
+    "animation_type": "Generic",
+    "global_scale": 1,
+    "non_preview_clip_count": 5,
+    "skinned_renderer_count": 15,
+    "frame_rate": 24,
+    "compilation_failed": false
+  },
+  "output_unity_imported": false,
+  "scene_prefab_changed_by_task": false
+}

@@ -77,18 +77,25 @@ public class ProfessionViewModelManager :
     // =====================================================================
     #region ViewModel Root
 
-    [Header("ViewModel Root")]
+    [Header("第一人稱模型根節點")]
 
     [SerializeField]
     [Tooltip("第一人稱職業 ViewModel 的生成位置。請拖入 CameraRig 下的 ViewModelRoot。執行期間這個物件底下只會保留目前職業的 ViewModel。")]
     private Transform viewModelRoot;
+
+    [Header("本地槍口火焰")]
+    [SerializeField]
+    [Tooltip("拖入渲染 ViewModel 圖層的 WeaponCamera。提供火焰面向與畫面尺寸計算；不可使用不同 FOV 的 WorldCamera。留空時槍口火焰不顯示。")]
+    private Camera muzzleFlashCamera;
+
+    private FirstPersonMuzzleFlash currentMuzzleFlash;
 
     #endregion
 
     // =====================================================================
     #region 職業 ViewModel Prefab
 
-    [Header("職業 ViewModel Prefab")]
+    [Header("職業 第一人稱模型 預置物")]
 
     [SerializeField]
     [Tooltip("攻擊職業使用的第一人稱 ViewModel Prefab。應包含攻擊職業的手部模型、骨架、Animator、WeaponViewModelReferences，以及武器的 MuzzlePoint。")]
@@ -107,7 +114,7 @@ public class ProfessionViewModelManager :
     // =====================================================================
     #region Layer 設定
 
-    [Header("ViewModel Layer")]
+    [Header("第一人稱模型圖層")]
 
     [SerializeField]
     [Tooltip("開啟後，生成 ViewModel 時會自動將整個 ViewModel 階層設定為指定 Layer。建議開啟，避免子物件忘記設定 ViewModel Layer 而被 World Camera 渲染。")]
@@ -124,7 +131,7 @@ public class ProfessionViewModelManager :
     // =====================================================================
     #region Runtime 遷移設定
 
-    [Header("Attack Runtime 遷移階段")]
+    [Header("攻擊 執行階段 遷移階段")]
 
     [SerializeField]
     [Tooltip("開啟後，如果目前 Attack Profession Runtime 還找不到 AttackRifle，會暫時回到 Player Root 搜尋 AttackRifle。這只是目前重構期間的相容功能。等 AttackRifle 正式搬進 AttackProfessionRuntime 後會刪除。")]
@@ -1112,6 +1119,8 @@ public class ProfessionViewModelManager :
 
         UnbindCurrentActionAnimation();
 
+        UnbindCurrentMuzzleFlash();
+
         UnbindCurrentTankAnimation();
 
         UnbindCurrentGameplayWeaponMuzzle();
@@ -1368,6 +1377,25 @@ public class ProfessionViewModelManager :
         BindCurrentGameplayWeaponMuzzle(
             profession
         );
+
+        BindCurrentMuzzleFlash(profession);
+    }
+
+    private void BindCurrentMuzzleFlash(PlayerProfessionType profession)
+    {
+        if (currentViewModel == null || currentWeaponReferences == null || targetProfession == null)
+            return;
+        currentMuzzleFlash = currentViewModel.GetComponentInChildren<FirstPersonMuzzleFlash>(true);
+        if (currentMuzzleFlash == null) return; // 尚未手動配置的 ViewModel 維持原行為。
+        currentMuzzleFlash.BindGameplaySources(profession, targetAttackRifle, targetSupportSMG,
+            targetQuickActionController, targetAimController, targetProfession.GetComponent<Player>(),
+            currentWeaponReferences.MuzzlePoint, muzzleFlashCamera);
+    }
+
+    private void UnbindCurrentMuzzleFlash()
+    {
+        if (currentMuzzleFlash != null) currentMuzzleFlash.UnbindGameplaySources();
+        currentMuzzleFlash = null;
     }
 
 
@@ -2300,6 +2328,7 @@ public class ProfessionViewModelManager :
     /// </summary>
     private void UnbindCurrentWeaponReferences()
     {
+        UnbindCurrentMuzzleFlash();
 
         // =============================================================
         // ADS Aim Animation

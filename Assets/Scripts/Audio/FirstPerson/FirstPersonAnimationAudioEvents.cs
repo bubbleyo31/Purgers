@@ -56,7 +56,7 @@ public class FirstPersonAnimationAudioEntry
 public class FirstPersonAnimationAudioEvents :
     MonoBehaviour
 {
-    [Header("第一人稱 Animation Audio Events")]
+    [Header("第一人稱動畫音效事件")]
 
     [SerializeField]
     [Tooltip(

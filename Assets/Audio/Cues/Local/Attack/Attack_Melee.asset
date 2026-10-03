@@ -15,7 +15,7 @@ MonoBehaviour:
   networkId: 0
   networkDelivery: 0
   clips:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 226a9faf8cf67be43b971caf4845b387, type: 3}
   volume: 1
   minimumPitch: 1
   maximumPitch: 1

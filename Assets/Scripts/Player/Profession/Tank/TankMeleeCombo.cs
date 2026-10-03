@@ -215,7 +215,7 @@ public class TankMeleeCombo :
     // =====================================================================
     #region Owner Player
 
-    [Header("Owner Player Binding")]
+    [Header("擁有者玩家綁定")]
 
     [SerializeField]
     [Tooltip("這個 Tank Melee Combo 真正所屬的 Player Core。正常情況不需要手動指定，TankProfessionRuntimeDriver 會在 Runtime Spawn 後自動綁定。")]
@@ -376,7 +376,7 @@ public class TankMeleeCombo :
     // =====================================================================
     #region Combo 設定
 
-    [Header("Tank 三段 Combo")]
+    [Header("坦克 三段 連段")]
 
     [SerializeField]
     [Tooltip("第一段輕攻擊設定。建議 Full Attack Angle 初始設為 120，也就是玩家左右各 60 度。")]
@@ -442,7 +442,7 @@ public class TankMeleeCombo :
     // =====================================================================
     #region 世界攻擊聲
 
-    [Header("Tank 三段世界揮擊聲")]
+    [Header("坦克 三段世界揮擊聲")]
 
     [SerializeField]
     [Tooltip(
@@ -479,7 +479,7 @@ public class TankMeleeCombo :
     // =====================================================================
     #region 強制 Heavy 預留
 
-    [Header("Grapple 強制 Heavy 預留")]
+    [Header("勾索強制重擊預留")]
 
     [SerializeField]
     [Min(0.01f)]
@@ -510,7 +510,7 @@ public class TankMeleeCombo :
     // =====================================================================
     #region Lag Compensation
 
-    [Header("Photon Fusion Lag Compensation")]
+    [Header("Photon Fusion 延遲補償")]
 
     [SerializeField]
     [Tooltip("開啟後使用 SubtickAccuracy。Tank 可以在高速 Grapple 中攻擊，建議目前保持開啟。")]

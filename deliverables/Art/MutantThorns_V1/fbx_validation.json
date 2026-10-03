@@ -1,0 +1,101 @@
+[
+  {
+    "file": "Thorn_A_BriarHeart_Detail0.fbx",
+    "meshes": 1,
+    "triangles": 17718,
+    "dimensions_m": [
+      2.818493127822876,
+      2.725160837173462,
+      2.484879970550537
+    ],
+    "uv": true
+  },
+  {
+    "file": "Thorn_A_BriarHeart_Detail1.fbx",
+    "meshes": 1,
+    "triangles": 7441,
+    "dimensions_m": [
+      2.8184125423431396,
+      2.7239017486572266,
+      2.4835171699523926
+    ],
+    "uv": true
+  },
+  {
+    "file": "Thorn_A_BriarHeart_Detail2.fbx",
+    "meshes": 1,
+    "triangles": 2657,
+    "dimensions_m": [
+      2.818728446960449,
+      2.7240958213806152,
+      2.48355770111084
+    ],
+    "uv": true
+  },
+  {
+    "file": "Thorn_B_GnarledKnot_Detail0.fbx",
+    "meshes": 1,
+    "triangles": 20176,
+    "dimensions_m": [
+      2.966965913772583,
+      2.7066428661346436,
+      2.3650388717651367
+    ],
+    "uv": true
+  },
+  {
+    "file": "Thorn_B_GnarledKnot_Detail1.fbx",
+    "meshes": 1,
+    "triangles": 8472,
+    "dimensions_m": [
+      2.9664883613586426,
+      2.7042160034179688,
+      2.3638720512390137
+    ],
+    "uv": true
+  },
+  {
+    "file": "Thorn_B_GnarledKnot_Detail2.fbx",
+    "meshes": 1,
+    "triangles": 3026,
+    "dimensions_m": [
+      2.9654741287231445,
+      2.703934669494629,
+      2.3638720512390137
+    ],
+    "uv": true
+  },
+  {
+    "file": "Thorn_C_SplitCrown_Detail0.fbx",
+    "meshes": 1,
+    "triangles": 16262,
+    "dimensions_m": [
+      2.7084550857543945,
+      2.7506535053253174,
+      2.809464931488037
+    ],
+    "uv": true
+  },
+  {
+    "file": "Thorn_C_SplitCrown_Detail1.fbx",
+    "meshes": 1,
+    "triangles": 6830,
+    "dimensions_m": [
+      2.707034111022949,
+      2.7491512298583984,
+      2.807612180709839
+    ],
+    "uv": true
+  },
+  {
+    "file": "Thorn_C_SplitCrown_Detail2.fbx",
+    "meshes": 1,
+    "triangles": 2439,
+    "dimensions_m": [
+      2.707034111022949,
+      2.749281406402588,
+      2.807612180709839
+    ],
+    "uv": true
+  }
+]

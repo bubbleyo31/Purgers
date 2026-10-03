@@ -8697,7 +8697,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 112ed5970ac6e704b9a0972c0a27cc93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseSpeed: 10
+  chaseSpeed: 4
   rotationSpeed: 240
   obstacleMask:
     serializedVersion: 2
@@ -8771,8 +8771,8 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 1
-  bodyRadius: 16
-  bodyHeight: 45
+  bodyRadius: 0.35
+  bodyHeight: 1.8
   collisionSkin: 0.02
   agentTypeId: 0
   navMeshSnapDistance: 0.3

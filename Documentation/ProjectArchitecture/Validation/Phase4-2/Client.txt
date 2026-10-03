@@ -1,0 +1,50 @@
+2026-09-18T17:29:32.5450008Z [Client] snapshot step=0 peers=0 phase=none ready=0 remaining=0 vote=0 locks=None
+2026-09-18T17:29:33.4347817Z [Client] snapshot step=0 peers=0 phase=none ready=0 remaining=0 vote=0 locks=None
+2026-09-18T17:29:34.4419076Z [Client] snapshot step=0 peers=0 phase=none ready=0 remaining=0 vote=0 locks=None
+2026-09-18T17:29:35.4489149Z [Client] snapshot step=0 peers=0 phase=none ready=0 remaining=0 vote=0 locks=None
+2026-09-18T17:29:36.4490414Z [Client] snapshot step=0 peers=0 phase=none ready=0 remaining=0 vote=0 locks=None
+2026-09-18T17:29:37.4482393Z [Client] snapshot step=0 peers=0 phase=none ready=0 remaining=0 vote=0 locks=None
+2026-09-18T17:29:38.4554369Z [Client] snapshot step=0 peers=0 phase=none ready=0 remaining=0 vote=0 locks=None
+2026-09-18T17:29:39.4553487Z [Client] snapshot step=0 peers=0 phase=none ready=0 remaining=0 vote=0 locks=None
+2026-09-18T17:29:40.4558364Z [Client] snapshot step=0 peers=0 phase=none ready=0 remaining=0 vote=0 locks=None
+2026-09-18T17:29:41.4550254Z [Client] snapshot step=0 peers=0 phase=none ready=0 remaining=0 vote=0 locks=None
+2026-09-18T17:29:42.4550572Z [Client] snapshot step=0 peers=0 phase=none ready=0 remaining=0 vote=0 locks=None
+2026-09-18T17:29:43.4558858Z [Client] snapshot step=0 peers=0 phase=none ready=0 remaining=0 vote=0 locks=None
+2026-09-18T17:29:44.4557855Z [Client] snapshot step=0 peers=0 phase=none ready=0 remaining=0 vote=0 locks=None
+2026-09-18T17:29:45.4628538Z [Client] snapshot step=0 peers=0 phase=none ready=0 remaining=0 vote=0 locks=None
+2026-09-18T17:29:46.4624606Z [Client] snapshot step=0 peers=0 phase=none ready=0 remaining=0 vote=0 locks=None
+2026-09-18T17:29:47.4620902Z [Client] snapshot step=0 peers=0 phase=none ready=0 remaining=0 vote=0 locks=None
+2026-09-18T17:29:48.2936336Z [Client] StartGame=True, reason=Ok
+2026-09-18T17:29:48.6194695Z [Client] snapshot step=0 peers=2 phase=ReadyCheck ready=0 remaining=0.00 vote=6.36 locks=AllInput
+2026-09-18T17:29:49.4668998Z [Client] PASS HUD LEDs/counts/top-left-third-row/no-input-lock leds=2 connected=2 counts=True row=True lock=None
+2026-09-18T17:29:49.4679005Z [Client] PASS Client ready vote leaves gameplay input unrestricted
+2026-09-18T17:29:49.5803213Z [Client] snapshot step=1 peers=2 phase=ReadyCheck ready=0 remaining=0.00 vote=5.36 locks=None
+2026-09-18T17:29:50.5816124Z [Client] snapshot step=1 peers=2 phase=ReadyCheck ready=0 remaining=0.00 vote=4.64 locks=None
+2026-09-18T17:29:51.5809241Z [Client] snapshot step=1 peers=2 phase=ReadyCheck ready=0 remaining=0.00 vote=3.66 locks=None
+2026-09-18T17:29:52.5877905Z [Client] snapshot step=1 peers=2 phase=ReadyCheck ready=0 remaining=0.00 vote=2.64 locks=None
+2026-09-18T17:29:53.5877211Z [Client] snapshot step=1 peers=2 phase=ReadyCheck ready=0 remaining=0.00 vote=1.64 locks=None
+2026-09-18T17:29:54.5880354Z [Client] snapshot step=1 peers=2 phase=ReadyCheck ready=0 remaining=0.00 vote=0.64 locks=None
+2026-09-18T17:29:55.2690941Z [Client] PASS Client observed seven-second ready vote timeout
+2026-09-18T17:29:55.2901245Z [Client] Client requested whole ready vote cancel
+2026-09-18T17:29:55.3176814Z [Client] PASS Client ESC-equivalent cancel synchronized
+2026-09-18T17:29:55.3326917Z [Client] Client requested ready toggle
+2026-09-18T17:29:55.5876758Z [Client] snapshot step=5 peers=2 phase=ReadyCheck ready=1 remaining=0.00 vote=6.69 locks=None
+2026-09-18T17:29:55.8315327Z [Client] PASS HUD LEDs/counts/top-left-third-row/no-input-lock leds=2 connected=2 counts=True row=True lock=None
+2026-09-18T17:29:55.8325330Z [Client] PASS Client ready synchronized
+2026-09-18T17:29:55.8660745Z [Client] PASS HUD LEDs/counts/top-left-third-row/no-input-lock leds=2 connected=2 counts=True row=True lock=None
+2026-09-18T17:29:55.8670760Z [Client] PASS Client cancel synchronized
+2026-09-18T17:29:56.1368056Z [Client] PASS Client observed Host ready
+2026-09-18T17:29:56.5944841Z [Client] snapshot step=8 peers=2 phase=Countdown ready=2 remaining=2.52 vote=5.67 locks=None
+2026-09-18T17:29:57.5944693Z [Client] snapshot step=8 peers=2 phase=Countdown ready=2 remaining=1.52 vote=4.67 locks=None
+2026-09-18T17:29:57.6089896Z [Client] PASS HUD LEDs/counts/top-left-third-row/no-input-lock leds=2 connected=2 counts=True row=True lock=None
+2026-09-18T17:29:57.6099911Z [Client] PASS Client observed countdown and requested cancel
+2026-09-18T17:29:58.1095366Z [Client] PASS HUD LEDs/counts/top-left-third-row/no-input-lock leds=2 connected=2 counts=True row=True lock=None
+2026-09-18T17:29:58.1100720Z [Client] PASS Client observed countdown cancellation
+2026-09-18T17:29:58.1300631Z [Client] PASS Client observed restarted countdown
+2026-09-18T17:29:58.6015533Z [Client] snapshot step=11 peers=2 phase=Countdown ready=2 remaining=2.48 vote=3.67 locks=None
+2026-09-18T17:29:59.6013187Z [Client] snapshot step=11 peers=2 phase=Countdown ready=2 remaining=1.48 vote=2.67 locks=None
+2026-09-18T17:30:00.6017676Z [Client] snapshot step=11 peers=2 phase=Countdown ready=2 remaining=0.47 vote=1.66 locks=None
+2026-09-18T17:30:01.6121791Z [Client] snapshot step=11 peers=2 phase=none ready=0 remaining=0 vote=0 locks=AllInput
+2026-09-18T17:30:02.6155280Z [Client] snapshot step=11 peers=2 phase=none ready=0 remaining=0 vote=0 locks=AllInput
+2026-09-18T17:30:03.6160510Z [Client] snapshot step=11 peers=2 phase=none ready=0 remaining=0 vote=0 locks=AllInput
+2026-09-18T17:30:03.8234950Z [Client] PASS transition reached Game; step=11, expected=11, stage phase=Initializing

@@ -1,0 +1,25 @@
+{
+  "jsonrpc": "2.0",
+  "id": 10,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":[\"Projectile pos=(9990.000, 100.500, 10000.000) yaw=44.98729 alive=True authority=True target=False direct=False state=Idle option=None shots=4\",\"Beam pos=(10010.000, 100.500, 10000.000) yaw=320.7231 alive=True authority=True target=False direct=False state=Idle option=None shots=2\",\"Player pos=(10001.320, 100.510, 10011.320) alive=False\"],\"compiler\":\"codedom\"}}"
+      }
+    ],
+    "structuredContent": {
+      "success": true,
+      "message": "Code executed successfully.",
+      "data": {
+        "result": [
+          "Projectile pos=(9990.000, 100.500, 10000.000) yaw=44.98729 alive=True authority=True target=False direct=False state=Idle option=None shots=4",
+          "Beam pos=(10010.000, 100.500, 10000.000) yaw=320.7231 alive=True authority=True target=False direct=False state=Idle option=None shots=2",
+          "Player pos=(10001.320, 100.510, 10011.320) alive=False"
+        ],
+        "compiler": "codedom"
+      }
+    },
+    "isError": false
+  }
+}

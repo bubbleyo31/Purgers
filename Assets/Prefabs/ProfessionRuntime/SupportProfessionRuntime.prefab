@@ -110,7 +110,7 @@ MonoBehaviour:
   aimEnterDuration: 0.1
   aimExitDuration: 0.12
   aimedWorldFov: 50
-  aimedWeaponFov: 50
+  aimedWeaponFov: 30
   aimFovChannels: -1
   aimFovPriority: 1000
   actionGate: {fileID: 0}
@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movement: {fileID: 0}
-  worldGunshotCue: {fileID: 11400000, guid: d0fd5051fdad8264ca202422133d3982, type: 2}
+  worldGunshotCue: {fileID: 11400000, guid: 8d13aa70762832b4290597c2e7747c22, type: 2}
   worldGunshotVolumeScale: 0.5
   magazineCapacity: 30
   ammoSupplyMode: 1
@@ -142,7 +142,7 @@ MonoBehaviour:
   shotOriginHeight: 1.6
   hitMask:
     serializedVersion: 2
-    m_Bits: 576
+    m_Bits: 577
   useSubtickAccuracy: 1
   allowPhysicsFallback: 1
   baseDamage: 20
@@ -154,6 +154,7 @@ MonoBehaviour:
   specialHealAmount: 20
   recoilPitchPerShot: -0.8
   recoilYawPerShot: 0.25
+  recoilApplicationDuration: 0.06
   recoilRecoveryDelay: 0.15
   recoilRecoverySpeed: 20
   bulletTracerLineDrawer: {fileID: 0}
@@ -198,18 +199,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8048c09f0dc11dd43ad9b7c3411042c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableTracer: 0
+  enableTracer: 1
   tracerMaterial: {fileID: 0}
-  tracerColor: {r: 1, g: 0.5151677, b: 0, a: 1}
-  startWidth: 0.05
-  endWidth: 0.05
+  tracerColor: {r: 1, g: 0.17842808, b: 0, a: 1}
+  tracerGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 0.9999423, b: 0.9999423, a: 0}
+    key1: {r: 1, g: 0.9999423, b: 0.9999423, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 1}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 193
+    atime2: 65535
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 3
+  useMaximumEnergyColor: 1
+  maximumEnergyTracerColor: {r: 0.13333334, g: 0.28627452, b: 0.5019608, a: 1}
+  startWidth: 0.02
+  endWidth: 0.08
   tracerLength: 20
   visibleDuration: 0
   fadeDuration: 0
+  displayDelay: 0.0015
   animateTravel: 1
-  travelSpeed: 2400
-  passThroughDistance: 3
-  hideAfterPassingHitPoint: 1
+  travelSpeed: 1200
+  passThroughDistance: 0
+  hideAfterPassingHitPoint: 0
   tracerRoot: {fileID: 0}
   debugTracer: 0
 --- !u!114 &2319066986831710684
@@ -260,5 +294,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportSMG: {fileID: 0}
-  weaponIcon: {fileID: 21300000, guid: abf8cdbb000984b418f9ae838a3307d2, type: 3}
+  weaponIcon: {fileID: 21300000, guid: b0e7b3f23d81b5a4f8624484b8c0804a, type: 3}
   reloadReminderBelowAmmo: 5

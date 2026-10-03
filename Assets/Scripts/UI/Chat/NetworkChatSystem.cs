@@ -209,6 +209,24 @@ public sealed class NetworkChatSystem :
 
     public override void Spawned()
     {
+        /*
+         * GameLogic persists across gameplay scenes. The incoming scene also
+         * contains a short-lived GameLogic replacement so the primary can
+         * adopt its spawn configuration. Fusion can still invoke this
+         * behaviour after the replacement has been scheduled for Despawn.
+         * That hand-off is expected and must not be reported as a duplicate
+         * gameplay chat system.
+         */
+        GameLogic owningGameLogic =
+            GetComponent<GameLogic>();
+
+        if (owningGameLogic != null &&
+            owningGameLogic.IsPrimaryForRunner == false)
+        {
+            enabled = false;
+            return;
+        }
+
         if (Instance != null &&
             Instance != this)
         {

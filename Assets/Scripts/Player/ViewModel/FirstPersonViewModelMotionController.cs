@@ -87,7 +87,7 @@ public class FirstPersonViewModelMotionController :
     #region Transform References
 
 
-    [Header("ViewModel Transform")]
+    [Header("第一人稱模型變換")]
 
 
     [SerializeField]
@@ -172,7 +172,7 @@ public class FirstPersonViewModelMotionController :
     #region Base Look Sway
 
 
-    [Header("Look Sway 基礎位移")]
+    [Header("視角擺動 基礎位移")]
 
 
     [SerializeField]
@@ -187,7 +187,7 @@ public class FirstPersonViewModelMotionController :
         0.0012f;
 
 
-    [Header("Look Sway 基礎旋轉")]
+    [Header("視角擺動 基礎旋轉")]
 
 
     [SerializeField]
@@ -214,7 +214,7 @@ public class FirstPersonViewModelMotionController :
     #region Idle Motion Settings
 
 
-    [Header("Idle Motion 位移")]
+    [Header("待機動態 位移")]
 
 
     [SerializeField]
@@ -231,7 +231,7 @@ public class FirstPersonViewModelMotionController :
         0.002f;
 
 
-    [Header("Idle Motion 旋轉")]
+    [Header("待機動態 旋轉")]
 
 
     [SerializeField]
@@ -248,7 +248,7 @@ public class FirstPersonViewModelMotionController :
         0.15f;
 
 
-    [Header("Idle Motion 頻率")]
+    [Header("待機動態 頻率")]
 
 
     [SerializeField]
@@ -263,7 +263,7 @@ public class FirstPersonViewModelMotionController :
     #region Walk Run Bob Settings
 
 
-    [Header("Walk Bob")]
+    [Header("步行晃動")]
 
 
     [SerializeField]
@@ -301,7 +301,7 @@ public class FirstPersonViewModelMotionController :
         7f;
 
 
-    [Header("Run Bob")]
+    [Header("跑步晃動")]
 
 
     [SerializeField]
@@ -339,7 +339,7 @@ public class FirstPersonViewModelMotionController :
         10f;
 
 
-    [Header("Locomotion Blend")]
+    [Header("移動混合")]
 
 
     [SerializeField]
@@ -355,7 +355,7 @@ public class FirstPersonViewModelMotionController :
     #region Air Vertical Motion Settings
 
 
-    [Header("Air Vertical Sway")]
+    [Header("空中垂直擺動")]
 
 
     [SerializeField]
@@ -379,7 +379,7 @@ public class FirstPersonViewModelMotionController :
         8f;
 
 
-    [Header("Air Vertical Rotation")]
+    [Header("空中垂直旋轉")]
 
 
     [SerializeField]
@@ -396,7 +396,7 @@ public class FirstPersonViewModelMotionController :
         3f;
 
 
-    [Header("Grapple Vertical Motion")]
+    [Header("勾索垂直動態")]
 
 
     [SerializeField]
@@ -427,7 +427,7 @@ public class FirstPersonViewModelMotionController :
         4f;
 
 
-    [Header("Air Motion 回正")]
+    [Header("空中動態 回正")]
 
 
     [SerializeField]
@@ -442,7 +442,7 @@ public class FirstPersonViewModelMotionController :
     #region Landing Motion Settings
 
 
-    [Header("Landing Compression")]
+    [Header("落地壓縮")]
 
 
     [SerializeField]
@@ -473,7 +473,7 @@ public class FirstPersonViewModelMotionController :
         0.25f;
 
 
-    [Header("Landing 回彈")]
+    [Header("落地回彈")]
 
 
     [SerializeField]
@@ -496,7 +496,7 @@ public class FirstPersonViewModelMotionController :
     #region Grapple Speed Motion Settings
 
 
-    [Header("Grapple 高速前後 Motion")]
+    [Header("勾索高速前後動態")]
 
 
     [SerializeField]
@@ -527,7 +527,7 @@ public class FirstPersonViewModelMotionController :
         2.5f;
 
 
-    [Header("Grapple 高速轉向 Motion")]
+    [Header("勾索高速轉向動態")]
 
 
     [SerializeField]
@@ -558,7 +558,7 @@ public class FirstPersonViewModelMotionController :
         4f;
 
 
-    [Header("Grapple Speed Motion 平滑")]
+    [Header("勾索速度動態平滑")]
 
 
     [SerializeField]
@@ -581,7 +581,7 @@ public class FirstPersonViewModelMotionController :
     #region Look Sway Limits
 
 
-    [Header("Look Sway 位移上限")]
+    [Header("視角擺動 位移上限")]
 
 
     [SerializeField]
@@ -598,7 +598,7 @@ public class FirstPersonViewModelMotionController :
         0.025f;
 
 
-    [Header("Look Sway 旋轉上限")]
+    [Header("視角擺動 旋轉上限")]
 
 
     [SerializeField]
@@ -629,7 +629,7 @@ public class FirstPersonViewModelMotionController :
     #region Smoothing
 
 
-    [Header("Look Sway 平滑")]
+    [Header("視角擺動 平滑")]
 
 
     [SerializeField]
@@ -667,7 +667,7 @@ public class FirstPersonViewModelMotionController :
     #region Profession Blend
 
 
-    [Header("職業 Motion 切換")]
+    [Header("職業動態切換")]
 
 
     [SerializeField]
@@ -700,7 +700,7 @@ public class FirstPersonViewModelMotionController :
     #region ADS Motion Layer Suspension
 
 
-    [Header("ADS Motion Layer 暫停")]
+    [Header("瞄準動態圖層暫停")]
 
 
     [SerializeField]

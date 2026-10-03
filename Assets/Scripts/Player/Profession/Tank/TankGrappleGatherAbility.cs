@@ -55,7 +55,7 @@ public class TankGrappleGatherAbility :
     // =====================================================================
     #region Owner Player Binding
 
-    [Header("Owner Player Binding")]
+    [Header("擁有者玩家綁定")]
 
     [SerializeField]
     [Tooltip("這個 Tank Grapple Gather Ability 真正所屬的 Player Core。正常情況不需要手動指定，由 TankProfessionRuntimeDriver 在 Runtime Spawn 後自動綁定。")]
@@ -109,7 +109,7 @@ public class TankGrappleGatherAbility :
     // =====================================================================
     #region Gather Search
 
-    [Header("Tank Gather 搜尋")]
+    [Header("坦克 聚集 搜尋")]
 
     [SerializeField]
     [Min(0.1f)]
@@ -150,7 +150,7 @@ public class TankGrappleGatherAbility :
     // =====================================================================
     #region Grapple Cancel
 
-    [Header("Tank 勾中 Enemy 後斷索")]
+    [Header("坦克勾中敵人後斷索")]
 
     [SerializeField]
     [Tooltip("開啟後，Tank 的勾索真正 Attached 到 Gather Anchor Enemy A 時會立即中斷原本 Grapple，不讓普通勾索繼續拉玩家。這是 Tank 特殊勾索的正式規則，建議保持開啟。")]
@@ -168,7 +168,7 @@ public class TankGrappleGatherAbility :
     #region Tank 玩家 Gather Dash
 
 
-    [Header("Tank 玩家 Gather Dash")]
+    [Header("坦克 玩家 聚集 衝刺")]
 
 
     [SerializeField]

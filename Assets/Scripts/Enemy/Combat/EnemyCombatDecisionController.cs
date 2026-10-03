@@ -226,6 +226,8 @@ public sealed class EnemyCombatDecisionController :
             return;
         }
 
+        TickStationaryTargetAim(context);
+
         if (CanChooseOption() == false ||
             IsTargetValid(context.Target) == false)
         {
@@ -269,6 +271,29 @@ public sealed class EnemyCombatDecisionController :
         }
 
         return true;
+    }
+
+    private void TickStationaryTargetAim(in EnemyCombatContext context)
+    {
+        // Active Option 在上方已獨占 Tick；冷卻瞄準只使用非攻擊期間的旋轉權。
+        if (!enemyActor.IsStationary || !movementOwnership.CanRotate ||
+            enemyActor.StateController.CurrentBrainState == EnemyBrainState.Dormant ||
+            !IsTargetValid(context.Target) ||
+            !(perception.HasDirectSight || perception.IsInsideLockedTargetRetention))
+            return;
+
+        // 同一 Tick 只委派給一個能力，不讓多個 Option 同時寫 Root 朝向。
+        EnemyCombatOption aimingOption = null;
+        foreach (EnemyCombatOption option in options)
+        {
+            if (option == null || !option.isActiveAndEnabled ||
+                option.OptionId == EnemyCombatOptionId.None ||
+                !option.SupportsBetweenActionAiming ||
+                (aimingOption != null && option.Priority <= aimingOption.Priority))
+                continue;
+            aimingOption = option;
+        }
+        aimingOption?.AimBetweenActions(context);
     }
 
     private bool CanChooseOption()
@@ -416,7 +441,8 @@ public sealed class EnemyCombatDecisionController :
             perception.CurrentTarget;
 
         Vector3 targetPosition =
-            target != null && target.IsValid
+            target != null && target.IsValid &&
+            (perception.HasDirectSight || perception.IsInsideLockedTargetRetention)
                 ? perception.GetPlayerObservationPosition(target)
                 : perception.LastKnownTargetPosition;
 

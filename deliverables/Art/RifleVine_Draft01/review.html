@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>藤蔓步槍與手臂 — 初版 01</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#171c1b;color:#e5e6db;font:16px/1.7 system-ui,sans-serif}main{max-width:1280px;margin:auto;padding:48px 28px}small{color:#b9ca8f;letter-spacing:.13em}h1{font-size:clamp(28px,4vw,48px);line-height:1.25;margin:12px 0}h2{font-size:24px;margin:44px 0 16px}p{max-width:850px;color:#b7bfb8}a{color:#ceda9e}nav{display:flex;gap:22px;flex-wrap:wrap;margin:26px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.card{margin:0;overflow:hidden;border:1px solid #3a433c;border-radius:12px;background:#242c27}img,video{display:block;width:100%;height:auto}figcaption{padding:12px 18px;color:#ccd1c3}.ref img{height:320px;object-fit:contain;background:white}.note{border-left:3px solid #8fa964;padding:14px 22px;background:#232c24;margin:24px 0}.stats{display:flex;gap:32px;flex-wrap:wrap;padding:20px 0}.stats strong{font-size:25px;display:block;color:#e5e8d9}.stats span{color:#a6b09f}@media(max-width:760px){.grid{grid-template-columns:1fr}main{padding:28px 16px}}
+</style><main>
+<small>PURGERS / ART REVIEW / 2026.09.25</small>
+<h1>藤蔓步槍與第一人稱手臂</h1>
+<p>初版 01 · 以原 FBX 比例與動畫為基礎，加入木質外殼、立體藤蔓、黃色袖子、深色護腕與手套。以下全部模型預覽均由實際 Blender 網格渲染。</p>
+<nav><a href="RifleVine_Arms_Draft01.blend">Blender 原檔</a><a href="RifleVine_Arms_Draft01.fbx">FBX</a><a href="README.md">操作與匯入說明</a><a href="roundtrip_validation.json">驗證紀錄</a></nav>
+<figure class="card"><img src="Previews/00_Hero.png" alt="持槍造型預覽"><figcaption>武器與雙手 · 材質及立體輪廓</figcaption></figure>
+<div class="note">審閱草稿：程序生成貼圖尚待美術精修。Unity 材質、正式相機視角與全部動畫姿勢的穿模驗收尚未完成。</div>
+<h2>設計參考</h2><div class="grid ref"><figure class="card"><img src="References/rifle_design.png" alt="使用者武器原始設計"><figcaption>使用者提供的武器設計</figcaption></figure><figure class="card"><img src="References/arms_design.png" alt="使用者玩家手部原始設計"><figcaption>使用者提供的服裝與手部設計</figcaption></figure></div>
+<h2>武器外形</h2><figure class="card"><img src="Previews/01_Rifle_Side.png" alt="武器側面"><figcaption>側面：沿用原灰盒比例，藤蔓與木片為新增幾何</figcaption></figure>
+<div class="grid" style="margin-top:20px"><figure class="card"><img src="Previews/02_Rifle_ThreeQuarter.png" alt="斜角"><figcaption>斜角與厚度</figcaption></figure><figure class="card"><img src="Previews/03_Rifle_Opposite.png" alt="反面"><figcaption>補齊的另一側設計</figcaption></figure></div>
+<h2>手部與視線</h2><div class="grid"><figure class="card"><img src="Previews/04_Idle_Arms.png" alt="雙手持槍"><figcaption>原動畫中的持槍姿勢</figcaption></figure><figure class="card"><img src="Previews/05_FirstPerson.png" alt="第一人稱示意"><figcaption>Blender 第一人稱審閱鏡頭；不是 Unity 正式 FOV</figcaption></figure></div>
+<h2>換彈動作</h2><figure class="card"><video controls loop muted playsinline preload="metadata" poster="Previews/Reload_20.png" src="Previews/06_Reload.mp4"></video><figcaption>播放原 Reload.001 動作 · 24 fps · 六段原動作均包含於交付檔</figcaption></figure>
+<h2>資料檢查</h2><div class="stats"><div><strong>63</strong><span>原有骨骼</span></div><div><strong>6</strong><span>來源動作</span></div><div><strong>35,528</strong><span>三角形</span></div><div><strong>10,395</strong><span>逐幀骨骼位置比對</span></div></div>
+<p>FBX 已重新匯入 Blender 檢查，骨骼名稱、父子關係與動作幀範圍一致；骨骼位置最大誤差小於 0.001 mm。這項檢查不代表 Unity 執行或穿模驗收已完成。美術草稿尚待效能整理。</p>
+</main></html>

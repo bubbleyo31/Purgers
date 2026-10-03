@@ -72,7 +72,7 @@ public sealed class EnemyRangedBeamAttack :
     [SerializeField]
     [Min(1f)]
     [Tooltip(
-        "從 Tracking 開始到 Recovery 收招完成前，持續朝玩家旋轉的最大角速度，度／秒。\n" +
+        "持續朝玩家旋轉的最大角速度，度／秒。定點光束砲台在鎖定期間的冷卻也沿用此值。\n" +
         "LockedDelay 的角色朝向仍會追蹤玩家，但已鎖定的 Beam 世界射線不會重新跟隨。")]
     private float trackingTurnSpeed =
         180f;
@@ -221,6 +221,13 @@ public sealed class EnemyRangedBeamAttack :
         return CooldownTimer.ExpiredOrNotRunning(runner);
     }
 
+    public override bool SupportsBetweenActionAiming => true;
+
+    public override void AimBetweenActions(in EnemyCombatContext context)
+    {
+        FaceTarget(context);
+    }
+
     public override bool CanStartOption(
         in EnemyCombatContext context
     )
@@ -260,7 +267,7 @@ public sealed class EnemyRangedBeamAttack :
         switch (context.Controller.CurrentActionPhase)
         {
             case EnemyCombatActionPhase.Tracking:
-                if (context.Perception.HasDirectSight == false)
+                if (context.Perception.HasCombatSight == false)
                 {
                     StartCooldown(cancelledCooldownSeconds);
 
@@ -355,7 +362,7 @@ public sealed class EnemyRangedBeamAttack :
     }
 
     /// <summary>
-    /// 攻擊開始到 Recovery 完成前持續水平面向目前玩家。
+    /// 攻擊期間與定點砲台的攻擊間隔，持續水平面向感知提供的位置。
     /// 此函式只改 Enemy Root 朝向，不會改寫已鎖定的 BeamEndPoint。
     /// </summary>
     private void FaceTarget(

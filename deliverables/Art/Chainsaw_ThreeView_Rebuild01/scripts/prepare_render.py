@@ -1,0 +1,11 @@
+from pathlib import Path
+base=Path(r'M:/UnityProject/Purgers/deliverables/Art/Chainsaw_ThreeView_Rebuild01')
+s=(base.parent/'ChainsawVein_Draft04/scripts/render_review.py').read_text(encoding='utf-8-sig').replace('ChainsawVein_Arms_Draft04','Chainsaw_ThreeView_Animated')
+s=s.replace("render('01_Chainsaw_Side',(-2,-.025,-.025),(0,-.025,-.025),1.63,(1800,1000))","""render('01_Chainsaw_Side',(-3,-.28,-.09),(0,-.28,-.09),2.37,(2100,850))
+render('07_Top',(0,-.28,3),(0,-.28,-.05),2.37,(2100,850))
+render('08_Front',(0,-3,-.025),(0,0,-.025),.72,(1000,1100))""")
+s=s.replace("(-1.6,-.85,.56),(0,-.015,-.025),1.75","(-2.4,-1.30,.65),(0,-.28,-.05),2.5")
+s=s.replace("(-1,-.53,.23),(-.112,-.43,-.095),.71","(-1.4,-.7,.25),(-.012,-.66,-.07),1.18")
+s=s.replace("(-1,.9,.53),(0,.36,-.02),.76","(-1,.9,.53),(0,.36,-.035),.90")
+s=s.replace("(.9,-.7,.42),(0,-.025,-.025),1.75","(1.8,-1.1,.65),(0,-.28,-.05),2.5")
+(base/'scripts/render_review.py').write_text(s,encoding='utf8')

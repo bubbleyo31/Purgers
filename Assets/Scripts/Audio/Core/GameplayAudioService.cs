@@ -52,7 +52,7 @@ public class GameplayAudioService :
     // =====================================================================
     #region Mixer Fallback
 
-    [Header("Mixer Fallback")]
+    [Header("混音器替代設定")]
 
     [SerializeField]
     [Tooltip(
@@ -71,7 +71,7 @@ public class GameplayAudioService :
     // =====================================================================
     #region OneShot Pool
 
-    [Header("OneShot AudioSource Pool")]
+    [Header("單次音效來源集區")]
 
     [SerializeField]
     [Min(1)]

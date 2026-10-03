@@ -12,14 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fc0d95d8b6364349aa666fb50892c12, type: 3}
   m_Name: Support_SMG_Shot
   m_EditorClassIdentifier: 
-  networkId: 2
+  networkId: 1
   networkDelivery: 0
   clips:
-  - {fileID: 8300000, guid: a061449cdda3b6243a4668dc2f352055, type: 3}
-  - {fileID: 8300000, guid: 52288702fb185d14aa992d6f1208c3c8, type: 3}
+  - {fileID: 8300000, guid: 2f214cb6fd3d8d44f9d126d12fcfcd26, type: 3}
+  - {fileID: 8300000, guid: ec674515bef9a2842b87ef84bfd4693e, type: 3}
+  - {fileID: 8300000, guid: 5286e47cc462f874d901c873ba649b26, type: 3}
+  - {fileID: 8300000, guid: 84a8a0b7c9e4cff46adee91d689f7c53, type: 3}
   volume: 0.3
-  minimumPitch: 2
-  maximumPitch: 2
+  minimumPitch: 1.5
+  maximumPitch: 1.5
   outputMixerGroup: {fileID: -2305752944303880011, guid: 7533ecc1f215ca047b8742ddc76965e2,
     type: 2}
   worldSpatialBlend: 1

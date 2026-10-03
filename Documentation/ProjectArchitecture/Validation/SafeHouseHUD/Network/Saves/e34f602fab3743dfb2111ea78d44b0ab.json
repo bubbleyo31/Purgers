@@ -1,0 +1,30 @@
+{
+    "SaveVersion": 1,
+    "SaveId": "e34f602fab3743dfb2111ea78d44b0ab",
+    "DisplayName": "Phase 4-E isolated verification",
+    "CreatedUtc": "2026-09-22T14:32:51.7102232Z",
+    "LastPlayedUtc": "2026-09-22T14:33:19.3434207Z",
+    "CycleLengthSnapshot": 4,
+    "PermanentProgression": {
+        "PermanentPoints": 0,
+        "CosmeticUnlockIds": [],
+        "SafeHouseTalentIds": []
+    },
+    "RunProgression": {
+        "StageLevel": 2,
+        "PlayerProgressionEntries": [
+            {
+                "StablePlayerId": "host",
+                "PlayerLevel": 1,
+                "CurrentExperience": 0,
+                "EquippedGrappleHitId": "",
+                "EquippedGrappleFocusId": "",
+                "EquippedWeaponId": "",
+                "AcquiredCharacterBonusIds": [],
+                "InventoryItemIds": [],
+                "DebuffIds": [],
+                "OneShotAbilityIds": []
+            }
+        ]
+    }
+}

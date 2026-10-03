@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccef123392d77ab4b8b1e4fc8d287142, type: 3}
+  m_Name: WeaponImpactSettings
+  m_EditorClassIdentifier: 
+  bulletHoleLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  sparkLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  bulletHoleMaterials:
+  - {fileID: 2100000, guid: 7b1b272d3c1deca499b962405754a903, type: 2}
+  - {fileID: 2100000, guid: 51a256da59a615446956d1194f17f5d3, type: 2}
+  - {fileID: 2100000, guid: 862a2bf6051da7042b104df986841762, type: 2}
+  maxBulletHolesPerPlayer: 32
+  bulletHoleSize: 0.6
+  surfaceOffset: 0.002
+  sparkPrefab: {fileID: 105191315621674459, guid: 5e090d5773ca99743beca4606e10d4a5,
+    type: 3}
+  maxSparksPerPlayer: 12
+  sparkScale: 0.1
+  sparkTimeout: 15
+  sparkRotationOffset: {x: 0, y: 0, z: 0}

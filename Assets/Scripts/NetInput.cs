@@ -65,9 +65,7 @@ public enum InputButton
     ///
     /// 這是一個「按住」型輸入。
     ///
-    /// 未來：
-/// 一般狀態 → ADS。
-/// GrappleAirborne → 專注技能。
+    /// 一般狀態用於 ADS；攻擊職業既有瞄準專注仍沿用此輸入。
     /// </summary>
     Aim = 4,
 
@@ -80,10 +78,7 @@ public enum InputButton
     Reload = 5,
 
     /// <summary>
-    /// 第一主動技能。
-    ///
-    /// 目前先保留，
-    /// 尚未綁定正式鍵位。
+    /// 鈎索專注能力，預設 E 鍵。
     /// </summary>
     Ability1 = 6,
 
@@ -127,6 +122,9 @@ public enum InputButton
 /// </summary>
 public struct NetInput : INetworkInput
 {
+    // Transmitted with the input tick, so Host and prediction use the same gates.
+    public Purgers.GameFlow.Control.PlayerControlMask BlockedControls;
+
     /// <summary>
     /// 玩家所有按鍵狀態。
     /// </summary>

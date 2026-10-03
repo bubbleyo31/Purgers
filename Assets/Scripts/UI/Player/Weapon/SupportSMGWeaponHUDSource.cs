@@ -19,7 +19,7 @@ public class SupportSMGWeaponHUDSource :
     // =====================================================================
     #region References
 
-    [Header("Support SMG HUD 資料來源")]
+    [Header("支援衝鋒槍抬頭顯示資料來源")]
 
     [SerializeField]
     [Tooltip(
@@ -32,7 +32,7 @@ public class SupportSMGWeaponHUDSource :
     // =====================================================================
     #region Presentation Data
 
-    [Header("Support 武器 HUD 顯示")]
+    [Header("支援武器抬頭顯示")]
 
     [SerializeField]
     [Tooltip(
@@ -100,17 +100,15 @@ public class SupportSMGWeaponHUDSource :
                 supportSMG.MagazineAmmo
             );
 
-        int reserveAmmo =
-            Mathf.Max(
-                0,
-                supportSMG.ReserveAmmo
-            );
+        int magazineCapacity = supportSMG.MagazineCapacity;
 
         bool infiniteMagazine =
             supportSMG.HasInfiniteMagazine;
 
-        bool infiniteReserve =
-            supportSMG.HasInfiniteReserveAmmo;
+        bool isReloading = supportSMG.IsReloading;
+        float reloadProgress = isReloading && supportSMG.ReloadDurationSeconds > 0f
+            ? 1f - supportSMG.ReloadRemainingSeconds / supportSMG.ReloadDurationSeconds
+            : 0f;
 
         bool showReloadReminder =
             infiniteMagazine == false &&
@@ -125,10 +123,12 @@ public class SupportSMGWeaponHUDSource :
                 weaponIcon,
                 PlayerWeaponHUDValueMode.Ammunition,
                 currentAmmo,
-                reserveAmmo,
+                magazineCapacity,
                 infiniteMagazine,
-                infiniteReserve,
-                showReloadReminder
+                false,
+                showReloadReminder,
+                isReloading,
+                reloadProgress
             );
 
         return true;

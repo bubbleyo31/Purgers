@@ -84,7 +84,7 @@ public class PlayerAimController : NetworkBehaviour
     // =====================================================================
     #region ADS 時間
 
-    [Header("ADS 時間")]
+    [Header("瞄準時間")]
 
     [SerializeField]
     [Min(0f)]
@@ -103,7 +103,7 @@ public class PlayerAimController : NetworkBehaviour
     // =====================================================================
     #region ADS FOV
 
-    [Header("ADS FOV")]
+    [Header("瞄準視野角")]
 
     [SerializeField]
     [Range(1f, 179f)]

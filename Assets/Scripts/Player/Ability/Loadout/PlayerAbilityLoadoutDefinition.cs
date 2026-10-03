@@ -39,10 +39,12 @@ public class PlayerAbilityLoadoutDefinition :
     /// <summary>
     /// 驗證容量、重複裝備、Prefab 與互斥規則。
     /// </summary>
-    public bool TryValidate(
-        int technicalMaximumSlots,
-        out string failureReason
-    )
+    public bool TryValidate(int technicalMaximumSlots, out string failureReason)
+    {
+        return TryValidateEntries(slotLayout, EquippedAbilities, technicalMaximumSlots, out failureReason);
+    }
+
+    public static bool TryValidateEntries(PlayerAbilitySlotLayoutDefinition slotLayout, IReadOnlyList<PlayerAbilityDefinition> abilities, int technicalMaximumSlots, out string failureReason)
     {
         failureReason =
             string.Empty;
@@ -55,8 +57,11 @@ public class PlayerAbilityLoadoutDefinition :
             return false;
         }
 
-        IReadOnlyList<PlayerAbilityDefinition> abilities =
-            EquippedAbilities;
+        if (abilities == null)
+        {
+            failureReason = "能力清單是 Null。";
+            return false;
+        }
 
         if (abilities.Count >
             Mathf.Max(

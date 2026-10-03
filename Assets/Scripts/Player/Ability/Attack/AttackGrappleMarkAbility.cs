@@ -72,7 +72,7 @@ public class AttackGrappleMarkAbility :
     // =====================================================================
     #region Owner Player Binding
 
-    [Header("Owner Player Binding")]
+    [Header("擁有者玩家綁定")]
 
     [SerializeField]
     [Tooltip("這個 Attack Grapple Mark Ability 所屬的玩家。正常情況不需要手動指定，AttackProfessionRuntimeDriver 會在 Runtime Spawn 後自動綁定。")]
@@ -219,7 +219,7 @@ public class AttackGrappleMarkAbility :
     // =====================================================================
     #region Mark 設定
 
-    [Header("Attack 勾索標記")]
+    [Header("攻擊 勾索標記")]
 
     [SerializeField]
     [Min(0.01f)]

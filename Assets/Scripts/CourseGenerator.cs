@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class CourseGenerator : MonoBehaviour
 {
-    [Header("Prefabs")]
+    [Header("預置物")]
     [SerializeField] private Transform blockPrefab;
     [SerializeField] private Transform jumpPadPrefab;
     [SerializeField] private Transform jumpBallPrefab;
-    [Header("Parents")]
+    [Header("父物件")]
     [SerializeField] private Transform blockParent;
     [SerializeField] private Transform jumpPadParent;
-    [Header("Settings")]
+    [Header("設定")]
     [SerializeField, Tooltip("Seed will not be set if this is 0")] private int seed;
     [SerializeField] private Vector3 courseMin;
     [SerializeField] private Vector3 courseMax;

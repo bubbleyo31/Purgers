@@ -13,7 +13,7 @@ using UnityEngine;
 public sealed class EnemyFlyingChaseMotor :
     EnemyChaseMotor
 {
-    [Header("Chase B：射程帶")]
+    [Header("追逐 B：射程帶")]
 
     [SerializeField]
     [Min(0f)]
@@ -47,7 +47,7 @@ public sealed class EnemyFlyingChaseMotor :
     private float clockwiseChance =
         0.5f;
 
-    [Header("飛行追逐碰撞 Gizmos")]
+    [Header("飛行追逐碰撞 視覺輔助線")]
 
     [SerializeField]
     [Tooltip(

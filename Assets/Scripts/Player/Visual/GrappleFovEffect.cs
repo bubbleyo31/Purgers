@@ -29,7 +29,7 @@ public class GrappleFovEffect : MonoBehaviour
     // =====================================================================
     #region 管理器引用
 
-    [Header("FOV 管理器")]
+    [Header("視野角管理器")]
 
     [SerializeField]
     [Tooltip("場景中的 FirstPersonFovManager。若留空，Awake 與 Update 會嘗試從 Singleton 自動取得。")]
@@ -40,7 +40,7 @@ public class GrappleFovEffect : MonoBehaviour
     // =====================================================================
     #region FOV 修改設定
 
-    [Header("勾索 FOV 修改")]
+    [Header("勾索視野角修改")]
 
     [SerializeField]
     [Tooltip("勾索 FOV 請求的優先權。數字越高越晚套用。建議低於武器瞄準，高於一般跑步。")]

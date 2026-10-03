@@ -1,4 +1,5 @@
 using Fusion;
+using Purgers.GameFlow.Stage;
 using UnityEngine;
 
 
@@ -134,7 +135,7 @@ public sealed class EnemyDeathLifecycleController :
     // =====================================================================
     #region Extensions
 
-    [Header("特殊死亡 Gameplay 擴充")]
+    [Header("特殊死亡 遊戲邏輯 擴充")]
 
     [SerializeField]
     [Tooltip(
@@ -446,6 +447,8 @@ public sealed class EnemyDeathLifecycleController :
                 );
         }
 
+        AwardConfirmedKillExperience(deathData);
+
         InvokeDeathStartedExtensions(
             deathData
         );
@@ -460,6 +463,37 @@ public sealed class EnemyDeathLifecycleController :
                 this
             );
         }
+    }
+
+    private void AwardConfirmedKillExperience(CombatDeathEventData deathData)
+    {
+        DamageResult killingDamage = deathData.KillingDamage;
+        if (!killingDamage.Accepted || !killingDamage.KilledTarget ||
+            enemy == null || enemy.Definition == null ||
+            enemy.Definition.BaseKillExperience <= 0)
+            return;
+
+        bool activeStage = false;
+        foreach (StageFlowController flow in FindObjectsOfType<StageFlowController>())
+        {
+            if (flow != null && flow.Runner == Runner &&
+                flow.Object != null && flow.Object.IsValid &&
+                flow.Object.HasStateAuthority &&
+                flow.Phase == StagePhase.Active)
+            {
+                activeStage = true;
+                break;
+            }
+        }
+
+        if (!activeStage)
+            return;
+
+        GameLogic gameLogic = GameLogic.GetPrimaryForRunner(Runner);
+        if (gameLogic != null)
+            gameLogic.AwardEnemyKillExperience(
+                killingDamage.Request.Attacker,
+                enemy.Definition.BaseKillExperience);
     }
 
     private void EnterCorpsePhase()

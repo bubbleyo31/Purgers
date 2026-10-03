@@ -111,12 +111,12 @@ public abstract class EnemyCombatOption : NetworkBehaviour
 
     [SerializeField]
     [Tooltip(
-        "開啟後，能力開始時必須親眼看見目標。\n" +
+        "開啟後，能力開始時必須有正常視線，或剛離開扇形但仍在保留期間的無遮擋視線。\n" +
         "共享警戒或最後位置記憶只能用於追逐，不能隔牆發動攻擊。")]
     private bool requiresDirectSight =
         true;
 
-    [Header("戰鬥距離 Gizmos")]
+    [Header("戰鬥距離 視覺輔助線")]
 
     [SerializeField]
     [Tooltip("選取敵人時，在 Scene 視窗顯示此戰鬥選項的最小／最大啟動距離。")]
@@ -168,7 +168,7 @@ public abstract class EnemyCombatOption : NetworkBehaviour
             context.Distance < minimumStartDistance ||
             context.Distance > maximumStartDistance ||
             (requiresDirectSight &&
-             context.Perception.HasDirectSight == false) ||
+             context.Perception.HasCombatSight == false) ||
             IsCooldownReady(context.Actor.Runner) == false)
         {
             return false;
@@ -176,6 +176,15 @@ public abstract class EnemyCombatOption : NetworkBehaviour
 
         return CanStartOption(context);
     }
+
+    /// <summary>能力是否提供定點敵人在沒有 Active Option 時使用的瞄準方式。</summary>
+    public virtual bool SupportsBetweenActionAiming => false;
+
+    /// <summary>
+    /// 只由 Combat Controller 在取得非攻擊期間旋轉權後呼叫；
+    /// 不可啟動攻擊、刷新冷卻或改寫已鎖定的射擊點。
+    /// </summary>
+    public virtual void AimBetweenActions(in EnemyCombatContext context) { }
 
     public abstract bool CanStartOption(
         in EnemyCombatContext context

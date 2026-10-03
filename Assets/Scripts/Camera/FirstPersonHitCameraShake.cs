@@ -137,7 +137,7 @@ public class FirstPersonHitCameraShake : MonoBehaviour
     // =====================================================================
     #region Tank 近戰命中震動
 
-    [Header("Tank 輕攻擊震動")]
+    [Header("坦克 輕攻擊震動")]
 
     [SerializeField]
     [Tooltip("開啟後，Combat Feedback ID 為 TankLightMelee 的命中會使用 Tank 專屬輕攻擊震動，而不是一般 Melee 震動。Light1 與 Light2 目前共用這組設定。")]
@@ -163,7 +163,7 @@ public class FirstPersonHitCameraShake : MonoBehaviour
         2f;
 
 
-    [Header("Tank 重攻擊震動")]
+    [Header("坦克 重攻擊震動")]
 
     [SerializeField]
     [Tooltip("開啟後，Combat Feedback ID 為 TankHeavyMelee 的命中會使用 Tank 專屬重攻擊震動，而不是一般 Melee 震動。")]
@@ -189,7 +189,7 @@ public class FirstPersonHitCameraShake : MonoBehaviour
         2f;
 
 
-    [Header("Tank 擊殺震動")]
+    [Header("坦克 擊殺震動")]
 
     [SerializeField]
     [Tooltip("開啟後，Tank Light 或 Heavy 造成擊殺時會使用 Tank 專屬 Kill Shake。Kill 的判定優先級高於 Light 與 Heavy，所以 Heavy 擊殺不會播放 Heavy Shake，而是播放這組 Tank Kill Shake。")]
@@ -219,7 +219,7 @@ public class FirstPersonHitCameraShake : MonoBehaviour
     // =====================================================================
     #region Tank Air Dash 震動
 
-    [Header("Tank Enemy Air Dash 發動震動")]
+    [Header("坦克敵人空中衝刺發動震動")]
 
     [SerializeField]
     [Min(0f)]
@@ -240,7 +240,7 @@ public class FirstPersonHitCameraShake : MonoBehaviour
         1.5f;
 
 
-    [Header("Tank World Air Dash 發動震動")]
+    [Header("坦克世界空中衝刺發動震動")]
 
     [SerializeField]
     [Min(0f)]
@@ -261,7 +261,7 @@ public class FirstPersonHitCameraShake : MonoBehaviour
         1f;
 
 
-    [Header("Tank Air Strike 命中震動")]
+    [Header("坦克 空中打擊 命中震動")]
 
     [SerializeField]
     [Min(0f)]

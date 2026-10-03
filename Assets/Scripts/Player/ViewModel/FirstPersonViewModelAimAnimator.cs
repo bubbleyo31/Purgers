@@ -61,7 +61,7 @@ public class FirstPersonViewModelAimAnimator :
     #region Animator Reference
 
 
-    [Header("Animator 引用")]
+    [Header("動畫控制器 引用")]
 
 
     [SerializeField]
@@ -76,7 +76,7 @@ public class FirstPersonViewModelAimAnimator :
     #region Animator ADS Contract
 
 
-    [Header("Animator ADS Layer")]
+    [Header("動畫控制器瞄準圖層")]
 
 
     [SerializeField]

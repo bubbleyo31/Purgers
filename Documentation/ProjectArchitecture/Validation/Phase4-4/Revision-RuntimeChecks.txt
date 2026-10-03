@@ -1,0 +1,1 @@
+terrain=65536 explored=473 enemyAfterDespawn=0; airborne +80m reveal produced 45 nonzero exploration words; near enemy=1, moved enemy=1

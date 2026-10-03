@@ -105,7 +105,7 @@ public class SupportAerialAbility :
     #region Support Weapon
 
 
-    [Header("可選的 Support 武器連動")]
+    [Header("可選的 支援 武器連動")]
 
 
     [SerializeField]
@@ -573,8 +573,8 @@ public class SupportAerialAbility :
         ClearExpiredCooldown();
 
 
-        bool isAimActive =
-            IsAimInputActive(
+        bool isFocusInputActive =
+            IsFocusInputActive(
                 input
             );
 
@@ -586,7 +586,7 @@ public class SupportAerialAbility :
         if (AbilityActive)
         {
             TickActiveAbility(
-                isAimActive
+                isFocusInputActive
             );
 
 
@@ -599,7 +599,7 @@ public class SupportAerialAbility :
         // =============================================================
 
         if (CanBeginAbility(
-                isAimActive
+                isFocusInputActive
             ) == false)
         {
             return;
@@ -655,12 +655,12 @@ public class SupportAerialAbility :
 
 
     /// <summary>
-    /// 取得本 Tick 是否允許將 Aim 視為能力 Hold 輸入。
+    /// 取得本 Tick 是否允許將 E 視為能力 Hold 輸入。
     ///
     /// 不依賴某一職業是否配置 PlayerAimController，才能維持真正的
     /// 掛載即用；同時仍尊重 PlayerActionGate 的 Aim 封鎖。
     /// </summary>
-    private bool IsAimInputActive(
+    private bool IsFocusInputActive(
         NetInput input
     )
     {
@@ -673,7 +673,7 @@ public class SupportAerialAbility :
         return
             aimBlocked == false &&
             input.Buttons.IsSet(
-                InputButton.Aim
+                InputButton.Ability1
             );
     }
 

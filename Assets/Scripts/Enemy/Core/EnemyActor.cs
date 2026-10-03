@@ -44,7 +44,7 @@ public sealed class EnemyActor :
     [SerializeField]
     [Tooltip(
         "描述這個 Enemy Prefab 靜態身分的 EnemyDefinition。\n\n" +
-        "近戰 A／近戰 B／遠程 A／遠程 B 必須各自建立一份 Definition。\n" +
+        "各敵人類型各自建立 Definition；遠程 C 的定點投射物與光束也分開配置。\n" +
         "不能在 Runtime 修改 Definition 內容。")]
     private EnemyDefinition definition;
 
@@ -144,6 +144,28 @@ public sealed class EnemyActor :
 
     public EnemyDefinition Definition =>
         definition;
+
+    /// <summary>定點是移動分類，與投射物／光束攻擊選項分開。</summary>
+    public bool IsStationary => definition != null &&
+        definition.LocomotionKind == EnemyLocomotionKind.Stationary;
+
+    /// <summary>
+    /// 所有生成來源共用的出生前巡邏契約。定點怪不建立也不綁定巡邏區；
+    /// 移動怪仍必須經過原有 Brain 綁定。只能在 Fusion Spawned 前呼叫。
+    /// </summary>
+    public bool TryInitializePatrolBeforeSpawn(EnemyPatrolArea area)
+    {
+        if (fusionSpawned || definition == null) return false;
+        var patrol = GetComponentInChildren<EnemyIdlePatrolBrain>(true);
+        if (IsStationary)
+            return patrol == null &&
+                GetComponentInChildren<EnemyPatrolNavigator>(true) == null &&
+                GetComponentInChildren<EnemyChaseBrain>(true) == null &&
+                GetComponentInChildren<EnemyChaseMotor>(true) == null;
+        if (definition.LocomotionKind != EnemyLocomotionKind.Ground &&
+            definition.LocomotionKind != EnemyLocomotionKind.FreeFlying) return false;
+        return patrol != null && patrol.TryInitializePatrolAreaBeforeSpawn(area);
+    }
 
     public string EnemyId =>
         definition != null

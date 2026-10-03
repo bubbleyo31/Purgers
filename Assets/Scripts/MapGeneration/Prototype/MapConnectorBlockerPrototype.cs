@@ -15,7 +15,7 @@ public sealed class MapConnectorBlockerPrototype : MonoBehaviour
         ConnectorSide.West
     };
 
-    [Header("Blocker Prefab")]
+    [Header("阻擋屋預置物")]
 
     [Tooltip(
         "生成在未接合 Connector 上的阻擋屋 Prefab。" +
@@ -29,7 +29,7 @@ public sealed class MapConnectorBlockerPrototype : MonoBehaviour
     [SerializeField]
     private bool debugBlockerPlacement;
 
-    [Header("NavMesh Blocking")]
+    [Header("導航網格阻擋")]
 
     [Tooltip(
         "啟用後，阻擋屋生成時確保存在 Box 型 NavMeshObstacle 並開啟 Carving。" +
@@ -41,6 +41,58 @@ public sealed class MapConnectorBlockerPrototype : MonoBehaviour
         new List<GameObject>();
 
     public int SpawnedBlockerCount => spawnedBlockers.Count;
+    public IReadOnlyList<GameObject> SpawnedBlockers => spawnedBlockers;
+
+    /// <summary>Replica geometry uses the authoritative open-side mask, never its own random selection.</summary>
+    public bool TryGenerateForLayout(IReadOnlyList<MapChunk> chunks, IReadOnlyList<int> openSides)
+    {
+        if (chunks == null || openSides == null || chunks.Count != openSides.Count || !CanBeginGeneration())
+            return false;
+        try
+        {
+            for (int i = 0; i < chunks.Count; i++)
+                GenerateForChunk(chunks[i], null, openSides[i]);
+            return true;
+        }
+        catch (Exception exception)
+        {
+            ClearGeneratedBlockers();
+            Debug.LogError("[MapConnectorBlocker] Replica layout failed: " + exception.Message, this);
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// 沒有下一個 Chunk 時封閉指定 Chunk 的全部 Connector。
+    /// </summary>
+    public bool TryGenerateForClosedChunk(MapChunk chunk)
+    {
+        if (!CanBeginGeneration() || chunk == null)
+            return false;
+
+        try
+        {
+            GenerateForChunk(chunk, null);
+
+            Debug.Log(
+                $"[MapConnectorBlocker] 單一 Chunk 已全部封閉。" +
+                $"\nChunk: {chunk.name}" +
+                $"\nCount: {spawnedBlockers.Count}",
+                this);
+            return true;
+        }
+        catch (Exception exception) when (
+            exception is MissingReferenceException ||
+            exception is InvalidOperationException)
+        {
+            ClearGeneratedBlockers();
+            Debug.LogError(
+                $"[MapConnectorBlocker] 單一 Chunk 阻擋屋生成失敗。\n" +
+                exception.Message,
+                this);
+            return false;
+        }
+    }
 
     /// <summary>
     /// 兩個 Chunk 接合完成後，封閉除了已接合 Connector 以外的所有開口。
@@ -52,37 +104,8 @@ public sealed class MapConnectorBlockerPrototype : MonoBehaviour
         MapChunk secondChunk,
         MapConnector secondConnectedConnector)
     {
-        if (!DevelopmentToolsPolicy.IsEnabled ||
-            !Application.isPlaying ||
-            !isActiveAndEnabled)
-        {
+        if (!CanBeginGeneration())
             return false;
-        }
-
-        if (spawnedBlockers.Count > 0)
-        {
-            Debug.LogWarning(
-                "[MapConnectorBlocker] 本輪阻擋屋已經生成，不會重複生成。",
-                this);
-            return false;
-        }
-
-        if (blockerPrefab == null)
-        {
-            Debug.LogWarning(
-                "[MapConnectorBlocker] 尚未指定 Blocker Prefab。",
-                this);
-            return false;
-        }
-
-        if (blockerPrefab.GetComponentInChildren<NetworkObject>(true) != null)
-        {
-            Debug.LogError(
-                "[MapConnectorBlocker] Blocker Prefab 不可包含 NetworkObject；" +
-                "目前流程使用一般 Instantiate。",
-                blockerPrefab);
-            return false;
-        }
 
         if (!ValidateConnectionOwnership(
                 firstChunk,
@@ -127,15 +150,52 @@ public sealed class MapConnectorBlockerPrototype : MonoBehaviour
         }
     }
 
+    private bool CanBeginGeneration()
+    {
+        if (!Application.isPlaying ||
+            !isActiveAndEnabled)
+        {
+            return false;
+        }
+
+        if (spawnedBlockers.Count > 0)
+        {
+            Debug.LogWarning(
+                "[MapConnectorBlocker] 本輪阻擋屋已經生成，不會重複生成。",
+                this);
+            return false;
+        }
+
+        if (blockerPrefab == null)
+        {
+            Debug.LogWarning(
+                "[MapConnectorBlocker] 尚未指定 Blocker Prefab。",
+                this);
+            return false;
+        }
+
+        if (blockerPrefab.GetComponentInChildren<NetworkObject>(true) != null)
+        {
+            Debug.LogError(
+                "[MapConnectorBlocker] Blocker Prefab 不可包含 NetworkObject；" +
+                "目前流程使用一般 Instantiate。",
+                blockerPrefab);
+            return false;
+        }
+
+        return true;
+    }
+
     private void GenerateForChunk(
         MapChunk chunk,
-        MapConnector connectedConnector)
+        MapConnector connectedConnector,
+        int openSideMask = 0)
     {
         foreach (ConnectorSide side in AllSides)
         {
             MapConnector connector = chunk.GetConnector(side);
 
-            if (connector == connectedConnector)
+            if (connector == connectedConnector || (openSideMask & (1 << (int)side)) != 0)
                 continue;
 
             Transform anchor = connector.BlockerSpawnPoint;

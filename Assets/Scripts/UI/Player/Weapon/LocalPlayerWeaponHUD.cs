@@ -54,7 +54,7 @@ public class LocalPlayerWeaponHUD :
     // =====================================================================
     #region Runner
 
-    [Header("Fusion Runner")]
+    [Header("Fusion 執行器")]
 
     [SerializeField]
     [Tooltip(
@@ -68,7 +68,7 @@ public class LocalPlayerWeaponHUD :
     // =====================================================================
     #region UI References
 
-    [Header("武器 HUD 物件")]
+    [Header("武器抬頭顯示物件")]
 
     [SerializeField]
     [Tooltip(
@@ -86,11 +86,22 @@ public class LocalPlayerWeaponHUD :
 
     [SerializeField]
     [Tooltip(
-        "顯示目前數值的 TextMeshPro 文字。\n\n" +
-        "槍械：目前彈匣 / 備用彈藥。\n" +
+        "舊版單一數值文字，相容用、可留空；新版只需指定 Current Value Text 與 Secondary Value Text。\n\n" +
+        "槍械：目前彈匣 / 最大彈匣容量。\n" +
         "Tank：目前 Combo / 最高 Combo。\n" +
         "無限數值會改用 Infinity Symbol。")]
     private TMP_Text weaponValueText;
+
+    // New HUD uses two independent texts. The legacy combined text is optional.
+    private bool HasValueDisplay => (currentValueText != null && secondaryValueText != null) || weaponValueText != null;
+
+    [SerializeField] private TMP_Text currentValueText;
+    [SerializeField] private TMP_Text secondaryValueText;
+    [SerializeField] private Sprite fallbackWeaponIcon;
+    [SerializeField] private GameObject reloadProgressRoot;
+    [SerializeField] private Image reloadProgressFill;
+    [SerializeField] private TMP_Text reloadKeyLabel;
+    [SerializeField] private Image reloadKeyBackground;
 
     [SerializeField]
     [Tooltip(
@@ -217,6 +228,8 @@ public class LocalPlayerWeaponHUD :
                 false;
         }
 
+        SetReloadProgress(false, 0f);
+
         TryResolveRunner();
 
         ClearDisplayedUI();
@@ -228,8 +241,7 @@ public class LocalPlayerWeaponHUD :
 
     private void Update()
     {
-        if (weaponIconImage == null ||
-            weaponValueText == null)
+        if (weaponIconImage == null || !HasValueDisplay)
         {
             return;
         }
@@ -276,6 +288,19 @@ public class LocalPlayerWeaponHUD :
         RefreshUIIfChanged(
             snapshot
         );
+        RefreshReloadKeyVisual();
+    }
+
+    private void RefreshReloadKeyVisual()
+    {
+        InputManager input = runner != null ? runner.GetComponent<InputManager>() : null;
+        KeyCode key = input != null ? input.ReloadKey : KeyCode.R;
+        if (reloadKeyLabel != null)
+            reloadKeyLabel.text = key.ToString().ToUpperInvariant();
+        if (reloadKeyBackground != null)
+            reloadKeyBackground.color = Input.GetKey(key)
+                ? new Color(0.2f, 0.78f, 0.95f, 0.95f)
+                : new Color32(204, 190, 199, 255);
     }
 
     private void OnDisable()
@@ -338,10 +363,10 @@ public class LocalPlayerWeaponHUD :
             );
         }
 
-        if (weaponValueText == null)
+        if (!HasValueDisplay)
         {
             Debug.LogError(
-                "[Weapon HUD] 尚未指定 Weapon Value Text。",
+                "[Weapon HUD] 請指定 Current Value Text 與 Secondary Value Text；舊版才使用 Weapon Value Text。",
                 this
             );
         }
@@ -606,10 +631,10 @@ public class LocalPlayerWeaponHUD :
         if (iconChanged)
         {
             weaponIconImage.sprite =
-                snapshot.WeaponIcon;
+                snapshot.WeaponIcon != null ? snapshot.WeaponIcon : fallbackWeaponIcon;
 
             weaponIconImage.enabled =
-                snapshot.WeaponIcon != null;
+                weaponIconImage.sprite != null;
         }
 
         bool valuesChanged =
@@ -646,12 +671,22 @@ public class LocalPlayerWeaponHUD :
                     ? " / "
                     : valueSeparator;
 
-            weaponValueText.SetText(
-                currentText +
-                separator +
-                secondaryText
-            );
+            if (currentValueText != null && secondaryValueText != null)
+            {
+                currentValueText.SetText(currentText);
+                // Spacing between independent TMPs belongs to layout, not text wrapping.
+                currentValueText.enableWordWrapping = false;
+                secondaryValueText.enableWordWrapping = false;
+                secondaryValueText.SetText(separator.Trim() + secondaryText);
+                if (weaponValueText != null) weaponValueText.SetText(string.Empty);
+            }
+            else if (weaponValueText != null)
+            {
+                weaponValueText.SetText(currentText + separator + secondaryText);
+            }
         }
+
+        SetReloadProgress(snapshot.IsReloading, snapshot.ReloadProgress);
 
         bool reloadReminderChanged =
             hasDisplayedSnapshot == false ||
@@ -777,6 +812,10 @@ public class LocalPlayerWeaponHUD :
             );
         }
 
+        if (currentValueText != null) currentValueText.SetText(string.Empty);
+        if (secondaryValueText != null) secondaryValueText.SetText(string.Empty);
+        SetReloadProgress(false, 0f);
+
         SetReloadReminderVisible(
             false
         );
@@ -838,6 +877,22 @@ public class LocalPlayerWeaponHUD :
 
         visualVisible =
             visible;
+    }
+
+    private void SetReloadProgress(bool reloading, float progress)
+    {
+        if (reloadProgressRoot != null && reloadProgressRoot.activeSelf != reloading)
+            reloadProgressRoot.SetActive(reloading);
+        if (reloadProgressFill == null) return;
+
+        // A sprite-less Filled Image ignores fillAmount in uGUI. Rect width has one owner
+        // and works with the existing solid-color Image, without a hidden sprite dependency.
+        reloadProgressFill.type = Image.Type.Simple;
+        reloadProgressFill.raycastTarget = false;
+        RectTransform fill = reloadProgressFill.rectTransform;
+        fill.anchorMin = Vector2.zero;
+        fill.anchorMax = new Vector2(reloading ? Mathf.Clamp01(progress) : 0f, 1f);
+        fill.offsetMin = fill.offsetMax = Vector2.zero;
     }
 
     private void SetReloadReminderVisible(

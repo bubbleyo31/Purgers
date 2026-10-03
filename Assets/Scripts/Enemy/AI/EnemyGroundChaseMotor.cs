@@ -14,7 +14,7 @@ using UnityEngine.AI;
 public sealed class EnemyGroundChaseMotor :
     EnemyChaseMotor
 {
-    [Header("Chase A：NavMesh")]
+    [Header("追逐 A：導航網格")]
 
     [SerializeField]
     [Tooltip("NavMesh Agent Type ID。必須與地面巡邏使用的烘焙類型一致；預設 Humanoid 通常為 0。")]

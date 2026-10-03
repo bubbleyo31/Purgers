@@ -7,7 +7,9 @@ namespace Purgers.Progression
     {
         string RootDirectory { get; }
 
-        GameSaveRepositoryResult<GameSaveData> CreateNew(string displayName);
+        GameSaveRepositoryResult<GameSaveData> CreateNew(
+            string displayName,
+            int cycleLength = GameSaveSchema.DefaultCycleLength);
         GameSaveCatalog List();
         GameSaveRepositoryResult<GameSaveData> Load(string saveId);
         GameSaveRepositoryResult<GameSaveData> Write(GameSaveData save);

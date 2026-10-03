@@ -1,0 +1,99 @@
+{
+  "module": "Branch reflex original art draft",
+  "inspiration": "https://falke-germany.com/en/falke-le/",
+  "replica": false,
+  "attachment_bone": "Root",
+  "collection": "Reflex_Branch_Replaceable",
+  "runtime_reticle_implemented": false,
+  "blender_rest_m": {
+    "mount_origin": [
+      0,
+      0.021,
+      0.045
+    ],
+    "axis_direction": [
+      0,
+      -1,
+      0
+    ],
+    "axis_point": [
+      0,
+      -0.004,
+      0.084
+    ],
+    "review_eye": [
+      0,
+      0.2,
+      0.084
+    ]
+  },
+  "materials": {
+    "Bark_Walnut": {
+      "material": "Bark_Walnut_SMG01",
+      "metallic": 0,
+      "roughness": 0.84,
+      "resolution": 2048
+    },
+    "Vine_Olive": {
+      "material": "Vine_Olive_SMG01",
+      "metallic": 0,
+      "roughness": 0.76,
+      "resolution": 2048
+    },
+    "Core_Charcoal": {
+      "material": "Core_Charcoal_SMG01",
+      "metallic": 0.28,
+      "roughness": 0.64,
+      "resolution": 1024
+    },
+    "Trim_BrushedSteel": {
+      "material": "Trim_BrushedSteel_SMG01",
+      "metallic": 0.85,
+      "roughness": 0.4,
+      "resolution": 1024
+    },
+    "Sleeve_Ochre": {
+      "material": "Sleeve_Ochre_SMG01",
+      "metallic": 0,
+      "roughness": 0.86,
+      "resolution": 1024
+    },
+    "Glove_Forest": {
+      "material": "Glove_Forest_SMG01",
+      "metallic": 0,
+      "roughness": 0.68,
+      "resolution": 1024
+    },
+    "Bracer_Graphite": {
+      "material": "Bracer_Graphite_SMG01",
+      "metallic": 0.18,
+      "roughness": 0.54,
+      "resolution": 1024
+    },
+    "Rubber_Soot": {
+      "material": "Rubber_Soot_SMG01",
+      "metallic": 0,
+      "roughness": 0.9,
+      "resolution": 1024
+    },
+    "Optic_Anodized": {
+      "material": "Optic_Anodized_SMG01",
+      "metallic": 0.66,
+      "roughness": 0.45,
+      "resolution": 1024
+    },
+    "Petal_DustyRose": {
+      "material": "Petal_DustyRose_SMG01",
+      "metallic": 0,
+      "roughness": 0.73,
+      "resolution": 1024
+    },
+    "Pollen_Ochre": {
+      "material": "Pollen_Ochre_SMG01",
+      "metallic": 0,
+      "roughness": 0.81,
+      "resolution": 512
+    }
+  },
+  "lens_note": "Blender transparent coating is a review material. Rebuild as transparent URP material in Unity."
+}

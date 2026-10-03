@@ -1,0 +1,33 @@
+{
+  "jsonrpc": "2.0",
+  "id": 10,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"playing\":false,\"compiling\":false,\"failed\":false,\"scenes\":[\"Assets/Scenes/Game.unity:dirty=False\"],\"probeObjects\":0,\"defaults\":[\"Projectile:seconds=3,radius=60\",\"Beam:seconds=3,radius=60\"]},\"compiler\":\"codedom\"}}"
+      }
+    ],
+    "structuredContent": {
+      "success": true,
+      "message": "Code executed successfully.",
+      "data": {
+        "result": {
+          "playing": false,
+          "compiling": false,
+          "failed": false,
+          "scenes": [
+            "Assets/Scenes/Game.unity:dirty=False"
+          ],
+          "probeObjects": 0,
+          "defaults": [
+            "Projectile:seconds=3,radius=60",
+            "Beam:seconds=3,radius=60"
+          ]
+        },
+        "compiler": "codedom"
+      }
+    },
+    "isError": false
+  }
+}

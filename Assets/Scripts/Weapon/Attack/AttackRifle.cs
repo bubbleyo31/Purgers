@@ -286,6 +286,8 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
     public Player OwnerPlayer =>
         ownerPlayer;
 
+    private PlayerWeaponImpactEffects impactEffects;
+
     /// <summary>
     /// 將 Attack Rifle 綁定到 Player Core。
     /// </summary>
@@ -295,6 +297,8 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
     {
         ownerPlayer =
             newOwnerPlayer;
+
+        impactEffects = ownerPlayer != null ? ownerPlayer.GetComponent<PlayerWeaponImpactEffects>() : null;
 
         if (ownerPlayer == null)
         {
@@ -546,7 +550,7 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
     // =====================================================================
     #region Hitscan
 
-    [Header("Hitscan 設定")]
+    [Header("即時射線命中設定")]
 
     [SerializeField]
     [Min(0.1f)]
@@ -607,10 +611,10 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
     // =====================================================================
     #region 後座力
 
-    [Header("Gameplay 後座力")]
+    [Header("遊戲邏輯 後座力")]
 
     [SerializeField]
-    [Tooltip("每發子彈加入 KCC Look Pitch 的角度。負值通常會讓視角往上抬，因此可以先測試 -0.5 到 -1.5 左右。這是 Gameplay Recoil，之後 ViewModel 槍械動畫後座力會另外處理。")]
+    [Tooltip("每發子彈最終施加到 KCC Look Pitch 的總角度；可由 Recoil Application Duration 分段施加。負值通常會讓視角往上抬，因此可以先測試 -0.5 到 -1.5 左右。這是 Gameplay Recoil，之後 ViewModel 槍械動畫後座力會另外處理。")]
     private float recoilPitchPerShot = -0.8f;
 
     [SerializeField]
@@ -618,7 +622,14 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
     [Tooltip("每發子彈左右偏移的最大固定角度。目前使用可預測的左右交替模式，而不是 Unity Random，避免 Fusion Prediction 與 Re-simulation 因隨機結果不同而失去一致性。設為 0 可完全關閉水平後座力。")]
     private float recoilYawPerShot = 0.25f;
 
-    [Header("後座力回正設定 (Recoil Recovery)")]
+    [Header("後座力施加設定")]
+
+    [SerializeField]
+    [Min(0f)]
+    [Tooltip("每發後座力分段施加到 KCC 視角的時間，單位秒，需大於等於 0。0 為原本的瞬間抬槍；數值越大，抬槍越柔和，但下一發準心變動也會延後。")]
+    private float recoilApplicationDuration = 0.06f;
+
+    [Header("後座力回正設定")]
     
     [SerializeField]
     [Min(0f)]
@@ -749,6 +760,11 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
     /// </summary>
     [Networked] private float LastAimPitch { get; set; }
 
+    [Networked] private float PendingRecoilPitch { get; set; }
+    [Networked] private float PendingRecoilYaw { get; set; }
+    [Networked] private float RecoilApplicationSecondsRemaining { get; set; }
+
+
     #endregion
 
     // =====================================================================
@@ -863,6 +879,8 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
             1,
             magazineCapacity
         );
+
+    public float ReloadDurationSeconds => Mathf.Max(0f, reloadDuration);
 
     /// <summary>
     /// 是否使用無限備彈。
@@ -1104,6 +1122,9 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
         AccumulatedRecoilPitch = 0f;
         LastAimPitch = 0f;
         RecoilRecoveryTimer = TickTimer.None;
+        PendingRecoilPitch = 0f;
+        PendingRecoilYaw = 0f;
+        RecoilApplicationSecondsRemaining = 0f;
         // ▲ 新增結束 ▲
 
         IsInitialized = true;
@@ -1180,7 +1201,10 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
         // -------------------------------------------------------------
 
         if (fireHeld == false)
+        {
+            ApplyPendingRecoil();
             return false;
+        }
 
         // -------------------------------------------------------------
         // 嘗試射擊
@@ -1212,6 +1236,7 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
             }
         }
 
+        ApplyPendingRecoil();
         return fired;
     }
 
@@ -1681,6 +1706,10 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
         if (hit.GameObject == null)
             return;
 
+        // 真正權威命中才廣播表面特效；先於傷害處理，避免可破壞物被立即移除後遺失命中資料。
+        if (impactEffects != null)
+            impactEffects.PublishConfirmedHit(Object, ShotSequence, hit.GameObject, hit.Point, hit.Normal);
+
         // =============================================================
         // 特殊 Rifle Hit Override
         // =============================================================
@@ -2066,36 +2095,41 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
     #region Recoil
 
     /// <summary>
-    /// 將後座力加入 KCC Look Rotation。
-    /// 並記錄到回正累積池中。
+    /// 將每發 Pitch／Yaw 加入待施加池；實際分段施加時才計入回正池。
     /// </summary>
     private void ApplyGameplayRecoil()
     {
-        float horizontalSign = (ShotSequence % 2 == 0) ? 1f : -1f;
-        float yawRecoil = recoilYawPerShot * horizontalSign;
-
-        // 對 KCC 加上這發子彈的後座力 Impulse
-        movement.AddLookRotationImpulse(recoilPitchPerShot, yawRecoil);
-
-        // ▼ 新增：記錄回正狀態與計時 ▼
-        
-        // 1. 記錄累積向上的後座力
-        // (recoilPitchPerShot 通常為負值，代表視角往上，累積池會變成例如 -0.8, -1.6...)
-        AccumulatedRecoilPitch += recoilPitchPerShot;
-
-        // 2. 刷新自動回正的延遲計時器。只有在停止射擊經過這段時間後，才會開始回正。
+        float horizontalSign = ShotSequence % 2 == 0 ? 1f : -1f;
+        PendingRecoilPitch += recoilPitchPerShot;
+        PendingRecoilYaw += recoilYawPerShot * horizontalSign;
+        RecoilApplicationSecondsRemaining = Mathf.Max(0f, recoilApplicationDuration);
         RecoilRecoveryTimer = TickTimer.CreateFromSeconds(Runner, recoilRecoveryDelay);
-
-        // 3. 因為我們程式主動給了向上 Impulse，下一幀的 AimDirection Pitch 會變小（往上）。
-        // 為了不讓 ProcessRecoilRecovery() 誤判，我們提前把這個位移加到 LastAimPitch 內。
-        LastAimPitch += recoilPitchPerShot;
-        
-        // ▲ 新增結束 ▲
     }
 
-    /// <summary>
-    /// 每幀執行：偵測玩家手動壓槍，並在沒有射擊時平滑拉回視角。
-    /// </summary>
+    /// <summary>每 Tick 僅施加一次待處理角度；實際施加量才列入回正池。</summary>
+    private void ApplyPendingRecoil()
+    {
+        if (movement == null)
+            return;
+
+        float pendingPitch = PendingRecoilPitch;
+        float pendingYaw = PendingRecoilYaw;
+        float secondsRemaining = RecoilApplicationSecondsRemaining;
+        Vector2 applied = WeaponRecoilApplication.Step(
+            ref pendingPitch, ref pendingYaw, ref secondsRemaining, Runner.DeltaTime);
+        PendingRecoilPitch = pendingPitch;
+        PendingRecoilYaw = pendingYaw;
+        RecoilApplicationSecondsRemaining = secondsRemaining;
+
+        if (applied == Vector2.zero)
+            return;
+
+        movement.AddLookRotationImpulse(applied.x, applied.y);
+        AccumulatedRecoilPitch += applied.x;
+        LastAimPitch += applied.x;
+    }
+
+    /// <summary>偵測手動壓槍，並在待施加角度結清及延遲結束後回正。</summary>
     private void ProcessRecoilRecovery()
     {
         // 1. 取得當前的瞄準方向，並轉換為 Pitch 角度
@@ -2130,7 +2164,9 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
 
         // 4. 執行平滑回正
         // 當累積池還有殘留 (小於 0)，且已經過了延遲時間 (未開火)
-        if (AccumulatedRecoilPitch < 0f && RecoilRecoveryTimer.ExpiredOrNotRunning(Runner))
+        if (AccumulatedRecoilPitch < 0f &&
+            PendingRecoilPitch == 0f && PendingRecoilYaw == 0f &&
+            RecoilRecoveryTimer.ExpiredOrNotRunning(Runner))
         {
             // 本 Tick 預計要回正的總量
             float recoveryAmount = recoilRecoverySpeed * Runner.DeltaTime;

@@ -29,12 +29,16 @@ public class PlayerAbilityDefinition :
         string.Empty;
 
     [SerializeField]
+    [Tooltip("獎勵卡片與裝備後技能 HUD 共用的圖示；留空時使用 UI 佔位圖。")]
+    private Sprite hudIcon;
+
+    [SerializeField]
     [Tooltip("能力所屬管線。必須與 Runtime Prefab 上能力程式實作的 Ability Category 一致。")]
     private PlayerAbilityCategory category =
         PlayerAbilityCategory.None;
 
 
-    [Header("Runtime Prefab")]
+    [Header("執行階段預置物")]
 
     [SerializeField]
     [Tooltip("這個能力的獨立 Network Runtime Prefab。Root 必須有 NetworkObject、PlayerAbilityRuntime，以及一個分類相符的能力模組。")]
@@ -84,6 +88,8 @@ public class PlayerAbilityDefinition :
             ? AbilityId
             : displayName.Trim();
 
+
+    public Sprite HudIcon => hudIcon;
 
     public PlayerAbilityCategory Category =>
         category;

@@ -14,13 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityId: grapple.focus.aerial_slow
   displayName: "\u7A7A\u4E2D\u7DE9\u901F\u5C08\u6CE8"
+  hudIcon: {fileID: 8940071058449208875, guid: ed2d04a02f0ea34438b7aeda1aa75a21, type: 3}
   category: 1
   runtimePrefab: {fileID: 4127220335254648774, guid: e8ed06506f09f9841b42af27c1831044,
     type: 3}
   includeAdditionalGrappleTargetMask: 0
   professionRule:
     restrictProfession: 0
-    allowedProfessions: 7
+    allowedProfessions: 255
   allowDuplicateEquip: 0
   exclusiveGroupIds:
   - GrappleFocusMovementAuthority

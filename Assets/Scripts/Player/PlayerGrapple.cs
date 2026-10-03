@@ -521,7 +521,7 @@ public class PlayerGrapple : NetworkBehaviour
     // =====================================================================
     #region 取消後 Momentum
 
-    [Header("勾索釋放 Momentum")]
+    [Header("勾索釋放動量")]
 
     [SerializeField]
     [Min(0.01f)]
@@ -2271,6 +2271,12 @@ public class PlayerGrapple : NetworkBehaviour
 
                 RecordRecentSpeed();
                 PullTowardPoint();
+
+                // 只有這個 Tick 確實維持普通玩家拉動才扣使用能量。
+                // 自動／手動釋放、Support Tether、跳躍及 Release Momentum 不走這個入口。
+                // 扣至零仍繼續本次拉動，HasCharge 只封鎖下一次發射。
+                if (IsNormalPlayerPullAttached)
+                    charges.ConsumePullEnergy(Runner.DeltaTime);
 
                 break;
             }

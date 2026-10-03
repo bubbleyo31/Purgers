@@ -1,0 +1,7 @@
+cooldownStart target=True phase=None cooldown=20.00 yaw=0.00 delta=0.00 endpointUnchanged=True positionUnchanged=True stateAuthority=True
+cooldownFollowing target=True phase=None cooldown=19.30 yaw=90.00 delta=90.00 endpointUnchanged=True positionUnchanged=True stateAuthority=True
+rotationLocked target=True phase=None cooldown=18.80 yaw=90.00 delta=0.00 endpointUnchanged=True positionUnchanged=True stateAuthority=True
+rotationReleased target=True phase=None cooldown=18.09 yaw=323.83 delta=126.17 endpointUnchanged=True positionUnchanged=True stateAuthority=True
+externalMovement target=True phase=None cooldown=17.38 yaw=323.44 delta=0.00 endpointUnchanged=True positionUnchanged=True stateAuthority=True
+targetLost target=False phase=None cooldown=16.88 yaw=323.44 delta=0.00 endpointUnchanged=True positionUnchanged=True stateAuthority=True
+PASS: cooldown following, rotation lock, resumed aim, external ownership, target loss, fixed endpoint and stationary root

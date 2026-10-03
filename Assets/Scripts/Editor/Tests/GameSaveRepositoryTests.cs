@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using NUnit.Framework;
 using Purgers.Progression;
+using UnityEngine;
 
 [Category("PurgersRegression")]
 public sealed class GameSaveRepositoryTests
@@ -76,6 +77,89 @@ public sealed class GameSaveRepositoryTests
         Assert.That(
             loadResult.Value.LastPlayedUtc,
             Is.EqualTo(currentWrite.ToString("O")));
+    }
+
+    [Test]
+    public void CreateNewCapturesConfiguredCycleLength()
+    {
+        var repository = new JsonGameSaveRepository(testDirectory);
+
+        GameSaveRepositoryResult<GameSaveData> createResult =
+            repository.CreateNew("可調循環", 3);
+
+        Assert.That(createResult.Success, Is.True, createResult.Error);
+        Assert.That(createResult.Value.CycleLengthSnapshot, Is.EqualTo(3));
+
+        GameSaveRepositoryResult<GameSaveData> loadResult =
+            repository.Load(createResult.Value.SaveId);
+        Assert.That(loadResult.Success, Is.True, loadResult.Error);
+        Assert.That(loadResult.Value.CycleLengthSnapshot, Is.EqualTo(3));
+    }
+
+    [Test]
+    public void VersionOneSaveMigratesWithoutCreatingPendingRewards()
+    {
+        GameSaveData oldSave = GameSaveData.CreateNew(
+            Guid.NewGuid().ToString("N"), "Old", DateTime.UtcNow);
+        oldSave.SaveVersion = 1;
+        oldSave.RunProgression.PlayerProgressionEntries[0].PlayerLevel = 3;
+        Directory.CreateDirectory(testDirectory);
+        File.WriteAllText(
+            Path.Combine(testDirectory, oldSave.SaveId + ".json"),
+            JsonUtility.ToJson(oldSave));
+
+        var repository = new JsonGameSaveRepository(testDirectory);
+        var loaded = repository.Load(oldSave.SaveId);
+
+        Assert.That(loaded.Success, Is.True, loaded.Error);
+        Assert.That(loaded.Value.SaveVersion,
+            Is.EqualTo(GameSaveSchema.CurrentVersion));
+        Assert.That(loaded.Value.RunProgression.PlayerProgressionEntries[0]
+            .PlayerLevel, Is.EqualTo(3));
+        Assert.That(loaded.Value.RunProgression.PlayerProgressionEntries[0]
+            .PendingRewardCount, Is.Zero);
+    }
+
+    [Test]
+    public void VersionTwoSaveMigratesWithEmptyRewardDraft()
+    {
+        GameSaveData oldSave = GameSaveData.CreateNew(
+            Guid.NewGuid().ToString("N"), "Old V2", DateTime.UtcNow);
+        oldSave.SaveVersion = 2;
+        oldSave.RunProgression.PlayerProgressionEntries[0].PendingRewardCount = 1;
+        Directory.CreateDirectory(testDirectory);
+        File.WriteAllText(
+            Path.Combine(testDirectory, oldSave.SaveId + ".json"),
+            JsonUtility.ToJson(oldSave));
+
+        var loaded = new JsonGameSaveRepository(testDirectory).Load(oldSave.SaveId);
+
+        Assert.That(loaded.Success, Is.True, loaded.Error);
+        Assert.That(loaded.Value.SaveVersion, Is.EqualTo(3));
+        Assert.That(loaded.Value.RunProgression.PlayerProgressionEntries[0]
+            .PendingRewardCandidateIds, Is.Empty);
+        Assert.That(loaded.Value.RunProgression.PlayerProgressionEntries[0]
+            .PendingRewardCount, Is.EqualTo(1));
+    }
+
+    [Test]
+    public void PendingRewardsSurviveSaveAndResetWithRun()
+    {
+        var repository = new JsonGameSaveRepository(testDirectory);
+        var created = repository.CreateNew("Pending");
+        Assert.That(created.Success, Is.True, created.Error);
+        created.Value.RunProgression.PlayerProgressionEntries[0]
+            .PendingRewardCount = 2;
+        Assert.That(repository.Write(created.Value).Success, Is.True);
+
+        var loaded = repository.Load(created.Value.SaveId);
+        Assert.That(loaded.Success, Is.True, loaded.Error);
+        Assert.That(loaded.Value.RunProgression.PlayerProgressionEntries[0]
+            .PendingRewardCount, Is.EqualTo(2));
+
+        loaded.Value.ResetRunProgression();
+        Assert.That(loaded.Value.RunProgression.PlayerProgressionEntries[0]
+            .PendingRewardCount, Is.Zero);
     }
 
     [Test]

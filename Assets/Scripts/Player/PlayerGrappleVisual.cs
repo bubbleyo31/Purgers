@@ -50,7 +50,7 @@ public class PlayerGrappleVisual : MonoBehaviour
     // =====================================================================
     #region LineRenderer 外觀
 
-    [Header("LineRenderer 外觀")]
+    [Header("線段渲染器外觀")]
 
     [SerializeField]
     [Min(0.001f)]

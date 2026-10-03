@@ -37,21 +37,21 @@ public class ProfessionDefinition : ScriptableObject
     [Tooltip("職業顯示名稱。主要提供 UI、除錯資訊或之後的 Lobby 顯示使用。")]
     private string displayName = "Attack";
 
-    [Header("勾索資源規則")]
+    [Header("舊版鈎索設定（僅保留序列化，新能量制不使用）")]
 
     [SerializeField]
     [Min(0)]
-    [Tooltip("此職業可儲存的勾索最大充能數。玩家每次成功啟動勾索會消耗 1 格。")]
+    [Tooltip("舊版資料，已不參與鈎索能量計算。請到玩家 Prefab 的 PlayerGrappleCharges 調整等級容量。")]
     private int grappleMaxCharges = 3;
 
     [SerializeField]
     [Min(0f)]
-    [Tooltip("此職業恢復 1 格勾索充能所需秒數。這是『每一格』的恢復時間，不是整組全部恢復的時間。")]
+    [Tooltip("舊版資料，已停用自然回充；調整此值不影響新的鈎索能量。")]
     private float grappleRechargeDuration = 10f;
 
     [SerializeField]
     [Min(0)]
-    [Tooltip("此職業擊殺敵人時，立刻回復多少格勾索充能。若目前已滿格，則不會超過最大值。")]
+    [Tooltip("舊版資料，擊殺回充目前停用；調整此值不會恢復鈎索能量。")]
     private int grappleRestoreOnKill = 1;
 
     // =====================================================================

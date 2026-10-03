@@ -1,4 +1,6 @@
-# Phase 1-B：Menu 存檔實際配置與驗證
+﻿# Phase 1-B：Menu 存檔實際配置與驗證
+
+> **2026-10-03 排版更新**：本頁的水平 Continue 與 Grid 配置保留為 Phase 1-B 歷史記錄；目前 Continue 位於 MainButtons 第二列，Grid 已停用，最新排版與既有事件保留方式以 [166](166_Menu筆觸視覺與配置.md) 為準。下方存檔功能責任仍適用。
 
 > 最後核對：2026-09-18  
 > 適用場景：`Assets/Scenes/_Menu.unity`  
@@ -57,6 +59,12 @@ GameplayHUD Canvas
          ├─ Feedback                 ← TMP：損壞檔／讀取錯誤
          ├─ StartSelectedSave        ← TMP：開始遊戲
          └─ Back                     ← TMP：返回
+      └─ DeleteConfirmation           ← 最後一個 Sibling，刪除確認 Modal
+         ├─ ModalBlocker              ← 阻擋點擊穿透
+         └─ ConfirmationPanel
+            ├─ Title / Message
+            ├─ CancelDelete
+            └─ ConfirmDelete
 ```
 
 1. `ContinueOverlay` 的 RectTransform 設成 Stretch／Stretch，四邊 Offset 都為 0。
@@ -82,6 +90,7 @@ GameplayHUD Canvas
    - `Level` TMP
    - `LastPlayed` TMP
    - `SelectedIndicator` Image，可選
+   - `DeleteButton` Button，固定在最右側，文字為 `X`
 3. 在根物件加入 `MenuSaveSlotRow`。
 4. Inspector 指派：
    - Select Button：根物件 Button
@@ -89,6 +98,7 @@ GameplayHUD Canvas
    - Level Label：`Level`
    - Last Played Label：`LastPlayed`
    - Selected Indicator：`SelectedIndicator`，不需要選中效果時可留空
+   - Delete Button：`DeleteButton`
 5. 將它拖成 Prefab，例如：
    `Assets/Prefabs/UI/Menu/SaveSlotRow.prefab`
 6. Prefab 建立後，刪除 Canvas／Content 裡用來製作的暫時實例。正式列會由 Controller 動態 Instantiate。
@@ -108,7 +118,11 @@ GameplayHUD Canvas
    - Feedback Label：`Feedback`，可留空但建議保留
    - Start Button：`StartSelectedSave`
    - Back Button：`Back`
-4. 三個按鈕的事件由 `MenuSaveFlowController.Awake()` 清除複製來源事件後重新綁定。不要再於 Inspector 疊加 Persistent Call。
+   - Delete Confirmation Root：`DeleteConfirmation`
+   - Delete Confirmation Label：`ConfirmationPanel/Message`
+   - Confirm Delete Button：`ConfirmDelete`
+   - Cancel Delete Button：`CancelDelete`
+4. 按鈕事件由 `MenuSaveFlowController.Awake()` 清除複製來源事件後重新綁定。不要再於 Inspector 疊加 Persistent Call。
 5. Save Scene。
 
 不要替 Quick Play 新增 `MenuSaveFlowController` 事件。Quick Play 保持原本 Fusion Menu 事件即可。
@@ -151,6 +165,14 @@ Application.persistentDataPath/Purgers/Saves/<SaveId>.json
 3. 再開 Continue；有效存檔仍應列出，Feedback 顯示損壞檔錯誤。
 4. 測試後移除這個人工損壞檔。
 
+### 6.4 刪除存檔
+
+1. 每列最右側按 `X`；此時只開啟確認視窗，不得直接刪檔，也不應誤觸該列的選取／開始流程。
+2. 確認視窗必須顯示存檔名稱、關卡、玩家等級及「刪除後無法復原」。
+3. 按「取消」後關閉視窗，JSON 仍存在。
+4. 再按 `X` 並選「確認刪除」，Repository 刪除該 SaveId，清單立即重整。
+5. 若刪除的是已選列，Start 必須回到不可互動；刪除失敗則在 Feedback 顯示原因。
+
 ## 7. Host／Client 驗證
 
 請使用兩個獨立程序或 ParrelSync Clone；不要只依賴同一 Runner 的單機結果。
@@ -164,10 +186,10 @@ Application.persistentDataPath/Purgers/Saves/<SaveId>.json
 
 ## 8. 目前驗證邊界
 
-- EditMode `PurgersRegression` 已 24/24 通過。
-- `_Menu` UI 已由 UnityMCP 配置並儲存。Play Mode 已驗證：Continue 位於 Quick Play 右方、Overlay 位於最上層、空清單提示、動態存檔列、選取 Indicator、Start 由 Disabled 轉為 Interactable、Back 關閉 Overlay。
+- EditMode 全部測試已 38/38 通過。
+- `_Menu` UI 已由 UnityMCP 配置並儲存。Play Mode 已驗證：Continue 位於 Quick Play 右方、Overlay 位於最上層、動態存檔列、選取與 Start、Back，以及最右側 X 的確認／取消／正式刪除流程。
 - UI 驗證使用的暫時存檔已刪除，沒有留下測試 Save。
 - 實際 Quick Play／Continue Host 開房、連線失敗回滾、Unity 重啟後列出與獨立 Client 加入仍待多人 Play Mode 驗證。
 - 此文件記錄 Phase 1-B 當時狀態；Phase 2 已把 Fusion Menu Config 入口改為 SafeHouse，最新流程見 `142_Phase2_安全屋灰盒配置與驗證.md`。
-- Continue 尚未提供重新命名或刪除按鈕。
+- Continue 已可刪除存檔；重新命名仍未提供。
 - Host 開房失敗會刪除該次新建、尚未啟用的存檔；Continue 開房失敗不刪除既有存檔。

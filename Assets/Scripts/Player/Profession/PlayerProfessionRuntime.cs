@@ -54,7 +54,7 @@ public class PlayerProfessionRuntime :
     // =====================================================================
     #region Prefab 設定
 
-    [Header("Runtime Prefab 設定")]
+    [Header("執行階段 預置物 設定")]
 
     [SerializeField]
     [Tooltip("這個 Runtime Prefab 預期代表哪一個職業。AttackProfessionRuntime Prefab 設為 Attack，Tank 設為 Tank，Support 設為 Support。這主要用來檢查 Prefab 是否配置錯誤。")]

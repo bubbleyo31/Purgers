@@ -2,7 +2,7 @@
 
 > 建立日期：2026-09-14  
 > 最後核對：2026-09-18（局部核對：安全屋 Phase 2；完整索引另見 02）  
-> 原始碼快照：`M:/UnityProject/Purgers/Assets/Scripts`，176 支 C#。
+> 原始碼快照：`M:/UnityProject/Purgers/Assets/Scripts`，187 支 C#。
 
 這個資料夾可整份複製到 Unity 專案：
 
@@ -16,6 +16,7 @@ M:/UnityProject/Purgers/Documentation/ProjectArchitecture
 - 給開發者閱讀：[01_專案架構總覽_給開發者.md](01_專案架構總覽_給開發者.md)
 - 查找每支 C#：[02_程式職責總表.md](02_程式職責總表.md)
 - 修改後如何維護：[120_文件維護規則.md](120_文件維護規則.md)
+- 調整 Phase 6 經驗與獎勵數值：[160_Phase6_經驗與獎勵數值調整手冊.md](160_Phase6_經驗與獎勵數值調整手冊.md)
 
 ## 分系統文件
 
@@ -31,15 +32,31 @@ M:/UnityProject/Purgers/Documentation/ProjectArchitecture
 - [80_聲音系統.md](80_聲音系統.md)
 - [90_敵人核心感知巡邏與追逐.md](90_敵人核心感知巡邏與追逐.md)
 - [91_敵人攻擊表現與生成.md](91_敵人攻擊表現與生成.md)
+- [164_Phase10_怪物生成區與Encounter守則.md](164_Phase10_怪物生成區與Encounter守則.md)
 - [100_UI觀戰與聊天.md](100_UI觀戰與聊天.md)
 - [110_場景工具與選單.md](110_場景工具與選單.md)
 - [130_回歸驗證與審查狀態.md](130_回歸驗證與審查狀態.md)
 - [140_遊戲流程存檔關卡成長與長期藍圖.md](140_遊戲流程存檔關卡成長與長期藍圖.md)
 - [141_Phase1B_Menu存檔手動配置與驗證.md](141_Phase1B_Menu存檔手動配置與驗證.md)
 - [142_Phase2_安全屋灰盒配置與驗證.md](142_Phase2_安全屋灰盒配置與驗證.md)
+- [143_Phase3_Level1關卡閉環配置與驗證.md](143_Phase3_Level1關卡閉環配置與驗證.md)
+- [144_PrePhase4-1_共用控制與轉場.md](144_PrePhase4-1_共用控制與轉場.md)
+- [145_PrePhase4-2_安全屋鍵盤準備與HUD.md](145_PrePhase4-2_安全屋鍵盤準備與HUD.md)
+- [146_PrePhase4-3_HUD排列與資訊精簡.md](146_PrePhase4-3_HUD排列與資訊精簡.md)
+- [147_PrePhase4-4_小地圖與戰爭迷霧.md](147_PrePhase4-4_小地圖與戰爭迷霧.md)
+- [148_Phase4-A_決定性多Chunk拓撲核心.md](148_Phase4-A_決定性多Chunk拓撲核心.md)
+- [149_Phase4-B_Host多Chunk生成與導航.md](149_Phase4-B_Host多Chunk生成與導航.md)
+- [150_Phase4-C_最後Chunk撤離.md](150_Phase4-C_最後Chunk撤離.md)
+- [151_Phase4-D_NetworkMapState完整拓撲同步.md](151_Phase4-D_NetworkMapState完整拓撲同步.md)
+- [150_開發工具與AI_Agent工作流.md](150_開發工具與AI_Agent工作流.md)
 
 ## 使用方式
 
 新對話可先提供 `00_CHATGPT快速讀取.md`，再依當次任務補上相應模組文件。若 ChatGPT 能直接讀取專案檔案，仍應在修改前核對實際 C#，不可把文件當成永遠正確的程式快照。
 
 每次架構更動完成後，依 `120_文件維護規則.md` 同步修正文件。只有數值調整且完全不改職責、介面或資料流時，不必重寫整份架構。
+
+
+## 2026-09-18 Phase 4 前置-1 局部核對
+
+共用控制票證、黑幕與所有連線玩家載入完成後啟動計時，詳見 [144_PrePhase4-1_共用控制與轉場.md](144_PrePhase4-1_共用控制與轉場.md)。本輪核對 187 支 C#；多人驗證狀態以 144 的實際紀錄為準。

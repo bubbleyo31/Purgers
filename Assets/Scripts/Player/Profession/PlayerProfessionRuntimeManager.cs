@@ -55,7 +55,7 @@ public class PlayerProfessionRuntimeManager :
     // =====================================================================
     #region Player 引用
 
-    [Header("Player 引用")]
+    [Header("玩家引用")]
 
     [SerializeField]
     [Tooltip("玩家職業資料。Runtime Manager 會根據 Current Profession 決定應該生成哪一個職業 Runtime。若留空會自動取得。")]
@@ -66,7 +66,7 @@ public class PlayerProfessionRuntimeManager :
     // =====================================================================
     #region Runtime Prefabs
 
-    [Header("職業 Runtime Prefab")]
+    [Header("職業 執行階段 預置物")]
 
     [SerializeField]
     [Tooltip("Attack 職業 Runtime Network Prefab。Prefab Root 必須擁有 NetworkObject 與 PlayerProfessionRuntime，並將 Prefab Profession 設為 Attack。")]
@@ -241,6 +241,8 @@ public class PlayerProfessionRuntimeManager :
     /// </summary>
     private void Update()
     {
+        if (Purgers.GameFlow.Control.LocalPlayerControl.AllInputBlocked)
+            return;
         if (!DevelopmentToolsPolicy.IsEnabled || enableTestHotkeys == false)
         {
             return;

@@ -36,11 +36,11 @@ public class BulletTracerLineDrawer : MonoBehaviour
     [Header("外觀設定")]
 
     [SerializeField]
-    [Tooltip("彈道使用的材質。若留空，系統會在執行時自動建立 Sprites/Default 材質。")]
+    [Tooltip("彈道使用的材質。留空時使用支援顏色與透明度的 Sprites/Default。自訂 Shader 必須支援 LineRenderer 頂點色與透明混合；材質顏色及貼圖會再乘上彈道顏色。")]
     private Material tracerMaterial;
 
     [SerializeField]
-    [Tooltip("彈道顏色。")]
+    [Tooltip("彈道基礎色與 Alpha（0～1），會乘上 Tracer Gradient 的各色鍵與透明度鍵。要直接使用漸層原色，請設為白色且 Alpha 為 1；下一發生效。")]
     private Color tracerColor =
         new Color(
             1f,
@@ -48,6 +48,18 @@ public class BulletTracerLineDrawer : MonoBehaviour
             0.25f,
             1f
         );
+
+    [SerializeField]
+    [Tooltip("沿曳光線從尾端（左、0）到前端（右、1）的顏色與透明度漸層。色鍵調 RGB、透明度鍵調 Alpha（0～1）；預設全白且完全不透明，保留舊 Prefab 顏色。與 Tracer Color 相乘，下一發生效。")]
+    private Gradient tracerGradient = new Gradient();
+
+    [SerializeField]
+    [Tooltip("讀取此職業 Runtime 所屬玩家的鈎索動能。NormalizedEnergy 達到 1 時，新發射線段使用滿能量顏色；未滿、來源無效或尚未 Spawn 時使用 Tracer Color。")]
+    private bool useMaximumEnergyColor = true;
+
+    [SerializeField]
+    [Tooltip("動能滿值時取代 Tracer Color 的基礎 RGBA（0～1），仍乘上 Tracer Gradient。預設青色；每發生成時取樣，隱藏延遲與飛行途中不重新換色。")]
+    private Color maximumEnergyTracerColor = new Color(0.2f, 0.8f, 1f, 1f);
 
     [SerializeField]
     [Min(0.001f)]
@@ -80,6 +92,11 @@ public class BulletTracerLineDrawer : MonoBehaviour
     #region 飛行設定
 
     [Header("飛行設定")]
+
+    [SerializeField]
+    [Min(0f)]
+    [Tooltip("生成後先隱藏多少遊戲秒。線段照常飛行，但隱藏期間的路段永遠不畫；從時間到達時的前端位置開始長出，直到 Tracer Length。0 從槍口開始。若整段飛行都在隱藏期內，停留與淡出也不補畫。")]
+    private float displayDelay = 0f;
 
     [SerializeField]
     [Tooltip("開啟後，曳光彈會沿著射擊方向高速飛行。關閉後會直接把曳光線放到最終視覺位置。")]
@@ -130,6 +147,8 @@ public class BulletTracerLineDrawer : MonoBehaviour
     /// 沒有指定材質時建立的 Runtime Material。
     /// </summary>
     private Material runtimeMaterial;
+
+    private PlayerProfessionRuntime professionRuntime;
 
     #endregion
 
@@ -288,6 +307,11 @@ public class BulletTracerLineDrawer : MonoBehaviour
             line
         );
 
+        // 位置與生命期照常更新；顯示延遲另決定可繪製路段的固定起點。
+        float effectiveDisplayDelay = Mathf.Max(0f, displayDelay);
+        if (effectiveDisplayDelay > 0f)
+            line.enabled = false;
+
         // -------------------------------------------------------------
         // 計算 Hitscan 路徑
         // -------------------------------------------------------------
@@ -404,6 +428,11 @@ public class BulletTracerLineDrawer : MonoBehaviour
         bool rendererHiddenAfterHit =
             false;
 
+        float tracerAge = 0f;
+        bool revealStartResolved = effectiveDisplayDelay <= 0f;
+        // 尚未開放時預設裁到最終位置，避免停留／淡出回補隱藏路段。
+        float revealStartDistance = revealStartResolved ? 0f : visualTravelDistance;
+
         // =============================================================
         // 有飛行動畫
         // =============================================================
@@ -417,6 +446,9 @@ public class BulletTracerLineDrawer : MonoBehaviour
             while (headDistance <
                    visualTravelDistance)
             {
+                float previousAge = tracerAge;
+                float previousHeadDistance = headDistance;
+                tracerAge += Time.deltaTime;
                 // -----------------------------------------------------
                 // Head 持續以固定速度前進
                 // -----------------------------------------------------
@@ -438,6 +470,14 @@ public class BulletTracerLineDrawer : MonoBehaviour
                         headDistance,
                         visualTravelDistance
                     );
+
+                if (!revealStartResolved && tracerAge >= effectiveDisplayDelay)
+                {
+                    // 在跨過開放時間的這一幀內計算位置，避免結果依 FPS 向前偏移。
+                    revealStartDistance = Mathf.Min(visualTravelDistance,
+                        previousHeadDistance + travelSpeed * (effectiveDisplayDelay - previousAge));
+                    revealStartResolved = true;
+                }
 
                 // -----------------------------------------------------
                 // Tracer Head
@@ -469,10 +509,12 @@ public class BulletTracerLineDrawer : MonoBehaviour
                         validTracerLength
                     );
 
+                float visibleTailDistance = Mathf.Min(headDistance,
+                    Mathf.Max(tailDistance, revealStartDistance));
                 Vector3 tracerTail =
                     start +
                     direction *
-                    tailDistance;
+                    visibleTailDistance;
 
                 // -----------------------------------------------------
                 // 更新 LineRenderer
@@ -540,6 +582,7 @@ public class BulletTracerLineDrawer : MonoBehaviour
                         true;
                 }
 
+                line.enabled = !rendererHiddenAfterHit && revealStartResolved && headDistance - visibleTailDistance > 0.0001f;
                 yield return null;
             }
         }
@@ -627,6 +670,10 @@ public class BulletTracerLineDrawer : MonoBehaviour
                 validTracerLength
             );
 
+        finalTailDistanceAfterTravel = Mathf.Min(visualTravelDistance,
+            Mathf.Max(finalTailDistanceAfterTravel, revealStartDistance));
+        bool hasVisibleSegment = revealStartResolved && visualTravelDistance - finalTailDistanceAfterTravel > 0.0001f;
+
         Vector3 finalTail =
             start +
             direction *
@@ -671,12 +718,13 @@ public class BulletTracerLineDrawer : MonoBehaviour
          * hideAfterPassingHitPoint 關閉時，
          * Tracer 才會在 Visual End 保持顯示。
          */
-        if (visibleDuration > 0f)
+        float holdElapsed = 0f;
+        while (holdElapsed < visibleDuration)
         {
-            yield return
-                new WaitForSeconds(
-                    visibleDuration
-                );
+            line.enabled = hasVisibleSegment && tracerAge >= effectiveDisplayDelay;
+            yield return null;
+            holdElapsed += Time.deltaTime;
+            tracerAge += Time.deltaTime;
         }
 
         // =============================================================
@@ -688,14 +736,20 @@ public class BulletTracerLineDrawer : MonoBehaviour
             float elapsed =
                 0f;
 
-            Color baseColor =
-                tracerColor;
+            // 使用這一發的空間漸層；淡出只縮放每個 Alpha 鍵，不覆寫顏色鍵。
+            Gradient shotGradient = line.colorGradient;
+            GradientColorKey[] colorKeys = shotGradient.colorKeys;
+            GradientAlphaKey[] alphaKeys = shotGradient.alphaKeys;
+            GradientAlphaKey[] fadedAlphaKeys = new GradientAlphaKey[alphaKeys.Length];
+            Gradient fadedGradient = new Gradient { mode = shotGradient.mode };
 
             while (elapsed <
                    fadeDuration)
             {
                 elapsed +=
                     Time.deltaTime;
+                tracerAge += Time.deltaTime;
+                line.enabled = hasVisibleSegment && tracerAge >= effectiveDisplayDelay;
 
                 float progress =
                     Mathf.Clamp01(
@@ -703,26 +757,16 @@ public class BulletTracerLineDrawer : MonoBehaviour
                         fadeDuration
                     );
 
-                float alpha =
-                    Mathf.Lerp(
-                        baseColor.a,
-                        0f,
-                        progress
+                for (int i = 0; i < alphaKeys.Length; i++)
+                {
+                    fadedAlphaKeys[i] = new GradientAlphaKey(
+                        alphaKeys[i].alpha * (1f - progress),
+                        alphaKeys[i].time
                     );
+                }
 
-                Color currentColor =
-                    new Color(
-                        baseColor.r,
-                        baseColor.g,
-                        baseColor.b,
-                        alpha
-                    );
-
-                line.startColor =
-                    currentColor;
-
-                line.endColor =
-                    currentColor;
+                fadedGradient.SetKeys(colorKeys, fadedAlphaKeys);
+                line.colorGradient = fadedGradient;
 
                 yield return null;
             }
@@ -741,6 +785,37 @@ public class BulletTracerLineDrawer : MonoBehaviour
 
     // =====================================================================
     #region LineRenderer 設定
+
+    /// <summary>依正式職業 Owner 讀取動能，避免把其他玩家或未 Spawn 狀態當成來源。</summary>
+    private Color ResolveTracerColor()
+    {
+        if (!useMaximumEnergyColor)
+            return tracerColor;
+
+        if (professionRuntime == null)
+            professionRuntime = GetComponentInParent<PlayerProfessionRuntime>();
+
+        if (professionRuntime == null || professionRuntime.Object == null ||
+            !professionRuntime.Object.IsValid || professionRuntime.Runner == null)
+            return tracerColor;
+
+        Player owner = professionRuntime.OwnerPlayer;
+        if (owner == null || owner.Object == null || !owner.Object.IsValid)
+            return tracerColor;
+
+        PlayerGrappleMomentumEnergy energy = owner.GetComponent<PlayerGrappleMomentumEnergy>();
+        if (energy == null || energy.Object == null || !energy.Object.IsValid || energy.Runner == null)
+            return tracerColor;
+
+        return SelectTracerColor(energy.NormalizedEnergy);
+    }
+
+    private Color SelectTracerColor(float normalizedEnergy)
+    {
+        return useMaximumEnergyColor && normalizedEnergy >= 1f
+            ? maximumEnergyTracerColor
+            : tracerColor;
+    }
 
     /// <summary>
     /// 初始化 LineRenderer 外觀。
@@ -775,13 +850,37 @@ public class BulletTracerLineDrawer : MonoBehaviour
          * [================]
          */
         line.numCapVertices =
-            8;
+            12;
 
-        line.startColor =
-            tracerColor;
+        // LineRenderer 的漸層沿線段長度取樣；Prefab 舊色保留為整體乘色。
+        Gradient source = tracerGradient ?? new Gradient();
+        Color shotColor = ResolveTracerColor();
+        GradientColorKey[] sourceColors = source.colorKeys;
+        GradientAlphaKey[] sourceAlphas = source.alphaKeys;
+        GradientColorKey[] colors = new GradientColorKey[sourceColors.Length];
+        GradientAlphaKey[] alphas = new GradientAlphaKey[sourceAlphas.Length];
 
-        line.endColor =
-            tracerColor;
+        for (int i = 0; i < colors.Length; i++)
+        {
+            Color color = sourceColors[i].color;
+            colors[i] = new GradientColorKey(
+                new Color(color.r * shotColor.r, color.g * shotColor.g,
+                    color.b * shotColor.b, 1f),
+                sourceColors[i].time
+            );
+        }
+
+        for (int i = 0; i < alphas.Length; i++)
+        {
+            alphas[i] = new GradientAlphaKey(
+                Mathf.Clamp01(sourceAlphas[i].alpha * shotColor.a),
+                sourceAlphas[i].time
+            );
+        }
+
+        Gradient appearance = new Gradient { mode = source.mode };
+        appearance.SetKeys(colors, alphas);
+        line.colorGradient = appearance;
 
         line.shadowCastingMode =
             UnityEngine.Rendering

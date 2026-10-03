@@ -36,7 +36,7 @@ public sealed class LocalChatPanel :
     // =====================================================================
     #region UI References
 
-    [Header("聊天欄 UI")]
+    [Header("聊天欄介面")]
 
     [SerializeField]
     [Tooltip(

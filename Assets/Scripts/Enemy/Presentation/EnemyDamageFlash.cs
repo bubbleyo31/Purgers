@@ -100,7 +100,7 @@ public sealed class EnemyDamageFlash :
     // =====================================================================
     #region Shader Properties
 
-    [Header("Shader 顏色欄位")]
+    [Header("著色器顏色欄位")]
 
     [SerializeField]
     [Tooltip(

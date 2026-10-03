@@ -151,11 +151,16 @@ public abstract class EnemyPatrolNavigator : MonoBehaviour
     /// 膠囊掃掠整段位移；先檢查起點重疊，再檢查路上碰撞。
     /// obstacleMask 必須排除自己的 Enemy Collider。
     /// </summary>
-    protected bool IsSegmentClear(Vector3 from, Vector3 to)
+    protected bool IsSegmentClear(Vector3 from, Vector3 to) =>
+        IsSegmentClear(Runner.GetPhysicsScene(), from, to);
+
+    /// <summary>供 Host 以 Prefab 膠囊規劃飛行點；不讀 Networked 或 Actor 生命週期。</summary>
+    protected bool IsSegmentClear(PhysicsScene physics, Vector3 from, Vector3 to)
     {
+        if (!physics.IsValid() || obstacleMask.value == 0 || bodyRadius <= 0f ||
+            bodyHeight < bodyRadius * 2f || collisionSkin <= 0f) return false;
         Vector3 bottom = from + Vector3.up * (bodyRadius + collisionSkin);
         Vector3 top = from + Vector3.up * Mathf.Max(bodyRadius + collisionSkin, bodyHeight - bodyRadius);
-        PhysicsScene physics = Runner.GetPhysicsScene();
         // 單一暫存槽已足以回答是否重疊；不需要列出全部碰撞器。
         if (physics.OverlapCapsule(bottom, top, bodyRadius, overlapBuffer,
             obstacleMask, QueryTriggerInteraction.Ignore) > 0) return false;

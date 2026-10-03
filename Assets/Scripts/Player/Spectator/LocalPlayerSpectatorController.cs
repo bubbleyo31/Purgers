@@ -49,7 +49,7 @@ public class LocalPlayerSpectatorController :
     // =====================================================================
     #region Runner
 
-    [Header("Fusion Runner")]
+    [Header("Fusion 執行器")]
 
     [SerializeField]
     [Tooltip(

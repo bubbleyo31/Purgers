@@ -1,0 +1,444 @@
+{
+  "passed": true,
+  "errors": [],
+  "compared_bone_positions": 6615,
+  "max_bone_position_delta_m": 1.3259521793022543e-06,
+  "worst_sample": [
+    "Reload:33",
+    "骨骼.013.l.001_end"
+  ],
+  "max_basis_coefficient_delta": 9.432435035705566e-06,
+  "source_bones": 63,
+  "output_bones": 63,
+  "source_actions": {
+    "idle": [
+      1.0,
+      61.0
+    ],
+    "Opening the scope": [
+      1.0,
+      4.0
+    ],
+    "Opening the scope shoot": [
+      1.0,
+      2.0
+    ],
+    "Reload": [
+      1.0,
+      36.0
+    ],
+    "shoot": [
+      1.0,
+      2.0
+    ]
+  },
+  "output_actions": {
+    "idle": [
+      1.0,
+      61.0
+    ],
+    "Opening the scope": [
+      1.0,
+      4.0
+    ],
+    "Opening the scope shoot": [
+      1.0,
+      2.0
+    ],
+    "Reload": [
+      1.0,
+      36.0
+    ],
+    "shoot": [
+      1.0,
+      2.0
+    ]
+  },
+  "meshes": [
+    {
+      "name": "SMG_optic_Rubber_Soot_SMG01",
+      "vertices": 240,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "SMG_weapon_Bark_Walnut_SMG01",
+      "vertices": 9456,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "SMG_weapon_Trim_BrushedSteel_SMG01",
+      "vertices": 1120,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "SMG_optic_Trim_BrushedSteel_SMG01",
+      "vertices": 224,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "SMG_optic_Reflex_Lens_Coating",
+      "vertices": 6,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "立方体.004",
+      "vertices": 7596,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 5,
+      "armature_modifier": true
+    },
+    {
+      "name": "SMG_weapon_Rubber_Soot_SMG01",
+      "vertices": 960,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "SMG_arms_Rubber_Soot_SMG01",
+      "vertices": 640,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "SMG_optic_Core_Charcoal_SMG01",
+      "vertices": 288,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "SMG_magazine_Core_Charcoal_SMG01",
+      "vertices": 1728,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "SMG_magazine_Rubber_Soot_SMG01",
+      "vertices": 96,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "SMG_weapon_Pollen_Ochre_SMG01",
+      "vertices": 1548,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "SMG_arms_Trim_BrushedSteel_SMG01",
+      "vertices": 2296,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "SMG_optic_Bark_Walnut_SMG01",
+      "vertices": 720,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "SMG_optic_Optic_Anodized_SMG01",
+      "vertices": 864,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "SMG_weapon_Core_Charcoal_SMG01",
+      "vertices": 3932,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "SMG_weapon_Vine_Olive_SMG01",
+      "vertices": 8688,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    },
+    {
+      "name": "SMG_weapon_Petal_DustyRose_SMG01",
+      "vertices": 9900,
+      "uv_layers": 1,
+      "unweighted": 0,
+      "nonfinite": 0,
+      "materials": 1,
+      "armature_modifier": true
+    }
+  ],
+  "texture_paths": [
+    {
+      "name": "Bark_Walnut_BaseColor",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Bark_Walnut_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Bark_Walnut_BaseColor.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Bark_Walnut_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Bark_Walnut_Normal",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Bark_Walnut_Normal.png",
+      "exists": true
+    },
+    {
+      "name": "Bark_Walnut_Roughness",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Bark_Walnut_Roughness.png",
+      "exists": true
+    },
+    {
+      "name": "Bracer_Graphite_BaseColor",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Bracer_Graphite_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Bracer_Graphite_BaseColor.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Bracer_Graphite_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Bracer_Graphite_Normal",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Bracer_Graphite_Normal.png",
+      "exists": true
+    },
+    {
+      "name": "Bracer_Graphite_Roughness",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Bracer_Graphite_Roughness.png",
+      "exists": true
+    },
+    {
+      "name": "Core_Charcoal_BaseColor",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Core_Charcoal_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Core_Charcoal_BaseColor.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Core_Charcoal_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Core_Charcoal_Normal",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Core_Charcoal_Normal.png",
+      "exists": true
+    },
+    {
+      "name": "Core_Charcoal_Roughness",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Core_Charcoal_Roughness.png",
+      "exists": true
+    },
+    {
+      "name": "Glove_Forest_BaseColor",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Glove_Forest_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Glove_Forest_BaseColor.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Glove_Forest_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Glove_Forest_Normal",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Glove_Forest_Normal.png",
+      "exists": true
+    },
+    {
+      "name": "Glove_Forest_Roughness",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Glove_Forest_Roughness.png",
+      "exists": true
+    },
+    {
+      "name": "Optic_Anodized_BaseColor",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Optic_Anodized_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Optic_Anodized_BaseColor.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Optic_Anodized_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Optic_Anodized_Normal",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Optic_Anodized_Normal.png",
+      "exists": true
+    },
+    {
+      "name": "Optic_Anodized_Roughness",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Optic_Anodized_Roughness.png",
+      "exists": true
+    },
+    {
+      "name": "Petal_DustyRose_BaseColor",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Petal_DustyRose_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Petal_DustyRose_BaseColor.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Petal_DustyRose_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Petal_DustyRose_Normal",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Petal_DustyRose_Normal.png",
+      "exists": true
+    },
+    {
+      "name": "Petal_DustyRose_Roughness",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Petal_DustyRose_Roughness.png",
+      "exists": true
+    },
+    {
+      "name": "Pollen_Ochre_BaseColor",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Pollen_Ochre_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Pollen_Ochre_BaseColor.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Pollen_Ochre_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Pollen_Ochre_Normal",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Pollen_Ochre_Normal.png",
+      "exists": true
+    },
+    {
+      "name": "Pollen_Ochre_Roughness",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Pollen_Ochre_Roughness.png",
+      "exists": true
+    },
+    {
+      "name": "Rubber_Soot_BaseColor",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Rubber_Soot_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Rubber_Soot_BaseColor.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Rubber_Soot_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Rubber_Soot_Normal",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Rubber_Soot_Normal.png",
+      "exists": true
+    },
+    {
+      "name": "Rubber_Soot_Roughness",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Rubber_Soot_Roughness.png",
+      "exists": true
+    },
+    {
+      "name": "Sleeve_Ochre_BaseColor",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Sleeve_Ochre_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Sleeve_Ochre_BaseColor.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Sleeve_Ochre_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Sleeve_Ochre_Normal",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Sleeve_Ochre_Normal.png",
+      "exists": true
+    },
+    {
+      "name": "Sleeve_Ochre_Roughness",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Sleeve_Ochre_Roughness.png",
+      "exists": true
+    },
+    {
+      "name": "Trim_BrushedSteel_BaseColor",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Trim_BrushedSteel_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Trim_BrushedSteel_BaseColor.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Trim_BrushedSteel_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Trim_BrushedSteel_Normal",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Trim_BrushedSteel_Normal.png",
+      "exists": true
+    },
+    {
+      "name": "Trim_BrushedSteel_Roughness",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Trim_BrushedSteel_Roughness.png",
+      "exists": true
+    },
+    {
+      "name": "Vine_Olive_BaseColor",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Vine_Olive_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Vine_Olive_BaseColor.001",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Vine_Olive_BaseColor.png",
+      "exists": true
+    },
+    {
+      "name": "Vine_Olive_Normal",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Vine_Olive_Normal.png",
+      "exists": true
+    },
+    {
+      "name": "Vine_Olive_Roughness",
+      "path": "M:\\UnityProject\\Purgers\\deliverables\\Art\\SMGBloom_Draft01\\SMGBloom_Arms_Draft01.fbm\\Vine_Olive_Roughness.png",
+      "exists": true
+    }
+  ],
+  "scope": "Blender FBX round-trip only. Does not verify Unity import, runtime animation blending, material conversion or collision-free animation."
+}

@@ -3,6 +3,9 @@ using Fusion.Sockets;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Purgers.GameFlow.Control;
+using Purgers.GameFlow.Transition;
+using Purgers.Progression;
 
 /// <summary>
 /// Photon Fusion 玩家輸入管理器。
@@ -51,6 +54,98 @@ public class InputManager :
     /// </summary>
     private bool resetInput;
 
+    [Header("戰鬥按鍵")]
+    [SerializeField] private KeyCode grappleKey = KeyCode.Q;
+    [SerializeField] private KeyCode grappleFocusKey = KeyCode.E;
+    [SerializeField] private KeyCode reloadKey = KeyCode.R;
+    [SerializeField] private KeyCode rewardHoldKey = KeyCode.LeftAlt;
+
+    public KeyCode GrappleKey => grappleKey;
+    public KeyCode GrappleFocusKey => grappleFocusKey;
+    public KeyCode ReloadKey => reloadKey;
+    public KeyCode RewardHoldKey => rewardHoldKey;
+    public string RewardHoldKeyLabel => rewardHoldKey == KeyCode.LeftAlt ||
+        rewardHoldKey == KeyCode.RightAlt ? "ALT" :
+        rewardHoldKey.ToString().ToUpperInvariant();
+    public bool IsRewardHoldKeyPressed => Input.GetKey(rewardHoldKey) ||
+        (rewardHoldKey == KeyCode.LeftAlt && Input.GetKey(KeyCode.RightAlt));
+
+    [SerializeField, Min(0f)]
+    [Tooltip("安全屋與關卡載入完成後的黑幕淡入秒數；使用 Unscaled Time。")]
+    private float sceneFadeDuration = 1.5f;
+    private LocalSceneTransition sceneTransition;
+    private NetworkRunner rewardRunner;
+    private LocalPlayerRewardHUD registeredRewardHud;
+    private bool pendingHostRewardChoice;
+    private int pendingHostRewardRevision;
+    private int pendingHostRewardIndex;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+    private bool pendingHostDebugLevelUp;
+#endif
+
+    public bool IsRewardSelectionActive { get; private set; }
+
+    // Unity mouse indices: left=0, right=1, middle=2. This survives HUD dismissal
+    // and ClearPendingInput; only the physical release rearms a consumed button.
+    private int rewardMouseButtonsBlockedUntilRelease;
+
+    public void RegisterRewardHud(LocalPlayerRewardHUD hud)
+    {
+        if (hud != null)
+            registeredRewardHud = hud;
+    }
+
+    public void UnregisterRewardHud(LocalPlayerRewardHUD hud)
+    {
+        if (registeredRewardHud == hud)
+        {
+            registeredRewardHud = null;
+            IsRewardSelectionActive = false;
+        }
+    }
+
+    public bool TryConsumeHostRewardChoice(out int revision, out int index)
+    {
+        revision = pendingHostRewardRevision;
+        index = pendingHostRewardIndex;
+        bool hasChoice = pendingHostRewardChoice;
+        pendingHostRewardChoice = false;
+        return hasChoice;
+    }
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+    public bool TryConsumeHostDebugLevelUp()
+    {
+        bool requested = pendingHostDebugLevelUp;
+        pendingHostDebugLevelUp = false;
+        return requested;
+    }
+#endif
+
+    private void Awake()
+    {
+        rewardRunner = GetComponent<NetworkRunner>();
+        LocalPlayerControl.Locks.Changed += ClearPendingInput;
+    }
+
+    private void ClearPendingInput()
+    {
+        accumulatedInput = default;
+        resetInput = false;
+        IsRewardSelectionActive = false;
+        pendingHostRewardChoice = false;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        pendingHostDebugLevelUp = false;
+#endif
+    }
+
+    private void OnDestroy()
+    {
+        LocalPlayerControl.Locks.Changed -= ClearPendingInput;
+        if (sceneTransition != null)
+            sceneTransition.Cancel();
+    }
+
     #endregion
 
     // =====================================================================
@@ -61,6 +156,15 @@ public class InputManager :
     /// </summary>
     void IBeforeUpdate.BeforeUpdate()
     {
+        int heldMouseButtons = (Input.GetMouseButton(0) ? 1 : 0) |
+            (Input.GetMouseButton(1) ? 2 : 0) |
+            (Input.GetMouseButton(2) ? 4 : 0);
+        rewardMouseButtonsBlockedUntilRelease &= heldMouseButtons;
+        if (LocalPlayerControl.AllInputBlocked)
+        {
+            ClearPendingInput();
+            return;
+        }
         // -------------------------------------------------------------
         // 清除上一輪已提交的資料
         // -------------------------------------------------------------
@@ -103,6 +207,10 @@ public class InputManager :
             }
         }
 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        RefreshDebugLevelUp();
+#endif
+
         // -------------------------------------------------------------
         // 游標未鎖定時，不接受角色操作
         // -------------------------------------------------------------
@@ -113,8 +221,12 @@ public class InputManager :
             accumulatedInput =
                 default;
 
+            IsRewardSelectionActive = false;
+
             return;
         }
+
+        RefreshRewardSelection();
 
         NetworkButtons currentButtons =
             default;
@@ -236,7 +348,7 @@ public class InputManager :
         currentButtons.Set(
             InputButton.Grapple,
             Input.GetKey(
-                KeyCode.Q
+                grappleKey
             )
         );
 
@@ -292,7 +404,7 @@ public class InputManager :
          */
         currentButtons.Set(
             InputButton.Fire,
-            Input.GetMouseButton(0)
+            !IsRewardSelectionActive && Input.GetMouseButton(0)
         );
 
         // =============================================================
@@ -313,7 +425,7 @@ public class InputManager :
          */
         currentButtons.Set(
             InputButton.Aim,
-            Input.GetMouseButton(1)
+            !IsRewardSelectionActive && Input.GetMouseButton(1)
         );
 
         // =============================================================
@@ -326,7 +438,7 @@ public class InputManager :
         currentButtons.Set(
             InputButton.Reload,
             Input.GetKeyDown(
-                KeyCode.R
+                reloadKey
             )
         );
 
@@ -347,15 +459,17 @@ public class InputManager :
         );
 
         // =============================================================
-        // 未來技能按鍵
+        // 鈎索專注能力
         // =============================================================
 
         /*
-         * Ability1 / Ability2 現在只保留 InputButton 編號。
-         *
-         * 尚未確定正式鍵位之前，
-         * 不在這裡綁定。
+         * E 持續狀態交由能力 Runtime 判斷按下或按住；
+         * Ability2 暫時保留。選獎勵時不送出能力輸入。
          */
+        currentButtons.Set(
+            InputButton.Ability1,
+            !IsRewardSelectionActive && Input.GetKey(grappleFocusKey)
+        );
 
         // =============================================================
         // 累積按鍵
@@ -371,7 +485,96 @@ public class InputManager :
                 accumulatedInput.Buttons.Bits |
                 currentButtons.Bits
             );
+
+        FilterRewardMouseInput(IsRewardSelectionActive, heldMouseButtons);
     }
+
+    private void FilterRewardMouseInput(bool selectionActive, int heldMouseButtons)
+    {
+        rewardMouseButtonsBlockedUntilRelease &= heldMouseButtons;
+        if (selectionActive)
+            rewardMouseButtonsBlockedUntilRelease |= heldMouseButtons;
+
+        // Filter after accumulation so pre-ALT buffered combat cannot leak either.
+        if (selectionActive || (rewardMouseButtonsBlockedUntilRelease & 1) != 0)
+            accumulatedInput.Buttons.Set(InputButton.Fire, false);
+        if (selectionActive || (rewardMouseButtonsBlockedUntilRelease & 2) != 0)
+            accumulatedInput.Buttons.Set(InputButton.Aim, false);
+        if (selectionActive)
+            accumulatedInput.Buttons.Set(InputButton.Ability1, false);
+    }
+
+    private void RefreshRewardSelection()
+    {
+        IsRewardSelectionActive = false;
+        if (rewardRunner == null || !rewardRunner.IsRunning ||
+            !rewardRunner.LocalPlayer.IsRealPlayer ||
+            registeredRewardHud == null ||
+            !registeredRewardHud.CanPresentRewardSelection)
+            return;
+
+        if (!rewardRunner.TryGetPlayerObject(rewardRunner.LocalPlayer,
+                out NetworkObject localPlayerObject) ||
+            localPlayerObject == null || !localPlayerObject.IsValid)
+            return;
+        Player localPlayer = localPlayerObject.GetComponent<Player>();
+        if (localPlayer == null || localPlayer.Health == null ||
+            !localPlayer.Health.IsAlive)
+            return;
+
+        GameLogic logic = GameLogic.GetPrimaryForRunner(rewardRunner);
+        if (logic == null ||
+            !logic.TryGetPlayerExperience(rewardRunner.LocalPlayer,
+                out PlayerExperienceState experience) ||
+            !logic.TryGetPlayerRewardDraft(rewardRunner.LocalPlayer,
+                out PlayerRewardNetworkState draft))
+            return;
+
+        bool altHeld = IsRewardHoldKeyPressed;
+        IsRewardSelectionActive = RewardSelectionInputRules.IsSelectionActive(
+            altHeld, experience.PendingRewards, draft.ChoiceCount);
+        if (!IsRewardSelectionActive)
+            return;
+
+        int choiceIndex = RewardSelectionInputRules.GetChoiceIndex(
+            draft.ChoiceCount,
+            Input.GetMouseButtonDown(0),
+            Input.GetMouseButtonDown(2),
+            Input.GetMouseButtonDown(1));
+        if (choiceIndex < 0)
+            return;
+
+        if (logic.Object.HasStateAuthority)
+        {
+            pendingHostRewardRevision = draft.DraftRevision;
+            pendingHostRewardIndex = choiceIndex;
+            pendingHostRewardChoice = true;
+        }
+        else
+            logic.RPC_RequestRewardChoice(draft.DraftRevision, choiceIndex);
+    }
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+    private void RefreshDebugLevelUp()
+    {
+        if (!Input.GetKeyDown(KeyCode.F8) ||
+            !DevelopmentToolsPolicy.IsEnabled ||
+            rewardRunner == null || !rewardRunner.IsRunning ||
+            !rewardRunner.LocalPlayer.IsRealPlayer ||
+            registeredRewardHud == null ||
+            !registeredRewardHud.CanPresentRewardSelection)
+            return;
+
+        GameLogic logic = GameLogic.GetPrimaryForRunner(rewardRunner);
+        if (logic == null || logic.Object == null || !logic.Object.IsValid)
+            return;
+
+        if (logic.Object.HasStateAuthority)
+            pendingHostDebugLevelUp = true;
+        else
+            logic.RPC_RequestDebugLevelUp();
+    }
+#endif
 
     #endregion
 
@@ -386,6 +589,7 @@ public class InputManager :
         NetworkInput input
     )
     {
+        PlayerControlLocks.Filter(ref accumulatedInput, LocalPlayerControl.Locks.Mask);
         // -------------------------------------------------------------
         // 移動輸入正規化
         // -------------------------------------------------------------
@@ -465,6 +669,8 @@ public class InputManager :
         ShutdownReason shutdownReason
     )
     {
+        if (sceneTransition != null)
+            sceneTransition.Cancel();
         Cursor.lockState =
             CursorLockMode.None;
 
@@ -572,11 +778,16 @@ public class InputManager :
     void INetworkRunnerCallbacks.OnSceneLoadDone(
         NetworkRunner runner)
     {
+        sceneTransition = LocalSceneTransition.Ensure(runner, sceneFadeDuration);
+        sceneTransition.SceneLoadDone();
     }
 
     void INetworkRunnerCallbacks.OnSceneLoadStart(
         NetworkRunner runner)
     {
+        ClearPendingInput();
+        sceneTransition = LocalSceneTransition.Ensure(runner, sceneFadeDuration);
+        sceneTransition.BeginLoad();
     }
 
     void INetworkRunnerCallbacks.OnSessionListUpdated(

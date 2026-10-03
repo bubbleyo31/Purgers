@@ -16,12 +16,14 @@ namespace MultiClimb.Menu
         public MenuConnection(
             IFusionMenuConfig config,
             NetworkRunner runnerPrefab,
-            IGameSaveRepository saveRepository)
+            IGameSaveRepository saveRepository,
+            int newSaveCycleLength = GameSaveSchema.DefaultCycleLength)
         {
             _config = config;
             _runnerPrefab = runnerPrefab;
             _saveRepository = saveRepository ??
                 throw new ArgumentNullException(nameof(saveRepository));
+            _newSaveCycleLength = Math.Max(1, newSaveCycleLength);
         }
 
         public string SessionName { get; private set; }
@@ -36,6 +38,7 @@ namespace MultiClimb.Menu
         private NetworkRunner _runner;
         private IFusionMenuConfig _config;
         private readonly IGameSaveRepository _saveRepository;
+        private readonly int _newSaveCycleLength;
         private GameSaveData _selectedHostSave;
         private bool _connectingSafeCheck;
         private CancellationTokenSource _cancellationTokenSource;
@@ -289,7 +292,9 @@ namespace MultiClimb.Menu
             }
 
             GameSaveRepositoryResult<GameSaveData> createResult =
-                _saveRepository.CreateNew(string.Empty);
+                _saveRepository.CreateNew(
+                    string.Empty,
+                    _newSaveCycleLength);
 
             if (!createResult.Success)
             {
@@ -381,7 +386,9 @@ namespace MultiClimb.Menu
                 return UnityEngine.Object.Instantiate(_runnerPrefab);
 
             var runnerObject = new GameObject("NetworkRunner");
-            return runnerObject.AddComponent<NetworkRunner>();
+            var runner = runnerObject.AddComponent<NetworkRunner>();
+            runnerObject.AddComponent<InputManager>();
+            return runner;
         }
 
         private static GameSaveRuntimeContext GetOrAddSaveContext(

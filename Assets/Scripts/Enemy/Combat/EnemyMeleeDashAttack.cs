@@ -107,7 +107,7 @@ public sealed class EnemyMeleeDashAttack :
     private float damage =
         25f;
 
-    [Header("NavMesh 邊界保護")]
+    [Header("導航網格 邊界保護")]
 
     [SerializeField]
     [Tooltip(
@@ -153,7 +153,7 @@ public sealed class EnemyMeleeDashAttack :
     [Tooltip("開啟後輸出衝刺命中、碰牆、距離結束與玩家離開後方視野等原因。")]
     private bool debugMeleeDash;
 
-    [Header("近戰 B Gizmos")]
+    [Header("近戰 B 視覺輔助線")]
 
     [SerializeField]
     [Tooltip("選取敵人時顯示目前正前方的最大衝刺距離與傷害球半徑。攻擊開始後實際方向會在 Active 瞬間鎖定。")]

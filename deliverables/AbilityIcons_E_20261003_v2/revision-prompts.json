@@ -1,0 +1,47 @@
+{
+  "generator": "built-in image_gen",
+  "revisions": [
+    {
+      "key": "07_ExperienceBoost",
+      "name": "經驗增加",
+      "refs": [
+        "M:/UnityProject/Purgers/deliverables/AbilityIcons_E_20261003_v1/07_ExperienceBoost.png"
+      ],
+      "prompt": "Use case: precise-object-edit. Revise this existing game ability icon for Experience Boost. Keep the bold five-point star and strong upward upgrade arrow idea. Recompose the middle into a broad clean readable area containing EXACT uppercase text EXP, spelled E X P, once only. EXP must be large, heavy geometric sans serif stencil cutouts across the star/arrow center, readable at small HUD size, no other letters or numerals. It must instantly communicate experience gain. Preserve a strong cohesive silhouette with generous gaps. Remove the old thin lower crack if it makes EXP harder to read. This is a game HUD icon, not an illustration.\nFinal shared style: ONE standalone square transparent PNG icon. Pure flat opaque white geometric artwork on a genuinely transparent background. Maintain the existing family of minimalist FPS ability HUD pictograms, chunky readable shapes, consistent bold visual weight and centered balanced margins. CRITICAL: completely clean smooth vector-like edges and EMPTY transparent negative spaces. Remove all speckles, distressed/grunge texture, debris, fine contour sketch lines, gradients, soft shadows and glow from the source. No black filled background, no color, no tile, no decorative background. Sharp large simple cutouts, not hairline details. Approximately 76 percent canvas occupancy; never crop artwork.",
+      "file": "07_ExperienceBoost.png",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-4f670476-118a-4962-9c6b-cd78e3269ba4.png"
+    },
+    {
+      "key": "08_Blink",
+      "name": "閃現",
+      "refs": [
+        "M:/UnityProject/Purgers/deliverables/AbilityIcons_E_20261003_v1/08_Blink.png",
+        "C:/Users/hsuai/AppData/Local/Temp/codex-clipboard-91ea6d9c-5154-4756-976d-7b19d417ee7f.png"
+      ],
+      "prompt": "Use case: precise-object-edit. Image 1 is the existing Blink ability icon to revise. Image 2 is the player's character design reference only. Keep the existing rightward dash concept, two tapered motion streaks behind the character and one forward directional chevron. Replace the generic smooth humanoid with a recognizable SIMPLIFIED SILHOUETTE OF THE REFERENCE HAZMAT PLAYER, in a dynamic forward-leaning rightward dash pose, upper body with a cropped trailing leg sufficient. Essential identity: bulky protective suit shoulders and sleeves, enclosed rounded hood with side ear modules, large angular goggle visor rendered as one clear negative-space cut, prominent projecting gas respirator with two chunky round filter forms, thick protective glove and a minimal harness strap cut. The head must be large enough for gas mask recognition. Preserve believable anatomy and momentum; do not use a naked face, athletic spandex runner, robot, soldier helmet or superhero. Translate the character into a few white filled shapes and large transparent cutouts; do not reproduce the reference colors, shading, pose, full body portrait or fine costume detail. No text.\nFinal shared style: ONE standalone square transparent PNG icon. Pure flat opaque white geometric artwork on a genuinely transparent background. Maintain the existing family of minimalist FPS ability HUD pictograms, chunky readable shapes, consistent bold visual weight and centered balanced margins. CRITICAL: completely clean smooth vector-like edges and EMPTY transparent negative spaces. Remove all speckles, distressed/grunge texture, debris, fine contour sketch lines, gradients, soft shadows and glow from the source. No black filled background, no color, no tile, no decorative background. Sharp large simple cutouts, not hairline details. Approximately 76 percent canvas occupancy; never crop artwork.",
+      "file": "08_Blink.png",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-11fffe68-3e83-426d-9fc0-a9771d0dea81.png"
+    },
+    {
+      "key": "09_BulletTime",
+      "name": "子彈時間",
+      "refs": [
+        "M:/UnityProject/Purgers/deliverables/AbilityIcons_E_20261003_v1/09_BulletTime.png"
+      ],
+      "prompt": "Use case: precise-object-edit. Completely redesign the supplied Bullet Time icon's subject: replace the entire clock, bullet and pause symbol with ONE INTIMIDATING PAIR OF SHARP FOCUSED EYES. The desired feeling is a striking tactical operator emblem similar in mood to Rainbow Six Siege IQ's operator badge, but make an original design: two symmetric narrow angular eyes, strongly slanted upper brow blades descending toward the bridge, outer tips swept up and out like sharp wings, a small piercing pupil cutout in each eye. These are eyes, not ordinary glasses or VR goggles. Eyes float without a full face, skull, head or surrounding badge; minimal geometry, powerful focused stare. Make it handsome, severe, precise and iconic. Only the two eyes plus the bold integrated brow shapes, no clock, no projectile, no symbols, no text, no circular frame. Broad horizontal eye pair centered on a square canvas, with generous empty vertical space.\nFinal shared style: ONE standalone square transparent PNG icon. Pure flat opaque white geometric artwork on a genuinely transparent background. Maintain the existing family of minimalist FPS ability HUD pictograms, chunky readable shapes, consistent bold visual weight and centered balanced margins. CRITICAL: completely clean smooth vector-like edges and EMPTY transparent negative spaces. Remove all speckles, distressed/grunge texture, debris, fine contour sketch lines, gradients, soft shadows and glow from the source. No black filled background, no color, no tile, no decorative background. Sharp large simple cutouts, not hairline details. Approximately 76 percent canvas occupancy; never crop artwork.",
+      "file": "09_BulletTime.png",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-06eaadef-c331-4e9e-9bce-7d83929140da.png"
+    },
+    {
+      "key": "10_PrecisionLock",
+      "name": "精準鎖敵",
+      "refs": [
+        "M:/UnityProject/Purgers/deliverables/AbilityIcons_E_20261003_v1/10_PrecisionLock.png",
+        "C:/Users/hsuai/AppData/Local/Temp/codex-clipboard-18ca1c83-0c42-451c-b505-2123711332bf.png"
+      ],
+      "prompt": "Use case: precise-object-edit. Image 1 is the existing Precision Lock ability icon, edit target. Image 2 is the enemy design reference, identity reference only. Keep the four angular lock-on corner brackets and the one curved incoming projectile from lower left, with balanced roomy separation. Replace the human soldier bust inside the brackets with a very simplified silhouette of the specific mushroom-like enemy in image 2, cropped to HEAD, LONG NARROW NECK AND UPPER RIBCAGE / SHOULDERS only. Key identity: broad shallow flattened mushroom-cap / trumpet-rim head, NO HUMAN FACE, a long fluted stem neck narrowing in the middle then widening into the upper thorax, pointed bony shoulders, gaunt narrow upper torso, two or three thick clean rib cutouts maximum. The wide flat mushroom crown and stem neck MUST remain immediately legible. No humanoid helmet or facial eyes, no cute mushroom face, no full body or long arms. Bullet curves toward the upper torso without hiding the cap or neck. Translate to simple flat white filled silhouette and large clean transparent cutouts; no reference colors, botanical textures or detailed illustration. No text.\nFinal shared style: ONE standalone square transparent PNG icon. Pure flat opaque white geometric artwork on a genuinely transparent background. Maintain the existing family of minimalist FPS ability HUD pictograms, chunky readable shapes, consistent bold visual weight and centered balanced margins. CRITICAL: completely clean smooth vector-like edges and EMPTY transparent negative spaces. Remove all speckles, distressed/grunge texture, debris, fine contour sketch lines, gradients, soft shadows and glow from the source. No black filled background, no color, no tile, no decorative background. Sharp large simple cutouts, not hairline details. Approximately 76 percent canvas occupancy; never crop artwork.",
+      "file": "10_PrecisionLock.png",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-b880ede0-efd8-4fc8-a8d7-4f12bcabedfb.png"
+    }
+  ]
+}

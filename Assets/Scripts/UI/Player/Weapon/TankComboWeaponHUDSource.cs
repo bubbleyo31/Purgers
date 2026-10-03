@@ -30,7 +30,7 @@ public class TankComboWeaponHUDSource :
     // =====================================================================
     #region References
 
-    [Header("Tank Combo HUD 資料來源")]
+    [Header("坦克連段抬頭顯示資料來源")]
 
     [SerializeField]
     [Tooltip(
@@ -43,7 +43,7 @@ public class TankComboWeaponHUDSource :
     // =====================================================================
     #region Presentation Data
 
-    [Header("Tank 武器 HUD 顯示")]
+    [Header("坦克武器抬頭顯示")]
 
     [SerializeField]
     [Tooltip(

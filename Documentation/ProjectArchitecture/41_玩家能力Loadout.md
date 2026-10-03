@@ -1,5 +1,7 @@
 # 玩家能力 Loadout 架構
 
+> **2026-10-03 設計方向更新（尚未實作）**：Attack 專注射擊規劃獨立化，讓槍械使用者按 E 啟動，無需 Aim／ADS，作用期間持續修正後續子彈方向。是否保留空戰前提、如何結束／冷卻，以及是否使用現有 GrappleFocus 分類或其他槽位安排，仍待確認；不可因同用 E 就直接併入 GrappleFocus。現有五種能力、Definition、槽位與互斥資產均未變更。Support 四項舊武器強化暫時擱置、保留原狀。完整決策見 [40](40_職業與特殊能力.md#2026-10-03-特殊技能設計決策已確認方向尚未實作)。
+
 > 最後核對：2026-09-17（局部核對：本輪修正與下方補充；其餘內容沿用 2026-09-15 基線）
 > 核對來源：`Assets/Scripts/Player/Ability/Loadout`、五個初始鈎索能力、`Player.cs`、`PlayerGrapple.cs`、`PlayerGrappleInteractionController.cs`  
 > 相關文件：`20_玩家核心移動與狀態.md`、`30_鈎索系統.md`、`40_職業與特殊能力.md`
@@ -47,7 +49,7 @@ Fusion `NetworkDictionary` 的容量固定為八格，這只是編譯期技術�
 
 | 分類 | 觸發管線 | 初始能力 |
 |---|---|---|
-| `GrappleFocus` | 進入 GrappleAirborne 後讀取專注／Aim 輸入 | `SupportAerialAbility`、`TankAirDashAbility` |
+| `GrappleFocus` | 進入 GrappleAirborne 後讀取 InputButton.Ability1（預設 E） | `SupportAerialAbility`、`TankAirDashAbility` |
 | `GrappleHit` | 鈎索正式 Attached 到 Gameplay Target 後 | `AttackGrappleMarkAbility`、`TankGrappleGatherAbility`、`SupportGrapplePullAbility` |
 
 分類由能力程式的 `IPlayerAbilityCategorized.AbilityCategory` 宣告，Definition 也保存分類。兩者必須一致，避免只靠 Inspector 把命中能力錯配到專注槽。
@@ -92,7 +94,7 @@ Loadout 套用前必須通過：
 
 初始遷移設定：
 
-- 兩個 GrappleFocus 共用 `GrappleFocusMovementAuthority`，因為都接管 Aim 與空中移動。
+- 兩個 GrappleFocus 共用 `GrappleFocusMovementAuthority`，因為都接管空中移動。
 - 三個 GrappleHit 共用 `GrappleHitRopeAuthority`，因為都可能決定繩索後續。
 - GrappleFocus 與 GrappleHit 不互斥，因此預設可以各裝一個。
 
@@ -131,12 +133,16 @@ State Authority 收到已解析的 Loadout Definition
 
 ## SupportAerialAbility 規則
 
+> 2026-10-03 決策：下列 SupportSMG 特殊模式連動只描述保留中的舊接口；無限彈匣、特殊射速、特殊治療量、零新增後座力目前暫時擱置，不代表要恢復接線或成為獨立技能的預設效果。空中緩速本身保持現狀。
+
 - 分類為 `GrappleFocus`。
 - Definition 預設不限制職業，因此 Attack、Tank、Support 都可裝備使用。
 - `SupportSMG` 是可選連動；Runtime Root 沒有 SMG 仍可運作空中能力。
 - `BeginAbility()` 只啟動 Active Timer，不啟動冷卻。
-- Aim 放開、落地、離開 GrappleAirborne、職業規則變成不允許或持續時間結束，都集中呼叫 `EndAbility()`。
+- E 放開、落地、離開 GrappleAirborne、職業規則變成不允許或持續時間結束，都集中呼叫 `EndAbility()`。
 - 完整 Cooldown Timer 只在 `EndAbility()` 建立，因此能力啟用期間不會先偷扣冷卻。
+
+Tank Air Dash 在 GrappleAirborne 收到 E 的新按下沿用既有 State Authority 判定；右鍵保留瞄準。PlayerAbilityRuntimeManager.GetEquippedRuntimeAtSlot 僅供本機 HUD 讀取已同步能力 Runtime，不參與權威裝備決策。
 
 ## 初始資產遷移
 
@@ -174,6 +180,8 @@ Tools → Player Ability → 建立初始能力 Runtime 與 Loadout
 目前資產設定通過驗證；不需為了更新文件再次執行遷移選單。GameLogic 目前重生保存職業，能力使用 startingLoadout；未建立玩家自訂 Loadout 的跨死亡保存規則。此為後續選裝系統的架構邊界，不可宣稱已有持久化。
 
 ## 變更紀錄
+
+- 2026-10-03：同步槍械 E 專注獨立化的待實作方向及未定槽位規則；標明 Support 舊武器強化暫時擱置，未改現行 Loadout。
 
 - 2026-09-15：建立玩家能力 Loadout 專用文件；記錄可變槽位、職業規則、互斥、Fusion Runtime、鈎索路由、SupportAerial 冷卻與資產遷移狀態。
 

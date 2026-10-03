@@ -39,6 +39,11 @@ public sealed class PlayerGrappleMomentumEnergy :
 
     [SerializeField]
     [Min(0f)]
+    [Tooltip("滿能量後維持最高傷害倍率的秒數。期間再次符合滿能量充能條件會刷新時間；無冷卻但倍率不疊加。")]
+    private float maximumBoostHoldDuration = 1.5f;
+
+    [SerializeField]
+    [Min(0f)]
     [Tooltip("低於此速度時視為完全停止，改用快速衰退。")]
     private float stationarySpeedThreshold =
         0.1f;
@@ -70,6 +75,9 @@ public sealed class PlayerGrappleMomentumEnergy :
         private set;
     }
 
+    [Networked]
+    private TickTimer MaximumBoostTimer { get; set; }
+
     public float EnergyPercent =>
         Mathf.Clamp01(NormalizedEnergy) *
         100f;
@@ -80,6 +88,17 @@ public sealed class PlayerGrappleMomentumEnergy :
             Mathf.Max(1f, maximumDamageMultiplier),
             Mathf.Clamp01(NormalizedEnergy)
         );
+
+    public bool IsMaximumBoostActive =>
+        Object != null && Object.IsValid && Runner != null &&
+        MaximumBoostTimer.IsRunning && !MaximumBoostTimer.Expired(Runner);
+
+    public float RemainingMaximumBoostSeconds =>
+        IsMaximumBoostActive
+            ? Mathf.Max(0f, MaximumBoostTimer.RemainingTime(Runner) ?? 0f)
+            : 0f;
+
+    public float MaximumBoostHoldDuration => Mathf.Max(0f, maximumBoostHoldDuration);
 
     public float CurrentWorldSpeed =>
     movement != null
@@ -145,6 +164,7 @@ public sealed class PlayerGrappleMomentumEnergy :
             RequiredChargeSpeed;
 
     public bool IsFastDecayingNow =>
+        IsMaximumBoostActive == false &&
         IsChargingNow == false &&
         CurrentWorldSpeed <=
             StationarySpeedThreshold;
@@ -167,6 +187,8 @@ public sealed class PlayerGrappleMomentumEnergy :
         {
             NormalizedEnergy =
                 0f;
+
+            MaximumBoostTimer = TickTimer.None;
         }
     }
 
@@ -186,46 +208,33 @@ public sealed class PlayerGrappleMomentumEnergy :
         bool shouldCharge =
             IsChargingNow;
 
-        if (shouldCharge)
-        {
-            if (fullChargeDuration <= 0f)
-            {
-                NormalizedEnergy =
-                    1f;
-            }
-            else
-            {
-                NormalizedEnergy =
-                    Mathf.Clamp01(
-                        NormalizedEnergy +
-                        Runner.DeltaTime /
-                        fullChargeDuration
-                    );
-            }
-
-            return;
-        }
-
         float decayDuration =
             currentSpeed <=
                 Mathf.Max(0f, stationarySpeedThreshold)
                 ? fastDecayDuration
                 : slowDecayDuration;
 
-        if (decayDuration <= 0f)
+        PlayerGrappleMomentumEnergyStep step =
+            PlayerGrappleMomentumEnergyRules.Evaluate(
+                NormalizedEnergy,
+                shouldCharge,
+                IsMaximumBoostActive,
+                Runner.DeltaTime,
+                fullChargeDuration,
+                decayDuration);
+
+        NormalizedEnergy = step.Energy;
+
+        if (step.RefreshMaximumBoost)
         {
-            NormalizedEnergy =
-                0f;
-
-            return;
+            MaximumBoostTimer = maximumBoostHoldDuration > 0f
+                ? TickTimer.CreateFromSeconds(Runner, maximumBoostHoldDuration)
+                : TickTimer.None;
         }
-
-        NormalizedEnergy =
-            Mathf.Clamp01(
-                NormalizedEnergy -
-                Runner.DeltaTime /
-                decayDuration
-            );
+        else if (MaximumBoostTimer.IsRunning && MaximumBoostTimer.Expired(Runner))
+        {
+            MaximumBoostTimer = TickTimer.None;
+        }
     }
 
     public void ModifyOutgoingDamage(
@@ -278,5 +287,50 @@ public sealed class PlayerGrappleMomentumEnergy :
          *
          * 也不修改既有 Grapple Charge／Cooldown。
          */
+    }
+}
+
+public readonly struct PlayerGrappleMomentumEnergyStep
+{
+    public readonly float Energy;
+    public readonly bool RefreshMaximumBoost;
+
+    public PlayerGrappleMomentumEnergyStep(float energy, bool refreshMaximumBoost)
+    {
+        Energy = Mathf.Clamp01(energy);
+        RefreshMaximumBoost = refreshMaximumBoost;
+    }
+}
+
+public static class PlayerGrappleMomentumEnergyRules
+{
+    public static PlayerGrappleMomentumEnergyStep Evaluate(
+        float energy,
+        bool charging,
+        bool maximumBoostActive,
+        float deltaTime,
+        float chargeDuration,
+        float decayDuration)
+    {
+        float safeEnergy = Mathf.Clamp01(energy);
+        float safeDeltaTime = Mathf.Max(0f, deltaTime);
+
+        if (maximumBoostActive)
+            return new PlayerGrappleMomentumEnergyStep(1f, charging);
+
+        if (charging)
+        {
+            float chargedEnergy = chargeDuration <= 0f
+                ? 1f
+                : Mathf.Clamp01(safeEnergy + safeDeltaTime / chargeDuration);
+            return new PlayerGrappleMomentumEnergyStep(
+                chargedEnergy,
+                chargedEnergy >= 1f);
+        }
+
+        float decayedEnergy = decayDuration <= 0f
+            ? 0f
+            : Mathf.Clamp01(safeEnergy - safeDeltaTime / decayDuration);
+        return new PlayerGrappleMomentumEnergyStep(decayedEnergy, false);
     }
 }

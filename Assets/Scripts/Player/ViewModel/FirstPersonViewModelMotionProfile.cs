@@ -95,7 +95,7 @@ public class FirstPersonViewModelMotionProfile :
     #region Look Sway
 
 
-    [Header("Look Sway 總倍率")]
+    [Header("視角擺動 總倍率")]
 
 
     [SerializeField]
@@ -112,7 +112,7 @@ public class FirstPersonViewModelMotionProfile :
         1f;
 
 
-    [Header("Look Sway 單軸倍率")]
+    [Header("視角擺動 單軸倍率")]
 
 
     [SerializeField]
@@ -156,7 +156,7 @@ public class FirstPersonViewModelMotionProfile :
     #region Locomotion Motion
 
 
-    [Header("Idle Motion")]
+    [Header("待機動態")]
 
 
     [SerializeField]
@@ -166,7 +166,7 @@ public class FirstPersonViewModelMotionProfile :
         1f;
 
 
-    [Header("Walk Motion")]
+    [Header("步行動態")]
 
 
     [SerializeField]
@@ -176,7 +176,7 @@ public class FirstPersonViewModelMotionProfile :
         1f;
 
 
-    [Header("Run Motion")]
+    [Header("跑步動態")]
 
 
     [SerializeField]
@@ -185,7 +185,7 @@ public class FirstPersonViewModelMotionProfile :
     private float runMotionMultiplier =
         1f;
 
-    [Header("Air Motion")]
+    [Header("空中動態")]
 
     [SerializeField]
     [Min(0f)]
@@ -194,7 +194,7 @@ public class FirstPersonViewModelMotionProfile :
         1f;
 
 
-    [Header("Grapple Air Motion")]
+    [Header("勾索空中動態")]
 
 
     [SerializeField]
@@ -216,7 +216,7 @@ public class FirstPersonViewModelMotionProfile :
     private float grappleTurnMotionMultiplier =
         1f;
 
-    [Header("Landing Motion")]
+    [Header("落地動態")]
 
     [SerializeField]
     [Min(0f)]

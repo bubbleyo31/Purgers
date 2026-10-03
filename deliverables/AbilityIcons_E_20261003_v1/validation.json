@@ -1,0 +1,92 @@
+[
+  {
+    "File": "01_ExplosiveGrenade.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Alpha": "Format32bppArgb",
+    "TransparentSamples": 15832,
+    "OpaqueSamples": 6676,
+    "PartialSamples": 2141
+  },
+  {
+    "File": "02_PiercingCannon.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Alpha": "Format32bppArgb",
+    "TransparentSamples": 20317,
+    "OpaqueSamples": 3368,
+    "PartialSamples": 964
+  },
+  {
+    "File": "03_ImpactFanWave.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Alpha": "Format32bppArgb",
+    "TransparentSamples": 17464,
+    "OpaqueSamples": 6143,
+    "PartialSamples": 1042
+  },
+  {
+    "File": "04_QuickShield.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Alpha": "Format32bppArgb",
+    "TransparentSamples": 17669,
+    "OpaqueSamples": 5795,
+    "PartialSamples": 1185
+  },
+  {
+    "File": "05_HealingPack.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Alpha": "Format32bppArgb",
+    "TransparentSamples": 16412,
+    "OpaqueSamples": 6774,
+    "PartialSamples": 1463
+  },
+  {
+    "File": "06_RicochetBullet.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Alpha": "Format32bppArgb",
+    "TransparentSamples": 22582,
+    "OpaqueSamples": 1541,
+    "PartialSamples": 526
+  },
+  {
+    "File": "07_ExperienceBoost.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Alpha": "Format32bppArgb",
+    "TransparentSamples": 17768,
+    "OpaqueSamples": 6315,
+    "PartialSamples": 566
+  },
+  {
+    "File": "08_Blink.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Alpha": "Format32bppArgb",
+    "TransparentSamples": 19088,
+    "OpaqueSamples": 3675,
+    "PartialSamples": 1886
+  },
+  {
+    "File": "09_BulletTime.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Alpha": "Format32bppArgb",
+    "TransparentSamples": 17187,
+    "OpaqueSamples": 5303,
+    "PartialSamples": 2159
+  },
+  {
+    "File": "10_PrecisionLock.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Alpha": "Format32bppArgb",
+    "TransparentSamples": 20815,
+    "OpaqueSamples": 3146,
+    "PartialSamples": 688
+  }
+]

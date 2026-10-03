@@ -1,0 +1,12 @@
+{
+  "reference": "References/ThreeView.png",
+  "scale_m_per_pixel": 0.00118,
+  "side_silhouette": "reconstructed",
+  "thickness_source": "TOP",
+  "front_view": "stacking reference; conflicting handle projection resolved with source grips",
+  "grip_decision": "user approved original hand contact points; adapt new handles",
+  "source_hand_vertices": 1900,
+  "source_hand_geometry_unchanged": true,
+  "red_mushrooms": 0,
+  "mycelium": "actual raised mesh from reference line bands"
+}

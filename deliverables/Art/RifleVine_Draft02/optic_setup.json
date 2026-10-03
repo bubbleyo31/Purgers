@@ -1,0 +1,110 @@
+{
+  "module": "ACOG-style 2.5x design draft",
+  "exact_product_replica": false,
+  "zoom_implemented": false,
+  "blender_rest_coordinates_m": {
+    "mount_origin": [
+      0,
+      0.028,
+      0.0305
+    ],
+    "axis_direction": [
+      0,
+      -1,
+      0
+    ],
+    "rear_lens_center": [
+      0,
+      0.104,
+      0.0647295
+    ],
+    "front_lens_center": [
+      0,
+      -0.051,
+      0.0647295
+    ],
+    "suggested_review_eye": [
+      0,
+      0.19,
+      0.0647295
+    ]
+  },
+  "attachment_bone": "Root",
+  "replaceable_collection": "ACOG_25_Replaceable",
+  "materials": {
+    "Bark_Walnut": {
+      "material": "Bark_Walnut_R2",
+      "metallic": 0,
+      "roughness": 0.84,
+      "resolution": 2048
+    },
+    "Vine_Olive": {
+      "material": "Vine_Olive_R2",
+      "metallic": 0,
+      "roughness": 0.79,
+      "resolution": 2048
+    },
+    "Core_Charcoal": {
+      "material": "Core_Charcoal_R2",
+      "metallic": 0.55,
+      "roughness": 0.56,
+      "resolution": 1024
+    },
+    "Trim_BrushedSteel": {
+      "material": "Trim_BrushedSteel_R2",
+      "metallic": 0.88,
+      "roughness": 0.38,
+      "resolution": 1024
+    },
+    "Sleeve_Ochre": {
+      "material": "Sleeve_Ochre_R2",
+      "metallic": 0,
+      "roughness": 0.86,
+      "resolution": 1024
+    },
+    "Glove_Forest": {
+      "material": "Glove_Forest_R2",
+      "metallic": 0,
+      "roughness": 0.66,
+      "resolution": 1024
+    },
+    "Bracer_Graphite": {
+      "material": "Bracer_Graphite_R2",
+      "metallic": 0.18,
+      "roughness": 0.54,
+      "resolution": 1024
+    },
+    "Rubber_Soot": {
+      "material": "Rubber_Soot_R2",
+      "metallic": 0,
+      "roughness": 0.91,
+      "resolution": 1024
+    },
+    "Optic_Anodized": {
+      "material": "Optic_Anodized_R2",
+      "metallic": 0.65,
+      "roughness": 0.49,
+      "resolution": 1024
+    },
+    "Seam_Thread": {
+      "material": "Seam_Thread_R2",
+      "metallic": 0,
+      "roughness": 0.9,
+      "resolution": 512
+    }
+  },
+  "reference": "Trijicon ACOG Family Specification Sheet, TA31 silhouette reference; 2.5x is the requested game design value, not a verified TA31 product specification.",
+  "ads_frame4_review_camera": {
+    "position": [
+      0.0003424760070629418,
+      -0.19482780992984772,
+      0.00022466666996479034
+    ],
+    "target": [
+      -5.658981535816565e-05,
+      -0.39616185426712036,
+      -0.0031975347083061934
+    ],
+    "note": "Blender optical-axis review only. Not the current Unity camera."
+  }
+}

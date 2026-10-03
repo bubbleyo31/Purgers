@@ -25,7 +25,7 @@ public sealed class MapConnector : MonoBehaviour
     [SerializeField]
     private ConnectorSide side;
 
-    [Header("Prototype Runtime Anchors")]
+    [Header("原型執行階段錨點")]
 
     [Tooltip(
         "玩家從此 Connector 出生時使用的位置與朝向。" +
@@ -46,7 +46,7 @@ public sealed class MapConnector : MonoBehaviour
     [SerializeField]
     private Vector3 blockerLocalPositionOffset;
 
-    [Header("Blocker Gizmos")]
+    [Header("阻擋屋視覺輔助線")]
 
     [Tooltip(
         "在 Scene 與 Prefab 編輯視窗顯示阻擋屋的實際生成位置、預覽範圍與朝向。")]

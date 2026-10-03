@@ -323,7 +323,7 @@ public class AttackFocusAbility :
     // =====================================================================
     #region 自動鎖定設定
 
-    [Header("專注 Auto Lock")]
+    [Header("專注自動鎖定")]
 
     [SerializeField]
     [Min(0.1f)]

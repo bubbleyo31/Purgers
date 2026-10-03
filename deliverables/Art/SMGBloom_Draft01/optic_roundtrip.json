@@ -1,0 +1,86 @@
+{
+  "meshes": 6,
+  "armatures": 0,
+  "uv_layers": {
+    "SMG_optic_Optic_Anodized_SMG01_Standalone": [
+      "SurfaceUV"
+    ],
+    "SMG_optic_Trim_BrushedSteel_SMG01_Standalone": [
+      "SurfaceUV"
+    ],
+    "SMG_optic_Core_Charcoal_SMG01_Standalone": [
+      "SurfaceUV"
+    ],
+    "SMG_optic_Bark_Walnut_SMG01_Standalone": [
+      "SurfaceUV"
+    ],
+    "SMG_optic_Rubber_Soot_SMG01_Standalone": [
+      "SurfaceUV"
+    ],
+    "SMG_optic_Reflex_Lens_Coating_Standalone": [
+      "SurfaceUV"
+    ]
+  },
+  "materials": [
+    {
+      "name": "Bark_Walnut_SMG01",
+      "diffuse": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929,
+        1.0
+      ],
+      "alpha": 1.0
+    },
+    {
+      "name": "Core_Charcoal_SMG01",
+      "diffuse": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929,
+        1.0
+      ],
+      "alpha": 1.0
+    },
+    {
+      "name": "Optic_Anodized_SMG01",
+      "diffuse": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929,
+        1.0
+      ],
+      "alpha": 1.0
+    },
+    {
+      "name": "Reflex_Lens_Coating",
+      "diffuse": [
+        0.07000000029802322,
+        0.25,
+        0.20999999344348907,
+        1.0
+      ],
+      "alpha": 0.12999999523162842
+    },
+    {
+      "name": "Rubber_Soot_SMG01",
+      "diffuse": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929,
+        1.0
+      ],
+      "alpha": 1.0
+    },
+    {
+      "name": "Trim_BrushedSteel_SMG01",
+      "diffuse": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929,
+        1.0
+      ],
+      "alpha": 1.0
+    }
+  ]
+}

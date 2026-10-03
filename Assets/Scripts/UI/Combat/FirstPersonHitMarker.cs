@@ -60,7 +60,7 @@ public class FirstPersonHitMarker : MonoBehaviour
     // =====================================================================
     #region UI 引用
 
-    [Header("UI 引用")]
+    [Header("介面引用")]
 
     [SerializeField]
     [Tooltip("Hit Marker 整體 RectTransform。通常就是掛著這支腳本的 HitMarkerRoot。若留空會自動取得。")]
@@ -137,7 +137,7 @@ public class FirstPersonHitMarker : MonoBehaviour
     // =====================================================================
     #region Tank 輕攻擊命中
 
-    [Header("Tank 輕攻擊命中")]
+    [Header("坦克 輕攻擊命中")]
 
     [SerializeField]
     [Tooltip("開啟後，Feedback ID 為 TankLightMelee 的有效命中會使用獨立 Hit Marker 樣式。Light1 與 Light2 目前共用這組設定。關閉後會退回一般 Melee Hit Marker。")]
@@ -171,7 +171,7 @@ public class FirstPersonHitMarker : MonoBehaviour
     // =====================================================================
     #region Tank 重攻擊命中
 
-    [Header("Tank 重攻擊命中")]
+    [Header("坦克 重攻擊命中")]
 
     [SerializeField]
     [Tooltip("開啟後，Feedback ID 為 TankHeavyMelee 的有效命中會使用獨立 Hit Marker 樣式。關閉後會退回一般 Melee Hit Marker。")]
@@ -205,7 +205,7 @@ public class FirstPersonHitMarker : MonoBehaviour
     // =====================================================================
     #region Tank Air Strike 命中
 
-    [Header("Tank Air Strike 命中")]
+    [Header("坦克 空中打擊 命中")]
 
     [SerializeField]
     [Tooltip("開啟後，Tank Enemy Air Dash 成功抵達並以 AOE 造成有效傷害時使用獨立 X Hit Marker。World Dash 不會使用這個樣式，因為 World Dash 沒有傷害。")]

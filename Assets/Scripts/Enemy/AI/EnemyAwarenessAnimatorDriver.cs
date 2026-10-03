@@ -19,7 +19,7 @@ public sealed class EnemyAwarenessAnimatorDriver : MonoBehaviour
     [SerializeField, Tooltip("同 Enemy Root 的 EnemyIdlePatrolBrain，提供實際巡邏速度；留空自動搜尋。")]
     private EnemyIdlePatrolBrain patrol;
 
-    [Header("Animator 參數名稱；留空可停用該參數")]
+    [Header("動畫控制器 參數名稱；留空可停用該參數")]
     [SerializeField, Tooltip("Bool：敵人是否存活。死亡應優先進入 Dead。")]
     private string aliveBoolName = "IsAlive";
     [SerializeField, Tooltip("Bool：目前是否處於 Announcing／Alerted／Investigating。")]

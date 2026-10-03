@@ -14,7 +14,7 @@ using UnityEngine;
 public sealed class EnemyProjectile :
     NetworkBehaviour
 {
-    [Header("Projectile 碰撞")]
+    [Header("投射物 碰撞")]
 
     [SerializeField]
     [Tooltip("必須包含 Player 與場景實體，不可包含 Enemy Layer。")]
@@ -32,7 +32,7 @@ public sealed class EnemyProjectile :
     private float impactLifetimeSeconds =
         0.08f;
 
-    [Header("Projectile 呈現")]
+    [Header("投射物 呈現")]
 
     [SerializeField]
     [Tooltip("飛行中顯示的模型／Trail Root。命中後會在各端本地關閉。可留空。")]

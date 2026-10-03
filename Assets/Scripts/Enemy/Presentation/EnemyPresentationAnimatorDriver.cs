@@ -39,7 +39,7 @@ public sealed class EnemyPresentationAnimatorDriver :
     [Tooltip("模型 Animator。若留空會在本物件與子物件搜尋。Apply Root Motion 必須關閉。")]
     private Animator animator;
 
-    [Header("Animator 參數名稱")]
+    [Header("動畫控制器 參數名稱")]
 
     [SerializeField]
     [Tooltip("Bool：敵人是否存活。預設 IsAlive。留空代表不寫入此參數。")]
@@ -91,7 +91,7 @@ public sealed class EnemyPresentationAnimatorDriver :
     private string combatPhaseIntName =
         "CombatActionPhase";
 
-    [Header("Locomotion 平滑與動畫基準")]
+    [Header("移動平滑與動畫基準")]
 
     [SerializeField]
     [Min(0f)]

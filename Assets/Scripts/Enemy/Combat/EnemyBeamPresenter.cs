@@ -32,7 +32,7 @@ public sealed class EnemyBeamPresenter :
     private UnityEvent onBeamFired =
         new UnityEvent();
 
-    [Header("Tracking 線段平滑")]
+    [Header("追蹤 線段平滑")]
 
     [SerializeField]
     [Tooltip(

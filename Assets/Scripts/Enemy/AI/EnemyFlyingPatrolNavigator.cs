@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// 自由飛行巡邏：XYZ 直線前往人工節點，整段先以膠囊掃掠確認通道暢通。
+/// 自由飛行巡邏：XYZ 直線前往人工或自動規劃節點，整段先以膠囊掃掠確認通道暢通。
 /// 牆後節點視為本次不可直達，Brain 改選其他候選點；每一步再掃掠，保護動態障礙。
 /// 這是局部巡邏，不是完整三維尋路。複雜室內飛行請先放連續可視節點；
 /// 日後可替換此 Navigator 為飛行節點圖／Voxel 路徑，不影響警戒系統。
@@ -10,7 +10,7 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyMovementOwnership))]
 public sealed class EnemyFlyingPatrolNavigator : EnemyPatrolNavigator
 {
-    [Header("飛行巡邏碰撞 Gizmos")]
+    [Header("飛行巡邏碰撞 視覺輔助線")]
 
     [SerializeField]
     [Tooltip(
@@ -42,6 +42,10 @@ public sealed class EnemyFlyingPatrolNavigator : EnemyPatrolNavigator
     private bool hasLastPlanAttempt;
     private bool lastPlanWasClear;
     public override EnemyLocomotionKind SupportedLocomotion => EnemyLocomotionKind.FreeFlying;
+
+    /// <summary>只讀此 Prefab 的膠囊與 Obstacle Mask，讓規劃與 Runtime 移動使用相同碰撞規則。</summary>
+    public bool IsPassageClear(PhysicsScene physics, Vector3 from, Vector3 to) =>
+        IsSegmentClear(physics, from, to);
 
     public override bool TryBegin(Vector3 target, out Vector3 actualDestination)
     {

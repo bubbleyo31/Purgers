@@ -65,7 +65,7 @@ public class PlayerSlideController :
     #region Core References
 
 
-    [Header("Player Core 引用")]
+    [Header("玩家核心 引用")]
 
 
     [SerializeField]
@@ -474,7 +474,7 @@ public class PlayerSlideController :
     #region Grapple KCC Protection Settings
 
 
-    [Header("Grapple KCC 速度保護")]
+    [Header("勾索 KCC 速度保護")]
 
 
     [SerializeField]

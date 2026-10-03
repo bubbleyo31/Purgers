@@ -34,7 +34,7 @@ public class TankProfessionRuntimeDriver :
     // =====================================================================
     #region Tank Modules
 
-    [Header("Tank Runtime 模組")]
+    [Header("坦克 執行階段 模組")]
 
     [SerializeField]
     [Tooltip("Tank 左鍵三段近戰 Combo。若留空會自動從 TankProfessionRuntime 取得。")]

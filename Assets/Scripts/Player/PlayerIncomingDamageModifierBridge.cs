@@ -52,7 +52,7 @@ public class PlayerIncomingDamageModifierBridge :
     // =====================================================================
     #region Player Core 引用
 
-    [Header("Player Core 引用")]
+    [Header("玩家核心 引用")]
 
     [SerializeField]
     [Tooltip("玩家目前正式職業。Bridge 會確認目前 Runtime 與正式職業一致，避免職業切換的短暫 Tick 使用到舊 Runtime。若留空會自動取得。")]

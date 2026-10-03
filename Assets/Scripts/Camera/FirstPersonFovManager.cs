@@ -176,7 +176,7 @@ public class FirstPersonFovManager : MonoBehaviour
     // =====================================================================
     #region 基礎 FOV
 
-    [Header("基礎 FOV")]
+    [Header("基礎視野角")]
 
     [SerializeField]
     [Tooltip("開啟後，遊戲開始時會讀取兩台 Camera 目前的 FOV，並將它們作為基礎值。適合直接使用 Camera Inspector 已經設定好的數值。")]
@@ -197,7 +197,7 @@ public class FirstPersonFovManager : MonoBehaviour
     // =====================================================================
     #region FOV 安全範圍
 
-    [Header("FOV 安全範圍")]
+    [Header("視野角安全範圍")]
 
     [SerializeField]
     [Range(1f, 179f)]

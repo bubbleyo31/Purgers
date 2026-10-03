@@ -72,7 +72,7 @@ public class SupportGrapplePlayerPullReceiver :
     #region Player Core References
 
 
-    [Header("Player Core 引用")]
+    [Header("玩家核心 引用")]
 
 
     [SerializeField]
@@ -97,7 +97,7 @@ public class SupportGrapplePlayerPullReceiver :
     #region Pull Timing
 
 
-    [Header("Player Pull 時間")]
+    [Header("玩家拉取時間")]
 
 
     [SerializeField]
@@ -114,7 +114,7 @@ public class SupportGrapplePlayerPullReceiver :
     #region Destination
 
 
-    [Header("Support 面前目的地")]
+    [Header("支援 面前目的地")]
 
 
     [SerializeField]
@@ -144,7 +144,7 @@ public class SupportGrapplePlayerPullReceiver :
     #region Pull Velocity
 
 
-    [Header("KCC Pull Velocity")]
+    [Header("KCC 拉取速度")]
 
 
     [SerializeField]

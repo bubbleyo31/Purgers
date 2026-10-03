@@ -102,7 +102,7 @@ public class PlayerQuickActionController :
     // =====================================================================
     #region Player Core 引用
 
-    [Header("Player Core 引用")]
+    [Header("玩家核心 引用")]
 
     [SerializeField]
     [Tooltip("玩家職業資料。Quick Action Controller 只用它確認目前正式職業，不再直接知道 Attack、Tank、Support 的具體 Ability。若留空會自動取得。")]
@@ -122,7 +122,7 @@ public class PlayerQuickActionController :
     // =====================================================================
     #region 遷移階段設定
 
-    [Header("職業 Runtime 遷移階段")]
+    [Header("職業 執行階段 遷移階段")]
 
     [SerializeField]
     [Tooltip("開啟後，如果目前 Profession Runtime 還找不到 IPlayerQuickActionAbility，會暫時從 Player Root 搜尋。這是讓目前尚未搬進 Runtime 的 AttackQuickMelee 繼續正常工作的過渡設定。等 AttackQuickMelee 真正搬進 Attack Runtime 後，這個選項會刪除。")]

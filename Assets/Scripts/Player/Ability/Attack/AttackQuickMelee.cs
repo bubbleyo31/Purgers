@@ -207,7 +207,7 @@ public class AttackQuickMelee :
     // =====================================================================
     #region Lag Compensation
 
-    [Header("Photon Fusion Lag Compensation")]
+    [Header("Photon Fusion 延遲補償")]
 
     [SerializeField]
     [Tooltip("開啟後，近戰範圍搜尋會加入 HitOptions.SubtickAccuracy，讓 Server 使用玩家輸入被採樣時更精確的插值位置進行判定。高速勾索中的近戰建議保持開啟。")]

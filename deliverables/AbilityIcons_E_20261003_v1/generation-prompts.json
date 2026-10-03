@@ -1,0 +1,65 @@
+{
+  "generator": "built-in image_gen",
+  "icons": [
+    {
+      "file": "01_ExplosiveGrenade.png",
+      "name": "爆破榴彈",
+      "prompt": "Use case: logo-brand. Asset type: standalone game HUD ability icon for Purgers, one of a consistent ten-icon family. Create ONE icon only, square 1024x1024 canvas. Style: minimalist original Overwatch 2 inspired ability pictogram visual language: bold flat pure white filled silhouettes, thick clean geometry, confident angular cuts with subtly softened corners, large readable negative spaces, balanced professional FPS HUD icon, legible at 48px. Pure opaque white artwork only, actual fully transparent background and transparent internal cutouts. Centered, roughly 70 percent canvas occupancy, generous even margins. No text, no letters, no numbers, no border, no badge tile, no color, no gradients, no shading, no glow, no texture, no drop shadow, no tiny detail, no scene, no copied existing game icon. Subject: A single chunky hand grenade leaning diagonally, with a compact three-point explosion burst behind its lower half. Instantly reads as explosive grenade.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-21030c63-e7ee-4e51-9365-704ca2453a59.png"
+    },
+    {
+      "file": "02_PiercingCannon.png",
+      "name": "貫穿砲",
+      "prompt": "Use case: logo-brand. Asset type: standalone game HUD ability icon for Purgers, one of a consistent ten-icon family. Create ONE icon only, square 1024x1024 canvas. Style: minimalist original Overwatch 2 inspired ability pictogram visual language: bold flat pure white filled silhouettes, thick clean geometry, confident angular cuts with subtly softened corners, large readable negative spaces, balanced professional FPS HUD icon, legible at 48px. Pure opaque white artwork only, actual fully transparent background and transparent internal cutouts. Centered, roughly 70 percent canvas occupancy, generous even margins. No text, no letters, no numbers, no border, no badge tile, no color, no gradients, no shading, no glow, no texture, no drop shadow, no tiny detail, no scene, no copied existing game icon. Subject: A powerful thick horizontal lance-shaped beam pointing right, piercing two separated short vertical target plates. Crisp negative-space cuts separate beam and plates; one straight trajectory, no curved trails.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-c32f1e6c-1aa2-40a5-a1da-f6841cfc278c.png"
+    },
+    {
+      "file": "03_ImpactFanWave.png",
+      "name": "衝擊扇波",
+      "prompt": "Use case: logo-brand. Asset type: standalone game HUD ability icon for Purgers, one of a consistent ten-icon family. Create ONE icon only, square 1024x1024 canvas. Style: minimalist original Overwatch 2 inspired ability pictogram visual language: bold flat pure white filled silhouettes, thick clean geometry, confident angular cuts with subtly softened corners, large readable negative spaces, balanced professional FPS HUD icon, legible at 48px. Pure opaque white artwork only, actual fully transparent background and transparent internal cutouts. Centered, roughly 70 percent canvas occupancy, generous even margins. No text, no letters, no numbers, no border, no badge tile, no color, no gradients, no shading, no glow, no texture, no drop shadow, no tiny detail, no scene, no copied existing game icon. Subject: A wide forward-spreading fan-shaped shockwave: three bold nested widening angular arcs opening toward the right, with a small origin wedge at left. Clearly a broad knockback blast, not radio signal.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-c7250b9c-c0fc-4f85-ac7a-5d121fc08e1f.png"
+    },
+    {
+      "file": "04_QuickShield.png",
+      "name": "快速護盾",
+      "prompt": "Use case: logo-brand. Asset type: standalone game HUD ability icon for Purgers, one of a consistent ten-icon family. Create ONE icon only, square 1024x1024 canvas. Style: minimalist original Overwatch 2 inspired ability pictogram visual language: bold flat pure white filled silhouettes, thick clean geometry, confident angular cuts with subtly softened corners, large readable negative spaces, balanced professional FPS HUD icon, legible at 48px. Pure opaque white artwork only, actual fully transparent background and transparent internal cutouts. Centered, roughly 70 percent canvas occupancy, generous even margins. No text, no letters, no numbers, no border, no badge tile, no color, no gradients, no shading, no glow, no texture, no drop shadow, no tiny detail, no scene, no copied existing game icon. Subject: One bold symmetrical upright shield silhouette with a smaller shield-shaped transparent cutout and a compact lightning bolt at the center. Instantly reads as instant personal shielding.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-6046de45-cfb9-4b7d-b7c9-fb8d1bb50707.png"
+    },
+    {
+      "file": "05_HealingPack.png",
+      "name": "治療包",
+      "prompt": "Use case: logo-brand. Asset type: standalone game HUD ability icon for Purgers, one of a consistent ten-icon family. Create ONE icon only, square 1024x1024 canvas. Style: minimalist original Overwatch 2 inspired ability pictogram visual language: bold flat pure white filled silhouettes, thick clean geometry, confident angular cuts with subtly softened corners, large readable negative spaces, balanced professional FPS HUD icon, legible at 48px. Pure opaque white artwork only, actual fully transparent background and transparent internal cutouts. Centered, roughly 70 percent canvas occupancy, generous even margins. No text, no letters, no numbers, no border, no badge tile, no color, no gradients, no shading, no glow, no texture, no drop shadow, no tiny detail, no scene, no copied existing game icon. Subject: One squat rounded rectangular medical pouch with a short carry handle on top and a large transparent medical plus cut out from the center. Two short motion strokes at lower left suggest a tossed pack. Extremely simple.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-217bef93-5fa5-40a6-9bb0-f98f8c934555.png"
+    },
+    {
+      "file": "06_RicochetBullet.png",
+      "name": "彈射彈",
+      "prompt": "Use case: logo-brand. Asset type: standalone game HUD ability icon for Purgers, one of a consistent ten-icon family. Create ONE icon only, square 1024x1024 canvas. Style: minimalist original Overwatch 2 inspired ability pictogram visual language: bold flat pure white filled silhouettes, thick clean geometry, confident angular cuts with subtly softened corners, large readable negative spaces, balanced professional FPS HUD icon, legible at 48px. Pure opaque white artwork only, actual fully transparent background and transparent internal cutouts. Centered, roughly 70 percent canvas occupancy, generous even margins. No text, no letters, no numbers, no border, no badge tile, no color, no gradients, no shading, no glow, no texture, no drop shadow, no tiny detail, no scene, no copied existing game icon. Subject: One bold zigzag projectile trail with exactly three sharp bounce turns, ending in a clearly recognizable large bullet tip pointing upper right. Small disconnected wall strokes at bounce locations. Very sparse diagram-like silhouette.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-0664e163-93d0-4bf2-9fa4-ac23d57abe07.png"
+    },
+    {
+      "file": "07_ExperienceBoost.png",
+      "name": "經驗增加",
+      "prompt": "Use case: logo-brand. Asset type: standalone game HUD ability icon for Purgers, one of a consistent ten-icon family. Create ONE icon only, square 1024x1024 canvas. Style: minimalist original Overwatch 2 inspired ability pictogram visual language: bold flat pure white filled silhouettes, thick clean geometry, confident angular cuts with subtly softened corners, large readable negative spaces, balanced professional FPS HUD icon, legible at 48px. Pure opaque white artwork only, actual fully transparent background and transparent internal cutouts. Centered, roughly 70 percent canvas occupancy, generous even margins. No text, no letters, no numbers, no border, no badge tile, no color, no gradients, no shading, no glow, no texture, no drop shadow, no tiny detail, no scene, no copied existing game icon. Subject: One bold upward upgrade arrow rising through a simple five-point experience star, with a single small sharp crack cut through the lower part of the star to hint increased vulnerability. No letters or numbers. Reads primarily as experience level-up.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-31b88d9c-4873-4787-b7e0-e10e1b8f3a7b.png"
+    },
+    {
+      "file": "08_Blink.png",
+      "name": "閃現",
+      "prompt": "Use case: logo-brand. Asset type: standalone game HUD ability icon for Purgers, one of a consistent ten-icon family. Create ONE icon only, square 1024x1024 canvas. Style: minimalist original Overwatch 2 inspired ability pictogram visual language: bold flat pure white filled silhouettes, thick clean geometry, confident angular cuts with subtly softened corners, large readable negative spaces, balanced professional FPS HUD icon, legible at 48px. Pure opaque white artwork only, actual fully transparent background and transparent internal cutouts. Centered, roughly 70 percent canvas occupancy, generous even margins. No text, no letters, no numbers, no border, no badge tile, no color, no gradients, no shading, no glow, no texture, no drop shadow, no tiny detail, no scene, no copied existing game icon. Subject: A minimal faceless human upper-body silhouette lunging right, with two disconnected tapered afterimage streaks to its left and a bold right-pointing directional chevron ahead. Suggests sudden directional dash / blink. Very few shapes.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-2db7365e-5d50-404b-bc4e-a8ff382efd15.png"
+    },
+    {
+      "file": "09_BulletTime.png",
+      "name": "子彈時間",
+      "prompt": "Use case: logo-brand. Asset type: standalone game HUD ability icon for Purgers, one of a consistent ten-icon family. Create ONE icon only, square 1024x1024 canvas. Style: minimalist original Overwatch 2 inspired ability pictogram visual language: bold flat pure white filled silhouettes, thick clean geometry, confident angular cuts with subtly softened corners, large readable negative spaces, balanced professional FPS HUD icon, legible at 48px. Pure opaque white artwork only, actual fully transparent background and transparent internal cutouts. Centered, roughly 70 percent canvas occupancy, generous even margins. No text, no letters, no numbers, no border, no badge tile, no color, no gradients, no shading, no glow, no texture, no drop shadow, no tiny detail, no scene, no copied existing game icon. Subject: A bold incomplete clock ring with two simple clock hands, enclosing one horizontal bullet silhouette suspended across the lower half. Two small pause bars integrated at the top right break in the ring. Reads as time stopping around a bullet. No tiny marks.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-69fe16b5-b450-4c77-8e08-cd3b83bd032d.png"
+    },
+    {
+      "file": "10_PrecisionLock.png",
+      "name": "精準鎖敵",
+      "prompt": "Use case: logo-brand. Asset type: standalone game HUD ability icon for Purgers, one of a consistent ten-icon family. Create ONE icon only, square 1024x1024 canvas. Style: minimalist original Overwatch 2 inspired ability pictogram visual language: bold flat pure white filled silhouettes, thick clean geometry, confident angular cuts with subtly softened corners, large readable negative spaces, balanced professional FPS HUD icon, legible at 48px. Pure opaque white artwork only, actual fully transparent background and transparent internal cutouts. Centered, roughly 70 percent canvas occupancy, generous even margins. No text, no letters, no numbers, no border, no badge tile, no color, no gradients, no shading, no glow, no texture, no drop shadow, no tiny detail, no scene, no copied existing game icon. Subject: Four bold separated angular targeting brackets framing one small faceless enemy head-and-shoulders silhouette, with one simple curved incoming bullet trail from lower left ending at the target. Strong focus on automatic target lock, very sparse shapes.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-923b011d-c43e-417e-a6a1-693b2a2527c7.png"
+    }
+  ]
+}

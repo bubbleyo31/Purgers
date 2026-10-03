@@ -61,7 +61,7 @@ public class FirstPersonViewModelActionAnimator :
     // =====================================================================
     #region Animator Reference
 
-    [Header("Animator 引用")]
+    [Header("動畫控制器 引用")]
 
     [SerializeField]
     [Tooltip("目前 Attack / Support ViewModel 使用的 Animator。通常就是這個 Prefab Root 上，同時包含 Base Layer 與 ADS Layer 的 Animator。若留空，Awake 時會自動從同一物件取得。")]
@@ -72,7 +72,7 @@ public class FirstPersonViewModelActionAnimator :
     // =====================================================================
     #region Animator Parameter Names
 
-    [Header("Animator Parameter 名稱")]
+    [Header("動畫控制器 參數 名稱")]
 
     [SerializeField]
     [Tooltip("播放 Appear 動畫使用的 Trigger 名稱。Animator 內必須建立同名 Trigger。預設：Appear。")]

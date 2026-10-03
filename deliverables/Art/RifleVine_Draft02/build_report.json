@@ -1,0 +1,43 @@
+{
+  "source_sha256": "30dd4097b6e421d9d812b992ea3d203d21472a11826b6d15a4bbe9e758d44349",
+  "previous_blend_sha256": "e2ffcd214e3e3f820e122bed0b652f51a0d04c8b5e1b58913adef84e811d0e82",
+  "meshes": 24,
+  "vertices": 34751,
+  "triangles": 67756,
+  "bones": 63,
+  "actions": {
+    "Appear": [
+      1.0,
+      11.0
+    ],
+    "idle": [
+      1.0,
+      61.0
+    ],
+    "melee": [
+      1.0,
+      24.0
+    ],
+    "Opening the scope": [
+      1.0,
+      4.0
+    ],
+    "Reload.001": [
+      1.0,
+      63.0
+    ],
+    "shoot": [
+      1.0,
+      2.0
+    ]
+  },
+  "optic_meshes": [
+    "ACOG_Optic_Anodized_R2",
+    "ACOG_Trim_BrushedSteel_R2",
+    "ACOG_Rubber_Soot_R2",
+    "ACOG_Optic_Fiber_Red_R2",
+    "ACOG_Optic_CoatedGlass_R2"
+  ],
+  "unity_validation": "not executed",
+  "magnification_implemented": false
+}
