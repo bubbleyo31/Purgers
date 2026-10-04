@@ -349,9 +349,15 @@ public string[] GetEquippedAbilityIds()
 
         return runtimeObject.GetComponent<PlayerAbilityRuntime>();
     }
+    public void SimulateActiveAbilities(NetInput input, NetworkButtons previousButtons)
+    {
+        SimulateActiveAbilities(input, previousButtons, input);
+    }
+
     public void SimulateActiveAbilities(
         NetInput input,
-        NetworkButtons previousButtons
+        NetworkButtons previousButtons,
+        NetInput legacyInput
     )
     {
         RefreshOrderedRuntimeCache();
@@ -368,8 +374,9 @@ public string[] GetEquippedAbilityIds()
                 continue;
             }
 
+            // 新 E 不沿用舊空中技能的鈎索／職業過濾；全域控制鎖已由 Player 與技能共用入口處理。
             runtime.Simulate(
-                input,
+                runtime.TryGetModule<PlayerActiveAbilityBase>(out _) ? input : legacyInput,
                 previousButtons
             );
         }

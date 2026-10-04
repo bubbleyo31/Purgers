@@ -6,7 +6,7 @@ using UnityEditor;
 public sealed class PlayerRewardCatalogTests
 {
     [Test]
-    public void CurrentCatalogHasFourActionableGrappleRewards()
+    public void CurrentCatalogPreservesFourLegacyRewardsAndAddsTenActiveSkills()
     {
         PlayerRewardCatalog catalog = AssetDatabase.LoadAssetAtPath<PlayerRewardCatalog>(
             "Assets/Resources/Progression/PlayerRewardCatalog.asset");
@@ -14,8 +14,8 @@ public sealed class PlayerRewardCatalogTests
         Assert.That(catalog, Is.Not.Null);
         Assert.That(catalog.TryBuildDraftPool(out RewardDraftEntry[] pool,
             out string error), Is.True, error);
-        // User confirmed the four-entry pool; AirDash is intentionally excluded.
-        Assert.That(pool.Length, Is.EqualTo(4));
+        // 十項新 E 加入原四項池；原先排除的 AirDash 仍維持既有設定。
+        Assert.That(pool.Length, Is.EqualTo(14));
         foreach (PlayerRewardDefinition reward in catalog.Rewards)
         {
             Assert.That(reward.IsImplementedAbilityReward, Is.True,
@@ -28,7 +28,7 @@ public sealed class PlayerRewardCatalogTests
     }
 
     [Test]
-    public void StartingLoadoutLeavesTwoCandidatesAndMiddleCardReturnsForThree()
+    public void ExpandedPoolShowsThreeChoicesAndStillSupportsTwoChoiceLayout()
     {
         var catalog = AssetDatabase.LoadAssetAtPath<PlayerRewardCatalog>(
             "Assets/Resources/Progression/PlayerRewardCatalog.asset");
@@ -38,7 +38,7 @@ public sealed class PlayerRewardCatalogTests
         foreach (var ability in loadout.EquippedAbilities) excluded.Add(ability.AbilityId);
         Assert.That(catalog.TryBuildDraftPool(out var pool, out var error), Is.True, error);
         var choices = RewardDraftRules.Draw(pool, 1, 1, null, excluded);
-        Assert.That(choices.Length, Is.EqualTo(2));
+        Assert.That(choices.Length, Is.EqualTo(3));
         var prefab = AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>("Assets/Prefabs/UI/StageHUD.prefab");
         var clone = UnityEngine.Object.Instantiate(prefab);
         try
@@ -47,7 +47,7 @@ public sealed class PlayerRewardCatalogTests
             var refresh = typeof(LocalPlayerRewardHUD).GetMethod("RefreshChoices",
                 System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
             var draft = new PlayerRewardNetworkState();
-            draft.SetChoices(choices);
+            draft.SetChoices(new[] { choices[0], choices[1] });
             refresh.Invoke(hud, new object[] { draft });
             var middle = hud.transform.Find("ChoiceWindow/MiddleCard");
             Assert.That(middle.gameObject.activeSelf, Is.False);

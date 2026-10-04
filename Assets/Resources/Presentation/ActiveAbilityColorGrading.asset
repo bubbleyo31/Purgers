@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d885c65cdf72bf46b64526c8a0ab935, type: 3}
+  m_Name: ActiveAbilityColorGrading
+  m_EditorClassIdentifier: 
+  fadeSeconds: 0.25
+  healingPulseSeconds: 0.45
+  bulletTime:
+    lift: {x: 1.04, y: 0.98, z: 1.08, w: 0}
+    gamma: {x: 1.08, y: 0.94, z: 1.16, w: 0}
+    gain: {x: 1.06, y: 0.97, z: 1.12, w: 0}
+    strength: 0.8
+  precisionLock:
+    lift: {x: 0.97, y: 1.04, z: 1.05, w: 0}
+    gamma: {x: 0.94, y: 1.1, z: 1.1, w: 0}
+    gain: {x: 0.97, y: 1.06, z: 1.08, w: 0}
+    strength: 0.7
+  experience:
+    lift: {x: 1.04, y: 1.03, z: 0.98, w: 0}
+    gamma: {x: 1.09, y: 1.07, z: 0.94, w: 0}
+    gain: {x: 1.08, y: 1.06, z: 0.98, w: 0}
+    strength: 0.7
+  healing:
+    lift: {x: 0.99, y: 1.025, z: 0.995, w: 0}
+    gamma: {x: 0.98, y: 1.06, z: 0.99, w: 0}
+    gain: {x: 0.99, y: 1.04, z: 1, w: 0}
+    strength: 0.4

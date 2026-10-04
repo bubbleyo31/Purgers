@@ -188,6 +188,13 @@ public sealed class EnemyCombatDecisionController :
             return;
         }
 
+        if (enemyActor.StateController != null && enemyActor.StateController.IsTimeFrozen)
+        {
+            foreach (EnemyCombatOption option in options)
+                if (option != null) option.PauseSimulationTick();
+            return;
+        }
+
         // 外部位移擁有最高優先權。敵人一旦被鈎索或集怪能力接管，
         // 目前攻擊必須取消，也不能在被拉動途中開始下一次攻擊。
         if (movementOwnership.IsExternallyMoved)
@@ -433,6 +440,13 @@ public sealed class EnemyCombatDecisionController :
         }
 
         FinishActiveOption(true);
+    }
+
+    /// <summary>既有 State owner 接受強制位移時立即交回攻擊控制權；Client 不得呼叫寫入。</summary>
+    public void CancelForExternalControl()
+    {
+        if (fusionSpawned && Object != null && Object.HasStateAuthority && activeOption != null)
+            CancelActiveOption();
     }
 
     private EnemyCombatContext CreateContext()

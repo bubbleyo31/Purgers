@@ -368,6 +368,13 @@ public sealed class EnemyMeleeDashAttack :
         StartCooldown();
     }
 
+    public override void PauseSimulationTick()
+    {
+        PhaseTimer = ActiveControlRules.PauseTimerForOneTick(PhaseTimer, Runner);
+        CooldownTimer = ActiveControlRules.PauseTimerForOneTick(CooldownTimer, Runner);
+        BehindTimer = ActiveControlRules.PauseTimerForOneTick(BehindTimer, Runner);
+    }
+
     private EnemyCombatOptionTickResult TickStartup(
         in EnemyCombatContext context
     )

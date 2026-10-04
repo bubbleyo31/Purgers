@@ -1,0 +1,41 @@
+2026-10-03T20:05:05.8643654Z 通過 (controlled Single Runner; not independent multiplayer or screenshot acceptance)
+PASS 既有 CameraFollow 存在
+PASS 既有 Game camera stack 有有效末端相機
+CAMERA observed final stack camera=WeaponCamera
+PASS Single Runner started
+PASS KCC_Player prefab exists
+PASS 受控玩家具 State/Input Authority
+PASS 調色及 CameraFollow 由正式本機玩家流程綁定
+PASS 出生滿血不產生治療脈衝
+PASS Shield equipped
+PASS PlayerShieldAbility E accepted once through SimulateAbility
+PASS Shield TimedHudState phase=Active duration=1.5 remaining=1.5
+PASS Shield 到期後隱藏時間條並進入冷卻
+PASS Experience equipped
+PASS PlayerExperienceAbility E accepted once through SimulateAbility
+PASS Experience TimedHudState phase=Active duration=5 remaining=5
+PASS Experience local weight=0.531 rendered frames=7
+PASS Experience HUD 倒數中且尚未開始冷卻
+PASS Blink equipped
+PASS PlayerBlinkAbility E accepted once through SimulateAbility
+PASS Blink TimedHudState phase=Armed duration=5 remaining=5
+PASS PlayerBlinkAbility E accepted once through SimulateAbility
+PASS Blink 二次 E 啟動衝刺、隱藏待命倒數且不重複建立施放序號
+PASS BulletTime equipped
+PASS PlayerBulletTimeAbility E accepted once through SimulateAbility
+PASS BulletTime TimedHudState phase=Active duration=2 remaining=2
+PASS BulletTime local weight=0.516 rendered frames=13
+PASS BulletTime 到期後隱藏時間條
+PASS PrecisionLock equipped
+PASS PlayerPrecisionLockAbility E accepted once through SimulateAbility
+PASS PrecisionLock TimedHudState phase=Active duration=2 remaining=2
+PASS PrecisionLock local weight=0.596 rendered frames=14
+PASS PrecisionLock 到期後隱藏時間條
+PASS 滿血 RestoreHealth 正式拒絕且回復量為 0
+PASS 滿血不送 LocalHealingReceived RPC 回饋、不觸發調色脈衝
+PASS 正式傷害入口建立可回復血量
+PASS 正式 RestoreHealth 實際回復 10 HP
+PASS 治療事件量等於實際回復量
+PASS 治療脈衝到期後不重播、不重複事件、不再注入技能 Volume
+PASS 所有觀測相機的 Volume stack 與後製還原一致
+Elapsed gameplay/setup seconds=7.85

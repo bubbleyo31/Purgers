@@ -1,4 +1,4 @@
-﻿# Phase 6-D：獎勵候選與權威領取
+# Phase 6-D：獎勵候選與權威領取
 
 > 獎勵 `Weight = 0` 停止新抽、最低等級、重複規則與既有候選／存檔的關係，統一見 [160 經驗與獎勵數值調整手冊](160_Phase6_經驗與獎勵數值調整手冊.md)。
 
@@ -25,3 +25,14 @@ Host 存檔升至 v3，新增待選候選 ID、已領 ID、已裝鈎索能力 ID
 - 尚需獨立進程 Host／Client 驗證候選一致、Client 選擇請求、非法／過期請求、玩家死亡重生、晚加入、成功撤離存檔再進入與失敗重設。未取得這些證據前，不宣稱多人流程驗收完成。
 
 閱讀順序：[155](155_Phase6-A_玩家經驗與存檔規則.md) → [156](156_Phase6-B_玩家進度權威同步.md) → [157](157_Phase6-C_敵人擊殺經驗發放.md) → 本文件 → [154](154_戰鬥HUD視覺配置第一版.md)。
+
+
+## 2026-10-04 E 主動技能原型接入（局部核對）
+
+最後核對日期：2026-10-04（僅本節責任與接點；較早章節為當時基線）。
+核對來源：Assets/Scripts/ 下的 GameLogic、PlayerAbilityQualification、PlayerAbilityExperienceRules、PlayerRewardCatalog。
+相關文件：[42 E 主動技能規格與驗收](42_E主動技能規格與強化預留.md)、[驗證紀錄](Validation/ActiveAbilities/README.md)。
+
+現有 Assets/Resources/Progression/PlayerRewardCatalog.asset 保留原四項權重與引用，追加十項 active.* reward，合計十四；新項權重 1、最低等級 1、Repeatable，已裝同類技能仍被排除。AirDash 原未入池維持不變。精準鎖敵於產生候選及領取前都重查遠程武器，失格領取不消耗 pending；其他裝備驗證仍由原 RuntimeManager 負責。
+
+變更紀錄：2026-10-04 同步本節結構、資產與權威邊界；強化消耗仍未實作。

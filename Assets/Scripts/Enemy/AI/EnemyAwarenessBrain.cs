@@ -130,6 +130,14 @@ public sealed class EnemyAwarenessBrain : NetworkBehaviour
         }
         if (enemyActor.StateController.CurrentBrainState == EnemyBrainState.Dormant) return;
 
+        if (enemyActor.StateController.IsTimeFrozen)
+        {
+            AnnouncementTimer = ActiveControlRules.PauseTimerForOneTick(AnnouncementTimer, Runner);
+            InvestigationTimer = ActiveControlRules.PauseTimerForOneTick(InvestigationTimer, Runner);
+            DamageAlertTimer = ActiveControlRules.PauseTimerForOneTick(DamageAlertTimer, Runner);
+            return;
+        }
+
         if (damagePending)
         {
             damagePending = false;

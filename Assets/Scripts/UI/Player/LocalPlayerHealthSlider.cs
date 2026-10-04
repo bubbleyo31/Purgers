@@ -132,6 +132,10 @@ public class LocalPlayerHealthSlider :
     /// </summary>
     private PlayerHealth boundHealth;
 
+    [Header("護盾額外血格")]
+    [SerializeField, Tooltip("原本生命 UI 的 LocalHealthSegmentView；護盾沿相同輪廓接在生命格右側，淡金色且使用同一每格血量。空白時只顯示原血量，遷移工具可補上引用。")]
+    private LocalHealthSegmentView healthSegmentView;
+
     /// <summary>
     /// 上一次真正寫入 Slider 的 Current Health。
     ///
@@ -240,10 +244,12 @@ public class LocalPlayerHealthSlider :
         }
 
         RefreshSliderIfChanged();
+        RefreshShield();
     }
 
     private void OnDisable()
     {
+        if (healthSegmentView != null) healthSegmentView.ResetPresentation();
         boundHealth =
             null;
 
@@ -313,6 +319,7 @@ public class LocalPlayerHealthSlider :
     {
         boundHealth =
             newHealth;
+        if (healthSegmentView != null) healthSegmentView.ResetPresentation();
 
         ResetDisplayedValueCache();
 
@@ -333,6 +340,7 @@ public class LocalPlayerHealthSlider :
 
     private void UnbindCurrentHealth()
     {
+        if (healthSegmentView != null) healthSegmentView.ResetPresentation();
         if (boundHealth != null &&
             debugHealthUI)
         {
@@ -481,6 +489,19 @@ public class LocalPlayerHealthSlider :
                 this
             );
         }
+    }
+
+    private void RefreshShield()
+    {
+        if (healthSegmentView == null) return;
+        float amount = 0f;
+        if (boundHealth != null && boundHealth.Object != null && boundHealth.Object.IsValid && boundHealth.IsAlive)
+        {
+            Player player = boundHealth.GetComponent<Player>();
+            PlayerShieldAbility shield = PlayerAbilityQualification.GetModule<PlayerShieldAbility>(player);
+            if (shield != null && shield.ActiveRemainingSeconds > 0f) amount = shield.CurrentShield;
+        }
+        healthSegmentView.SetShieldHealth(amount);
     }
 
     #endregion

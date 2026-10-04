@@ -81,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     [Tooltip("第一人稱攝影機跟隨目標。通常放在玩家眼睛高度。此 Transform 只負責 Pitch，上下看。")]
     private Transform camTarget;
+    private Player abilityOwner;
 
     #endregion
 
@@ -230,6 +231,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        abilityOwner = GetComponent<Player>();
         if (kcc == null)
         {
             kcc =
@@ -247,6 +249,31 @@ public class PlayerMovement : MonoBehaviour
 
     // =====================================================================
     #region Fusion 模擬入口
+
+    /// <summary>
+    /// 既有 KCC Processor 在基礎速度與滑鏟計算後呼叫；集中套用閃現及子彈時間位移。
+    /// 減速修改本次位移，不反覆乘上持久速度，因此效果結束可恢復正常運動。
+    /// </summary>
+    public void ApplyActiveAbilityMotion(KCC targetKcc, KCCData data)
+    {
+        if (abilityOwner == null) abilityOwner = GetComponent<Player>();
+        if (abilityOwner == null || abilityOwner.Object == null || !abilityOwner.Object.IsValid) return;
+        if (abilityOwner.AbilityRuntimeManager != null &&
+            abilityOwner.AbilityRuntimeManager.TryGetActiveModule<PlayerBlinkAbility>(out var blink) &&
+            blink.TryGetDashVelocity(targetKcc, data, out Vector3 dashVelocity))
+        {
+            data.KinematicVelocity = dashVelocity;
+            data.DynamicVelocity = Vector3.zero;
+            data.ExternalDelta = Vector3.zero;
+        }
+        float multiplier = Mathf.Clamp01(PlayerBulletTimeSessionRegistry.GetPlayerMovementMultiplier(abilityOwner));
+        if (multiplier < 1f)
+            data.ExternalDelta = data.ExternalDelta * multiplier + data.DesiredVelocity * data.DeltaTime * (multiplier - 1f);
+    }
+
+    public bool HasActiveAbilityDash => abilityOwner != null && abilityOwner.Object != null && abilityOwner.Object.IsValid &&
+        abilityOwner.AbilityRuntimeManager != null &&
+        abilityOwner.AbilityRuntimeManager.TryGetActiveModule<PlayerBlinkAbility>(out var blink) && blink.IsDashing;
 
     /// <summary>
     /// 每個 Fusion Tick 由 Player 根控制器呼叫。

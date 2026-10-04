@@ -124,6 +124,13 @@ public sealed class EnemyPerceptionController : NetworkBehaviour
         // 生命檢查每 Tick 執行，死亡／離線不用等下一輪視覺掃描。
         if (CurrentTarget != null && !IsValidAlivePlayer(CurrentTarget))
             ForgetTarget(false);
+        if (enemyActor.StateController != null && enemyActor.StateController.IsTimeFrozen)
+        {
+            ScanTimer = ActiveControlRules.PauseTimerForOneTick(ScanTimer, Runner);
+            TargetMemoryTimer = ActiveControlRules.PauseTimerForOneTick(TargetMemoryTimer, Runner);
+            LockedTargetRetentionTimer = ActiveControlRules.PauseTimerForOneTick(LockedTargetRetentionTimer, Runner);
+            return;
+        }
         if (ScanTimer.ExpiredOrNotRunning(Runner))
         {
             ScanTimer = TickTimer.CreateFromSeconds(Runner, scanIntervalSeconds);

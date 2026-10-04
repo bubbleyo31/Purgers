@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da3361bca07116044af1dc0ef46a900c, type: 3}
+  m_Name: Blink
+  m_EditorClassIdentifier: 
+  stableRewardId: active.blink
+  category: 2
+  minimumPlayerLevel: 1
+  weight: 1
+  repeatPolicy: 1
+  abilityDefinition: {fileID: 11400000, guid: d57bde0db24b2f641a8ab393869ee053, type: 2}
+  description: "\u5148\u6309 E \u5F85\u547D\uFF0C5 \u79D2\u5167\u518D\u6B21\u6309
+    E \u4F9D\u65B9\u5411\u5FEB\u901F\u885D\u523A\uFF0C\u7121\u65B9\u5411\u5247\u5411\u524D\uFF1B\u9047\u5230\u969C\u7919\u505C\u6B62\u3002"

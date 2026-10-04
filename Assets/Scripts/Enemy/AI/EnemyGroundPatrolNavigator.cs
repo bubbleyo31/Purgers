@@ -203,6 +203,7 @@ public sealed class EnemyGroundPatrolNavigator : EnemyPatrolNavigator
 
     public override void TickSupport(float deltaTime)
     {
+        if (Actor != null && Actor.StateController != null && Actor.StateController.IsTimeFrozen) return;
         if (!ConfigurationValid() || Ownership.IsExternallyMoved) { fallSpeed = 0f; return; }
         // 腳底 Root 正上方往下探測，保留少許容差。不在空中直接 Warp 回 NavMesh。
         RefreshGroundedState();

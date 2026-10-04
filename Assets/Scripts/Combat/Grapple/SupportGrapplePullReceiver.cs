@@ -470,6 +470,13 @@ public class SupportGrapplePullReceiver :
             return;
         }
 
+        var abilityState = GetComponent<EnemyStateController>();
+        if (abilityState != null && abilityState.IsTimeFrozen)
+        {
+            PhaseTimer = ActiveControlRules.PauseTimerForOneTick(PhaseTimer, Runner);
+            return;
+        }
+
 
         // =============================================================
         // Target 已經不能互動
@@ -572,6 +579,9 @@ public class SupportGrapplePullReceiver :
         PlayerRef sourcePlayer
     )
     {
+        var abilityState = GetComponent<EnemyStateController>();
+        if (abilityState != null && (abilityState.IsAbilityKnockbackActive || abilityState.IsAbilityStunned || abilityState.IsTimeFrozen))
+            return false;
         // =============================================================
         // Spawn Guard
         // =============================================================

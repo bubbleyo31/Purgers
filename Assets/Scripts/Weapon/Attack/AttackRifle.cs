@@ -1383,6 +1383,10 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
         * 如果這發子彈什麼都沒有打到，
         * LineRenderer 就畫到武器最大射程。
         */
+        if (Object.HasStateAuthority && PlayerPrecisionLockAbility.TryModifyShot(
+                ownerPlayer, shotOrigin, GetGameplayAimDirection(), maxShotDistance, hitMask, out Vector3 precisionDirection))
+            shotDirection = precisionDirection;
+
         Vector3 tracerEndPoint =
             shotOrigin +
             shotDirection *
@@ -2000,9 +2004,8 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
         * 特殊打擊音效
         * 護盾反應。
         */
-        DamageResolved?.Invoke(
-            damageResult
-        );
+        if (!damageResult.Deferred)
+            DamageResolved?.Invoke(damageResult);
 
         // =============================================================
         // 8. 正式有效命中

@@ -56,6 +56,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerSprintLatchController))]
 public class PlayerSlideController :
     NetworkKCCProcessor,
+    IPrepareData,
     ISetDynamicVelocity,
     ISetKinematicDirection,
     ISetKinematicVelocity,
@@ -2047,6 +2048,11 @@ public class PlayerSlideController :
     // =====================================================================
     #region KCC Processor
 
+    public void Execute(PrepareData stage, KCC targetKCC, KCCData data)
+    {
+        if (movement != null) movement.ApplyActiveAbilityMotion(targetKCC, data);
+    }
+
 
     /// <summary>
     /// EnvironmentProcessor 的預設 Priority 是 1000。
@@ -2152,6 +2158,11 @@ public class PlayerSlideController :
         KCCData data
     )
     {
+        if (movement != null && movement.HasActiveAbilityDash)
+        {
+            targetKCC.SuppressProcessors<StepUpProcessor>();
+            return;
+        }
         if (suppressStepUpWhileGrappleAttached ==
                 false ||
             grapple == null ||

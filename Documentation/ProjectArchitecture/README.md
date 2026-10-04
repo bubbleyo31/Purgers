@@ -26,6 +26,8 @@ M:/UnityProject/Purgers/Documentation/ProjectArchitecture
 - [31_鈎索動能與傷害倍率.md](31_鈎索動能與傷害倍率.md)
 - [40_職業與特殊能力.md](40_職業與特殊能力.md)
 - [41_玩家能力Loadout.md](41_玩家能力Loadout.md)
+- [43 E 技能視覺與 UI 配置](43_E技能視覺與UI配置.md)
+- [42_E主動技能規格與強化預留.md](42_E主動技能規格與強化預留.md)（2026-10-04 十項原型、Inspector 設定、手動驗收與強化預留）
 - [50_武器瞄準與射擊.md](50_武器瞄準與射擊.md)
 - [60_傷害生命死亡與回饋.md](60_傷害生命死亡與回饋.md)
 - [70_第一人稱模型與動畫.md](70_第一人稱模型與動畫.md)
@@ -60,3 +62,5 @@ M:/UnityProject/Purgers/Documentation/ProjectArchitecture
 ## 2026-09-18 Phase 4 前置-1 局部核對
 
 共用控制票證、黑幕與所有連線玩家載入完成後啟動計時，詳見 [144_PrePhase4-1_共用控制與轉場.md](144_PrePhase4-1_共用控制與轉場.md)。本輪核對 187 支 C#；多人驗證狀態以 144 的實際紀錄為準。
+
+- 2026-10-04：十項 E 主動技能已建立資產與獎勵池；[測試與多人驗收邊界](Validation/ActiveAbilities/README.md)。

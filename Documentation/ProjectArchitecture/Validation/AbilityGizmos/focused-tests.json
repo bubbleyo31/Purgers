@@ -1,0 +1,42 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "2207ae5c48394cd8985cf2e2d246218b",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1791104168369,
+      "finished_unix_ms": 1791104172437,
+      "last_update_unix_ms": 1791104172437,
+      "progress": {
+        "completed": 28,
+        "total": 437,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1791104171988,
+        "last_finished_test_full_name": "ActiveAbilityGizmoTests.UnspawnedProjectile_DoesNotReadNetworkStateOrInventRange",
+        "last_finished_unix_ms": 1791104171991,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 28,
+          "passed": 28,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 0.5447298,
+          "resultState": "Passed"
+        },
+        "results": []
+      }
+    },
+    "hint": null
+  }
+}

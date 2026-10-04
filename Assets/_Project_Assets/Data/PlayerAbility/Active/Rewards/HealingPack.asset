@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da3361bca07116044af1dc0ef46a900c, type: 3}
+  m_Name: HealingPack
+  m_EditorClassIdentifier: 
+  stableRewardId: active.healingpack
+  category: 2
+  minimumPlayerLevel: 1
+  weight: 1
+  repeatPolicy: 1
+  abilityDefinition: {fileID: 11400000, guid: 8f37b3044910f2e438d29316751c4061, type: 2}
+  description: "\u62CB\u51FA\u4FDD\u7559 10 \u79D2\u7684\u6CBB\u7642\u5305\u3002\u968A\u53CB\u56DE\u5FA9\u6295\u64F2\u8005\u7B49\u7D1A
+    \xD710\uFF0C\u81EA\u7528\u6548\u679C\u6E1B\u534A\uFF1B\u6EFF\u8840\u4E0D\u6D88\u8017\u3002"

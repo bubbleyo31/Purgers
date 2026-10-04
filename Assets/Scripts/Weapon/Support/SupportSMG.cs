@@ -1377,6 +1377,10 @@ public class SupportSMG :
         // Tracer Default
         // =============================================================
 
+        if (Object.HasStateAuthority && PlayerPrecisionLockAbility.TryModifyShot(
+                ownerPlayer, shotOrigin, GetGameplayAimDirection(), maxShotDistance, hitMask, out Vector3 precisionDirection))
+            shotDirection = precisionDirection;
+
         Vector3 tracerEndPoint =
             shotOrigin +
             shotDirection *
@@ -2157,9 +2161,8 @@ public class SupportSMG :
         // Damage Events
         // =============================================================
 
-        DamageResolved?.Invoke(
-            damageResult
-        );
+        if (!damageResult.Deferred)
+            DamageResolved?.Invoke(damageResult);
 
 
         if (receiverFound &&

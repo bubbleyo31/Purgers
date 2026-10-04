@@ -10,19 +10,13 @@ public sealed class BattleHudReadabilityTests
 {
     [TestCase(10f)]
     [TestCase(15f)]
-    public void PartialCellClipsTheOriginalOutlineWithoutChangingItsSlope(float health)
+    public void RemainingFractionKeepsTheEntireCellOutline(float health)
     {
-        WithMesh(health, mesh =>
-        {
-            var opaque = mesh.vertices.Where((p, i) => mesh.colors32[i].a == 255).ToArray();
-            Assert.That(opaque.Any(p => Vector2.Distance(p, new Vector2(24, 30)) < .01f),
-                "The retained upper-left corner must not move when health falls.");
-            Assert.That(opaque.Max(p => p.x), Is.EqualTo(120 * health / 20).Within(.01f));
-            // Every retained point stays below the original sloping top edge.
-            Assert.That(opaque.All(p => p.y <= 27.5f + p.x * 10f / 96f + .01f), Is.True);
-        });
+        WithMesh(health, partial => WithMesh(20, full => {
+            Assert.That(partial.vertexCount, Is.EqualTo(full.vertexCount));
+            Assert.That(partial.vertices, Is.EqualTo(full.vertices));
+        }));
     }
-
     [Test]
     public void HealthEdgesHaveTransparentCoverageFringeWithoutMsaa()
     {
@@ -56,7 +50,8 @@ public sealed class BattleHudReadabilityTests
             Set(view, "segmentWidth", 100f); Set(view, "segmentSlant", 20f);
             Set(view, "segmentOutline", new[] { new Vector2(0, 0), new Vector2(1, .25f), new Vector2(1, 1), new Vector2(.2f, .75f) });
             Set(view, "healthyColor", Color.white);
-            Set(view, "displayedMaximum", 20f); Set(view, "displayedHealth", health);
+            var slider = go.AddComponent<Slider>(); slider.maxValue = 20; slider.value = health; Set(view, "healthSource", slider);
+            typeof(LocalHealthSegmentView).GetMethod("Update", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(view, null);
             using (var vh = new VertexHelper())
             {
                 typeof(LocalHealthSegmentView).GetMethod("OnPopulateMesh", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly).Invoke(view, new object[] { vh });

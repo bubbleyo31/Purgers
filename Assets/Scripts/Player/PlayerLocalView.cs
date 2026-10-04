@@ -142,6 +142,7 @@ public class PlayerLocalView : NetworkBehaviour
 
         localPlayerBound =
             true;
+        PlayerAbilityColorGrading.BindLocal(player);
 
         // -------------------------------------------------------------
         // 隱藏本地第三人稱模型
@@ -261,6 +262,8 @@ public class PlayerLocalView : NetworkBehaviour
         if (localPlayerBound == false)
             return;
 
+        var abilityColor = GetComponent<PlayerAbilityColorGrading>();
+        if (abilityColor != null) abilityColor.Unbind();
         localPlayerBound =
             false;
         boundCamera = null;

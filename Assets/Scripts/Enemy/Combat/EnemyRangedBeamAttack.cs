@@ -235,6 +235,14 @@ public sealed class EnemyRangedBeamAttack :
         return beamHitMask.value != 0;
     }
 
+    public override void PauseSimulationTick()
+    {
+        PhaseTimer = ActiveControlRules.PauseTimerForOneTick(PhaseTimer, Runner);
+        CooldownTimer = ActiveControlRules.PauseTimerForOneTick(CooldownTimer, Runner);
+        TrackingTargetRefreshTimer = ActiveControlRules.PauseTimerForOneTick(TrackingTargetRefreshTimer, Runner);
+        // 已發射光束的 ShotVisualTimer 照常結束，不凍結獨立飛行物或命中特效。
+    }
+
     public override void BeginOption(
         in EnemyCombatContext context
     )

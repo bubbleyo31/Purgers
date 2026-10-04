@@ -89,6 +89,16 @@ public class PlayerAbilityDefinition :
             : displayName.Trim();
 
 
+    [Header("武器使用資格")]
+    [SerializeField, Tooltip("啟用後，獎勵候選、領取及技能使用都要求當前持有遠程武器。切近戰不卸除能力。")]
+    private bool requiresRangedWeapon;
+    public bool RequiresRangedWeapon => requiresRangedWeapon;
+
+    [Header("強化區域（預留，尚未啟用）")]
+    [SerializeField, Tooltip("所有 E 能力共用的未來強化設定。可留空；設定需實作 IPlayerAbilityEnhancementProvider。目前不啟用強化，也不消耗速度增傷值。")]
+    private ScriptableObject enhancementDefinition;
+    public bool HasReservedEnhancement => enhancementDefinition is IPlayerAbilityEnhancementProvider provider && provider.HasEnhancedVersion;
+
     public Sprite HudIcon => hudIcon;
 
     public PlayerAbilityCategory Category =>

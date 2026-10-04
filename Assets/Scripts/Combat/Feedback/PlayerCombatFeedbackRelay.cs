@@ -796,6 +796,14 @@ public class PlayerCombatFeedbackRelay :
     /// 它只把正式 DamageResult
     /// 轉換成 Presentation Data。
     /// </summary>
+    /// <summary>獨立技能與延遲結算沿用正式命中回饋；不可在排隊當下呼叫。</summary>
+    public void ReportAbilityDamage(DamageResult result)
+    {
+        if (Object == null || !Object.IsValid || !Object.HasStateAuthority ||
+            result.Request.Attacker != Object.InputAuthority) return;
+        OnDamageConfirmed(result);
+    }
+
     private void OnDamageConfirmed(
         DamageResult result
     )

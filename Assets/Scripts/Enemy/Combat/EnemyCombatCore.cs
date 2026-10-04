@@ -202,6 +202,9 @@ public abstract class EnemyCombatOption : NetworkBehaviour
         in EnemyCombatContext context
     );
 
+    /// <summary>暫停一個模擬 Tick；具體攻擊順延自己的 timer，保留目前階段與命中去重。</summary>
+    public virtual void PauseSimulationTick() { }
+
     /// <summary>
     /// 所有攻擊與未來防禦共用的距離視覺化。
     /// 邏輯使用三維距離，所以這裡刻意畫球形，不畫容易誤解成平面的圓。

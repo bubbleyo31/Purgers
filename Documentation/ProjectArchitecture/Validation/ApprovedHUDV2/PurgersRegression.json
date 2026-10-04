@@ -1,0 +1,65 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"846fe3a70db84e439c882a2899bad95b\",\"status\":\"failed\",\"mode\":\"EditMode\",\"started_unix_ms\":1791107808337,\"finished_unix_ms\":1791107818474,\"last_update_unix_ms\":1791107818474,\"progress\":{\"completed\":430,\"total\":445,\"current_test_full_name\":null,\"current_test_started_unix_ms\":1791107817983,\"last_finished_test_full_name\":\"WeaponRecoilApplicationTests.ZeroDurationKeepsImmediateImpulse\",\"last_finished_unix_ms\":1791107817983,\"stuck_suspected\":false,\"editor_is_focused\":false,\"blocked_reason\":null,\"failures_so_far\":[{\"full_name\":\"BossStageAssetTests.GameSceneContainsBossAssetWiring\",\"message\":\"  Expected: same as <MapChunk_Boss (MapChunk)>\\r\\n  But was:  <MapChunk_Boss (MapChunk)>\\r\\n\"},{\"full_name\":\"DevelopmentLevelUpRulesTests.GrantsExactlyTheMissingExperienceForNextLevel\",\"message\":\"  Expected: 33\\r\\n  But was:  13\\r\\n\"},{\"full_name\":\"FirstPersonMuzzleFlashTests.AtlasMaterialIsUsableWithoutRuntimeTextureOrMaterialCopies\",\"message\":\"  Expected: same as <StylizedMuzzleFlash_4x3 (UnityEngine.Texture2D)>\\r\\n  But was:  <StylizedMuzzleFlash_4x3_2 (UnityEngine.Texture2D)>\\r\\n\"},{\"full_name\":\"PlayerExperienceRulesTests.CrossingThresholdKeepsOverflowAndQueuesReward\",\"message\":\"  Expected: 3\\r\\n  But was:  8\\r\\n\"},{\"full_name\":\"PlayerExperienceRulesTests.OneLargeGrantCanQueueSeveralRewards\",\"message\":\"  Expected: 3\\r\\n  But was:  4\\r\\n\"},{\"full_name\":\"PlayerExperienceRulesTests.RequirementDoublesFromTen\",\"message\":\"  Expected: 10\\r\\n  But was:  5\\r\\n\"}],\"failures_capped\":false},\"error\":null,\"result\":null},\"hint\":null}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "success": true,
+      "message": "Test job status retrieved.",
+      "error": null,
+      "data": {
+        "job_id": "846fe3a70db84e439c882a2899bad95b",
+        "status": "failed",
+        "mode": "EditMode",
+        "started_unix_ms": 1791107808337,
+        "finished_unix_ms": 1791107818474,
+        "last_update_unix_ms": 1791107818474,
+        "progress": {
+          "completed": 430,
+          "total": 445,
+          "current_test_full_name": null,
+          "current_test_started_unix_ms": 1791107817983,
+          "last_finished_test_full_name": "WeaponRecoilApplicationTests.ZeroDurationKeepsImmediateImpulse",
+          "last_finished_unix_ms": 1791107817983,
+          "stuck_suspected": false,
+          "editor_is_focused": false,
+          "blocked_reason": null,
+          "failures_so_far": [
+            {
+              "full_name": "BossStageAssetTests.GameSceneContainsBossAssetWiring",
+              "message": "  Expected: same as <MapChunk_Boss (MapChunk)>\r\n  But was:  <MapChunk_Boss (MapChunk)>\r\n"
+            },
+            {
+              "full_name": "DevelopmentLevelUpRulesTests.GrantsExactlyTheMissingExperienceForNextLevel",
+              "message": "  Expected: 33\r\n  But was:  13\r\n"
+            },
+            {
+              "full_name": "FirstPersonMuzzleFlashTests.AtlasMaterialIsUsableWithoutRuntimeTextureOrMaterialCopies",
+              "message": "  Expected: same as <StylizedMuzzleFlash_4x3 (UnityEngine.Texture2D)>\r\n  But was:  <StylizedMuzzleFlash_4x3_2 (UnityEngine.Texture2D)>\r\n"
+            },
+            {
+              "full_name": "PlayerExperienceRulesTests.CrossingThresholdKeepsOverflowAndQueuesReward",
+              "message": "  Expected: 3\r\n  But was:  8\r\n"
+            },
+            {
+              "full_name": "PlayerExperienceRulesTests.OneLargeGrantCanQueueSeveralRewards",
+              "message": "  Expected: 3\r\n  But was:  4\r\n"
+            },
+            {
+              "full_name": "PlayerExperienceRulesTests.RequirementDoublesFromTen",
+              "message": "  Expected: 10\r\n  But was:  5\r\n"
+            }
+          ],
+          "failures_capped": false
+        },
+        "error": null,
+        "result": null
+      },
+      "hint": null
+    }
+  },
+  "isError": false
+}

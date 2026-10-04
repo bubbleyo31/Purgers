@@ -261,6 +261,7 @@ public sealed class EnemyChaseBrain :
         HasChaseDestination = false;
         ChaseDestination = transform.position;
         MoveSpeed = 0f;
+
         DestinationSequence = 0;
         RepathTimer = TickTimer.None;
         TargetPositionAtLastPlan = transform.position;
@@ -320,6 +321,12 @@ public sealed class EnemyChaseBrain :
 
         EnemyStateController state =
             enemyActor.StateController;
+
+        if (enemyActor.IsAlive && state != null && state.IsTimeFrozen)
+        {
+            RepathTimer = ActiveControlRules.PauseTimerForOneTick(RepathTimer, Runner);
+            return;
+        }
 
         if (enemyActor.IsAlive == false ||
             state == null ||

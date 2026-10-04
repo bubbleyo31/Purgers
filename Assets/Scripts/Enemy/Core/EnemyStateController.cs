@@ -72,7 +72,7 @@ public enum EnemyControlState : byte
 [RequireComponent(typeof(NetworkObject))]
 [RequireComponent(typeof(TestDamageReceiver))]
 [RequireComponent(typeof(EnemyActionGate))]
-public sealed class EnemyStateController :
+public sealed partial class EnemyStateController :
     NetworkBehaviour
 {
     // =====================================================================
@@ -199,6 +199,7 @@ public sealed class EnemyStateController :
 
     public bool CanRunBrain =>
         IsAlive &&
+        !IsTimeFrozen &&
         CurrentControlState ==
             EnemyControlState.Normal;
 
@@ -262,6 +263,7 @@ public sealed class EnemyStateController :
 
             ControlStateSequence =
                 1;
+            ResetAbilityControl();
         }
     }
 
@@ -274,6 +276,7 @@ public sealed class EnemyStateController :
         }
 
         SynchronizeDeathState();
+        TickAbilityControl();
     }
 
     public override void Despawned(

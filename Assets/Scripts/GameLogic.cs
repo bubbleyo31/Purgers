@@ -610,12 +610,25 @@ public class GameLogic :
     /// <summary>Called only by State Authority after validating a grant.</summary>
     public bool TryAwardPlayerExperience(PlayerRef player, int amount)
     {
+        return TryAwardPlayerExperienceCore(player, amount, applyAbilityMultiplier: true);
+    }
+
+    private bool TryAwardPlayerExperienceCore(PlayerRef player, int amount, bool applyAbilityMultiplier)
+    {
         if (Object == null || !Object.HasStateAuthority || amount <= 0 ||
             !Players.TryGet(player, out Player playerBehaviour) ||
             playerBehaviour == null || playerBehaviour.Health == null ||
             !playerBehaviour.Health.IsAlive ||
             !PlayerExperiences.TryGet(player, out NetworkPlayerExperience value))
             return false;
+
+        if (applyAbilityMultiplier)
+        {
+            IPlayerExperienceMultiplier modifier =
+                PlayerAbilityQualification.GetModule<IPlayerExperienceMultiplier>(playerBehaviour);
+            amount = PlayerAbilityExperienceRules.ApplyMultiplier(amount,
+                modifier != null ? modifier.ExperienceMultiplier : 1f);
+        }
 
         PlayerExperienceState before = value.ToState();
         PlayerExperienceState after = PlayerExperienceRules.Award(before, amount);
@@ -652,7 +665,7 @@ public class GameLogic :
             return false;
 
         int amount = DevelopmentLevelUpRules.ExperienceToNextLevel(current);
-        return amount > 0 && TryAwardPlayerExperience(player, amount);
+        return amount > 0 && TryAwardPlayerExperienceCore(player, amount, applyAbilityMultiplier: false);
     }
 #endif
 
@@ -700,6 +713,13 @@ public class GameLogic :
             playerBehaviour.AbilityRuntimeManager == null)
         {
             failureReason = "獎勵無效或玩家目前沒有可套用的能力管理器。";
+            return false;
+        }
+
+        // 候選建立後仍可能換武器；失敗不扣待選數、不改候選或取得紀錄。
+        if (!PlayerAbilityQualification.IsAllowed(playerBehaviour, reward.AbilityDefinition))
+        {
+            failureReason = "目前武器不符合此技能的領取條件；待選獎勵仍保留。";
             return false;
         }
 
@@ -774,6 +794,35 @@ public class GameLogic :
                 awardedPlayers++;
         }
 
+        return awardedPlayers;
+    }
+
+    /// <summary>
+    /// 子彈時間正式致死事件的替代發放路徑。只處理施放快照內、同一 PlayerObject
+    /// 仍連線存活者；待選者保留自己的份額但沿用 Award 拒收，不轉送給其他玩家。
+    /// </summary>
+    public int AwardSharedEnemyKillExperience(BulletTimeExperienceContext context, int baseExperience)
+    {
+        if (Object == null || !Object.HasStateAuthority || !IsPrimaryForRunner ||
+            context == null || context.Runner != Runner || baseExperience <= 0) return 0;
+        var connected = new HashSet<PlayerRef>();
+        foreach (PlayerRef player in Runner.ActivePlayers) connected.Add(player);
+        var recipients = new Dictionary<int, PlayerRef>();
+        for (int i = 0; i < context.ParticipantCount; i++)
+        {
+            BulletTimeParticipant snapshot = context.GetParticipant(i);
+            if (!connected.Contains(snapshot.Player) ||
+                !Players.TryGet(snapshot.Player, out Player current) || current == null ||
+                current.Object == null || !current.Object.IsValid ||
+                current.Object.Id != snapshot.PlayerObjectId || current.Health == null ||
+                !current.Health.IsAlive || !PlayerExperiences.ContainsKey(snapshot.Player)) continue;
+            recipients[snapshot.Player.RawEncoded] = snapshot.Player;
+        }
+        var shares = PlayerAbilityExperienceRules.CreateEqualShares(baseExperience,
+            PlayerExperienceRules.DefaultKillerBonus, new List<int>(recipients.Keys));
+        int awardedPlayers = 0;
+        foreach (KeyValuePair<int, int> share in shares)
+            if (share.Value > 0 && TryAwardPlayerExperience(recipients[share.Key], share.Value)) awardedPlayers++;
         return awardedPlayers;
     }
 
@@ -914,11 +963,20 @@ public class GameLogic :
             out HashSet<string> acquired);
         string[] equipped = playerBehaviour.AbilityRuntimeManager
             .GetEquippedAbilityIds();
+        // Draw 比較的是 Reward ID，不把 Ability ID 誤當成相同識別碼。
+        var equippedSet = new HashSet<string>(equipped, StringComparer.OrdinalIgnoreCase);
+        var exclusions = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (PlayerRewardDefinition reward in rewardCatalog.Rewards)
+        {
+            if (reward == null || reward.AbilityDefinition == null) continue;
+            if (!PlayerAbilityQualification.IsAllowed(playerBehaviour, reward.AbilityDefinition) ||
+                equippedSet.Contains(reward.AbilityDefinition.AbilityId)) exclusions.Add(reward.StableRewardId);
+        }
         int targetLevel = Math.Max(1, xp.Level - xp.PendingRewards + 1);
         ulong seed = RewardDraftSeed(player, targetLevel,
             draft.DraftRevision);
         string[] choices = RewardDraftRules.Draw(pool, targetLevel, seed,
-            acquired, equipped);
+            acquired, exclusions);
         if (choices.Length == 0)
         {
             if (missingRewardDraftLogged.Add(player))

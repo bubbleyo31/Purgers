@@ -14,6 +14,7 @@ public sealed class EnemyMovementOwnership : MonoBehaviour
     private TankGatherMovementReceiver tankGather;
 
     public bool IsExternallyMoved =>
+        (actor != null && actor.StateController != null && actor.StateController.IsAbilityKnockbackActive) ||
         (supportPull != null && supportPull.IsPullActive) ||
         (tankGather != null && tankGather.IsBeingGathered) ||
         (actor != null && actor.IsFusionSpawned && actor.Object != null && actor.Object.IsValid &&
@@ -23,11 +24,13 @@ public sealed class EnemyMovementOwnership : MonoBehaviour
            actor.ActionGate.GetLocks(EnemyActionLockSource.ExternalMovement) != EnemyActionLockFlags.None)));
 
     public bool CanMove => Ready && !actor.IsStationary && !IsExternallyMoved &&
+        !actor.StateController.IsTimeFrozen &&
         actor.StateController.CanRunBrain &&
         !actor.StateController.IsUsingAction &&
         actor.ActionGate.CanMove && actor.ActionGate.CanNavigate;
 
     public bool CanRotate => Ready && !IsExternallyMoved &&
+        !actor.StateController.IsTimeFrozen &&
         actor.StateController.CanRunBrain &&
         !actor.StateController.IsUsingAction && actor.ActionGate.CanRotate;
 

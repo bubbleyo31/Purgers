@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da3361bca07116044af1dc0ef46a900c, type: 3}
+  m_Name: Experience
+  m_EditorClassIdentifier: 
+  stableRewardId: active.experience
+  category: 2
+  minimumPlayerLevel: 1
+  weight: 1
+  repeatPolicy: 1
+  abilityDefinition: {fileID: 11400000, guid: e6ee058cb0834f34585138bd210fd918, type: 2}
+  description: "5 \u79D2\u5167\u81EA\u5DF1\u7372\u5F97\u7684\u7D93\u9A57\u8207\u53D7\u5230\u7684\u50B7\u5BB3\u90FD\u7FFB\u500D\u3002\u6548\u679C\u7D50\u675F\u624D\u958B\u59CB\u51B7\u537B\u3002"

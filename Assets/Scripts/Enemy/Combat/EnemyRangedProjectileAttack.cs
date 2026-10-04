@@ -133,6 +133,12 @@ public sealed class EnemyRangedProjectileAttack :
         return projectilePrefab.IsValid;
     }
 
+    public override void PauseSimulationTick()
+    {
+        PhaseTimer = ActiveControlRules.PauseTimerForOneTick(PhaseTimer, Runner);
+        CooldownTimer = ActiveControlRules.PauseTimerForOneTick(CooldownTimer, Runner);
+    }
+
     public override void BeginOption(
         in EnemyCombatContext context
     )

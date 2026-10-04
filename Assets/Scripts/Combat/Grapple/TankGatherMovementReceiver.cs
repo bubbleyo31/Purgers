@@ -442,6 +442,12 @@ public class TankGatherMovementReceiver :
             return;
         }
 
+        var abilityState = GetComponent<EnemyStateController>();
+        if (abilityState != null && abilityState.IsTimeFrozen)
+        {
+            GatherTimeoutTimer = ActiveControlRules.PauseTimerForOneTick(GatherTimeoutTimer, Runner);
+            return;
+        }
         TickGatherMovement();
     }
 
@@ -476,6 +482,9 @@ public class TankGatherMovementReceiver :
         PlayerRef sourcePlayer
     )
     {
+        var abilityState = GetComponent<EnemyStateController>();
+        if (abilityState != null && (abilityState.IsAbilityKnockbackActive || abilityState.IsAbilityStunned || abilityState.IsTimeFrozen))
+            return false;
         // =============================================================
         // 1. NetworkBehaviour / State Authority
         // =============================================================

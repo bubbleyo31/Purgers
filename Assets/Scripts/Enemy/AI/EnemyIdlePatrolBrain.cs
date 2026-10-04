@@ -144,6 +144,12 @@ public sealed class EnemyIdlePatrolBrain : NetworkBehaviour
     {
         if (!IsFusionSpawned || !HasStateAuthority || enemyActor == null) return;
         MoveSpeed = 0f;
+        if (enemyActor.IsAlive && enemyActor.StateController != null && enemyActor.StateController.IsTimeFrozen)
+        {
+            IdleDecisionTimer = ActiveControlRules.PauseTimerForOneTick(IdleDecisionTimer, Runner);
+            PatrolTimer = ActiveControlRules.PauseTimerForOneTick(PatrolTimer, Runner);
+            return;
+        }
         if (!enemyActor.IsAlive)
         {
             CancelPatrolForCombat();

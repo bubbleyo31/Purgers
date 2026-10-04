@@ -162,6 +162,16 @@ public sealed class EnemyPresentationAnimatorDriver :
     private int observedAnnouncementSequence;
     private bool combatInitialized;
     private int observedCombatSequence;
+    private bool abilityAnimationPaused;
+    private float animatorSpeedBeforeAbility = 1f;
+
+    private void OnDisable() { RestoreAbilityAnimationSpeed(); }
+
+    private void RestoreAbilityAnimationSpeed()
+    {
+        if (abilityAnimationPaused && animator != null) animator.speed = animatorSpeedBeforeAbility;
+        abilityAnimationPaused = false;
+    }
 
     private void Awake()
     {
@@ -196,6 +206,15 @@ public sealed class EnemyPresentationAnimatorDriver :
         }
 
         bool alive = actor.IsAlive;
+        bool pauseAnimation = alive && actor.StateController != null &&
+            (actor.StateController.IsTimeFrozen || actor.StateController.IsAbilityStunned);
+        if (pauseAnimation && !abilityAnimationPaused)
+        {
+            animatorSpeedBeforeAbility = animator.speed;
+            abilityAnimationPaused = true;
+        }
+        if (pauseAnimation) animator.speed = 0f;
+        else RestoreAbilityAnimationSpeed();
 
         bool awarenessReady =
             awareness != null &&

@@ -491,9 +491,18 @@ public sealed class EnemyDeathLifecycleController :
 
         GameLogic gameLogic = GameLogic.GetPrimaryForRunner(Runner);
         if (gameLogic != null)
+        {
+            // 延後傷害明確攜帶分配快照，取代普通擊殺發放；不能兩條路各發一次。
+            if (killingDamage.Request.BulletTimeExperience != null)
+            {
+                gameLogic.AwardSharedEnemyKillExperience(killingDamage.Request.BulletTimeExperience,
+                    enemy.Definition.BaseKillExperience);
+                return;
+            }
             gameLogic.AwardEnemyKillExperience(
                 killingDamage.Request.Attacker,
                 enemy.Definition.BaseKillExperience);
+        }
     }
 
     private void EnterCorpsePhase()

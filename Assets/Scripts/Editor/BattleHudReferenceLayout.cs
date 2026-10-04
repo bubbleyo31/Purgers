@@ -400,7 +400,7 @@ public static class BattleHudReferenceLayout
         return "player layout saved";
     }
 
-    public static string RenderPreview(bool rewards, int width = 1920, int height = 1080, float healthValue = 100f, bool healthDetail = false, float reloadProgress = -1f)
+    public static string RenderPreview(bool rewards, int width = 1920, int height = 1080, float healthValue = 100f, bool healthDetail = false, float reloadProgress = -1f, System.Action<GameObject, GameObject> configure = null, string outputName = null)
     {
         var activeScene = SceneManager.GetActiveScene();
         var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Additive);
@@ -482,6 +482,7 @@ public static class BattleHudReferenceLayout
                 var snapshot=new PlayerWeaponHUDSnapshot(null,PlayerWeaponHUDValueMode.Ammunition,2,25,false,false,true,true,reloadProgress);
                 typeof(LocalPlayerWeaponHUD).GetMethod("RefreshUIIfChanged",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).Invoke(hud,new object[]{snapshot});
             }
+            configure?.Invoke(player, stage);
             foreach(var t in canvasObject.GetComponentsInChildren<Transform>(true))t.gameObject.layer=31;
             target=new RenderTexture(width,height,24,RenderTextureFormat.ARGB32);target.antiAliasing=1;target.Create();camera.targetTexture=target;
             health.SendMessage("Update");
@@ -491,7 +492,7 @@ public static class BattleHudReferenceLayout
             camera.Render();
             RenderTexture.active=target;output=new Texture2D(width,height,TextureFormat.RGB24,false);output.ReadPixels(new Rect(0,0,width,height),0,0);output.Apply();
             var directory="Documentation/ProjectArchitecture/Validation/BattleHUD";Directory.CreateDirectory(directory);
-            string path=directory+"/"+(healthDetail?"health-detail":rewards?"reward":"normal")+"-"+width+"x"+height+(reloadProgress>=0?"-reload"+Mathf.RoundToInt(reloadProgress*100):"")+(healthValue<100?"-hp"+healthValue.ToString("0.##",System.Globalization.CultureInfo.InvariantCulture):"")+".png";File.WriteAllBytes(path,output.EncodeToPNG());return Path.GetFullPath(path);
+            string path=directory+"/"+(healthDetail?"health-detail":rewards?"reward":"normal")+"-"+width+"x"+height+(reloadProgress>=0?"-reload"+Mathf.RoundToInt(reloadProgress*100):"")+(healthValue<100?"-hp"+healthValue.ToString("0.##",System.Globalization.CultureInfo.InvariantCulture):"")+".png";if (!string.IsNullOrEmpty(outputName)) path=directory+"/"+outputName+".png"; File.WriteAllBytes(path,output.EncodeToPNG());return Path.GetFullPath(path);
         }
         finally
         {

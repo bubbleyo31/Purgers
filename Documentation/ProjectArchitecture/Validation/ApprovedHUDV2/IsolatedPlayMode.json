@@ -1,0 +1,17 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":\"100 -> 92 -> 85 -> 80: True\\nheal 8: True\\nheal 7: True\\nheal 5: True\\nheal animation active: True\\ngrant shield 25 -> 2 adjacent: True\\nshield -8 unchanged: True\\nshield cumulative -20 -> 1: True\\nshield zero: True\\ndamage animation active: True\\nanimation expires: True\\ndisable clears state: True\\nrebind snapshot: True\",\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": "100 -> 92 -> 85 -> 80: True\nheal 8: True\nheal 7: True\nheal 5: True\nheal animation active: True\ngrant shield 25 -> 2 adjacent: True\nshield -8 unchanged: True\nshield cumulative -20 -> 1: True\nshield zero: True\ndamage animation active: True\nanimation expires: True\ndisable clears state: True\nrebind snapshot: True",
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

@@ -41,6 +41,8 @@ public abstract class EnemyPatrolNavigator : MonoBehaviour
     protected NetworkRunner Runner => Actor.Runner;
     protected EnemyMovementOwnership Ownership { get; private set; }
     public float Speed => patrolSpeed;
+    public float BodyRadius => Mathf.Max(0.01f, bodyRadius);
+    public float BodyHeight => Mathf.Max(BodyRadius * 2f, bodyHeight);
     public abstract EnemyLocomotionKind SupportedLocomotion { get; }
 
     /// <summary>最近一次 TryBegin 失敗的穩定分類；成功時為 None。</summary>

@@ -261,6 +261,17 @@ public class PlayerHealth :
     // =====================================================================
     #region Health 設定
 
+    /// <summary>只有正式成功回血送到 Input Authority；出生／Reset 不觸發。</summary>
+    public event Action<float> LocalHealingReceived;
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority, TickAligned = false)]
+    private void RPC_ReceiveLocalHealing(float appliedAmount)
+    {
+        if (Object != null && Object.IsValid && Object.HasInputAuthority && appliedAmount > 0f)
+            LocalHealingReceived?.Invoke(appliedAmount);
+    }
+
+
     [Header("生命值設定")]
 
     [SerializeField]
@@ -1341,9 +1352,9 @@ public class PlayerHealth :
         // 7. 是否真的有恢復
         // =============================================================
 
-        return
-            appliedAmount >
-            0.0001f;
+        bool restored = appliedAmount > 0.0001f;
+        if (restored) RPC_ReceiveLocalHealing(appliedAmount);
+        return restored;
     }
 
     /// <summary>

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da3361bca07116044af1dc0ef46a900c, type: 3}
+  m_Name: Shockwave
+  m_EditorClassIdentifier: 
+  stableRewardId: active.shockwave
+  category: 2
+  minimumPlayerLevel: 1
+  weight: 1
+  repeatPolicy: 1
+  abilityDefinition: {fileID: 11400000, guid: cf178912b91467b49a2149d704878790, type: 2}
+  description: "\u5411\u524D\u6253\u51FA\u5BEC\u5E45\u885D\u64CA\u4E26\u64CA\u9000\u6575\u4EBA\u3002\u649E\u7246\u8FFD\u52A0\u4E00\u6B21\u50B7\u5BB3\u8207
+    1 \u79D2\u6688\u7729\u3002"

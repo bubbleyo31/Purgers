@@ -1,0 +1,86 @@
+{
+  "success": true,
+  "message": "Test job status retrieved.",
+  "error": null,
+  "data": {
+    "job_id": "c0924d284c294b1ea9050d2be4a80e70",
+    "status": "failed",
+    "mode": "EditMode",
+    "started_unix_ms": 1791056526640,
+    "finished_unix_ms": 1791056533868,
+    "last_update_unix_ms": 1791056533868,
+    "progress": {
+      "completed": 23,
+      "total": 409,
+      "current_test_full_name": null,
+      "current_test_started_unix_ms": 1791056533209,
+      "last_finished_test_full_name": "ActiveAbilityPresentationTests.VisualSlot_RejectsCollisionAndNetworkComponents",
+      "last_finished_unix_ms": 1791056533210,
+      "stuck_suspected": false,
+      "editor_is_focused": false,
+      "blocked_reason": null,
+      "failures_so_far": [
+        {
+          "full_name": "ActiveAbilityHudTests.CooldownWorldPickupAndDashSafetyTimerAreNotSelfBuffBars(Ready,3.0f,5.0f)",
+          "message": "  尚未提供技能時間條快照規則。\r\n  Expected: not null\r\n  But was:  null\r\n"
+        },
+        {
+          "full_name": "ActiveAbilityHudTests.CooldownWorldPickupAndDashSafetyTimerAreNotSelfBuffBars(AwaitingPickup,10.0f,10.0f)",
+          "message": "  尚未提供技能時間條快照規則。\r\n  Expected: not null\r\n  But was:  null\r\n"
+        },
+        {
+          "full_name": "ActiveAbilityHudTests.CooldownWorldPickupAndDashSafetyTimerAreNotSelfBuffBars(Dashing,80.0f,80.0f)",
+          "message": "  尚未提供技能時間條快照規則。\r\n  Expected: not null\r\n  But was:  null\r\n"
+        },
+        {
+          "full_name": "ActiveAbilityHudTests.CooldownWorldPickupAndDashSafetyTimerAreNotSelfBuffBars(Active,0.0f,2.0f)",
+          "message": "  尚未提供技能時間條快照規則。\r\n  Expected: not null\r\n  But was:  null\r\n"
+        },
+        {
+          "full_name": "ActiveAbilityHudTests.CooldownWorldPickupAndDashSafetyTimerAreNotSelfBuffBars(Casting,0.0f,0.0f)",
+          "message": "  尚未提供技能時間條快照規則。\r\n  Expected: not null\r\n  But was:  null\r\n"
+        },
+        {
+          "full_name": "ActiveAbilityHudTests.ShieldAppendsWhitePartialCellsWithoutMovingExistingHealthGeometry",
+          "message": "  護盾應沿用現有血格繪圖 owner。\r\n  Expected: not null\r\n  But was:  null\r\n"
+        },
+        {
+          "full_name": "ActiveAbilityHudTests.SkillHudContractExposesTimedSnapshotAndSynchronizedDuration",
+          "message": "  Expected: not null\r\n  But was:  null\r\n"
+        },
+        {
+          "full_name": "ActiveAbilityHudTests.TimedBarUsesAuthoritativeDurationInsteadOfFirstObservedRemaining(Casting,0.5f,2.0f,0.25f,\"施放準備\")",
+          "message": "  尚未提供技能時間條快照規則。\r\n  Expected: not null\r\n  But was:  null\r\n"
+        },
+        {
+          "full_name": "ActiveAbilityHudTests.TimedBarUsesAuthoritativeDurationInsteadOfFirstObservedRemaining(Armed,2.0f,5.0f,0.4f,\"待命\")",
+          "message": "  尚未提供技能時間條快照規則。\r\n  Expected: not null\r\n  But was:  null\r\n"
+        },
+        {
+          "full_name": "ActiveAbilityHudTests.TimedBarUsesAuthoritativeDurationInsteadOfFirstObservedRemaining(Active,1.0f,4.0f,0.25f,\"效果持續\")",
+          "message": "  尚未提供技能時間條快照規則。\r\n  Expected: not null\r\n  But was:  null\r\n"
+        },
+        {
+          "full_name": "ActiveAbilityPresentationTests.GrenadeNose_FollowsDescendingTrajectoryWithoutRotatingRoot",
+          "message": "  需要與投射物權威根物件分離的本機外觀元件。\r\n  Expected: not null\r\n  But was:  null\r\n"
+        },
+        {
+          "full_name": "ActiveAbilityPresentationTests.HealingFloat_ChangesVisualOnlyAndStaysBounded",
+          "message": "  需要與投射物權威根物件分離的本機外觀元件。\r\n  Expected: not null\r\n  But was:  null\r\n"
+        },
+        {
+          "full_name": "ActiveAbilityPresentationTests.MisconfiguredRootAnchor_CannotMoveAuthority",
+          "message": "  需要與投射物權威根物件分離的本機外觀元件。\r\n  Expected: not null\r\n  But was:  null\r\n"
+        },
+        {
+          "full_name": "ActiveAbilityPresentationTests.VisualSlot_RejectsCollisionAndNetworkComponents",
+          "message": "  Expected: not null\r\n  But was:  null\r\n"
+        }
+      ],
+      "failures_capped": false
+    },
+    "error": null,
+    "result": null
+  },
+  "hint": null
+}

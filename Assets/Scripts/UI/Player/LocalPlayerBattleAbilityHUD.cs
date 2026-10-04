@@ -20,6 +20,31 @@ public sealed class LocalPlayerBattleAbilityHUD : MonoBehaviour
     [SerializeField] private Image grappleKeyBackground;
     [SerializeField] private CanvasGroup visualGroup;
 
+    [Header("中央下方技能時間條")]
+    [SerializeField, Tooltip("技能時間條根物件；未接線時只保留既有技能槽。顯示施法延遲、閃現待命及自身效果時間，不顯示地上治療包或衝刺安全期限。")]
+    private GameObject timedAbilityRoot;
+    [SerializeField, Tooltip("剩餘時間填色。使用 Simple Image 及水平錨點比例，不依賴 Sprite 的 Filled 模式；子物件需使用左側 pivot。")]
+    private Image timedAbilityFill;
+    [SerializeField, Tooltip("技能名稱文字；讀目前裝備 Definition 的顯示名稱。")]
+    private TMP_Text timedAbilityName;
+    [SerializeField, Tooltip("狀態文字：施放準備、待命或效果持續。")]
+    private TMP_Text timedAbilityState;
+    [SerializeField, Tooltip("剩餘秒數文字，以一位小數呈現。")]
+    private TMP_Text timedAbilitySeconds;
+    [SerializeField, Tooltip("施法延遲的填色。僅改外觀，不改施法時間。")]
+    private Color castingBarColor = new Color(1f, .78f, .2f, 1f);
+    [SerializeField, Tooltip("閃現待命的填色。僅改外觀，不改第二次 E 的期限。")]
+    private Color armedBarColor = new Color(.3f, .8f, 1f, 1f);
+    [SerializeField, Tooltip("自己持續效果的填色。僅改外觀，不改效果或冷卻。")]
+    private Color activeBarColor = new Color(.25f, 1f, .9f, 1f);
+
+    [Header("已確認技能槽配色")]
+    [SerializeField, Tooltip("可用技能與未按下鍵帽的暖米白底色。")]
+    private Color slotReadyColor = new Color32(241, 237, 217, 255);
+    [SerializeField, Tooltip("按住對應按鍵時的柔黃底色。")]
+    private Color slotPressedColor = new Color32(213, 196, 94, 255);
+    [SerializeField, Tooltip("技能不可用時的低明度底色；不改技能資格。")]
+    private Color slotUnavailableColor = new Color32(111, 115, 99, 255);
     private readonly List<SlotView> views = new List<SlotView>();
     private StageHudController stageHud;
     private InputManager inputManager;
@@ -74,14 +99,54 @@ public sealed class LocalPlayerBattleAbilityHUD : MonoBehaviour
         if (inputManager == null) inputManager = runner.GetComponent<InputManager>();
         RefreshGrapple(charges);
         RefreshSlots(manager);
+        RefreshTimedAbility(playerObject.GetComponent<Player>(), manager);
     }
 
     private void Hide()
     {
+        if (timedAbilityRoot != null) timedAbilityRoot.SetActive(false);
         if (visualGroup != null) visualGroup.alpha = 0f;
         foreach (SlotView view in views)
             if (view.Root != null) view.Root.SetActive(false);
     }
+
+    private void RefreshTimedAbility(Player player, PlayerAbilityRuntimeManager manager)
+    {
+        if (timedAbilityRoot == null) return;
+        if (player == null || player.Health == null || !player.Health.IsAlive)
+        {
+            timedAbilityRoot.SetActive(false);
+            return;
+        }
+        for (int slot = 0; slot < PlayerAbilityRuntimeManager.MaximumAbilityRuntimeSlots; slot++)
+        {
+            PlayerAbilityRuntime runtime = manager.GetEquippedRuntimeAtSlot(slot);
+            if (runtime == null || runtime.Definition == null || !runtime.IsAvailableForCurrentProfession ||
+                !runtime.TryGetModule<IPlayerAbilityHudState>(out var source)) continue;
+            PlayerAbilityTimedHudState state = source.TimedHudState;
+            if (!state.IsVisible) continue;
+            timedAbilityRoot.SetActive(true);
+            if (timedAbilityName != null && timedAbilityName.text != runtime.Definition.DisplayName)
+                timedAbilityName.text = runtime.Definition.DisplayName;
+            if (timedAbilityState != null && timedAbilityState.text != state.StateLabel)
+                timedAbilityState.text = state.StateLabel;
+            if (timedAbilitySeconds != null) timedAbilitySeconds.SetText("{0:1}s", state.RemainingSeconds);
+            if (timedAbilityFill != null)
+            {
+                RectTransform fill = timedAbilityFill.rectTransform;
+                Vector2 maximum = fill.anchorMax;
+                maximum.x = state.NormalizedRemaining;
+                if (fill.anchorMax != maximum) fill.anchorMax = maximum;
+                Color color = state.Phase == PlayerActiveAbilityPhase.Casting ? castingBarColor :
+                    state.Phase == PlayerActiveAbilityPhase.Armed ? armedBarColor : activeBarColor;
+                if (timedAbilityFill.color != color) timedAbilityFill.color = color;
+            }
+            return;
+        }
+        timedAbilityRoot.SetActive(false);
+    }
+
+    private void OnDisable() => Hide();
 
     private void RefreshGrapple(PlayerGrappleCharges charges)
     {
@@ -174,19 +239,34 @@ public sealed class LocalPlayerBattleAbilityHUD : MonoBehaviour
         if (view.Fallback != null)
         {
             view.Fallback.gameObject.SetActive(icon == null);
-            view.Fallback.text = "✶";
+            string label = runtime.Definition.DisplayName;
+            view.Fallback.text = runtime.TryGetModule<IPlayerAbilityHudState>(out _) && !string.IsNullOrEmpty(label)
+                ? label.Substring(0, Mathf.Min(2, label.Length)) : "✶";
         }
         float cooldown = 0f;
-        if (runtime.TryGetModule(out SupportAerialAbility aerial))
+        if (runtime.TryGetModule<IPlayerAbilityHudState>(out var activeHud))
+            cooldown = activeHud.CooldownRemainingSeconds;
+        else if (runtime.TryGetModule(out SupportAerialAbility aerial))
             cooldown = aerial.CooldownRemainingSeconds;
         else if (runtime.TryGetModule(out TankAirDashAbility dash))
             cooldown = dash.CooldownRemainingSeconds;
         bool cooling = cooldown > 0.01f;
-        if (view.CooldownShade != null) view.CooldownShade.gameObject.SetActive(cooling);
+        bool active = activeHud != null && activeHud.IsAbilityActive;
+        if (view.CooldownShade != null) view.CooldownShade.gameObject.SetActive(cooling && !active);
         if (view.CooldownText != null)
         {
-            view.CooldownText.gameObject.SetActive(cooling);
-            if (cooling) view.CooldownText.text = Mathf.CeilToInt(cooldown).ToString();
+            view.CooldownText.gameObject.SetActive(cooling || active);
+            if (active)
+            {
+                view.CooldownText.color = new Color(.25f, 1f, .9f);
+                view.CooldownText.text = activeHud.ActiveRemainingSeconds > .01f
+                    ? Mathf.CeilToInt(activeHud.ActiveRemainingSeconds).ToString() : "…";
+            }
+            else if (cooling)
+            {
+                view.CooldownText.color = Color.white;
+                view.CooldownText.text = Mathf.CeilToInt(cooldown).ToString();
+            }
         }
         KeyCode key = category == PlayerAbilityCategory.GrappleFocus
             ? (inputManager != null ? inputManager.GrappleFocusKey : KeyCode.E)
@@ -194,12 +274,13 @@ public sealed class LocalPlayerBattleAbilityHUD : MonoBehaviour
         if (view.KeyText != null) view.KeyText.text = key.ToString().ToUpperInvariant();
         if (view.KeyBackground != null)
             view.KeyBackground.color = Input.GetKey(key)
-                ? new Color(0.2f, 0.78f, 0.95f, 0.95f)
-                : new Color32(204, 190, 199, 255);
+                ? slotPressedColor
+                : slotReadyColor;
         if (view.Background != null)
-            view.Background.color = runtime.IsAvailableForCurrentProfession
-                ? new Color32(204, 190, 199, 255)
-                : new Color(0.28f, 0.28f, 0.31f, 0.75f);
+            view.Background.color = runtime.IsAvailableForCurrentProfession &&
+                (!runtime.TryGetModule<IPlayerAbilityHudState>(out var availabilityHud) || availabilityHud.IsUsable)
+                ? slotReadyColor
+                : slotUnavailableColor;
     }
 
     private static void CenterSlotContent(RectTransform rect)

@@ -1,0 +1,31 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "358ad11b769e40f5a6895339d20c6321",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1791057960973,
+      "finished_unix_ms": 1791057964650,
+      "last_update_unix_ms": 1791057964650,
+      "progress": {
+        "completed": 23,
+        "total": 409,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1791057964160,
+        "last_finished_test_full_name": "ActiveAbilityPresentationTests.VisualSlot_RejectsCollisionAndNetworkComponents",
+        "last_finished_unix_ms": 1791057964161,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": null
+    },
+    "hint": null
+  }
+}

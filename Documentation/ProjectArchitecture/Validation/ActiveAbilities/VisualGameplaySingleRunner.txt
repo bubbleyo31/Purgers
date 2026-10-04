@@ -1,0 +1,60 @@
+2026-10-03T19:57:46.5865353Z 通過 (controlled Single Runner, not independent multiplayer)
+PASS Single Runner started
+PASS Player health spawned
+PASS Shield equip: 
+PASS Shield usable
+PASS Shield E accepted exactly once
+PASS shield absorbs before health
+PASS shield overflow preserves exact damage
+PASS Experience equip: 
+PASS Experience usable
+PASS Experience E accepted exactly once
+PASS experience buff doubles received damage
+PASS personal experience multiplier active
+PASS experience cooldown waits for end
+PASS Blink equip: 
+PASS Blink usable
+PASS Blink E accepted exactly once
+PASS blink armed without cooldown
+PASS second E dashes and starts cooldown
+BLINK initial hit ActiveAbility verification obstacle distance=0 normal=(0.00, 0.00, -1.00) point=(0.00, 0.00, 0.00)
+BLINK fixed=(1000.00, 100.00, 1000.00) deltaTime=0.015625 active=True
+BLINK end=(1000.00, 100.00, 1003.50) phase=Ready velocity=(0.00, 0.00, 0.00)
+PASS grounded blink travels and stops before wall: 3.5
+PASS BulletTime equip: 
+PASS BulletTime usable
+PASS BulletTime E accepted exactly once
+PASS bullet time does not apply damage early
+PASS bullet time settles exactly once
+PASS Grenade equip: 
+PASS Grenade usable
+PASS Grenade E accepted exactly once
+PASS Grenade launched and starts cooldown
+PASS HealingPack equip: 
+PASS HealingPack usable
+PASS HealingPack E accepted exactly once
+PASS healing pack waits for pickup
+PASS Ricochet equip: 
+PASS Ricochet usable
+PASS Ricochet E accepted exactly once
+PASS Ricochet launched and starts cooldown
+PASS PiercingCannon equip: 
+PASS PiercingCannon usable
+PASS PiercingCannon E accepted exactly once
+PASS PiercingCannon launched and starts cooldown
+PASS Shockwave equip: 
+PASS Shockwave usable
+PASS Shockwave E accepted exactly once
+PASS Shockwave launched and starts cooldown
+PASS PrecisionLock equip: 
+PASS PrecisionLock usable
+PASS PrecisionLock E accepted exactly once
+PASS precision lock active for two seconds
+PASS same-tick wall ricochet deals doubled full self damage
+PASS production enemy uses collider-independent knockback shape
+PASS production enemy accepts knockback without CapsuleCollider
+PASS enemy stops before wall
+PASS wall extra damage applied once
+PASS wall hit stuns enemy
+PASS stun expires without duplicate wall damage
+PASS optional enemy component can reject knockback

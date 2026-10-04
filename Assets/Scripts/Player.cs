@@ -685,8 +685,9 @@ public class Player :
         {
             abilityRuntimeManager
                 .SimulateActiveAbilities(
-                    professionInput,
-                    PreviousButtons
+                    input,
+                    PreviousButtons,
+                    professionInput
                 );
         }
 

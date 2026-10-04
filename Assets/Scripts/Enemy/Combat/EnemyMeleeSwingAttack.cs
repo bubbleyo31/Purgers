@@ -224,6 +224,13 @@ public sealed class EnemyMeleeSwingAttack :
         StartCooldown();
     }
 
+    public override void PauseSimulationTick()
+    {
+        PhaseTimer = ActiveControlRules.PauseTimerForOneTick(PhaseTimer, Runner);
+        CooldownTimer = ActiveControlRules.PauseTimerForOneTick(CooldownTimer, Runner);
+        CaptureCurrentWeaponPose();
+    }
+
     private void BeginActive(in EnemyCombatContext context)
     {
         Vector3 direction = Vector3.ProjectOnPlane(

@@ -220,7 +220,10 @@ public enum DamageRejectReason : byte
     /// 在 Host / Dedicated Server 架構下，
     /// 正式 HP 只能由 Server / Host 修改。
     /// </summary>
-    NotStateAuthority = 8
+    NotStateAuthority = 8,
+
+    /// <summary>已排入子彈時間佇列；不是正式命中、拒絕或死亡結果。</summary>
+    Deferred = 9
 }
 
 /// <summary>
@@ -253,6 +256,9 @@ public enum DamageRejectReason : byte
 /// </summary>
 public struct DamageRequest
 {
+    /// <summary>僅此筆延後結算使用的權威經驗分配快照；一般攻擊為 null。</summary>
+    public BulletTimeExperienceContext BulletTimeExperience;
+
     /// <summary>
     /// 攻擊方要求造成的傷害。
     ///
@@ -503,6 +509,9 @@ public struct DamageRequest
 /// </summary>
 public struct DamageResult
 {
+    /// <summary>已排隊但尚未扣血；不得據此播放命中回饋或發放擊殺獎勵。</summary>
+    public bool Deferred;
+
     /// <summary>
     /// 原始傷害要求。
     /// </summary>
@@ -824,6 +833,18 @@ public static class DamageReceiverUtility
         out DamageResult result
     )
     {
+        if (!TryPrepareDamage(hitObject, request, out PreparedDamageSnapshot pending, out result))
+            return false;
+        if (PlayerBulletTimeSessionRegistry.TryDeferDamage(pending, out result))
+            return true;
+        return TryResolvePreparedDamage(pending, out result);
+    }
+
+    /// <summary>找接收器後取得來源倍率快照；不消耗目標護盾、不扣血、不通知結果。</summary>
+    public static bool TryPrepareDamage(GameObject hitObject, DamageRequest request,
+        out PreparedDamageSnapshot pending, out DamageResult result)
+    {
+        pending = null;
         // =============================================================
         // Hit Object
         // =============================================================
@@ -961,6 +982,39 @@ public static class DamageReceiverUtility
                 );
         }
     }
+
+        pending = new PreparedDamageSnapshot(hitObject, resolvedRequest,
+            targetReceiver, targetReceiverBehaviour, sourceBehaviours);
+        result = default;
+        return true;
+    }
+
+    /// <summary>只結算一次快照；來源倍率不重算，目標 Modifier 使用結算當下狀態。</summary>
+    public static bool TryResolvePreparedDamage(PreparedDamageSnapshot pending, out DamageResult result)
+    {
+        if (pending == null || !pending.TryBeginResolution())
+        {
+            result = DamageResult.CreateRejected(pending != null ? pending.Request : default,
+                pending != null ? pending.TargetObject : null, DamageRejectReason.InvalidRequest);
+            return false;
+        }
+        if (!pending.HasValidTarget)
+        {
+            result = DamageResult.CreateNoReceiver(pending.Request, pending.HitObject);
+            return false;
+        }
+        DamageRequest resolvedRequest = pending.Request;
+        IDamageReceiver targetReceiver = pending.Receiver;
+        MonoBehaviour targetReceiverBehaviour = pending.TargetBehaviour;
+        MonoBehaviour[] sourceBehaviours = pending.SourceBehaviours;
+        if (pending.TargetNetworkObject != null && !pending.TargetNetworkObject.HasStateAuthority)
+        {
+            result = DamageResult.CreateRejected(resolvedRequest, pending.TargetObject,
+                DamageRejectReason.NotStateAuthority);
+            NotifyOutgoingDamageResolved(sourceBehaviours, result);
+            return true;
+        }
+        MonoBehaviour[] behaviours = pending.HitObject.GetComponentsInParent<MonoBehaviour>(true);
 
         /*
         * 現在只有確定：

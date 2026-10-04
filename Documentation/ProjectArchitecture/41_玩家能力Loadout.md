@@ -1,6 +1,8 @@
 # 玩家能力 Loadout 架構
 
-> **2026-10-03 設計方向更新（尚未實作）**：Attack 專注射擊規劃獨立化，讓槍械使用者按 E 啟動，無需 Aim／ADS，作用期間持續修正後續子彈方向。是否保留空戰前提、如何結束／冷卻，以及是否使用現有 GrappleFocus 分類或其他槽位安排，仍待確認；不可因同用 E 就直接併入 GrappleFocus。現有五種能力、Definition、槽位與互斥資產均未變更。Support 四項舊武器強化暫時擱置、保留原狀。完整決策見 [40](40_職業與特殊能力.md#2026-10-03-特殊技能設計決策已確認方向尚未實作)。
+> **2026-10-04 E 主動技能原型已接入**：十項跨職業 E 沿用 GrappleFocus 分類及同槽互斥，現有獎勵池保留四項並追加十項。新增條件與共用 Definition 強化接口；強化仍不啟用、不清空動能，原空中緩速／衝刺維持原樣。設定、暫定規則與驗收見 [42 E 主動技能規格與驗收](42_E主動技能規格與強化預留.md)；驗證見 [紀錄](Validation/ActiveAbilities/README.md)。
+>
+> 最後核對日期：2026-10-04（局部核對：本輪 E 原型、原有能力／武器接點與驗證；其餘歷史紀錄保留）。
 
 > 最後核對：2026-09-17（局部核對：本輪修正與下方補充；其餘內容沿用 2026-09-15 基線）
 > 核對來源：`Assets/Scripts/Player/Ability/Loadout`、五個初始鈎索能力、`Player.cs`、`PlayerGrapple.cs`、`PlayerGrappleInteractionController.cs`  
@@ -181,8 +183,30 @@ Tools → Player Ability → 建立初始能力 Runtime 與 Loadout
 
 ## 變更紀錄
 
+- 2026-10-04：記錄單一 E 同池、舊空中能力維持原樣、武器資格及強化擴充契約；未修改能力分類、欄位、Runtime 或資產。
+
 - 2026-10-03：同步槍械 E 專注獨立化的待實作方向及未定槽位規則；標明 Support 舊武器強化暫時擱置，未改現行 Loadout。
 
 - 2026-09-15：建立玩家能力 Loadout 專用文件；記錄可變槽位、職業規則、互斥、Fusion Runtime、鈎索路由、SupportAerial 冷卻與資產遷移狀態。
 
 - 2026-09-17：同步本輪局部修正、資產設定與驗證邊界。
+
+
+## 2026-10-04 E 主動技能原型接入（局部核對）
+
+最後核對日期：2026-10-04（僅本節責任與接點；較早章節為當時基線）。
+核對來源：Assets/Scripts/ 下的 PlayerAbilityDefinition、PlayerAbilityRuntimeManager、PlayerActiveAbilityBase、PlayerActiveAbilityAssetSetup。
+相關文件：[42 E 主動技能規格與驗收](42_E主動技能規格與強化預留.md)、[驗證紀錄](Validation/ActiveAbilities/README.md)。
+
+保留 GrappleFocus 序列化值 1、原 Slot Layout 與互斥群組；十項 Definition 不限職業。Definition 新增 RequiresRangedWeapon 與空的 enhancementDefinition。Runtime 同步 Phase／timer／ActivationSequence 並提供 IPlayerAbilityHudState；條件 useConditions 預設空。已生成十份 Definition、Runtime、reward、test Loadout 與三個投射物 Prefab，已加入 Fusion PrefabTable；未改 Scene／玩家 Prefab 起始裝備。
+
+變更紀錄：2026-10-04 同步本節結構、資產與權威邊界；強化消耗仍未實作。
+
+## 2026-10-04 E 技能視覺與 UI 接入（局部核對）
+
+最後核對日期：2026-10-04；本節僅核對以下呈現責任。
+相關文件：[43 E 技能視覺與 UI 配置](43_E技能視覺與UI配置.md)。
+
+核對來源：PlayerActiveAbilityBase、PlayerBlinkAbility、PlayerAbilityExtensionContracts、ActiveAbilityHudRules。
+
+新 E Runtime 在進入 Casting、Armed、Active 時同步 PhaseDurationSeconds，供 HUD 依原階段長度計算剩餘比例。TimedHudState 是只讀契約，不計冷卻、不發動技能、不啟用強化。既有 Loadout 分類、互斥與老空中技能維持原樣。

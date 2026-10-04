@@ -98,6 +98,8 @@ public class PlayerIncomingDamageModifierBridge :
     /// 使用 MonoBehaviour 保存是為了
     /// 正確處理 Unity Destroy Null。
     /// </summary>
+    private readonly List<MonoBehaviour> resolvedModifierBehaviours = new List<MonoBehaviour>(12);
+
     private readonly List<MonoBehaviour>
         cachedModifierBehaviours =
             new List<MonoBehaviour>(4);
@@ -137,38 +139,35 @@ public class PlayerIncomingDamageModifierBridge :
         ref DamageRequest request
     )
     {
-        if (profession == null ||
-            runtimeManager == null)
-        {
-            return;
-        }
-
-        // =============================================================
-        // Runtime 必須跟正式職業一致
-        // =============================================================
-
-        if (runtimeManager.CurrentRuntimeProfession !=
-            profession.CurrentProfession)
-        {
-            return;
-        }
-
-        // =============================================================
-        // Cache
-        // =============================================================
-
+        // 職業與獨立能力合併後排序，護盾才會位於所有減傷之後。
         RefreshModifierCache();
+        resolvedModifierBehaviours.Clear();
+        if (profession != null && runtimeManager != null &&
+            runtimeManager.CurrentRuntimeProfession == profession.CurrentProfession)
+            resolvedModifierBehaviours.AddRange(cachedModifierBehaviours);
+        var abilities = GetComponent<PlayerAbilityRuntimeManager>();
+        if (abilities != null)
+            for (int slot = 0; slot < PlayerAbilityRuntimeManager.MaximumAbilityRuntimeSlots; slot++)
+            {
+                var runtime = abilities.GetEquippedRuntimeAtSlot(slot);
+                if (runtime != null && runtime.RefreshProfessionAvailabilityNow() &&
+                    runtime.TryGetModule<IPlayerIncomingDamageModifier>(out var modifier) &&
+                    modifier is MonoBehaviour behaviour && behaviour.isActiveAndEnabled &&
+                    !resolvedModifierBehaviours.Contains(behaviour))
+                    resolvedModifierBehaviours.Add(behaviour);
+            }
+        resolvedModifierBehaviours.Sort(CompareModifierPriority);
 
         // =============================================================
         // 依 Priority 執行
         // =============================================================
 
         for (int i = 0;
-             i < cachedModifierBehaviours.Count;
+             i < resolvedModifierBehaviours.Count;
              i++)
         {
             MonoBehaviour behaviour =
-                cachedModifierBehaviours[i];
+                resolvedModifierBehaviours[i];
 
             if (behaviour == null)
             {
