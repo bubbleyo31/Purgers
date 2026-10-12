@@ -10,7 +10,7 @@ public sealed class DevelopmentLevelUpRulesTests
         var current = new PlayerExperienceState(3, 7, 0);
         int grant = DevelopmentLevelUpRules.ExperienceToNextLevel(current);
 
-        Assert.That(grant, Is.EqualTo(33));
+        Assert.That(grant, Is.EqualTo(13));
         PlayerExperienceState after = PlayerExperienceRules.Award(current, grant);
         Assert.That(after.Level, Is.EqualTo(4));
         Assert.That(after.Experience, Is.Zero);

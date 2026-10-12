@@ -265,11 +265,10 @@ public sealed class LocalPlayerRewardHUD : MonoBehaviour
         if (!found)
             return;
 
-        PlayerAbilityDefinition ability = reward.AbilityDefinition;
-        card.title.text = ability != null ? ability.DisplayName : rewardId;
+        card.title.text = reward.DisplayName;
         card.description.text = reward.Description;
         card.mouseButton.text = mouseButton;
-        Sprite icon = ability != null ? ability.HudIcon : null;
+        Sprite icon = reward.HudIcon;
         if (card.icon != null)
         {
             card.icon.enabled = icon != null;

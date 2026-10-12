@@ -290,11 +290,23 @@ public class PlayerProfessionRuntime :
         ResolveRuntimeDriver();
     }
 
+    /// <summary>各端只清理本 Runtime 持有的呈現，不遍歷玩家的獨立能力。</summary>
+    public void ClearLocalWeaponPresentation()
+    {
+        foreach (var tracer in GetComponentsInChildren<BulletTracerLineDrawer>(true))
+            tracer.ClearTracers();
+        foreach (var audio in GetComponentsInChildren<AudioSource>(true))
+            audio.Stop();
+        foreach (var effect in GetComponentsInChildren<ParticleSystem>(true))
+            effect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+    }
+
     public override void Despawned(
         NetworkRunner runner,
         bool hasState
     )
     {
+        ClearLocalWeaponPresentation();
         sharedRuntimeModulesBound =
             false;
 

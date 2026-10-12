@@ -66,6 +66,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   definition: {fileID: 11400000, guid: daabd16af8e7bf14fab4cfd5db908847, type: 2}
+  recoil:
+    cameraEnabled: 1
+    cameraTiming: 2
+    cameraAngles: {x: -3, y: 0}
+    cameraApplicationDuration: 0.06
+    cameraRecoveryDelay: 0.1
+    cameraRecoverySpeed: 20
+    movementEnabled: 1
+    movementTiming: 2
+    movementSpeed: 50
+    movementLocalDirection: {x: 0, y: 0, z: -1}
   _OwnerPlayerObject: {fileID: 0}
   _LoadoutSlotIndex: 0
 --- !u!114 &8871948839826529802
@@ -80,8 +91,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1ecf033e602c2041b5f05807632ce53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldownSeconds: 12
-  castDelaySeconds: 0.25
+  cooldownSeconds: 1
+  castDelaySeconds: 0.1
   useConditions: []
   rangeGizmos:
     enabled: 1
@@ -100,13 +111,13 @@ MonoBehaviour:
   projectilePrefab: {fileID: 5086515930126324702, guid: 17811fd3f2a028b43a32111403838e93,
     type: 3}
   originHeight: 1.5
-  projectileSpeed: 30
-  gravity: 18
+  projectileSpeed: 100
+  gravity: 100
   projectileRadius: 0.1
   collisionMask:
     serializedVersion: 2
-    m_Bits: 577
+    m_Bits: 513
   projectileLifetime: 8
-  baseDamage: 40
-  explosionRadius: 30
+  baseDamage: 100
+  explosionRadius: 20
   pickupRadius: 0.4

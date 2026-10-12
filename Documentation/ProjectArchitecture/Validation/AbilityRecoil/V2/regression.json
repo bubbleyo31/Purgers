@@ -1,0 +1,45 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"b08b86b4cdff48769280eb1b7bfbaa91\",\"status\":\"failed\",\"mode\":\"EditMode\",\"started_unix_ms\":1791463919398,\"finished_unix_ms\":1791463932290,\"last_update_unix_ms\":1791463932290,\"progress\":{\"completed\":562,\"total\":577,\"current_test_full_name\":null,\"current_test_started_unix_ms\":1791463931816,\"last_finished_test_full_name\":\"WeaponRecoilApplicationTests.ZeroDurationKeepsImmediateImpulse\",\"last_finished_unix_ms\":1791463931816,\"stuck_suspected\":false,\"editor_is_focused\":true,\"blocked_reason\":null,\"failures_so_far\":[{\"full_name\":\"BossStageAssetTests.GameSceneContainsBossAssetWiring\",\"message\":\"  Expected: same as <MapChunk_Boss (MapChunk)>\\r\\n  But was:  <MapChunk_Boss (MapChunk)>\\r\\n\"}],\"failures_capped\":false},\"error\":null,\"result\":null},\"hint\":null}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "success": true,
+      "message": "Test job status retrieved.",
+      "error": null,
+      "data": {
+        "job_id": "b08b86b4cdff48769280eb1b7bfbaa91",
+        "status": "failed",
+        "mode": "EditMode",
+        "started_unix_ms": 1791463919398,
+        "finished_unix_ms": 1791463932290,
+        "last_update_unix_ms": 1791463932290,
+        "progress": {
+          "completed": 562,
+          "total": 577,
+          "current_test_full_name": null,
+          "current_test_started_unix_ms": 1791463931816,
+          "last_finished_test_full_name": "WeaponRecoilApplicationTests.ZeroDurationKeepsImmediateImpulse",
+          "last_finished_unix_ms": 1791463931816,
+          "stuck_suspected": false,
+          "editor_is_focused": true,
+          "blocked_reason": null,
+          "failures_so_far": [
+            {
+              "full_name": "BossStageAssetTests.GameSceneContainsBossAssetWiring",
+              "message": "  Expected: same as <MapChunk_Boss (MapChunk)>\r\n  But was:  <MapChunk_Boss (MapChunk)>\r\n"
+            }
+          ],
+          "failures_capped": false
+        },
+        "error": null,
+        "result": null
+      },
+      "hint": null
+    }
+  },
+  "isError": false
+}

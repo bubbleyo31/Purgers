@@ -1,0 +1,28 @@
+2026-10-08T13:46:40.9232917Z 失敗; controlled Single Runner, not independent multiplayer
+PASS Single Runner started
+PASS Probe observes fixed KCC data
+PASS Accepted press enters windup
+PASS Camera BeforeCast kicks immediately
+PASS Movement AfterCast waits
+PASS Repeated press during cast cannot kick twice
+PASS Movement uses release aim including pitch
+PASS Release finishes cannon
+PASS Later tick does not replay recoil
+PASS Shot direction sampled before AfterCast camera kick
+PASS Zero windup applies camera once
+PASS Same-event movement uses pre-kick aim
+PASS Held input cannot repeat kick
+PASS Blocked press cannot kick
+PASS Cancelled windup cannot release camera recoil
+PASS Cancelled windup cannot release movement recoil
+PASS Both flags with zero windup apply two camera kicks
+PASS Both flags represent two distinct cast events
+PASS Both flags add movement at each event aim
+FAIL System.Exception: Blink preparation respects selected stage mask=2
+  at AbilityRecoilRuntimeVerification.Check (System.Boolean condition, System.String label) [0x0001f] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\AbilityRecoilRuntimeVerification.cs:281 
+  at AbilityRecoilRuntimeVerification+<>c__DisplayClass12_1.<Begin>b__10 () [0x0004a] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\AbilityRecoilRuntimeVerification.cs:129 
+  at AbilityRecoilRuntimeVerification.FixedUpdateNetwork () [0x00025] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\AbilityRecoilRuntimeVerification.cs:28 
+--- End of stack trace from previous location where exception was thrown ---
+
+  at AbilityRecoilRuntimeVerification.Tick (System.Action action) [0x000e3] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\AbilityRecoilRuntimeVerification.cs:34 
+  at AbilityRecoilRuntimeVerification.Begin () [0x0081c] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\AbilityRecoilRuntimeVerification.cs:126 

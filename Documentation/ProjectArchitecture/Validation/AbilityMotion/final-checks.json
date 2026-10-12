@@ -1,0 +1,43 @@
+{
+  "editor": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"playMode\":false,\"compileFailed\":false,\"compiling\":false,\"scene\":\"Assets/Scenes/_Menu.unity\",\"sceneDirty\":false},\"compiler\":\"codedom\"}}"
+      }
+    ],
+    "structuredContent": {
+      "success": true,
+      "message": "Code executed successfully.",
+      "data": {
+        "result": {
+          "playMode": false,
+          "compileFailed": false,
+          "compiling": false,
+          "scene": "Assets/Scenes/_Menu.unity",
+          "sceneDirty": false
+        },
+        "compiler": "codedom"
+      }
+    },
+    "isError": false
+  },
+  "console": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Retrieved 0 log entries.\",\"data\":[]}"
+      }
+    ],
+    "structuredContent": {
+      "success": true,
+      "message": "Retrieved 0 log entries.",
+      "data": []
+    },
+    "isError": false
+  },
+  "runtimePrefabBaseline": {
+    "count": 24,
+    "changed": 0
+  }
+}

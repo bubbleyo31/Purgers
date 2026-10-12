@@ -72,9 +72,11 @@ public sealed class PlayerBulletTimeAbility : PlayerActiveAbilityBase
         hadStateAuthority = false;
     }
 
-    protected override void Activate()
+    protected override bool CanEndOnActivePress => true;
+
+    protected override bool Activate()
     {
-        if (!Authority) return;
+        if (!Authority) return false;
         Vector3 center = Owner.transform.position;
         float radiusSquared = Mathf.Max(0.01f, effectRadius) * Mathf.Max(0.01f, effectRadius);
         var players = new List<BulletTimeParticipant>();
@@ -97,7 +99,7 @@ public sealed class PlayerBulletTimeAbility : PlayerActiveAbilityBase
         {
             Debug.LogWarning("[子彈時間] 範圍內對象超過同步容量；本次施放取消，沒有截斷影響名單。", this);
             FinishAbility();
-            return;
+            return false;
         }
 
         pendingDamage.Clear();
@@ -111,6 +113,7 @@ public sealed class PlayerBulletTimeAbility : PlayerActiveAbilityBase
         for (int i = 0; i < enemies.Count; i++) AffectedEnemies.Set(i, enemies[i]);
         experienceContext = new BulletTimeExperienceContext(Runner, players);
         BeginActive(durationSeconds);
+        return true;
     }
 
     private void AddPlayerSnapshot(Player player, Vector3 center, float radiusSquared,

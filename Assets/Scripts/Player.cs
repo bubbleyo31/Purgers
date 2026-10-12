@@ -643,13 +643,8 @@ public class Player :
          * 原始 NetInput 仍然保存真正的實體按鍵狀態，
          * PreviousButtons 也繼續使用原始按鍵歷史。
          *
-         * 只有交給 Profession Runtime 的副本會暫時關閉 Aim。
-         *
-         * 這可以防止：
-         *
-         * Attached 按 Aim
-         * → 斷繩
-         * → 同一顆 Aim 又啟動 Tank / Support 特殊能力。
+         * Profession Runtime 的副本仍遵守既有移動／動作鎖。
+         * 鈎索不再以右鍵斷繩，也不再因此消耗 Aim 或封鎖 Ability1。
          */
         NetInput professionInput =
             input;

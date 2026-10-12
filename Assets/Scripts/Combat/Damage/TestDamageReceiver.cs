@@ -207,8 +207,11 @@ public class TestDamageReceiver :
     // =====================================================================
     #region Fusion
 
+    private MonoBehaviour[] fatalHitPolicies;
+
     public override void Spawned()
     {
+        fatalHitPolicies = GetComponents<MonoBehaviour>();
         /*
          * 初始 Gameplay State
          * 只由 State Authority 建立。
@@ -324,6 +327,11 @@ public class TestDamageReceiver :
                 0f,
                 MaxHealth
             );
+
+        // 在正式傷害被接受後才套用特殊一擊致死政策；AppliedDamage 保留實際命中量。
+        foreach (var component in fatalHitPolicies)
+            if (component != null && component.isActiveAndEnabled && component is IEnemyFatalHitPolicy policy && policy.IsFatalHit(request))
+            { CurrentHealth = 0f; break; }
 
         bool killedTarget =
             healthBefore > 0f &&

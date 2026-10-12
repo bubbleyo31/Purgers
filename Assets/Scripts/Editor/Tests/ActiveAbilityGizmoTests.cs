@@ -88,18 +88,48 @@ public sealed class ActiveAbilityGizmoTests
             Assert.That(Vector3.Angle(Vector3.forward,p),Is.EqualTo(8f).Within(.001f));
         }
     }
-    [Test] public void ShockwaveBoundary_IsSphereIntersectedWithHorizontalWedge()
+    [Test] public void ShockwaveBoundary_UsesIndependentSizeTravelAndHeight()
     {
-        var skill=Create("Shockwave");Set(skill,"radius",5f);Set(skill,"halfAngleDegrees",60f);
+        var skill=Create("Shockwave");
+        Set(skill,"radius",5f);Set(skill,"halfAngleDegrees",60f);Set(skill,"waveThickness",1f);
+        Set(skill,"travelDistance",12f);Set(skill,"waveHeight",7f);
+        skill.transform.position=new Vector3(3f,20f,4f);
         var model=Build(skill);var origin=Field<Vector3>(model,"Origin");
         var surfaces=(IEnumerable)model.GetType().GetField("RangePaths").GetValue(model);
+        var bounds=new Bounds();bool first=true;
         foreach(Vector3[] path in surfaces)
             foreach(var p in path)
             {
                 var delta=p-origin;
-                Assert.That(delta.magnitude,Is.LessThanOrEqualTo(5.001f));
-                var flat=Vector3.ProjectOnPlane(delta,Vector3.up);
-                if(flat.sqrMagnitude>.0001f) Assert.That(Vector3.Angle(Vector3.forward,flat),Is.LessThanOrEqualTo(60.01f));
+                if(first){bounds=new Bounds(delta,Vector3.zero);first=false;}else bounds.Encapsulate(delta);
+                Assert.That(delta.y,Is.InRange(-.001f,7.001f));
+                Assert.That(Mathf.Abs(delta.x),Is.LessThanOrEqualTo(5f*Mathf.Sin(60f*Mathf.Deg2Rad)+.001f));
+            }
+        Assert.That(bounds.min.z,Is.EqualTo(0f).Within(.001f));
+        Assert.That(bounds.max.z,Is.EqualTo(15f).Within(.001f),"12m 位移加上波牆自身 3m 深度。");
+        Assert.That(Field<string>(model,"Description"),Does.Contain("整片位移 12").And.Contain("高度 7"));
+    }
+
+    [Test] public void ShockwavePreview_RotatesOffsetAndWholeWallWithoutScaling()
+    {
+        var skill=Create("Shockwave");
+        Set(skill,"radius",4);Set(skill,"waveHeight",3);Set(skill,"travelDistance",12);
+        Set(skill,"halfAngleDegrees",60);Set(skill,"waveThickness",1);
+        skill.transform.SetPositionAndRotation(new Vector3(10,20,30),Quaternion.Euler(-35,70,0));
+        skill.transform.localScale=Vector3.one*5;
+        var data=new SerializedObject(skill);var offset=new Vector3(.4f,1.5f,.6f);
+        data.FindProperty("originOffset").vector3Value=offset;data.ApplyModifiedPropertiesWithoutUndo();
+        var model=Build(skill);var origin=Field<Vector3>(model,"Origin");
+        Assert.That(Vector3.Distance(origin,skill.transform.position+skill.transform.rotation*offset),Is.LessThan(.001f));
+        Assert.That(Vector3.Distance(Field<Vector3>(model,"Direction"),skill.transform.forward),Is.LessThan(.001f));
+        var surfaces=(IEnumerable)model.GetType().GetField("RangePaths").GetValue(model);
+        foreach(Vector3[] path in surfaces)
+            foreach(var point in path)
+            {
+                var local=Quaternion.Inverse(skill.transform.rotation)*(point-origin);
+                Assert.That(local.y,Is.InRange(-.001f,3.001f));
+                Assert.That(local.z,Is.InRange(-.001f,14.501f));
+                Assert.That(Mathf.Abs(local.x),Is.LessThan(3.465f));
             }
     }
     [TestCase(false,false,true,true,false)]
@@ -130,12 +160,12 @@ public sealed class ActiveAbilityGizmoTests
         return obj;
     }
     private ActiveAbilityGizmoPreview Trace(PlayerAbilityProjectileKind kind,Vector3 origin,Vector3 velocity,
-        float seconds,float gravity=0f,Transform owner=null)
+        float seconds,float gravity=0f,Transform owner=null,bool ignorePlayers=false)
     {
         var model=new ActiveAbilityGizmoPreview { Origin=origin,EffectRadius=kind==PlayerAbilityProjectileKind.Grenade?4f:0f };
         Physics.SyncTransforms();
         Builder.GetMethod("Trace",BindingFlags.NonPublic|BindingFlags.Static).Invoke(null,new object[]{
-            model,scene.GetPhysicsScene(),owner,null,kind,velocity,gravity,.05f,~0,seconds,0 });
+            model,scene.GetPhysicsScene(),owner,null,kind,velocity,gravity,.05f,~0,seconds,0,ignorePlayers });
         return model;
     }
     [Test] public void Ricochet_ReflectionPreservesRemainingStepDistance()
@@ -164,6 +194,13 @@ public sealed class ActiveAbilityGizmoTests
         Assert.That(model.Labels.Any(l=>l.Text.Contains("預估接觸點")),Is.True);
         var last=model.Paths.Last().Last();
         Assert.That(last.y,Is.EqualTo(.55f).Within(.01f));
+    }
+    [Test] public void Grenade_IgnoresPlayerInPreviewButStillHitsWall()
+    {
+        Box("Player",Vector3.forward,Vector3.one).AddComponent<PlayerHealth>();
+        Box("Wall",Vector3.forward*3,new Vector3(4,4,.1f));
+        var model=Trace(PlayerAbilityProjectileKind.Grenade,Vector3.zero,Vector3.forward*10f,1f,0f,null,true);
+        Assert.That(model.Paths.Last().Last().z,Is.EqualTo(2.9f).Within(.01f));
     }
     [Test] public void UnspawnedProjectile_DoesNotReadNetworkStateOrInventRange()
     {

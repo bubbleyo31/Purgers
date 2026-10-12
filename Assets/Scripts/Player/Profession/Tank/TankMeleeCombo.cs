@@ -61,7 +61,10 @@ public enum TankMeleeAttackPhase : byte
 
     Active = 2,
 
-    Recovery = 3
+    Recovery = 3,
+
+    Preparing = 4,
+    PreparedDashing = 5
 }
 
 /// <summary>
@@ -73,6 +76,22 @@ public enum TankMeleeAttackPhase : byte
 [Serializable]
 public class TankMeleeAttackDefinition
 {
+    [Header("動畫幀時序（逐段配置）")]
+    [Tooltip("啟用後，以原始動畫長度、FPS、倍率及指定幀換算時序，並開放按住預備。未啟用保留既有秒數，不改寫舊資產。")]
+    public bool UseAnimationFrames;
+    public AnimationFrameTiming FrameTiming = new AnimationFrameTiming();
+    [Min(0f), Tooltip("按住時停在來源動畫第幾幀，從第 0 幀起算。必須小於或等於出傷幀；放開前不出傷。")]
+    public float PreparationFrame;
+    [Min(0f), Tooltip("來源動畫出傷幀（第 0 幀起算）。點按照常播到這幀；預備後放開直接跳到這幀，出傷及震動各一次。")]
+    public float DamageFrame;
+    [Min(0f), Tooltip("來源動畫開始收招的幀，必須不早於出傷幀且不超過總幀數。收招持續到動畫總長結束，之後才開始連段接續計時。")]
+    public float RecoveryFrame;
+    public bool HasValidFrameTiming => FrameTiming != null && FrameTiming.IsValid &&
+        FrameTiming.ContainsFrame(PreparationFrame) && FrameTiming.ContainsFrame(DamageFrame) &&
+        FrameTiming.ContainsFrame(RecoveryFrame) && PreparationFrame <= DamageFrame && DamageFrame <= RecoveryFrame;
+    public float ResolvedStartup => UseAnimationFrames ? FrameTiming.FrameToSeconds(DamageFrame) : StartupDuration;
+    public float ResolvedActive => UseAnimationFrames ? FrameTiming.FrameToSeconds(RecoveryFrame) - ResolvedStartup : ActiveDuration;
+    public float ResolvedRecovery => UseAnimationFrames ? FrameTiming.DurationSeconds - FrameTiming.FrameToSeconds(RecoveryFrame) : RecoveryDuration;
     // =====================================================================
     #region 時間
 
@@ -152,7 +171,7 @@ public class TankMeleeAttackDefinition
 ///
 /// ====================================================================
 ///
-/// 每一段都有：
+/// 每一段都有（幀模式按住可在 Startup 與 Active 之間停於 Preparing）：
 ///
 /// Startup
 /// ↓
@@ -175,17 +194,8 @@ public class TankMeleeAttackDefinition
 ///
 /// ====================================================================
 ///
-/// Input Buffer：
-///
-/// 玩家目前還在攻擊
-/// ↓
-/// 提前按下一次左鍵
-/// ↓
-/// 不取消現在攻擊
-/// ↓
-/// 只保存 Buffered Input
-/// ↓
-/// Recovery 完成後開始下一段。
+/// 攻擊輸入鎖：整刀（含 Recovery）完成前不預存下一刀。
+/// 必須回到 Idle 後重新按下左鍵；按住跨過完成時點不自動出手。
 ///
 /// ====================================================================
 ///
@@ -208,7 +218,7 @@ public class TankMeleeAttackDefinition
 /// 讓三秒內下一次左鍵直接 Heavy。
 /// </summary>
 [DisallowMultipleComponent]
-public class TankMeleeCombo :
+public partial class TankMeleeCombo :
     NetworkBehaviour,
     ICombatDamageFeedbackSource
 {
@@ -432,10 +442,11 @@ public class TankMeleeCombo :
     private float comboResetDuration =
         0.8f;
 
-    [SerializeField]
-    [Tooltip("開啟後，玩家在目前攻擊 Startup、Active 或 Recovery 尚未結束時提前按下一次左鍵，會保存一個下一段攻擊輸入。現在這一刀不會被取消，下一段只會在 Recovery 完成後才開始。")]
-    private bool allowAttackInputBuffer =
-        true;
+    // 僅保留舊 Prefab 序列化；現在固定於整刀完成後才接受新按鍵，不再啟用輸入緩衝。
+#pragma warning disable CS0414
+    [SerializeField, HideInInspector]
+    private bool allowAttackInputBuffer = true;
+#pragma warning restore CS0414
 
     #endregion
 
@@ -626,17 +637,6 @@ public class TankMeleeCombo :
     }
 
     /// <summary>
-    /// 玩家是否已經在目前攻擊途中
-    /// 提前輸入下一次左鍵。
-    /// </summary>
-    [Networked]
-    private NetworkBool BufferedNextAttack
-    {
-        get;
-        set;
-    }
-
-    /// <summary>
     /// Grapple 強制 Heavy 的有效 Timer。
     ///
     /// Timer 有效時：
@@ -682,6 +682,61 @@ public class TankMeleeCombo :
     #endregion
 
     // =====================================================================
+    [Networked] public TankMeleePreparationProgress Preparation { get; private set; }
+    [Networked] public int SwingSequence { get; private set; }
+    [Networked] public int InterruptedSequence { get; private set; }
+
+    public bool IsPreparing => CurrentPhase == TankMeleeAttackPhase.Preparing;
+    public bool CanCancelPreparation => (CurrentPhase == TankMeleeAttackPhase.Startup || IsPreparing) &&
+        GetDefinition(CurrentStep) != null && GetDefinition(CurrentStep).UseAnimationFrames && !Preparation.Released;
+    public float ButtonHeldSeconds => Preparation.ButtonHeldSeconds;
+    public float PreparedSeconds => Preparation.PreparedSeconds;
+
+    // 動畫與 Gameplay 共用同一時間座標；不從 Animator 反推傷害。
+    public bool TryGetAnimationPosition(out TankMeleeComboStep step, out float normalizedTime)
+    {
+        step = CurrentStep;
+        normalizedTime = 0f;
+        var definition = GetDefinition(step);
+        if (definition == null || !definition.UseAnimationFrames || !definition.HasValidFrameTiming) return false;
+        float seconds = Preparation.CursorSeconds;
+        if (CurrentPhase == TankMeleeAttackPhase.Active)
+            seconds = definition.ResolvedStartup + definition.ResolvedActive - (PhaseTimer.RemainingTime(Runner) ?? 0f);
+        else if (CurrentPhase == TankMeleeAttackPhase.Recovery)
+            seconds = definition.ResolvedStartup + definition.ResolvedActive + definition.ResolvedRecovery - (PhaseTimer.RemainingTime(Runner) ?? 0f);
+        normalizedTime = Mathf.Clamp01(seconds / definition.FrameTiming.DurationSeconds);
+        return true;
+    }
+
+    /// <summary>只在已成功消耗 F 充能後呼叫；保留取消的當前段，不啟動連段逾時。</summary>
+    public bool CancelPreparationForQuickAction()
+    {
+        if (Object == null || !Object.IsValid || !Object.HasStateAuthority || !CanCancelPreparation) return false;
+        var retainedStep = CurrentStep;
+        ResetAttackState();
+        NextComboStep = retainedStep;
+        InterruptedSequence++;
+        return true;
+    }
+
+    /// <summary>死亡、換武器、控制封鎖等中斷：清除段數、按住時間、緩衝及強制重擊。</summary>
+    public void ResetForInterruption()
+    {
+        if (Object == null || !Object.IsValid) return;
+        if (!Object.HasStateAuthority && !Object.HasInputAuthority) return;
+        if (CurrentPhase != TankMeleeAttackPhase.Idle) InterruptedSequence++;
+        ResetAttackState();
+        ForcedHeavyTimer = TickTimer.None;
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        // 沒有輸入的死亡 Tick 也必須清理，不能等玩家再次送入按鍵。
+        if (ownerPlayer != null && ownerPlayer.Object != null && ownerPlayer.Object.IsValid &&
+            ((ownerPlayer.Health != null && !ownerPlayer.Health.IsAlive) || !ownerPlayer.Profession.IsTank))
+            ResetForInterruption();
+    }
+
     #region Damage Feedback
 
     /// <summary>
@@ -807,14 +862,13 @@ public class TankMeleeCombo :
             ComboResetTimer =
                 TickTimer.None;
 
-            BufferedNextAttack =
-                false;
-
             ForcedHeavyTimer =
                 TickTimer.None;
 
-            AttackSequence =
-                0;
+            AttackSequence = 0;
+            SwingSequence = 0;
+            InterruptedSequence = 0;
+            Preparation = default;
         }
     }
 
@@ -832,6 +886,17 @@ public class TankMeleeCombo :
         NetworkButtons previousButtons
     )
     {
+        if (Object == null || !Object.IsValid || (!Object.HasStateAuthority && !Object.HasInputAuthority)) return;
+        if (ownerPlayer != null && ownerPlayer.Health != null && !ownerPlayer.Health.IsAlive)
+        {
+            ResetForInterruption();
+            return;
+        }
+        if (IsPreparedDashing && ((input.BlockedControls & Purgers.GameFlow.Control.PlayerControlMask.Movement) != 0 || PreparedDashDisplaced()))
+        {
+            ResetForInterruption();
+            return;
+        }
         if (ownerPlayer == null ||
             ownerMovement == null ||
             ownerPlayerNetworkObject == null)
@@ -866,6 +931,7 @@ public class TankMeleeCombo :
         // 左鍵 Press
         // =============================================================
 
+        bool held = input.Buttons.IsSet(InputButton.Fire);
         bool attackPressed =
             input.Buttons.WasPressed(
                 previousButtons,
@@ -879,21 +945,9 @@ public class TankMeleeCombo :
         if (CurrentPhase !=
             TankMeleeAttackPhase.Idle)
         {
-            /*
-             * 不能取消目前攻擊。
-             *
-             * 玩家再次按左鍵：
-             *
-             * 只保存下一刀 Input。
-             */
-            if (attackPressed &&
-                allowAttackInputBuffer)
-            {
-                BufferedNextAttack =
-                    true;
-            }
-
-            TickAttackPhase();
+            // 攻擊中的 Press 一律丟棄；仍讀取 Hold／Release 以完成當前預備。
+            // 即使本 Tick 收招完成，也只返回 Idle，不能使用本 Tick 的提前按鍵。
+            TickAttackPhase(held, allowPreparedDash: (input.BlockedControls & Purgers.GameFlow.Control.PlayerControlMask.Movement) == 0);
 
             return;
         }
@@ -918,7 +972,7 @@ public class TankMeleeCombo :
 
         if (attackPressed)
         {
-            StartNextAttack();
+            StartNextAttack(held);
         }
     }
 
@@ -931,7 +985,7 @@ public class TankMeleeCombo :
     /// 根據目前 Combo / Forced Heavy
     /// 開始下一次攻擊。
     /// </summary>
-    private void StartNextAttack()
+    private void StartNextAttack(bool held = false)
     {
         TankMeleeComboStep step;
 
@@ -956,16 +1010,14 @@ public class TankMeleeCombo :
                 NextComboStep;
         }
 
-        StartAttack(
-            step
-        );
+        StartAttack(step, held);
     }
 
     /// <summary>
     /// 正式開始指定 Combo Step。
     /// </summary>
     private void StartAttack(
-        TankMeleeComboStep step
+        TankMeleeComboStep step, bool held = false
     )
     {
         TankMeleeAttackDefinition definition =
@@ -980,13 +1032,17 @@ public class TankMeleeCombo :
             return;
         }
 
+        if (definition.UseAnimationFrames && !definition.HasValidFrameTiming)
+        {
+            Debug.LogError("Tank 動畫幀設定無效：需 0 <= 預備幀 <= 出傷幀 <= 收招幀 <= 原始總幀數，長度／FPS／倍率皆須大於 0。", this);
+            ResetAttackState();
+            return;
+        }
+        Preparation = TankMeleePreparationProgress.Begin(held);
         AttackSequence++;
 
         CurrentStep =
             step;
-
-        BufferedNextAttack =
-            false;
 
         ComboResetTimer =
             TickTimer.None;
@@ -998,13 +1054,17 @@ public class TankMeleeCombo :
         CurrentPhase =
             TankMeleeAttackPhase.Startup;
 
-        if (definition.StartupDuration >
-            0f)
+        if (definition.UseAnimationFrames)
+        {
+            PhaseTimer = TickTimer.None;
+            TickAttackPhase(held, 0f);
+        }
+        else if (definition.ResolvedStartup > 0f)
         {
             PhaseTimer =
                 TickTimer.CreateFromSeconds(
                     Runner,
-                    definition.StartupDuration
+                    definition.ResolvedStartup
                 );
         }
         else
@@ -1019,7 +1079,7 @@ public class TankMeleeCombo :
                 $"[Tank Melee] Attack Started" +
                 $"\nStep：{CurrentStep}" +
                 $"\nSequence：{AttackSequence}" +
-                $"\nStartup：{definition.StartupDuration:F3}" +
+                $"\nStartup：{definition.ResolvedStartup:F3}" +
                 $"\nDamage：{definition.Damage:F2}" +
                 $"\nAngle：{definition.FullAttackAngle:F1}",
                 this
@@ -1032,8 +1092,27 @@ public class TankMeleeCombo :
     // =====================================================================
     #region Attack Phase
 
-    private void TickAttackPhase()
+    private void TickAttackPhase(bool held, float deltaTime = -1f, bool allowPreparedDash = true)
     {
+        if (IsPreparedDashing) { TickPreparedDash(); return; }
+        var definition = GetDefinition(CurrentStep);
+        if (definition != null && definition.UseAnimationFrames &&
+            (CurrentPhase == TankMeleeAttackPhase.Startup || CurrentPhase == TankMeleeAttackPhase.Preparing))
+        {
+            if (TankPreparedDashRules.ShouldDash(Preparation.IsHolding, held) && enablePreparedDash && allowPreparedDash)
+            {
+                // 只有 Host 可以授權目標與延後出傷；Client 等待同步的 Dash／Active。
+                if (!Object.HasStateAuthority) return;
+                if (TryStartPreparedDash()) return;
+            }
+            var progress = Preparation;
+            bool strike = progress.Advance(deltaTime < 0f ? Runner.DeltaTime : deltaTime, held,
+                definition.FrameTiming.FrameToSeconds(definition.PreparationFrame), definition.ResolvedStartup);
+            Preparation = progress;
+            CurrentPhase = progress.IsHolding ? TankMeleeAttackPhase.Preparing : TankMeleeAttackPhase.Startup;
+            if (strike) EnterActivePhase();
+            return;
+        }
         switch (CurrentPhase)
         {
             case TankMeleeAttackPhase.Startup:
@@ -1082,8 +1161,8 @@ public class TankMeleeCombo :
             return;
         }
 
-        CurrentPhase =
-            TankMeleeAttackPhase.Active;
+        CurrentPhase = TankMeleeAttackPhase.Active;
+        SwingSequence++;
 
         // =============================================================
         // 1. Network World Swing Audio
@@ -1168,13 +1247,13 @@ public class TankMeleeCombo :
         // 3. Active Timer
         // =============================================================
 
-        if (definition.ActiveDuration >
+        if (definition.ResolvedActive >
             0f)
         {
             PhaseTimer =
                 TickTimer.CreateFromSeconds(
                     Runner,
-                    definition.ActiveDuration
+                    definition.ResolvedActive
                 );
         }
         else
@@ -1200,13 +1279,13 @@ public class TankMeleeCombo :
         CurrentPhase =
             TankMeleeAttackPhase.Recovery;
 
-        if (definition.RecoveryDuration >
+        if (definition.ResolvedRecovery >
             0f)
         {
             PhaseTimer =
                 TickTimer.CreateFromSeconds(
                     Runner,
-                    definition.RecoveryDuration
+                    definition.ResolvedRecovery
                 );
 
             return;
@@ -1349,20 +1428,6 @@ public class TankMeleeCombo :
             TickTimer.None;
 
         // =============================================================
-        // Buffered Input
-        // =============================================================
-
-        if (BufferedNextAttack)
-        {
-            BufferedNextAttack =
-                false;
-
-            StartNextAttack();
-
-            return;
-        }
-
-        // =============================================================
         // Combo Reset Window
         // =============================================================
 
@@ -1403,6 +1468,7 @@ public class TankMeleeCombo :
 
     private void ResetAttackState()
     {
+        ClearPreparedDash();
         CurrentStep =
             TankMeleeComboStep.None;
 
@@ -1412,9 +1478,7 @@ public class TankMeleeCombo :
         PhaseTimer =
             TickTimer.None;
 
-        BufferedNextAttack =
-            false;
-
+        Preparation = default;
         ResetComboToLight1();
     }
 

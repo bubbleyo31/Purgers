@@ -25,11 +25,11 @@ public sealed class PlayerExperienceRulesTests
     }
 
     [Test]
-    public void RequirementDoublesFromTen()
+    public void RequirementDoublesFromCurrentFivePointBaseline()
     {
-        Assert.That(PlayerExperienceRules.RequiredExperience(1), Is.EqualTo(10));
-        Assert.That(PlayerExperienceRules.RequiredExperience(2), Is.EqualTo(20));
-        Assert.That(PlayerExperienceRules.RequiredExperience(3), Is.EqualTo(40));
+        Assert.That(PlayerExperienceRules.RequiredExperience(1), Is.EqualTo(5));
+        Assert.That(PlayerExperienceRules.RequiredExperience(2), Is.EqualTo(10));
+        Assert.That(PlayerExperienceRules.RequiredExperience(3), Is.EqualTo(20));
         Assert.That(PlayerExperienceRules.RequiredExperience(40),
             Is.EqualTo(int.MaxValue));
     }
@@ -38,7 +38,7 @@ public sealed class PlayerExperienceRulesTests
     public void CrossingThresholdKeepsOverflowAndQueuesReward()
     {
         var result = PlayerExperienceRules.Award(
-            new PlayerExperienceState(1, 8, 0), 5);
+            new PlayerExperienceState(1, 3, 0), 5);
 
         Assert.That(result.Level, Is.EqualTo(2));
         Assert.That(result.Experience, Is.EqualTo(3));
@@ -49,10 +49,10 @@ public sealed class PlayerExperienceRulesTests
     public void OneLargeGrantCanQueueSeveralRewards()
     {
         var result = PlayerExperienceRules.Award(
-            new PlayerExperienceState(1, 0, 0), 50);
+            new PlayerExperienceState(1, 0, 0), 25);
 
         Assert.That(result.Level, Is.EqualTo(3));
-        Assert.That(result.Experience, Is.EqualTo(20));
+        Assert.That(result.Experience, Is.EqualTo(10));
         Assert.That(result.PendingRewards, Is.EqualTo(2));
     }
 

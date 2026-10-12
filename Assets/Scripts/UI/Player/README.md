@@ -26,3 +26,7 @@
 - 網路同步：搜尋 `[Networked]`、`[Rpc(`、`HasStateAuthority`、`IsSceneAuthority`。
 - 場景綁定：由 `[SerializeField]` 欄位名稱回到 Unity Inspector 找同名引用。
 
+
+## 2026-10-10 受傷來源提示
+
+`LocalPlayerDamageIndicator` 訂閱本地受傷事件，使用固定世界位置快照顯示方向弧與倒三角；`DamageIndicatorSettings` 提供共用圖像、色彩、尺寸、時間與遮擋設定。`DamageIndicatorRules`／`DamageIndicatorOcclusionQuery` 處理方向、時序及限定 PhysicsScene／預算的持續遮擋；`DamageIndicatorGraphic` 提供可替換的 UI 幾何。正式配置與驗證見 [49](../../../../Documentation/ProjectArchitecture/49_玩家受傷來源指示.md)。

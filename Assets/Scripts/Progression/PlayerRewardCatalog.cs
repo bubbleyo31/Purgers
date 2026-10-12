@@ -41,7 +41,7 @@ namespace Purgers.Progression
             var ids = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach (PlayerRewardDefinition reward in rewards)
             {
-                if (reward == null || !reward.IsImplementedAbilityReward ||
+                if (reward == null || !reward.IsImplementedReward ||
                     string.IsNullOrWhiteSpace(reward.StableRewardId) ||
                     !ids.Add(reward.StableRewardId))
                 {

@@ -1,4 +1,18 @@
+> **2026-10-11 E 切換操作**：空中緩速維持原 GrappleAirborne／落地規則，改按 E 啟動、放開維持、再次按下結束；子彈時間再次按下沿正常流程結算。兩項從結束時開始完整冷卻，人工資產數值未改。規則見 [41](41_玩家能力Loadout.md)／[42](42_E主動技能規格與強化預留.md)，驗證邊界見 [紀錄](Validation/AbilityToggle/README.md)。
+
+> **2026-10-10 安全屋出發（局部核對）**：全員準備後立即進入 1 秒倒數；State Authority 保存同步剩餘投票 Tick 並停止投票計時，HUD 只顯示出發。取消準備／新加入恢復原投票餘額，ESC 仍取消整票。SafeHouse 場景已設為 1 秒；設定與證據見 [145](145_PrePhase4-2_安全屋鍵盤準備與HUD.md)。
+
+> **2026-10-10 受傷來源指示 V1**：已加入 2D 紅弧與世界位置倒三角，位置採權威受傷快照、不追蹤敵人；預設淡色透牆，可切隱藏，受擊後持續受預算限制重查遮擋。圖像／顏色／尺寸／時間共用設定可調，_Menu 已配置。設定見 [49](49_玩家受傷來源指示.md)，聚焦、受控多人與剩餘驗證邊界見 [紀錄](Validation/DamageIndicator/README.md)。
+
+> **2026-10-10 動畫幀時序共用規則已定案／Tank 首次接入**：未來新增或修改玩家武器、技能與敵人的動畫出傷／事件時機，統一使用原始長度、FPS、倍率及指定幀，由 AnimationFrameTiming 自動換算，不要求人工計算秒數。Tank 三段可設定預備／出傷／開始收招幀；停格後放開：選中直接命中或寬鬆角內可見敵人時，動畫恢復並衝刺至出傷幀，否則原地出手（[48](48_Tank預備衝刺與共用敵人準心.md)）；成功 F 取消保留當前段，死亡／換裝重設。整段動畫完成前的再次按下會丟棄，不預存下一刀；完成後須重新按下左鍵。程式入口已加入，Prefab 需手動配置；其他玩家技能與敵人未遷移，特殊能力僅保留計時。規格及驗證見 [47](47_Tank預備攻擊與動畫幀時序.md)。
+
+> **2026-10-08 衝擊扇波（圖解確認後修訂）**：固定尺寸直立弧形波牆，上下同寬；Radius、Travel Distance、Wave Height 分離，前搖結束才取樣完整瞄準角度，整片傾斜；Origin Offset 可配瞄準座標 XYZ，空中不貼地，出手後固定。傷害按受擊 Collider 中心判定，修正傾斜時腳底 Root 在外造成漏傷。權威連續平移掃掠與各端呈現／Gizmo 共用幾何；保留人工傷害／擊退值。設定見 [44](44_衝擊扇波推進與特效.md)，驗證見 [本次紀錄](Validation/ShockwaveAim/README.md)。
+
+> **2026-10-05 E 技能整合穩定化（局部核對）**：修復延後 Owner 綁定、過期命中特效補播及低矮障礙發射點穿越；五項過期測試已校正。聚焦完成 77 項、無失敗；完整回歸完成 437／探索 452 項，result=null，仍有 Boss 引用一項失敗。Single Runner 技能與生命週期探測通過；獨立 Host／Client 啟動未成功。後段同期鈎索修改造成建置型別不一致，使用者確認 Editor 由其他工作使用，本輪停止 Editor 操作；目前工作區最終編譯／多人驗證待續。原始結果、待決設計及重跑入口見 [驗證紀錄](Validation/ActiveAbilityStabilization/README.md)。
+
 # 《除草機》ChatGPT 專案架構快速讀取
+
+> **新對話功能查找入口**：新增、修改或打磨功能前，先搜尋 [關鍵詞規則索引](關鍵詞規則索引.md) 的關鍵詞／別名，再讀正式規則、設定位置並核對實作。添加功能但索引與相關文件仍找不到時，先詢問是否為新功能；若否，先深入查專案文件與歷史規劃，再追查實作，未確認前不建立新系統。打磨完成後，主動提出是否將定案內容新增或更新至索引。已獲明確收錄授權則直接同步。
 
 > **2026-10-04 已確認 HUD V2**：獎勵保留原有三框／六角／折角結構，改米白底與淡金折角；Q／E 縮小方形。生命與護盾每 20 點累積增減一整格，淡金護盾緊接可見生命格，同一水平基線。新版規格、設定與驗證以 [167](167_已確認HUD美術與整格血量.md) 為準；下方舊版部分裁切／飛散描述已被取代。
 
@@ -129,6 +143,7 @@ PlayerGrapple（飛行、命中、拉動、釋放、GrappleAirborne）
 → 目標 Receiver 或狀態元件
 ```
 
+- 2026-10-05 普通鉤索啟動：首次拉力提交並於後續 Tick 確認離地後才啟用落地取消；啟動著地接續一次既有起跳，阻塞預設 0.5 秒收繩。零速度不再誤判飛過掛點。規則、Inspector 與驗證見 [30](30_鈎索系統.md)／[紀錄](Validation/GrappleLanding/README.md)。
 - 世界掛點：`GrappleAnchor`。
 - 互動目標描述：`GrappleInteractionTarget`。
 - Support 拉 Enemy：`SupportGrapplePullReceiver`。
@@ -224,7 +239,7 @@ EnemyActor（組裝根）
 ## 10. 新對話工作規則
 
 1. 先讀本檔。
-2. 再讀任務對應的模組文件。
+2. 涉及新增、修改或打磨功能時，先搜尋 [關鍵詞規則索引](關鍵詞規則索引.md)，再讀命中的規則／設定與任務對應模組文件；多義詞先區分。添加功能但索引與相關文件仍找不到時，必須先詢問是否為新功能；若否，先查專案文件與歷史規劃，再追查程式／必要資產；若是，依既有架構規劃。未回覆不得當作新功能先做。
 3. 文件與實際 C# 不一致時，以實際原始碼為準，先指出漂移，不可直接沿用過時敘述。
 4. 改動跨模組公開介面、控制權或資料流時，同步更新本檔、對應模組文件與 `02_程式職責總表.md`。
 5. 不因類名不漂亮就建立第二套平行系統；先確認既有仲裁層與遷移成本。
@@ -257,4 +272,59 @@ EnemyActor（組裝根）
 
 ## 2026-10-02 鈎索使用能量局部更新
 
+> 2026-10-05 鉤索呈現局部補充：`PlayerLocalView` 在所有玩家 Spawn／Despawn 綁定及清理 `PlayerGrappleVisual`；第一人稱仍等相機更新，旁觀角色改用第三人稱起點。新增可配置鉤爪、流動波浪及命中拉直，只讀既有階段／掛點／伸出比例，不增加網路玩法狀態。鉤爪 Prefab 由使用者手動指定，詳見 [30](30_鈎索系統.md) 與 [驗證紀錄](Validation/GrappleVisual/README.md)。核對來源：上述兩支程式，非全專案重驗。
+
 `PlayerGrappleCharges` 沿用舊元件改為玩家等級制使用能量，1 級 50、每級 +25；合法發射扣 1，尚未釋放且拉動自己時每秒扣 1。無自然／擊殺回充；耗盡不取消本次移動。Host 讀主要 `GameLogic` 的玩家等級套用容量，Input Authority 沿用預測消耗，HUD 只讀同步比例。升級補滿／補差額可在玩家 Prefab Inspector 切換；死亡重生及正式安全屋／關卡轉場補滿。左下動能增傷獨立。保留舊元件 GUID 與職業舊欄位，未重建 Scene／Prefab；設定、遷移邊界與驗收順序見 [30](30_鈎索系統.md)，證據見 [130](130_回歸驗證與審查狀態.md)。
+
+## 2026-10-07 技能前搖與榴彈碰撞（局部核對）
+
+有前搖的技能在 Activate 放行時取當前 KCC 射出位置／準星，不得沿用按鍵受理快照；未來投擲與飛行物沿用同一契約。榴彈預設飛行穿過所有玩家，爆炸自傷／友傷獨立可調，State Authority 與原傷害管線不變。配置與手動驗收見 [42](42_E主動技能規格與強化預留.md)，證據見 [驗證紀錄](Validation/AbilityReleaseSafety/README.md)。
+
+
+## 2026-10-08 E 技能後座力（局部核對）
+
+全部十二項 E 專注能力在既有 PlayerAbilityRuntime 提供獨立鏡頭／移動後座力與觸發時機；每顆 Prefab 仍停用且未設定。成功事件由 State Authority 經 PlayerMovement 寫入原 KCC；V2 在 Runtime 保存 Networked 分段施加／回正狀態，沒有新 RPC。鏡頭沿用槍械施加與回正规則；兩組時機各自可複選。設定、閃現與舊空中技能特例見 [45 後座力配置](45_E技能後座力配置.md)。
+
+## 2026-10-08 Play Mode 關卡限時開發鍵（局部核對）
+
+Editor Host 可用 InputManager 的可配置 F7 暫停／恢復關卡限制時間。StageFlowController 在權威 Tick 保存同步剩餘 Tick，Client HUD 沿用 RemainingStageSeconds；遊戲、技能與撤離倒數照常。Client／所有 Build 無按鍵入口，不寫存檔、不自動修改 Scene／Prefab。設定與驗證見 [143](143_Phase3_Level1關卡閉環配置與驗證.md)。
+
+
+### 2026-10-08 V3 後座力施放事件
+
+後座力的準備與真正施放分離：閃現第一次 E 發 BeforeCast、第二次 E 成功衝刺發 AfterCast；一般新 E 的 Activate 與二次觸發 OnArmedPress 明確回傳成功，失敗不發 AfterCast。舊空中技能仍合併一次；閃現移動後座力不擴充。欄位值與資產不改，詳見 [45](45_E技能後座力配置.md)。
+
+
+### 2026-10-08 V4：後座力地面／空中一致性
+
+移動後座力改為 Runtime 保存有限距離與衰減秒數，原 PlayerSlideController 的 PrepareData 經 PlayerMovement 追加 KCC ExternalDelta；不混入一般摩擦，保留碰撞／重力／原速度。每技能新增 Movement Decay Duration（初始 0.2 秒），無阻擋額外距離 = Movement Speed × 秒數 ÷ 2。人工資產未保存；既有啟用設定需用新公式試調。閃現基準量測地面／空中皆 8 m、無殘速，沒有重寫其既有距離演算法。詳見 [45](45_E技能後座力配置.md) 與 [V4 證據](Validation/AbilityMotion/README.md)。
+
+
+## 2026-10-10 武器獎勵與換裝（局部核對）
+
+最後核對日期：2026-10-10。核對來源：本次 GameLogic／Progression／Profession Runtime／QuickAction／Tracer／HUD 修改。
+
+> **2026-10-10 武器獎勵接入（局部核對）**：Attack／Tank／Support 三套現有武器操作加入 Q／E 同池，正式池十四技能＋三武器；換裝滿彈匣、獨立 Q／E 不重建、各武器 F 離手回充、舊 Tracer 等按歸屬清理。死亡／換關／讀檔保留武器，失敗回 Attack。設定與定案見 [46](46_武器獎勵與換裝.md)，各層驗證見 [紀錄](Validation/WeaponRewards/README.md)。
+
+正式規則、Inspector 入口與驗收見 [46 武器獎勵與換裝](46_武器獎勵與換裝.md)，證據與限制見 [驗證紀錄](Validation/WeaponRewards/README.md)。
+
+
+## 2026-10-10 Tank 預備衝刺與共用敵人準心（局部核對）
+
+TankMeleeCombo 新增 PreparedDashing：停格放開時，由 Host 優先查直接命中、再查寬鬆半角內可見敵人；動畫恢復播放，既有 PlayerMovement／KCC 依剩餘距離與出傷幀期限調整速度；普通點按不衝刺。TankMeleeCombo.PreparedDash 同步目標、持續時間、經過時間及中斷清理，TankPreparedDashRules 提供觸發／幾何／幀間隔與期限速度換算；PlayerEnemyAimQuery 共用存活敵人分類，LocalPlayerEnemyCrosshair 僅呈現所有武器共用的紅色準心。動畫仍沿用 [47 幀時序](47_Tank預備攻擊與動畫幀時序.md)。設定、責任與驗證邊界見 [48 預備衝刺與準心](48_Tank預備衝刺與共用敵人準心.md)；Scene／Prefab 需手動配置。
+
+## 2026-10-11 命中傷害跳字（局部核對）
+
+最後核對日期：2026-10-11；核對來源：PlayerCombatFeedbackRelay、DamageNumberSettings、DamageNumberRules、LocalPlayerDamageNumbers。
+
+沿用權威 DamageResult → PlayerCombatFeedbackRelay → Input Authority LocalHitConfirmed；新增目標／來源的不透明合併識別與敵人標記，位置使用既有 HitPoint。LocalPlayerDamageNumbers 僅顯示自己對敵人的實際扣血量，固定世界命中快照、螢幕字級、透牆；一般逐次／持續傷害合併可獨立切換，實際 Head 命中可配置色彩與放大倍率。延後結算不提前發出回饋。
+
+獨立 DamageNumbers.prefab 與 DamageNumberV1.asset 已建立，尚未接入正式場景；完整調整表與手動接線见 [61 命中傷害跳字](61_命中傷害跳字.md)。聚焦 23/23；完整回歸 670/671，既有 Boss 引用一項失敗；Single Runner 7 項、受控 Host／Client 15 項通過，獨立多人／自然操作與最終美術仍待驗收。詳見 [驗證紀錄](Validation/DamageNumbers/README.md)，含 MCP 測試自動儲存原有 dirty `_Menu` 的副作用紀錄。
+
+## 2026-10-11 自爆撲擊敵人（局部核對）
+
+新增獨立地面灰盒 `Enemy_Suicide`，沿用 EnemyCombatDecision／ActionGate／MovementOwnership、正式 Health／DeathLifecycle／GameLogic。`EnemySuicideAttack` 提供有限修正撲擊、近身高速引爆、距離衰減爆炸與本機 VFX；`EnemySuicideRules` 共用幾何／觸發規則與 `IEnemyFatalHitPolicy`。`TestDamageReceiver` 在有效傷害接受後套用可選一擊致死政策，保留實際命中量與經驗歸屬。
+
+既有 `PlayerActionGate.ExplosionStatus` partial 管理鈎索封鎖及各次緩速，`PlayerGrapple` 出鈎與 `LocalPlayerBattleAbilityHUD` 禁用標記共用 Gate；`PlayerMovement` 只修正地面走跑位移，保留空中慣性。新增 Networked 狀態需 Host／Client 同版。`EnemySuicideSetup` 只建立缺失灰盒資產；`EnemySuicideRulesTests`／`EnemySuicideAssetTests` 及 `EnemySuicideRuntimeVerification` 提供聚焦與隔離驗證入口。正式場景／生成區未自動接線，準心遮擋只預留圖檔。
+
+完整定案、Inspector 數值、動畫需求與手動配置見 [92 自爆撲擊敵人](92_自爆撲擊敵人.md)，實際測試及多人邊界見 [驗證紀錄](Validation/SuicideEnemy/README.md)。本節不代表其他模組重新驗收。

@@ -1,0 +1,40 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "bdf4db142e914be980dbc193d3e1c114",
+      "status": "failed",
+      "mode": "EditMode",
+      "started_unix_ms": 1791454704045,
+      "finished_unix_ms": 1791454706022,
+      "last_update_unix_ms": 1791454706022,
+      "progress": {
+        "completed": 2,
+        "total": 524,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1791454705506,
+        "last_finished_test_full_name": "ShockwaveVisualTests.UpperAndLowerEdges_HaveIdenticalHorizontalWidth",
+        "last_finished_unix_ms": 1791454705511,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "blocked_reason": null,
+        "failures_so_far": [
+          {
+            "full_name": "ShockwaveVisualTests.Translation_DoesNotResizeTheWave",
+            "message": "  平移不得改變波牆尺寸。\r\n  Expected: (8.66, 10.00, 5.00)\r\n  But was:  (17.32, 20.00, 10.00)\r\n"
+          },
+          {
+            "full_name": "ShockwaveVisualTests.UpperAndLowerEdges_HaveIdenticalHorizontalWidth",
+            "message": "  頂部不得向球極收攏。\r\n  Expected: 4.33012724f +/- 0.00100000005f\r\n  But was:  1.8927588E-07f\r\n"
+          }
+        ],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": null
+    },
+    "hint": null
+  }
+}

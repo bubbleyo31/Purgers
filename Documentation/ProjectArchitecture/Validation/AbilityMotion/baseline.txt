@@ -1,0 +1,15 @@
+2026-10-08T14:29:04.0970753Z 失敗; controlled Single Runner, not independent multiplayer
+PASS Single Runner starts
+PASS equip Shield 
+RECOIL air=False distance=0.3450928 grounded=True
+PASS equip Shield 
+RECOIL air=True distance=3.914185 grounded=False
+PASS equip Blink 
+BLINK air=False distance=8 residual=0
+PASS equip Blink 
+BLINK air=True distance=8 residual=0
+MEASURE recoil ground=0.3450928 air=3.914185 expected=2
+MEASURE blink ground=8 air=8 expected=8
+FAIL blink residual True System.Exception: Recoil has two metres on ground and in air
+  at AbilityMotionRuntimeVerification.Check (System.Boolean ok, System.String label) [0x0001f] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\AbilityMotionRuntimeVerification.cs:132 
+  at AbilityMotionRuntimeVerification.Begin () [0x006c8] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\AbilityMotionRuntimeVerification.cs:59 

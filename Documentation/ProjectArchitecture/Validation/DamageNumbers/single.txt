@@ -1,0 +1,7 @@
+PASS Runner starts Ok
+PASS authority applies damage exactly once
+PASS authority hit position and enemy grouping identity arrive intact
+PASS physical head zone reaches head style
+PASS opaque wall does not suppress confirmed damage number
+PASS deferred result cannot emit a premature popup
+PASS despawn keeps original popup without another hit event

@@ -8,7 +8,7 @@ public sealed class PlayerExperienceAbility : PlayerActiveAbilityBase, IPlayerIn
     private float durationSeconds = 5f;
     public float ExperienceMultiplier => IsAbilityActive && Phase == PlayerActiveAbilityPhase.Active && ActiveRemainingSeconds > 0f ? 2f : 1f;
     public int IncomingDamageModifierPriority => 0;
-    protected override void Activate() { BeginActive(durationSeconds); }
+    protected override bool Activate() { BeginActive(durationSeconds); return true; }
     public void ModifyIncomingDamage(ref DamageRequest request)
     {
         if (Authority && ExperienceMultiplier > 1f) request.RequestedDamage *= 2f;

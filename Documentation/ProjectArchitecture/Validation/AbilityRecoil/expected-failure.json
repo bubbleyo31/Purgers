@@ -1,0 +1,77 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"e79d60b9e2574a8a98937878f4961ffe\",\"status\":\"failed\",\"mode\":\"EditMode\",\"started_unix_ms\":1791460228299,\"finished_unix_ms\":1791460232016,\"last_update_unix_ms\":1791460232016,\"progress\":{\"completed\":9,\"total\":554,\"current_test_full_name\":null,\"current_test_started_unix_ms\":1791460231469,\"last_finished_test_full_name\":\"AbilityRecoilTests.UnconfiguredDisabledAndNegativeSpeedCannotKick\",\"last_finished_unix_ms\":1791460231469,\"stuck_suspected\":false,\"editor_is_focused\":false,\"blocked_reason\":null,\"failures_so_far\":[{\"full_name\":\"AbilityRecoilTests.DefaultDirectionOpposesFullAim(-45.0f,90.0f)\",\"message\":\"  所有 E Runtime 必須共用後座力設定。\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"AbilityRecoilTests.DefaultDirectionOpposesFullAim(90.0f,0.0f)\",\"message\":\"  所有 E Runtime 必須共用後座力設定。\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"AbilityRecoilTests.DefaultDirectionOpposesFullAim(0.0f,180.0f)\",\"message\":\"  所有 E Runtime 必須共用後座力設定。\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"AbilityRecoilTests.DirectionLengthDoesNotMultiplySpeedAndZeroFallsBack\",\"message\":\"  所有 E Runtime 必須共用後座力設定。\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"AbilityRecoilTests.ExistingAssetsRemainInertUntilConfigured\",\"message\":\"  所有 E Runtime 必須共用後座力設定。\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"AbilityRecoilTests.IndependentTimings\",\"message\":\"  所有 E Runtime 必須共用後座力設定。\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"AbilityRecoilTests.InstantSkillsResolveEitherTimingOnce(1)\",\"message\":\"  所有 E Runtime 必須共用後座力設定。\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"AbilityRecoilTests.InstantSkillsResolveEitherTimingOnce(2)\",\"message\":\"  所有 E Runtime 必須共用後座力設定。\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"AbilityRecoilTests.UnconfiguredDisabledAndNegativeSpeedCannotKick\",\"message\":\"  所有 E Runtime 必須共用後座力設定。\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"}],\"failures_capped\":false},\"error\":null,\"result\":null},\"hint\":null}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "success": true,
+      "message": "Test job status retrieved.",
+      "error": null,
+      "data": {
+        "job_id": "e79d60b9e2574a8a98937878f4961ffe",
+        "status": "failed",
+        "mode": "EditMode",
+        "started_unix_ms": 1791460228299,
+        "finished_unix_ms": 1791460232016,
+        "last_update_unix_ms": 1791460232016,
+        "progress": {
+          "completed": 9,
+          "total": 554,
+          "current_test_full_name": null,
+          "current_test_started_unix_ms": 1791460231469,
+          "last_finished_test_full_name": "AbilityRecoilTests.UnconfiguredDisabledAndNegativeSpeedCannotKick",
+          "last_finished_unix_ms": 1791460231469,
+          "stuck_suspected": false,
+          "editor_is_focused": false,
+          "blocked_reason": null,
+          "failures_so_far": [
+            {
+              "full_name": "AbilityRecoilTests.DefaultDirectionOpposesFullAim(-45.0f,90.0f)",
+              "message": "  所有 E Runtime 必須共用後座力設定。\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "AbilityRecoilTests.DefaultDirectionOpposesFullAim(90.0f,0.0f)",
+              "message": "  所有 E Runtime 必須共用後座力設定。\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "AbilityRecoilTests.DefaultDirectionOpposesFullAim(0.0f,180.0f)",
+              "message": "  所有 E Runtime 必須共用後座力設定。\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "AbilityRecoilTests.DirectionLengthDoesNotMultiplySpeedAndZeroFallsBack",
+              "message": "  所有 E Runtime 必須共用後座力設定。\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "AbilityRecoilTests.ExistingAssetsRemainInertUntilConfigured",
+              "message": "  所有 E Runtime 必須共用後座力設定。\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "AbilityRecoilTests.IndependentTimings",
+              "message": "  所有 E Runtime 必須共用後座力設定。\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "AbilityRecoilTests.InstantSkillsResolveEitherTimingOnce(1)",
+              "message": "  所有 E Runtime 必須共用後座力設定。\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "AbilityRecoilTests.InstantSkillsResolveEitherTimingOnce(2)",
+              "message": "  所有 E Runtime 必須共用後座力設定。\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "AbilityRecoilTests.UnconfiguredDisabledAndNegativeSpeedCannotKick",
+              "message": "  所有 E Runtime 必須共用後座力設定。\r\n  Expected: not null\r\n  But was:  null\r\n"
+            }
+          ],
+          "failures_capped": false
+        },
+        "error": null,
+        "result": null
+      },
+      "hint": null
+    }
+  },
+  "isError": false
+}

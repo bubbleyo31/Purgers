@@ -82,6 +82,8 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("第一人稱攝影機跟隨目標。通常放在玩家眼睛高度。此 Transform 只負責 Pitch，上下看。")]
     private Transform camTarget;
     private Player abilityOwner;
+    private PlayerActionGate explosionGate;
+    private PlayerSlideController explosionSlide;
 
     #endregion
 
@@ -256,8 +258,19 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     public void ApplyActiveAbilityMotion(KCC targetKcc, KCCData data)
     {
+        hasUpwardAbilityRecoil = false;
         if (abilityOwner == null) abilityOwner = GetComponent<Player>();
         if (abilityOwner == null || abilityOwner.Object == null || !abilityOwner.Object.IsValid) return;
+        var weaponRuntime = abilityOwner.ProfessionRuntimeManager != null ? abilityOwner.ProfessionRuntimeManager.CurrentRuntimeObject : null;
+        var preparedMelee = weaponRuntime != null && weaponRuntime.IsValid ? weaponRuntime.GetComponent<TankMeleeCombo>() : null;
+        Vector3 preparedVelocity = Vector3.zero;
+        bool preparedDash = preparedMelee != null && preparedMelee.TryGetPreparedDashVelocity(targetKcc, data, out preparedVelocity);
+        if (preparedDash)
+        {
+            data.KinematicVelocity = preparedVelocity;
+            data.DynamicVelocity = Vector3.zero;
+            data.ExternalDelta = Vector3.zero;
+        }
         if (abilityOwner.AbilityRuntimeManager != null &&
             abilityOwner.AbilityRuntimeManager.TryGetActiveModule<PlayerBlinkAbility>(out var blink) &&
             blink.TryGetDashVelocity(targetKcc, data, out Vector3 dashVelocity))
@@ -266,10 +279,41 @@ public class PlayerMovement : MonoBehaviour
             data.DynamicVelocity = Vector3.zero;
             data.ExternalDelta = Vector3.zero;
         }
+        if (targetKcc.IsInFixedUpdate && abilityOwner.Object.HasStateAuthority && abilityOwner.AbilityRuntimeManager != null)
+        {
+            var manager = abilityOwner.AbilityRuntimeManager;
+            Vector3 recoilDelta = manager.ConsumeMovementRecoil(data.DeltaTime);
+            bool suppressed = preparedDash || HasActiveAbilityDash ||
+                (abilityOwner.SupportGrapplePlayerPullReceiver != null && abilityOwner.SupportGrapplePlayerPullReceiver.IsPullActive) ||
+                (abilityOwner.Grapple != null && abilityOwner.Grapple.IsNormalPlayerPullAttached) ||
+                (manager.TryGetActiveModule<TankAirDashAbility>(out var tank) && tank.IsDashing);
+            if (!suppressed)
+            {
+                if (manager.TryGetActiveModule<SupportAerialAbility>(out var aerial))
+                    recoilDelta *= aerial.AbilityRecoilMotionMultiplier;
+                data.ExternalDelta += recoilDelta;
+                hasUpwardAbilityRecoil = recoilDelta.y > 0f;
+            }
+        }
+        // 只修正本 Tick 的地面 Kinematic 位移，保留持久速度、空中慣性與外部位移。
+        if (explosionGate == null) explosionGate = GetComponent<PlayerActionGate>();
+        if (explosionSlide == null) explosionSlide = GetComponent<PlayerSlideController>();
+        if (data.IsGrounded && !preparedDash && !HasActiveAbilityDash &&
+            (explosionSlide == null || !explosionSlide.IsSliding) &&
+            (abilityOwner.SupportGrapplePlayerPullReceiver == null || !abilityOwner.SupportGrapplePlayerPullReceiver.IsPullActive) &&
+            (abilityOwner.AbilityRuntimeManager == null || !abilityOwner.AbilityRuntimeManager.TryGetActiveModule<TankAirDashAbility>(out var explosionTankDash) || !explosionTankDash.IsDashing) &&
+            (abilityOwner.Grapple == null || !abilityOwner.Grapple.IsGrappleControlActive))
+        {
+            float groundMultiplier = explosionGate != null ? explosionGate.ExplosionGroundSpeedMultiplier : 1f;
+            data.ExternalDelta += data.KinematicVelocity * data.DeltaTime * (groundMultiplier - 1f);
+        }
         float multiplier = Mathf.Clamp01(PlayerBulletTimeSessionRegistry.GetPlayerMovementMultiplier(abilityOwner));
         if (multiplier < 1f)
             data.ExternalDelta = data.ExternalDelta * multiplier + data.DesiredVelocity * data.DeltaTime * (multiplier - 1f);
     }
+
+    private bool hasUpwardAbilityRecoil;
+    public bool HasUpwardAbilityRecoil => hasUpwardAbilityRecoil;
 
     public bool HasActiveAbilityDash => abilityOwner != null && abilityOwner.Object != null && abilityOwner.Object.IsValid &&
         abilityOwner.AbilityRuntimeManager != null &&
@@ -332,10 +376,14 @@ public class PlayerMovement : MonoBehaviour
         // Look
         // -------------------------------------------------------------
 
+        float pitchBeforeInput = kcc.Data.LookPitch;
         kcc.AddLookRotation(
             input.LookDelta *
             lookSensitivity
         );
+        manualRecoilPitchAvailable = Mathf.Max(0f, kcc.Data.LookPitch - pitchBeforeInput);
+        manualRecoilInputTick = abilityOwner != null && abilityOwner.Runner != null
+            ? abilityOwner.Runner.Tick.Raw : int.MinValue;
 
         // -------------------------------------------------------------
         // WASD
@@ -594,7 +642,20 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     // =====================================================================
-    #region 外部 Look Rotation
+    #region 外部視角與技能速度
+
+    // 純 Tick 內暫存：每次 Simulate（包含 Fusion 重模擬）都由當次輸入重建。
+    // 技能依 Loadout 順序先消耗，再由武器消耗；沒有輸入的新 Tick 不沿用舊額度。
+    private float manualRecoilPitchAvailable;
+    private int manualRecoilInputTick = int.MinValue;
+
+    /// <summary>只取得本 Tick 真正向下視角輸入，避免系統回正被當成手動壓槍，或一份輸入扣掉多份後座力。</summary>
+    public float ConsumeManualRecoilPitch(float accumulatedPitch)
+    {
+        if (kcc == null || !kcc.IsInFixedUpdate || abilityOwner == null || abilityOwner.Runner == null ||
+            manualRecoilInputTick != abilityOwner.Runner.Tick.Raw) return 0f;
+        return WeaponRecoilRecovery.ConsumeManualPitch(ref manualRecoilPitchAvailable, accumulatedPitch);
+    }
 
     /// <summary>
     /// 讓其他 Gameplay 系統對 KCC Look Rotation
@@ -622,18 +683,16 @@ public class PlayerMovement : MonoBehaviour
     /// Yaw 增量。
     /// 正負代表左右方向。
     /// </param>
-    public void AddLookRotationImpulse(
+    /// <returns>KCC 角度限制後真正施加的 Pitch，供後座力回正池記帳；系統偏移不增加手動壓槍額度。</returns>
+    public float AddLookRotationImpulse(
         float pitchDelta,
         float yawDelta
     )
     {
-        if (kcc == null)
-            return;
-
-        kcc.AddLookRotation(
-            pitchDelta,
-            yawDelta
-        );
+        if (kcc == null) return 0f;
+        float before = kcc.Data.LookPitch;
+        kcc.AddLookRotation(pitchDelta, yawDelta);
+        return kcc.Data.LookPitch - before;
     }
     #endregion
 

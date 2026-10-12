@@ -31,10 +31,10 @@ public static class GrappleEnergyRules
 
     public static bool CanLaunch(float energy, float launchCost)
     {
-        return energy > 0f && energy >= Mathf.Max(0f, launchCost);
+        return energy > 0f;
     }
 
-    /// <summary>失敗不扣款；必須足額支付一次發射，不能用不足一點的尾數發射。</summary>
+    /// <summary>仍有能量即可發射；不足發射費時消耗剩餘能量至零，歸零後不可再次發射。</summary>
     public static bool TryConsumeLaunch(float energy, float launchCost, out float remaining)
     {
         remaining = Mathf.Max(0f, energy);

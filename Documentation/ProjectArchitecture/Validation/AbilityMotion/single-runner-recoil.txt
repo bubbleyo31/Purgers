@@ -1,0 +1,57 @@
+2026-10-08T14:39:47.5194345Z 通過; controlled Single Runner, not independent multiplayer
+PASS Single Runner started
+PASS Probe observes fixed KCC data
+PASS Accepted press enters windup
+PASS Camera BeforeCast kicks immediately
+PASS Movement AfterCast waits
+PASS Repeated press during cast cannot kick twice
+PASS Movement uses release aim including pitch
+PASS Release finishes cannon
+PASS Later tick does not replay recoil
+PASS Shot direction sampled before AfterCast camera kick
+PASS Zero windup applies camera once
+PASS Same-event movement uses pre-kick aim
+PASS Held input cannot repeat kick
+PASS Blocked press cannot kick
+PASS Cancelled windup cannot release camera recoil
+PASS Cancelled windup cannot release movement recoil
+PASS Both flags with zero windup apply two camera kicks
+PASS Both flags represent two distinct cast events
+PASS Both flags add movement at each event aim
+PASS Blink preparation respects selected stage mask=2
+PASS Blocked Blink release cannot kick mask=2
+PASS Held first E cannot release Blink mask=2
+PASS Blink actual dash respects selected stage mask=2
+PASS Blink dash cannot replay recoil mask=2
+PASS Blink preparation respects selected stage mask=1
+PASS Blocked Blink release cannot kick mask=1
+PASS Held first E cannot release Blink mask=1
+PASS Blink actual dash respects selected stage mask=1
+PASS Blink dash cannot replay recoil mask=1
+PASS Blink preparation respects selected stage mask=3
+PASS Blocked Blink release cannot kick mask=3
+PASS Held first E cannot release Blink mask=3
+PASS Blink actual dash respects selected stage mask=3
+PASS Blink dash cannot replay recoil mask=3
+PASS Expired Blink cannot emit actual-release recoil
+PASS Projectile accepts preparation before release failure
+PASS Failed projectile release cannot kick camera
+PASS Failed projectile release cannot kick movement
+PASS Legacy successful start emits camera recoil
+PASS Legacy slow keeps original stored momentum separate from recoil
+PASS Legacy recoil queues its own finite displacement
+PASS Positive duration queues without immediate full kick
+PASS First smoothing tick applies one quarter
+PASS Repeated simulation cannot apply twice in same tick
+PASS Smoothed camera reaches exact configured total
+PASS First yaw uses deterministic negative direction
+PASS Unexpired recovery delay keeps applied angle
+PASS Automatic recovery uses configured degrees per second
+PASS Recovery finishes without overshoot
+PASS Yaw does not auto recover
+PASS Next event alternates yaw
+PASS KCC pitch clamp counts only actual applied angle
+PASS Actual Rifle runtime available for interaction check
+PASS Skill consumes one degree of real manual input
+PASS Rifle consumes only remaining half degree
+PASS Skill automatic recovery cannot erase Rifle recoil pool

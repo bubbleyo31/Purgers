@@ -1,0 +1,30 @@
+[
+  {
+    "File": "01_GrappleHit_Mark.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": 0
+  },
+  {
+    "File": "02_AerialSlow_Focus.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": 0
+  },
+  {
+    "File": "03_GrappleHit_Pull.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": 0
+  },
+  {
+    "File": "04_GrappleHit_Gather.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": 0
+  }
+]

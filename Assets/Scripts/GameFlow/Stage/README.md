@@ -39,3 +39,7 @@ Phase 4 前置-1：Host 在地圖準備完成且所有連線玩家的當次 Play
 - 網路同步：搜尋 `[Networked]`、`[Rpc(`、`HasStateAuthority`、`IsSceneAuthority`。
 - 場景綁定：由 `[SerializeField]` 欄位名稱回到 Unity Inspector 找同名引用。
 
+
+## 2026-10-08 Editor 開發者暫停
+
+InputManager 的可配置 F7 只在 Editor Host 蒐集意圖；StageFlowController 在權威 Tick 暫停／恢復 StageTimer，透過 Networked PausedStageTicks 供各端 HUD 固定剩餘秒數。不限時、到期與非 Active 拒收，Spawn／新關卡／結果提交清除；不停止遊戲或撤離倒數。設定與驗證見 [143](../../../../Documentation/ProjectArchitecture/143_Phase3_Level1關卡閉環配置與驗證.md)。

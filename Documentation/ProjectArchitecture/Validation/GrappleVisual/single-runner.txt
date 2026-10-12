@@ -1,0 +1,16 @@
+2026-10-04T20:44:48.6579327Z SingleRunner 通過
+PASS Host Input Authority has first-person binding
+PASS Host observer has third-person binding
+PASS Host local shooting waves and hook
+PASS Host local wave advances
+PASS Host local hit straightens
+PASS Host local retract retains hook
+PASS Host local disabled hides
+PASS Host local idle hides
+PASS Host remote shooting waves and hook
+PASS Host remote wave advances
+PASS Host remote hit straightens
+PASS Host remote retract retains hook
+PASS Host remote disabled hides
+PASS Host remote idle hides
+PASS Despawn destroys hook instance

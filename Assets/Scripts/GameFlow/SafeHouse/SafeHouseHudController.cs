@@ -122,8 +122,7 @@ namespace Purgers.GameFlow.SafeHouse
                     ? "正在載入關卡…"
                     : countingDown
                         ? $"已準備 {readyCount}　未準備 {unreadyCount}　" +
-                          $"出發 {Mathf.CeilToInt(flowController.RemainingCountdownSeconds)}　" +
-                          $"投票 {Mathf.CeilToInt(flowController.RemainingReadyCheckSeconds)}"
+                          $"出發 {Mathf.CeilToInt(flowController.RemainingCountdownSeconds)}"
                         : $"已準備 {readyCount}　未準備 {unreadyCount}　" +
                           $"投票 {Mathf.CeilToInt(flowController.RemainingReadyCheckSeconds)}";
                 SetTextIfChanged(readyStatusLabel, status);

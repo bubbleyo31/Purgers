@@ -368,6 +368,10 @@ public struct DamageRequest
     /// </summary>
     public GameObject SourceObject;
 
+    /// <summary>可選的權威來源位置快照；爆炸可指定爆心，與歸屬攻擊者分離。</summary>
+    public bool HasSourceWorldPosition;
+    public Vector3 SourceWorldPosition;
+
     /// <summary>
     /// Raycast / Hitbox 實際碰到的 GameObject。
     ///
@@ -1106,6 +1110,9 @@ public static class DamageReceiverUtility
                     wasImmune: false
                 );
 
+            if (targetReceiver is IBlockedDamageFeedbackReceiver feedbackReceiver)
+                feedbackReceiver.NotifyFullyBlockedDamage(resolvedRequest);
+
             NotifyOutgoingDamageResolved(
                 sourceBehaviours,
                 result
@@ -1289,4 +1296,10 @@ public interface IOutgoingDamageResultListener
     void OnOutgoingDamageResolved(
         in DamageResult result
     );
+}
+
+/// <summary>已結算的完全阻擋回饋；不再次套用傷害或 Modifier。</summary>
+public interface IBlockedDamageFeedbackReceiver
+{
+    void NotifyFullyBlockedDamage(DamageRequest request);
 }

@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SortKey: 724290879
   ObjectInterest: 1
-  Flags: 1
+  Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 7192827177287751213}
@@ -66,6 +66,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   definition: {fileID: 11400000, guid: cf178912b91467b49a2149d704878790, type: 2}
+  recoil:
+    cameraEnabled: 1
+    cameraTiming: 2
+    cameraAngles: {x: -10, y: 0}
+    cameraApplicationDuration: 0.02
+    cameraRecoveryDelay: 0.1
+    cameraRecoverySpeed: 40
+    movementEnabled: 1
+    movementTiming: 2
+    movementSpeed: 10
+    movementLocalDirection: {x: 0, y: 0, z: -1}
   _OwnerPlayerObject: {fileID: 0}
   _LoadoutSlotIndex: 0
 --- !u!114 &5287745661975827317
@@ -80,16 +91,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c0bd7609bdefc418e97f5e18b99d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldownSeconds: 12
-  castDelaySeconds: 0
+  cooldownSeconds: 0
+  castDelaySeconds: 0.2
   useConditions: []
+  rangeGizmos:
+    enabled: 1
+    selectedOnly: 1
+    labels: 1
+    paths: 1
+    previewCollisions: 1
+    trajectorySeconds: 3
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+    labelSize: 13
+    labelOffset: {x: 0, y: 0.3, z: 0}
   _Phase: 0
-  _ActivationSequence: 0
-  damage: 40
-  radius: 5
-  halfAngleDegrees: 60
-  knockbackDistance: 4
-  knockbackSpeed: 12
+  _ActivationSequence: 137
+  damage: 30
+  radius: 22.43
+  travelDistance: 30
+  waveHeight: 10
+  originOffset: {x: 0, y: 0, z: 0}
+  halfAngleDegrees: 45
+  knockbackDistance: 30
+  knockbackSpeed: 80
   wallStunSeconds: 1
   hitMask:
     serializedVersion: 2
@@ -102,3 +127,6 @@ MonoBehaviour:
     anchor: {fileID: 0}
     lifetimeSeconds: 2
   visualEventSeconds: 0.5
+  waveSpeed: 200
+  waveThickness: 1
+  waveVisualPrefab: {fileID: 0}

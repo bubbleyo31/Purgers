@@ -63,9 +63,7 @@ namespace Purgers.GameFlow.SafeHouse
             SafeHousePhase phase,
             bool timeoutExpired)
         {
-            return timeoutExpired &&
-                   (phase == SafeHousePhase.ReadyCheck ||
-                    phase == SafeHousePhase.Countdown);
+            return timeoutExpired && phase == SafeHousePhase.ReadyCheck;
         }
 
         public static bool AreAllPlayersReady(

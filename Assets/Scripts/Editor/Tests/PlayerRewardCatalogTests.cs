@@ -6,7 +6,7 @@ using UnityEditor;
 public sealed class PlayerRewardCatalogTests
 {
     [Test]
-    public void CurrentCatalogPreservesFourLegacyRewardsAndAddsTenActiveSkills()
+    public void CurrentCatalogPreservesAbilitiesAndAddsThreeWeapons()
     {
         PlayerRewardCatalog catalog = AssetDatabase.LoadAssetAtPath<PlayerRewardCatalog>(
             "Assets/Resources/Progression/PlayerRewardCatalog.asset");
@@ -14,13 +14,13 @@ public sealed class PlayerRewardCatalogTests
         Assert.That(catalog, Is.Not.Null);
         Assert.That(catalog.TryBuildDraftPool(out RewardDraftEntry[] pool,
             out string error), Is.True, error);
-        // 十項新 E 加入原四項池；原先排除的 AirDash 仍維持既有設定。
-        Assert.That(pool.Length, Is.EqualTo(14));
+        // 原四項、十項新 E 與三把武器同池；原先排除的 AirDash 維持原樣。
+        Assert.That(pool.Length, Is.EqualTo(17));
         foreach (PlayerRewardDefinition reward in catalog.Rewards)
         {
-            Assert.That(reward.IsImplementedAbilityReward, Is.True,
+            Assert.That(reward.IsImplementedReward, Is.True,
                 reward != null ? reward.name : "null");
-            Assert.That(reward.AbilityDefinition.RuntimePrefab, Is.Not.Null);
+            if (reward.IsImplementedAbilityReward) Assert.That(reward.AbilityDefinition.RuntimePrefab, Is.Not.Null);
             Assert.That(reward.RepeatPolicy, Is.EqualTo(RewardRepeatPolicy.Repeatable));
             Assert.That(reward.Description, Is.Not.Empty,
                 reward.name + " 缺少選擇視窗說明");
@@ -69,6 +69,7 @@ public sealed class PlayerRewardCatalogTests
         Assert.That(loadout, Is.Not.Null);
         foreach (PlayerRewardDefinition reward in catalog.Rewards)
         {
+            if (!reward.IsImplementedAbilityReward) continue;
             var entries = new System.Collections.Generic.List<PlayerAbilityDefinition>(
                 loadout.EquippedAbilities);
             for (int i = 0; i < entries.Count; i++)

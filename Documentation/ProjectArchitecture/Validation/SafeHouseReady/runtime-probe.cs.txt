@@ -1,0 +1,59 @@
+
+if (!UnityEngine.Application.isPlaying || Fusion.NetworkRunner.Instances.Any(r => r.IsRunning)) throw new System.Exception("Need idle Play Mode");
+System.Action run = async () => {
+var report = new System.Collections.Generic.List<string>();
+Fusion.NetworkRunner host = null, client = null;
+System.Action<bool,string> check = (ok,label) => { if (!ok) throw new System.Exception(label); report.Add("PASS " + label); };
+System.Func<System.Func<bool>,string,System.Threading.Tasks.Task> until = async (pred,label) => { var end = UnityEngine.Time.realtimeSinceStartup + 35f; while(!pred()) { if(UnityEngine.Time.realtimeSinceStartup>end) throw new System.TimeoutException(label); await System.Threading.Tasks.Task.Delay(20); } };
+var flags = System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic;
+string session="safehouse-ready-"+System.Guid.NewGuid().ToString("N");
+try {
+System.Func<bool,System.Threading.Tasks.Task<Fusion.NetworkRunner>> connect = async server => {
+var runner = new UnityEngine.GameObject(server ? "Ready Verification Host" : "Ready Verification Client").AddComponent<Fusion.NetworkRunner>();
+var config=Fusion.NetworkProjectConfig.Deserialize(Fusion.NetworkProjectConfig.Serialize(Fusion.NetworkProjectConfig.Global));
+config.PeerMode=Fusion.NetworkProjectConfig.PeerModes.Multiple;
+foreach(var e in Fusion.NetworkProjectConfig.Global.PrefabTable.GetEntries()) config.PrefabTable.AddSource(e.Item2);
+var manager=runner.gameObject.AddComponent<Fusion.NetworkSceneManagerDefault>(); manager.IsSceneTakeOverEnabled=false;
+var settings=new Fusion.Photon.Realtime.FusionAppSettings(); Fusion.Photon.Realtime.PhotonAppSettings.Global.AppSettings.CopyTo(settings);settings.FixedRegion="asia";
+var scene=new Fusion.NetworkSceneInfo();scene.AddSceneRef(Fusion.SceneRef.FromIndex(1),UnityEngine.SceneManagement.LoadSceneMode.Additive);
+var start=await runner.StartGame(new Fusion.StartGameArgs { GameMode=server?Fusion.GameMode.Host:Fusion.GameMode.Client, Config=config, SceneManager=manager, Scene=server?(Fusion.NetworkSceneInfo?)scene:null, SessionName=session, CustomPhotonAppSettings=settings, IsVisible=false, PlayerCount=3 });
+check(start.Ok,"Connected "+(server?"Host":"Client")+" "+start.ShutdownReason);
+return runner;
+};
+host=await connect(true); client=await connect(false);
+System.Func<Fusion.NetworkRunner,Purgers.GameFlow.SafeHouse.SafeHouseFlowController> flow = r => UnityEngine.Object.FindObjectsOfType<Purgers.GameFlow.SafeHouse.SafeHouseFlowController>().FirstOrDefault(f=>f.Runner==r && f.IsNetworkReady);
+await until(()=>flow(host)!=null&&flow(client)!=null&&flow(host).ConnectedPlayerCount==2&&!host.IsSceneManagerBusy&&!client.IsSceneManagerBusy,"SafeHouse peers");
+var h=flow(host);var c=flow(client);var driver=host.gameObject.AddComponent<StageTimerPauseVerificationDriver>();host.AddGlobal(driver);
+System.Action<Purgers.GameFlow.SafeHouse.SafeHouseFlowController,string,object> set=(f,n,v)=>f.GetType().GetProperty(n,flags).SetValue(f,v,null);
+System.Func<string,object> get=n=>h.GetType().GetProperty(n,flags).GetValue(h,null);
+System.Action<float> open=seconds=>{set(h,"Phase",Purgers.GameFlow.SafeHouse.SafeHousePhase.ReadyCheck);set(h,"ReadyCheckTimeout",Fusion.TickTimer.CreateFromSeconds(host,seconds));set(h,"StageStartCountdown",Fusion.TickTimer.None);set(h,"PausedReadyCheckTicks",0);};
+await driver.AtTick(()=>open(5f));
+await until(()=>c.Phase==Purgers.GameFlow.SafeHouse.SafeHousePhase.ReadyCheck,"Client vote");
+c.RequestToggleLocalReady();
+await until(()=>h.ReadyPlayerCount==1,"Client ready RPC");
+await driver.AtTick(()=>{set(h,"ReadyCheckTimeout",Fusion.TickTimer.CreateFromSeconds(host,.2f));h.RequestToggleLocalReady();});
+await until(()=>h.Phase==Purgers.GameFlow.SafeHouse.SafeHousePhase.Countdown&&c.Phase==h.Phase,"Both countdown");
+float frozen=h.RemainingReadyCheckSeconds;check(h.RemainingCountdownSeconds<=1.01f&&h.RemainingCountdownSeconds>.6f,"Authored countdown is one second");
+check(!((Fusion.TickTimer)get("ReadyCheckTimeout")).IsRunning,"Vote timer stopped");
+await System.Threading.Tasks.Task.Delay(350);
+check(h.Phase==Purgers.GameFlow.SafeHouse.SafeHousePhase.Countdown&&System.Math.Abs(h.RemainingReadyCheckSeconds-frozen)<.0001f,"Original vote expiry ignored and remaining time frozen");
+check(System.Math.Abs(c.RemainingReadyCheckSeconds-frozen)<.025f,"Client receives frozen remaining vote time");
+c.RequestToggleLocalReady();
+await until(()=>h.Phase==Purgers.GameFlow.SafeHouse.SafeHousePhase.ReadyCheck,"Client cancels departure");
+check(h.RemainingReadyCheckSeconds<=frozen+.02f&&h.RemainingReadyCheckSeconds>0,"Cancellation resumes remaining vote budget");
+await until(()=>h.Phase==Purgers.GameFlow.SafeHouse.SafeHousePhase.WaitingForHost,"Resumed vote expires");
+check(h.ReadyPlayerCount==0,"Expired vote clears ready flags");
+await driver.AtTick(()=>open(5f));
+await until(()=>c.Phase==Purgers.GameFlow.SafeHouse.SafeHousePhase.ReadyCheck,"Second vote");
+c.RequestToggleLocalReady();await until(()=>h.ReadyPlayerCount==1,"Second client ready");
+await driver.AtTick(()=>{set(h,"ReadyCheckTimeout",Fusion.TickTimer.CreateFromTicks(host,0));h.RequestToggleLocalReady();});
+await until(()=>h.Phase==Purgers.GameFlow.SafeHouse.SafeHousePhase.Countdown,"Ready wins timeout tie");
+check(h.RemainingReadyCheckSeconds==0,"All ready on expiry still starts departure");
+await until(()=>h==null||h.Phase==Purgers.GameFlow.SafeHouse.SafeHousePhase.LoadingStage,"Departure loads");
+await until(()=>UnityEngine.Object.FindObjectsOfType<Purgers.GameFlow.Stage.StageFlowController>().Any(s=>s.Runner==host)&&UnityEngine.Object.FindObjectsOfType<Purgers.GameFlow.Stage.StageFlowController>().Any(s=>s.Runner==client),"Both Game scenes");
+check(true,"Both Host and Client enter Game after one second despite expired vote");
+report.Add("RESULT PASS");
+} catch(System.Exception e) {report.Add("FAIL "+e);UnityEngine.Debug.LogError(e);}
+finally {if(client!=null)await client.Shutdown();if(host!=null)await host.Shutdown();System.IO.Directory.CreateDirectory("Temp/SafeHouseReadyVerification");System.IO.File.WriteAllLines("Temp/SafeHouseReadyVerification/runtime.txt",report);}
+};
+run();return "Verification started";

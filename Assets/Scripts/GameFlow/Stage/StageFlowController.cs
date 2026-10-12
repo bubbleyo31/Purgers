@@ -77,6 +77,12 @@ namespace Purgers.GameFlow.Stage
         }
         [Networked] public NetworkBool HasTimeLimit { get; private set; }
         [Networked] private TickTimer StageTimer { get; set; }
+        // 暫停以剩餘 Tick 同步給所有端；0 表示正常倒數，不改 HasTimeLimit。
+        [Networked] private int PausedStageTicks { get; set; }
+#if UNITY_EDITOR
+        private bool pendingDevelopmentTimerToggle;
+#endif
+        public bool IsStageTimerPaused => IsNetworkReady && PausedStageTicks > 0;
         [Networked] private TickTimer ExtractionHoldTimer { get; set; }
 
         [Networked, Capacity(12)]
@@ -110,7 +116,9 @@ namespace Purgers.GameFlow.Stage
 
         public float RemainingStageSeconds =>
             IsNetworkReady && HasTimeLimit
-                ? Mathf.Max(0f, StageTimer.RemainingTime(Runner) ?? 0f)
+                ? (IsStageTimerPaused
+                    ? PausedStageTicks * Runner.DeltaTime
+                    : Mathf.Max(0f, StageTimer.RemainingTime(Runner) ?? 0f))
                 : 0f;
 
         public float RemainingExtractionSeconds =>
@@ -165,6 +173,10 @@ namespace Purgers.GameFlow.Stage
             FailureReason = StageFailureReason.None;
             extractionSelectionAttempted = false;
             StageTimer = TickTimer.None;
+            PausedStageTicks = 0;
+#if UNITY_EDITOR
+            pendingDevelopmentTimerToggle = false;
+#endif
             ExtractionHoldTimer = TickTimer.None;
         }
 
@@ -172,6 +184,15 @@ namespace Purgers.GameFlow.Stage
         {
             if (!Object.HasStateAuthority || !Runner.IsServer)
                 return;
+
+#if UNITY_EDITOR
+            if (pendingDevelopmentTimerToggle)
+            {
+                pendingDevelopmentTimerToggle = false;
+                if (!Purgers.GameFlow.Control.LocalPlayerControl.AllInputBlocked)
+                    ToggleDevelopmentTimerStateAuthority();
+            }
+#endif
 
             switch (Phase)
             {
@@ -183,6 +204,49 @@ namespace Purgers.GameFlow.Stage
                     break;
             }
         }
+
+#if UNITY_EDITOR
+        /// <summary>InputManager 只排入意圖；正式 Tick 再次檢查權威與到期狀態。</summary>
+        public bool RequestDevelopmentTimerToggle()
+        {
+            if (!CanToggleDevelopmentTimer())
+                return false;
+            pendingDevelopmentTimerToggle = true;
+            return true;
+        }
+
+        private bool CanToggleDevelopmentTimer()
+        {
+            if (!IsNetworkReady)
+                return false;
+            int remaining = IsStageTimerPaused
+                ? PausedStageTicks : StageTimer.RemainingTicks(Runner) ?? 0;
+            return StageRules.CanToggleDevelopmentTimerPause(
+                Application.isEditor && Application.isPlaying && DevelopmentToolsPolicy.IsEnabled,
+                Object.HasStateAuthority && Runner.IsServer, Phase, HasTimeLimit, remaining);
+        }
+
+        private void ToggleDevelopmentTimerStateAuthority()
+        {
+            if (!CanToggleDevelopmentTimer())
+                return;
+
+            if (IsStageTimerPaused)
+            {
+                StageTimer = TickTimer.CreateFromTicks(Runner, PausedStageTicks);
+                PausedStageTicks = 0;
+            }
+            else
+            {
+                PausedStageTicks = StageTimer.RemainingTicks(Runner) ?? 0;
+                StageTimer = TickTimer.None;
+            }
+
+            Debug.Log(IsStageTimerPaused
+                ? "[StageFlow] 開發者已暫停關卡限制時間；遊戲與撤離倒數照常。"
+                : "[StageFlow] 開發者已恢復關卡限制時間。", this);
+        }
+#endif
 
         public override void Render()
         {
@@ -457,7 +521,7 @@ namespace Purgers.GameFlow.Stage
 
         private void EvaluateActiveStage()
         {
-            if (HasTimeLimit && StageTimer.Expired(Runner))
+            if (HasTimeLimit && !IsStageTimerPaused && StageTimer.Expired(Runner))
             {
                 CompleteStage(false, StageFailureReason.TimeExpired);
                 return;
@@ -530,6 +594,10 @@ namespace Purgers.GameFlow.Stage
                 : StagePhase.Failed;
             FailureReason = failureReason;
             StageTimer = TickTimer.None;
+            PausedStageTicks = 0;
+#if UNITY_EDITOR
+            pendingDevelopmentTimerToggle = false;
+#endif
             ExtractionHoldTimer = TickTimer.None;
 
             GameSaveRuntimeContext context =
@@ -668,6 +736,10 @@ namespace Purgers.GameFlow.Stage
                 IsUnlimitedStage(StageLevel),
                 bossTimeLimitSeconds);
 
+            PausedStageTicks = 0;
+#if UNITY_EDITOR
+            pendingDevelopmentTimerToggle = false;
+#endif
             HasTimeLimit = timeLimit > 0f;
             StageTimer = HasTimeLimit
                 ? TickTimer.CreateFromSeconds(Runner, timeLimit)

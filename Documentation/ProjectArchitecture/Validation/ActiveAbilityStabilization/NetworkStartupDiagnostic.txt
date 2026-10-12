@@ -1,0 +1,25 @@
+WARNING: Shader Did you use #pragma only_renderers and omit this platform?
+WARNING: Shader If subshaders removal was intentional, you may have forgotten turning Fallback off?
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+UnloadTime: 6.384300 ms
+ERROR: Shader TextMeshPro/Sprite shader is not supported on this GPU (none of subshaders/fallbacks are suitable)
+PlayerPrefsException: Could not store preference value
+  at UnityEngine.PlayerPrefs.SetString (System.String key, System.String value) [0x0001a] in C:\build\output\unity\unity\Runtime\Export\PlayerPrefs\PlayerPrefs.bindings.cs:49 
+  at Fusion.Menu.FusionMenuConnectArgs.set_AppVersion (System.String value) [0x00000] in M:\UnityProject\Purgers\Assets\Photon\FusionMenu\Runtime\FusionMenu.Common.cs:271 
+  at Fusion.Menu.FusionMenuConnectArgs.SetDefaults (Fusion.Menu.IFusionMenuConfig config) [0x0004b] in M:\UnityProject\Purgers\Assets\Photon\FusionMenu\Runtime\FusionMenu.Common.cs:317 
+  at Fusion.Menu.FusionMenuUIMain.Init () [0x00008] in M:\UnityProject\Purgers\Assets\Photon\FusionMenu\Runtime\FusionMenuUIMain.cs:95 
+  at Fusion.Menu.FusionMenuUIController`1[T].Awake () [0x0010c] in M:\UnityProject\Purgers\Assets\Photon\FusionMenu\Runtime\FusionMenu.Common.cs:903 
+
+(Filename: M:/UnityProject/Purgers/Assets/Photon/FusionMenu/Runtime/FusionMenu.Common.cs Line: 271)
+
+WARNING: Shader Unsupported: 'Shader Graphs/PhotonCap' - All subshaders removed
+WARNING: Shader Did you use #pragma only_renderers and omit this platform?
+WARNING: Shader If subshaders removal was intentional, you may have forgotten turning Fallback off?
+ERROR: Shader Shader Graphs/PhotonCap shader is not supported on this GPU (none of subshaders/fallbacks are suitable)
+WARNING: Shader Unsupported: 'Shader Graphs/PhotonCap' - All subshaders removed
+WARNING: Shader Did you use #pragma only_renderers and omit this platform?
+WARNING: Shader If subshaders removal was intentional, you may have forgotten turning Fallback off?
+WARNING: Shader Unsupported: 'Universal Render Pipeline/Unlit' - All subshaders removed
+WARNING: Shader Did you use #pragma only_renderers and omit this platform?
+WARNING: Shader If subshaders removal was intentional, you may have forgotten turning Fallback off?
+ERROR: Shader Universal Render Pipeline/Unlit shader is not supported on this GPU (none of subshaders/fallbacks are suitable)

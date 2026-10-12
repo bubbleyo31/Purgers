@@ -1,0 +1,35 @@
+2026-10-08T15:04:30.1772926Z 通過; controlled Host/Client in one Editor process
+PASS Host StartGame Ok
+PASS equip Shield 
+PASS Host input triggers both camera stages with total minus eight degrees
+PASS Host receives backward movement recoil
+PASS Client StartGame Ok
+PASS Late join receives existing sequence without replay
+PASS Proxy has no gameplay authority
+PASS Proxy direct call cannot add recoil
+PASS Authority recovery reaches proxy without extra event
+PASS Client StartGame Ok
+PASS Reconnect after recovery does not replay old kick
+PASS equip Shield 
+PASS Client player has only Input Authority
+PASS Client E executes exactly two kicks on Host
+PASS Client receives authoritative backward movement
+PASS Held client E does not repeatedly enqueue recoil
+PASS Input Authority and Host converge after recovery
+PASS equip Blink 
+PASS Client Blink first E prepares without actual-release recoil
+PASS Held client E cannot release Blink
+PASS Client Blink second E applies one authoritative camera recoil
+PASS Client Blink release recoil does not replay
+PASS equip Shield 
+START air=False grounded=True pitch=0 position=(1420.00, 99.50, 1400.00)
+PASS Client trial starts with verified grounded state and horizontal aim air=False
+MEASURE Client recoil air=False distance=1.999878
+PASS Client recoil has two metres air=False
+PASS Input Authority receives authoritative recoil distance air=False
+PASS equip Shield 
+START air=True grounded=False pitch=0 position=(1420.00, 149.56, 1400.00)
+PASS Client trial starts with verified grounded state and horizontal aim air=True
+MEASURE Client recoil air=True distance=2
+PASS Client recoil has two metres air=True
+PASS Input Authority receives authoritative recoil distance air=True

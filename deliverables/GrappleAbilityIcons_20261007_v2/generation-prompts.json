@@ -1,0 +1,42 @@
+{
+  "generator": "built-in image_gen",
+  "icons": [
+    {
+      "file": "01_GrappleHit_Mark.png",
+      "name": "鈎索命中標記",
+      "refs": [
+        "M:/UnityProject/Purgers/deliverables/GrappleAbilityIcons_20261007_v1/01_GrappleHit_Mark.png"
+      ],
+      "prompt": "Use case: precise-object-edit. Redesign the targeting treatment of this icon while retaining this SAME mushroom enemy identity: wide shallow mushroom-cap head, long slender stem neck and pointed upper chest silhouette. REMOVE the overhead downward triangle completely. REMOVE the hook and rope completely. Replace them with ONE circular AIMING RETICLE surrounding and LOCKING ONTO THE MUSHROOM HEAD. The circular sight ring must be centered on the cap / head, NOT the chest, and its diameter should extend beyond both edges of the wide cap. Add four short cardinal aiming ticks at top, bottom, left and right; ticks point toward the head but do not cover its contour. Use separated ring arcs if needed for clean separation, but it must immediately read as a circular gunsight aimed at the mushroom head. Keep clear transparent gaps between sight ring and head. Neck and compact upper chest extend below the sight, centered. Simplify the enemy's interior details to broad cutouts. No human face, no new creature, no arrows, no bullet, no headshot explosion, no floating triangle, no hook.\nOutput ONE square game skill icon, pure white solid pictogram on genuinely transparent background, preserving transparent negative spaces. Same visual family and bold weight as the input. Large clean shapes readable at small HUD size. Clean smooth edges with no gritty specks, no distress, no accidental residue, no thin sketch lines, no gray shading, no colored fill, no shadow, no glow, no text, no letters, no numbers, no background badge. Complete composition centered with generous margins. ",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-a631f0c1-0066-4c8a-abbb-d21be4662bee.png"
+    },
+    {
+      "file": "02_AerialSlow_Focus.png",
+      "name": "空中緩速專注",
+      "refs": [
+        "M:/UnityProject/Purgers/deliverables/GrappleAbilityIcons_20261007_v1/02_AerialSlow_Focus.png"
+      ],
+      "prompt": "Use case: precise-object-edit. Perform ONLY THESE TWO changes to the supplied icon:\n1. Completely REMOVE the small white elliptical ground shadow / floor mark beneath the boots AND all associated residue below the feet. There must be only empty transparency below the floating player.\n2. Turn the CHARACTER slightly farther to their RIGHT / the image RIGHT, approximately 15 degrees of yaw, so the mask, shoulders and held gun read as a slightly more right-facing three-quarter view. This is a gentle change of facing direction in 3D, NOT a clockwise tilt of the image.\nPRESERVE EVERYTHING ELSE: same hazmat player design, same gas mask, protective suit, rifle, anatomy, full-body bent-knee floating posture, relaxed separated hanging boots, proportions, expression, icon scale and position, white silhouette style and transparent cutouts. The player is still airborne without a floor symbol. Do not straighten the legs, do not change to sprinting, do not replace the character or weapon, do not invent accessories. Do not add smoke, movement lines, arrows, halos, platforms, clock or hourglass.\nOutput ONE square game skill icon, pure white solid pictogram on genuinely transparent background, preserving transparent negative spaces. Same visual family and bold weight as the input. Large clean shapes readable at small HUD size. Clean smooth edges with no gritty specks, no distress, no accidental residue, no thin sketch lines, no gray shading, no colored fill, no shadow, no glow, no text, no letters, no numbers, no background badge. Complete composition centered with generous margins. ",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-3df6bdaa-69cb-4365-bf21-23778f3aaa44.png"
+    },
+    {
+      "file": "03_GrappleHit_Pull.png",
+      "name": "鈎索命中拉取",
+      "refs": [
+        "M:/UnityProject/Purgers/deliverables/GrappleAbilityIcons_20261007_v1/03_GrappleHit_Pull.png"
+      ],
+      "prompt": "Use case: precise-object-edit. Keep the ONE LARGE OPEN J-SHAPED HOOK concept and its tilted orientation, but redesign its outline to feel MORE DANGEROUS, SHARP AND BARBED. Replace soft round corners with deliberate angular beveled segments. The deep lower bend should be a strong faceted sweep, preserving the large open inside gap. Give the upper-right hook point a long needle-sharp tip with ONE very pronounced backward-facing triangular barb immediately below it and ONE smaller secondary backward-facing barb lower on the inside edge. Make the barbs broad and unmistakable at small sizes. Keep a thick sturdy shank and turn the round upper-left attachment eye into a compact angular / hexagonal eye with a clear central hole. It must remain one coherent hook silhouette, not an anchor, not a sawblade, not a claw, not a skull. No rope, no enemy, no extra icons or splash. Bold menacing functional contour; avoid excessive tiny serrations.\nOutput ONE square game skill icon, pure white solid pictogram on genuinely transparent background, preserving transparent negative spaces. Same visual family and bold weight as the input. Large clean shapes readable at small HUD size. Clean smooth edges with no gritty specks, no distress, no accidental residue, no thin sketch lines, no gray shading, no colored fill, no shadow, no glow, no text, no letters, no numbers, no background badge. Complete composition centered with generous margins. ",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-091b2eb9-b2d9-40a1-8297-9b30e18ba2e7.png"
+    },
+    {
+      "file": "04_GrappleHit_Gather.png",
+      "name": "鈎索命中聚怪",
+      "refs": [
+        "C:/Users/hsuai/AppData/Local/Temp/codex-clipboard-fad48f34-a7df-4c2e-869c-944789ad81da.png",
+        "M:/UnityProject/Purgers/deliverables/GrappleAbilityIcons_20261007_v1/04_GrappleHit_Gather.png"
+      ],
+      "prompt": "Use case: reference-guided redesign. Image 1 is the user's NEW composition reference and has priority. Image 2 is the OLD icon for white style only; replace the pair-of-arrows layout.\nCreate a SIMPLE perspective inward-gathering / suction emblem resembling image 1: one small horizontal white ellipse at the center, surrounded by two thick concentric open elliptical arc bands in the lower half, like a shallow dimensional basin / attraction field seen from a slightly raised camera. Distinct generous transparent gaps between bands. Above and around this center, arrange 7 short tapered attraction-line segments in a loose fan from upper left through top to upper right. The lines visibly converge INTO the same central ellipse; each ends in a small pointed inward-facing tip nearer the center, with a visible gap before it. Add two short curved inward-flow segments at the sides connecting the spatial feeling of the rings and fan. The apparent depth comes only from foreshortened ellipses and overlapping spatial arrangement, NOT lighting or gradients. It should read as things being SUCKED IN toward one central point, not an explosion shooting outward, not a Wi-Fi symbol or sunrise. Keep it sparse, graphically simple, clean and balanced like the small reference. NO characters, NO monster silhouettes, NO hook, NO lettering. Do not reproduce the black circular badge or colored frame around image 1: background must be transparent.\nOutput ONE square game skill icon, pure white solid pictogram on genuinely transparent background, preserving transparent negative spaces. Same visual family and bold weight as the input. Large clean shapes readable at small HUD size. Clean smooth edges with no gritty specks, no distress, no accidental residue, no thin sketch lines, no gray shading, no colored fill, no shadow, no glow, no text, no letters, no numbers, no background badge. Complete composition centered with generous margins. ",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-1c3440d2-6dc8-45bb-a21a-6c379ee18da1.png"
+    }
+  ]
+}

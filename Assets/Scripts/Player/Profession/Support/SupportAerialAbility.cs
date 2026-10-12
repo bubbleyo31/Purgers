@@ -1,6 +1,7 @@
 using Fusion;
 using Fusion.Addons.KCC;
 using UnityEngine;
+using Purgers.GameFlow.Control;
 
 
 /// <summary>
@@ -11,10 +12,10 @@ using UnityEngine;
 /// 第一階段規則：
 ///
 /// 1. 玩家必須是 GrappleAirborne。
-/// 2. 玩家必須按住 Aim。
+/// 2. 玩家按下 E 啟動，放開後持續，再次按下提前結束。
 /// 3. 技能不可處於冷卻。
 /// 4. 每次最多持續 5 秒。
-/// 5. 放開 Aim、落地、離開 GrappleAirborne 或時間到時結束。
+/// 5. 再次按下 E、操作封鎖、落地、離開 GrappleAirborne 或時間到時結束。
 /// 6. 技能結束後才開始完整 15 秒冷卻。
 /// 7. 啟動瞬間記錄完整 KCC DynamicVelocity。
 /// 8. Active 期間將記錄速度依倍率壓縮，形成整體慢動作飄移。
@@ -52,7 +53,8 @@ public class SupportAerialAbility :
     NetworkBehaviour,
     IPlayerProfessionRuntimeModule,
     IPlayerAbilityRuntimeModule,
-    IPlayerMovementInputModifier
+    IPlayerMovementInputModifier,
+    IPlayerAbilityHudState
 {
     /// <summary>
     /// 此能力由 GrappleAirborne 專注輸入管線驅動。
@@ -69,7 +71,7 @@ public class SupportAerialAbility :
 
     [SerializeField]
     [Min(0.01f)]
-    [Tooltip("Support 空中特殊能力每次最多可維持的時間，單位為秒。預設 5 秒。放開 Aim 或落地仍會提早結束。")]
+    [Tooltip("Support 空中特殊能力每次最多可維持的時間，單位為秒。預設 5 秒。再次按下 E 或落地會提早結束；放開 E 不會結束。")]
     private float maximumActiveDuration =
         5f;
 
@@ -161,6 +163,11 @@ public class SupportAerialAbility :
     }
 
 
+    /// <summary>State Authority 在啟動時保存總長，供各端與晚加入 HUD 計算比例。</summary>
+    [Networked]
+    private float ActiveDurationSeconds { get; set; }
+
+
     /// <summary>
     /// 技能結束後才建立的完整冷卻計時器。
     ///
@@ -205,6 +212,9 @@ public class SupportAerialAbility :
     // =====================================================================
     #region Runtime References
 
+    // 舊 Profession 單參數入口的按鍵歷史；正式 Loadout 使用 Player 傳入的原始歷史。
+    [Networked] private NetworkButtons LegacyPreviousButtons { get; set; }
+
 
     /// <summary>
     /// 這顆 Support Profession Runtime 真正所屬的 Player Core。
@@ -231,7 +241,7 @@ public class SupportAerialAbility :
     /// <summary>
     /// Owner Player 的統一操作封鎖管理器。
     ///
-    /// 共用能力直接讀 NetInput 的 Aim，因此仍要尊重 Action Gate 對 Aim
+    /// 共用能力直接讀 NetInput 的 E，因此仍要尊重 Action Gate 對 Aim
     /// 的封鎖，避免換彈、Quick Action 或其他高權限行為期間誤啟動。
     /// </summary>
     private PlayerActionGate ownerActionGate;
@@ -268,6 +278,17 @@ public class SupportAerialAbility :
     public bool IsAbilityActive =>
         fusionSpawned &&
         AbilityActive;
+
+    /// <summary>HUD 沿用原有職業可用狀態；空中／落地資格仍由正式啟動規則判定。</summary>
+    public bool IsUsable => fusionSpawned && professionAvailable;
+
+    /// <summary>與子彈時間共用中央倒數條；本地 UI 只讀同步快照，不另開計時器。</summary>
+    public PlayerAbilityTimedHudState TimedHudState => IsAbilityActive
+        ? ActiveAbilityHudRules.Create(PlayerActiveAbilityPhase.Active, ActiveRemainingSeconds, ActiveDurationSeconds)
+        : default;
+
+    /// <summary>短暫技能後座力也沿用作用中的速度壓縮；消耗期間不累積解除後補發。</summary>
+    public float AbilityRecoilMotionMultiplier => IsAbilityActive ? Mathf.Clamp01(activeVelocityMultiplier) : 1f;
 
 
     /// <summary>
@@ -402,6 +423,9 @@ public class SupportAerialAbility :
 
             StoredDynamicVelocity =
                 Vector3.zero;
+
+            LegacyPreviousButtons = default;
+            ActiveDurationSeconds = 0f;
         }
     }
 
@@ -533,14 +557,17 @@ public class SupportAerialAbility :
     #region Simulation
 
 
-    /// <summary>
-    /// 每個 Fusion Tick 由 PlayerProfessionRuntime 自動呼叫。
-    /// 直接讀取同一 Tick 的 Aim Input，因此任何職業 Runtime 只要掛上
-    /// 此元件，不需要再修改自己的 Driver。
-    /// </summary>
-    public void Simulate(
-        NetInput input
-    )
+    /// <summary>保留舊 Profession Runtime 入口；按鍵歷史必須在條件／冷卻檢查前更新。</summary>
+    public void Simulate(NetInput input)
+    {
+        if (!fusionSpawned || Object == null || !Object.HasStateAuthority) return;
+        NetworkButtons previousButtons = LegacyPreviousButtons;
+        LegacyPreviousButtons = input.Buttons;
+        SimulateAbility(input, previousButtons);
+    }
+
+    /// <summary>正式 Loadout 入口：使用 Player 原始按鍵歷史，避免解除封鎖時把長按誤認成新按下。</summary>
+    public void SimulateAbility(NetInput input, NetworkButtons previousButtons)
     {
         if (fusionSpawned == false ||
             Object.HasStateAuthority == false)
@@ -573,10 +600,14 @@ public class SupportAerialAbility :
         ClearExpiredCooldown();
 
 
-        bool isFocusInputActive =
-            IsFocusInputActive(
-                input
-            );
+        if (IsFocusInputBlocked(input))
+        {
+            if (AbilityActive) EndAbility("Focus Input Blocked");
+            return;
+        }
+
+        bool focusPressed = IsFocusInputActive(input) &&
+            input.Buttons.WasPressed(previousButtons, InputButton.Ability1);
 
 
         // =============================================================
@@ -586,7 +617,7 @@ public class SupportAerialAbility :
         if (AbilityActive)
         {
             TickActiveAbility(
-                isFocusInputActive
+                focusPressed
             );
 
 
@@ -599,7 +630,7 @@ public class SupportAerialAbility :
         // =============================================================
 
         if (CanBeginAbility(
-                isFocusInputActive
+                focusPressed
             ) == false)
         {
             return;
@@ -614,20 +645,6 @@ public class SupportAerialAbility :
          * 不多等一個 Fusion Tick。
          */
         ApplyCompressedVelocity();
-    }
-
-
-    /// <summary>
-    /// 獨立 Ability Runtime 的統一 Tick 入口。
-    /// </summary>
-    public void SimulateAbility(
-        NetInput input,
-        NetworkButtons previousButtons
-    )
-    {
-        Simulate(
-            input
-        );
     }
 
 
@@ -654,27 +671,23 @@ public class SupportAerialAbility :
     }
 
 
-    /// <summary>
-    /// 取得本 Tick 是否允許將 E 視為能力 Hold 輸入。
-    ///
-    /// 不依賴某一職業是否配置 PlayerAimController，才能維持真正的
-    /// 掛載即用；同時仍尊重 PlayerActionGate 的 Aim 封鎖。
-    /// </summary>
-    private bool IsFocusInputActive(
-        NetInput input
-    )
+    /// <summary>保留 E 按鍵及原有資格檢查；按下邊緣由 SimulateAbility 判定。</summary>
+    private bool IsFocusInputActive(NetInput input)
     {
-        bool aimBlocked =
-            ownerActionGate != null &&
-            ownerActionGate.IsBlocked(
-                PlayerActionBlockMask.Aim
-            );
+        return !IsFocusInputBlocked(input) && input.Buttons.IsSet(InputButton.Ability1);
+    }
 
-        return
-            aimBlocked == false &&
-            input.Buttons.IsSet(
-                InputButton.Ability1
-            );
+    private bool IsFocusInputBlocked(NetInput input)
+    {
+        if ((input.BlockedControls & (PlayerControlMask.AllInput | PlayerControlMask.Gameplay)) != 0)
+            return true;
+        if (ownerActionGate != null && ownerActionGate.IsBlocked(PlayerActionBlockMask.Aim))
+            return true;
+        if (ownerPlayer == null) return false;
+        // 對應 Player.professionInput 原有過濾；E 放開不再代替操作封鎖訊號。
+        if (PlayerControlLocks.BlocksMovement(input.BlockedControls) && ownerPlayer.Profession != null &&
+            ownerPlayer.Profession.CurrentProfession != PlayerProfessionType.Attack) return true;
+        return ownerPlayer.Grapple != null && ownerPlayer.Grapple.BlocksProfessionAimInput;
     }
 
 
@@ -682,10 +695,10 @@ public class SupportAerialAbility :
     /// 檢查尚未啟動的能力是否可以開始。
     /// </summary>
     private bool CanBeginAbility(
-        bool isAimActive
+        bool focusPressed
     )
     {
-        if (isAimActive == false)
+        if (focusPressed == false)
         {
             return false;
         }
@@ -717,7 +730,7 @@ public class SupportAerialAbility :
     /// 更新已經 Active 的能力。
     /// </summary>
     private void TickActiveAbility(
-        bool isAimActive
+        bool focusPressed
     )
     {
         KCC kcc =
@@ -725,13 +738,13 @@ public class SupportAerialAbility :
 
 
         // =============================================================
-        // 放開 Aim：提前結束
+        // 再次按下 E：沿正常結束流程提前結束
         // =============================================================
 
-        if (isAimActive == false)
+        if (focusPressed)
         {
             EndAbility(
-                "Aim Released"
+                "Ability Pressed Again"
             );
 
 
@@ -814,6 +827,8 @@ public class SupportAerialAbility :
     /// </summary>
     private void BeginAbility()
     {
+        // 已通過啟動檢查；後座力由 Runtime 另存短暫位移，原動量保存／返還仍只處理 DynamicVelocity。
+        GetComponent<PlayerAbilityRuntime>()?.ApplyAbilityRecoil(PlayerAbilityRecoilEvent.InstantActivation);
         KCC kcc =
             ownerMovement.KCC;
 
@@ -837,14 +852,8 @@ public class SupportAerialAbility :
             true;
 
 
-        ActiveTimer =
-            TickTimer.CreateFromSeconds(
-                Runner,
-                Mathf.Max(
-                    0.01f,
-                    maximumActiveDuration
-                )
-            );
+        ActiveDurationSeconds = Mathf.Max(0.01f, maximumActiveDuration);
+        ActiveTimer = TickTimer.CreateFromSeconds(Runner, ActiveDurationSeconds);
 
 
         // =============================================================
@@ -919,6 +928,7 @@ public class SupportAerialAbility :
 
         ActiveTimer =
             TickTimer.None;
+        ActiveDurationSeconds = 0f;
 
 
         // =============================================================
@@ -972,7 +982,7 @@ public class SupportAerialAbility :
         // =============================================================
 
         /*
-         * 放開 Aim、落地、離開 GrappleAirborne 或時間到，
+         * 再次按下 E、操作封鎖、落地、離開 GrappleAirborne 或時間到，
          * 都會走同一個 EndAbility()。
          *
          * 所以不會留下某一條提前結束路徑

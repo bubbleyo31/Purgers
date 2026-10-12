@@ -1,0 +1,21 @@
+2026-10-08T11:56:25.8367663Z 通過; controlled Single Runner, not independent multiplayer
+PASS Single Runner started
+PASS Probe observes fixed KCC data
+PASS Accepted press enters windup
+PASS Camera BeforeCast kicks immediately
+PASS Movement AfterCast waits
+PASS Repeated press during cast cannot kick twice
+PASS Movement uses release aim including pitch
+PASS Release finishes cannon
+PASS Later tick does not replay recoil
+PASS Shot direction sampled before AfterCast camera kick
+PASS Zero windup applies camera once
+PASS Same-event movement uses pre-kick aim
+PASS Held input cannot repeat kick
+PASS Blocked press cannot kick
+PASS Cancelled windup cannot release camera recoil
+PASS Cancelled windup cannot release movement recoil
+PASS Blink first successful E kicks while arming
+PASS Blink second E does not repeat kick
+PASS Legacy successful start emits camera recoil
+PASS Legacy slow stores recoil in velocity to compress and restore

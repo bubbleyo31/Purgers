@@ -1,0 +1,11 @@
+PASS Connected Host Ok
+PASS Connected Client Ok
+PASS Authored countdown is one second
+PASS Vote timer stopped
+PASS Original vote expiry ignored and remaining time frozen
+PASS Client receives frozen remaining vote time
+PASS Cancellation resumes remaining vote budget
+PASS Expired vote clears ready flags
+PASS All ready on expiry still starts departure
+PASS Both Host and Client enter Game after one second despite expired vote
+RESULT PASS

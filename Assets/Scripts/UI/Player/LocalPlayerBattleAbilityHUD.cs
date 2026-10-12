@@ -161,7 +161,9 @@ public sealed class LocalPlayerBattleAbilityHUD : MonoBehaviour
                     : new Color32(54, 171, 246, 255);
         }
         // 尚有尾數但不足一次發射費時，也顯示不可再次出鈎。
-        if (emptyGrappleMark != null) emptyGrappleMark.SetActive(!charges.HasCharge);
+        var gate = charges.GetComponent<PlayerActionGate>();
+        bool blocked = gate != null && gate.IsFusionSpawned && gate.IsBlocked(PlayerActionBlockMask.Grapple);
+        if (emptyGrappleMark != null) emptyGrappleMark.SetActive(!charges.HasCharge || blocked);
         KeyCode key = inputManager != null ? inputManager.GrappleKey : KeyCode.Q;
         if (grappleKeyLabel != null) grappleKeyLabel.text = key.ToString().ToUpperInvariant();
         if (grappleKeyBackground != null)

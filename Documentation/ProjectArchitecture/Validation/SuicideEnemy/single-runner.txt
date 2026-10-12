@@ -1,0 +1,31 @@
+PASS Runner starts: Ok
+PASS zero damage does not trigger
+PASS one effective hit detonates without faking damage amount
+PASS player-triggered death retains experience instigator
+PASS player hit starts explosion
+PASS duplicate hit cannot detonate or award twice
+PASS invulnerable target rejects trigger
+INFO blast player=(1500.00, 100.00, 1500.00) KCC=(1500.00, 100.00, 1500.00) capsule=Center: (1500.00, 100.90, 1500.00), Extents: (0.35, 0.90, 0.35) center=(1500.00, 100.50, 1502.00)
+INFO active=[Player:0] local=[Player:0] hit=KCCCollider point=(1500.00, 100.50, 1500.35) spawnedGate=True
+PASS autonomous blast has no player experience instigator
+PASS blast damages and blocks grapple; hp=100 -> 95 blocked=True
+PASS active grapple forcibly ends and cannot restart
+PASS forced release preserves existing dynamic velocity
+PASS block does not consume energy
+PASS existing unavailable UI shows during block
+PASS UI clears after block with energy remaining
+PASS strongest slow wins, not summed
+PASS weaker slow remains after strong slow expires
+PASS all slow effects expire independently
+PASS expiry preserves another source's grapple lock
+PASS wall blocks blast damage and debuff
+PASS unnoticed close player detonates through real combat arbiter
+PASS distant unobserved player does not trigger
+PASS high speed crossing between ticks is detected
+PASS zero-delay crossing explodes at current location
+PASS 50 percent ground movement correction preserves stored velocities
+PASS air motion receives no explosion slow correction
+PASS pounce begins with a physical arc
+PASS early pounce corrects landing point toward moving target: (1500.03, 100.00, 1500.00) -> (1500.10, 100.00, 1500.00) player=(1500.48, 100.00, 1500.00)
+PASS late pounce keeps committed landing point
+PASS fixed deadline ends pounce even if target escapes

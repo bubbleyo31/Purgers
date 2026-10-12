@@ -76,6 +76,7 @@ using UnityEngine;
 public class TankQuickDashAbility :
     NetworkBehaviour,
     IPlayerQuickActionAbility,
+    IPlayerQuickActionInputContext,
     ICombatDamageFeedbackSource
 {
     // =====================================================================
@@ -819,6 +820,9 @@ public class TankQuickDashAbility :
     /// <summary>
     /// 是否允許開始 Tank F Dash。
     /// </summary>
+    private bool quickActionFireHeld;
+    public void SetQuickActionInput(NetInput input) => quickActionFireHeld = input.Buttons.IsSet(InputButton.Fire);
+
     public bool CanStartQuickAction()
     {
         // -------------------------------------------------------------
@@ -929,11 +933,11 @@ public class TankQuickDashAbility :
         }
 
         // -------------------------------------------------------------
-        // ★ 普通 Melee 不可被 F 取消
+        // 仍按住且尚未出手的預備可由成功 F 取消；出手及收招不可取消
         // -------------------------------------------------------------
 
-        if (meleeCombo != null &&
-            meleeCombo.IsAttackLocked)
+        if (meleeCombo != null && meleeCombo.IsAttackLocked &&
+            !(quickActionFireHeld && meleeCombo.CanCancelPreparation))
         {
             return false;
         }
@@ -1330,11 +1334,11 @@ public class TankQuickDashAbility :
         }
 
 
-        if (ConsumeCharge() ==
-            false)
-        {
-            return;
-        }
+        if (ConsumeCharge() == false) return;
+
+        // 扣充能成功後才取消，拒絕的 F 不影響近戰與連段。
+        if (quickActionFireHeld && meleeCombo != null)
+            meleeCombo.CancelPreparationForQuickAction();
 
 
         // =============================================================
@@ -2332,6 +2336,29 @@ public class TankQuickDashAbility :
     /// 外部高權限系統需要時
     /// 可以強制中止 F Dash。
     /// </summary>
+    public WeaponQuickActionReserve CaptureWeaponReserve()
+    {
+        return new WeaponQuickActionReserve
+        {
+            Charges = CurrentCharges,
+            Capacity = MaximumCharges,
+            NextChargeAt = Runner.SimulationTime + (RechargeTimer.RemainingTime(Runner) ?? 0f),
+            RechargeSeconds = Mathf.Max(0f, rechargeDuration),
+            RecoveryEndsAt = Runner.SimulationTime + (PostDashRecoveryTimer.RemainingTime(Runner) ?? 0f)
+        };
+    }
+
+    public void RestoreWeaponReserve(WeaponQuickActionReserve snapshot)
+    {
+        if (Object == null || !Object.IsValid || !Object.HasStateAuthority) return;
+        var state = snapshot.Advance(Runner.SimulationTime);
+        CurrentCharges = Mathf.Clamp(state.Charges, 0, MaximumCharges);
+        RechargeTimer = CurrentCharges >= MaximumCharges ? TickTimer.None :
+            TickTimer.CreateFromSeconds(Runner, Mathf.Max(0f, (float)(state.NextChargeAt - Runner.SimulationTime)));
+        float recovery = Mathf.Max(0f, (float)(state.RecoveryEndsAt - Runner.SimulationTime));
+        PostDashRecoveryTimer = recovery > 0 ? TickTimer.CreateFromSeconds(Runner, recovery) : TickTimer.None;
+    }
+
     public void ForceCancelDash()
     {
         if (Object == null ||

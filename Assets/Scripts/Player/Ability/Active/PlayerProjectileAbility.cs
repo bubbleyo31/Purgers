@@ -19,7 +19,7 @@ public sealed class PlayerProjectileAbility : PlayerActiveAbilityBase
     private float gravity = 18f;
     [SerializeField, Min(0.001f), Tooltip("權威掃掠球半徑，公尺；應對應投射物可見尺寸，避免高速穿牆。")]
     private float projectileRadius = 0.1f;
-    [SerializeField, Tooltip("投射碰撞與爆炸遮擋使用的實體 Layer；需包含牆壁、Enemy 和 Player，不包含純視覺或 Trigger。")]
+    [SerializeField, Tooltip("投射碰撞、拾取與爆炸使用的實體 Layer；需包含牆壁、Enemy 和 Player。榴彈是否穿過玩家由投射物 Prefab 的玩家碰撞開關決定，不可藉刪除 Player 層關掉飛行碰撞。")]
     private LayerMask collisionMask = ~0;
     [SerializeField, Min(0.1f), Tooltip("榴彈／彈射彈最大存活秒數，逾時直接消失。治療包固定投出後保留 10 秒。")]
     private float projectileLifetime = 8f;
@@ -37,13 +37,17 @@ public sealed class PlayerProjectileAbility : PlayerActiveAbilityBase
     protected override bool CanBegin(NetInput input) => projectilePrefab != null &&
         (OutstandingProjectile == null || !OutstandingProjectile.IsValid);
 
-    protected override void Activate()
+    protected override bool Activate()
     {
-        if (!Authority || projectilePrefab == null) { FinishAbility(); return; }
+        if (!Authority || projectilePrefab == null) { FinishAbility(); return false; }
         Vector3 direction = Owner.Movement != null ? Owner.Movement.GetAimDirection() : Owner.transform.forward;
         if (direction.sqrMagnitude < 0.000001f) direction = Owner.transform.forward;
         direction.Normalize();
-        Vector3 origin = ActiveAbilityPhysics.ShotOrigin(Owner, originHeight);
+        if (!ActiveAbilityPhysics.TryGetShotOrigin(Owner, originHeight, projectileRadius, collisionMask, out Vector3 origin, projectilePrefab.IgnoresPlayers(projectileKind)))
+        {
+            FinishAbility();
+            return false;
+        }
         var spawned = Runner.Spawn(projectilePrefab.GetComponent<NetworkObject>(), origin,
             Quaternion.LookRotation(direction), Owner.Object.InputAuthority,
             (runner, obj) => obj.GetComponent<PlayerAbilityProjectile>().Initialize(runner, Owner.Object,
@@ -58,6 +62,7 @@ public sealed class PlayerProjectileAbility : PlayerActiveAbilityBase
             PhaseTimer = TickTimer.CreateFromSeconds(Runner, 10f);
         }
         else FinishAbility();
+        return spawned != null;
     }
 
     protected override void TickAbility()

@@ -1,0 +1,51 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"d1ed63fed42c44d4bbdc402b10046111\",\"status\":\"succeeded\",\"mode\":\"EditMode\",\"started_unix_ms\":1791467331728,\"finished_unix_ms\":1791467335707,\"last_update_unix_ms\":1791467335707,\"progress\":{\"completed\":23,\"total\":577,\"current_test_full_name\":null,\"current_test_started_unix_ms\":1791467335271,\"last_finished_test_full_name\":\"WeaponRecoilApplicationTests.ZeroDurationKeepsImmediateImpulse\",\"last_finished_unix_ms\":1791467335271,\"stuck_suspected\":false,\"editor_is_focused\":false,\"blocked_reason\":null,\"failures_so_far\":[],\"failures_capped\":false},\"error\":null,\"result\":{\"mode\":\"EditMode\",\"summary\":{\"total\":23,\"passed\":23,\"failed\":0,\"skipped\":0,\"durationSeconds\":0.5902708,\"resultState\":\"Passed\"},\"results\":[]}},\"hint\":null}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "success": true,
+      "message": "Test job status retrieved.",
+      "error": null,
+      "data": {
+        "job_id": "d1ed63fed42c44d4bbdc402b10046111",
+        "status": "succeeded",
+        "mode": "EditMode",
+        "started_unix_ms": 1791467331728,
+        "finished_unix_ms": 1791467335707,
+        "last_update_unix_ms": 1791467335707,
+        "progress": {
+          "completed": 23,
+          "total": 577,
+          "current_test_full_name": null,
+          "current_test_started_unix_ms": 1791467335271,
+          "last_finished_test_full_name": "WeaponRecoilApplicationTests.ZeroDurationKeepsImmediateImpulse",
+          "last_finished_unix_ms": 1791467335271,
+          "stuck_suspected": false,
+          "editor_is_focused": false,
+          "blocked_reason": null,
+          "failures_so_far": [],
+          "failures_capped": false
+        },
+        "error": null,
+        "result": {
+          "mode": "EditMode",
+          "summary": {
+            "total": 23,
+            "passed": 23,
+            "failed": 0,
+            "skipped": 0,
+            "durationSeconds": 0.5902708,
+            "resultState": "Passed"
+          },
+          "results": []
+        }
+      },
+      "hint": null
+    }
+  },
+  "isError": false
+}

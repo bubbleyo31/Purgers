@@ -1,0 +1,14 @@
+{
+  "broken_links": [],
+  "assets": {
+    "Assets/Prefabs/AbilityRuntime/SupportAerialAbilityRuntime.prefab": {
+      "unchanged": true,
+      "sha256": "5dd73020c909a0a3aefec8e7ffc7c190ed140f164fbeee8ed1cd4453190e49f2"
+    },
+    "Assets/Prefabs/AbilityRuntime/Active/BulletTime.prefab": {
+      "unchanged": true,
+      "sha256": "7dba35d4b0ee91bd81df47ddf6d375a7e059d1bdbe9fc2f7319f6627bd05d762"
+    }
+  },
+  "new_test_trailing_whitespace_lines": []
+}

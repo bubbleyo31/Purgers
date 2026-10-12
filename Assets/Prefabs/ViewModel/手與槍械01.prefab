@@ -68,6 +68,7 @@ Transform:
   - {fileID: 4579014457958258383}
   - {fileID: 1498922398068148512}
   - {fileID: 3897458598356075003}
+  - {fileID: 1770512637392929429}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-1585698346162633819
@@ -82,7 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ee1243c31a1b842afa75ce443c9e8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  muzzlePoint: {fileID: 2669317401147729801}
+  muzzlePoint: {fileID: 6627147929191672464}
   aimAnimator: {fileID: 8447344464676194740}
   actionAnimator: {fileID: -2975519151712344130}
 --- !u!114 &8447344464676194740
@@ -97,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98dc9f64a80db73468ee8051eb9f8844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewModelAnimator: {fileID: 4329193078057578080}
+  viewModelAnimator: {fileID: 3722556203924802052}
   aimLayerName: ADS
   aimStateName: Aim
   aimPlaybackSpeedParameter: AimPlaybackSpeed
@@ -137,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7962d4043cfabb04b8bb59bcdb4e5be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 4329193078057578080}
+  animator: {fileID: 3722556203924802052}
   appearTriggerParameter: Appear
   shootTriggerParameter: Shoot
   reloadingBoolParameter: Reloading
@@ -221,6 +222,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5960382833327899955}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7803864244508166898
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6627147929191672464}
+  m_Layer: 0
+  m_Name: Muzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6627147929191672464
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7803864244508166898}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7100379, y: 0.027354328, z: -0.047417562, w: 0.70203245}
+  m_LocalPosition: {x: 0, y: 0.00378512, z: 0.00049643894}
+  m_LocalScale: {x: 0.037832856, y: 0.037832875, z: 0.08624028}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4896188563227234698}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1389224728711392971
 PrefabInstance:
@@ -1127,6 +1159,281 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1389224728711392971}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2240724027328439678
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8380308561422029330}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7757501210281753785, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7530461222687845792, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7382914442463583452, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6505375542093475470, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6103730984320819014, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -5731173805125004077, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -3336694720960723513, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2403933912043153435, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2201405566769505384, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1621435821806348965, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1364406000930428334, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -813551045605790740, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -98576454227759941, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 639445237268569983, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 690801285594607907, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_Name
+      value: RifleVine_Arms_Draft03
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054323953273094943, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357116846441238205, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1824766358512429161, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375558460600631944, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3552782172208042873, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3697543779193484599, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4221956984177412581, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4465448479210317060, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5812106980755740365, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7487540683245818178, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -2528094788567862028, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6627147929191672464}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3722556203924802052}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ff5f68dc736296242bfc09cd35b1dae3,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3372123061689313399}
+  m_SourcePrefab: {fileID: 100100000, guid: ff5f68dc736296242bfc09cd35b1dae3, type: 3}
+--- !u!1 &1430402438431840303 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ff5f68dc736296242bfc09cd35b1dae3,
+    type: 3}
+  m_PrefabInstance: {fileID: 2240724027328439678}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &3722556203924802052
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430402438431840303}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: eb83c906b312da945b466afc8081053a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3372123061689313399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430402438431840303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98d42ca56f54aef45ae120e3b50f8832, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  oneShotEntries:
+  - EventKey: Attack_Reload_MagIn
+    Cue: {fileID: 11400000, guid: 170d728441b202246ac0f686bfa1eca8, type: 2}
+    VolumeScale: 1
+  - EventKey: Attack_Reload_MagOut
+    Cue: {fileID: 11400000, guid: b6f74d3ff888cc3409b3c47b412d86c0, type: 2}
+    VolumeScale: 1
+  - EventKey: Attack_Reload_Bolt
+    Cue: {fileID: 11400000, guid: 72029054480a86747b973c87cd91adc4, type: 2}
+    VolumeScale: 1
+  - EventKey: Attack_Appear
+    Cue: {fileID: 11400000, guid: d01b14c29af25d044bb44e68a12dc539, type: 2}
+    VolumeScale: 1
+  debugAnimationAudio: 1
+--- !u!4 &1770512637392929429 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ff5f68dc736296242bfc09cd35b1dae3,
+    type: 3}
+  m_PrefabInstance: {fileID: 2240724027328439678}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4896188563227234698 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -2528094788567862028, guid: ff5f68dc736296242bfc09cd35b1dae3,
+    type: 3}
+  m_PrefabInstance: {fileID: 2240724027328439678}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3574789994880116240
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1200,6 +1507,11 @@ PrefabInstance:
       propertyPath: m_UpdateWhenOffscreen
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7878737364134211012, guid: 1aa5bd7130bdae74bbbd89bc14e739dd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -7757501210281753785, guid: 1aa5bd7130bdae74bbbd89bc14e739dd,
         type: 3}
       propertyPath: m_UpdateWhenOffscreen
@@ -1269,6 +1581,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RifleVine_Arms_Draft02
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1aa5bd7130bdae74bbbd89bc14e739dd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1054323953273094943, guid: 1aa5bd7130bdae74bbbd89bc14e739dd,
         type: 3}

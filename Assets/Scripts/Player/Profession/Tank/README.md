@@ -25,3 +25,7 @@
 - 網路同步：搜尋 `[Networked]`、`[Rpc(`、`HasStateAuthority`、`IsSceneAuthority`。
 - 場景綁定：由 `[SerializeField]` 欄位名稱回到 Unity Inspector 找同名引用。
 
+
+## 三段預備與幀時序（2026-10-10）
+
+`TankMeleePreparationProgress` 保存可重播的前搖／停格與兩種時間；`TankMeleeCombo` 決定出手、Combo 與權威傷害。共用 `AnimationFrameTiming` 只負責幀換算。逐段手動設定及驗證邊界見 [47 Tank 預備攻擊與動畫幀時序](../../../../../Documentation/ProjectArchitecture/47_Tank預備攻擊與動畫幀時序.md)。

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -117,6 +117,8 @@ public static class ActiveAbilityGizmoPreviewBuilder
             float radius=Mathf.Max(.001f,F(data,"projectileRadius"));
             p.EffectRadius=kind==PlayerAbilityProjectileKind.Grenade?Mathf.Max(.1f,F(data,"explosionRadius")):
                 kind==PlayerAbilityProjectileKind.HealingPack?Mathf.Max(radius,F(data,"pickupRadius")):0f;
+            var projectilePrefab=data.FindProperty("projectilePrefab").objectReferenceValue as PlayerAbilityProjectile;
+            bool ignorePlayers=projectilePrefab!=null&&projectilePrefab.IgnoresPlayers(kind);
             float lifetime=kind==PlayerAbilityProjectileKind.HealingPack?10f:F(data,"projectileLifetime");
             float seconds=Mathf.Min(Mathf.Clamp(settings.trajectorySeconds,.1f,10f),Mathf.Max(0f,lifetime));
             p.Description=mode+"\n碰撞球 R "+M(radius)+"m｜初速 "+M(F(data,"projectileSpeed"))+"m/s";
@@ -126,7 +128,7 @@ public static class ActiveAbilityGizmoPreviewBuilder
             else p.Description+="\n最多反彈 3 次：×1 → ×2 → ×4 → ×8";
             p.Description+="\n"+(physics.HasValue?"目前場景碰撞預估，非未來／權威命中結果":"無場景碰撞的理論路徑");
             Trace(p,physics,ignore,skill.transform,kind,aim*Mathf.Max(.1f,F(data,"projectileSpeed")),
-                F(data,"gravity"),radius,I(data,"collisionMask"),seconds,0);
+                F(data,"gravity"),radius,I(data,"collisionMask"),seconds,0,ignorePlayers);
         }
         else if(skill is PlayerPiercingCannonAbility)
         {
@@ -140,16 +142,43 @@ public static class ActiveAbilityGizmoPreviewBuilder
             p.Description=mode+"\n最大射線 "+M(distance)+"m｜零傷害半徑，線寬只是外觀\n"+(physics.HasValue?"目前 PhysX 預估；非 Lag Compensation 歷史命中":"配置上限；未計遮擋");
             p.Labels.Add(new ActiveAbilityGizmoLabel(p.Origin+aim*distance,"設定射程 "+M(distance)+"m"));
         }
-        else if(skill is PlayerShockwaveAbility)
+        else if(skill is PlayerShockwaveAbility shockwave)
         {
-            p.Title="衝擊扇波";p.Direction=forward;
-            float radius=Mathf.Max(0f,F(data,"radius")),half=Mathf.Clamp(F(data,"halfAngleDegrees"),0f,180f);
+            p.Title="衝擊扇波";
+            Quaternion rotation=live && owner.Movement!=null && owner.Movement.KCC!=null
+                ? owner.Movement.KCC.Data.TransformRotation * Quaternion.Euler(owner.Movement.KCC.Data.LookPitch,0f,0f)
+                : skill.transform.rotation;
+            forward=rotation*Vector3.forward;p.Direction=forward;
+            p.Origin=ShockwavePropagationRules.EmissionOrigin(feet,rotation,data.FindProperty("originOffset").vector3Value);
+            if(physics.HasValue && live && !shockwave.IsWaveRunning && owner.Movement!=null && owner.Movement.KCC!=null)
+            {
+                var kcc=owner.Movement.KCC;
+                if(ActiveAbilityPhysics.TryResolveShotOrigin(physics.Value,feet+Vector3.up*(kcc.Settings.Height*.5f),
+                    p.Origin,0f,I(data,"obstructionMask"),owner.Object,out Vector3 safeOrigin,true)) p.Origin=safeOrigin;
+                else p.Labels.Add(new ActiveAbilityGizmoLabel(p.Origin,"安全起點被障礙包住：出手將取消"));
+            }
+            float radius=Mathf.Max(.1f,F(data,"radius")),half=Mathf.Clamp(F(data,"halfAngleDegrees"),0f,180f);
+            float travel=Mathf.Max(.1f,F(data,"travelDistance")),height=Mathf.Max(.1f,F(data,"waveHeight"));
+            float thickness=ShockwavePropagationRules.GetThickness(radius,F(data,"waveThickness")),front=0f;
+            if(live && shockwave.IsWaveRunning)
+            {
+                p.Origin=shockwave.CurrentWaveOrigin;
+                forward=shockwave.CurrentWaveDirection;p.Direction=forward;rotation=shockwave.CurrentWaveRotation;
+                radius=shockwave.CurrentWaveRadius;half=shockwave.CurrentWaveHalfAngle;
+                travel=shockwave.CurrentWaveRange;height=shockwave.CurrentWaveHeight;
+                thickness=shockwave.CurrentWaveThickness;front=shockwave.CurrentWaveFront;
+            }
             p.EffectRadius=radius;
-            Wedge(p,forward,radius,half);
-            Vector3 edge=feet+forward*radius;
-            Arrow(p.Paths,edge,edge+forward*F(data,"knockbackDistance"));
-            p.Labels.Add(new ActiveAbilityGizmoLabel(edge+forward*F(data,"knockbackDistance"),"擊退上限 "+M(F(data,"knockbackDistance"))+"m（方向僅示意）"));
-            p.Description=mode+"\n球距 R "+M(radius)+"m ∩ 水平半角 ±"+M(half)+"°（總角 "+M(half*2)+"°）\n命中仍逐目標檢查遮擋；只撞牆才追加傷害／暈眩";
+            WaveWall(p,rotation,front,radius,half,thickness,height);
+            WaveWall(p,rotation,travel,radius,half,thickness,height);
+            Arrow(p.Paths,p.Origin,p.Origin+forward*travel);
+            p.Labels.Add(new ActiveAbilityGizmoLabel(p.Origin+forward*travel,"整片平移 "+M(travel)+"m"));
+            Vector3 edge=p.Origin+forward*(travel+ShockwavePropagationRules.GetCenterOffset(radius,half,thickness)+radius);
+            Arrow(p.Paths,edge,edge+Vector3.ProjectOnPlane(forward,Vector3.up).normalized*F(data,"knockbackDistance"));
+            p.Labels.Add(new ActiveAbilityGizmoLabel(edge+Vector3.ProjectOnPlane(forward,Vector3.up).normalized*F(data,"knockbackDistance"),"擊退上限 "+M(F(data,"knockbackDistance"))+"m（方向僅示意）"));
+            p.Description=mode+"\n固定弧半徑 "+M(radius)+"m｜整片位移 "+M(travel)+"m｜高度 "+M(height)+"m"+
+                "\n局部半角 ±"+M(half)+"°｜波速 "+M(F(data,"waveSpeed"))+"m/s｜波厚 "+M(thickness)+"m"+
+                "\n前搖結束取樣瞄準角度與 XYZ 偏移；整片傾斜、不吸附地面，逐目標檢查遮擋";
         }
         else if(skill is PlayerShieldAbility)
         {
@@ -249,32 +278,27 @@ public static class ActiveAbilityGizmoPreviewBuilder
         }
         else Trace(p,settings.previewCollisions?(PhysicsScene?)state.Scene:null,state.Owner,projectile.transform,state.Kind,
             state.Velocity,state.Gravity,state.CollisionRadius,state.CollisionMask,
-            Mathf.Min(Mathf.Clamp(settings.trajectorySeconds,.1f,10f),state.RemainingSeconds),state.Bounces);
+            Mathf.Min(Mathf.Clamp(settings.trajectorySeconds,.1f,10f),state.RemainingSeconds),state.Bounces,projectile.IgnoresPlayers(state.Kind));
         return p;
     }
-    private static void Wedge(ActiveAbilityGizmoPreview p,Vector3 forward,float radius,float half)
+    /// <summary>與實際波牆共用弧心偏移及直立表面；上下弧不隨高度收攏。</summary>
+    private static void WaveWall(ActiveAbilityGizmoPreview p,Quaternion rotation,float distance,float radius,float half,float thickness,float height)
     {
-        for(int elevation=-60;elevation<=60;elevation+=30)
+        Vector3 forward=rotation*Vector3.forward;
+        Vector3 center=p.Origin+forward*(distance+ShockwavePropagationRules.GetCenterOffset(radius,half,thickness));
+        foreach(float r in new[]{radius-thickness,radius})
         {
-            var points=new Vector3[Segments+1];
-            float pitch=elevation*Mathf.Deg2Rad;
-            for(int n=0;n<=Segments;n++)
+            foreach(float y in new[]{0f,height})
             {
-                float yaw=Mathf.Lerp(-half,half,(float)n/Segments);
-                points[n]=p.Origin+radius*(Quaternion.AngleAxis(yaw,Vector3.up)*forward*Mathf.Cos(pitch)+Vector3.up*Mathf.Sin(pitch));
+                var points=new Vector3[Segments+1];
+                for(int n=0;n<=Segments;n++)
+                    points[n]=center+rotation*ShockwavePropagationRules.SurfacePoint(r,Mathf.Lerp(-half,half,(float)n/Segments),y);
+                p.RangePaths.Add(points);
             }
-            p.RangePaths.Add(points);
-        }
-        foreach(float yaw in new[]{-half,0f,half})
-        {
-            var points=new Vector3[Segments+1];Vector3 direction=Quaternion.AngleAxis(yaw,Vector3.up)*forward;
-            for(int n=0;n<=Segments;n++)
-            {
-                float angle=Mathf.Lerp(-90f,90f,(float)n/Segments)*Mathf.Deg2Rad;
-                points[n]=p.Origin+radius*(direction*Mathf.Cos(angle)+Vector3.up*Mathf.Sin(angle));
-            }
-            p.RangePaths.Add(points);
-            p.RangePaths.Add(new[]{p.Origin,p.Origin+direction*radius});
+            foreach(float yaw in new[]{-half,0f,half})
+                p.RangePaths.Add(new[]{
+                    center+rotation*ShockwavePropagationRules.SurfacePoint(r,yaw,0f),
+                    center+rotation*ShockwavePropagationRules.SurfacePoint(r,yaw,height)});
         }
     }
     private static void Capsule(ActiveAbilityGizmoPreview p,Vector3 feet,float radius,float height)
@@ -294,11 +318,12 @@ public static class ActiveAbilityGizmoPreviewBuilder
             p.RangePaths.Add((Vector3[])arc.Clone());
         }
     }
-    private static bool Ignore(Collider c,Transform owner,Transform source) => c==null||
+    private static bool Ignore(Collider c,Transform owner,Transform source,bool ignorePlayers=false) => c==null||
+        (ignorePlayers&&ActiveAbilityPhysics.IsPlayerCollider(c))||
         (owner!=null&&(c.transform==owner||c.transform.IsChildOf(owner)))||
         (source!=null&&(c.transform==source||c.transform.IsChildOf(source)));
     private static bool FirstHit(PhysicsScene? scene,Vector3 origin,Vector3 direction,float distance,float radius,
-        int mask,Transform ignore,Transform source,bool piercing,out RaycastHit hit)
+        int mask,Transform ignore,Transform source,bool piercing,out RaycastHit hit,bool ignorePlayers=false)
     {
         hit=default;if((!scene.HasValue||!scene.Value.IsValid())||distance<=.000001f)return false;
         var hits=new RaycastHit[16];int count;
@@ -311,14 +336,14 @@ public static class ActiveAbilityGizmoPreviewBuilder
         float nearest=float.PositiveInfinity;
         for(int n=0;n<count;n++)
         {
-            var c=hits[n].collider;if(Ignore(c,ignore,source))continue;
+            var c=hits[n].collider;if(Ignore(c,ignore,source,ignorePlayers))continue;
             var receiver=ActiveAbilityPhysics.ResolveReceiver(c.gameObject);
             if(piercing&&receiver!=null&&!(receiver is PlayerHealth))continue;
             if(hits[n].distance<nearest){nearest=hits[n].distance;hit=hits[n];}
         }
         return !float.IsPositiveInfinity(nearest);
     }
-    private static bool InitialOverlap(PhysicsScene? scene,Vector3 origin,float radius,int mask,Transform owner,Transform source)
+    private static bool InitialOverlap(PhysicsScene? scene,Vector3 origin,float radius,int mask,Transform owner,Transform source,bool ignorePlayers=false)
     {
         if((!scene.HasValue||!scene.Value.IsValid()))return false;
         var colliders=new Collider[16];int count;
@@ -327,7 +352,7 @@ public static class ActiveAbilityGizmoPreviewBuilder
             count=scene.Value.OverlapSphere(origin,radius*.99f,colliders,mask,QueryTriggerInteraction.Ignore);
             if(count<colliders.Length)break;System.Array.Resize(ref colliders,colliders.Length*2);
         }while(true);
-        for(int n=0;n<count;n++)if(!Ignore(colliders[n],owner,source))return true;
+        for(int n=0;n<count;n++)if(!Ignore(colliders[n],owner,source,ignorePlayers))return true;
         return false;
     }
     private static bool OverlapsOwner(PhysicsScene? scene,Vector3 position,float radius,int mask,Transform owner)
@@ -346,11 +371,11 @@ public static class ActiveAbilityGizmoPreviewBuilder
     }
 
     private static void Trace(ActiveAbilityGizmoPreview p,PhysicsScene? scene,Transform ignore,Transform source,
-        PlayerAbilityProjectileKind kind,Vector3 velocity,float gravity,float radius,int mask,float seconds,int bounces)
+        PlayerAbilityProjectileKind kind,Vector3 velocity,float gravity,float radius,int mask,float seconds,int bounces,bool ignorePlayers=false)
     {
         Vector3 position=p.Origin;var points=new List<Vector3>{position};
         Sphere(p,position,radius,null);
-        if(InitialOverlap(scene,position,radius,mask,ignore,source))
+        if(InitialOverlap(scene,position,radius,mask,ignore,source,ignorePlayers))
         {
             Sphere(p,position,p.EffectRadius,"半徑參考；起點重疊，停止路徑預覽");
             p.Labels.Add(new ActiveAbilityGizmoLabel(position,"起點重疊（結果依正式碰撞／受擊判定）"));return;
@@ -370,7 +395,7 @@ public static class ActiveAbilityGizmoPreviewBuilder
             while(distance>.000001f&&!contact)
             {
                 if(ignore!=null&&!OverlapsOwner(scene,position,clearanceRadius,mask,ignore))ignore=null;
-                if(!FirstHit(scene,position,direction,distance,radius,mask,ignore,source,false,out var hit))
+                if(!FirstHit(scene,position,direction,distance,radius,mask,ignore,source,false,out var hit,ignorePlayers))
                 {
                     position+=direction*distance;points.Add(position);break;
                 }

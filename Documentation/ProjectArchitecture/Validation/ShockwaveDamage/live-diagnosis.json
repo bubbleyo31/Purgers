@@ -1,0 +1,8 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": "[{\"name\":\"Enemy_Ranged_C_Beam(Clone)\",\"root\":\"(-35.00, 1.05, -144.00)\",\"rootLocal\":\"(0.20, -4.47, 21.66)\",\"rootHit\":false,\"colliders\":[{\"name\":\"Body\",\"centerLocal\":\"(0.20, 2.37, 23.35)\",\"centerHit\":true,\"blocked\":false},{\"name\":\"Body (1)\",\"centerLocal\":\"(-0.59, 2.36, 23.34)\",\"centerHit\":true,\"blocked\":false},{\"name\":\"Body (2)\",\"centerLocal\":\"(1.01, 2.35, 23.36)\",\"centerHit\":true,\"blocked\":false},{\"name\":\"Body (3)\",\"centerLocal\":\"(-0.08, 1.10, 23.03)\",\"centerHit\":true,\"blocked\":false},{\"name\":\"Body (4)\",\"centerLocal\":\"(0.51, 1.09, 23.04)\",\"centerHit\":true,\"blocked\":false},{\"name\":\"Head\",\"centerLocal\":\"(0.20, 3.41, 23.61)\",\"centerHit\":true,\"blocked\":false}]},{\"name\":\"Enemy_Ranged_C_Beam(Clone)\",\"root\":\"(124.00, 1.05, -244.00)\",\"rootLocal\":\"(-72.49, 37.18, -146.46)\",\"rootHit\":false,\"colliders\":[{\"name\":\"Body\",\"centerLocal\":\"(-72.49, 44.01, -144.77)\",\"centerHit\":false,\"blocked\":false},{\"name\":\"Body (1)\",\"centerLocal\":\"(-72.58, 43.81, -144.01)\",\"centerHit\":false,\"blocked\":false},{\"name\":\"Body (2)\",\"centerLocal\":\"(-72.39, 44.19, -145.55)\",\"centerHit\":false,\"blocked\":false},{\"name\":\"Body (3)\",\"centerLocal\":\"(-72.52, 42.67, -144.81)\",\"centerHit\":false,\"blocked\":false},{\"name\":\"Body (4)\",\"centerLocal\":\"(-72.45, 42.81, -145.38)\",\"centerHit\":false,\"blocked\":false},{\"name\":\"Head\",\"centerLocal\":\"(-72.49, 45.05, -144.51)\",\"centerHit\":false,\"blocked\":false}]}]",
+    "compiler": "codedom"
+  }
+}

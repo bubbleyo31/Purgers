@@ -76,6 +76,15 @@ namespace Purgers.GameFlow.Stage
 
     public static class StageRules
     {
+        /// <summary>只允許 Editor Play Mode 的關卡權威切換仍未到期的有限倒數。</summary>
+        public static bool CanToggleDevelopmentTimerPause(
+            bool editorPlaying, bool stateAuthority, StagePhase phase,
+            bool hasTimeLimit, int remainingTicks)
+        {
+            return editorPlaying && stateAuthority && phase == StagePhase.Active &&
+                hasTimeLimit && remainingTicks > 0;
+        }
+
         private const int ExtractionSeedSalt = 0x34A1C52D;
         public const int MaxOrdinaryAdditionalChunkCount = 2;
 

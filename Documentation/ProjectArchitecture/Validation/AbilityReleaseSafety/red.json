@@ -1,0 +1,64 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "2d1121e978d84e29aad2465c6f989c56",
+      "status": "failed",
+      "mode": "EditMode",
+      "started_unix_ms": 1791365442272,
+      "finished_unix_ms": 1791365443784,
+      "last_update_unix_ms": 1791365443784,
+      "progress": {
+        "completed": 8,
+        "total": 491,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1791365443351,
+        "last_finished_test_full_name": "ActiveAbilityPlayerCollisionTests.OriginInsideAnotherPlayerObeysFlightPolicy(False)",
+        "last_finished_unix_ms": 1791365443351,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "blocked_reason": null,
+        "failures_so_far": [
+          {
+            "full_name": "ActiveAbilityPlayerCollisionTests.ExistingGrenadePrefabDefaultsToIgnoringPlayers",
+            "message": "  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "ActiveAbilityPlayerCollisionTests.FlightPolicyOnlyIgnoresPlayersForConfiguredGrenades(Grenade,True,True)",
+            "message": "  榴彈飛行碰撞需可配置，且不可改動補包與反彈彈規則。\r\n  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "ActiveAbilityPlayerCollisionTests.FlightPolicyOnlyIgnoresPlayersForConfiguredGrenades(Grenade,False,False)",
+            "message": "  榴彈飛行碰撞需可配置，且不可改動補包與反彈彈規則。\r\n  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "ActiveAbilityPlayerCollisionTests.FlightPolicyOnlyIgnoresPlayersForConfiguredGrenades(HealingPack,True,False)",
+            "message": "  榴彈飛行碰撞需可配置，且不可改動補包與反彈彈規則。\r\n  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "ActiveAbilityPlayerCollisionTests.FlightPolicyOnlyIgnoresPlayersForConfiguredGrenades(Ricochet,True,False)",
+            "message": "  榴彈飛行碰撞需可配置，且不可改動補包與反彈彈規則。\r\n  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "ActiveAbilityPlayerCollisionTests.IgnoringPlayersStillStopsAtWorldBehindThem",
+            "message": "  Expected: 8\r\n  But was:  7\r\n"
+          },
+          {
+            "full_name": "ActiveAbilityPlayerCollisionTests.OriginInsideAnotherPlayerObeysFlightPolicy(True)",
+            "message": "  射出起點需要與飛行一致的玩家排除規則。\r\n  Expected: 8\r\n  But was:  7\r\n"
+          },
+          {
+            "full_name": "ActiveAbilityPlayerCollisionTests.OriginInsideAnotherPlayerObeysFlightPolicy(False)",
+            "message": "  射出起點需要與飛行一致的玩家排除規則。\r\n  Expected: 8\r\n  But was:  7\r\n"
+          }
+        ],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": null
+    },
+    "hint": null
+  }
+}

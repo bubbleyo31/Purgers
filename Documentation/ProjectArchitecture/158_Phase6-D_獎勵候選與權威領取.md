@@ -36,3 +36,12 @@ Host 存檔升至 v3，新增待選候選 ID、已領 ID、已裝鈎索能力 ID
 現有 Assets/Resources/Progression/PlayerRewardCatalog.asset 保留原四項權重與引用，追加十項 active.* reward，合計十四；新項權重 1、最低等級 1、Repeatable，已裝同類技能仍被排除。AirDash 原未入池維持不變。精準鎖敵於產生候選及領取前都重查遠程武器，失格領取不消耗 pending；其他裝備驗證仍由原 RuntimeManager 負責。
 
 變更紀錄：2026-10-04 同步本節結構、資產與權威邊界；強化消耗仍未實作。
+
+
+## 2026-10-10 武器獎勵與換裝（局部核對）
+
+最後核對日期：2026-10-10。核對來源：GameLogic、Progression、PlayerProfessionRuntimeManager、LocalPlayerRewardHUD。
+
+先前『武器僅預留分類』已由本次取代：正式池保留十四技能並追加三武器。Host 候選與領取前排除目前武器，領取分流至原 Profession Runtime，成功才扣待選；SavedProfessions 與原 EquippedWeaponId 保存武器。
+
+正式規則／Inspector 入口見 [46](46_武器獎勵與換裝.md)，證據見 [驗證紀錄](Validation/WeaponRewards/README.md)。

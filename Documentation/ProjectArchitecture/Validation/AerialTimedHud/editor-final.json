@@ -1,0 +1,21 @@
+{
+  "editor": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "compilationFailed": false,
+        "compiling": false,
+        "playing": false,
+        "runners": 0,
+        "dirtyScenes": []
+      },
+      "compiler": "codedom"
+    }
+  },
+  "console": {
+    "success": true,
+    "message": "Retrieved 0 log entries.",
+    "data": []
+  }
+}

@@ -1,0 +1,25 @@
+2026-10-07T09:40:29.1003530Z 通過 controlled Single Runner; not independent multiplayer
+PASS Grenade enters windup
+PASS Grenade does not release during windup
+PASS Grenade spawns projectile
+PASS Grenade uses release position: (1200.00, 101.50, 1204.00)
+PASS Grenade uses release aim
+PASS Grenade is not caught by caster at release
+PASS HealingPack enters windup
+PASS HealingPack does not release during windup
+PASS HealingPack spawns projectile
+PASS HealingPack uses release position: (1200.00, 101.50, 1204.00)
+PASS HealingPack uses release aim
+PASS HealingPack is not caught by caster at release
+PASS PiercingCannon enters windup
+PASS PiercingCannon does not release during windup
+PASS PiercingCannon uses release position: (1200.00, 101.50, 1204.00)
+PASS PiercingCannon uses release aim
+PASS grenade crosses caster and teammate after owner clearance
+PASS flight crossing causes no explosion damage
+PASS grenade initial overlap with teammate is ignored
+PASS world contact still detonates
+PASS explosion keeps full self damage
+PASS explosion keeps 35 percent teammate damage
+PASS zero player multipliers preserve explosion without self or teammate damage
+PASS disabled option restores player contact detonation

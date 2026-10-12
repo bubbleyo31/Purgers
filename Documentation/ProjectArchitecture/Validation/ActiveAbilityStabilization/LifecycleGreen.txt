@@ -1,0 +1,10 @@
+2026-10-04T20:18:34.5741095Z 通過 controlled Single Runner lifecycle verification
+PASS late owner reference binds without input or HUD query
+PASS expired first impact snapshot does not replay local VFX
+PASS bullet time queues damage without early health change
+PASS unequip flushes pending damage exactly once
+PASS unequip releases player slowdown registry
+PASS old session cannot settle twice
+PASS shield active before death
+PASS death clears shield through ability tick
+PASS despawn leaves no affected player entry

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
@@ -7,6 +7,18 @@ using UnityEngine;
 [RequireComponent(typeof(NetworkObject), typeof(NetworkTransform))]
 public sealed class PlayerAbilityProjectile : NetworkBehaviour
 {
+    [Header("榴彈玩家碰撞與爆炸傷害")]
+    [SerializeField, Tooltip("只影響榴彈：開啟時飛行與出生檢查忽略所有玩家及其子碰撞器，不因碰到玩家引爆；預設開啟。關閉恢復接觸引爆，但仍保留出生時施放者排除。爆炸傷害由下方倍率獨立控制，補包與彈射彈不受影響。")]
+    private bool grenadeIgnoresPlayers = true;
+    [SerializeField, Min(0f), Tooltip("榴彈爆炸對施放者的傷害倍率；有效值為非負數，0 不造成自傷，1 為全額。預設 1；實際傷害仍經護盾、減傷等正式管線。與飛行玩家碰撞開關無關。")]
+    private float grenadeSelfDamageMultiplier = 1f;
+    [SerializeField, Min(0f), Tooltip("榴彈爆炸對其他玩家的傷害倍率；有效值為非負數，0 不造成友傷，0.35 為 35%。預設 0.35；不影響敵人傷害，與飛行玩家碰撞開關無關。")]
+    private float grenadeOtherPlayerDamageMultiplier = 0.35f;
+
+    /// <summary>可在未 Spawn 的 Prefab 讀取；射出起點、權威飛行與 Editor 預覽共用同一政策。</summary>
+    public bool IgnoresPlayers(PlayerAbilityProjectileKind kind) =>
+        kind == PlayerAbilityProjectileKind.Grenade && grenadeIgnoresPlayers;
+
     [Header("命中本機呈現")]
     [SerializeField, Min(0.05f), Tooltip("榴彈爆炸／彈射命中後保留網路物件的秒數，供各端呈現範圍線環。傷害不等待此時間。")]
     private float impactVisibleSeconds = 0.25f;
@@ -180,7 +192,7 @@ public sealed class PlayerAbilityProjectile : NetworkBehaviour
             bool found = false;
             for (int i = 0; i < count; i++)
             {
-                if (ActiveAbilityPhysics.BelongsTo(hits[i].collider, Object)) continue;
+                if (IgnoresFlightContact(hits[i].collider)) continue;
                 var receiver = ActiveAbilityPhysics.ResolveReceiver(hits[i].collider.gameObject);
                 if (receiver != null && ignoredReceivers.Contains(receiver)) continue;
                 hit = hits[i]; found = true; break;
@@ -201,13 +213,17 @@ public sealed class PlayerAbilityProjectile : NetworkBehaviour
         }
     }
 
+    // 排除在取最近接觸點之前執行，才能繼續命中玩家後方的牆／敵人。
+    private bool IgnoresFlightContact(Collider collider) => ActiveAbilityPhysics.BelongsTo(collider, Object) ||
+        (IgnoresPlayers(Kind) && ActiveAbilityPhysics.IsPlayerCollider(collider));
+
     private bool TryInitialOverlap(PhysicsScene scene, Vector3 direction)
     {
         int count = ActiveAbilityPhysics.OverlapSphere(scene, transform.position, radius * 0.99f, mask, ref overlaps);
         for (int i = 0; i < count; i++)
         {
             var collider = overlaps[i];
-            if (collider == null || ActiveAbilityPhysics.BelongsTo(collider, Object) ||
+            if (collider == null || IgnoresFlightContact(collider) ||
                 (!clearedOwner && ActiveAbilityPhysics.BelongsTo(collider, OwnerPlayerObject))) continue;
             var receiver = ActiveAbilityPhysics.ResolveReceiver(collider.gameObject);
             if (receiver != null && ignoredReceivers.Contains(receiver)) continue;
@@ -276,7 +292,9 @@ public sealed class PlayerAbilityProjectile : NetworkBehaviour
             if (ActiveAbilityPhysics.IsWorldOccluded(scene, center, point, mask, ref visibilityHits)) continue;
             damagedReceivers.Add(receiver);
             var health = receiver as PlayerHealth;
-            float multiplier = health != null && health.Object != OwnerPlayerObject ? 0.35f : 1f;
+            float multiplier = health == null ? 1f : Mathf.Max(0f, health.Object == OwnerPlayerObject
+                ? grenadeSelfDamageMultiplier : grenadeOtherPlayerDamageMultiplier);
+            if (multiplier <= 0f) continue;
             Vector3 direction = point - center;
             ActiveAbilityPhysics.ApplyDamage(Owner, collider.gameObject, point, -direction.normalized,
                 direction, direction.magnitude, damage * multiplier, DamageType.Explosion, sequence);
@@ -338,8 +356,14 @@ public sealed class PlayerAbilityProjectile : NetworkBehaviour
             foreach (var visual in GetComponentsInChildren<Renderer>())
                 if (visual != impactRing && visual.enabled) { visual.enabled = false; hidden.Add(visual); }
             hiddenImpactRenderers = hidden.ToArray();
-            customImpactPresented = impactVfx != null && impactVfx.TryPlay(transform, ImpactPosition,
+            // 延遲快照仍須隱藏已命中的模型，但不可補播已逾期的特效。
+            customImpactPresented = !ImpactTimer.ExpiredOrNotRunning(Runner) && impactVfx != null && impactVfx.TryPlay(transform, ImpactPosition,
                 Quaternion.identity, ImpactPosition, ImpactRadius);
+        }
+        if (ImpactTimer.ExpiredOrNotRunning(Runner))
+        {
+            if (impactRing != null) impactRing.enabled = false;
+            return;
         }
         if (customImpactPresented) return;
         if (impactRing == null)

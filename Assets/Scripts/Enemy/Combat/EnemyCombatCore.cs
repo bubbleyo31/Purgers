@@ -13,6 +13,7 @@ public enum EnemyCombatOptionId : byte
     MeleeAttackB = 2,
     RangedAttackA = 3,
     RangedAttackB = 4,
+    SuicidePounce = 5,
     DefenseA = 10,
     DefenseB = 11
 }
@@ -179,6 +180,13 @@ public abstract class EnemyCombatOption : NetworkBehaviour
 
     /// <summary>能力是否提供定點敵人在沒有 Active Option 時使用的瞄準方式。</summary>
     public virtual bool SupportsBetweenActionAiming => false;
+
+    /// <summary>自爆等已承諾動作可在目標失效後完成固定落點；預設仍取消。</summary>
+    public virtual bool ContinueWithoutTarget => false;
+
+    /// <summary>由唯一決策器輪詢的近身感知；不允許能力自行在 FixedUpdateNetwork 啟動。</summary>
+    public virtual bool TryGetEmergencyContext(in EnemyCombatContext context, out EnemyCombatContext emergency)
+    { emergency = default; return false; }
 
     /// <summary>
     /// 只由 Combat Controller 在取得非攻擊期間旋轉權後呼叫；

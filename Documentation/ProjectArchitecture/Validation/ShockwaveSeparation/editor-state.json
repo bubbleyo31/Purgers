@@ -1,0 +1,22 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "isPlaying": false,
+      "compiling": false,
+      "scriptCompilationFailed": false,
+      "scene": "Assets/Scenes/_Menu.unity",
+      "sceneDirty": false,
+      "liveRunners": 0,
+      "loadedRunnerAssets": 1,
+      "radius": 20,
+      "travelDistance": 20,
+      "height": 3,
+      "speed": 60,
+      "shaderError": false,
+      "missingScripts": 0
+    },
+    "compiler": "codedom"
+  }
+}

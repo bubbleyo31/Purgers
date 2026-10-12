@@ -28,17 +28,17 @@ public sealed class PlayerBlinkAbility : PlayerActiveAbilityBase
         PhaseDurationSeconds = Mathf.Max(0.01f, primedSeconds);
         PhaseTimer = TickTimer.CreateFromSeconds(Runner, Mathf.Max(0.01f, primedSeconds));
     }
-    protected override void Activate() { }
+    protected override bool Activate() => false; // 閃現只從第二次 E 提交衝刺。
 
-    protected override void OnArmedPress(NetInput input)
+    protected override bool OnArmedPress(NetInput input)
     {
-        if ((input.BlockedControls & Purgers.GameFlow.Control.PlayerControlMask.Movement) != 0) return;
+        if ((input.BlockedControls & Purgers.GameFlow.Control.PlayerControlMask.Movement) != 0) return false;
         var gate = Owner.GetComponent<PlayerActionGate>();
-        if (gate != null && gate.IsBlocked(PlayerActionBlockMask.Movement)) return;
-        if (PhaseTimer.ExpiredOrNotRunning(Runner)) { FinishAbility(); return; }
-        if (Owner.SupportGrapplePlayerPullReceiver != null && Owner.SupportGrapplePlayerPullReceiver.IsPullActive) return;
+        if (gate != null && gate.IsBlocked(PlayerActionBlockMask.Movement)) return false;
+        if (PhaseTimer.ExpiredOrNotRunning(Runner)) { FinishAbility(); return false; }
+        if (Owner.SupportGrapplePlayerPullReceiver != null && Owner.SupportGrapplePlayerPullReceiver.IsPullActive) return false;
         KCC kcc = Owner.Movement.KCC;
-        if (kcc == null) return;
+        if (kcc == null) return false;
         DashDirection = ActiveControlRules.ResolveDashDirection(input.Direction, kcc.Data.LookYaw);
         RemainingDistance = Mathf.Max(0f, dashDistance);
         LastDashPosition = kcc.Data.TargetPosition;
@@ -47,6 +47,7 @@ public sealed class PlayerBlinkAbility : PlayerActiveAbilityBase
         base.FinishAbility(); // 冷卻由真正衝刺觸發起算，結束時不重設。
         Phase = PlayerActiveAbilityPhase.Dashing;
         PhaseTimer = TickTimer.CreateFromSeconds(Runner, Mathf.Max(0.1f, dashDistance / Mathf.Max(0.1f, dashSpeed) / 0.01f + 1f));
+        return true;
     }
 
     protected override void TickAbility()

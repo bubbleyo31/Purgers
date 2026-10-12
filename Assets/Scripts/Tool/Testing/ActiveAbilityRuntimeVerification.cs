@@ -53,7 +53,7 @@ public static class ActiveAbilityRuntimeVerification
                 Check(player.AbilityRuntimeManager.TryEquipRewardAbilityStateAuthority(def, out string error), key + " equip: " + error);
                 await Task.Delay(100);
                 var skill = PlayerAbilityQualification.GetModule<PlayerActiveAbilityBase>(player);
-                Check(skill != null && skill.IsUsable, key + " usable");
+                Check(skill != null && skill.IsUsable, key + " usable; module=" + (skill != null) + "; ownerValid=" + player.Object.IsValid + "; alive=" + player.Health.IsAlive + "; hp=" + player.Health.CurrentHealth);
                 player.Health.RestoreHealth(player.Health.MaximumHealth);
                 float hp = player.Health.CurrentHealth;
                 Press(skill);

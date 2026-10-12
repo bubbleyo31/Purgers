@@ -33,3 +33,9 @@ Phase 4 前置-1：終端機與 Ready 請求遵守 AllInput 鎖。切場前重�
 - 網路同步：搜尋 `[Networked]`、`[Rpc(`、`HasStateAuthority`、`IsSceneAuthority`。
 - 場景綁定：由 `[SerializeField]` 欄位名稱回到 Unity Inspector 找同名引用。
 
+
+## 2026-10-10 全員準備快速出發（局部核對）
+
+核對來源：SafeHouseFlowController／SafeHouseReadyRules／SafeHouseHudController 與 SafeHouse 場景。
+全員準備即進入 1 秒出發，優先於同 Tick 投票逾時。State Authority 保存同步 PausedReadyCheckTicks、停止投票 Timer；HUD 只顯示出發秒數。取消準備／新加入恢復原投票餘額；ESC 取消整票。場景既有 Countdown Duration Seconds 由 Editor 改為 1，Ready Check Timeout Seconds 保留 7。
+設定、手動操作與驗證見 [145 安全屋 Ready Check](../../../../Documentation/ProjectArchitecture/145_PrePhase4-2_安全屋鍵盤準備與HUD.md)。

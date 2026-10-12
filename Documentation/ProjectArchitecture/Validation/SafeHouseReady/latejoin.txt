@@ -1,0 +1,11 @@
+PASS Connected Host Ok
+Before connect: Countdown players=1 ready=1 vote=120 departure=119.9844
+PASS Connected Client Ok
+After connect: Countdown players=2 ready=1 vote=120 departure=103.7188
+PASS Late join is unready and retains Host ready state
+PASS Late join resumes saved vote budget
+PASS Disconnect removes player without cancelling remaining ready team
+PASS Connected Client Ok
+PASS Reconnect starts unready and cancels departure
+PASS Client cancels entire vote and clears timers
+RESULT PASS

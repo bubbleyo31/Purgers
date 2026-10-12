@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SortKey: 622585801
   ObjectInterest: 1
-  Flags: 1
+  Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 9136006783242477778}
@@ -66,6 +66,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   definition: {fileID: 11400000, guid: d57bde0db24b2f641a8ab393869ee053, type: 2}
+  recoil:
+    cameraEnabled: 1
+    cameraTiming: 2
+    cameraAngles: {x: -2, y: 0}
+    cameraApplicationDuration: 0
+    cameraRecoveryDelay: 0.1
+    cameraRecoverySpeed: 20
+    movementEnabled: 0
+    movementTiming: 0
+    movementSpeed: 0
+    movementLocalDirection: {x: 0, y: 0, z: -1}
   _OwnerPlayerObject: {fileID: 0}
   _LoadoutSlotIndex: 0
 --- !u!114 &1133028106577056043
@@ -83,6 +94,17 @@ MonoBehaviour:
   cooldownSeconds: 1
   castDelaySeconds: 0
   useConditions: []
+  rangeGizmos:
+    enabled: 1
+    selectedOnly: 1
+    labels: 1
+    paths: 1
+    previewCollisions: 1
+    trajectorySeconds: 3
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+    labelSize: 13
+    labelOffset: {x: 0, y: 0.3, z: 0}
   _Phase: 0
   _ActivationSequence: 0
   primedSeconds: 5

@@ -11,7 +11,7 @@
 | 顯示內容 | 資料與呈現 Owner | 不應修改的玩法來源 |
 |---|---|---|
 | 圖示／技能名稱 | `PlayerAbilityDefinition.HudIcon`／`DisplayName`，既有技能槽與獎勵卡共用 | Loadout、獎勵資格及裝備互斥 |
-| 中央技能時間條 | `IPlayerAbilityHudState.TimedHudState` → `LocalPlayerBattleAbilityHUD` | State Authority 的階段、`PhaseTimer` 與 `PhaseDurationSeconds` |
+| 中央技能時間條 | `IPlayerAbilityHudState.TimedHudState` → `LocalPlayerBattleAbilityHUD` | State Authority 的階段、`PhaseTimer`／`PhaseDurationSeconds`；空中緩速使用 `ActiveTimer`／`ActiveDurationSeconds` |
 | 淡金護盾整格 | `LocalPlayerHealthSlider` 讀本機 `PlayerShieldAbility.CurrentShield` → 同一 `LocalHealthSegmentView` | 正式護盾吸收與 `PlayerHealth` |
 | 畫面四色 | `PlayerLocalView` → `PlayerAbilityColorGrading.BindLocal`；只處理有效 Input Authority 玩家 | 技能效果、傷害、經驗與治療結果 |
 | 投射物模型、轉向、漂浮 | `PlayerAbilityProjectile.Render` → `PlayerAbilityProjectilePresentation` 的純外觀子物件 | 投射物 Root、同步速度、掃掠碰撞及拾取 |
@@ -59,7 +59,7 @@ Owner 為 `StageHUD.prefab` 的 `ReferenceFrame/BattleAbilityHUD` 上的 [`Local
 
 新建根物件預設 anchor `(0.5, 0)`、pivot `(0.5, 0.5)`、anchored position `(0, 280)`、大小 `400×18`，即參考畫面中央、由上方算約 y=800。名稱在條上方左側、秒數在上方右側、狀態在下方左側；TMP 使用現有 `NotoSansTC-Bold HUD SDF`，名稱／秒數 22、狀態 18。作者可直接調整根物件位置與大小；不移動準心、換彈提示或鈎索圓環。
 
-顯示比例是 `Clamp01(剩餘秒數 / 本階段總秒數)`。總長由技能的 Networked `PhaseDurationSeconds` 提供；晚加入不會把首次看到的剩餘時間當成完整時間。施法階段、閃現第一次 E 的待命階段、快速護盾／經驗增加／子彈時間／精準鎖敵的 Active 階段可顯示。一般冷卻仍由原技能槽顯示；地上治療包等待拾取、閃現衝刺安全期限及舊空中技能不冒充中央自身效果條。效果到期、死亡、玩家缺失或卸裝後隱藏。
+顯示比例是 `Clamp01(剩餘秒數 / 本階段總秒數)`。總長由技能的 Networked `PhaseDurationSeconds` 提供；空中緩速由 `SupportAerialAbility.ActiveDurationSeconds` 保存每次啟動時的完整總長，與 `ActiveTimer` 一起同步。晚加入不會把首次看到的剩餘時間當成完整時間。施法階段、閃現第一次 E 的待命階段、快速護盾／經驗增加／子彈時間／精準鎖敵／空中緩速專注的 Active 階段可顯示。一般冷卻仍由原技能槽顯示；地上治療包等待拾取、閃現衝刺安全期限及空中衝刺不冒充中央自身效果條。效果到期、死亡、玩家缺失或卸裝後隱藏。
 
 ### 接線步驟
 
@@ -183,7 +183,7 @@ LGG 的中性 Vector4 是 `(1,1,1,0)`；不是 `(0,0,0,0)`，也不是 RGBA 的�
 
 ## 9. 十項技能 Gizmos（試行，等待使用者畫面驗收）
 
-本輪只把 Gizmos 加到這十項 E 技能及其投射物。尚未把「所有技能都必須遵守」寫成專案通用規則或專案記憶；待使用者確認顯示效果後再決定。舊空中緩速／空中衝刺不變。
+2026-10-04 試行實作範圍為十項 E 技能及其投射物，舊空中緩速／空中衝刺不變。2026-10-08 使用者要求將技能 Gizmos 記錄到規則，已將既有顯示與維護契約收錄至 [關鍵詞索引 ABILITY-GIZMOS](關鍵詞規則索引.md#ability-gizmos)。這次收錄不代表所有技能皆已支援，也不代表試行畫面、Runtime 或獨立 Host／Client 已完成驗收。
 
 ### 設定與開關
 
@@ -207,13 +207,25 @@ LGG 的中性 Vector4 是 `(1,1,1,0)`；不是 `(0,0,0,0)`，也不是 RGBA 的�
 
 這些是新增欄位的預設；程式即時讀取既有序列化技能數值與人工 override，不重存或重設 Prefab。
 
+### 維護與擴充規則（2026-10-08 收錄）
+
+以下整理既有實作的顯示與安全契約，供未來修改或擴充技能 Gizmos 時沿用：
+
+1. 沿用 ActiveAbilityGizmoSettings、ActiveAbilityGizmoPreviewBuilder、ActiveAbilityGizmos；Gizmos 僅供 Editor 診斷，不建立場景物件或第二套玩法，不寫傷害、冷卻、碰撞設定、移動結果或 Networked 狀態。
+2. 讀取當前序列化數值與人工 override；圖形、文字與正式技能使用一致的尺度、起點、方向及範圍語意。繪製距離以世界公尺表示，不因 Prefab Scale 放大；無空間半徑的自身效果不畫虛構範圍球。
+3. 預設僅選取顯示；保留視窗、Tools 與單技能開關，以及文字、路徑、碰撞預覽、自訂顏色等設定。線與文字共用技能辨識色；只調整 Editor 顯示不得連帶改動 VFX／HUD 或資產玩法值。
+4. 未 Spawn／未綁定 Owner 時只讀配置，明示預覽限制；有效 Runtime 才讀 Owner／KCC／武器的正式起點或技能快照。不得把獨立 Runtime Root 當作玩家位置。權威投射物資料不完整的 Proxy 不假造物理半徑或飛行結果。
+5. 碰撞預估只查所屬 PhysicsScene；Prefab Mode／Preview Scene 或關閉碰撞預覽時，不回退預設 PhysicsScene。預估不是正式命中、Lag Compensation 或未來移動保證；路徑顯示時間截斷不代表碰撞、爆炸或落地。
+6. 已支援技能的範圍、起點、角度、碰撞排除或施放快照變更時，同步核對預覽 Builder、文字及 ActiveAbilityGizmoTests，避免顯示舊規則。衝擊扇波依 [44](44_衝擊扇波推進與特效.md) 的共用幾何；榴彈碰撞排除依 [42](42_E主動技能規格與強化預留.md) 的 2026-10-07 補充。
+7. 修改 Gizmos 行為時遵循專案測試流程，分開記錄聚焦／完整回歸、Prefab 預覽、Runtime Owner／投射物、Proxy 與 Host／Client 畫面。單純收錄文件不重跑 Unity，也不將歷史通過記錄當作新版本已驗證。
+
 ### 十項範圍與辨識色
 
 | 技能 | 辨識色 | 本輪既有 Prefab 設定與圖形 |
 |---|---|---|
 | 爆破榴彈 | 橘 | 初速 40m/s、碰撞球 R 0.1m、爆炸候選球 R 10m；拋物線與預估接觸中心。球內仍受牆遮擋 |
 | 貫穿砲 | 桃紅 | 最大射線 60m；目前場景的敵人可穿透、玩家／世界阻擋。線寬不是傷害半徑 |
-| 衝擊扇波 | 紅 | R 5m 的三維球距與水平 ±60° 交集；額外 4m 擊退箭頭只是方向示意，並非延伸命中範圍 |
+| 衝擊扇波 | 紅 | 固定弧形波牆；Radius／Travel Distance／Wave Height 各自獨立，顯示起點與終點，上下同寬。額外擊退箭頭只是方向示意，非延伸傷害範圍；實際值見 44 |
 | 快速護盾 | 白 | 自身標記與 25% 最大生命、1.5 + (Lv−1)×0.5 秒；沒有虛構範圍球 |
 | 治療包 | 綠 | 初速 18m/s、碰撞 R 0.1m、實際拾取 R 0.4m、存活 10 秒；拾取球不跟漂浮模型移動 |
 | 彈射彈 | 藍 | 初速 60m/s、碰撞 R 0.1m、反彈路徑與 ×2／×4／×8 標記；第四次世界碰撞停止，命中特效線環不是 AOE |
@@ -236,8 +248,37 @@ LGG 的中性 Vector4 是 `(1,1,1,0)`；不是 `(0,0,0,0)`，也不是 RGBA 的�
 
 ## 變更紀錄
 
+- 2026-10-08：依使用者要求將既有技能 Gizmos 規則加入關鍵詞索引，整理維護與擴充契約；僅靜態核對文件與程式，未改程式／資產，畫面及多人驗收邊界保留。
+
 - 2026-10-04：加入十項 E 技能的 Editor Gizmos 試行、顯示開關、辨識色與預覽邊界；通用規則與記憶等待使用者驗收。
 
 - 2026-10-04：新增 E 技能圖示、中央時間條、護盾分格、LGG 四色、投射物純外觀與 VFX 插槽的配置／驗收手冊；只記錄來源核對與操作規則，未在本文件宣告驗證通過。
 
 
+
+## 2026-10-05 E 技能整合穩定化（局部核對）
+
+Owner 引用晚於 Runtime 可用時，由 Runtime.Render 重試綁定。投射物首次收到已過期命中狀態仍隱藏模型，但不新播自訂 VFX 或建立線環；期限內已播的獨立特效仍按自身 lifetime 播完。無新增 Inspector 配置。
+
+核對來源：本節列出的程式與本輪驗證；詳見 [驗證與待決事項](Validation/ActiveAbilityStabilization/README.md)。
+
+## 2026-10-07 圖示填框補充
+
+技能槽與獎勵卡新增 `AbilityIconFrameFit`，等比放大至各自框內，允許裁掉邊緣。保留原本 HudIcon 與 preserveAspect 欄位；啟用元件時最終顯示以裁切網格為準。無 Icon 時仍由原 HUD 顯示 fallback。三張六角卡 Inset=2、方形槽 Inset=6，Zoom 均為 1；設定、調整及驗證界線見 [167](167_已確認HUD美術與整格血量.md)。
+
+## 2026-10-08 衝擊扇波持續主波
+
+Shockwave 的 fireVfx 保留作為一次性施放附加特效；本文件舊表所述「空白無特效」不再適用於新的持續主波。PlayerShockwaveAbility.waveVisualPrefab 可指定純外觀 PlayerShockwaveVisual Prefab，留空載入 Resources/Presentation/Shockwave/ThickWave。
+
+主波由 WaveRunning／WaveFront 與施放參數快照驅動，不由 fireVfx.lifetimeSeconds 或 visualEventSeconds 計時。死亡／卸裝／Despawn 清除主波，與可獨立播完的舊一次性粒子生命週期分開；不更改其他技能插槽。材質、Kenney CC0 貼圖、網格預算與設定見 [44 衝擊扇波推進與特效](44_衝擊扇波推進與特效.md)。
+
+
+### 2026-10-08 圖解確認後修訂
+
+PlayerShockwaveVisual 保留材質／貼圖／Prefab 引用，改為上下同寬的直立弧形波牆及頂底封面。網格只於尺寸改變時重建，Render 以同步位移平移；完整 WaveRotation 使網格與傷害／Gizmo 一起隨出手瞄準傾斜；Origin Offset 使用相同座標，空中不吸附地板。Radius／距離／高度與成本見 [44](44_衝擊扇波推進與特效.md)。
+
+## 2026-10-11 空中緩速共用倒數量條
+
+`SupportAerialAbility` 實作 `IPlayerAbilityHudState`，使用上述中央 `TimedAbilityBar` 顯示 Definition 名稱、「效果持續」、一位小數秒數及剩餘比例。技能槽同步使用既有作用中秒數樣式；結束後照常顯示冷卻。再次按下 E、落地或到期等既有結束路徑立即讓快照隱藏。HUD 可用底色沿用職業限制，不新增空中資格判定。
+
+總長由 State Authority 啟動時保存，不依本機首次看到的剩餘時間、也不依啟動後改動的 Inspector 值重建。本輪不調整時間／倍率資產，不重建 UI、不改 Prefab 接線與外觀。既有 StageHUD 引用即可使用。驗證與多人限制見 [本輪紀錄](Validation/AerialTimedHud/README.md)。

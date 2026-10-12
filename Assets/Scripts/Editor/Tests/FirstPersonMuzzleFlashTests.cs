@@ -165,16 +165,21 @@ public sealed class FirstPersonMuzzleFlashTests
     [Test]
     public void AtlasMaterialIsUsableWithoutRuntimeTextureOrMaterialCopies()
     {
-        const string path = "Assets/Art/VFX/MuzzleFlash/StylizedMuzzleFlash_4x3.png";
-        var texture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
-        var importer = (TextureImporter)AssetImporter.GetAtPath(path);
-        Assert.That(texture.width, Is.EqualTo(1448));
-        Assert.That(texture.height, Is.EqualTo(1086));
+        // 驗证實際配置圖集的渲染契約，允許作者替換素材，不把檔名當作玩法規格。
+        var material = AssetDatabase.LoadAssetAtPath<Material>("Assets/Art/VFX/MuzzleFlash/MuzzleFlash.mat");
+        Assert.That(material, Is.Not.Null);
+        var texture = material.mainTexture as Texture2D;
+        Assert.That(texture, Is.Not.Null);
+        string path = AssetDatabase.GetAssetPath(texture);
+        var importer = AssetImporter.GetAtPath(path) as TextureImporter;
+        Assert.That(importer, Is.Not.Null, "圖集必須引用持久化匯入資產。");
+        Assert.That(texture.width, Is.GreaterThanOrEqualTo(4));
+        Assert.That(texture.height, Is.GreaterThanOrEqualTo(3));
+        Assert.That((float)texture.width / texture.height, Is.EqualTo(4f / 3f).Within(.01f));
         Assert.That(importer.mipmapEnabled, Is.False);
         Assert.That(importer.alphaIsTransparency, Is.True);
         Assert.That(importer.isReadable, Is.False);
-        var material = AssetDatabase.LoadAssetAtPath<Material>("Assets/Art/VFX/MuzzleFlash/MuzzleFlash.mat");
-        Assert.That(material.mainTexture, Is.SameAs(texture));
+        Assert.That(EditorUtility.IsPersistent(material), Is.True);
         Assert.That(ShaderUtil.ShaderHasError(material.shader), Is.False);
     }
 }

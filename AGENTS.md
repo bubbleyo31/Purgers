@@ -5,9 +5,19 @@ These rules apply to Hermes, Codex, Claude Code, and other coding agents working
 ## Read before editing
 
 1. Read `Documentation/ProjectArchitecture/00_CHATGPT快速讀取.md`.
-2. Read the task-specific architecture document linked from that file.
+2. For feature additions or changes, first search `Documentation/ProjectArchitecture/關鍵詞規則索引.md` by keyword, alias, and class name; then read the matched rules and the task-specific architecture document.
 3. Inspect the real implementation under `Assets/Scripts`; source code and serialized assets are the final truth.
 4. Check `git status --short`. The working tree may contain unfinished user work. Never reset, revert, overwrite, or reformat unrelated changes.
+
+## 關鍵詞規則索引
+
+- 新對話涉及新增、修改或打磨功能時，先查 [關鍵詞規則索引](Documentation/ProjectArchitecture/關鍵詞規則索引.md)，再讀命中的正式規則與設定位置並核對實作；先說明沿用哪些既有規則，避免重新建立已規劃的系統。
+- 同詞命中多個系統時，依任務上下文區分；仍不明確時先詢問使用者。新對話收到添加功能的指令，查索引及相關文件仍找不到時，必須先詢問「這是全新功能，還是先前已規劃／實作過的功能？」不能把「添加」或搜尋未命中當成全新設計的授權。
+- 若使用者回答不是新功能，先深入搜尋專案文件、歷史規劃與設定／驗證紀錄，再追查 `Assets/Scripts` 及必要資產，找回既有規則與責任入口後接續工作；仍找不到時列明搜尋範圍並請使用者提供舊名稱或線索，不自行重建。
+- 若確認為新功能，再依既有架構規劃與實作。答覆前可繼續唯讀查找及不依賴此判定的工作，但不得先建立這項功能的新系統；未回覆不視為「是」。同一對話已明確確認新舊性質時不重複詢問。詳細分支見索引的「找不到功能時的必要確認」。
+- 功能或規則打磨完成後，主動提出是否新增或更新索引，附上建議關鍵詞、定案摘要與規則／設定連結，讓使用者確認具體條目。使用者已明確要求收錄時直接完成，不重複詢問；未答覆不得視為同意。
+- 新增條目或改寫定案規則須遵循上述確認；已收錄條目的路徑、事實漂移及驗證狀態依文件維護規則同步修正，不必因索引確認流程停止已授權的實作或文件維護。
+- 索引只保存精簡規則與路由；完整數值及操作步驟保留在正式模組文件。分開標記設計定案、實作／資產與驗證狀態；暫定方案不可冒充已確認規則。
 
 ## Project baseline
 
@@ -31,6 +41,16 @@ These rules apply to Hermes, Codex, Claude Code, and other coding agents working
 - Do not hand-edit `.unity`, `.prefab`, `.asset`, or `.meta` YAML unless no Editor path exists and the exact serialization impact is understood.
 - Do not run two write-capable agents against the same checkout. Use a Git worktree for parallel implementation.
 - Package dependencies must be pinned to a released version, tag, or exact commit; do not leave production dependencies on a moving branch.
+
+## 3D art topology and resource budget
+
+- Default to quad-based modeling. Use triangles only where they improve a necessary termination, hidden cap, or topology transition; do not increase geometry merely to force every face into a quad.
+- Control runtime cost from the start: silhouette and deformation justify geometry; small grooves, grain, knurling, and surface wear should preferentially use textures or normal maps. Avoid unnecessary subdivision, tiny separate meshes, material slots, and oversized textures.
+- Before modeling, record the existing asset cost and set a task-specific budget. Do not invent a universal production budget without a target-platform measurement.
+- Deliver polygon distribution (quads/triangles/ngons), triangulated triangle count, vertex count, mesh/material counts, texture resolutions, and comparison with the baseline. Quads are an authoring preference, not a claim of lower GPU cost.
+- Preserve approved silhouettes, hand meshes, rigs, weights, and animations. Optimize inherited content only within the approved scope; report inherited costs separately.
+- Verify exported FBX topology and animation round-trip. DCC inspection does not prove Unity import, draw calls, runtime performance, or final visual acceptance.
+- Detailed default rules: `Documentation/ProjectArchitecture/150_開發工具與AI_Agent工作流.md` section 6.
 
 ## Development workflow
 

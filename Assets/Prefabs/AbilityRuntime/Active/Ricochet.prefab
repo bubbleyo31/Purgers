@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SortKey: 638495643
   ObjectInterest: 1
-  Flags: 1
+  Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 2377330304149568807}
@@ -80,16 +80,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1ecf033e602c2041b5f05807632ce53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldownSeconds: 12
+  cooldownSeconds: 2
   castDelaySeconds: 0
   useConditions: []
+  rangeGizmos:
+    enabled: 1
+    selectedOnly: 1
+    labels: 1
+    paths: 1
+    previewCollisions: 1
+    trajectorySeconds: 3
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+    labelSize: 13
+    labelOffset: {x: 0, y: 0.3, z: 0}
   _Phase: 0
   _ActivationSequence: 0
   projectileKind: 2
   projectilePrefab: {fileID: 2699290669135992500, guid: fd3a1cfe6ccb6dc4c818cc1b9719d3e3,
     type: 3}
   originHeight: 1.5
-  projectileSpeed: 60
+  projectileSpeed: 40
   gravity: 0
   projectileRadius: 0.1
   collisionMask:

@@ -1,0 +1,73 @@
+PASS Single Runner starts
+PASS new run starts with Attack
+PASS equip shield: 
+PASS shield active before weapon replacement
+PASS Attack F starts
+PASS gain one pending reward
+PASS Host drafts Tank
+PASS stale draft rejected without changing weapon
+PASS failed replacement preserves old Runtime
+PASS claim Tank: 
+PASS duplicate claim rejected
+PASS equipped Tank
+PASS exactly one reward consumed
+PASS old detached Tracer cleaned during replacement
+PASS old F action ends before new weapon
+PASS weapon swap preserves active shield and Q/E revision
+PASS Q/E Runtime identity preserved: [Id:1031]
+PASS Q/E Runtime identity preserved: [Id:1032]
+PASS gain one pending reward
+PASS Host drafts Support
+PASS stale draft rejected without changing weapon
+PASS failed replacement preserves old Runtime
+PASS claim Support: 
+PASS duplicate claim rejected
+PASS equipped Support
+PASS exactly one reward consumed
+PASS SMG starts full
+PASS gain one pending reward
+PASS Host drafts Tank
+PASS stale draft rejected without changing weapon
+PASS failed replacement preserves old Runtime
+PASS claim Tank: 
+PASS duplicate claim rejected
+PASS equipped Tank
+PASS exactly one reward consumed
+PASS Tank F recharges while unequipped without unconditional refill
+PASS gain one pending reward
+PASS Host drafts Attack
+PASS stale draft rejected without changing weapon
+PASS failed replacement preserves old Runtime
+PASS claim Attack: 
+PASS duplicate claim rejected
+PASS equipped Attack
+PASS exactly one reward consumed
+PASS Attack F remaining recovery survives round trip
+PASS Attack F becomes available after elapsed cooldown
+PASS equip precision
+PASS gain one pending reward
+PASS Host drafts Tank
+PASS stale draft rejected without changing weapon
+PASS failed replacement preserves old Runtime
+PASS claim Tank: 
+PASS duplicate claim rejected
+PASS equipped Tank
+PASS exactly one reward consumed
+PASS melee keeps precision equipped but ends and blocks it
+PASS gain one pending reward
+PASS Host drafts Support
+PASS stale draft rejected without changing weapon
+PASS failed replacement preserves old Runtime
+PASS claim Support: 
+PASS duplicate claim rejected
+PASS equipped Support
+PASS exactly one reward consumed
+PASS weapon survives death
+PASS write Host equipment snapshot
+PASS saved weapon is Support
+PASS isolated save writes successfully
+PASS weapon survives scene transition
+PASS Single Runner starts
+PASS fresh Runner restores saved Support before first Runtime
+PASS failed run resets live weapon to Attack
+PASS failed run saves Attack

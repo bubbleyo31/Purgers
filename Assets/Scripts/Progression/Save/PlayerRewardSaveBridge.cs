@@ -5,14 +5,16 @@ namespace Purgers.Progression
 {
     public readonly struct PlayerRewardSaveSnapshot
     {
+        public readonly string EquippedWeaponId;
         public readonly string EquippedGrappleHitId;
         public readonly string EquippedGrappleFocusId;
         public readonly string[] PendingCandidateIds;
         public readonly string[] AcquiredRewardIds;
 
         public PlayerRewardSaveSnapshot(string hitId, string focusId,
-            string[] pendingIds, string[] acquiredIds)
+            string[] pendingIds, string[] acquiredIds, string weaponId = null)
         {
+            EquippedWeaponId = weaponId ?? string.Empty;
             EquippedGrappleHitId = hitId ?? string.Empty;
             EquippedGrappleFocusId = focusId ?? string.Empty;
             PendingCandidateIds = pendingIds ?? Array.Empty<string>();
@@ -33,7 +35,7 @@ namespace Purgers.Progression
                 entry.EquippedGrappleHitId,
                 entry.EquippedGrappleFocusId,
                 entry.PendingRewardCandidateIds.ToArray(),
-                entry.AcquiredRewardIds.ToArray());
+                entry.AcquiredRewardIds.ToArray(), entry.EquippedWeaponId);
         }
 
         public static void WriteHost(GameSaveData save,
@@ -51,6 +53,7 @@ namespace Purgers.Progression
                 save.RunProgression.PlayerProgressionEntries.Add(entry);
             }
 
+            entry.EquippedWeaponId = snapshot.EquippedWeaponId;
             entry.EquippedGrappleHitId = snapshot.EquippedGrappleHitId;
             entry.EquippedGrappleFocusId = snapshot.EquippedGrappleFocusId;
             entry.PendingRewardCandidateIds = new List<string>(

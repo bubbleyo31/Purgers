@@ -1,0 +1,15 @@
+Purgers | Failed(Child) | passed=0 failed=2 skipped=0 | One or more child tests had errors | 
+M:/UnityProject/Purgers/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll | Failed(Child) | passed=0 failed=2 skipped=0 | One or more child tests had errors | 
+AbilityToggleInputTests | Failed(Child) | passed=0 failed=2 skipped=0 | One or more child tests had errors | 
+AbilityToggleInputTests.AerialPressReleaseRepressPreservesMomentumAndOriginalEndConditions | Failed | passed=0 failed=1 skipped=0 |   Holding before eligibility must not start the ability
+  Expected: False
+  But was:  True
+ | at AbilityToggleInputTests+<AerialPressReleaseRepressPreservesMomentumAndOriginalEndConditions>d__7.MoveNext () [0x000f4] in M:\UnityProject\Purgers\Assets\Scripts\Editor\Tests\AbilityToggleInputTests.cs:68
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+
+AbilityToggleInputTests.BulletTimeSecondPressUsesNormalFinishAndResolvesDamageExactlyOnce | Failed | passed=0 failed=1 skipped=0 |   Manual press and timeout share the finish path
+  Expected: False
+  But was:  True
+ | at AbilityToggleInputTests+<BulletTimeSecondPressUsesNormalFinishAndResolvesDamageExactlyOnce>d__8.MoveNext () [0x00225] in M:\UnityProject\Purgers\Assets\Scripts\Editor\Tests\AbilityToggleInputTests.cs:141
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+

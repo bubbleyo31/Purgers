@@ -2426,6 +2426,7 @@ public class ProfessionViewModelManager :
                 );
             }
 
+            currentViewModel.SetActive(false);
             Destroy(
                 currentViewModel
             );

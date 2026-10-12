@@ -1,0 +1,18 @@
+2026-10-08T12:57:06.4354075Z 通過; controlled Host/Client in one Editor process
+PASS Host StartGame Ok
+PASS equip Shield 
+PASS Host input triggers both camera stages with total minus eight degrees
+PASS Host receives backward movement recoil
+PASS Client StartGame Ok
+PASS Late join receives existing sequence without replay
+PASS Proxy has no gameplay authority
+PASS Proxy direct call cannot add recoil
+PASS Authority recovery reaches proxy without extra event
+PASS Client StartGame Ok
+PASS Reconnect after recovery does not replay old kick
+PASS equip Shield 
+PASS Client player has only Input Authority
+PASS Client E executes exactly two kicks on Host
+PASS Client receives authoritative backward movement
+PASS Held client E does not repeatedly enqueue recoil
+PASS Input Authority and Host converge after recovery

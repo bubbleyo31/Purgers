@@ -199,6 +199,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c643fd6e6120a09448800e4b5ca9c20f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grenadeIgnoresPlayers: 1
+  grenadeSelfDamageMultiplier: 1
+  grenadeOtherPlayerDamageMultiplier: 0.35
   impactVisibleSeconds: 0.25
   impactColor: {r: 1, g: 0.65, b: 0.12, a: 1}
   impactVfx:
@@ -212,6 +215,17 @@ MonoBehaviour:
   _IsResting: 0
   _BounceCount: 0
   _HasImpacted: 0
+  rangeGizmos:
+    enabled: 1
+    selectedOnly: 1
+    labels: 1
+    paths: 1
+    previewCollisions: 1
+    trajectorySeconds: 3
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+    labelSize: 13
+    labelOffset: {x: 0, y: 0.3, z: 0}
 --- !u!114 &7094963483416145861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,6 +253,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8256548911290393581}
     m_Modifications:
+    - target: {fileID: 899528724123432502, guid: a4d79fba25790894a88748fc72a28cb7,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 899528724123432502, guid: a4d79fba25790894a88748fc72a28cb7,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 899528724123432502, guid: a4d79fba25790894a88748fc72a28cb7,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 899528724123432502, guid: a4d79fba25790894a88748fc72a28cb7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -288,6 +317,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 899528724123432502, guid: a4d79fba25790894a88748fc72a28cb7,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8370369733177889753, guid: a4d79fba25790894a88748fc72a28cb7,
         type: 3}

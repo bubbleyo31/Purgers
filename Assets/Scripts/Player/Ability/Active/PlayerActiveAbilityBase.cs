@@ -58,30 +58,62 @@ public abstract class PlayerActiveAbilityBase : NetworkBehaviour, IPlayerAbility
         if (!IsUsable) return;
         var gate = Owner.GetComponent<PlayerActionGate>();
         if (gate != null && gate.IsBlocked(PlayerActionBlockMask.QuickAction)) return;
-        if (Phase == PlayerActiveAbilityPhase.Armed) { OnArmedPress(input); return; }
+        if (Phase == PlayerActiveAbilityPhase.Active)
+        {
+            // 自願結束不算新施放，不重播後座力，也不重設作用時間。
+            if (CanEndOnActivePress) FinishAbility();
+            return;
+        }
+        if (Phase == PlayerActiveAbilityPhase.Armed)
+        {
+            Vector2? aim = GetReleaseAim();
+            if (OnArmedPress(input))
+                GetComponent<PlayerAbilityRuntime>().ApplyAbilityRecoil(PlayerAbilityRecoilEvent.AfterCast, aim);
+            return;
+        }
         if (Phase != PlayerActiveAbilityPhase.Ready || !CooldownTimer.ExpiredOrNotRunning(Runner)) return;
         foreach (var condition in useConditions)
             if (condition != null && (!(condition is IPlayerAbilityUseCondition rule) || !rule.CanActivate(Owner))) return;
         if (!CanBegin(input)) return;
         ActivationSequence++;
         OnActivationAccepted(input);
+        // 成功受理是準備事件；待命型技能須等後續主動操作成功才送出實際施放事件。
+        GetComponent<PlayerAbilityRuntime>().ApplyAbilityRecoil(PlayerAbilityRecoilEvent.BeforeCast);
         if (Phase != PlayerActiveAbilityPhase.Ready) return;
         Phase = PlayerActiveAbilityPhase.Casting;
         PhaseDurationSeconds = Mathf.Max(0f, castDelaySeconds);
         PhaseTimer = TickTimer.CreateFromSeconds(Runner, Mathf.Max(0f, castDelaySeconds));
-        if (castDelaySeconds <= 0f) Activate();
+        if (castDelaySeconds <= 0f) CompleteCast();
     }
     public override void FixedUpdateNetwork()
     {
         if (!Authority) return;
         if (!IsUsable) { if (IsAbilityActive) FinishAbility(); return; }
-        if (Phase == PlayerActiveAbilityPhase.Casting && PhaseTimer.ExpiredOrNotRunning(Runner)) Activate();
+        if (Phase == PlayerActiveAbilityPhase.Casting && PhaseTimer.ExpiredOrNotRunning(Runner)) CompleteCast();
         else TickAbility();
     }
+    /// <summary>先讓正式技能取樣本次準星，再追加後座力，避免這次攻擊被自身視角後座力踢偏。</summary>
+    private void CompleteCast()
+    {
+        Vector2? aim = GetReleaseAim();
+        if (Activate())
+            GetComponent<PlayerAbilityRuntime>().ApplyAbilityRecoil(PlayerAbilityRecoilEvent.AfterCast, aim);
+    }
+    private Vector2? GetReleaseAim()
+    {
+        var kcc = Owner.Movement != null ? Owner.Movement.KCC : null;
+        return kcc != null ? new Vector2(kcc.Data.LookPitch, kcc.Data.LookYaw) : (Vector2?)null;
+    }
+    /// <summary>預設不允許再次按下結束；只有明確支援的技能覆寫，結束仍走原 FinishAbility。</summary>
+    protected virtual bool CanEndOnActivePress => false;
     protected virtual bool CanBegin(NetInput input) => true;
+    /// <summary>僅處理按下當刻的受理／待命；有前搖的攻擊不得在此快取射出位置或方向。</summary>
     protected virtual void OnActivationAccepted(NetInput input) { }
-    protected virtual void OnArmedPress(NetInput input) { }
-    protected abstract void Activate();
+    /// <returns>只有真正提交後續施放才回傳 true；阻擋、逾時、取消回傳 false。</returns>
+    protected virtual bool OnArmedPress(NetInput input) => false;
+    /// <summary>前搖到期後的權威結果入口。投擲／飛行物／射線必須在此讀取當前 Owner KCC 位置與準星，不能沿用按鍵時快照；Spawn 與命中查詢使用同一份射出資料。</summary>
+    /// <returns>正式效果已建立才回傳 true；不要求命中，但失敗返回不得產生施放後座力。</returns>
+    protected abstract bool Activate();
     protected virtual void TickAbility()
     {
         if (Phase == PlayerActiveAbilityPhase.Active && PhaseTimer.ExpiredOrNotRunning(Runner)) FinishAbility();

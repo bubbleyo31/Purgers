@@ -1,0 +1,13 @@
+2026-10-10T07:17:17.0996909Z PASS isolated save created
+2026-10-10T07:17:36.8328845Z PASS StartGame Ok
+2026-10-10T07:17:37.0487814Z PASS Host creates weapon draft
+2026-10-10T07:17:37.0487814Z PASS Host draft readable
+2026-10-10T07:17:37.0627942Z PASS Host claims Tank
+2026-10-10T07:17:56.0217570Z PASS Host creates weapon draft
+2026-10-10T07:17:56.5768891Z PASS remote reward consumed exactly once
+2026-10-10T07:17:57.6367176Z PASS remote weapon survives death
+2026-10-10T07:18:00.0738465Z PASS both weapons survive Game transition
+2026-10-10T07:18:19.9732877Z PASS Host retains weapon; rejoining guest follows new-player policy
+2026-10-10T07:18:19.9752899Z PASS write Host snapshot
+2026-10-10T07:18:19.9762904Z PASS Host saved Tank independently of guest
+2026-10-10T07:18:20.2802355Z PASS failed run resets all players to Attack

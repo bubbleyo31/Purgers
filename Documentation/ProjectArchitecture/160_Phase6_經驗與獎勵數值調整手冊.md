@@ -8,7 +8,7 @@
 
 | 想調整的內容 | 目前入口 | 是否可在 Inspector 改 | 影響範圍 |
 |---|---|---|---|
-| 升下一級所需經驗 | `Assets/Scripts/Progression/PlayerExperienceRules.cs` 的 `DefaultBaseRequirement = 10`、`DefaultGrowthMultiplier = 2` | **否，現在是 C# 共用常數** | 所有玩家、HUD 分母與 F8 測試鍵都使用同一套門檻 |
+| 升下一級所需經驗 | `Assets/Scripts/Progression/PlayerExperienceRules.cs` 的 `DefaultBaseRequirement = 5`、`DefaultGrowthMultiplier = 2` | **否，現在是 C# 共用常數** | 所有玩家、HUD 分母與 F8 測試鍵都使用同一套門檻 |
 | 擊殺各種敵人的基礎經驗 | `Assets/_Project_Assets/Data/Enemy/ED_*.asset` 的 `Base Kill Experience` | 是 | 該 Definition 對應的所有敵人；存活隊友各得完整基礎值 |
 | 擊殺者額外經驗 | `PlayerExperienceRules.cs` 的 `DefaultKillerBonus = 1` | 否 | 有效擊殺者在基礎值之外多得的點數 |
 | 某能力是否可被新抽到／抽中權重 | `Assets/_Project_Assets/Data/Progression/Reward_*.asset` 的 `Weight` | 是；`0` 代表不進**新候選** | 新產生的獎勵選單，不會回頭改已抽選單 |
@@ -19,17 +19,17 @@
 
 ## 1. 調整玩家升級門檻
 
-打開 [`PlayerExperienceRules.cs`](../../Assets/Scripts/Progression/PlayerExperienceRules.cs)，修改 `DefaultBaseRequirement`（第一級門檻）和／或 `DefaultGrowthMultiplier`（逐級整數倍率）。目前的公式是「**目前等級 L → 下一級**所需新增經驗 = `10 × 2^(L−1)`」，極大值會飽和到 `int.MaxValue`，不是把所有歷史門檻相加後才顯示在經驗條上。
+打開 [`PlayerExperienceRules.cs`](../../Assets/Scripts/Progression/PlayerExperienceRules.cs)，修改 `DefaultBaseRequirement`（第一級門檻）和／或 `DefaultGrowthMultiplier`（逐級整數倍率）。目前的公式是「**目前等級 L → 下一級**所需新增經驗 = `5 × 2^(L−1)`」，極大值會飽和到 `int.MaxValue`，不是把所有歷史門檻相加後才顯示在經驗條上。
 
 | 目前等級 | 升下一級所需 | 從 Lv.1／0 經驗累計到下一級 |
 |---|---:|---:|
-| 1 | 10 | 10 |
-| 2 | 20 | 30 |
-| 3 | 40 | 70 |
-| 4 | 80 | 150 |
-| 5 | 160 | 310 |
+| 1 | 5 | 5 |
+| 2 | 10 | 15 |
+| 3 | 20 | 35 |
+| 4 | 40 | 75 |
+| 5 | 80 | 155 |
 
-例如只想改成 1→2 級要 20 點、其後維持倍增，就將 `DefaultBaseRequirement` 改為 `20`，保留 `DefaultGrowthMultiplier = 2`；新門檻變成 20、40、80……。成長倍率目前是整數，不支援直接填 1.5；不規則逐級表也不是改這兩個常數就能達成。改完要同步更新 `PlayerExperienceRulesTests.RequirementDoublesFromTen` 等門檻斷言及必要的平衡測試，不要為了讓測試通過而忽略新需求。
+例如只想改成 1→2 級要 20 點、其後維持倍增，就將 `DefaultBaseRequirement` 改為 `20`，保留 `DefaultGrowthMultiplier = 2`；新門檻變成 20、40、80……。成長倍率目前是整數，不支援直接填 1.5；不規則逐級表也不是改這兩個常數就能達成。改完要同步更新 `PlayerExperienceRulesTests.RequirementDoublesFromCurrentFivePointBaseline` 等門檻斷言及必要的平衡測試，不要為了讓測試通過而忽略新需求。
 
 `GameLogic` 的 State Authority 呼叫 `PlayerExperienceRules.Award` 更新同步等級／經驗／待選數；[`LocalPlayerRewardHUD.cs`](../../Assets/Scripts/UI/Player/LocalPlayerRewardHUD.cs) 只呼叫同一 `RequiredExperience` 顯示分母；開發版 F8 的 [`DevelopmentLevelUpRules.cs`](../../Assets/Scripts/Tool/DevelopmentLevelUpRules.cs) 也依同一門檻補足差額。因此不要分別修改 HUD 或 F8 的數字。既有存檔的等級、目前經驗和待選獎勵不會因修改公式自動重算；若舊經驗已高於新門檻，下一次正式加經驗可能連升多級，而 F8 在這種狀態下不補發。平衡變更應先用新一輪／乾淨測試檔驗證，再決定正式存檔遷移策略。
 
@@ -82,3 +82,16 @@ Host 每次新建候選最多抽三個且同次不重複；合格項目只有兩
 經驗增加作用 5 秒，只把該玩家的正式所得經驗乘 2；F8 補足一級不乘倍。子彈時間延後擊殺以 base XP + 1 均分固定初始名單中的有效玩家，再套各自當下倍率；整數餘數依 PlayerRef 排序，pending 拒收份額不重分。原門檻常數與待選拒收未改。
 
 變更紀錄：2026-10-04 同步本節結構、資產與權威邊界；強化消耗仍未實作。
+
+## 2026-10-05 門檻文件與測試校正（局部）
+
+實際 DefaultBaseRequirement 早已為 5，本輪對齊上方公式、表格及四項過期測試，不改遊戲數值。基線與後續結果見 [E 技能穩定化](Validation/ActiveAbilityStabilization/README.md)。
+
+
+## 2026-10-10 武器獎勵與換裝（局部核對）
+
+最後核對日期：2026-10-10。核對來源：GameLogic、Progression、PlayerProfessionRuntimeManager、LocalPlayerRewardHUD。
+
+Reward_WeaponAttack／Tank／Support 皆為最低等級 1、權重 1、Repeatable。Weapon 分類設定 Weapon Profession、Ability Definition 留空；目前武器排除，換掉可再抽。與技能混池，不保證每次有武器。
+
+正式規則／Inspector 入口見 [46](46_武器獎勵與換裝.md)，證據見 [驗證紀錄](Validation/WeaponRewards/README.md)。

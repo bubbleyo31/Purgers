@@ -110,3 +110,7 @@ InitTestScene*.unity*
 
 Assets/TextMesh Pro/Fonts/Noto_Sans_TC/Noto_Sans_TC.zip
 Assets/TextMesh Pro/Fonts/Noto_Sans_TC/Noto_Sans_TC.zip.meta
+
+# Local recovery snapshots and reproducible delivery archives.
+/deliverables/Backups/
+/deliverables/**/*.zip

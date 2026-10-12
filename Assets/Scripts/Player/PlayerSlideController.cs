@@ -2158,6 +2158,9 @@ public class PlayerSlideController :
         KCCData data
     )
     {
+        // 向上後座力走 ExternalDelta；避免 GroundSnap 因 DynamicVelocity 沒有向上值而吸回地面。
+        if (movement != null && movement.HasUpwardAbilityRecoil)
+            targetKCC.SuppressProcessors<GroundSnapProcessor>();
         if (movement != null && movement.HasActiveAbilityDash)
         {
             targetKCC.SuppressProcessors<StepUpProcessor>();

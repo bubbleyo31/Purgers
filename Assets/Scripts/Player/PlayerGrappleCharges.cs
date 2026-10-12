@@ -21,7 +21,7 @@ public class PlayerGrappleCharges : NetworkBehaviour
     private GrappleEnergyLevelUpMode levelUpMode = GrappleEnergyLevelUpMode.RefillToMaximum;
 
     [Header("鈎索消耗")]
-    [SerializeField, Min(0f), Tooltip("每次確認合法鈎點並正式發射所扣的能量，單位：點；有效值至少 0，預設 1。打空不扣。必須足額且仍有能量才能發射；0 只免除發射費。")]
+    [SerializeField, Min(0f), Tooltip("每次確認合法鈎點並正式發射所扣的能量，單位：點；有效值至少 0，預設 1。打空不扣。只要仍有能量即可發射，不足費用時扣至 0；0 只免除發射費，能量為 0 仍不能發射。")]
     private float launchEnergyCost = 1f;
     [SerializeField, Min(0f), Tooltip("鈎索尚未釋放且實際拉動玩家自己時，每秒扣除的能量；有效值至少 0，預設 1。按 Fusion DeltaTime 連續扣除。跳躍、釋放後 Momentum、拉其他目標不扣；歸零不會中斷本次拉動。")]
     private float pullEnergyPerSecond = 1f;

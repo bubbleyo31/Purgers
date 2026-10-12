@@ -1,0 +1,38 @@
+PASS Single Runner started
+PASS equip: 
+PASS fixture target is fully occluded before firing
+PASS wave starts; no instant full-sector damage
+PASS near and far HP unchanged at launch
+PASS zero cooldown cannot overwrite a live wave
+PASS changing Inspector fields cannot resize an in-flight snapshot
+PASS no premature damage
+PASS near enemy receives one damage request on arrival; before=200 after=193 enemy=(999.00, 100.50, 1004.00) origin=(1000.00, 100.00, 1000.00) front=5.5625 alive=True
+PASS far enemy still unharmed
+PASS one local wave presentation
+PASS visual snapshot carries edited geometry
+PASS far enemy hit on later wave arrival
+PASS multiple colliders and ticks do not duplicate damage
+PASS outside angle is not hit
+PASS wall occlusion retained
+PASS finished wave visual cleaned up
+PASS fast wave sweep cannot tunnel past target
+PASS airborne cast captures player height without ground snapping
+PASS landing and turning do not drag the airborne wave
+PASS airborne target is hit inside fixed wall height
+PASS ground target below airborne wall is not hit
+PASS windup does not launch immediately
+PASS release captures latest Pitch/Yaw -35
+PASS release captures rotated XYZ offset -35
+PASS turning after release cannot steer the wave
+PASS tilted authoritative sweep hits target -35
+PASS windup does not launch immediately
+PASS release captures latest Pitch/Yaw 35
+PASS release captures rotated XYZ offset 35
+PASS turning after release cannot steer the wave
+PASS tilted authoritative sweep hits target 35
+PASS regression fixture root is outside tilted wave
+PASS regression fixture body center is inside tilted wave
+PASS body hitbox receives damage when root lies outside tilted wave
+PASS root inside cannot hit body outside the wave
+PASS owner death cancels live wave
+PASS death clears presentation

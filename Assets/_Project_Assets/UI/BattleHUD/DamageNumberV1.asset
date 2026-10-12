@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5960d4de9d7db114bb7fdd8bd1e1e893, type: 3}
+  m_Name: DamageNumberV1
+  m_EditorClassIdentifier: 
+  showNumbers: 1
+  individualHits: 1
+  mergeContinuousDamage: 1
+  mergeWindow: 0.2
+  maximumNumbers: 64
+  font: {fileID: 11400000, guid: 1cbc1dba7d946d14489a5b217ff1717f, type: 2}
+  fontSize: 30
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  headColor: {r: 1, g: 0.827451, b: 0.3019608, a: 1}
+  headScale: 1.35
+  outlineColor: {r: 0.04, g: 0.04, b: 0.04, a: 1}
+  outlineWidth: 0.18
+  hitOffset: {x: 18, y: 18}
+  riseDistance: 32
+  lifetime: 0.8
+  holdFraction: 0.45
+  popScale: 1.12
+  stackSpacing: 14

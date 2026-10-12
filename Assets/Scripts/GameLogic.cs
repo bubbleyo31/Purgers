@@ -471,10 +471,6 @@ public class GameLogic :
             player
         );
 
-        SavedProfessions.Remove(
-            player
-        );
-
         SpawnPlayer(
             player,
             isRespawn: false
@@ -707,31 +703,44 @@ public class GameLogic :
         if (string.IsNullOrEmpty(rewardId) ||
             rewardCatalog == null ||
             !rewardCatalog.TryFind(rewardId, out PlayerRewardDefinition reward) ||
-            !reward.IsImplementedAbilityReward ||
+            !reward.IsImplementedReward ||
             !Players.TryGet(player, out Player playerBehaviour) ||
             playerBehaviour == null ||
-            playerBehaviour.AbilityRuntimeManager == null)
+            playerBehaviour.AbilityRuntimeManager == null ||
+            playerBehaviour.Health == null || !playerBehaviour.Health.IsAlive)
         {
-            failureReason = "獎勵無效或玩家目前沒有可套用的能力管理器。";
+            failureReason = "獎勵無效或玩家目前無法換裝。";
             return false;
         }
 
-        // 候選建立後仍可能換武器；失敗不扣待選數、不改候選或取得紀錄。
-        if (!PlayerAbilityQualification.IsAllowed(playerBehaviour, reward.AbilityDefinition))
+        // 武器獎勵沿用既有職業 Runtime；不重建獨立 Q/E。
+        if (reward.IsImplementedWeaponReward)
         {
-            failureReason = "目前武器不符合此技能的領取條件；待選獎勵仍保留。";
-            return false;
+            var weapons = playerBehaviour.GetComponent<PlayerProfessionRuntimeManager>();
+            if (weapons == null ||
+                !weapons.TryEquipRewardWeaponStateAuthority(reward.WeaponProfession, out failureReason))
+                return false;
+            SavePlayerProfession(player, playerBehaviour.Profession);
         }
-
-        if (!playerBehaviour.AbilityRuntimeManager
-            .TryEquipRewardAbilityStateAuthority(
-                reward.AbilityDefinition, out failureReason))
-            return false;
-
-        if (reward.Category == RewardCategory.GrappleHit)
-            draft.EquippedGrappleHitId = rewardId;
         else
-            draft.EquippedGrappleFocusId = rewardId;
+        {
+            // 候選建立後仍可能換武器；失敗不扣待選數、不改候選或取得紀錄。
+            if (!PlayerAbilityQualification.IsAllowed(playerBehaviour, reward.AbilityDefinition))
+            {
+                failureReason = "目前武器不符合此技能的領取條件；待選獎勵仍保留。";
+                return false;
+            }
+
+            if (!playerBehaviour.AbilityRuntimeManager
+                .TryEquipRewardAbilityStateAuthority(
+                    reward.AbilityDefinition, out failureReason))
+                return false;
+
+            if (reward.Category == RewardCategory.GrappleHit)
+                draft.EquippedGrappleHitId = rewardId;
+            else
+                draft.EquippedGrappleFocusId = rewardId;
+        }
 
         if (!acquiredRewardIdsByPlayer.TryGetValue(player,
                 out HashSet<string> acquired))
@@ -849,7 +858,7 @@ public class GameLogic :
             new PlayerRewardSaveSnapshot(
                 draft.EquippedGrappleHitId.ToString(),
                 draft.EquippedGrappleFocusId.ToString(),
-                choices, acquiredIds));
+                choices, acquiredIds, GetSavedWeaponId(Runner.LocalPlayer)));
         return true;
     }
 
@@ -869,6 +878,12 @@ public class GameLogic :
             PlayerExperiences.Set(player,
                 new NetworkPlayerExperience(new PlayerExperienceState(1, 0, 0)));
             PlayerRewardDrafts.Set(player, default);
+            SavedProfessions.Set(player, PlayerProfessionType.Attack);
+            if (Players.TryGet(player, out Player current) && current != null)
+            {
+                // 正式失敗流程即將卸載 Player；先改身分，避免死亡收尾重新保存舊武器。
+                current.Profession?.SetProfession(PlayerProfessionType.Attack);
+            }
         }
         acquiredRewardIdsByPlayer.Clear();
         restoredRewardLoadoutByPlayer.Clear();
@@ -906,6 +921,7 @@ public class GameLogic :
             EquippedGrappleHitId = rewards.EquippedGrappleHitId,
             EquippedGrappleFocusId = rewards.EquippedGrappleFocusId
         };
+        SavedProfessions.Set(player, WeaponRewardRules.ResolveSavedWeapon(rewards.EquippedWeaponId));
         rewardState.SetChoices(rewards.PendingCandidateIds);
         PlayerRewardDrafts.Set(player, rewardState);
         acquiredRewardIdsByPlayer[player] = new HashSet<string>(
@@ -968,7 +984,15 @@ public class GameLogic :
         var exclusions = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         foreach (PlayerRewardDefinition reward in rewardCatalog.Rewards)
         {
-            if (reward == null || reward.AbilityDefinition == null) continue;
+            if (reward == null) continue;
+            if (reward.IsImplementedWeaponReward)
+            {
+                if (playerBehaviour.Profession == null ||
+                    !WeaponRewardRules.CanOffer(playerBehaviour.Profession.CurrentProfession, reward.WeaponProfession))
+                    exclusions.Add(reward.StableRewardId);
+                continue;
+            }
+            if (reward.AbilityDefinition == null) continue;
             if (!PlayerAbilityQualification.IsAllowed(playerBehaviour, reward.AbilityDefinition) ||
                 equippedSet.Contains(reward.AbilityDefinition.AbilityId)) exclusions.Add(reward.StableRewardId);
         }
@@ -1356,6 +1380,16 @@ public class GameLogic :
 
     // =====================================================================
     #region Profession Persistence
+
+    private string GetSavedWeaponId(PlayerRef player)
+    {
+        if (Players.TryGet(player, out Player current) && current != null &&
+            current.Profession != null)
+            SavePlayerProfession(player, current.Profession);
+        SavedProfessions.TryGet(player, out PlayerProfessionType weapon);
+        return WeaponRewardRules.GetWeaponId(WeaponRewardRules.IsWeapon(weapon)
+            ? weapon : PlayerProfessionType.Attack);
+    }
 
     private void SavePlayerProfession(
         PlayerRef player,

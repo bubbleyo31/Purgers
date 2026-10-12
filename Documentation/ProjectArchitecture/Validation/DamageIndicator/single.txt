@@ -1,0 +1,10 @@
+PASS Runner starts: Ok
+PASS authored Menu HUD exists
+PASS authoritative damage pipeline accepts hit
+PASS health changes exactly once
+PASS RPC contains authority position snapshot
+PASS source movement does not change received position snapshot
+MEASURE wall entry response 47.5 ms (20ms polling resolution)
+PASS occlusion transitions need no additional hit
+PASS fully blocked result and HP remain unchanged
+PASS respawn starts without old markers

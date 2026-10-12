@@ -53,6 +53,25 @@ public sealed class ActiveAbilityHudTests
     }
 
     [Test]
+    public void AerialProvidesSafeTimedHudAndSynchronizedDuration()
+    {
+        Assert.That(typeof(IPlayerAbilityHudState).IsAssignableFrom(typeof(SupportAerialAbility)), Is.True,
+            "空中緩速必須沿用子彈時間的中央倒數條契約。");
+        var duration = typeof(SupportAerialAbility).GetProperty("ActiveDurationSeconds", BindingFlags.NonPublic | BindingFlags.Instance);
+        Assert.That(duration, Is.Not.Null);
+        Assert.That(duration.GetCustomAttribute<Fusion.NetworkedAttribute>(), Is.Not.Null);
+        var root = new GameObject("Unspawned aerial HUD");
+        try
+        {
+            var hud = (IPlayerAbilityHudState)(object)root.AddComponent<SupportAerialAbility>();
+            Assert.That(hud.TimedHudState.IsVisible, Is.False);
+            Assert.That(hud.IsUsable, Is.False);
+            Assert.That(hud.CooldownRemainingSeconds, Is.Zero);
+        }
+        finally { UnityEngine.Object.DestroyImmediate(root); }
+    }
+
+    [Test]
     public void ShieldUsesTwoWholeCellsForTwentyFiveAndForty()
     {
         var root=new GameObject("Whole shield",typeof(RectTransform));

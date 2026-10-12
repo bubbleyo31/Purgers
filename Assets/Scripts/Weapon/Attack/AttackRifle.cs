@@ -2127,73 +2127,29 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
         if (applied == Vector2.zero)
             return;
 
-        movement.AddLookRotationImpulse(applied.x, applied.y);
-        AccumulatedRecoilPitch += applied.x;
-        LastAimPitch += applied.x;
+        float actualPitch = movement.AddLookRotationImpulse(applied.x, applied.y);
+        AccumulatedRecoilPitch += actualPitch;
+        LastAimPitch = movement.KCC != null ? movement.KCC.Data.LookPitch : LastAimPitch;
     }
 
     /// <summary>偵測手動壓槍，並在待施加角度結清及延遲結束後回正。</summary>
     private void ProcessRecoilRecovery()
     {
-        // 1. 取得當前的瞄準方向，並轉換為 Pitch 角度
-        // Unity 中 forward.y 的 Asin 範圍是 -PI/2 到 PI/2。
-        // 為了對應前面 recoilPitchPerShot 負值代表「抬高視角」，這裡我們掛上負號轉譯。
-        // （結果：往上瞄準 = 負 Pitch，往下瞄準 = 正 Pitch）
-        Vector3 aimDir = GetGameplayAimDirection();
-        float currentPitch = Mathf.Asin(aimDir.y) * -Mathf.Rad2Deg;
-
-        // 防呆：如果是剛生成或是剛初始化，直接同步
-        if (ShotSequence == 0 && AccumulatedRecoilPitch == 0f)
+        if (movement == null) return;
+        float accumulated = AccumulatedRecoilPitch;
+        float manual = movement.ConsumeManualRecoilPitch(accumulated);
+        float step = WeaponRecoilRecovery.Step(ref accumulated, manual,
+            PendingRecoilPitch != 0f || PendingRecoilYaw != 0f,
+            RecoilRecoveryTimer.ExpiredOrNotRunning(Runner), recoilRecoverySpeed, Runner.DeltaTime);
+        if (step > 0f)
         {
-            LastAimPitch = currentPitch;
-            return;
+            float applied = movement.AddLookRotationImpulse(step, 0f);
+            accumulated -= step - applied;
         }
-
-        // 2. 計算與上一幀的 Pitch 差異 (Delta)
-        float pitchDelta = currentPitch - LastAimPitch;
-
-        // 3. 偵測玩家手動下壓視角 (Player Input Override)
-        // 如果 pitchDelta > 0，代表玩家正把滑鼠/搖桿往下壓。
-        // 這時我們應該把玩家下壓的量從「累積後座力池」裡面扣除！
-        // 這樣可以達到「玩家手動壓槍抵消回正力道」的效果，避免程式後續硬拉視角。
-        if (pitchDelta > 0f && AccumulatedRecoilPitch < 0f)
-        {
-            // 例如累積了 -1.6 的後座力，玩家這幀壓槍壓了 +0.5。
-            // 累積池就只剩下 -1.1 需要程式回正。
-            AccumulatedRecoilPitch = Mathf.Min(0f, AccumulatedRecoilPitch + pitchDelta);
-        }
-
-        float appliedRecovery = 0f;
-
-        // 4. 執行平滑回正
-        // 當累積池還有殘留 (小於 0)，且已經過了延遲時間 (未開火)
-        if (AccumulatedRecoilPitch < 0f &&
-            PendingRecoilPitch == 0f && PendingRecoilYaw == 0f &&
-            RecoilRecoveryTimer.ExpiredOrNotRunning(Runner))
-        {
-            // 本 Tick 預計要回正的總量
-            float recoveryAmount = recoilRecoverySpeed * Runner.DeltaTime;
-            
-            // 實際回正量不能超過剩餘的累積後座力 (注意 AccumulatedRecoilPitch 是負值)
-            appliedRecovery = Mathf.Min(recoveryAmount, -AccumulatedRecoilPitch);
-
-            // 加入正值 Impulse，讓視角往下回歸
-            if (movement != null)
-            {
-                movement.AddLookRotationImpulse(appliedRecovery, 0f);
-            }
-
-            // 將已經回正的量從池子裡扣除
-            AccumulatedRecoilPitch += appliedRecovery;
-        }
-
-        // 5. 更新上一幀的 Pitch
-        // 注意：因為我們可能在第 4 步加入了 appliedRecovery (Impulse)，
-        // KCC 實際的 Pitch 已經被我們往下推了。為了避免下一幀把「程式的回正」
-        // 誤認成「玩家的手動壓槍」，我們必須把這個量預先加給 LastAimPitch。
-        LastAimPitch = currentPitch + appliedRecovery;
+        AccumulatedRecoilPitch = accumulated;
+        // 保留既有網路欄位，但不再用系統視角差猜測玩家輸入。
+        LastAimPitch = movement.KCC != null ? movement.KCC.Data.LookPitch : LastAimPitch;
     }
-
     #endregion
 
     // =====================================================================

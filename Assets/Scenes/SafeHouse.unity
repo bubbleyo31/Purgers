@@ -2827,7 +2827,7 @@ MonoBehaviour:
   startTerminalAnchor: {fileID: 2124911739}
   interactionDistance: 4
   gameplaySceneName: Game
-  countdownDurationSeconds: 3
+  countdownDurationSeconds: 1
   readyCheckTimeoutSeconds: 7
   debugFlow: 1
   _Phase: 0

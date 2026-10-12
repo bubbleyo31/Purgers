@@ -388,6 +388,8 @@ public class PlayerQuickActionController :
         // 嘗試開始
         // =============================================================
 
+        var inputReceiver = profession != null ? GetCurrentQuickActionAbility(profession.CurrentProfession) as IPlayerQuickActionInputContext : null;
+        inputReceiver?.SetQuickActionInput(input);
         TryStartQuickAction();
     }
 
@@ -399,6 +401,29 @@ public class PlayerQuickActionController :
     /// <summary>
     /// 嘗試開始目前職業 Runtime 提供的 Quick Action。
     /// </summary>
+    [Networked, Capacity(3)]
+    private NetworkDictionary<PlayerProfessionType, TickTimer> UnequippedRecovery => default;
+
+    /// <summary>在舊 Runtime 仍存在時收尾；各武器剩餘 F 階段獨立倒數，不轉交給新武器。</summary>
+    public void PrepareForWeaponReplacement()
+    {
+        if (Object == null || !Object.IsValid || !Object.HasStateAuthority) return;
+        if (CurrentPhase != PlayerQuickActionPhase.Idle)
+        {
+            var ability = GetCurrentQuickActionAbility(ActiveProfession);
+            float remaining = PhaseTimer.RemainingTime(Runner) ?? 0f;
+            if (ability != null)
+            {
+                if (CurrentPhase == PlayerQuickActionPhase.Startup)
+                    remaining += ability.ActiveDuration + ability.RecoveryDuration;
+                else if (CurrentPhase == PlayerQuickActionPhase.Active)
+                    remaining += ability.RecoveryDuration;
+            }
+            UnequippedRecovery.Set(ActiveProfession, TickTimer.CreateFromSeconds(Runner, remaining));
+        }
+        ForceEndQuickAction();
+    }
+
     private bool TryStartQuickAction()
     {
         if (profession == null ||
@@ -421,6 +446,9 @@ public class PlayerQuickActionController :
 
         PlayerProfessionType currentProfession =
             profession.CurrentProfession;
+
+        if (UnequippedRecovery.TryGet(currentProfession, out TickTimer recovery) &&
+            !recovery.ExpiredOrNotRunning(Runner)) return false;
 
         // -------------------------------------------------------------
         // 找目前職業真正 Ability

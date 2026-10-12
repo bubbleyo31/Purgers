@@ -1,0 +1,55 @@
+{
+  "recordedUtc": "2026-10-04T20:30:50.9946188Z",
+  "purpose": "Handoff source snapshot; not a claim that all current files were tested together",
+  "baseHead": "09e5be2",
+  "files": [
+    {
+      "path": "Assets/Scripts/Player/Ability/Active/ActiveAbilityPhysics.cs",
+      "sha256": "026A406FCE607490D73680F4988D062E05C78B30AA88FBBDB2C2851B74B396FE"
+    },
+    {
+      "path": "Assets/Scripts/Player/Ability/Active/PlayerAbilityProjectile.cs",
+      "sha256": "FD7C49446309E573F42915DA537BA0D95F4D19D99191E7FE1AF7EE07B13D058E"
+    },
+    {
+      "path": "Assets/Scripts/Player/Ability/Active/PlayerPiercingCannonAbility.cs",
+      "sha256": "63477286AB5F2BE0ACE0D70082A558C822B252D03886C90FAAED5714A49FBA8C"
+    },
+    {
+      "path": "Assets/Scripts/Player/Ability/Active/PlayerProjectileAbility.cs",
+      "sha256": "BC4E39DA13303950C5C8F8A26A10FF4884117644537A8217BB01648B14EDB5CC"
+    },
+    {
+      "path": "Assets/Scripts/Player/Ability/Loadout/PlayerAbilityRuntime.cs",
+      "sha256": "B647A2F87FA06E3D119EF37B38695BB421D62F6FF9BC1B4EDF972C2ADD80C03C"
+    },
+    {
+      "path": "Assets/Scripts/Editor/Tests/ActiveAbilityShotOriginTests.cs",
+      "sha256": "C25959629B10BE057ACF3A84920652293F1F26BEFA0112963A59129086E3FB77"
+    },
+    {
+      "path": "Assets/Scripts/Editor/Tests/DevelopmentLevelUpRulesTests.cs",
+      "sha256": "7DE2E53A1AF3E96E559DFEDA34978BD118C8A336AA88DB09524F496DEB24CC49"
+    },
+    {
+      "path": "Assets/Scripts/Editor/Tests/FirstPersonMuzzleFlashTests.cs",
+      "sha256": "BC34B939E1F143E11F10370FB3F626CEC5E0E13B8EBAD29C9D27C1F1B65A9390"
+    },
+    {
+      "path": "Assets/Scripts/Editor/Tests/PlayerExperienceRulesTests.cs",
+      "sha256": "80971F1A5157C3AD86F2A0D9D3D5E6D9CEE544E6385038C014F6F5477C7072EE"
+    },
+    {
+      "path": "Assets/Scripts/Tool/Testing/ActiveAbilityLifecycleVerification.cs",
+      "sha256": "6CE7487C7E6EFC5CA234ED4E5CB73FE248CB0933FA0480257778F6AC690327D1"
+    },
+    {
+      "path": "Assets/Scripts/Tool/Testing/ActiveAbilityNetworkVerification.cs",
+      "sha256": "1A41F7C56B896FBE479FA53009E3E518FE1DCA45A8B05AF951C5057A6E39F990"
+    },
+    {
+      "path": "Assets/Scripts/Tool/Testing/ActiveAbilityRuntimeVerification.cs",
+      "sha256": "8B68A3A52B9EEC1B7B00003FA972F07A3F2417B95835328F96AA74B7C4F0A278"
+    }
+  ]
+}

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityId: grapple.focus.aerial_slow
   displayName: "\u7A7A\u4E2D\u7DE9\u901F\u5C08\u6CE8"
-  hudIcon: {fileID: 8940071058449208875, guid: ed2d04a02f0ea34438b7aeda1aa75a21, type: 3}
+  hudIcon: {fileID: 21300000, guid: 417cda86a69a22d468ab250347583013, type: 3}
   category: 1
   runtimePrefab: {fileID: 4127220335254648774, guid: e8ed06506f09f9841b42af27c1831044,
     type: 3}
@@ -27,3 +27,5 @@ MonoBehaviour:
   - GrappleFocusMovementAuthority
   incompatibleAbilities: []
   executionPriority: 100
+  requiresRangedWeapon: 0
+  enhancementDefinition: {fileID: 0}

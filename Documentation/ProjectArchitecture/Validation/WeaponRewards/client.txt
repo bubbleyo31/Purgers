@@ -1,0 +1,11 @@
+2026-10-10T07:17:55.5227255Z PASS StartGame Ok
+2026-10-10T07:17:55.9946173Z PASS new guest starts with Attack
+2026-10-10T07:17:55.9956180Z PASS Client cannot directly change weapon
+2026-10-10T07:17:56.5538646Z PASS Client Q/E revision unchanged
+2026-10-10T07:17:56.5548654Z PASS Client Q/E identity preserved [Id:1035]
+2026-10-10T07:17:56.5548654Z PASS Client Q/E identity preserved [Id:1036]
+2026-10-10T07:17:57.6698185Z PASS Client sees Support after respawn
+2026-10-10T07:18:00.1228901Z PASS Client sees both weapons in Game
+2026-10-10T07:18:00.6832020Z PASS Client weapon persists on return
+2026-10-10T07:18:19.6055085Z PASS StartGame Ok
+2026-10-10T07:18:19.9282466Z PASS reconnected snapshots

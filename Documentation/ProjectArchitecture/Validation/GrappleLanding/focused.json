@@ -1,0 +1,349 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "03eb5ce2783044608db7b68151b97f64",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1791145954214,
+      "finished_unix_ms": 1791145958187,
+      "last_update_unix_ms": 1791145958187,
+      "progress": {
+        "completed": 34,
+        "total": 480,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1791145957760,
+        "last_finished_test_full_name": "GrappleLandingRulesTests.ZeroThresholdDoesNotTreatStationaryAsPassingPoint",
+        "last_finished_unix_ms": 1791145957760,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 34,
+          "passed": 34,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 0.6739959,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "CapacityUsesPlayerLevel(1,50.0f)",
+            "fullName": "GrappleEnergyRulesTests.CapacityUsesPlayerLevel(1,50.0f)",
+            "state": "Passed",
+            "durationSeconds": 0.0202851,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CapacityUsesPlayerLevel(2,75.0f)",
+            "fullName": "GrappleEnergyRulesTests.CapacityUsesPlayerLevel(2,75.0f)",
+            "state": "Passed",
+            "durationSeconds": 0.0001048,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CapacityUsesPlayerLevel(3,100.0f)",
+            "fullName": "GrappleEnergyRulesTests.CapacityUsesPlayerLevel(3,100.0f)",
+            "state": "Passed",
+            "durationSeconds": 0.0000453,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CapacityUsesPlayerLevel(0,50.0f)",
+            "fullName": "GrappleEnergyRulesTests.CapacityUsesPlayerLevel(0,50.0f)",
+            "state": "Passed",
+            "durationSeconds": 0.0000432,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LaunchRequiresFullPayment(50.0f,True,49.0f)",
+            "fullName": "GrappleEnergyRulesTests.LaunchRequiresFullPayment(50.0f,True,49.0f)",
+            "state": "Passed",
+            "durationSeconds": 0.0018897,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LaunchRequiresFullPayment(1.0f,True,0.0f)",
+            "fullName": "GrappleEnergyRulesTests.LaunchRequiresFullPayment(1.0f,True,0.0f)",
+            "state": "Passed",
+            "durationSeconds": 0.0000656,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LaunchRequiresFullPayment(0.5f,False,0.5f)",
+            "fullName": "GrappleEnergyRulesTests.LaunchRequiresFullPayment(0.5f,False,0.5f)",
+            "state": "Passed",
+            "durationSeconds": 0.0000511,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LaunchRequiresFullPayment(0.0f,False,0.0f)",
+            "fullName": "GrappleEnergyRulesTests.LaunchRequiresFullPayment(0.0f,False,0.0f)",
+            "state": "Passed",
+            "durationSeconds": 0.0000647,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LevelUpCanRefillOrAddOnlyCapacityDifference(True,75.0f)",
+            "fullName": "GrappleEnergyRulesTests.LevelUpCanRefillOrAddOnlyCapacityDifference(True,75.0f)",
+            "state": "Passed",
+            "durationSeconds": 0.0005533,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LevelUpCanRefillOrAddOnlyCapacityDifference(False,35.0f)",
+            "fullName": "GrappleEnergyRulesTests.LevelUpCanRefillOrAddOnlyCapacityDifference(False,35.0f)",
+            "state": "Passed",
+            "durationSeconds": 0.0000628,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LowerLevelClampsEnergyWithoutGrantingARefill",
+            "fullName": "GrappleEnergyRulesTests.LowerLevelClampsEnergyWithoutGrantingARefill",
+            "state": "Passed",
+            "durationSeconds": 0.0001459,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "MultipleLevelsAddTheWholeCapacityDifference",
+            "fullName": "GrappleEnergyRulesTests.MultipleLevelsAddTheWholeCapacityDifference",
+            "state": "Passed",
+            "durationSeconds": 0.0001126,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PlayerPrefabExposesNewEnergySettingsAndSafeUnspawnedHud",
+            "fullName": "GrappleEnergyRulesTests.PlayerPrefabExposesNewEnergySettingsAndSafeUnspawnedHud",
+            "state": "Passed",
+            "durationSeconds": 0.0532729,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PullCannotProduceNegativeEnergyOrRefill",
+            "fullName": "GrappleEnergyRulesTests.PullCannotProduceNegativeEnergyOrRefill",
+            "state": "Passed",
+            "durationSeconds": 0.0002571,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PullCostDependsOnElapsedTimeNotTickRate",
+            "fullName": "GrappleEnergyRulesTests.PullCostDependsOnElapsedTimeNotTickRate",
+            "state": "Passed",
+            "durationSeconds": 0.0004205,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SameCapacityDoesNotGrantEnergyAgain(True)",
+            "fullName": "GrappleEnergyRulesTests.SameCapacityDoesNotGrantEnergyAgain(True)",
+            "state": "Passed",
+            "durationSeconds": 0.0002308,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SameCapacityDoesNotGrantEnergyAgain(False)",
+            "fullName": "GrappleEnergyRulesTests.SameCapacityDoesNotGrantEnergyAgain(False)",
+            "state": "Passed",
+            "durationSeconds": 0.0000556,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ConfirmedAirborneAfterPullArmsNextLanding",
+            "fullName": "GrappleLandingRulesTests.ConfirmedAirborneAfterPullArmsNextLanding",
+            "state": "Passed",
+            "durationSeconds": 0.0004382,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GroundedPullHasNotConfirmedTakeoff",
+            "fullName": "GrappleLandingRulesTests.GroundedPullHasNotConfirmedTakeoff",
+            "state": "Passed",
+            "durationSeconds": 0.0001296,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LandingBetweenAttachmentAndFirstPullDoesNotRelease",
+            "fullName": "GrappleLandingRulesTests.LandingBetweenAttachmentAndFirstPullDoesNotRelease",
+            "state": "Passed",
+            "durationSeconds": 0.0001645,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "NonzeroApproachStillRespectsThreshold(0.01f,0.0f,True)",
+            "fullName": "GrappleLandingRulesTests.NonzeroApproachStillRespectsThreshold(0.01f,0.0f,True)",
+            "state": "Passed",
+            "durationSeconds": 0.0003477,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "NonzeroApproachStillRespectsThreshold(0.2f,0.5f,False)",
+            "fullName": "GrappleLandingRulesTests.NonzeroApproachStillRespectsThreshold(0.2f,0.5f,False)",
+            "state": "Passed",
+            "durationSeconds": 0.0000769,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "NonzeroApproachStillRespectsThreshold(0.5f,0.5f,True)",
+            "fullName": "GrappleLandingRulesTests.NonzeroApproachStillRespectsThreshold(0.5f,0.5f,True)",
+            "state": "Passed",
+            "durationSeconds": 0.0000688,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PassingPointRequiresPreviousApproachAndAwayThreshold(True,-0.01f,0.0f,True)",
+            "fullName": "GrappleLandingRulesTests.PassingPointRequiresPreviousApproachAndAwayThreshold(True,-0.01f,0.0f,True)",
+            "state": "Passed",
+            "durationSeconds": 0.0005682,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PassingPointRequiresPreviousApproachAndAwayThreshold(False,-1.0f,0.0f,False)",
+            "fullName": "GrappleLandingRulesTests.PassingPointRequiresPreviousApproachAndAwayThreshold(False,-1.0f,0.0f,False)",
+            "state": "Passed",
+            "durationSeconds": 0.0000908,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PassingPointRequiresPreviousApproachAndAwayThreshold(True,-0.05f,0.1f,False)",
+            "fullName": "GrappleLandingRulesTests.PassingPointRequiresPreviousApproachAndAwayThreshold(True,-0.05f,0.1f,False)",
+            "state": "Passed",
+            "durationSeconds": 0.0000732,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PassingPointRequiresPreviousApproachAndAwayThreshold(True,-0.1f,0.1f,True)",
+            "fullName": "GrappleLandingRulesTests.PassingPointRequiresPreviousApproachAndAwayThreshold(True,-0.1f,0.1f,True)",
+            "state": "Passed",
+            "durationSeconds": 0.0000706,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StartupLandingRequestsOnlyOneJumpAndThenArmsAfterPullTakeoff",
+            "fullName": "GrappleLandingRulesTests.StartupLandingRequestsOnlyOneJumpAndThenArmsAfterPullTakeoff",
+            "state": "Passed",
+            "durationSeconds": 0.0002571,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StartupTimeoutOnlyAbortsBlockedTakeoff(False,True,True,True)",
+            "fullName": "GrappleLandingRulesTests.StartupTimeoutOnlyAbortsBlockedTakeoff(False,True,True,True)",
+            "state": "Passed",
+            "durationSeconds": 0.000464,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StartupTimeoutOnlyAbortsBlockedTakeoff(False,True,False,False)",
+            "fullName": "GrappleLandingRulesTests.StartupTimeoutOnlyAbortsBlockedTakeoff(False,True,False,False)",
+            "state": "Passed",
+            "durationSeconds": 0.0000827,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StartupTimeoutOnlyAbortsBlockedTakeoff(False,False,True,False)",
+            "fullName": "GrappleLandingRulesTests.StartupTimeoutOnlyAbortsBlockedTakeoff(False,False,True,False)",
+            "state": "Passed",
+            "durationSeconds": 0.0000571,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StartupTimeoutOnlyAbortsBlockedTakeoff(True,True,True,False)",
+            "fullName": "GrappleLandingRulesTests.StartupTimeoutOnlyAbortsBlockedTakeoff(True,True,True,False)",
+            "state": "Passed",
+            "durationSeconds": 0.0000745,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ZeroThresholdDoesNotTreatStationaryAsApproaching",
+            "fullName": "GrappleLandingRulesTests.ZeroThresholdDoesNotTreatStationaryAsApproaching",
+            "state": "Passed",
+            "durationSeconds": 0.0001376,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ZeroThresholdDoesNotTreatStationaryAsPassingPoint",
+            "fullName": "GrappleLandingRulesTests.ZeroThresholdDoesNotTreatStationaryAsPassingPoint",
+            "state": "Passed",
+            "durationSeconds": 0.0001091,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

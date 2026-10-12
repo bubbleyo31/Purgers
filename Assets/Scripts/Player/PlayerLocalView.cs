@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// 本地第一人稱玩家視覺綁定器。
 ///
-/// 只有具有 Input Authority 的玩家會啟動。
+/// 相機／ViewModel 只有 Input Authority 啟動；鉤索世界視覺對所有觀察端綁定。
 ///
 /// 負責：
 /// 1. CamTarget LateUpdate。
@@ -43,7 +43,7 @@ public class PlayerLocalView : NetworkBehaviour
     private PlayerProfession profession;
 
     [SerializeField]
-    [Tooltip("第一人稱勾索 LineRenderer 視覺。若留空會自動取得。")]
+    [Tooltip("勾索 LineRenderer 與鉤爪視覺。所有玩家均綁定世界呈現，本機另啟用第一人稱起點；若留空會自動取得。")]
     private PlayerGrappleVisual grappleVisual;
 
     #endregion
@@ -127,6 +127,8 @@ public class PlayerLocalView : NetworkBehaviour
 
     private void OnDestroy()
     {
+        if (grappleVisual != null)
+            grappleVisual.UnbindNetworkVisual();
         CleanupLocalView();
     }
 
@@ -137,6 +139,10 @@ public class PlayerLocalView : NetworkBehaviour
 
     public override void Spawned()
     {
+        // 遠端也需觀察同步的鉤索階段；必須在 Input Authority 提早返回之前綁定。
+        if (grappleVisual != null)
+            grappleVisual.BindNetworkVisual();
+
         if (Object.HasInputAuthority == false)
             return;
 
@@ -249,6 +255,8 @@ public class PlayerLocalView : NetworkBehaviour
         bool hasState
     )
     {
+        if (grappleVisual != null)
+            grappleVisual.UnbindNetworkVisual();
         CleanupLocalView();
     }
 

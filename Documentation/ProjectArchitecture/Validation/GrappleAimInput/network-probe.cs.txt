@@ -1,0 +1,100 @@
+if (!Application.isPlaying) throw new System.InvalidOperationException("Play Mode required");
+var report = new System.Collections.Generic.List<string>();
+var flags = System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic;
+var startMethod = typeof(GrappleVisualRuntimeVerification).GetMethod("Start", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
+System.Action<PlayerGrapple,string,object> set = (g,n,v) => typeof(PlayerGrapple).GetProperty(n,flags).SetValue(g,v,null);
+System.Action<PlayerGrapple,string,object> field = (g,n,v) => typeof(PlayerGrapple).GetField(n,flags).SetValue(g,v);
+System.Action<bool,string> check = (ok,label) => { report.Add((ok?"PASS ":"FAIL ")+label); if(!ok) throw new System.Exception(label); };
+System.Func<System.Func<bool>,string,System.Threading.Tasks.Task> until = async (predicate,label) => {
+    var deadline=Time.realtimeSinceStartup+15f;
+    while(!predicate()) { if(Time.realtimeSinceStartup>deadline)throw new System.TimeoutException(label); await System.Threading.Tasks.Task.Delay(30); }
+};
+System.Action<Fusion.NetworkObject> configure = obj => {
+    var g=obj.GetComponent<PlayerGrapple>();
+    field(g,"debugGrapple",false); field(g,"grappleOcclusionObstacleMask",(LayerMask)0);
+    field(g,"useHoldToMaintainGrappleInput",false); field(g,"grappleAcceleration",0f);
+    field(g,"grappleMaxSpeed",0f); field(g,"releaseNormalGrappleOnLanding",false);
+};
+System.Action<Fusion.NetworkObject> attach = obj => {
+    var g=obj.GetComponent<PlayerGrapple>(); configure(obj);
+    typeof(PlayerGrapple).GetProperty("CurrentPhase").SetValue(g,GrapplePhase.Attached,null);
+    set(g,"GrappleWorldPoint",obj.transform.position+Vector3.forward*40f+Vector3.up*10f);
+    set(g,"TrackingDynamicAnchor",(Fusion.NetworkBool)false);
+    set(g,"SupportInteractionTetherActive",(Fusion.NetworkBool)false);
+    set(g,"ReleaseMomentumActive",(Fusion.NetworkBool)false);
+    set(g,"HasApproachedPoint",(Fusion.NetworkBool)false);
+    set(g,"HasAppliedAttachedPull",(Fusion.NetworkBool)false);
+    set(g,"HasBeenAirborneDuringAttached",(Fusion.NetworkBool)false);
+    set(g,"AttachedStartupGroundedTimer",Fusion.TickTimer.None);
+};
+System.Func<Fusion.NetworkObject,bool> attached = obj => obj!=null && obj.IsValid && obj.GetComponent<PlayerGrapple>().CurrentPhase==GrapplePhase.Attached;
+System.Func<Fusion.NetworkObject,bool> sawAim = obj => ((Fusion.NetworkButtons)typeof(Player).GetProperty("PreviousButtons",flags).GetValue(obj.GetComponent<Player>(),null)).IsSet(InputButton.Aim);
+bool hostAim=false, clientAim=false;
+System.Action<Fusion.NetworkRunner,bool> inputFor = (r,server) => {
+    r.ProvideInput=true;
+    var ev=r.gameObject.AddComponent<Fusion.NetworkEvents>();
+    ev.OnInput=new Fusion.NetworkEvents.InputEvent();
+    ev.OnInput.AddListener((runner,input)=> { var d=new NetInput();d.Buttons.Set(InputButton.Aim,server?hostAim:clientAim); input.Set(d); });
+};
+System.Func<System.Threading.Tasks.Task> run = async () => {
+    Fusion.NetworkRunner host=null,client=null;
+    try {
+        string session="GrappleAim-"+System.Guid.NewGuid().ToString("N").Substring(0,10);
+        host=await (System.Threading.Tasks.Task<Fusion.NetworkRunner>)startMethod.Invoke(null,new object[]{Fusion.GameMode.Host,session,true});
+        inputFor(host,true);
+        var prefab=AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/KCC_Player.prefab").GetComponent<Fusion.NetworkObject>();
+        var local=host.Spawn(prefab,new Vector3(1000,1000,1000),Quaternion.identity,host.LocalPlayer);
+        attach(local);
+        await System.Threading.Tasks.Task.Delay(200);
+        hostAim=true;
+        await until(()=>sawAim(local),"Host Aim received");
+        check(attached(local),"Host State/Input Authority: formal Aim input keeps Attached");
+        check(!local.GetComponent<PlayerGrapple>().BlocksProfessionAimInput,"Host Aim not consumed");
+        hostAim=false;
+        await until(()=>!sawAim(local),"Host Aim released");
+        check(attached(local),"Host release Aim keeps Attached");
+
+        client=await (System.Threading.Tasks.Task<Fusion.NetworkRunner>)startMethod.Invoke(null,new object[]{Fusion.GameMode.Client,session,true});
+        inputFor(client,false);
+        Fusion.NetworkObject proxy=null;
+        await until(()=>client.TryFindObject(local.Id,out proxy)&&proxy.IsValid,"late join");
+        configure(proxy);
+        await until(()=>attached(proxy),"late Attached snapshot");
+        check(attached(local)&&attached(proxy),"Late join observes Attached");
+        var remote=host.Spawn(prefab,new Vector3(1003,1000,1000),Quaternion.identity,client.LocalPlayer);
+        remote.GetComponent<Player>().enabled=false;
+        attach(remote);
+        Fusion.NetworkObject owned=null;
+        await until(()=>client.TryFindObject(remote.Id,out owned)&&owned.IsValid,"client owned");
+        configure(owned);
+        remote.GetComponent<Player>().enabled=true;
+        await System.Threading.Tasks.Task.Delay(200);
+        clientAim=true;
+        await until(()=>sawAim(remote)&&sawAim(owned),"Client Aim travels through NetInput to Host");
+        check(attached(remote)&&attached(owned),"Client Input Authority and Host both remain Attached after Aim press");
+        check(!remote.GetComponent<PlayerGrapple>().BlocksProfessionAimInput && !owned.GetComponent<PlayerGrapple>().BlocksProfessionAimInput,"Client and Host do not consume Aim");
+        await System.Threading.Tasks.Task.Delay(300);
+        check(attached(remote)&&attached(owned),"Held Aim keeps both peers Attached");
+        clientAim=false;
+        await until(()=>!sawAim(remote)&&!sawAim(owned),"Client Aim release");
+        check(attached(remote)&&attached(owned),"Client Aim release keeps both peers Attached");
+        var line=owned.GetComponent<LineRenderer>();
+        check(line.enabled,"Client local rope remains visible");
+        host.Despawn(remote);
+        await client.Shutdown();client=null;
+        client=await (System.Threading.Tasks.Task<Fusion.NetworkRunner>)startMethod.Invoke(null,new object[]{Fusion.GameMode.Client,session,true});
+        Fusion.NetworkObject rejoined=null;
+        await until(()=>client.TryFindObject(local.Id,out rejoined)&&rejoined.IsValid&&attached(rejoined),"reconnect Attached");
+        check(attached(rejoined)&&!rejoined.GetComponent<PlayerGrapple>().BlocksProfessionAimInput,"Reconnect receives Attached without Aim lock");
+        host.Despawn(local);
+    } catch(System.Exception ex) {report.Add("FAIL "+ex);}
+    finally {
+        clientAim=false;hostAim=false;
+        if(client!=null)await client.Shutdown();
+        if(host!=null)await host.Shutdown();
+        System.IO.File.WriteAllLines("Temp/GrappleAimFix/host-client.txt",report);
+        Debug.Log("[GrappleAimFix] controlled network checks finished");
+    }
+};
+run();
+return "Controlled Host/Client started; results: Temp/GrappleAimFix/host-client.txt";

@@ -200,6 +200,12 @@ public class TankProfessionRuntimeDriver :
             return;
         }
 
+        if ((OwnerPlayer.Health != null && !OwnerPlayer.Health.IsAlive) ||
+            Purgers.GameFlow.Control.PlayerControlLocks.BlocksGameplay(input.BlockedControls))
+        {
+            meleeCombo?.ResetForInterruption();
+            return;
+        }
         RefreshLoadoutAbilityReferences();
 
         if (OwnerProfession.CurrentProfession !=
@@ -281,6 +287,7 @@ public class TankProfessionRuntimeDriver :
         * → Air Special。
         */
         if (guardAbility != null &&
+            !(input.Buttons.IsSet(InputButton.Fire) && !guardAbility.IsGuarding) &&
             (quickDashAbility == null ||
             quickDashAbility.IsCombatActionLocked == false) &&
             (airDashAbility == null ||
@@ -297,6 +304,11 @@ public class TankProfessionRuntimeDriver :
         // =============================================================
         // 3. Tank Melee
         // =============================================================
+
+        if (meleeCombo != null &&
+            ((airDashAbility != null && airDashAbility.IsDashing) ||
+             (grappleGatherAbility != null && grappleGatherAbility.IsPlayerGatherDashing)))
+            meleeCombo.ResetForInterruption();
 
         if (meleeCombo != null &&
             (quickDashAbility == null ||

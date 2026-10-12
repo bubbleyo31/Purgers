@@ -1,0 +1,7 @@
+Purgers | Failed(Child) | passed=0 failed=1 skipped=0 | One or more child tests had errors
+M:/UnityProject/Purgers/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll | Failed(Child) | passed=0 failed=1 skipped=0 | One or more child tests had errors
+GrappleAimInputTests | Failed(Child) | passed=0 failed=1 skipped=0 | One or more child tests had errors
+GrappleAimInputTests.RightMousePreservesGrappleAndManualQStillReleases | Failed | passed=0 failed=1 skipped=0 |   False / Attached / Aim 0
+  Expected: Attached
+  But was:  Retracting
+

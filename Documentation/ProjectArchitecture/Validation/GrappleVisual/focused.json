@@ -1,0 +1,142 @@
+{
+  "Summary": {
+    "Total": 14,
+    "Passed": 14,
+    "Failed": 0,
+    "Skipped": 0,
+    "DurationSeconds": 0.2332135,
+    "ResultState": "Passed"
+  },
+  "Results": [
+    {
+      "Name": "AmplitudeCurveControlsWaveStrength",
+      "FullName": "GrappleRopeVisualTests.AmplitudeCurveControlsWaveStrength",
+      "State": "Passed",
+      "DurationSeconds": 0.0007571,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "AttachedFinishesTighteningAndKeepsExactHitPoint",
+      "FullName": "GrappleRopeVisualTests.AttachedFinishesTighteningAndKeepsExactHitPoint",
+      "State": "Passed",
+      "DurationSeconds": 0.0005611,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DisabledWavesKeepOriginalStraightLine",
+      "FullName": "GrappleRopeVisualTests.DisabledWavesKeepOriginalStraightLine",
+      "State": "Passed",
+      "DurationSeconds": 0.0005184,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HookConnectionTracksTipAndHidesWithRope",
+      "FullName": "GrappleRopeVisualTests.HookConnectionTracksTipAndHidesWithRope",
+      "State": "Passed",
+      "DurationSeconds": 0.0005935,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HookIsReusedAndReleasedOnDespawn",
+      "FullName": "GrappleRopeVisualTests.HookIsReusedAndReleasedOnDespawn",
+      "State": "Passed",
+      "DurationSeconds": 0.000568,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HookOffsetRespectsScaleAndRotationCorrection",
+      "FullName": "GrappleRopeVisualTests.HookOffsetRespectsScaleAndRotationCorrection",
+      "State": "Passed",
+      "DurationSeconds": 0.0005432,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "LateJoinAttachedStartsStraightWithoutReplayingLaunch",
+      "FullName": "GrappleRopeVisualTests.LateJoinAttachedStartsStraightWithoutReplayingLaunch",
+      "State": "Passed",
+      "DurationSeconds": 0.0004681,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MidFlightCancelDoesNotExtendToTarget",
+      "FullName": "GrappleRopeVisualTests.MidFlightCancelDoesNotExtendToTarget",
+      "State": "Passed",
+      "DurationSeconds": 0.0007513,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RemoteOriginNeverUsesFirstPersonOrigin",
+      "FullName": "GrappleRopeVisualTests.RemoteOriginNeverUsesFirstPersonOrigin",
+      "State": "Passed",
+      "DurationSeconds": 0.0006302,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ShootingHasWavesButBothEndpointsStayConnected",
+      "FullName": "GrappleRopeVisualTests.ShootingHasWavesButBothEndpointsStayConnected",
+      "State": "Passed",
+      "DurationSeconds": 0.000534,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StrongWavesAreLimitedOnVeryShortRopes",
+      "FullName": "GrappleRopeVisualTests.StrongWavesAreLimitedOnVeryShortRopes",
+      "State": "Passed",
+      "DurationSeconds": 0.0005906,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "UnspawnedVisualDoesNotReadNetworkedState",
+      "FullName": "GrappleRopeVisualTests.UnspawnedVisualDoesNotReadNetworkedState",
+      "State": "Passed",
+      "DurationSeconds": 0.0004731,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "WaveMovesEvenWhenExtensionHasNotChanged",
+      "FullName": "GrappleRopeVisualTests.WaveMovesEvenWhenExtensionHasNotChanged",
+      "State": "Passed",
+      "DurationSeconds": 0.0005111,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ZeroTighteningTimeImmediatelyStraightens",
+      "FullName": "GrappleRopeVisualTests.ZeroTighteningTimeImmediatelyStraightens",
+      "State": "Passed",
+      "DurationSeconds": 0.0005023,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    }
+  ],
+  "Total": 14,
+  "Passed": 14,
+  "Failed": 0,
+  "Skipped": 0
+}

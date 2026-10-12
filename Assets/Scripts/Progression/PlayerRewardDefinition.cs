@@ -9,7 +9,7 @@ namespace Purgers.Progression
         [Tooltip("獎勵的永久識別碼。已抽候選與存檔會記住此 ID；建立使用後請勿任意改名或重複使用。")]
         [SerializeField] private string stableRewardId = string.Empty;
 
-        [Tooltip("獎勵所屬能力分類。目前只支援鈎索命中與鈎索專注，且必須和下方能力資料的分類一致；未實作分類即使權重為 0 也會使清單驗證失敗。")]
+        [Tooltip("獎勵所屬能力分類。支援鈎索命中、鈎索專注與 Weapon；能力分類須和下方能力資料一致；未實作分類即使權重為 0 也會使清單驗證失敗。")]
         [SerializeField] private RewardCategory category;
 
         [Header("候選抽選條件")]
@@ -23,7 +23,7 @@ namespace Purgers.Progression
         [SerializeField] private RewardRepeatPolicy repeatPolicy = RewardRepeatPolicy.OncePerRun;
 
         [Header("能力與選擇視窗")]
-        [Tooltip("實際領取後要裝備的能力 Definition。不可留空，分類必須符合上方獎勵分類；不是在此直接指定 Runtime Prefab。")]
+        [Tooltip("實際領取後要裝備的能力 Definition。能力獎勵不可留空，Weapon 必須留空；分類必須符合上方獎勵分類；不是在此直接指定 Runtime Prefab。")]
         [SerializeField] private PlayerAbilityDefinition abilityDefinition;
 
         [Tooltip("ALT 獎勵選窗顯示的技能效果說明。請描述玩家實際會得到的能力，而非內部 ID。")]
@@ -36,6 +36,23 @@ namespace Purgers.Progression
         public RewardRepeatPolicy RepeatPolicy => repeatPolicy;
         public PlayerAbilityDefinition AbilityDefinition => abilityDefinition;
         public string Description => description?.Trim() ?? string.Empty;
+
+        [Header("武器獎勵")]
+        [Tooltip("Weapon 分類要替換成的既有武器操作組。沿用職業 Runtime；能力獎勵保持 None。")]
+        [SerializeField] private PlayerProfessionType weaponProfession;
+        [Tooltip("武器獎勵卡名稱；不影響穩定 ID 或存檔。")]
+        [SerializeField] private string weaponDisplayName = string.Empty;
+        [Tooltip("武器獎勵卡圖片；留空沿用 HUD 佔位圖。")]
+        [SerializeField] private Sprite weaponIcon;
+
+        public PlayerProfessionType WeaponProfession => weaponProfession;
+        public bool IsImplementedWeaponReward => category == RewardCategory.Weapon &&
+            WeaponRewardRules.IsWeapon(weaponProfession) && abilityDefinition == null;
+        public bool IsImplementedReward => IsImplementedAbilityReward || IsImplementedWeaponReward;
+        public string DisplayName => category == RewardCategory.Weapon
+            ? weaponDisplayName : abilityDefinition != null ? abilityDefinition.DisplayName : StableRewardId;
+        public Sprite HudIcon => category == RewardCategory.Weapon
+            ? weaponIcon : abilityDefinition != null ? abilityDefinition.HudIcon : null;
 
         public RewardDraftEntry ToDraftEntry() => new RewardDraftEntry(
             StableRewardId, Category, MinimumPlayerLevel, Weight, RepeatPolicy);

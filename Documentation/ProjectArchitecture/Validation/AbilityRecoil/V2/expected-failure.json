@@ -1,0 +1,85 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"413feb7a3bea474f945835c7e5b6b195\",\"status\":\"failed\",\"mode\":\"EditMode\",\"started_unix_ms\":1791463347057,\"finished_unix_ms\":1791463351494,\"last_update_unix_ms\":1791463351494,\"progress\":{\"completed\":20,\"total\":577,\"current_test_full_name\":null,\"current_test_started_unix_ms\":1791463350986,\"last_finished_test_full_name\":\"RecoilRecoveryTests.SystemRecoveryDoesNotConsumeManualBudget\",\"last_finished_unix_ms\":1791463350987,\"stuck_suspected\":false,\"editor_is_focused\":false,\"blocked_reason\":null,\"failures_so_far\":[{\"full_name\":\"AbilityRecoilTests.BothTimingsTriggerEachStageAndInstantOnlyOnce(1)\",\"message\":\"  Expected: (-2.00, 1.00)\\r\\n  But was:  (0.00, 0.00)\\r\\n\"},{\"full_name\":\"AbilityRecoilTests.BothTimingsTriggerEachStageAndInstantOnlyOnce(2)\",\"message\":\"  Expected: (-2.00, 1.00)\\r\\n  But was:  (0.00, 0.00)\\r\\n\"},{\"full_name\":\"AbilityRecoilTests.BothTimingsTriggerEachStageAndInstantOnlyOnce(3)\",\"message\":\"  Expected: (-2.00, 1.00)\\r\\n  But was:  (0.00, 0.00)\\r\\n\"},{\"full_name\":\"AbilityRecoilTests.TimingRetainsOldValuesAndSupportsFlags\",\"message\":\"  Expected: True\\r\\n  But was:  False\\r\\n\"},{\"full_name\":\"RecoilRecoveryTests.DownwardRecoilDoesNotAutoRecoverOrConsumeInput\",\"message\":\"  技能與槍械必須共用回正规則。\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"RecoilRecoveryTests.ManualInputReducesOnlyAppliedPoolEvenWhileWaiting\",\"message\":\"  技能與槍械必須共用回正规則。\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"RecoilRecoveryTests.OneManualInputCannotCancelTwoPoolsTwice\",\"message\":\"  技能與槍械必須共用回正规則。\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"RecoilRecoveryTests.PendingApplicationOrDelayBlocksAutomaticRecovery(True,True)\",\"message\":\"  技能與槍械必須共用回正规則。\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"RecoilRecoveryTests.PendingApplicationOrDelayBlocksAutomaticRecovery(False,False)\",\"message\":\"  技能與槍械必須共用回正规則。\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"RecoilRecoveryTests.RecoveryIsRateLimitedAndCannotOvershoot\",\"message\":\"  技能與槍械必須共用回正规則。\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"RecoilRecoveryTests.SystemRecoveryDoesNotConsumeManualBudget\",\"message\":\"  技能與槍械必須共用回正规則。\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"}],\"failures_capped\":false},\"error\":null,\"result\":null},\"hint\":null}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "success": true,
+      "message": "Test job status retrieved.",
+      "error": null,
+      "data": {
+        "job_id": "413feb7a3bea474f945835c7e5b6b195",
+        "status": "failed",
+        "mode": "EditMode",
+        "started_unix_ms": 1791463347057,
+        "finished_unix_ms": 1791463351494,
+        "last_update_unix_ms": 1791463351494,
+        "progress": {
+          "completed": 20,
+          "total": 577,
+          "current_test_full_name": null,
+          "current_test_started_unix_ms": 1791463350986,
+          "last_finished_test_full_name": "RecoilRecoveryTests.SystemRecoveryDoesNotConsumeManualBudget",
+          "last_finished_unix_ms": 1791463350987,
+          "stuck_suspected": false,
+          "editor_is_focused": false,
+          "blocked_reason": null,
+          "failures_so_far": [
+            {
+              "full_name": "AbilityRecoilTests.BothTimingsTriggerEachStageAndInstantOnlyOnce(1)",
+              "message": "  Expected: (-2.00, 1.00)\r\n  But was:  (0.00, 0.00)\r\n"
+            },
+            {
+              "full_name": "AbilityRecoilTests.BothTimingsTriggerEachStageAndInstantOnlyOnce(2)",
+              "message": "  Expected: (-2.00, 1.00)\r\n  But was:  (0.00, 0.00)\r\n"
+            },
+            {
+              "full_name": "AbilityRecoilTests.BothTimingsTriggerEachStageAndInstantOnlyOnce(3)",
+              "message": "  Expected: (-2.00, 1.00)\r\n  But was:  (0.00, 0.00)\r\n"
+            },
+            {
+              "full_name": "AbilityRecoilTests.TimingRetainsOldValuesAndSupportsFlags",
+              "message": "  Expected: True\r\n  But was:  False\r\n"
+            },
+            {
+              "full_name": "RecoilRecoveryTests.DownwardRecoilDoesNotAutoRecoverOrConsumeInput",
+              "message": "  技能與槍械必須共用回正规則。\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "RecoilRecoveryTests.ManualInputReducesOnlyAppliedPoolEvenWhileWaiting",
+              "message": "  技能與槍械必須共用回正规則。\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "RecoilRecoveryTests.OneManualInputCannotCancelTwoPoolsTwice",
+              "message": "  技能與槍械必須共用回正规則。\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "RecoilRecoveryTests.PendingApplicationOrDelayBlocksAutomaticRecovery(True,True)",
+              "message": "  技能與槍械必須共用回正规則。\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "RecoilRecoveryTests.PendingApplicationOrDelayBlocksAutomaticRecovery(False,False)",
+              "message": "  技能與槍械必須共用回正规則。\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "RecoilRecoveryTests.RecoveryIsRateLimitedAndCannotOvershoot",
+              "message": "  技能與槍械必須共用回正规則。\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "RecoilRecoveryTests.SystemRecoveryDoesNotConsumeManualBudget",
+              "message": "  技能與槍械必須共用回正规則。\r\n  Expected: not null\r\n  But was:  null\r\n"
+            }
+          ],
+          "failures_capped": false
+        },
+        "error": null,
+        "result": null
+      },
+      "hint": null
+    }
+  },
+  "isError": false
+}

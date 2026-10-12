@@ -2317,113 +2317,28 @@ public class SupportSMG :
         if (applied == Vector2.zero)
             return;
 
-        movement.AddLookRotationImpulse(applied.x, applied.y);
-        AccumulatedRecoilPitch += applied.x;
-        LastAimPitch += applied.x;
+        float actualPitch = movement.AddLookRotationImpulse(applied.x, applied.y);
+        AccumulatedRecoilPitch += actualPitch;
+        LastAimPitch = movement.KCC != null ? movement.KCC.Data.LookPitch : LastAimPitch;
     }
 
     private void ProcessRecoilRecovery()
     {
-        if (movement == null)
+        if (movement == null) return;
+        float accumulated = AccumulatedRecoilPitch;
+        float manual = movement.ConsumeManualRecoilPitch(accumulated);
+        float step = WeaponRecoilRecovery.Step(ref accumulated, manual,
+            PendingRecoilPitch != 0f || PendingRecoilYaw != 0f,
+            RecoilRecoveryTimer.ExpiredOrNotRunning(Runner), recoilRecoverySpeed, Runner.DeltaTime);
+        if (step > 0f)
         {
-            return;
+            float applied = movement.AddLookRotationImpulse(step, 0f);
+            accumulated -= step - applied;
         }
-
-
-        Vector3 aimDirection =
-            GetGameplayAimDirection();
-
-
-        float currentPitch =
-            Mathf.Asin(
-                Mathf.Clamp(
-                    aimDirection.y,
-                    -1f,
-                    1f
-                )
-            ) *
-            -Mathf.Rad2Deg;
-
-
-        if (ShotSequence == 0 &&
-            Mathf.Approximately(
-                AccumulatedRecoilPitch,
-                0f
-            ))
-        {
-            LastAimPitch =
-                currentPitch;
-
-
-            return;
-        }
-
-
-        float pitchDelta =
-            currentPitch -
-            LastAimPitch;
-
-
-        // =============================================================
-        // Player 手動壓槍
-        // =============================================================
-
-        if (pitchDelta > 0f &&
-            AccumulatedRecoilPitch < 0f)
-        {
-            AccumulatedRecoilPitch =
-                Mathf.Min(
-                    0f,
-                    AccumulatedRecoilPitch +
-                    pitchDelta
-                );
-        }
-
-
-        float appliedRecovery =
-            0f;
-
-
-        // =============================================================
-        // Automatic Recovery
-        // =============================================================
-
-        if (AccumulatedRecoilPitch < 0f &&
-            PendingRecoilPitch == 0f && PendingRecoilYaw == 0f &&
-            RecoilRecoveryTimer
-                .ExpiredOrNotRunning(
-                    Runner
-                ))
-        {
-            float recoveryAmount =
-                recoilRecoverySpeed *
-                Runner.DeltaTime;
-
-
-            appliedRecovery =
-                Mathf.Min(
-                    recoveryAmount,
-                    -AccumulatedRecoilPitch
-                );
-
-
-            movement.AddLookRotationImpulse(
-                appliedRecovery,
-                0f
-            );
-
-
-            AccumulatedRecoilPitch +=
-                appliedRecovery;
-        }
-
-
-        LastAimPitch =
-            currentPitch +
-            appliedRecovery;
+        AccumulatedRecoilPitch = accumulated;
+        // 保留既有網路欄位，但不再用系統視角差猜測玩家輸入。
+        LastAimPitch = movement.KCC != null ? movement.KCC.Data.LookPitch : LastAimPitch;
     }
-
-
     #endregion
 
 

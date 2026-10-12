@@ -23,3 +23,7 @@
 - 網路同步：搜尋 `[Networked]`、`[Rpc(`、`HasStateAuthority`、`IsSceneAuthority`。
 - 場景綁定：由 `[SerializeField]` 欄位名稱回到 Unity Inspector 找同名引用。
 
+
+## 2026-10-10 武器獎勵
+
+WeaponRewardRules 提供三武器穩定 ID 與已裝排除。PlayerRewardDefinition／Catalog 支援 Weapon；GameLogic 經既有 Profession Runtime 換裝。正式規則：[46](../../../Documentation/ProjectArchitecture/46_武器獎勵與換裝.md)。

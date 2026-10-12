@@ -1,0 +1,127 @@
+Host/Client verification
+BEGIN Host/Client connection
+PASS Host/Client connection
+BEGIN network tick
+PASS network tick
+BEGIN Host/Client connection
+ERROR during Host/Client connection: <color=#73ACE5>[Fusion]</color> System.NullReferenceException <i>See next error log entry for details.</i>
+UnityEngine.Debug:LogError (object,UnityEngine.Object)
+Fusion.FusionUnityLogger:Log (Fusion.LogType,object,Fusion.LogContext&) (at Assets/Photon/Fusion/Runtime/Fusion.Unity.cs:2317)
+Fusion.FusionUnityLogger:LogException (System.Exception,Fusion.LogContext&) (at Assets/Photon/Fusion/Runtime/Fusion.Unity.cs:2329)
+Fusion.FusionUnityLogger:Fusion.ILogger.LogException (System.Exception,Fusion.LogContext modreq(System.Runtime.InteropServices.InAttribute)&)
+Fusion.Log:Exception (System.Exception)
+Fusion.SimulationConnection:GetObjectData (Fusion.NetworkId,bool,bool) (at Fusion/Fusion.Runtime/Simulation/SimulationConnection.cs:106)
+Fusion.Simulation:InvokePlayerJoinedLeft () (at Fusion/Fusion.Runtime/Simulation/Simulation.cs:1185)
+Fusion.Simulation:InvokeTick (Fusion.SimulationStages,bool) (at Fusion/Fusion.Runtime/Simulation/Simulation.cs:1667)
+Fusion.Simulation:StepSimulation (Fusion.SimulationStages,bool,bool,bool) (at Fusion/Fusion.Runtime/Simulation/Simulation.cs:590)
+Fusion.Simulation:Update (double) (at Fusion/Fusion.Runtime/Simulation/Simulation.cs:1375)
+Fusion.NetworkRunner:UpdateInternal (double) (at Fusion/Fusion.Runtime/Runner/NetworkRunner.cs:1343)
+Fusion.NetworkRunnerUpdaterDefault:InvokeUpdate () (at Fusion/Fusion.Runtime/Runner/NetworkRunnerUpdaterDefault.cs:121)
+
+ERROR during Host/Client connection: <color=#73ACE5>[Fusion]</color> System.NullReferenceException <i>See next error log entry for details.</i>
+UnityEngine.Debug:LogError (object,UnityEngine.Object)
+Fusion.FusionUnityLogger:Log (Fusion.LogType,object,Fusion.LogContext&) (at Assets/Photon/Fusion/Runtime/Fusion.Unity.cs:2317)
+Fusion.FusionUnityLogger:LogException (System.Exception,Fusion.LogContext&) (at Assets/Photon/Fusion/Runtime/Fusion.Unity.cs:2329)
+Fusion.FusionUnityLogger:Fusion.ILogger.LogException (System.Exception,Fusion.LogContext modreq(System.Runtime.InteropServices.InAttribute)&)
+Fusion.Log:Exception (System.Exception)
+Fusion.SimulationConnection:GetObjectData (Fusion.NetworkId,bool,bool) (at Fusion/Fusion.Runtime/Simulation/SimulationConnection.cs:106)
+Fusion.Simulation:InvokePlayerJoinedLeft () (at Fusion/Fusion.Runtime/Simulation/Simulation.cs:1185)
+Fusion.Simulation:InvokeTick (Fusion.SimulationStages,bool) (at Fusion/Fusion.Runtime/Simulation/Simulation.cs:1667)
+Fusion.Simulation:StepSimulation (Fusion.SimulationStages,bool,bool,bool) (at Fusion/Fusion.Runtime/Simulation/Simulation.cs:590)
+Fusion.Simulation:Update (double) (at Fusion/Fusion.Runtime/Simulation/Simulation.cs:1375)
+Fusion.NetworkRunner:UpdateInternal (double) (at Fusion/Fusion.Runtime/Runner/NetworkRunner.cs:1343)
+Fusion.NetworkRunnerUpdaterDefault:InvokeUpdate () (at Fusion/Fusion.Runtime/Runner/NetworkRunnerUpdaterDefault.cs:121)
+
+ERROR during Host/Client connection: <color=#73ACE5>[Fusion]</color> System.NullReferenceException <i>See next error log entry for details.</i>
+UnityEngine.Debug:LogError (object,UnityEngine.Object)
+Fusion.FusionUnityLogger:Log (Fusion.LogType,object,Fusion.LogContext&) (at Assets/Photon/Fusion/Runtime/Fusion.Unity.cs:2317)
+Fusion.FusionUnityLogger:LogException (System.Exception,Fusion.LogContext&) (at Assets/Photon/Fusion/Runtime/Fusion.Unity.cs:2329)
+Fusion.FusionUnityLogger:Fusion.ILogger.LogException (System.Exception,Fusion.LogContext modreq(System.Runtime.InteropServices.InAttribute)&)
+Fusion.Log:Exception (System.Exception)
+Fusion.SimulationConnection:GetObjectData (Fusion.NetworkId,bool,bool) (at Fusion/Fusion.Runtime/Simulation/SimulationConnection.cs:106)
+Fusion.Simulation:InvokePlayerJoinedLeft () (at Fusion/Fusion.Runtime/Simulation/Simulation.cs:1185)
+Fusion.Simulation:InvokeTick (Fusion.SimulationStages,bool) (at Fusion/Fusion.Runtime/Simulation/Simulation.cs:1667)
+Fusion.Simulation:StepSimulation (Fusion.SimulationStages,bool,bool,bool) (at Fusion/Fusion.Runtime/Simulation/Simulation.cs:590)
+Fusion.Simulation:Update (double) (at Fusion/Fusion.Runtime/Simulation/Simulation.cs:1375)
+Fusion.NetworkRunner:UpdateInternal (double) (at Fusion/Fusion.Runtime/Runner/NetworkRunner.cs:1343)
+Fusion.NetworkRunnerUpdaterDefault:InvokeUpdate () (at Fusion/Fusion.Runtime/Runner/NetworkRunnerUpdaterDefault.cs:121)
+
+PASS Host/Client connection
+BEGIN network tick
+PASS network tick
+BEGIN late join ability snapshot
+PASS late join ability snapshot
+BEGIN late join active state
+PASS late join active state
+BEGIN host cancellation replicated
+PASS host cancellation replicated
+BEGIN Host/Client connection
+PASS Host/Client connection
+ERROR during Host/Client connection: <color=#73ACE5>[Fusion]</color> System.NullReferenceException <i>See next error log entry for details.</i>
+UnityEngine.Debug:LogError (object,UnityEngine.Object)
+Fusion.FusionUnityLogger:Log (Fusion.LogType,object,Fusion.LogContext&) (at Assets/Photon/Fusion/Runtime/Fusion.Unity.cs:2317)
+Fusion.FusionUnityLogger:LogException (System.Exception,Fusion.LogContext&) (at Assets/Photon/Fusion/Runtime/Fusion.Unity.cs:2329)
+Fusion.FusionUnityLogger:Fusion.ILogger.LogException (System.Exception,Fusion.LogContext modreq(System.Runtime.InteropServices.InAttribute)&)
+Fusion.Log:Exception (System.Exception)
+Fusion.SimulationConnection:GetObjectData (Fusion.NetworkId,bool,bool) (at Fusion/Fusion.Runtime/Simulation/SimulationConnection.cs:106)
+Fusion.Simulation:InvokePlayerJoinedLeft () (at Fusion/Fusion.Runtime/Simulation/Simulation.cs:1185)
+Fusion.Simulation:InvokeTick (Fusion.SimulationStages,bool) (at Fusion/Fusion.Runtime/Simulation/Simulation.cs:1667)
+Fusion.Simulation:StepSimulation (Fusion.SimulationStages,bool,bool,bool) (at Fusion/Fusion.Runtime/Simulation/Simulation.cs:590)
+Fusion.Simulation:Update (double) (at Fusion/Fusion.Runtime/Simulation/Simulation.cs:1375)
+Fusion.NetworkRunner:UpdateInternal (double) (at Fusion/Fusion.Runtime/Runner/NetworkRunner.cs:1343)
+Fusion.NetworkRunnerUpdaterDefault:InvokeUpdate () (at Fusion/Fusion.Runtime/Runner/NetworkRunnerUpdaterDefault.cs:121)
+
+ERROR during Host/Client connection: <color=#73ACE5>[Fusion]</color> System.NullReferenceException <i>See next error log entry for details.</i>
+UnityEngine.Debug:LogError (object,UnityEngine.Object)
+Fusion.FusionUnityLogger:Log (Fusion.LogType,object,Fusion.LogContext&) (at Assets/Photon/Fusion/Runtime/Fusion.Unity.cs:2317)
+Fusion.FusionUnityLogger:LogException (System.Exception,Fusion.LogContext&) (at Assets/Photon/Fusion/Runtime/Fusion.Unity.cs:2329)
+Fusion.FusionUnityLogger:Fusion.ILogger.LogException (System.Exception,Fusion.LogContext modreq(System.Runtime.InteropServices.InAttribute)&)
+Fusion.Log:Exception (System.Exception)
+Fusion.SimulationConnection:GetObjectData (Fusion.NetworkId,bool,bool) (at Fusion/Fusion.Runtime/Simulation/SimulationConnection.cs:106)
+Fusion.Simulation:InvokePlayerJoinedLeft () (at Fusion/Fusion.Runtime/Simulation/Simulation.cs:1185)
+Fusion.Simulation:InvokeTick (Fusion.SimulationStages,bool) (at Fusion/Fusion.Runtime/Simulation/Simulation.cs:1667)
+Fusion.Simulation:StepSimulation (Fusion.SimulationStages,bool,bool,bool) (at Fusion/Fusion.Runtime/Simulation/Simulation.cs:590)
+Fusion.Simulation:Update (double) (at Fusion/Fusion.Runtime/Simulation/Simulation.cs:1375)
+Fusion.NetworkRunner:UpdateInternal (double) (at Fusion/Fusion.Runtime/Runner/NetworkRunner.cs:1343)
+Fusion.NetworkRunnerUpdaterDefault:InvokeUpdate () (at Fusion/Fusion.Runtime/Runner/NetworkRunnerUpdaterDefault.cs:121)
+
+ERROR during Host/Client connection: <color=#73ACE5>[Fusion]</color> System.NullReferenceException <i>See next error log entry for details.</i>
+UnityEngine.Debug:LogError (object,UnityEngine.Object)
+Fusion.FusionUnityLogger:Log (Fusion.LogType,object,Fusion.LogContext&) (at Assets/Photon/Fusion/Runtime/Fusion.Unity.cs:2317)
+Fusion.FusionUnityLogger:LogException (System.Exception,Fusion.LogContext&) (at Assets/Photon/Fusion/Runtime/Fusion.Unity.cs:2329)
+Fusion.FusionUnityLogger:Fusion.ILogger.LogException (System.Exception,Fusion.LogContext modreq(System.Runtime.InteropServices.InAttribute)&)
+Fusion.Log:Exception (System.Exception)
+Fusion.SimulationConnection:GetObjectData (Fusion.NetworkId,bool,bool) (at Fusion/Fusion.Runtime/Simulation/SimulationConnection.cs:106)
+Fusion.Simulation:InvokePlayerJoinedLeft () (at Fusion/Fusion.Runtime/Simulation/Simulation.cs:1185)
+Fusion.Simulation:InvokeTick (Fusion.SimulationStages,bool) (at Fusion/Fusion.Runtime/Simulation/Simulation.cs:1667)
+Fusion.Simulation:StepSimulation (Fusion.SimulationStages,bool,bool,bool) (at Fusion/Fusion.Runtime/Simulation/Simulation.cs:590)
+Fusion.Simulation:Update (double) (at Fusion/Fusion.Runtime/Simulation/Simulation.cs:1375)
+Fusion.NetworkRunner:UpdateInternal (double) (at Fusion/Fusion.Runtime/Runner/NetworkRunner.cs:1343)
+Fusion.NetworkRunnerUpdaterDefault:InvokeUpdate () (at Fusion/Fusion.Runtime/Runner/NetworkRunnerUpdaterDefault.cs:121)
+
+BEGIN network tick
+PASS network tick
+BEGIN reconnect ability snapshot
+PASS reconnect ability snapshot
+BEGIN client owned objects
+PASS client owned objects
+BEGIN client first E activates on Host and replicates
+PASS client first E activates on Host and replicates
+BEGIN client hold
+PASS client hold
+BEGIN client release received
+PASS client release received
+BEGIN client second E ends on Host and replicates
+PASS client second E ends on Host and replicates
+BEGIN settled health replicated
+PASS settled health replicated
+BEGIN release before aerial
+PASS release before aerial
+BEGIN client aerial object
+PASS client aerial object
+BEGIN client aerial first press
+PASS client aerial first press
+BEGIN client aerial release
+PASS client aerial release
+BEGIN client aerial second press
+PASS client aerial second press

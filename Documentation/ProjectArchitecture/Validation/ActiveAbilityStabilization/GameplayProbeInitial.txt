@@ -1,0 +1,36 @@
+2026-10-04T20:21:29.8501097Z 失敗 (controlled Single Runner, not independent multiplayer)
+PASS Single Runner started
+PASS Player health spawned
+PASS Shield equip: 
+PASS Shield usable
+PASS Shield E accepted exactly once
+PASS shield absorbs before health
+PASS shield overflow preserves exact damage
+PASS Experience equip: 
+PASS Experience usable
+PASS Experience E accepted exactly once
+PASS experience buff doubles received damage
+PASS personal experience multiplier active
+PASS experience cooldown waits for end
+PASS Blink equip: 
+PASS Blink usable
+PASS Blink E accepted exactly once
+PASS blink armed without cooldown
+PASS second E dashes and starts cooldown
+BLINK initial hit ActiveAbility verification obstacle distance=0 normal=(0.00, 0.00, -1.00) point=(0.00, 0.00, 0.00)
+BLINK fixed=(1000.00, 100.00, 1000.00) deltaTime=0.015625 active=True
+BLINK end=(1000.00, 100.00, 1003.50) phase=Ready velocity=(0.00, 0.00, 0.00)
+PASS grounded blink travels and stops before wall: 3.5
+PASS BulletTime equip: 
+PASS BulletTime usable
+PASS BulletTime E accepted exactly once
+PASS bullet time does not apply damage early
+PASS bullet time settles exactly once
+PASS Grenade equip: 
+PASS Grenade usable
+PASS Grenade E accepted exactly once
+PASS Grenade launched and starts cooldown
+PASS HealingPack equip: 
+FAIL System.InvalidOperationException: HealingPack usable
+  at ActiveAbilityRuntimeVerification.Check (System.Boolean value, System.String message) [0x0001f] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\ActiveAbilityRuntimeVerification.cs:238 
+  at ActiveAbilityRuntimeVerification.Begin () [0x00601] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\ActiveAbilityRuntimeVerification.cs:56 

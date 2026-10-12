@@ -1,0 +1,4 @@
+Purgers | Passed | passed=1 failed=0 skipped=0 |  | 
+M:/UnityProject/Purgers/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll | Passed | passed=1 failed=0 skipped=0 |  | 
+GrappleAimInputTests | Passed | passed=1 failed=0 skipped=0 |  | 
+GrappleAimInputTests.RightMousePreservesGrappleAndManualQStillReleases | Passed | passed=1 failed=0 skipped=0 |  | 

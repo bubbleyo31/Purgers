@@ -28,10 +28,10 @@ namespace Purgers.GameFlow.SafeHouse
             "Phase 2 預設為 Game。")]
         [SerializeField] private string gameplaySceneName = "Game";
 
-        [Tooltip("全員準備後，Host 等待多久才切入關卡。")]
-        [SerializeField, Min(0.1f)] private float countdownDurationSeconds = 3f;
+        [Tooltip("全員準備後的出發倒數，單位秒，最小 0.1，預設 1。期間投票計時暫停；取消準備後恢復原投票剩餘時間。")]
+        [SerializeField, Min(0.1f)] private float countdownDurationSeconds = 1f;
 
-        [Tooltip("Host 開啟投票後，超過這段時間仍未進場就自動取消。")]
+        [Tooltip("未全員準備時的投票時限，單位秒，最小 0.1，預設 7。全員準備立即進入出發倒數，不等待此時限。")]
         [SerializeField, Min(0.1f)] private float readyCheckTimeoutSeconds = 7f;
 
         [Header("除錯資訊")]
@@ -62,6 +62,10 @@ namespace Purgers.GameFlow.SafeHouse
 
         [Networked]
         private TickTimer ReadyCheckTimeout { get; set; }
+
+        // 僅 State Authority 寫入，讓晚加入端也能讀取凍結的投票剩餘時間。
+        [Networked]
+        private int PausedReadyCheckTicks { get; set; }
 
         private readonly List<PlayerRef> connectedPlayers =
             new List<PlayerRef>(12);
@@ -114,11 +118,10 @@ namespace Purgers.GameFlow.SafeHouse
                 : 0f;
 
         public float RemainingReadyCheckSeconds =>
-            IsNetworkReady && ReadyCheckTimeout.IsRunning
-                ? Mathf.Max(
-                    0f,
-                    ReadyCheckTimeout.RemainingTime(Runner) ?? 0f)
-                : 0f;
+            !IsNetworkReady ? 0f :
+            Phase == SafeHousePhase.Countdown
+                ? PausedReadyCheckTicks * Runner.DeltaTime
+                : Mathf.Max(0f, ReadyCheckTimeout.RemainingTime(Runner) ?? 0f);
 
         public bool IsLocalPlayerReady
         {
@@ -148,6 +151,7 @@ namespace Purgers.GameFlow.SafeHouse
             IsBossStage = runtimePlan.IsBossStage;
             StageStartCountdown = TickTimer.None;
             ReadyCheckTimeout = TickTimer.None;
+            PausedReadyCheckTicks = 0;
             ReconcileReadyPlayers();
 
             if (debugFlow)
@@ -172,13 +176,6 @@ namespace Purgers.GameFlow.SafeHouse
                 return;
             }
 
-            if (SafeHouseReadyRules.ShouldCancelExpiredReadyCheck(
-                    Phase,
-                    ReadyCheckTimeout.Expired(Runner)))
-            {
-                CancelReadyCheck("投票逾時");
-                return;
-            }
 
             int connectedCount = connectedPlayers.Count;
             int readyCount = CountConnectedReadyPlayers();
@@ -189,6 +186,15 @@ namespace Purgers.GameFlow.SafeHouse
                     connectedCount,
                     readyCount,
                     StageStartCountdown.Expired(Runner));
+
+            // 全員準備優先於同 Tick 的投票逾時；出發期間不判定投票時限。
+            if (decision != SafeHouseReadyCountdownDecision.Start &&
+                SafeHouseReadyRules.ShouldCancelExpiredReadyCheck(
+                    Phase, ReadyCheckTimeout.Expired(Runner)))
+            {
+                CancelReadyCheck("投票逾時");
+                return;
+            }
 
             switch (decision)
             {
@@ -383,6 +389,7 @@ namespace Purgers.GameFlow.SafeHouse
                 ReadyByPlayer.Set(connectedPlayers[i], false);
 
             StageStartCountdown = TickTimer.None;
+            PausedReadyCheckTicks = 0;
             ReadyCheckTimeout = TickTimer.CreateFromSeconds(
                 Runner,
                 Mathf.Max(0.1f, readyCheckTimeoutSeconds));
@@ -464,6 +471,7 @@ namespace Purgers.GameFlow.SafeHouse
 
             StageStartCountdown = TickTimer.None;
             ReadyCheckTimeout = TickTimer.None;
+            PausedReadyCheckTicks = 0;
             Phase = SafeHousePhase.WaitingForHost;
 
             if (debugFlow)
@@ -475,6 +483,9 @@ namespace Purgers.GameFlow.SafeHouse
             if (!Object.HasStateAuthority || !Runner.IsServer)
                 return;
 
+            // 停止原 TickTimer，保存剩餘 Tick；取消出發時才恢復。
+            PausedReadyCheckTicks = Mathf.Max(0, ReadyCheckTimeout.RemainingTicks(Runner) ?? 0);
+            ReadyCheckTimeout = TickTimer.None;
             Phase = SafeHousePhase.Countdown;
             StageStartCountdown = TickTimer.CreateFromSeconds(
                 Runner,
@@ -495,6 +506,8 @@ namespace Purgers.GameFlow.SafeHouse
                 return;
 
             StageStartCountdown = TickTimer.None;
+            ReadyCheckTimeout = TickTimer.CreateFromTicks(Runner, PausedReadyCheckTicks);
+            PausedReadyCheckTicks = 0;
             Phase = SafeHousePhase.ReadyCheck;
 
             if (debugFlow)
@@ -521,6 +534,7 @@ namespace Purgers.GameFlow.SafeHouse
             Phase = SafeHousePhase.LoadingStage;
             StageStartCountdown = TickTimer.None;
             ReadyCheckTimeout = TickTimer.None;
+            PausedReadyCheckTicks = 0;
 
             // Use the existing lifecycle hook for both directions of travel.
             GameLogic gameLogic = FindObjectOfType<GameLogic>();

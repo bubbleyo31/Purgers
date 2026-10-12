@@ -212,7 +212,7 @@ public sealed class EnemyCombatDecisionController :
 
         if (activeOption != null)
         {
-            if (IsTargetValid(context.Target) == false)
+            if (IsTargetValid(context.Target) == false && !activeOption.ContinueWithoutTarget)
             {
                 CancelActiveOption();
                 return;
@@ -233,6 +233,13 @@ public sealed class EnemyCombatDecisionController :
             return;
         }
 
+        // 近身自爆仍由本仲裁器取得動作鎖，允許尚未進入 Chase 的合法敵人觸發。
+        if (enemyActor.StateController.CanRunBrain && enemyActor.StateController.CurrentBrainState != EnemyBrainState.Dormant && enemyActor.ActionGate.CanAttack)
+        {
+            foreach (var option in options)
+                if (option != null && option.isActiveAndEnabled && option.TryGetEmergencyContext(context, out var emergency))
+                { StartOption(option, emergency); return; }
+        }
         TickStationaryTargetAim(context);
 
         if (CanChooseOption() == false ||

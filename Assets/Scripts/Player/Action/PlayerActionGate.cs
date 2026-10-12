@@ -42,7 +42,7 @@ using UnityEngine;
 /// 全部互相引用。
 /// </summary>
 [DisallowMultipleComponent]
-public class PlayerActionGate : NetworkBehaviour
+public partial class PlayerActionGate : NetworkBehaviour
 {
     // =====================================================================
     #region Networked Block Sources
@@ -123,6 +123,7 @@ public class PlayerActionGate : NetworkBehaviour
         get
         {
             int combined =
+                (IsExplosionGrappleBlocked ? (int)PlayerActionBlockMask.Grapple : 0) |
                 QuickActionBlockMask |
                 StatusEffectBlockMask |
                 DeathBlockMask |
@@ -142,6 +143,7 @@ public class PlayerActionGate : NetworkBehaviour
 
     public override void Spawned()
     {
+        InitializeExplosionStatus();
         /*
          * State Authority 建立正式初始狀態。
          *

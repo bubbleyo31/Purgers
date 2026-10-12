@@ -30,7 +30,8 @@ using UnityEngine;
 /// TankMeleeCombo.AttackSequence
 /// TankMeleeCombo.CurrentStep
 ///
-/// 當 AttackSequence 真正增加時，才播放該段動畫。
+/// 舊秒數模式在 AttackSequence 增加時觸發動畫；幀模式則持續讀取
+/// TankMeleeCombo.TryGetAnimationPosition，呈現前搖、停格、放開跳幀及收招。
 ///
 /// 因此以下情況不會誤播：
 ///
@@ -103,6 +104,52 @@ public class FirstPersonTankViewModelAnimator :
     #endregion
 
     // =====================================================================
+    [Header("三段幀取樣的 Animator State 路徑")]
+    [SerializeField, Tooltip("第一段完整 State 路徑。幀模式直接按 Gameplay 進度取樣；Controller 原 Speed 不會再疊乘。")]
+    private string attack1State = "Tank_Base Layer.attack1";
+    [SerializeField, Tooltip("第二段完整 State 路徑。")]
+    private string attack2State = "Tank_Base Layer.attack2";
+    [SerializeField, Tooltip("第三段完整 State 路徑。")]
+    private string attack3State = "Tank_Base Layer.attack3_001";
+    [SerializeField, Tooltip("完成／取消幀模式攻擊時回到的 State 路徑。F 仍由原本 Quick Action Trigger 接續。")]
+    private string idleState = "Tank_Base Layer.idle";
+    private bool samplingAttack;
+    private float savedAnimatorSpeed = 1f;
+    private bool warnedMissingFrameState;
+
+    private void StopFrameSampling(bool returnToIdle)
+    {
+        if (!samplingAttack || animator == null) return;
+        samplingAttack = false;
+        animator.speed = savedAnimatorSpeed;
+        if (returnToIdle && animator.HasState(0, Animator.StringToHash(idleState)))
+            animator.Play(idleState, 0, 0f);
+    }
+
+    private bool SampleFrameAttack(TankMeleeComboStep step, float normalizedTime)
+    {
+        string state = step == TankMeleeComboStep.Light1 ? attack1State :
+            step == TankMeleeComboStep.Light2 ? attack2State : attack3State;
+        int hash = Animator.StringToHash(state);
+        if (animator == null || !animator.HasState(0, hash))
+        {
+            StopFrameSampling(true);
+            if (!warnedMissingFrameState)
+                Debug.LogError("Tank 幀模式找不到 Animator State：" + state, this);
+            warnedMissingFrameState = true;
+            return false;
+        }
+        if (!samplingAttack)
+        {
+            savedAnimatorSpeed = animator.speed;
+            samplingAttack = true;
+        }
+        animator.speed = 0f;
+        animator.Play(hash, 0, normalizedTime);
+        animator.Update(0f);
+        return true;
+    }
+
     #region Debug
 
     [Header("除錯設定")]
@@ -408,8 +455,18 @@ public class FirstPersonTankViewModelAnimator :
                 out TankMeleeComboStep currentStep
             ) == false)
         {
+            StopFrameSampling(true);
             return;
         }
+
+        if (meleeCombo.TryGetAnimationPosition(out var frameStep, out float normalizedTime))
+        {
+            observedAttackSequence = currentSequence;
+            observationInitialized = true;
+            SampleFrameAttack(frameStep, normalizedTime);
+            return;
+        }
+        StopFrameSampling(true);
 
         // Runtime 剛完成 Spawn 時，先建立安全基準。
         if (observationInitialized == false)
@@ -864,6 +921,8 @@ public class FirstPersonTankViewModelAnimator :
     /// </summary>
     private void ResetAnimatorRuntimeParameters()
     {
+        StopFrameSampling(true);
+        warnedMissingFrameState = false;
         ResetOneShotTriggers();
 
         if (animator != null &&

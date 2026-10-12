@@ -176,7 +176,7 @@ PrefabInstance:
     - target: {fileID: 2251634029581067438, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
       propertyPath: ropeShootTimeAtMaxDistance
-      value: 0
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2251634029581067438, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
@@ -422,9 +422,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8358015731637810199, guid: 9d631177f90b9ba49bc00a53b3478fa2,
         type: 3}
+      propertyPath: hookPrefab
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8358015731637810199, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+        type: 3}
       propertyPath: ropeOrigin
       value: 
       objectReference: {fileID: 5771450098176116008}
+    - target: {fileID: 8358015731637810199, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+        type: 3}
+      propertyPath: waveLength
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8358015731637810199, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+        type: 3}
+      propertyPath: ropeSegments
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 8358015731637810199, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+        type: 3}
+      propertyPath: waveTravelSpeed
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 8358015731637810199, guid: 9d631177f90b9ba49bc00a53b3478fa2,
+        type: 3}
+      propertyPath: secondaryWaveRatio
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

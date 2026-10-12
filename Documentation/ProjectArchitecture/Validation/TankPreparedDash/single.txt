@@ -1,0 +1,21 @@
+PASS Runner starts: Ok
+PASS equip Tank: 
+DIAG origin=(1000.00, 101.10, 1000.00) enemy=(1000.00, 99.50, 1008.00) hp=200
+DIAG collider Prepared dash controlled target bounds=Center: (1000.00, 101.10, 1008.00), Extents: (0.50, 0.50, 0.50)
+DIAG first=Prepared dash controlled target layer=9 point=(1000.00, 101.10, 1007.50)
+PASS authoritative direct aim finds actual enemy hitbox
+PASS local enemy crosshair uses local Runner colliders
+PASS hold has no damage
+PASS dash starts without damage
+PASS dash keeps preparation animation frame
+PASS KCC moves player toward target
+PASS arrival strike damages using original melee resolver
+PASS arrival clears only weapon movement/action lock
+PASS combo window starts after recovery
+PASS tap never dashes
+PASS wall blocks target selection
+PASS wall blocks red crosshair
+PASS occluded preparation releases in place
+PASS dash cannot cross new wall
+PASS interruption cancels pending strike and clears counters
+PASS interruption releases weapon lock

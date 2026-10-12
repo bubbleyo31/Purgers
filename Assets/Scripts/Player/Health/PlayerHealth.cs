@@ -256,6 +256,7 @@ public struct PlayerDamageReceivedInfo
 public class PlayerHealth :
     NetworkBehaviour,
     IDamageReceiver,
+    IBlockedDamageFeedbackReceiver,
     ICombatLifeState
 {
     // =====================================================================
@@ -833,6 +834,18 @@ public class PlayerHealth :
     #endregion
 
     // =====================================================================
+    /// <summary>完全吸收仍通知受傷者；沿用同一 RPC，不扣 HP、不觸發 DamageApplied。</summary>
+    public void NotifyFullyBlockedDamage(DamageRequest request)
+    {
+        if (Object == null || !Object.IsValid || !Object.HasStateAuthority || !IsAlive ||
+            request.BlockedDamage <= 0f || request.RequestedDamage > 0f) return;
+        var snapshot = BuildDamageSourceSnapshot(request);
+        SaveLastDamageSource(request, snapshot);
+        RPC_ReceiveLocalDamage(0f, 0f, request.BlockedDamage, true,
+            (byte)request.DamageType, (byte)request.FeedbackId, request.Attacker, request.SourceNetworkObject,
+            snapshot.HasPosition, snapshot.Position, snapshot.DirectionToSource, request.HitPoint, false, request.Sequence);
+    }
+
     #region Damage Source Snapshot
 
     /// <summary>
@@ -888,6 +901,14 @@ public class PlayerHealth :
         // =============================================================
         // 1. Network Source
         // =============================================================
+
+        if (request.HasSourceWorldPosition)
+        {
+            snapshot.HasPosition = true;
+            snapshot.Position = request.SourceWorldPosition;
+            snapshot.DirectionToSource = CalculateDirectionToSource(playerPosition, snapshot.Position);
+            return snapshot;
+        }
 
         if (request.SourceNetworkObject != null)
         {

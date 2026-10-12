@@ -1,0 +1,31 @@
+PASS Runner starts: Ok
+PASS Runner starts: Ok
+PASS equip Tank: 
+DIAG origin=(1000.00, 101.10, 1000.00) enemy=(1000.00, 99.50, 1008.00) hp=200
+DIAG collider Prepared dash controlled target bounds=Center: (1000.00, 101.10, 1008.00), Extents: (0.50, 0.50, 0.50)
+DIAG first=Prepared dash controlled target layer=9 point=(1000.00, 101.10, 1007.50)
+PASS authoritative direct aim finds controlled enemy collider
+PASS local enemy crosshair uses local Runner colliders
+PASS hold has no damage
+PASS dash starts without damage
+PASS dash duration derives from 9 source frames at 30 FPS
+PASS animation advances before damage frame without early strike
+PASS client input, Host authority
+PASS KCC moves player toward target
+PASS strike respects animation deadline within polling/tick tolerance
+PASS arrives at stop distance by damage frame
+PASS arrival strike damages using original melee resolver
+PASS arrival clears only weapon movement/action lock
+PASS combo window starts after recovery
+PASS tap never dashes
+PASS wall blocks target selection
+PASS occluded preparation releases in place
+PASS dash cannot cross new wall
+PASS off-axis target is outside direct ray
+PASS zero tolerance retains direct-only selection
+PASS 10 degree cone selects visible off-axis enemy
+PASS cone selection dashes toward actual target direction
+PASS interruption cancels pending strike and clears counters
+PASS interruption releases weapon lock
+PASS Runner starts: Ok
+PASS rejoin receives cleared state without replaying strike

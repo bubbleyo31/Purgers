@@ -1,0 +1,40 @@
+{
+  "editor": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"compiling\":false,\"compileFailed\":false,\"playing\":false,\"scenes\":[\"Assets/Scenes/_Menu.unity dirty=False\"]},\"compiler\":\"codedom\"}}"
+      }
+    ],
+    "structuredContent": {
+      "success": true,
+      "message": "Code executed successfully.",
+      "data": {
+        "result": {
+          "compiling": false,
+          "compileFailed": false,
+          "playing": false,
+          "scenes": [
+            "Assets/Scenes/_Menu.unity dirty=False"
+          ]
+        },
+        "compiler": "codedom"
+      }
+    },
+    "isError": false
+  },
+  "console": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Retrieved 0 log entries.\",\"data\":[]}"
+      }
+    ],
+    "structuredContent": {
+      "success": true,
+      "message": "Retrieved 0 log entries.",
+      "data": []
+    },
+    "isError": false
+  }
+}

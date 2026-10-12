@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47fa2b73cb9b01143b947498184187ee, type: 3}
+  m_Name: ED_Suicide
+  m_EditorClassIdentifier: 
+  enemyId: suicide
+  displayName: "\u81EA\u7206\u64B2\u64CA\u602A"
+  designDescription: "\u5730\u9762\u5927\u91CF\u578B\uFF1B\u4E00\u64CA\u5F15\u7206\uFF0F\u6709\u9650\u4FEE\u6B63\u64B2\u64CA\u3002Inspector
+    \u6578\u503C\u70BA\u53EF\u8ABF\u539F\u578B\u8D77\u59CB\u503C\u3002"
+  combatFamily: 0
+  variant: 2
+  locomotionKind: 0
+  chaseKind: 0
+  baseKillExperience: 1

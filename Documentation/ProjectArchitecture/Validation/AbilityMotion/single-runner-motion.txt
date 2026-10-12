@@ -1,0 +1,37 @@
+2026-10-08T14:49:37.5943345Z 通過; controlled Single Runner, not independent multiplayer
+PASS Single Runner starts
+PASS equip Shield 
+RECOIL air=False landing=False moving=False distance=1.999878 grounded=True
+PASS equip Shield 
+RECOIL air=True landing=False moving=False distance=2 grounded=False
+PASS equip Blink 
+BLINK air=False distance=8 residual=0
+PASS equip Blink 
+BLINK air=True distance=8 residual=0
+MEASURE recoil ground=1.999878 air=2 expected=2
+MEASURE blink ground=8 air=8 expected=8
+PASS Recoil has two metres on ground and in air
+PASS Recoil ground and air agree
+PASS Blink has eight metres without overshoot
+PASS Blink ground and air agree
+PASS equip Shield 
+RECOIL air=True landing=True moving=False distance=1.999756 grounded=True
+PASS Recoil preserves distance while landing
+PASS equip Shield 
+RECOIL air=False landing=False moving=True distance=1.999878 grounded=True
+PASS Existing sideways velocity is preserved
+PASS Ground recoil preserves distance with existing sideways velocity
+PASS equip Shield 
+RECOIL air=True landing=False moving=True distance=2 grounded=False
+PASS Existing sideways velocity is preserved
+PASS Air recoil preserves distance with existing sideways velocity
+PASS equip Shield 
+RECOIL air=False landing=False moving=False distance=1.050049 grounded=True
+PASS Recoil stops before wall
+PASS Blocked recoil does not replay after wall disappears
+PASS equip Blink 
+BLINK air=False distance=3.049805 residual=0
+PASS Blink still stops before wall
+PASS equip Shield 
+UPWARD peak=0.7006836
+PASS Upward recoil leaves ground without ground-snap cancellation

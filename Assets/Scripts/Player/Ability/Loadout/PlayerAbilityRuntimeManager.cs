@@ -383,6 +383,17 @@ public string[] GetEquippedAbilityIds()
     }
 
 
+    /// <summary>由既有 PlayerMovement 在 KCC 固定 PrepareData 合併已裝備能力的額外位移。</summary>
+    public Vector3 ConsumeMovementRecoil(float deltaTime)
+    {
+        if (Object == null || !Object.IsValid || !Object.HasStateAuthority) return Vector3.zero;
+        RefreshOrderedRuntimeCache();
+        Vector3 delta = Vector3.zero;
+        for (int i = 0; i < orderedRuntimeCache.Count; ++i)
+            if (orderedRuntimeCache[i] != null) delta += orderedRuntimeCache[i].ConsumeMovementRecoil(deltaTime);
+        return delta;
+    }
+
     public float GetMovementInputMultiplier(
         NetInput input
     )

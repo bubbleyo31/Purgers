@@ -1,0 +1,19 @@
+PASS Single Runner 啟動
+PASS 存在存活玩家，避免全滅規則立即結束關卡
+PASS StageFlow 已 Spawn
+PASS 新關卡啟用有限倒數
+PASS 受理 Host 暫停
+DIAG ready=True authority=True server=True simulated=True tick=90 phase=Active lock=False pending=False
+PASS 跨過原始到期點仍保持 Active
+PASS 剩餘秒數精確凍結
+PASS Fusion Tick、Unity 時間持續且 timeScale 不變
+PASS 撤離倒數持續
+PASS 受理恢復
+PASS 恢復沿用剩餘時間，不補扣暫停期間
+PASS 恢復後正常扣時
+PASS 可再次暫停
+PASS 新關卡清除暫停
+PASS 載入期間拒收
+PASS 不限時拒收
+PASS 到期當 Tick 不可暫停救回
+PASS 已結束拒收

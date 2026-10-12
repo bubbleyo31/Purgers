@@ -6,6 +6,7 @@ using UnityEngine;
 using Purgers.GameFlow.Control;
 using Purgers.GameFlow.Transition;
 using Purgers.Progression;
+using Purgers.GameFlow.Stage;
 
 /// <summary>
 /// Photon Fusion 玩家輸入管理器。
@@ -59,6 +60,10 @@ public class InputManager :
     [SerializeField] private KeyCode grappleFocusKey = KeyCode.E;
     [SerializeField] private KeyCode reloadKey = KeyCode.R;
     [SerializeField] private KeyCode rewardHoldKey = KeyCode.LeftAlt;
+
+    [Header("Play Mode 開發者按鍵")]
+    [Tooltip("Editor Host 暫停／恢復目前關卡限制時間的按鍵，預設 F7；None 停用。只在 Play Mode 生效，Client 與所有 Build 不受理；不影響遊戲速度、技能或撤離倒數。")]
+    [SerializeField] private KeyCode developmentStageTimerPauseKey = KeyCode.F7;
 
     public KeyCode GrappleKey => grappleKey;
     public KeyCode GrappleFocusKey => grappleFocusKey;
@@ -209,6 +214,9 @@ public class InputManager :
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
         RefreshDebugLevelUp();
+#endif
+#if UNITY_EDITOR
+        RefreshDevelopmentStageTimerPause();
 #endif
 
         // -------------------------------------------------------------
@@ -553,6 +561,25 @@ public class InputManager :
         else
             logic.RPC_RequestRewardChoice(draft.DraftRevision, choiceIndex);
     }
+
+#if UNITY_EDITOR
+    /// <summary>沿用本機輸入 owner，只將按鍵意圖交給同一 Runner 的關卡權威。</summary>
+    private void RefreshDevelopmentStageTimerPause()
+    {
+        if (developmentStageTimerPauseKey == KeyCode.None ||
+            !Input.GetKeyDown(developmentStageTimerPauseKey) ||
+            !Application.isPlaying || !DevelopmentToolsPolicy.IsEnabled ||
+            rewardRunner == null || !rewardRunner.IsRunning || !rewardRunner.IsServer ||
+            !rewardRunner.LocalPlayer.IsRealPlayer)
+            return;
+
+        foreach (StageFlowController stage in FindObjectsOfType<StageFlowController>())
+        {
+            if (stage.Runner == rewardRunner && stage.RequestDevelopmentTimerToggle())
+                break;
+        }
+    }
+#endif
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
     private void RefreshDebugLevelUp()

@@ -44,12 +44,35 @@ public sealed class GrappleEnergyRulesTests
 
     [TestCase(50f, true, 49f)]
     [TestCase(1f, true, 0f)]
-    [TestCase(0.5f, false, 0.5f)]
+    [TestCase(0.5f, true, 0f)]
+    [TestCase(0.0001f, true, 0f)]
     [TestCase(0f, false, 0f)]
-    public void LaunchRequiresFullPayment(float energy, bool accepted, float expected)
+    public void PositiveEnergyAllowsOneFinalLaunch(float energy, bool accepted, float expected)
     {
+        Assert.That(GrappleEnergyRules.CanLaunch(energy, 1f), Is.EqualTo(accepted));
         Assert.That(GrappleEnergyRules.TryConsumeLaunch(energy, 1f, out float remaining), Is.EqualTo(accepted));
         Assert.That(remaining, Is.EqualTo(expected));
+    }
+
+    [TestCase(0.5f, 1f)]
+    [TestCase(1f, 5f)]
+    public void FinalLaunchDrainsRemainderAndRejectsNextLaunch(float energy, float cost)
+    {
+        Assert.That(GrappleEnergyRules.TryConsumeLaunch(energy, cost, out float remaining), Is.True);
+        Assert.That(remaining, Is.Zero);
+        Assert.That(GrappleEnergyRules.CanLaunch(remaining, cost), Is.False);
+        Assert.That(GrappleEnergyRules.TryConsumeLaunch(remaining, cost, out float afterRetry), Is.False);
+        Assert.That(afterRetry, Is.Zero);
+    }
+
+    [TestCase(0f)]
+    [TestCase(-1f)]
+    public void FreeLaunchStillRequiresPositiveEnergy(float cost)
+    {
+        Assert.That(GrappleEnergyRules.TryConsumeLaunch(0.5f, cost, out float remaining), Is.True);
+        Assert.That(remaining, Is.EqualTo(0.5f));
+        Assert.That(GrappleEnergyRules.TryConsumeLaunch(0f, cost, out remaining), Is.False);
+        Assert.That(remaining, Is.Zero);
     }
 
     [Test]

@@ -1,0 +1,19 @@
+PASS Host StartGame Ok
+PASS host equip 
+PASS Client StartGame Ok
+PASS client has no State Authority
+PASS host geometry overrides client prefab defaults
+PASS late join continues near host progress
+PASS host captures full aim rotation
+PASS late join receives complete aim and resolved offset snapshot
+PASS client direct call cannot activate or advance sequence
+PASS each Runner owns one local visual
+PASS client mesh tilts with authoritative aim
+PASS ongoing wave progress replicates
+PASS cancellation replicated without old wave replay
+PASS Client StartGame Ok
+PASS reconnect after completion does not replay expired wave
+PASS remote equip 
+PASS remote player is Input Authority only
+PASS client input traverses existing authority path once
+PASS runtime despawn replicates

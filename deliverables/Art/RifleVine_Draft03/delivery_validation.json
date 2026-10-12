@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "archive": "RifleVine_Concept02_Animated_Package.zip",
+  "file_count": 113,
+  "zip_bytes": 198530885,
+  "bad_zip_member": null,
+  "missing_links": [],
+  "fbx_sha256": "bff3907e69d62da32512f72af8120c82b4e4ae8d897031264d8073021a60ba7a",
+  "blend_sha256": "7e06a57a4404b0a3ac666a6fa48c51bbddf9396a4d0c4a127d9039f0b68953ce",
+  "video_bytes": 410656,
+  "scope": "ZIP integrity, local links and FBX hash. Unity import remains unverified."
+}

@@ -1,0 +1,21 @@
+PASS Host StartGame Ok
+PASS host equip 
+PASS Client StartGame Ok
+PASS client has no State Authority
+PASS host geometry overrides client prefab defaults
+PASS late join continues near host progress
+PASS host captures full aim rotation
+PASS late join receives complete aim and resolved offset snapshot
+PASS client direct call cannot activate or advance sequence
+PASS each Runner owns one local visual
+PASS client mesh tilts with authoritative aim
+PASS ongoing wave progress replicates
+PASS cancellation replicated without old wave replay
+PASS Client StartGame Ok
+PASS reconnect after completion does not replay expired wave
+PASS remote equip 
+PASS remote player is Input Authority only
+DIAG sequence=20 phase=Ready usable=True position=(1020.00, 99.50, 1000.00) anchor=(1020.00, 100.40, 1000.00) KCC layers=1 overlaps=KCCCollider layer=0 owner=True,KCC_Player(Clone) layer=6 owner=True
+FAIL client E reaches authority: System.TimeoutException: client E reaches authority
+  at ShockwaveNetworkVerification.Until (System.Func`1[TResult] condition, System.String label) [0x00035] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\ShockwaveNetworkVerification.cs:165 
+  at ShockwaveNetworkVerification.Begin () [0x01216] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\ShockwaveNetworkVerification.cs:112 

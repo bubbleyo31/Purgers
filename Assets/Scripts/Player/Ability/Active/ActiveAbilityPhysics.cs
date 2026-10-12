@@ -56,6 +56,10 @@ public static class ActiveAbilityPhysics
         collider != null && owner != null &&
         (collider.transform == owner.transform || collider.transform.IsChildOf(owner.transform));
 
+    /// <summary>依角色／生命元件辨識玩家子碰撞器，不假設所有子物件都使用 Player Layer。</summary>
+    public static bool IsPlayerCollider(Collider collider) => collider != null &&
+        (collider.GetComponentInParent<Player>() != null || collider.GetComponentInParent<PlayerHealth>() != null);
+
     public static MonoBehaviour ResolveReceiver(GameObject hitObject)
     {
         if (hitObject == null) return null;
@@ -76,7 +80,9 @@ public static class ActiveAbilityPhysics
             Attacker = owner.Object.InputAuthority, SourceNetworkObject = owner.Object, SourceObject = owner.gameObject,
             HitObject = target, HitPoint = point, HitNormal = normal,
             HitDirection = direction.sqrMagnitude > 0.00001f ? direction.normalized : Vector3.zero,
-            Distance = distance, Sequence = sequence
+            Distance = distance, Sequence = sequence,
+            HasSourceWorldPosition = type == DamageType.Explosion,
+            SourceWorldPosition = point - direction.normalized * distance
         };
         DamageReceiverUtility.TryApplyDamage(target, request, out var result);
         if (result.Accepted && result.HasEffectiveDamage)
@@ -87,6 +93,47 @@ public static class ActiveAbilityPhysics
     public static Vector3 ShotOrigin(Player owner, float height) =>
         (owner.Movement != null && owner.Movement.KCC != null
             ? owner.Movement.KCC.Data.TargetPosition : owner.transform.position) + Vector3.up * height;
+
+    /// <summary>從目前膠囊中心移到設定發射點；蹲姿遇低矮障礙時截到近側，不改正常高度。</summary>
+    public static bool TryGetShotOrigin(Player owner, float height, float radius, LayerMask mask, out Vector3 origin, bool ignorePlayers = false)
+    {
+        origin = ShotOrigin(owner, height);
+        var kcc = owner.Movement != null ? owner.Movement.KCC : null;
+        Vector3 anchor = kcc != null
+            ? kcc.Data.TargetPosition + Vector3.up * (kcc.Settings.Height * 0.5f)
+            : owner.transform.position;
+        return TryResolveShotOrigin(owner.Runner.GetPhysicsScene(), anchor, origin, radius, mask, owner.Object, out origin, ignorePlayers);
+    }
+
+    /// <summary>純幾何起點解析，僅使用指定 PhysicsScene；安全起點已嵌入障礙時拒絕發射。</summary>
+    public static bool TryResolveShotOrigin(PhysicsScene scene, Vector3 anchor, Vector3 desired,
+        float radius, LayerMask mask, NetworkObject owner, out Vector3 origin, bool ignorePlayers = false)
+    {
+        origin = anchor;
+        if (!scene.IsValid()) return false;
+        const float skin = 0.002f;
+        radius = Mathf.Max(0f, radius);
+        Collider[] overlaps = new Collider[4];
+        int overlapping = OverlapSphere(scene, anchor, Mathf.Max(skin, radius), mask, ref overlaps);
+        for (int i = 0; i < overlapping; i++)
+        {
+            var collider = overlaps[i];
+            if (collider == null || BelongsTo(collider, owner) || (ignorePlayers && IsPlayerCollider(collider))) continue;
+            if ((collider.ClosestPoint(anchor) - anchor).sqrMagnitude <= radius * radius + 0.0000001f)
+                return false;
+        }
+        Vector3 delta = desired - anchor;
+        RaycastHit[] hits = new RaycastHit[4];
+        int count = SphereCastSorted(scene, anchor, delta, delta.magnitude, radius, mask, owner, ref hits);
+        origin = desired;
+        for (int i = 0; i < count; i++)
+        {
+            if (ignorePlayers && IsPlayerCollider(hits[i].collider)) continue;
+            origin = anchor + delta.normalized * Mathf.Max(0f, hits[i].distance - skin);
+            break;
+        }
+        return true;
+    }
 
     /// <summary>爆炸只由世界實體遮擋；其他傷害接收者不充當牆壁。</summary>
     public static bool IsWorldOccluded(PhysicsScene scene, Vector3 origin, Vector3 destination,

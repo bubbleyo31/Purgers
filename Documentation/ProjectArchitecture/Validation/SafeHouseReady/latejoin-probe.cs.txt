@@ -1,0 +1,56 @@
+
+if (!UnityEngine.Application.isPlaying || Fusion.NetworkRunner.Instances.Any(r => r.IsRunning)) throw new System.Exception("Need idle Play Mode");
+System.Action run = async () => {
+var report = new System.Collections.Generic.List<string>();
+Fusion.NetworkRunner host = null, client = null;
+System.Action<bool,string> check = (ok,label) => { if (!ok) throw new System.Exception(label); report.Add("PASS " + label); };
+System.Func<System.Func<bool>,string,System.Threading.Tasks.Task> until = async (pred,label) => { var end = UnityEngine.Time.realtimeSinceStartup + 35f; while(!pred()) { if(UnityEngine.Time.realtimeSinceStartup>end) throw new System.TimeoutException(label); await System.Threading.Tasks.Task.Delay(20); } };
+var flags = System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic;
+string session="safehouse-ready-"+System.Guid.NewGuid().ToString("N");
+try {
+System.Func<bool,System.Threading.Tasks.Task<Fusion.NetworkRunner>> connect = async server => {
+var runner = new UnityEngine.GameObject(server ? "Ready Verification Host" : "Ready Verification Client").AddComponent<Fusion.NetworkRunner>();
+var config=Fusion.NetworkProjectConfig.Deserialize(Fusion.NetworkProjectConfig.Serialize(Fusion.NetworkProjectConfig.Global));
+config.PeerMode=Fusion.NetworkProjectConfig.PeerModes.Multiple;
+foreach(var e in Fusion.NetworkProjectConfig.Global.PrefabTable.GetEntries()) config.PrefabTable.AddSource(e.Item2);
+var manager=runner.gameObject.AddComponent<Fusion.NetworkSceneManagerDefault>(); manager.IsSceneTakeOverEnabled=false;
+var settings=new Fusion.Photon.Realtime.FusionAppSettings(); Fusion.Photon.Realtime.PhotonAppSettings.Global.AppSettings.CopyTo(settings);settings.FixedRegion="asia";
+var scene=new Fusion.NetworkSceneInfo();scene.AddSceneRef(Fusion.SceneRef.FromIndex(1),UnityEngine.SceneManagement.LoadSceneMode.Additive);
+var start=await runner.StartGame(new Fusion.StartGameArgs { GameMode=server?Fusion.GameMode.Host:Fusion.GameMode.Client, Config=config, SceneManager=manager, Scene=server?(Fusion.NetworkSceneInfo?)scene:null, SessionName=session, CustomPhotonAppSettings=settings, IsVisible=false, PlayerCount=3 });
+check(start.Ok,"Connected "+(server?"Host":"Client")+" "+start.ShutdownReason);
+return runner;
+};
+host=await connect(true);
+System.Func<Fusion.NetworkRunner,Purgers.GameFlow.SafeHouse.SafeHouseFlowController> flow = r => UnityEngine.Object.FindObjectsOfType<Purgers.GameFlow.SafeHouse.SafeHouseFlowController>().FirstOrDefault(f=>f.Runner==r && f.IsNetworkReady);
+
+await until(()=>flow(host)!=null&&flow(host).ConnectedPlayerCount==1&&!host.IsSceneManagerBusy,"Host SafeHouse");
+var h=flow(host);
+var driver=host.gameObject.AddComponent<StageTimerPauseVerificationDriver>();host.AddGlobal(driver);
+// 測試副本延長出發時間，確保網路握手在 Countdown 期間完成，不保存場景。
+h.GetType().GetField("countdownDurationSeconds",flags).SetValue(h,120f);
+System.Action<string,object> set=(n,v)=>h.GetType().GetProperty(n,flags).SetValue(h,v,null);
+await driver.AtTick(()=>{set("Phase",Purgers.GameFlow.SafeHouse.SafeHousePhase.ReadyCheck);set("ReadyCheckTimeout",Fusion.TickTimer.CreateFromSeconds(host,120));h.RequestToggleLocalReady();});
+await until(()=>h.Phase==Purgers.GameFlow.SafeHouse.SafeHousePhase.Countdown,"Host initial countdown");
+float frozen=h.RemainingReadyCheckSeconds;
+report.Add("Before connect: "+h.Phase+" players="+h.ConnectedPlayerCount+" ready="+h.ReadyPlayerCount+" vote="+h.RemainingReadyCheckSeconds+" departure="+h.RemainingCountdownSeconds); client=await connect(false); report.Add("After connect: "+h.Phase+" players="+h.ConnectedPlayerCount+" ready="+h.ReadyPlayerCount+" vote="+h.RemainingReadyCheckSeconds+" departure="+h.RemainingCountdownSeconds);
+await until(()=>flow(client)!=null&&h.ConnectedPlayerCount==2&&h.Phase==Purgers.GameFlow.SafeHouse.SafeHousePhase.ReadyCheck,"Late join cancels countdown");
+var c=flow(client);
+await until(()=>c.Phase==h.Phase,"Late join snapshot");
+check(!c.IsLocalPlayerReady&&h.ReadyPlayerCount==1,"Late join is unready and retains Host ready state");
+check(h.RemainingReadyCheckSeconds>0&&h.RemainingReadyCheckSeconds<=frozen,"Late join resumes saved vote budget");
+c.RequestToggleLocalReady();await until(()=>h.Phase==Purgers.GameFlow.SafeHouse.SafeHousePhase.Countdown,"Both ready");
+await client.Shutdown();client=null;
+await until(()=>h.ConnectedPlayerCount==1,"Client disconnect");
+check(h.Phase==Purgers.GameFlow.SafeHouse.SafeHousePhase.Countdown,"Disconnect removes player without cancelling remaining ready team");
+client=await connect(false);
+await until(()=>flow(client)!=null&&h.ConnectedPlayerCount==2&&h.Phase==Purgers.GameFlow.SafeHouse.SafeHousePhase.ReadyCheck,"Reconnect cancels countdown");
+c=flow(client);await until(()=>c.Phase==h.Phase,"Reconnect snapshot");
+check(!c.IsLocalPlayerReady&&h.ReadyPlayerCount==1,"Reconnect starts unready and cancels departure");
+c.RequestCancelLocalReadyCheck();
+await until(()=>h.Phase==Purgers.GameFlow.SafeHouse.SafeHousePhase.WaitingForHost&&c.Phase==h.Phase,"Client ESC RPC");
+check(h.ReadyPlayerCount==0&&h.RemainingReadyCheckSeconds==0&&h.RemainingCountdownSeconds==0,"Client cancels entire vote and clears timers");
+report.Add("RESULT PASS");
+} catch(System.Exception e) {report.Add("FAIL "+e);UnityEngine.Debug.LogError(e);}
+finally {if(client!=null)await client.Shutdown();if(host!=null)await host.Shutdown();System.IO.Directory.CreateDirectory("Temp/SafeHouseReadyVerification");System.IO.File.WriteAllLines("Temp/SafeHouseReadyVerification/latejoin.txt",report);}
+};
+run();return "Verification started";

@@ -141,7 +141,8 @@ State Authority 收到已解析的 Loadout Definition
 - Definition 預設不限制職業，因此 Attack、Tank、Support 都可裝備使用。
 - `SupportSMG` 是可選連動；Runtime Root 沒有 SMG 仍可運作空中能力。
 - `BeginAbility()` 只啟動 Active Timer，不啟動冷卻。
-- E 放開、落地、離開 GrappleAirborne、職業規則變成不允許或持續時間結束，都集中呼叫 `EndAbility()`。
+- 按下 E 啟動，放開後繼續，再次按下 E 提前結束；長按不重複觸發，提前按住再進入合法狀態／冷卻結束不自動啟動。
+- 再次按下 E、操作封鎖、落地、離開 GrappleAirborne、職業規則變成不允許或持續時間結束，都集中呼叫 `EndAbility()`。
 - 完整 Cooldown Timer 只在 `EndAbility()` 建立，因此能力啟用期間不會先偷扣冷卻。
 
 Tank Air Dash 在 GrappleAirborne 收到 E 的新按下沿用既有 State Authority 判定；右鍵保留瞄準。PlayerAbilityRuntimeManager.GetEquippedRuntimeAtSlot 僅供本機 HUD 讀取已同步能力 Runtime，不參與權威裝備決策。
@@ -210,3 +211,54 @@ Tools → Player Ability → 建立初始能力 Runtime 與 Loadout
 核對來源：PlayerActiveAbilityBase、PlayerBlinkAbility、PlayerAbilityExtensionContracts、ActiveAbilityHudRules。
 
 新 E Runtime 在進入 Casting、Armed、Active 時同步 PhaseDurationSeconds，供 HUD 依原階段長度計算剩餘比例。TimedHudState 是只讀契約，不計冷卻、不發動技能、不啟用強化。既有 Loadout 分類、互斥與老空中技能維持原樣。
+
+## 2026-10-05 E 技能整合穩定化（局部核對）
+
+PlayerAbilityRuntime 在 Spawned 開啟本機生命週期旗標，尚未 Spawn／失效時 OwnerPlayer 回傳 null。若 Owner 引用稍晚才可解析，各端 Render 會重試尚未完成的 Bind，成功後更新職業可用性；遠端 Proxy 不依賴輸入或 HUD 查詢，不重複綁定已完成的模組。權威施放仍由 Host 決定。換 Q 重建整份 Loadout 導致 E 重置，以及投出物在 Owner 消失後的存留規則，保留為待決玩法。
+
+核對來源：本節列出的程式與本輪驗證；詳見 [驗證與待決事項](Validation/ActiveAbilityStabilization/README.md)。
+
+## 2026-10-07 前搖施放契約（局部核對）
+
+最後核對日期：2026-10-07。核對來源：PlayerActiveAbilityBase、PlayerProjectileAbility、PlayerPiercingCannonAbility。按鍵受理僅進入 Casting；正式發射必須在 Activate 到期入口讀當前 Owner KCC 位置／準星，未來投擲與飛行物同樣遵守。既有三項前搖技能已符合此取樣時間，本輪補驗證。未新增 Loadout、RPC 或 Networked 欄位。榴彈碰撞與自傷／友傷配置見 [42](42_E主動技能規格與強化預留.md)，證據見 [驗證紀錄](Validation/AbilityReleaseSafety/README.md)。
+
+
+## 2026-10-08 衝擊扇波尺寸與位移分離（局部核對）
+
+核對來源：PlayerShockwaveAbility、ShockwavePropagationRules、PlayerShockwaveVisual。既有跨職業 Runtime／NetInput／仲裁管線不變；Host 新增半徑與高度快照、距離改為整片位移上限，Client 只讀呈現。使用者確認固定弧形波牆、上下同寬，並進一步確認前搖結束依瞄準角度整片傾斜、以瞄準座標 XYZ 偏移配置發射點；新增 WaveRotation 同步，空中不吸附地面。設定與驗證見 [44](44_衝擊扇波推進與特效.md)。
+
+
+## 2026-10-08 E 技能後座力（局部核對）
+
+PlayerAbilityRuntime 新增序列化 Recoil 設定及 ApplyAbilityRecoil 入口，只接受 GrappleFocus、有效 Spawned／Owner／State Authority 與存活玩家。資料隨各技能 Runtime Prefab 配置，不保存到玩家存檔；不需新增元件或變更 Loadout 配置。V2 在 Runtime 新增八個 Networked 欄位：PendingCameraPitch／Yaw、CameraApplicationRemaining、AccumulatedCameraPitch、CameraRecoveryTimer、CameraRecoilSequence、LastCameraApplicationTick、LastCameraRecoveryTick；State Authority 每 Tick 推進，Proxy 沿用 KCC 結果，不補播事件。十項新 E 與兩項舊空中 E 已接成功事件；未使用的舊 AttackFocusAbility 不屬於這十二項獨立 E。詳見 [45](45_E技能後座力配置.md)。
+
+
+### 2026-10-08 V3 後座力施放事件
+
+後座力的準備與真正施放分離：閃現第一次 E 發 BeforeCast、第二次 E 成功衝刺發 AfterCast；一般新 E 的 Activate 與二次觸發 OnArmedPress 明確回傳成功，失敗不發 AfterCast。舊空中技能仍合併一次；閃現移動後座力不擴充。欄位值與資產不改，詳見 [45](45_E技能後座力配置.md)。
+
+
+### 2026-10-08 V4：有限時間移動後座力
+
+Runtime 新增 Networked RemainingMovementRecoil、MovementRecoilSeconds、LastMovementRecoilTick、MovementRecoilLifetime。成功事件排入新曲線面積，重觸發合併剩餘距離並重設時間；ConsumeMovementRecoil 僅由權威每 KCC 固定 Tick 消耗一次，Proxy 不重播。失效期限以向上取整的 Tick 加派發餘裕計算，防止正常末段被截短，也防止 KCC 長時間未執行後補發。死亡清除，卸下 Runtime 直接丟棄狀態。
+
+舊 Timing／Speed／Direction 欄位保持，新增 Movement Decay Duration 初始 0.2 秒；無資產遷移或保存。PlayerAbilityRuntimeManager 增加彙總入口，既有仲裁與排序不變。詳見 [45](45_E技能後座力配置.md)。
+
+## 2026-10-10 武器獎勵與換裝（局部核對）
+
+最後核對日期：2026-10-10。核對來源：GameLogic、PlayerProfessionRuntimeManager、PlayerAbilityQualification。
+
+武器獎勵沿用 Profession Runtime，不呼叫能力 Loadout 替換，因此換武器保留 Q／E 的實例、作用狀態與冷卻。精準鎖敵仍按實際遠程武器資格終止／封鎖。這不改變既有領取另一個 Q／E 會替換能力 Loadout 的邊界。
+
+正式規則與 Inspector 入口見 [46 武器獎勵與換裝](46_武器獎勵與換裝.md)，證據見 [驗證紀錄](Validation/WeaponRewards/README.md)。
+
+
+## 2026-10-11 空中緩速改為按下切換（局部核對）
+
+最後核對日期：2026-10-11。核對來源：SupportAerialAbility、PlayerActiveAbilityBase、PlayerBulletTimeAbility 與兩項 Runtime Prefab（唯讀）。
+
+使用者確認保留 GrappleAirborne 且未落地的啟動條件，改為 E 按下啟動、放開維持、再次按下提前結束。落地、離開 GrappleAirborne、職業不允許、操作封鎖與期限結束仍走 EndAbility，返還保存的原始 DynamicVelocity 並開始完整冷卻；WASD 與後座力位移倍率隨 Active 解除。正式 Loadout 使用原始按鍵歷史，因此預先按住、長按到冷卻結束與解除封鎖都不會自動啟動。
+
+子彈時間作用中再次按下沿原 FinishAbility 提前結算，完整結束規則見 [42](42_E主動技能規格與強化預留.md)。資產不改：SupportAerialAbilityRuntime Prefab 最長 1 秒、CD 5 秒、速度倍率 0.5；BulletTime Prefab 作用 5 秒、CD 3 秒、前搖 0 秒（2026-10-11 磁碟快照；Scene Override 另計）。
+
+驗證與限制：[本輪紀錄](Validation/AbilityToggle/README.md)。

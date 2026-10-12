@@ -139,6 +139,12 @@ public struct CombatHitFeedbackData
     /// </summary>
     public Vector3 HitPoint;
 
+    /// <summary>權威端目標／來源的不透明識別，僅短時間合併用；不可在 Client 當成 InstanceID 查找物件。</summary>
+    public int TargetKey;
+    public int SourceKey;
+    /// <summary>正式敵人 Receiver；避免隊友／自己受到的傷害進入敵人跳字。</summary>
+    public bool IsEnemyTarget;
+
     #endregion
 
     // =====================================================================
@@ -822,7 +828,7 @@ public class PlayerCombatFeedbackRelay :
         // 只接受正式傷害
         // =============================================================
 
-        if (result.Accepted == false)
+        if (result.Accepted == false || result.Deferred)
         {
             return;
         }
@@ -876,7 +882,10 @@ public class PlayerCombatFeedbackRelay :
             * 5. Hit Information
             */
             request.HitPoint,
-            request.Sequence
+            request.Sequence,
+            result.TargetObject != null ? result.TargetObject.GetInstanceID() : 0,
+            request.SourceObject != null ? request.SourceObject.GetInstanceID() : 0,
+            result.TargetObject != null && result.TargetObject.GetComponentInParent<TestDamageReceiver>() != null
         );
     }
 
@@ -971,7 +980,10 @@ public class PlayerCombatFeedbackRelay :
         /*
         * 攻擊 Sequence。
         */
-        int sequence
+        int sequence,
+        int targetKey,
+        int sourceKey,
+        bool isEnemyTarget
     )
     {
         // =============================================================
@@ -1033,7 +1045,10 @@ public class PlayerCombatFeedbackRelay :
                     hitPoint,
 
                 Sequence =
-                    sequence
+                    sequence,
+                TargetKey = targetKey,
+                SourceKey = sourceKey,
+                IsEnemyTarget = isEnemyTarget
             };
 
         // =============================================================

@@ -1,0 +1,18 @@
+PASS Runner starts: Ok
+PASS equip Tank: 
+PASS hold beyond combo timeout causes no damage or shake
+PASS both timers advance from distinct origins
+PASS local Tank ViewModel is bound
+DIAG sample=True step=Light1 time=0.2 sampled=True hasState=True fps=6435
+PASS Animator freezes exactly at configured preparation frame: speed=0 normalized=0.2 state=698723080 desired=698723080 driver=True active=True
+PASS RMB neither cancels nor guards
+PASS release damages enemy through authoritative resolver
+PASS one shake event at actual release swing
+PASS completion starts combo window for atk2
+PASS Animator speed restored after complete attack
+PASS preparation permits normal movement
+PASS long atk2 hold preserves atk3 and whiff shakes
+PASS third stage supports hold and wraps to atk1
+FAIL tap start: System.InvalidOperationException: early release preserves original windup
+  at TankPreparationRuntimeVerification.Check (System.Boolean value, System.String message) [0x0001f] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\TankPreparationRuntimeVerification.cs:27 
+  at TankPreparationRuntimeVerification.Begin (System.Boolean multiplayer) [0x0127b] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\TankPreparationRuntimeVerification.cs:98 

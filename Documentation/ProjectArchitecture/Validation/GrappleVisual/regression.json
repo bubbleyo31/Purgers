@@ -1,0 +1,4228 @@
+{
+  "Summary": {
+    "Total": 468,
+    "Passed": 467,
+    "Failed": 1,
+    "Skipped": 0,
+    "DurationSeconds": 9.2655221,
+    "ResultState": "Failed(Child)"
+  },
+  "Results": [
+    {
+      "Name": "CompositorOwnsUrpVolumeAndNeverNeedsCanvasOverlay",
+      "FullName": "AbilityColorGradingTests.CompositorOwnsUrpVolumeAndNeverNeedsCanvasOverlay",
+      "State": "Passed",
+      "DurationSeconds": 0.0003148,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HealingIsASingleBoundedPulse(-0.1f,0.0f)",
+      "FullName": "AbilityColorGradingTests.HealingIsASingleBoundedPulse(-0.1f,0.0f)",
+      "State": "Passed",
+      "DurationSeconds": 0.0008307,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HealingIsASingleBoundedPulse(0.0f,0.0f)",
+      "FullName": "AbilityColorGradingTests.HealingIsASingleBoundedPulse(0.0f,0.0f)",
+      "State": "Passed",
+      "DurationSeconds": 6.48E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HealingIsASingleBoundedPulse(0.225f,1.0f)",
+      "FullName": "AbilityColorGradingTests.HealingIsASingleBoundedPulse(0.225f,1.0f)",
+      "State": "Passed",
+      "DurationSeconds": 5.44E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HealingIsASingleBoundedPulse(0.45f,0.0f)",
+      "FullName": "AbilityColorGradingTests.HealingIsASingleBoundedPulse(0.45f,0.0f)",
+      "State": "Passed",
+      "DurationSeconds": 4.9E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HealingIsASingleBoundedPulse(1.0f,0.0f)",
+      "FullName": "AbilityColorGradingTests.HealingIsASingleBoundedPulse(1.0f,0.0f)",
+      "State": "Passed",
+      "DurationSeconds": 4.79E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HealingPresentationUsesFormalOwnerEvent",
+      "FullName": "AbilityColorGradingTests.HealingPresentationUsesFormalOwnerEvent",
+      "State": "Passed",
+      "DurationSeconds": 0.0016693,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "TintAddsRelativeColorWithoutTreatingAlphaAsExposure",
+      "FullName": "AbilityColorGradingTests.TintAddsRelativeColorWithoutTreatingAlphaAsExposure",
+      "State": "Passed",
+      "DurationSeconds": 0.000652,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ZeroWeightPreservesAuthoredBaselineIncludingBrightness",
+      "FullName": "AbilityColorGradingTests.ZeroWeightPreservesAuthoredBaselineIncludingBrightness",
+      "State": "Passed",
+      "DurationSeconds": 0.0005414,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DifferentAspectRatiosStayCenteredInTheSlot(\"AerialSlowTight\")",
+      "FullName": "AbilitySlotCenteringTests.DifferentAspectRatiosStayCenteredInTheSlot(\"AerialSlowTight\")",
+      "State": "Passed",
+      "DurationSeconds": 0.035353,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DifferentAspectRatiosStayCenteredInTheSlot(\"AirDashTight\")",
+      "FullName": "AbilitySlotCenteringTests.DifferentAspectRatiosStayCenteredInTheSlot(\"AirDashTight\")",
+      "State": "Passed",
+      "DurationSeconds": 0.000885,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DifferentAspectRatiosStayCenteredInTheSlot(\"GrappleGatherTight\")",
+      "FullName": "AbilitySlotCenteringTests.DifferentAspectRatiosStayCenteredInTheSlot(\"GrappleGatherTight\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0006884,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DefinitionHasValidModuleAndManualTestLoadout(\"Grenade\")",
+      "FullName": "ActiveAbilityAssetsTests.DefinitionHasValidModuleAndManualTestLoadout(\"Grenade\")",
+      "State": "Passed",
+      "DurationSeconds": 0.007008,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DefinitionHasValidModuleAndManualTestLoadout(\"PiercingCannon\")",
+      "FullName": "ActiveAbilityAssetsTests.DefinitionHasValidModuleAndManualTestLoadout(\"PiercingCannon\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0007949,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DefinitionHasValidModuleAndManualTestLoadout(\"Shockwave\")",
+      "FullName": "ActiveAbilityAssetsTests.DefinitionHasValidModuleAndManualTestLoadout(\"Shockwave\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0005048,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DefinitionHasValidModuleAndManualTestLoadout(\"Shield\")",
+      "FullName": "ActiveAbilityAssetsTests.DefinitionHasValidModuleAndManualTestLoadout(\"Shield\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0005021,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DefinitionHasValidModuleAndManualTestLoadout(\"HealingPack\")",
+      "FullName": "ActiveAbilityAssetsTests.DefinitionHasValidModuleAndManualTestLoadout(\"HealingPack\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0003605,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DefinitionHasValidModuleAndManualTestLoadout(\"Ricochet\")",
+      "FullName": "ActiveAbilityAssetsTests.DefinitionHasValidModuleAndManualTestLoadout(\"Ricochet\")",
+      "State": "Passed",
+      "DurationSeconds": 0.000452,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DefinitionHasValidModuleAndManualTestLoadout(\"Experience\")",
+      "FullName": "ActiveAbilityAssetsTests.DefinitionHasValidModuleAndManualTestLoadout(\"Experience\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0004468,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DefinitionHasValidModuleAndManualTestLoadout(\"Blink\")",
+      "FullName": "ActiveAbilityAssetsTests.DefinitionHasValidModuleAndManualTestLoadout(\"Blink\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0004453,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DefinitionHasValidModuleAndManualTestLoadout(\"BulletTime\")",
+      "FullName": "ActiveAbilityAssetsTests.DefinitionHasValidModuleAndManualTestLoadout(\"BulletTime\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0004817,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DefinitionHasValidModuleAndManualTestLoadout(\"PrecisionLock\")",
+      "FullName": "ActiveAbilityAssetsTests.DefinitionHasValidModuleAndManualTestLoadout(\"PrecisionLock\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0004451,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "NewAbilitiesConflictWithBothLegacyESkills",
+      "FullName": "ActiveAbilityAssetsTests.NewAbilitiesConflictWithBothLegacyESkills",
+      "State": "Passed",
+      "DurationSeconds": 0.0018478,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DifferentSkillFamilies_HaveDistinctDefaultColors",
+      "FullName": "ActiveAbilityGizmoTests.DifferentSkillFamilies_HaveDistinctDefaultColors",
+      "State": "Passed",
+      "DurationSeconds": 0.0206687,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "Grenade_CanHitOwnerAfterLeavingSpawnOverlap",
+      "FullName": "ActiveAbilityGizmoTests.Grenade_CanHitOwnerAfterLeavingSpawnOverlap",
+      "State": "Passed",
+      "DurationSeconds": 0.0048299,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "Grenade_UsesEditedValuesInWorldMetersAndLabels",
+      "FullName": "ActiveAbilityGizmoTests.Grenade_UsesEditedValuesInWorldMetersAndLabels",
+      "State": "Passed",
+      "DurationSeconds": 0.0082859,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HealingPickup_NeverSmallerThanCollisionRadius",
+      "FullName": "ActiveAbilityGizmoTests.HealingPickup_NeverSmallerThanCollisionRadius",
+      "State": "Passed",
+      "DurationSeconds": 0.0012227,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MasterSelectionAndGlobalSwitches(False,False,True,True,False)",
+      "FullName": "ActiveAbilityGizmoTests.MasterSelectionAndGlobalSwitches(False,False,True,True,False)",
+      "State": "Passed",
+      "DurationSeconds": 0.0016069,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MasterSelectionAndGlobalSwitches(True,True,False,True,False)",
+      "FullName": "ActiveAbilityGizmoTests.MasterSelectionAndGlobalSwitches(True,True,False,True,False)",
+      "State": "Passed",
+      "DurationSeconds": 0.0005609,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MasterSelectionAndGlobalSwitches(True,True,True,True,True)",
+      "FullName": "ActiveAbilityGizmoTests.MasterSelectionAndGlobalSwitches(True,True,True,True,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0005875,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MasterSelectionAndGlobalSwitches(True,False,False,True,True)",
+      "FullName": "ActiveAbilityGizmoTests.MasterSelectionAndGlobalSwitches(True,False,False,True,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0005532,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MasterSelectionAndGlobalSwitches(True,False,True,False,False)",
+      "FullName": "ActiveAbilityGizmoTests.MasterSelectionAndGlobalSwitches(True,False,True,False,False)",
+      "State": "Passed",
+      "DurationSeconds": 0.0005349,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PrecisionRim_RespectsSphericalDistanceAndHalfAngle",
+      "FullName": "ActiveAbilityGizmoTests.PrecisionRim_RespectsSphericalDistanceAndHalfAngle",
+      "State": "Passed",
+      "DurationSeconds": 0.0012724,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PreviewScene_NeverFallsBackToDefaultPhysicsScene(True)",
+      "FullName": "ActiveAbilityGizmoTests.PreviewScene_NeverFallsBackToDefaultPhysicsScene(True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0022776,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PreviewScene_NeverFallsBackToDefaultPhysicsScene(False)",
+      "FullName": "ActiveAbilityGizmoTests.PreviewScene_NeverFallsBackToDefaultPhysicsScene(False)",
+      "State": "Passed",
+      "DurationSeconds": 0.0013907,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "Ricochet_FourthWorldContactStopsPreview",
+      "FullName": "ActiveAbilityGizmoTests.Ricochet_FourthWorldContactStopsPreview",
+      "State": "Passed",
+      "DurationSeconds": 0.0016432,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "Ricochet_ReflectionPreservesRemainingStepDistance",
+      "FullName": "ActiveAbilityGizmoTests.Ricochet_ReflectionPreservesRemainingStepDistance",
+      "State": "Passed",
+      "DurationSeconds": 0.0015719,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SelfBuff_DoesNotInventRadius(\"Shield\")",
+      "FullName": "ActiveAbilityGizmoTests.SelfBuff_DoesNotInventRadius(\"Shield\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0023729,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SelfBuff_DoesNotInventRadius(\"Experience\")",
+      "FullName": "ActiveAbilityGizmoTests.SelfBuff_DoesNotInventRadius(\"Experience\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0008219,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ShockwaveBoundary_IsSphereIntersectedWithHorizontalWedge",
+      "FullName": "ActiveAbilityGizmoTests.ShockwaveBoundary_IsSphereIntersectedWithHorizontalWedge",
+      "State": "Passed",
+      "DurationSeconds": 0.0031364,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "UnspawnedPrefab_HasNamedSafePreview(\"Grenade\",\"爆破榴彈\")",
+      "FullName": "ActiveAbilityGizmoTests.UnspawnedPrefab_HasNamedSafePreview(\"Grenade\",\"爆破榴彈\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0018272,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "UnspawnedPrefab_HasNamedSafePreview(\"PiercingCannon\",\"貫穿砲\")",
+      "FullName": "ActiveAbilityGizmoTests.UnspawnedPrefab_HasNamedSafePreview(\"PiercingCannon\",\"貫穿砲\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0009424,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "UnspawnedPrefab_HasNamedSafePreview(\"Shockwave\",\"衝擊扇波\")",
+      "FullName": "ActiveAbilityGizmoTests.UnspawnedPrefab_HasNamedSafePreview(\"Shockwave\",\"衝擊扇波\")",
+      "State": "Passed",
+      "DurationSeconds": 0.001288,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "UnspawnedPrefab_HasNamedSafePreview(\"Shield\",\"快速護盾\")",
+      "FullName": "ActiveAbilityGizmoTests.UnspawnedPrefab_HasNamedSafePreview(\"Shield\",\"快速護盾\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0008904,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "UnspawnedPrefab_HasNamedSafePreview(\"HealingPack\",\"治療包\")",
+      "FullName": "ActiveAbilityGizmoTests.UnspawnedPrefab_HasNamedSafePreview(\"HealingPack\",\"治療包\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0007806,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "UnspawnedPrefab_HasNamedSafePreview(\"Ricochet\",\"彈射彈\")",
+      "FullName": "ActiveAbilityGizmoTests.UnspawnedPrefab_HasNamedSafePreview(\"Ricochet\",\"彈射彈\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0007989,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "UnspawnedPrefab_HasNamedSafePreview(\"Experience\",\"經驗增加\")",
+      "FullName": "ActiveAbilityGizmoTests.UnspawnedPrefab_HasNamedSafePreview(\"Experience\",\"經驗增加\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0007584,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "UnspawnedPrefab_HasNamedSafePreview(\"Blink\",\"閃現\")",
+      "FullName": "ActiveAbilityGizmoTests.UnspawnedPrefab_HasNamedSafePreview(\"Blink\",\"閃現\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0010454,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "UnspawnedPrefab_HasNamedSafePreview(\"BulletTime\",\"子彈時間\")",
+      "FullName": "ActiveAbilityGizmoTests.UnspawnedPrefab_HasNamedSafePreview(\"BulletTime\",\"子彈時間\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0009654,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "UnspawnedPrefab_HasNamedSafePreview(\"PrecisionLock\",\"精準鎖敵\")",
+      "FullName": "ActiveAbilityGizmoTests.UnspawnedPrefab_HasNamedSafePreview(\"PrecisionLock\",\"精準鎖敵\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0007538,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "UnspawnedProjectile_DoesNotReadNetworkStateOrInventRange",
+      "FullName": "ActiveAbilityGizmoTests.UnspawnedProjectile_DoesNotReadNetworkStateOrInventRange",
+      "State": "Passed",
+      "DurationSeconds": 0.0022368,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CooldownWorldPickupAndDashSafetyTimerAreNotSelfBuffBars(Ready,3.0f,5.0f)",
+      "FullName": "ActiveAbilityHudTests.CooldownWorldPickupAndDashSafetyTimerAreNotSelfBuffBars(Ready,3.0f,5.0f)",
+      "State": "Passed",
+      "DurationSeconds": 0.0012904,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CooldownWorldPickupAndDashSafetyTimerAreNotSelfBuffBars(AwaitingPickup,10.0f,10.0f)",
+      "FullName": "ActiveAbilityHudTests.CooldownWorldPickupAndDashSafetyTimerAreNotSelfBuffBars(AwaitingPickup,10.0f,10.0f)",
+      "State": "Passed",
+      "DurationSeconds": 6.69E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CooldownWorldPickupAndDashSafetyTimerAreNotSelfBuffBars(Dashing,80.0f,80.0f)",
+      "FullName": "ActiveAbilityHudTests.CooldownWorldPickupAndDashSafetyTimerAreNotSelfBuffBars(Dashing,80.0f,80.0f)",
+      "State": "Passed",
+      "DurationSeconds": 5.33E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CooldownWorldPickupAndDashSafetyTimerAreNotSelfBuffBars(Active,0.0f,2.0f)",
+      "FullName": "ActiveAbilityHudTests.CooldownWorldPickupAndDashSafetyTimerAreNotSelfBuffBars(Active,0.0f,2.0f)",
+      "State": "Passed",
+      "DurationSeconds": 5.39E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CooldownWorldPickupAndDashSafetyTimerAreNotSelfBuffBars(Casting,0.0f,0.0f)",
+      "FullName": "ActiveAbilityHudTests.CooldownWorldPickupAndDashSafetyTimerAreNotSelfBuffBars(Casting,0.0f,0.0f)",
+      "State": "Passed",
+      "DurationSeconds": 5.15E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ShieldUsesTwoWholeCellsForTwentyFiveAndForty",
+      "FullName": "ActiveAbilityHudTests.ShieldUsesTwoWholeCellsForTwentyFiveAndForty",
+      "State": "Passed",
+      "DurationSeconds": 0.0017048,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SkillHudContractExposesTimedSnapshotAndSynchronizedDuration",
+      "FullName": "ActiveAbilityHudTests.SkillHudContractExposesTimedSnapshotAndSynchronizedDuration",
+      "State": "Passed",
+      "DurationSeconds": 0.0003765,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "TimedBarUsesAuthoritativeDurationInsteadOfFirstObservedRemaining(Casting,0.5f,2.0f,0.25f,\"施放準備\")",
+      "FullName": "ActiveAbilityHudTests.TimedBarUsesAuthoritativeDurationInsteadOfFirstObservedRemaining(Casting,0.5f,2.0f,0.25f,\"施放準備\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0068554,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "TimedBarUsesAuthoritativeDurationInsteadOfFirstObservedRemaining(Armed,2.0f,5.0f,0.4f,\"待命\")",
+      "FullName": "ActiveAbilityHudTests.TimedBarUsesAuthoritativeDurationInsteadOfFirstObservedRemaining(Armed,2.0f,5.0f,0.4f,\"待命\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0001354,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "TimedBarUsesAuthoritativeDurationInsteadOfFirstObservedRemaining(Active,1.0f,4.0f,0.25f,\"效果持續\")",
+      "FullName": "ActiveAbilityHudTests.TimedBarUsesAuthoritativeDurationInsteadOfFirstObservedRemaining(Active,1.0f,4.0f,0.25f,\"效果持續\")",
+      "State": "Passed",
+      "DurationSeconds": 6.6E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ExplosionOriginInsideWall_RemainsOccluded",
+      "FullName": "ActiveAbilityPhysicsTests.ExplosionOriginInsideWall_RemainsOccluded",
+      "State": "Passed",
+      "DurationSeconds": 0.0027222,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ReceiverIdentity_CollidersOnOneEnemyResolveToSameOwner",
+      "FullName": "ActiveAbilityPhysicsTests.ReceiverIdentity_CollidersOnOneEnemyResolveToSameOwner",
+      "State": "Passed",
+      "DurationSeconds": 0.0017928,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "Sweep_GrowsBufferAndReturnsNearestObstacleBeforeTarget",
+      "FullName": "ActiveAbilityPhysicsTests.Sweep_GrowsBufferAndReturnsNearestObstacleBeforeTarget",
+      "State": "Passed",
+      "DurationSeconds": 0.0044639,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "Sweep_UsesSuppliedPhysicsScene",
+      "FullName": "ActiveAbilityPhysicsTests.Sweep_UsesSuppliedPhysicsScene",
+      "State": "Passed",
+      "DurationSeconds": 0.001585,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "GrenadeNose_FollowsDescendingTrajectoryWithoutRotatingRoot",
+      "FullName": "ActiveAbilityPresentationTests.GrenadeNose_FollowsDescendingTrajectoryWithoutRotatingRoot",
+      "State": "Passed",
+      "DurationSeconds": 0.0046237,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HealingFloat_ChangesVisualOnlyAndStaysBounded",
+      "FullName": "ActiveAbilityPresentationTests.HealingFloat_ChangesVisualOnlyAndStaysBounded",
+      "State": "Passed",
+      "DurationSeconds": 0.0012712,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MisconfiguredRootAnchor_CannotMoveAuthority",
+      "FullName": "ActiveAbilityPresentationTests.MisconfiguredRootAnchor_CannotMoveAuthority",
+      "State": "Passed",
+      "DurationSeconds": 0.0009335,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "VisualSlot_RejectsCollisionAndNetworkComponents",
+      "FullName": "ActiveAbilityPresentationTests.VisualSlot_RejectsCollisionAndNetworkComponents",
+      "State": "Passed",
+      "DurationSeconds": 0.0010875,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "EqualRewardSharesConservePoolIncludingRemainder",
+      "FullName": "ActiveAbilityRulesTests.EqualRewardSharesConservePoolIncludingRemainder",
+      "State": "Passed",
+      "DurationSeconds": 0.0003177,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HealingUsesThrowerLevelAndHalvesOnlyForThrower(False,30.0f)",
+      "FullName": "ActiveAbilityRulesTests.HealingUsesThrowerLevelAndHalvesOnlyForThrower(False,30.0f)",
+      "State": "Passed",
+      "DurationSeconds": 0.0004467,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HealingUsesThrowerLevelAndHalvesOnlyForThrower(True,15.0f)",
+      "FullName": "ActiveAbilityRulesTests.HealingUsesThrowerLevelAndHalvesOnlyForThrower(True,15.0f)",
+      "State": "Passed",
+      "DurationSeconds": 5.38E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PiercingUsesRemainingDamageAndDoesNotReduceFirstTarget",
+      "FullName": "ActiveAbilityRulesTests.PiercingUsesRemainingDamageAndDoesNotReduceFirstTarget",
+      "State": "Passed",
+      "DurationSeconds": 0.0002343,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RicochetDoublesUpToThreeBounces(0,10.0f)",
+      "FullName": "ActiveAbilityRulesTests.RicochetDoublesUpToThreeBounces(0,10.0f)",
+      "State": "Passed",
+      "DurationSeconds": 0.0004597,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RicochetDoublesUpToThreeBounces(1,20.0f)",
+      "FullName": "ActiveAbilityRulesTests.RicochetDoublesUpToThreeBounces(1,20.0f)",
+      "State": "Passed",
+      "DurationSeconds": 8.53E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RicochetDoublesUpToThreeBounces(2,40.0f)",
+      "FullName": "ActiveAbilityRulesTests.RicochetDoublesUpToThreeBounces(2,40.0f)",
+      "State": "Passed",
+      "DurationSeconds": 5.32E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RicochetDoublesUpToThreeBounces(3,80.0f)",
+      "FullName": "ActiveAbilityRulesTests.RicochetDoublesUpToThreeBounces(3,80.0f)",
+      "State": "Passed",
+      "DurationSeconds": 4.18E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RicochetDoublesUpToThreeBounces(9,80.0f)",
+      "FullName": "ActiveAbilityRulesTests.RicochetDoublesUpToThreeBounces(9,80.0f)",
+      "State": "Passed",
+      "DurationSeconds": 4.02E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ShieldConsumesOnlyPostReductionDamageAndPassesOverflow",
+      "FullName": "ActiveAbilityRulesTests.ShieldConsumesOnlyPostReductionDamageAndPassesOverflow",
+      "State": "Passed",
+      "DurationSeconds": 0.0002703,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ShieldDurationUsesClampedPlayerLevel(1,1.5f)",
+      "FullName": "ActiveAbilityRulesTests.ShieldDurationUsesClampedPlayerLevel(1,1.5f)",
+      "State": "Passed",
+      "DurationSeconds": 0.0003939,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ShieldDurationUsesClampedPlayerLevel(3,2.5f)",
+      "FullName": "ActiveAbilityRulesTests.ShieldDurationUsesClampedPlayerLevel(3,2.5f)",
+      "State": "Passed",
+      "DurationSeconds": 5.44E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ShieldDurationUsesClampedPlayerLevel(0,1.5f)",
+      "FullName": "ActiveAbilityRulesTests.ShieldDurationUsesClampedPlayerLevel(0,1.5f)",
+      "State": "Passed",
+      "DurationSeconds": 4.41E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SmallHitDoesNotDestroyTheWholeShield",
+      "FullName": "ActiveAbilityRulesTests.SmallHitDoesNotDestroyTheWholeShield",
+      "State": "Passed",
+      "DurationSeconds": 0.0001637,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ClearPathPreservesConfiguredHeight",
+      "FullName": "ActiveAbilityShotOriginTests.ClearPathPreservesConfiguredHeight",
+      "State": "Passed",
+      "DurationSeconds": 0.0024343,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DesiredOriginInsideThickWallStaysOnNearSide",
+      "FullName": "ActiveAbilityShotOriginTests.DesiredOriginInsideThickWallStaysOnNearSide",
+      "State": "Passed",
+      "DurationSeconds": 0.0017425,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "EmbeddedAnchorRejectsShot",
+      "FullName": "ActiveAbilityShotOriginTests.EmbeddedAnchorRejectsShot",
+      "State": "Passed",
+      "DurationSeconds": 0.0008606,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "OtherPhysicsSceneCannotBlockShot",
+      "FullName": "ActiveAbilityShotOriginTests.OtherPhysicsSceneCannotBlockShot",
+      "State": "Passed",
+      "DurationSeconds": 0.0020364,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "OwnerColliderDoesNotBlockOrigin",
+      "FullName": "ActiveAbilityShotOriginTests.OwnerColliderDoesNotBlockOrigin",
+      "State": "Passed",
+      "DurationSeconds": 0.0010089,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ThinCeilingCannotBeCrossed(0.0f)",
+      "FullName": "ActiveAbilityShotOriginTests.ThinCeilingCannotBeCrossed(0.0f)",
+      "State": "Passed",
+      "DurationSeconds": 0.0017216,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ThinCeilingCannotBeCrossed(0.1f)",
+      "FullName": "ActiveAbilityShotOriginTests.ThinCeilingCannotBeCrossed(0.1f)",
+      "State": "Passed",
+      "DurationSeconds": 0.0006279,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DashUsesHorizontalCharacterYawAndNormalizesDiagonalInput",
+      "FullName": "ActiveControlRulesTests.DashUsesHorizontalCharacterYawAndNormalizesDiagonalInput",
+      "State": "Passed",
+      "DurationSeconds": 0.0011207,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DashWithoutDirectionUsesCharacterForward",
+      "FullName": "ActiveControlRulesTests.DashWithoutDirectionUsesCharacterForward",
+      "State": "Passed",
+      "DurationSeconds": 0.0004576,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "EveryExistingAttackOwnsItsPauseTimerImplementation(EnemyMeleeSwingAttack)",
+      "FullName": "ActiveControlRulesTests.EveryExistingAttackOwnsItsPauseTimerImplementation(EnemyMeleeSwingAttack)",
+      "State": "Passed",
+      "DurationSeconds": 0.0003778,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "EveryExistingAttackOwnsItsPauseTimerImplementation(EnemyMeleeDashAttack)",
+      "FullName": "ActiveControlRulesTests.EveryExistingAttackOwnsItsPauseTimerImplementation(EnemyMeleeDashAttack)",
+      "State": "Passed",
+      "DurationSeconds": 6.15E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "EveryExistingAttackOwnsItsPauseTimerImplementation(EnemyRangedProjectileAttack)",
+      "FullName": "ActiveControlRulesTests.EveryExistingAttackOwnsItsPauseTimerImplementation(EnemyRangedProjectileAttack)",
+      "State": "Passed",
+      "DurationSeconds": 5.28E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "EveryExistingAttackOwnsItsPauseTimerImplementation(EnemyRangedBeamAttack)",
+      "FullName": "ActiveControlRulesTests.EveryExistingAttackOwnsItsPauseTimerImplementation(EnemyRangedBeamAttack)",
+      "State": "Passed",
+      "DurationSeconds": 5.17E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "FloorAndSeparatingContactDoNotCountAsWallImpact",
+      "FullName": "ActiveControlRulesTests.FloorAndSeparatingContactDoNotCountAsWallImpact",
+      "State": "Passed",
+      "DurationSeconds": 0.0007881,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PauseExtendsPendingDeadlineWithoutRevivingExpiredOrMissingTimers(110,100,1,111)",
+      "FullName": "ActiveControlRulesTests.PauseExtendsPendingDeadlineWithoutRevivingExpiredOrMissingTimers(110,100,1,111)",
+      "State": "Passed",
+      "DurationSeconds": 0.0009005,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PauseExtendsPendingDeadlineWithoutRevivingExpiredOrMissingTimers(100,100,1,100)",
+      "FullName": "ActiveControlRulesTests.PauseExtendsPendingDeadlineWithoutRevivingExpiredOrMissingTimers(100,100,1,100)",
+      "State": "Passed",
+      "DurationSeconds": 0.0001098,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PauseExtendsPendingDeadlineWithoutRevivingExpiredOrMissingTimers(90,100,10,90)",
+      "FullName": "ActiveControlRulesTests.PauseExtendsPendingDeadlineWithoutRevivingExpiredOrMissingTimers(90,100,10,90)",
+      "State": "Passed",
+      "DurationSeconds": 5.65E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PauseExtendsPendingDeadlineWithoutRevivingExpiredOrMissingTimers(0,100,10,0)",
+      "FullName": "ActiveControlRulesTests.PauseExtendsPendingDeadlineWithoutRevivingExpiredOrMissingTimers(0,100,10,0)",
+      "State": "Passed",
+      "DurationSeconds": 5.26E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SlowedDashUsesFinalTravelForObstacleCompletion(8.0f,0.25f,0.5f,0.1458333f,False)",
+      "FullName": "ActiveControlRulesTests.SlowedDashUsesFinalTravelForObstacleCompletion(8.0f,0.25f,0.5f,0.1458333f,False)",
+      "State": "Passed",
+      "DurationSeconds": 0.0011127,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SlowedDashUsesFinalTravelForObstacleCompletion(8.0f,0.25f,0.1f,0.08f,True)",
+      "FullName": "ActiveControlRulesTests.SlowedDashUsesFinalTravelForObstacleCompletion(8.0f,0.25f,0.1f,0.08f,True)",
+      "State": "Passed",
+      "DurationSeconds": 7.5E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SlowedDashUsesFinalTravelForObstacleCompletion(0.05f,0.25f,float.PositiveInfinity,0.05f,False)",
+      "FullName": "ActiveControlRulesTests.SlowedDashUsesFinalTravelForObstacleCompletion(0.05f,0.25f,float.PositiveInfinity,0.05f,False)",
+      "State": "Passed",
+      "DurationSeconds": 7.5E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SlowedDashUsesFinalTravelForObstacleCompletion(8.0f,1.0f,0.5f,0.48f,True)",
+      "FullName": "ActiveControlRulesTests.SlowedDashUsesFinalTravelForObstacleCompletion(8.0f,1.0f,0.5f,0.48f,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0001016,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "TravelNeverOvershootsRemainingDistanceOrCollision(4.0f,30.0f,0.1f,float.PositiveInfinity,0.02f,3.0f)",
+      "FullName": "ActiveControlRulesTests.TravelNeverOvershootsRemainingDistanceOrCollision(4.0f,30.0f,0.1f,float.PositiveInfinity,0.02f,3.0f)",
+      "State": "Passed",
+      "DurationSeconds": 0.0007657,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "TravelNeverOvershootsRemainingDistanceOrCollision(0.5f,30.0f,0.1f,float.PositiveInfinity,0.02f,0.5f)",
+      "FullName": "ActiveControlRulesTests.TravelNeverOvershootsRemainingDistanceOrCollision(0.5f,30.0f,0.1f,float.PositiveInfinity,0.02f,0.5f)",
+      "State": "Passed",
+      "DurationSeconds": 6.97E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "TravelNeverOvershootsRemainingDistanceOrCollision(4.0f,30.0f,0.1f,1.0f,0.02f,0.98f)",
+      "FullName": "ActiveControlRulesTests.TravelNeverOvershootsRemainingDistanceOrCollision(4.0f,30.0f,0.1f,1.0f,0.02f,0.98f)",
+      "State": "Passed",
+      "DurationSeconds": 5.51E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "TravelNeverOvershootsRemainingDistanceOrCollision(4.0f,30.0f,0.1f,0.01f,0.02f,0.0f)",
+      "FullName": "ActiveControlRulesTests.TravelNeverOvershootsRemainingDistanceOrCollision(4.0f,30.0f,0.1f,0.01f,0.02f,0.0f)",
+      "State": "Passed",
+      "DurationSeconds": 8.66E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "EveryRewardFitsAllThreeUnchangedDescriptionPanels",
+      "FullName": "ApprovedHudVisualTests.EveryRewardFitsAllThreeUnchangedDescriptionPanels",
+      "State": "Passed",
+      "DurationSeconds": 0.0549767,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SkillTemplateIsSquareAndKeepsIndependentKeyAndCooldown",
+      "FullName": "ApprovedHudVisualTests.SkillTemplateIsSquareAndKeepsIndependentKeyAndCooldown",
+      "State": "Passed",
+      "DurationSeconds": 0.0009892,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HealthEdgesHaveTransparentCoverageFringeWithoutMsaa",
+      "FullName": "BattleHudReadabilityTests.HealthEdgesHaveTransparentCoverageFringeWithoutMsaa",
+      "State": "Passed",
+      "DurationSeconds": 0.0037597,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RemainingFractionKeepsTheEntireCellOutline(10.0f)",
+      "FullName": "BattleHudReadabilityTests.RemainingFractionKeepsTheEntireCellOutline(10.0f)",
+      "State": "Passed",
+      "DurationSeconds": 0.0020106,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RemainingFractionKeepsTheEntireCellOutline(15.0f)",
+      "FullName": "BattleHudReadabilityTests.RemainingFractionKeepsTheEntireCellOutline(15.0f)",
+      "State": "Passed",
+      "DurationSeconds": 0.0006301,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RewardBackdropIsDisabledAndStageTextUsesNotoBold",
+      "FullName": "BattleHudReadabilityTests.RewardBackdropIsDisabledAndStageTextUsesNotoBold",
+      "State": "Passed",
+      "DurationSeconds": 0.0007262,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ScreenChangesKeepCirclesRoundAndTheDrawingInsideTheViewport(1280,720)",
+      "FullName": "BattleHudReferenceLayoutTests.ScreenChangesKeepCirclesRoundAndTheDrawingInsideTheViewport(1280,720)",
+      "State": "Passed",
+      "DurationSeconds": 0.0011381,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ScreenChangesKeepCirclesRoundAndTheDrawingInsideTheViewport(1920,1080)",
+      "FullName": "BattleHudReferenceLayoutTests.ScreenChangesKeepCirclesRoundAndTheDrawingInsideTheViewport(1920,1080)",
+      "State": "Passed",
+      "DurationSeconds": 0.0001435,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ScreenChangesKeepCirclesRoundAndTheDrawingInsideTheViewport(2560,1080)",
+      "FullName": "BattleHudReferenceLayoutTests.ScreenChangesKeepCirclesRoundAndTheDrawingInsideTheViewport(2560,1080)",
+      "State": "Passed",
+      "DurationSeconds": 0.0001338,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StageHudSharesTheIllustratedReferenceFrame",
+      "FullName": "BattleHudReferenceLayoutTests.StageHudSharesTheIllustratedReferenceFrame",
+      "State": "Passed",
+      "DurationSeconds": 0.0004972,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "BossChunkContainsRequiredRuntimeContract",
+      "FullName": "BossStageAssetTests.BossChunkContainsRequiredRuntimeContract",
+      "State": "Passed",
+      "DurationSeconds": 0.0634145,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CartographyPayloadIsHiddenFromDefaultInspector(\"cells\")",
+      "FullName": "BossStageAssetTests.CartographyPayloadIsHiddenFromDefaultInspector(\"cells\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0004578,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CartographyPayloadIsHiddenFromDefaultInspector(\"elevations\")",
+      "FullName": "BossStageAssetTests.CartographyPayloadIsHiddenFromDefaultInspector(\"elevations\")",
+      "State": "Passed",
+      "DurationSeconds": 9.01E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "GameSceneContainsBossAssetWiring",
+      "FullName": "BossStageAssetTests.GameSceneContainsBossAssetWiring",
+      "State": "Failed",
+      "DurationSeconds": 0.7511086,
+      "Message": "  Expected: same as <MapChunk_Boss (MapChunk)>\r\n  But was:  <MapChunk_Boss (MapChunk)>\r\n",
+      "StackTrace": "at BossStageAssetTests.GameSceneContainsBossAssetWiring () [0x000bc] in M:\\UnityProject\\Purgers\\Assets\\Scripts\\Editor\\Tests\\BossStageAssetTests.cs:96\r\n",
+      "Output": ""
+    },
+    {
+      "Name": "TemporaryBossPrefabSupportsAuthoritativeObjective",
+      "FullName": "BossStageAssetTests.TemporaryBossPrefabSupportsAuthoritativeObjective",
+      "State": "Passed",
+      "DurationSeconds": 0.0225254,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "APreparedHitCannotResolveOrNotifyTwice",
+      "FullName": "BulletTimeDamageTests.APreparedHitCannotResolveOrNotifyTwice",
+      "State": "Passed",
+      "DurationSeconds": 0.0093118,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CapturesOutgoingOnceAndAppliesCurrentIncomingOnlyOnFlush",
+      "FullName": "BulletTimeDamageTests.CapturesOutgoingOnceAndAppliesCurrentIncomingOnlyOnFlush",
+      "State": "Passed",
+      "DurationSeconds": 0.0008789,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DestroyedTargetIsDiscardedWithoutPhantomDamageOrNotification",
+      "FullName": "BulletTimeDamageTests.DestroyedTargetIsDiscardedWithoutPhantomDamageOrNotification",
+      "State": "Passed",
+      "DurationSeconds": 0.0006963,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "FullBlockIsEvaluatedAtFlushAndNotifiesOnce",
+      "FullName": "BulletTimeDamageTests.FullBlockIsEvaluatedAtFlushAndNotifiesOnce",
+      "State": "Passed",
+      "DurationSeconds": 0.0008896,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "NoReceiverDoesNotRunOutgoingModifiers",
+      "FullName": "BulletTimeDamageTests.NoReceiverDoesNotRunOutgoingModifiers",
+      "State": "Passed",
+      "DurationSeconds": 0.0006343,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DefaultGradientPreservesExistingTracerColorIncludingAlpha",
+      "FullName": "BulletTracerAppearanceTests.DefaultGradientPreservesExistingTracerColorIncludingAlpha",
+      "State": "Passed",
+      "DurationSeconds": 0.0041562,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "EnergyColorChangesOnlyAtFullCharge(0.0f,False)",
+      "FullName": "BulletTracerAppearanceTests.EnergyColorChangesOnlyAtFullCharge(0.0f,False)",
+      "State": "Passed",
+      "DurationSeconds": 0.0015525,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "EnergyColorChangesOnlyAtFullCharge(0.999f,False)",
+      "FullName": "BulletTracerAppearanceTests.EnergyColorChangesOnlyAtFullCharge(0.999f,False)",
+      "State": "Passed",
+      "DurationSeconds": 0.0003356,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "EnergyColorChangesOnlyAtFullCharge(1.0f,True)",
+      "FullName": "BulletTracerAppearanceTests.EnergyColorChangesOnlyAtFullCharge(1.0f,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0002463,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "FadeKeepsSpatialColorsAndRelativeAlphaWhenSettingsChange",
+      "FullName": "BulletTracerAppearanceTests.FadeKeepsSpatialColorsAndRelativeAlphaWhenSettingsChange",
+      "State": "Passed",
+      "DurationSeconds": 0.0053149,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "FinalHoldDoesNotRestoreHiddenPath(1.5f,1.5f,True)",
+      "FullName": "BulletTracerAppearanceTests.FinalHoldDoesNotRestoreHiddenPath(1.5f,1.5f,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0018104,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "FinalHoldDoesNotRestoreHiddenPath(2.0f,2.0f,False)",
+      "FullName": "BulletTracerAppearanceTests.FinalHoldDoesNotRestoreHiddenPath(2.0f,2.0f,False)",
+      "State": "Passed",
+      "DurationSeconds": 0.0004226,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "FinalHoldDoesNotRestoreHiddenPath(3.0f,2.0f,False)",
+      "FullName": "BulletTracerAppearanceTests.FinalHoldDoesNotRestoreHiddenPath(3.0f,2.0f,False)",
+      "State": "Passed",
+      "DurationSeconds": 0.0003768,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "GradientControlsDifferentColorsAndTransparencyAlongLine",
+      "FullName": "BulletTracerAppearanceTests.GradientControlsDifferentColorsAndTransparencyAlongLine",
+      "State": "Passed",
+      "DurationSeconds": 0.0009144,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HiddenSegmentTravelsAndRevealsAtItsCurrentPosition",
+      "FullName": "BulletTracerAppearanceTests.HiddenSegmentTravelsAndRevealsAtItsCurrentPosition",
+      "State": "Passed",
+      "DurationSeconds": 0.0015436,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MaximumColorCanBeDisabled",
+      "FullName": "BulletTracerAppearanceTests.MaximumColorCanBeDisabled",
+      "State": "Passed",
+      "DurationSeconds": 0.000828,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PassingHitPointBeforeRevealNeverEnablesRenderer",
+      "FullName": "BulletTracerAppearanceTests.PassingHitPointBeforeRevealNeverEnablesRenderer",
+      "State": "Passed",
+      "DurationSeconds": 0.0011077,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SegmentEndsUseSmoothRoundedCaps",
+      "FullName": "BulletTracerAppearanceTests.SegmentEndsUseSmoothRoundedCaps",
+      "State": "Passed",
+      "DurationSeconds": 0.0005447,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "UnspawnedProfessionUsesNormalColorWithoutReadingNetworkState",
+      "FullName": "BulletTracerAppearanceTests.UnspawnedProfessionUsesNormalColorWithoutReadingNetworkState",
+      "State": "Passed",
+      "DurationSeconds": 0.0012218,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ZeroDelayDisplaysSegmentImmediately",
+      "FullName": "BulletTracerAppearanceTests.ZeroDelayDisplaysSegmentImmediately",
+      "State": "Passed",
+      "DurationSeconds": 0.0008289,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "BlockedOrRejectedResultNotifiesExactlyOnce(True,FullyBlocked,0)",
+      "FullName": "CombatRegressionTests.BlockedOrRejectedResultNotifiesExactlyOnce(True,FullyBlocked,0)",
+      "State": "Passed",
+      "DurationSeconds": 0.0019982,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "BlockedOrRejectedResultNotifiesExactlyOnce(False,Invulnerable,1)",
+      "FullName": "CombatRegressionTests.BlockedOrRejectedResultNotifiesExactlyOnce(False,Invulnerable,1)",
+      "State": "Passed",
+      "DurationSeconds": 0.0002774,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DisabledSourceDoesNotModifyOrReceiveNotification",
+      "FullName": "CombatRegressionTests.DisabledSourceDoesNotModifyOrReceiveNotification",
+      "State": "Passed",
+      "DurationSeconds": 0.0003525,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "InvalidMeleeQueryAcceptsNullOutputLists",
+      "FullName": "CombatRegressionTests.InvalidMeleeQueryAcceptsNullOutputLists",
+      "State": "Passed",
+      "DurationSeconds": 0.002376,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "InvalidMeleeQueryClearsBothPreviousResults",
+      "FullName": "CombatRegressionTests.InvalidMeleeQueryClearsBothPreviousResults",
+      "State": "Passed",
+      "DurationSeconds": 0.0009847,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "NearestHitSkipsOwnerAndKeepsWorldOcclusion",
+      "FullName": "CombatRegressionTests.NearestHitSkipsOwnerAndKeepsWorldOcclusion",
+      "State": "Passed",
+      "DurationSeconds": 0.0011969,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "NoReceiverDoesNotRunOutgoingModifiersOrNotify",
+      "FullName": "CombatRegressionTests.NoReceiverDoesNotRunOutgoingModifiersOrNotify",
+      "State": "Passed",
+      "DurationSeconds": 0.0003371,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ReceiverResultNotifiesSourceOnceAfterNormalization(False)",
+      "FullName": "CombatRegressionTests.ReceiverResultNotifiesSourceOnceAfterNormalization(False)",
+      "State": "Passed",
+      "DurationSeconds": 0.0008794,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ReceiverResultNotifiesSourceOnceAfterNormalization(True)",
+      "FullName": "CombatRegressionTests.ReceiverResultNotifiesSourceOnceAfterNormalization(True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0001548,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "WeaponFalloffPreservesBoundaryAndInterpolation(0.0f,1.0f)",
+      "FullName": "CombatRegressionTests.WeaponFalloffPreservesBoundaryAndInterpolation(0.0f,1.0f)",
+      "State": "Passed",
+      "DurationSeconds": 0.0005068,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "WeaponFalloffPreservesBoundaryAndInterpolation(10.0f,1.0f)",
+      "FullName": "CombatRegressionTests.WeaponFalloffPreservesBoundaryAndInterpolation(10.0f,1.0f)",
+      "State": "Passed",
+      "DurationSeconds": 6.32E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "WeaponFalloffPreservesBoundaryAndInterpolation(15.0f,0.625f)",
+      "FullName": "CombatRegressionTests.WeaponFalloffPreservesBoundaryAndInterpolation(15.0f,0.625f)",
+      "State": "Passed",
+      "DurationSeconds": 6.02E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "WeaponFalloffPreservesBoundaryAndInterpolation(20.0f,0.25f)",
+      "FullName": "CombatRegressionTests.WeaponFalloffPreservesBoundaryAndInterpolation(20.0f,0.25f)",
+      "State": "Passed",
+      "DurationSeconds": 5.28E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "WeaponFalloffPreservesBoundaryAndInterpolation(30.0f,0.25f)",
+      "FullName": "CombatRegressionTests.WeaponFalloffPreservesBoundaryAndInterpolation(30.0f,0.25f)",
+      "State": "Passed",
+      "DurationSeconds": 5.29E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "GrantsExactlyTheMissingExperienceForNextLevel",
+      "FullName": "DevelopmentLevelUpRulesTests.GrantsExactlyTheMissingExperienceForNextLevel",
+      "State": "Passed",
+      "DurationSeconds": 0.0006893,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "InvalidOrMaximumLevelDoesNotGrantExperience",
+      "FullName": "DevelopmentLevelUpRulesTests.InvalidOrMaximumLevelDoesNotGrantExperience",
+      "State": "Passed",
+      "DurationSeconds": 0.00016,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PendingRewardCannotBeSkippedByDebugKey",
+      "FullName": "DevelopmentLevelUpRulesTests.PendingRewardCannotBeSkippedByDebugKey",
+      "State": "Passed",
+      "DurationSeconds": 0.0001277,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "BetweenActionAimUsesBeamTurnSpeedWithoutMovingOrRequiringAttackState(0.1f,18.0f)",
+      "FullName": "EnemyBeamContinuousAimTests.BetweenActionAimUsesBeamTurnSpeedWithoutMovingOrRequiringAttackState(0.1f,18.0f)",
+      "State": "Passed",
+      "DurationSeconds": 0.002704,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "BetweenActionAimUsesBeamTurnSpeedWithoutMovingOrRequiringAttackState(1.0f,90.0f)",
+      "FullName": "EnemyBeamContinuousAimTests.BetweenActionAimUsesBeamTurnSpeedWithoutMovingOrRequiringAttackState(1.0f,90.0f)",
+      "State": "Passed",
+      "DurationSeconds": 0.0001808,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "OtherAttackTypesDoNotOptIntoBetweenActionAiming",
+      "FullName": "EnemyBeamContinuousAimTests.OtherAttackTypesDoNotOptIntoBetweenActionAiming",
+      "State": "Passed",
+      "DurationSeconds": 0.0003803,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CrossingOutsideRectangleOrRemainingOnOneSideDoesNotTrigger",
+      "FullName": "EnemyEncounterRulesTests.CrossingOutsideRectangleOrRemainingOnOneSideDoesNotTrigger",
+      "State": "Passed",
+      "DurationSeconds": 0.0007722,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "FastSegmentCrossesDirectionalGateOnlyInConfiguredDirection",
+      "FullName": "EnemyEncounterRulesTests.FastSegmentCrossesDirectionalGateOnlyInConfiguredDirection",
+      "State": "Passed",
+      "DurationSeconds": 0.0003825,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "GateDirectionOptionPreservesSingleDirectionAndAllowsReverse(False,1,True)",
+      "FullName": "EnemyEncounterRulesTests.GateDirectionOptionPreservesSingleDirectionAndAllowsReverse(False,1,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0028746,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "GateDirectionOptionPreservesSingleDirectionAndAllowsReverse(False,-1,False)",
+      "FullName": "EnemyEncounterRulesTests.GateDirectionOptionPreservesSingleDirectionAndAllowsReverse(False,-1,False)",
+      "State": "Passed",
+      "DurationSeconds": 0.0001599,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "GateDirectionOptionPreservesSingleDirectionAndAllowsReverse(True,1,True)",
+      "FullName": "EnemyEncounterRulesTests.GateDirectionOptionPreservesSingleDirectionAndAllowsReverse(True,1,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0001892,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "GateDirectionOptionPreservesSingleDirectionAndAllowsReverse(True,-1,True)",
+      "FullName": "EnemyEncounterRulesTests.GateDirectionOptionPreservesSingleDirectionAndAllowsReverse(True,-1,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0001768,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "GroundSpawnProjectsNavMeshHeightToNearbyCollider",
+      "FullName": "EnemyEncounterRulesTests.GroundSpawnProjectsNavMeshHeightToNearbyCollider",
+      "State": "Passed",
+      "DurationSeconds": 0.0017971,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "LockedZoneCannotConsumeAnotherSlot",
+      "FullName": "EnemyEncounterRulesTests.LockedZoneCannotConsumeAnotherSlot",
+      "State": "Passed",
+      "DurationSeconds": 0.0009738,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SixthSuccessfulZoneUnlocksOldestAndRelockRotates",
+      "FullName": "EnemyEncounterRulesTests.SixthSuccessfulZoneUnlocksOldestAndRelockRotates",
+      "State": "Passed",
+      "DurationSeconds": 0.0002871,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DefinitionCanConfigureIndependentBaseExperience",
+      "FullName": "EnemyExperienceSourceTests.DefinitionCanConfigureIndependentBaseExperience",
+      "State": "Passed",
+      "DurationSeconds": 0.0008569,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "FormalEnemyPrefabHasDeathOwnerAndPositiveExperience(\"Enemy_Melee_A\")",
+      "FullName": "EnemyExperienceSourceTests.FormalEnemyPrefabHasDeathOwnerAndPositiveExperience(\"Enemy_Melee_A\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0007189,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "FormalEnemyPrefabHasDeathOwnerAndPositiveExperience(\"Enemy_Melee_B\")",
+      "FullName": "EnemyExperienceSourceTests.FormalEnemyPrefabHasDeathOwnerAndPositiveExperience(\"Enemy_Melee_B\")",
+      "State": "Passed",
+      "DurationSeconds": 8.98E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "FormalEnemyPrefabHasDeathOwnerAndPositiveExperience(\"Enemy_Ranged_A\")",
+      "FullName": "EnemyExperienceSourceTests.FormalEnemyPrefabHasDeathOwnerAndPositiveExperience(\"Enemy_Ranged_A\")",
+      "State": "Passed",
+      "DurationSeconds": 7.99E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "FormalEnemyPrefabHasDeathOwnerAndPositiveExperience(\"Enemy_Ranged_B\")",
+      "FullName": "EnemyExperienceSourceTests.FormalEnemyPrefabHasDeathOwnerAndPositiveExperience(\"Enemy_Ranged_B\")",
+      "State": "Passed",
+      "DurationSeconds": 9.2E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "FormalEnemyPrefabHasDeathOwnerAndPositiveExperience(\"Enemy_Boss\")",
+      "FullName": "EnemyExperienceSourceTests.FormalEnemyPrefabHasDeathOwnerAndPositiveExperience(\"Enemy_Boss\")",
+      "State": "Passed",
+      "DurationSeconds": 7.87E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "NewDefinitionDefaultsToOneKillExperience",
+      "FullName": "EnemyExperienceSourceTests.NewDefinitionDefaultsToOneKillExperience",
+      "State": "Passed",
+      "DurationSeconds": 0.0002266,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ActualLargeFlyingCapsuleRejectsCeilingThatSmallCapsuleCouldFitUnder",
+      "FullName": "EnemyFlyingPatrolPlannerTests.ActualLargeFlyingCapsuleRejectsCeilingThatSmallCapsuleCouldFitUnder",
+      "State": "Passed",
+      "DurationSeconds": 0.0024742,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "FreeFlyingUsesAutomaticAreaOnlyWhenManualReferenceIsEmpty",
+      "FullName": "EnemyFlyingPatrolPlannerTests.FreeFlyingUsesAutomaticAreaOnlyWhenManualReferenceIsEmpty",
+      "State": "Passed",
+      "DurationSeconds": 0.0010218,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "NonOverlappingSpawnAndPatrolVolumesFailClosed",
+      "FullName": "EnemyFlyingPatrolPlannerTests.NonOverlappingSpawnAndPatrolVolumesFailClosed",
+      "State": "Passed",
+      "DurationSeconds": 0.002331,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "OccupiedVolumeAndIsolatedPointsDoNotProduceAnArea",
+      "FullName": "EnemyFlyingPatrolPlannerTests.OccupiedVolumeAndIsolatedPointsDoNotProduceAnArea",
+      "State": "Passed",
+      "DurationSeconds": 0.0008636,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "OpenVolumeProducesBoundedDeterministicPointsIncludingSpawnVolume",
+      "FullName": "EnemyFlyingPatrolPlannerTests.OpenVolumeProducesBoundedDeterministicPointsIncludingSpawnVolume",
+      "State": "Passed",
+      "DurationSeconds": 0.0018794,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PrefabCapsuleQueriesRejectWallsAndOccupiedPointsWithoutSpawnedLifecycle",
+      "FullName": "EnemyFlyingPatrolPlannerTests.PrefabCapsuleQueriesRejectWallsAndOccupiedPointsWithoutSpawnedLifecycle",
+      "State": "Passed",
+      "DurationSeconds": 0.0059982,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "TruncationPreservesReachabilityInsteadOfDroppingBridgePoints",
+      "FullName": "EnemyFlyingPatrolPlannerTests.TruncationPreservesReachabilityInsteadOfDroppingBridgePoints",
+      "State": "Passed",
+      "DurationSeconds": 0.0034427,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "WallSeparatesComponentsAndKeepsOnlySpawnReachableSide",
+      "FullName": "EnemyFlyingPatrolPlannerTests.WallSeparatesComponentsAndKeepsOnlySpawnReachableSide",
+      "State": "Passed",
+      "DurationSeconds": 0.0007384,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "NewPerceptionDefaultsToThreeSecondGraceAndNoCombatSightBeforeSpawn",
+      "FullName": "EnemyPerceptionRetentionTests.NewPerceptionDefaultsToThreeSecondGraceAndNoCombatSightBeforeSpawn",
+      "State": "Passed",
+      "DurationSeconds": 0.001187,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RetentionNeedsPersonalSightUnexpiredGraceAndDistance(True,True,2.9f,25.0f,25.0f,True)",
+      "FullName": "EnemyPerceptionRetentionTests.RetentionNeedsPersonalSightUnexpiredGraceAndDistance(True,True,2.9f,25.0f,25.0f,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0007244,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RetentionNeedsPersonalSightUnexpiredGraceAndDistance(True,True,0.01f,25.0f,25.0f,True)",
+      "FullName": "EnemyPerceptionRetentionTests.RetentionNeedsPersonalSightUnexpiredGraceAndDistance(True,True,0.01f,25.0f,25.0f,True)",
+      "State": "Passed",
+      "DurationSeconds": 7.05E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RetentionNeedsPersonalSightUnexpiredGraceAndDistance(True,True,0.0f,25.0f,25.0f,False)",
+      "FullName": "EnemyPerceptionRetentionTests.RetentionNeedsPersonalSightUnexpiredGraceAndDistance(True,True,0.0f,25.0f,25.0f,False)",
+      "State": "Passed",
+      "DurationSeconds": 6.08E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RetentionNeedsPersonalSightUnexpiredGraceAndDistance(True,True,-1.0f,25.0f,25.0f,False)",
+      "FullName": "EnemyPerceptionRetentionTests.RetentionNeedsPersonalSightUnexpiredGraceAndDistance(True,True,-1.0f,25.0f,25.0f,False)",
+      "State": "Passed",
+      "DurationSeconds": 5.59E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RetentionNeedsPersonalSightUnexpiredGraceAndDistance(True,True,3.0f,625.0f,25.0f,True)",
+      "FullName": "EnemyPerceptionRetentionTests.RetentionNeedsPersonalSightUnexpiredGraceAndDistance(True,True,3.0f,625.0f,25.0f,True)",
+      "State": "Passed",
+      "DurationSeconds": 5.61E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RetentionNeedsPersonalSightUnexpiredGraceAndDistance(True,True,3.0f,626.0f,25.0f,False)",
+      "FullName": "EnemyPerceptionRetentionTests.RetentionNeedsPersonalSightUnexpiredGraceAndDistance(True,True,3.0f,626.0f,25.0f,False)",
+      "State": "Passed",
+      "DurationSeconds": 5.73E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RetentionNeedsPersonalSightUnexpiredGraceAndDistance(True,False,3.0f,25.0f,25.0f,False)",
+      "FullName": "EnemyPerceptionRetentionTests.RetentionNeedsPersonalSightUnexpiredGraceAndDistance(True,False,3.0f,25.0f,25.0f,False)",
+      "State": "Passed",
+      "DurationSeconds": 5.65E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RetentionNeedsPersonalSightUnexpiredGraceAndDistance(False,True,3.0f,25.0f,25.0f,False)",
+      "FullName": "EnemyPerceptionRetentionTests.RetentionNeedsPersonalSightUnexpiredGraceAndDistance(False,True,3.0f,25.0f,25.0f,False)",
+      "State": "Passed",
+      "DurationSeconds": 5.81E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(True,False,10.0f,False,False)",
+      "FullName": "EnemySpawnOcclusionTests.SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(True,False,10.0f,False,False)",
+      "State": "Passed",
+      "DurationSeconds": 0.0029737,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(False,False,10.0f,False,True)",
+      "FullName": "EnemySpawnOcclusionTests.SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(False,False,10.0f,False,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0003073,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(True,True,10.0f,False,True)",
+      "FullName": "EnemySpawnOcclusionTests.SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(True,True,10.0f,False,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0003265,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(False,True,10.0f,False,True)",
+      "FullName": "EnemySpawnOcclusionTests.SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(False,True,10.0f,False,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0002505,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(False,False,7.0f,False,False)",
+      "FullName": "EnemySpawnOcclusionTests.SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(False,False,7.0f,False,False)",
+      "State": "Passed",
+      "DurationSeconds": 0.0002191,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(False,False,10.0f,True,False)",
+      "FullName": "EnemySpawnOcclusionTests.SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(False,False,10.0f,True,False)",
+      "State": "Passed",
+      "DurationSeconds": 0.0002256,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(True,True,10.0f,True,False)",
+      "FullName": "EnemySpawnOcclusionTests.SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(True,True,10.0f,True,False)",
+      "State": "Passed",
+      "DurationSeconds": 0.0002579,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ZoneRequiresOcclusionByDefaultAndAllowsInspectorOptOut",
+      "FullName": "EnemySpawnOcclusionTests.ZoneRequiresOcclusionByDefaultAndAllowsInspectorOptOut",
+      "State": "Passed",
+      "DurationSeconds": 0.0009269,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ExistingAttackTurnsWholeRootWithoutTranslation(\"Projectile\",EnemyRangedProjectileAttack)",
+      "FullName": "EnemyStationaryTests.ExistingAttackTurnsWholeRootWithoutTranslation(\"Projectile\",EnemyRangedProjectileAttack)",
+      "State": "Passed",
+      "DurationSeconds": 0.0014108,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ExistingAttackTurnsWholeRootWithoutTranslation(\"Beam\",EnemyRangedBeamAttack)",
+      "FullName": "EnemyStationaryTests.ExistingAttackTurnsWholeRootWithoutTranslation(\"Beam\",EnemyRangedBeamAttack)",
+      "State": "Passed",
+      "DurationSeconds": 0.0001659,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "OnlyStationaryZoneAcceptsMissingPatrolArea(Stationary,True)",
+      "FullName": "EnemyStationaryTests.OnlyStationaryZoneAcceptsMissingPatrolArea(Stationary,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0012537,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "OnlyStationaryZoneAcceptsMissingPatrolArea(Ground,False)",
+      "FullName": "EnemyStationaryTests.OnlyStationaryZoneAcceptsMissingPatrolArea(Ground,False)",
+      "State": "Passed",
+      "DurationSeconds": 0.0002274,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "OnlyStationaryZoneAcceptsMissingPatrolArea(FreeFlying,False)",
+      "FullName": "EnemyStationaryTests.OnlyStationaryZoneAcceptsMissingPatrolArea(FreeFlying,False)",
+      "State": "Passed",
+      "DurationSeconds": 0.00019,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "OnlyStationaryZoneAcceptsMissingPatrolArea(99,False)",
+      "FullName": "EnemyStationaryTests.OnlyStationaryZoneAcceptsMissingPatrolArea(99,False)",
+      "State": "Passed",
+      "DurationSeconds": 0.0001709,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StationarySpawnUsesAuthoredCenterWithChunkTransform",
+      "FullName": "EnemyStationaryTests.StationarySpawnUsesAuthoredCenterWithChunkTransform",
+      "State": "Passed",
+      "DurationSeconds": 0.0018592,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "TestSpawnerUsesExplicitPointWithoutPatrolArea(False)",
+      "FullName": "EnemyStationaryTests.TestSpawnerUsesExplicitPointWithoutPatrolArea(False)",
+      "State": "Passed",
+      "DurationSeconds": 0.001595,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "TestSpawnerUsesExplicitPointWithoutPatrolArea(True)",
+      "FullName": "EnemyStationaryTests.TestSpawnerUsesExplicitPointWithoutPatrolArea(True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0005011,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "TurretHasOneAttackAndNoNavigationDependency(\"Projectile\",EnemyRangedProjectileAttack,EnemyRangedBeamAttack)",
+      "FullName": "EnemyStationaryTests.TurretHasOneAttackAndNoNavigationDependency(\"Projectile\",EnemyRangedProjectileAttack,EnemyRangedBeamAttack)",
+      "State": "Passed",
+      "DurationSeconds": 0.1138719,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "TurretHasOneAttackAndNoNavigationDependency(\"Beam\",EnemyRangedBeamAttack,EnemyRangedProjectileAttack)",
+      "FullName": "EnemyStationaryTests.TurretHasOneAttackAndNoNavigationDependency(\"Beam\",EnemyRangedBeamAttack,EnemyRangedProjectileAttack)",
+      "State": "Passed",
+      "DurationSeconds": 0.0057381,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "VariantCIsAppendedWithoutChangingExistingSerializedValues",
+      "FullName": "EnemyStationaryTests.VariantCIsAppendedWithoutChangingExistingSerializedValues",
+      "State": "Passed",
+      "DurationSeconds": 0.0002325,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "AtlasMaterialIsUsableWithoutRuntimeTextureOrMaterialCopies",
+      "FullName": "FirstPersonMuzzleFlashTests.AtlasMaterialIsUsableWithoutRuntimeTextureOrMaterialCopies",
+      "State": "Passed",
+      "DurationSeconds": 0.0026096,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "BindingNeverReplaysHistoricalShotsAndRepeatedSnapshotsNeverFire",
+      "FullName": "FirstPersonMuzzleFlashTests.BindingNeverReplaysHistoricalShotsAndRepeatedSnapshotsNeverFire",
+      "State": "Passed",
+      "DurationSeconds": 0.000481,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PredictionRollbackAndCatchupDoNotDuplicateFlash",
+      "FullName": "FirstPersonMuzzleFlashTests.PredictionRollbackAndCatchupDoNotDuplicateFlash",
+      "State": "Passed",
+      "DurationSeconds": 0.0002231,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RapidFireRestartsOnePlaybackAndEndsWithoutQueue",
+      "FullName": "FirstPersonMuzzleFlashTests.RapidFireRestartsOnePlaybackAndEndsWithoutQueue",
+      "State": "Passed",
+      "DurationSeconds": 0.0769553,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RebindingAndSignedSequenceWrapRemainSafe",
+      "FullName": "FirstPersonMuzzleFlashTests.RebindingAndSignedSequenceWrapRemainSafe",
+      "State": "Passed",
+      "DurationSeconds": 0.0003743,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RendererStaysBoundedFollowsMuzzleAndKeepsScreenSizeAfterCameraTurns",
+      "FullName": "FirstPersonMuzzleFlashTests.RendererStaysBoundedFollowsMuzzleAndKeepsScreenSizeAfterCameraTurns",
+      "State": "Passed",
+      "DurationSeconds": 0.0124484,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StateChangeReleasesTailAndBlockedShotsAreNotReplayed",
+      "FullName": "FirstPersonMuzzleFlashTests.StateChangeReleasesTailAndBlockedShotsAreNotReplayed",
+      "State": "Passed",
+      "DurationSeconds": 0.0003868,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "UnspawnedSourcesNeverReadNetworkStateOrCreateVisuals",
+      "FullName": "FirstPersonMuzzleFlashTests.UnspawnedSourcesNeverReadNetworkStateOrCreateVisuals",
+      "State": "Passed",
+      "DurationSeconds": 0.0015826,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CorruptSaveDoesNotHideValidSaveFromCatalog",
+      "FullName": "GameSaveRepositoryTests.CorruptSaveDoesNotHideValidSaveFromCatalog",
+      "State": "Passed",
+      "DurationSeconds": 0.0207984,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CreateListLoadAndOverwriteRoundTrip",
+      "FullName": "GameSaveRepositoryTests.CreateListLoadAndOverwriteRoundTrip",
+      "State": "Passed",
+      "DurationSeconds": 0.021197,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CreateNewCapturesConfiguredCycleLength",
+      "FullName": "GameSaveRepositoryTests.CreateNewCapturesConfiguredCycleLength",
+      "State": "Passed",
+      "DurationSeconds": 0.0095746,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "InvalidSaveIdCannotEscapeRepositoryDirectory",
+      "FullName": "GameSaveRepositoryTests.InvalidSaveIdCannotEscapeRepositoryDirectory",
+      "State": "Passed",
+      "DurationSeconds": 0.000672,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PendingRewardsSurviveSaveAndResetWithRun",
+      "FullName": "GameSaveRepositoryTests.PendingRewardsSurviveSaveAndResetWithRun",
+      "State": "Passed",
+      "DurationSeconds": 0.0150493,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ResetRunProgressionPreservesPermanentProgression",
+      "FullName": "GameSaveRepositoryTests.ResetRunProgressionPreservesPermanentProgression",
+      "State": "Passed",
+      "DurationSeconds": 0.0015742,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "VersionOneSaveMigratesWithoutCreatingPendingRewards",
+      "FullName": "GameSaveRepositoryTests.VersionOneSaveMigratesWithoutCreatingPendingRewards",
+      "State": "Passed",
+      "DurationSeconds": 0.0087654,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "VersionTwoSaveMigratesWithEmptyRewardDraft",
+      "FullName": "GameSaveRepositoryTests.VersionTwoSaveMigratesWithEmptyRewardDraft",
+      "State": "Passed",
+      "DurationSeconds": 0.0103291,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CapacityUsesPlayerLevel(1,50.0f)",
+      "FullName": "GrappleEnergyRulesTests.CapacityUsesPlayerLevel(1,50.0f)",
+      "State": "Passed",
+      "DurationSeconds": 0.0004705,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CapacityUsesPlayerLevel(2,75.0f)",
+      "FullName": "GrappleEnergyRulesTests.CapacityUsesPlayerLevel(2,75.0f)",
+      "State": "Passed",
+      "DurationSeconds": 5.42E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CapacityUsesPlayerLevel(3,100.0f)",
+      "FullName": "GrappleEnergyRulesTests.CapacityUsesPlayerLevel(3,100.0f)",
+      "State": "Passed",
+      "DurationSeconds": 4.28E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CapacityUsesPlayerLevel(0,50.0f)",
+      "FullName": "GrappleEnergyRulesTests.CapacityUsesPlayerLevel(0,50.0f)",
+      "State": "Passed",
+      "DurationSeconds": 4.05E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "LaunchRequiresFullPayment(50.0f,True,49.0f)",
+      "FullName": "GrappleEnergyRulesTests.LaunchRequiresFullPayment(50.0f,True,49.0f)",
+      "State": "Passed",
+      "DurationSeconds": 0.000599,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "LaunchRequiresFullPayment(1.0f,True,0.0f)",
+      "FullName": "GrappleEnergyRulesTests.LaunchRequiresFullPayment(1.0f,True,0.0f)",
+      "State": "Passed",
+      "DurationSeconds": 6.38E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "LaunchRequiresFullPayment(0.5f,False,0.5f)",
+      "FullName": "GrappleEnergyRulesTests.LaunchRequiresFullPayment(0.5f,False,0.5f)",
+      "State": "Passed",
+      "DurationSeconds": 6E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "LaunchRequiresFullPayment(0.0f,False,0.0f)",
+      "FullName": "GrappleEnergyRulesTests.LaunchRequiresFullPayment(0.0f,False,0.0f)",
+      "State": "Passed",
+      "DurationSeconds": 5.04E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "LevelUpCanRefillOrAddOnlyCapacityDifference(True,75.0f)",
+      "FullName": "GrappleEnergyRulesTests.LevelUpCanRefillOrAddOnlyCapacityDifference(True,75.0f)",
+      "State": "Passed",
+      "DurationSeconds": 0.0004144,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "LevelUpCanRefillOrAddOnlyCapacityDifference(False,35.0f)",
+      "FullName": "GrappleEnergyRulesTests.LevelUpCanRefillOrAddOnlyCapacityDifference(False,35.0f)",
+      "State": "Passed",
+      "DurationSeconds": 5.28E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "LowerLevelClampsEnergyWithoutGrantingARefill",
+      "FullName": "GrappleEnergyRulesTests.LowerLevelClampsEnergyWithoutGrantingARefill",
+      "State": "Passed",
+      "DurationSeconds": 0.0001408,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MultipleLevelsAddTheWholeCapacityDifference",
+      "FullName": "GrappleEnergyRulesTests.MultipleLevelsAddTheWholeCapacityDifference",
+      "State": "Passed",
+      "DurationSeconds": 0.0001463,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PlayerPrefabExposesNewEnergySettingsAndSafeUnspawnedHud",
+      "FullName": "GrappleEnergyRulesTests.PlayerPrefabExposesNewEnergySettingsAndSafeUnspawnedHud",
+      "State": "Passed",
+      "DurationSeconds": 0.0134191,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PullCannotProduceNegativeEnergyOrRefill",
+      "FullName": "GrappleEnergyRulesTests.PullCannotProduceNegativeEnergyOrRefill",
+      "State": "Passed",
+      "DurationSeconds": 0.0002966,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PullCostDependsOnElapsedTimeNotTickRate",
+      "FullName": "GrappleEnergyRulesTests.PullCostDependsOnElapsedTimeNotTickRate",
+      "State": "Passed",
+      "DurationSeconds": 0.0001919,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SameCapacityDoesNotGrantEnergyAgain(True)",
+      "FullName": "GrappleEnergyRulesTests.SameCapacityDoesNotGrantEnergyAgain(True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0003019,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SameCapacityDoesNotGrantEnergyAgain(False)",
+      "FullName": "GrappleEnergyRulesTests.SameCapacityDoesNotGrantEnergyAgain(False)",
+      "State": "Passed",
+      "DurationSeconds": 5.15E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ConfirmedAirborneAfterPullArmsNextLanding",
+      "FullName": "GrappleLandingRulesTests.ConfirmedAirborneAfterPullArmsNextLanding",
+      "State": "Passed",
+      "DurationSeconds": 0.0002984,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "GroundedPullHasNotConfirmedTakeoff",
+      "FullName": "GrappleLandingRulesTests.GroundedPullHasNotConfirmedTakeoff",
+      "State": "Passed",
+      "DurationSeconds": 0.0001552,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "LandingBetweenAttachmentAndFirstPullDoesNotRelease",
+      "FullName": "GrappleLandingRulesTests.LandingBetweenAttachmentAndFirstPullDoesNotRelease",
+      "State": "Passed",
+      "DurationSeconds": 0.0001761,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "NonzeroApproachStillRespectsThreshold(0.01f,0.0f,True)",
+      "FullName": "GrappleLandingRulesTests.NonzeroApproachStillRespectsThreshold(0.01f,0.0f,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0003352,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "NonzeroApproachStillRespectsThreshold(0.2f,0.5f,False)",
+      "FullName": "GrappleLandingRulesTests.NonzeroApproachStillRespectsThreshold(0.2f,0.5f,False)",
+      "State": "Passed",
+      "DurationSeconds": 5.85E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "NonzeroApproachStillRespectsThreshold(0.5f,0.5f,True)",
+      "FullName": "GrappleLandingRulesTests.NonzeroApproachStillRespectsThreshold(0.5f,0.5f,True)",
+      "State": "Passed",
+      "DurationSeconds": 5.09E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PassingPointRequiresPreviousApproachAndAwayThreshold(True,-0.01f,0.0f,True)",
+      "FullName": "GrappleLandingRulesTests.PassingPointRequiresPreviousApproachAndAwayThreshold(True,-0.01f,0.0f,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0007246,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PassingPointRequiresPreviousApproachAndAwayThreshold(False,-1.0f,0.0f,False)",
+      "FullName": "GrappleLandingRulesTests.PassingPointRequiresPreviousApproachAndAwayThreshold(False,-1.0f,0.0f,False)",
+      "State": "Passed",
+      "DurationSeconds": 0.0001111,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PassingPointRequiresPreviousApproachAndAwayThreshold(True,-0.05f,0.1f,False)",
+      "FullName": "GrappleLandingRulesTests.PassingPointRequiresPreviousApproachAndAwayThreshold(True,-0.05f,0.1f,False)",
+      "State": "Passed",
+      "DurationSeconds": 5.36E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PassingPointRequiresPreviousApproachAndAwayThreshold(True,-0.1f,0.1f,True)",
+      "FullName": "GrappleLandingRulesTests.PassingPointRequiresPreviousApproachAndAwayThreshold(True,-0.1f,0.1f,True)",
+      "State": "Passed",
+      "DurationSeconds": 4.97E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StartupLandingRequestsOnlyOneJumpAndThenArmsAfterPullTakeoff",
+      "FullName": "GrappleLandingRulesTests.StartupLandingRequestsOnlyOneJumpAndThenArmsAfterPullTakeoff",
+      "State": "Passed",
+      "DurationSeconds": 0.0003038,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StartupTimeoutOnlyAbortsBlockedTakeoff(False,True,True,True)",
+      "FullName": "GrappleLandingRulesTests.StartupTimeoutOnlyAbortsBlockedTakeoff(False,True,True,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0004337,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StartupTimeoutOnlyAbortsBlockedTakeoff(False,True,False,False)",
+      "FullName": "GrappleLandingRulesTests.StartupTimeoutOnlyAbortsBlockedTakeoff(False,True,False,False)",
+      "State": "Passed",
+      "DurationSeconds": 6.07E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StartupTimeoutOnlyAbortsBlockedTakeoff(False,False,True,False)",
+      "FullName": "GrappleLandingRulesTests.StartupTimeoutOnlyAbortsBlockedTakeoff(False,False,True,False)",
+      "State": "Passed",
+      "DurationSeconds": 5.06E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StartupTimeoutOnlyAbortsBlockedTakeoff(True,True,True,False)",
+      "FullName": "GrappleLandingRulesTests.StartupTimeoutOnlyAbortsBlockedTakeoff(True,True,True,False)",
+      "State": "Passed",
+      "DurationSeconds": 5.04E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ZeroThresholdDoesNotTreatStationaryAsApproaching",
+      "FullName": "GrappleLandingRulesTests.ZeroThresholdDoesNotTreatStationaryAsApproaching",
+      "State": "Passed",
+      "DurationSeconds": 0.0001309,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ZeroThresholdDoesNotTreatStationaryAsPassingPoint",
+      "FullName": "GrappleLandingRulesTests.ZeroThresholdDoesNotTreatStationaryAsPassingPoint",
+      "State": "Passed",
+      "DurationSeconds": 0.0001096,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "AmplitudeCurveControlsWaveStrength",
+      "FullName": "GrappleRopeVisualTests.AmplitudeCurveControlsWaveStrength",
+      "State": "Passed",
+      "DurationSeconds": 0.00074,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "AttachedFinishesTighteningAndKeepsExactHitPoint",
+      "FullName": "GrappleRopeVisualTests.AttachedFinishesTighteningAndKeepsExactHitPoint",
+      "State": "Passed",
+      "DurationSeconds": 0.0005288,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DisabledWavesKeepOriginalStraightLine",
+      "FullName": "GrappleRopeVisualTests.DisabledWavesKeepOriginalStraightLine",
+      "State": "Passed",
+      "DurationSeconds": 0.0004943,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HookConnectionTracksTipAndHidesWithRope",
+      "FullName": "GrappleRopeVisualTests.HookConnectionTracksTipAndHidesWithRope",
+      "State": "Passed",
+      "DurationSeconds": 0.0006044,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HookIsReusedAndReleasedOnDespawn",
+      "FullName": "GrappleRopeVisualTests.HookIsReusedAndReleasedOnDespawn",
+      "State": "Passed",
+      "DurationSeconds": 0.0006231,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HookOffsetRespectsScaleAndRotationCorrection",
+      "FullName": "GrappleRopeVisualTests.HookOffsetRespectsScaleAndRotationCorrection",
+      "State": "Passed",
+      "DurationSeconds": 0.000557,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "LateJoinAttachedStartsStraightWithoutReplayingLaunch",
+      "FullName": "GrappleRopeVisualTests.LateJoinAttachedStartsStraightWithoutReplayingLaunch",
+      "State": "Passed",
+      "DurationSeconds": 0.0004752,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MidFlightCancelDoesNotExtendToTarget",
+      "FullName": "GrappleRopeVisualTests.MidFlightCancelDoesNotExtendToTarget",
+      "State": "Passed",
+      "DurationSeconds": 0.0005167,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RemoteOriginNeverUsesFirstPersonOrigin",
+      "FullName": "GrappleRopeVisualTests.RemoteOriginNeverUsesFirstPersonOrigin",
+      "State": "Passed",
+      "DurationSeconds": 0.0005268,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ShootingHasWavesButBothEndpointsStayConnected",
+      "FullName": "GrappleRopeVisualTests.ShootingHasWavesButBothEndpointsStayConnected",
+      "State": "Passed",
+      "DurationSeconds": 0.0009924,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StrongWavesAreLimitedOnVeryShortRopes",
+      "FullName": "GrappleRopeVisualTests.StrongWavesAreLimitedOnVeryShortRopes",
+      "State": "Passed",
+      "DurationSeconds": 0.0006216,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "UnspawnedVisualDoesNotReadNetworkedState",
+      "FullName": "GrappleRopeVisualTests.UnspawnedVisualDoesNotReadNetworkedState",
+      "State": "Passed",
+      "DurationSeconds": 0.0004869,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "WaveMovesEvenWhenExtensionHasNotChanged",
+      "FullName": "GrappleRopeVisualTests.WaveMovesEvenWhenExtensionHasNotChanged",
+      "State": "Passed",
+      "DurationSeconds": 0.0005193,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ZeroTighteningTimeImmediatelyStraightens",
+      "FullName": "GrappleRopeVisualTests.ZeroTighteningTimeImmediatelyStraightens",
+      "State": "Passed",
+      "DurationSeconds": 0.0005033,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DamageEightSevenFiveRemovesOnlyOneWholeCell",
+      "FullName": "HealthWholeCellTests.DamageEightSevenFiveRemovesOnlyOneWholeCell",
+      "State": "Passed",
+      "DurationSeconds": 0.0015363,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DeathAndRebindClearPendingCells",
+      "FullName": "HealthWholeCellTests.DeathAndRebindClearPendingCells",
+      "State": "Passed",
+      "DurationSeconds": 0.0006269,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HealingEightSevenFiveRestoresOnlyOneWholeCell",
+      "FullName": "HealthWholeCellTests.HealingEightSevenFiveRestoresOnlyOneWholeCell",
+      "State": "Passed",
+      "DurationSeconds": 0.0004397,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HighCapacityNeverExpandsAuthoredRect",
+      "FullName": "HealthWholeCellTests.HighCapacityNeverExpandsAuthoredRect",
+      "State": "Passed",
+      "DurationSeconds": 0.0004886,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "OppositeChangeCancelsPendingFraction",
+      "FullName": "HealthWholeCellTests.OppositeChangeCancelsPendingFraction",
+      "State": "Passed",
+      "DurationSeconds": 0.0003974,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ShieldStartsAfterVisibleHealthAndKeepsWholeTail",
+      "FullName": "HealthWholeCellTests.ShieldStartsAfterVisibleHealthAndKeepsWholeTail",
+      "State": "Passed",
+      "DurationSeconds": 0.000569,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HudSurvivesFusionSceneMigration(Purgers.GameFlow.Stage.StageHudController)",
+      "FullName": "HudLayoutTests.HudSurvivesFusionSceneMigration(Purgers.GameFlow.Stage.StageHudController)",
+      "State": "Passed",
+      "DurationSeconds": 0.0025906,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HudSurvivesFusionSceneMigration(Purgers.GameFlow.SafeHouse.SafeHouseHudController)",
+      "FullName": "HudLayoutTests.HudSurvivesFusionSceneMigration(Purgers.GameFlow.SafeHouse.SafeHouseHudController)",
+      "State": "Passed",
+      "DurationSeconds": 0.0014571,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "LeftColumnReservesMapBeforeStatusAndReady(\"Game\",\"StageHUD\",\"StagePanel\")",
+      "FullName": "HudLayoutTests.LeftColumnReservesMapBeforeStatusAndReady(\"Game\",\"StageHUD\",\"StagePanel\")",
+      "State": "Passed",
+      "DurationSeconds": 0.1191455,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "LeftColumnReservesMapBeforeStatusAndReady(\"SafeHouse\",\"SafeHouseHUD\",\"StageLevelPanel\")",
+      "FullName": "HudLayoutTests.LeftColumnReservesMapBeforeStatusAndReady(\"SafeHouse\",\"SafeHouseHUD\",\"StageLevelPanel\")",
+      "State": "Passed",
+      "DurationSeconds": 0.6335107,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MapChunkPrefabDoesNotContainStageScopedUi",
+      "FullName": "HudLayoutTests.MapChunkPrefabDoesNotContainStageScopedUi",
+      "State": "Passed",
+      "DurationSeconds": 0.0018536,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MomentumEnergyPeakHoldIsRefreshableWithoutStacking(0.9f,True,False,1.0f,10.0f,2.0f,1.0f,True)",
+      "FullName": "HudLayoutTests.MomentumEnergyPeakHoldIsRefreshableWithoutStacking(0.9f,True,False,1.0f,10.0f,2.0f,1.0f,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0013842,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MomentumEnergyPeakHoldIsRefreshableWithoutStacking(1.0f,True,True,0.1f,10.0f,2.0f,1.0f,True)",
+      "FullName": "HudLayoutTests.MomentumEnergyPeakHoldIsRefreshableWithoutStacking(1.0f,True,True,0.1f,10.0f,2.0f,1.0f,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0001725,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MomentumEnergyPeakHoldIsRefreshableWithoutStacking(1.0f,False,True,1.0f,10.0f,2.0f,1.0f,False)",
+      "FullName": "HudLayoutTests.MomentumEnergyPeakHoldIsRefreshableWithoutStacking(1.0f,False,True,1.0f,10.0f,2.0f,1.0f,False)",
+      "State": "Passed",
+      "DurationSeconds": 9.44E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MomentumEnergyPeakHoldIsRefreshableWithoutStacking(1.0f,False,False,0.5f,10.0f,2.0f,0.75f,False)",
+      "FullName": "HudLayoutTests.MomentumEnergyPeakHoldIsRefreshableWithoutStacking(1.0f,False,False,0.5f,10.0f,2.0f,0.75f,False)",
+      "State": "Passed",
+      "DurationSeconds": 9.59E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MomentumEnergyPeakHoldIsRefreshableWithoutStacking(0.5f,True,False,1.0f,10.0f,2.0f,0.6f,False)",
+      "FullName": "HudLayoutTests.MomentumEnergyPeakHoldIsRefreshableWithoutStacking(0.5f,True,False,1.0f,10.0f,2.0f,0.6f,False)",
+      "State": "Passed",
+      "DurationSeconds": 9.28E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "NewStageHudReplacesThePreviousHudForTheSameRunner",
+      "FullName": "HudLayoutTests.NewStageHudReplacesThePreviousHudForTheSameRunner",
+      "State": "Passed",
+      "DurationSeconds": 0.0032741,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ReadyPanelIsVisibleOnlyDuringVoting(WaitingForHost,False)",
+      "FullName": "HudLayoutTests.ReadyPanelIsVisibleOnlyDuringVoting(WaitingForHost,False)",
+      "State": "Passed",
+      "DurationSeconds": 0.0007732,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ReadyPanelIsVisibleOnlyDuringVoting(ReadyCheck,True)",
+      "FullName": "HudLayoutTests.ReadyPanelIsVisibleOnlyDuringVoting(ReadyCheck,True)",
+      "State": "Passed",
+      "DurationSeconds": 6.93E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ReadyPanelIsVisibleOnlyDuringVoting(Countdown,True)",
+      "FullName": "HudLayoutTests.ReadyPanelIsVisibleOnlyDuringVoting(Countdown,True)",
+      "State": "Passed",
+      "DurationSeconds": 6.05E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ReadyPanelIsVisibleOnlyDuringVoting(LoadingStage,False)",
+      "FullName": "HudLayoutTests.ReadyPanelIsVisibleOnlyDuringVoting(LoadingStage,False)",
+      "State": "Passed",
+      "DurationSeconds": 5.61E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SpeedVisualAnchorsToCanvasAndHidesBonusWithGauge",
+      "FullName": "HudLayoutTests.SpeedVisualAnchorsToCanvasAndHidesBonusWithGauge",
+      "State": "Passed",
+      "DurationSeconds": 0.0014269,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StageCountdownContainsOnlyClockDigits(600.0f,\"10:00\")",
+      "FullName": "HudLayoutTests.StageCountdownContainsOnlyClockDigits(600.0f,\"10:00\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0006564,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StageCountdownContainsOnlyClockDigits(59.1f,\"01:00\")",
+      "FullName": "HudLayoutTests.StageCountdownContainsOnlyClockDigits(59.1f,\"01:00\")",
+      "State": "Passed",
+      "DurationSeconds": 6.08E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StageCountdownContainsOnlyClockDigits(0.0f,\"00:00\")",
+      "FullName": "HudLayoutTests.StageCountdownContainsOnlyClockDigits(0.0f,\"00:00\")",
+      "State": "Passed",
+      "DurationSeconds": 4.79E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StageCountdownContainsOnlyClockDigits(-1.0f,\"00:00\")",
+      "FullName": "HudLayoutTests.StageCountdownContainsOnlyClockDigits(-1.0f,\"00:00\")",
+      "State": "Passed",
+      "DurationSeconds": 4.9E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StageHeaderShowsCycleAndBossRoute(1,1,4,False,\"關卡等級  1　循環  1/4\")",
+      "FullName": "HudLayoutTests.StageHeaderShowsCycleAndBossRoute(1,1,4,False,\"關卡等級  1　循環  1/4\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0007446,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StageHeaderShowsCycleAndBossRoute(4,4,4,True,\"關卡等級  4　Boss 關\")",
+      "FullName": "HudLayoutTests.StageHeaderShowsCycleAndBossRoute(4,4,4,True,\"關卡等級  4　Boss 關\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0001011,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StageHeaderShowsCycleAndBossRoute(5,1,4,False,\"關卡等級  5　循環  1/4\")",
+      "FullName": "HudLayoutTests.StageHeaderShowsCycleAndBossRoute(5,1,4,False,\"關卡等級  5　循環  1/4\")",
+      "State": "Passed",
+      "DurationSeconds": 4.61E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StageHudOwnershipIsIndependentPerRunner",
+      "FullName": "HudLayoutTests.StageHudOwnershipIsIndependentPerRunner",
+      "State": "Passed",
+      "DurationSeconds": 0.0007436,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StageScopedHudControllerOwnsTheWholeSceneHud(\"Game\",\"StageHUD\",Purgers.GameFlow.Stage.StageHudController)",
+      "FullName": "HudLayoutTests.StageScopedHudControllerOwnsTheWholeSceneHud(\"Game\",\"StageHUD\",Purgers.GameFlow.Stage.StageHudController)",
+      "State": "Passed",
+      "DurationSeconds": 0.1202678,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StageScopedHudControllerOwnsTheWholeSceneHud(\"SafeHouse\",\"SafeHouseHUD\",Purgers.GameFlow.SafeHouse.SafeHouseHudController)",
+      "FullName": "HudLayoutTests.StageScopedHudControllerOwnsTheWholeSceneHud(\"SafeHouse\",\"SafeHouseHUD\",Purgers.GameFlow.SafeHouse.SafeHouseHudController)",
+      "State": "Passed",
+      "DurationSeconds": 0.0053849,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DifferentSeedsCanProduceDifferentTopologySignatures",
+      "FullName": "MapTopologyPlannerTests.DifferentSeedsCanProduceDifferentTopologySignatures",
+      "State": "Passed",
+      "DurationSeconds": 0.0062119,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "EveryGeneratedChunkUsesDifferentEntryAndExitConnectors",
+      "FullName": "MapTopologyPlannerTests.EveryGeneratedChunkUsesDifferentEntryAndExitConnectors",
+      "State": "Passed",
+      "DurationSeconds": 0.0008037,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "FixedStartingEntryAndExitArePreservedByThePlan",
+      "FullName": "MapTopologyPlannerTests.FixedStartingEntryAndExitArePreservedByThePlan",
+      "State": "Passed",
+      "DurationSeconds": 0.0005678,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "OverlappingCandidateIsRejectedAndGenerationStopsAtRetryLimit",
+      "FullName": "MapTopologyPlannerTests.OverlappingCandidateIsRejectedAndGenerationStopsAtRetryLimit",
+      "State": "Passed",
+      "DurationSeconds": 0.000503,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SameSeedProducesSameTopologyAndUniqueFinalChunk",
+      "FullName": "MapTopologyPlannerTests.SameSeedProducesSameTopologyAndUniqueFinalChunk",
+      "State": "Passed",
+      "DurationSeconds": 0.0012449,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "TouchingBoundsAreAcceptedButPositiveAreaOverlapIsRejected",
+      "FullName": "MapTopologyPlannerTests.TouchingBoundsAreAcceptedButPositiveAreaOverlapIsRejected",
+      "State": "Passed",
+      "DurationSeconds": 0.0002003,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ZeroAdditionalChunksMarksStartingChunkAsFinal",
+      "FullName": "MapTopologyPlannerTests.ZeroAdditionalChunksMarksStartingChunkAsFinal",
+      "State": "Passed",
+      "DurationSeconds": 0.0002239,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SavedFadeControllerHasUsableShowAndHideStates",
+      "FullName": "MenuBrushAssetsTests.SavedFadeControllerHasUsableShowAndHideStates",
+      "State": "Passed",
+      "DurationSeconds": 0.0031684,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DisabledAncestorClearsHighlightAndPressWithoutChangingHitArea",
+      "FullName": "MenuBrushButtonTests.DisabledAncestorClearsHighlightAndPressWithoutChangingHitArea",
+      "State": "Passed",
+      "DurationSeconds": 0.0075037,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HideAndReopenDoNotRetainHoverOrPressedScale",
+      "FullName": "MenuBrushButtonTests.HideAndReopenDoNotRetainHoverOrPressedScale",
+      "State": "Passed",
+      "DurationSeconds": 0.0013526,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HoverAndKeyboardSelectionAreVisualOnlyAndPointerExitKeepsSelection",
+      "FullName": "MenuBrushButtonTests.HoverAndKeyboardSelectionAreVisualOnlyAndPointerExitKeepsSelection",
+      "State": "Passed",
+      "DurationSeconds": 0.0017841,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RightMouseAndZeroElapsedTimeCannotTriggerPressedPresentation",
+      "FullName": "MenuBrushButtonTests.RightMouseAndZeroElapsedTimeCannotTriggerPressedPresentation",
+      "State": "Passed",
+      "DurationSeconds": 0.0010343,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ClientReadOnlyContextCannotWriteHostSave",
+      "FullName": "MenuSaveFlowTests.ClientReadOnlyContextCannotWriteHostSave",
+      "State": "Passed",
+      "DurationSeconds": 0.0008882,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HostAndClientRunnerContextsRemainIndependent",
+      "FullName": "MenuSaveFlowTests.HostAndClientRunnerContextsRemainIndependent",
+      "State": "Passed",
+      "DurationSeconds": 0.0005451,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "LaunchPolicySeparatesQuickPlayContinueAndClient(False,null,False,QuickPlayNewHost)",
+      "FullName": "MenuSaveFlowTests.LaunchPolicySeparatesQuickPlayContinueAndClient(False,null,False,QuickPlayNewHost)",
+      "State": "Passed",
+      "DurationSeconds": 0.0006295,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "LaunchPolicySeparatesQuickPlayContinueAndClient(False,\"ABCD\",False,ClientJoin)",
+      "FullName": "MenuSaveFlowTests.LaunchPolicySeparatesQuickPlayContinueAndClient(False,\"ABCD\",False,ClientJoin)",
+      "State": "Passed",
+      "DurationSeconds": 5.55E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "LaunchPolicySeparatesQuickPlayContinueAndClient(True,null,False,FreshHost)",
+      "FullName": "MenuSaveFlowTests.LaunchPolicySeparatesQuickPlayContinueAndClient(True,null,False,FreshHost)",
+      "State": "Passed",
+      "DurationSeconds": 4.72E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "LaunchPolicySeparatesQuickPlayContinueAndClient(True,null,True,ContinueHost)",
+      "FullName": "MenuSaveFlowTests.LaunchPolicySeparatesQuickPlayContinueAndClient(True,null,True,ContinueHost)",
+      "State": "Passed",
+      "DurationSeconds": 4.25E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ScenePolicyFallsBackFromStalePlayerPrefsSelection",
+      "FullName": "MenuSaveFlowTests.ScenePolicyFallsBackFromStalePlayerPrefsSelection",
+      "State": "Passed",
+      "DurationSeconds": 0.0008168,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CountHandlesEmptyCatalogWithoutInventingRows",
+      "FullName": "MenuSaveSummaryViewTests.CountHandlesEmptyCatalogWithoutInventingRows",
+      "State": "Passed",
+      "DurationSeconds": 0.0029672,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MissingSelectionClearsStaleDetails",
+      "FullName": "MenuSaveSummaryViewTests.MissingSelectionClearsStaleDetails",
+      "State": "Passed",
+      "DurationSeconds": 0.0022274,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "OptionalReferencesCanRemainUnassigned",
+      "FullName": "MenuSaveSummaryViewTests.OptionalReferencesCanRemainUnassigned",
+      "State": "Passed",
+      "DurationSeconds": 0.0014227,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RealSummaryIsDisplayedAndClearedWithoutModifyingData",
+      "FullName": "MenuSaveSummaryViewTests.RealSummaryIsDisplayedAndClearedWithoutModifyingData",
+      "State": "Passed",
+      "DurationSeconds": 0.0018168,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "BlockerIndexPreservesExactBoundsAcrossNegativeAndAdjacentBuckets",
+      "FullName": "MinimapRulesTests.BlockerIndexPreservesExactBoundsAcrossNegativeAndAdjacentBuckets",
+      "State": "Passed",
+      "DurationSeconds": 0.0036758,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CachedTilesRespectBuildBudgetAndUploadOnlyWhenDirty",
+      "FullName": "MinimapRulesTests.CachedTilesRespectBuildBudgetAndUploadOnlyWhenDirty",
+      "State": "Passed",
+      "DurationSeconds": 0.0020091,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CartographyPaletteSeparatesWallsFloorsAndBlockedGround",
+      "FullName": "MinimapRulesTests.CartographyPaletteSeparatesWallsFloorsAndBlockedGround",
+      "State": "Passed",
+      "DurationSeconds": 0.0008536,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ExpandedViewZoomsOutWithoutMovingThePlayerCenter",
+      "FullName": "MinimapRulesTests.ExpandedViewZoomsOutWithoutMovingThePlayerCenter",
+      "State": "Passed",
+      "DurationSeconds": 0.0006906,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ExplorationPresentationReceivesOnlyActualChangesWithoutConsumingNetworkDeltas",
+      "FullName": "MinimapRulesTests.ExplorationPresentationReceivesOnlyActualChangesWithoutConsumingNetworkDeltas",
+      "State": "Passed",
+      "DurationSeconds": 0.0045419,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "FlightExploresBelowWithoutRevealingFloorsAbove(80.0f,True)",
+      "FullName": "MinimapRulesTests.FlightExploresBelowWithoutRevealingFloorsAbove(80.0f,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0005949,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "FlightExploresBelowWithoutRevealingFloorsAbove(0.0f,True)",
+      "FullName": "MinimapRulesTests.FlightExploresBelowWithoutRevealingFloorsAbove(0.0f,True)",
+      "State": "Passed",
+      "DurationSeconds": 7.04E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "FlightExploresBelowWithoutRevealingFloorsAbove(-12.0f,False)",
+      "FullName": "MinimapRulesTests.FlightExploresBelowWithoutRevealingFloorsAbove(-12.0f,False)",
+      "State": "Passed",
+      "DurationSeconds": 5.57E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "LateSnapshotCannotEraseNewerDeltas",
+      "FullName": "MinimapRulesTests.LateSnapshotCannotEraseNewerDeltas",
+      "State": "Passed",
+      "DurationSeconds": 0.0001838,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MarkersRequirePersonalProximityAndVisibility(True,10.0f,0.0f,True,True)",
+      "FullName": "MinimapRulesTests.MarkersRequirePersonalProximityAndVisibility(True,10.0f,0.0f,True,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0007048,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MarkersRequirePersonalProximityAndVisibility(True,60.0f,0.0f,True,False)",
+      "FullName": "MinimapRulesTests.MarkersRequirePersonalProximityAndVisibility(True,60.0f,0.0f,True,False)",
+      "State": "Passed",
+      "DurationSeconds": 6.88E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MarkersRequirePersonalProximityAndVisibility(True,10.0f,12.0f,True,False)",
+      "FullName": "MinimapRulesTests.MarkersRequirePersonalProximityAndVisibility(True,10.0f,12.0f,True,False)",
+      "State": "Passed",
+      "DurationSeconds": 6.01E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MarkersRequirePersonalProximityAndVisibility(True,10.0f,0.0f,False,False)",
+      "FullName": "MinimapRulesTests.MarkersRequirePersonalProximityAndVisibility(True,10.0f,0.0f,False,False)",
+      "State": "Passed",
+      "DurationSeconds": 5.69E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MarkersRequirePersonalProximityAndVisibility(False,10.0f,0.0f,True,False)",
+      "FullName": "MinimapRulesTests.MarkersRequirePersonalProximityAndVisibility(False,10.0f,0.0f,True,False)",
+      "State": "Passed",
+      "DurationSeconds": 5.51E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RotatedTranslatedChunkUsesItsLocalGrid",
+      "FullName": "MinimapRulesTests.RotatedTranslatedChunkUsesItsLocalGrid",
+      "State": "Passed",
+      "DurationSeconds": 0.0007181,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SharedExplorationDoesNotOverwritePersonalHistory",
+      "FullName": "MinimapRulesTests.SharedExplorationDoesNotOverwritePersonalHistory",
+      "State": "Passed",
+      "DurationSeconds": 0.0006636,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "UnexploredRoadRemainsReadableButDoesNotRevealMarkers",
+      "FullName": "MinimapRulesTests.UnexploredRoadRemainsReadableButDoesNotRevealMarkers",
+      "State": "Passed",
+      "DurationSeconds": 0.0008016,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HitEnvelopeFinishesWithoutResidualOffset(0.0f,1.0f)",
+      "FullName": "MutantThornVisualTests.HitEnvelopeFinishesWithoutResidualOffset(0.0f,1.0f)",
+      "State": "Passed",
+      "DurationSeconds": 0.0005731,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HitEnvelopeFinishesWithoutResidualOffset(0.3f,0.0f)",
+      "FullName": "MutantThornVisualTests.HitEnvelopeFinishesWithoutResidualOffset(0.3f,0.0f)",
+      "State": "Passed",
+      "DurationSeconds": 7.92E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HitEnvelopeFinishesWithoutResidualOffset(10.0f,0.0f)",
+      "FullName": "MutantThornVisualTests.HitEnvelopeFinishesWithoutResidualOffset(10.0f,0.0f)",
+      "State": "Passed",
+      "DurationSeconds": 6.01E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PresentationKeepsCollisionRootAndRestoresAuthoredPose(False)",
+      "FullName": "MutantThornVisualTests.PresentationKeepsCollisionRootAndRestoresAuthoredPose(False)",
+      "State": "Passed",
+      "DurationSeconds": 0.0023758,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PresentationKeepsCollisionRootAndRestoresAuthoredPose(True)",
+      "FullName": "MutantThornVisualTests.PresentationKeepsCollisionRootAndRestoresAuthoredPose(True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0004562,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CompleteThreeChunkChainIsAccepted",
+      "FullName": "NetworkMapTopologyRulesTests.CompleteThreeChunkChainIsAccepted",
+      "State": "Passed",
+      "DurationSeconds": 0.0009725,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ExtractionSelectionRangeIsValidated(-1,False)",
+      "FullName": "NetworkMapTopologyRulesTests.ExtractionSelectionRangeIsValidated(-1,False)",
+      "State": "Passed",
+      "DurationSeconds": 0.0004449,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ExtractionSelectionRangeIsValidated(0,True)",
+      "FullName": "NetworkMapTopologyRulesTests.ExtractionSelectionRangeIsValidated(0,True)",
+      "State": "Passed",
+      "DurationSeconds": 5.88E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ExtractionSelectionRangeIsValidated(3,True)",
+      "FullName": "NetworkMapTopologyRulesTests.ExtractionSelectionRangeIsValidated(3,True)",
+      "State": "Passed",
+      "DurationSeconds": 4.98E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ExtractionSelectionRangeIsValidated(4,False)",
+      "FullName": "NetworkMapTopologyRulesTests.ExtractionSelectionRangeIsValidated(4,False)",
+      "State": "Passed",
+      "DurationSeconds": 4.86E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "FinalChunkMustBeUniqueTail(-1)",
+      "FullName": "NetworkMapTopologyRulesTests.FinalChunkMustBeUniqueTail(-1)",
+      "State": "Passed",
+      "DurationSeconds": 0.0005429,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "FinalChunkMustBeUniqueTail(1)",
+      "FullName": "NetworkMapTopologyRulesTests.FinalChunkMustBeUniqueTail(1)",
+      "State": "Passed",
+      "DurationSeconds": 5.26E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MissingMiddleConnectionIsRejectedBeforeReplicaInstantiation",
+      "FullName": "NetworkMapTopologyRulesTests.MissingMiddleConnectionIsRejectedBeforeReplicaInstantiation",
+      "State": "Passed",
+      "DurationSeconds": 0.0003064,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "OpenSideMaskMustMatchPublishedEntryAndExit",
+      "FullName": "NetworkMapTopologyRulesTests.OpenSideMaskMustMatchPublishedEntryAndExit",
+      "State": "Passed",
+      "DurationSeconds": 0.000184,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StageHudContainsWiredPhase6RewardHud",
+      "FullName": "Phase6RewardHudPrefabTests.StageHudContainsWiredPhase6RewardHud",
+      "State": "Passed",
+      "DurationSeconds": 0.0022669,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "EmptySharedRecipientsCannotProduceRewards",
+      "FullName": "PlayerAbilityExperienceRulesTests.EmptySharedRecipientsCannotProduceRewards",
+      "State": "Passed",
+      "DurationSeconds": 0.0012293,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PendingRecipientKeepsItsShareButCannotRedirectItToAnotherPlayer",
+      "FullName": "PlayerAbilityExperienceRulesTests.PendingRecipientKeepsItsShareButCannotRedirectItToAnotherPlayer",
+      "State": "Passed",
+      "DurationSeconds": 0.0016267,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PersonalMultiplierIsAppliedAfterTheSharedPoolIsSplit",
+      "FullName": "PlayerAbilityExperienceRulesTests.PersonalMultiplierIsAppliedAfterTheSharedPoolIsSplit",
+      "State": "Passed",
+      "DurationSeconds": 0.0005767,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PersonalMultiplierIsSaturatingAndDoesNotChangeOtherGrants",
+      "FullName": "PlayerAbilityExperienceRulesTests.PersonalMultiplierIsSaturatingAndDoesNotChangeOtherGrants",
+      "State": "Passed",
+      "DurationSeconds": 0.0002874,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SharedPoolSortsDeduplicatesAndConservesRemainder",
+      "FullName": "PlayerAbilityExperienceRulesTests.SharedPoolSortsDeduplicatesAndConservesRemainder",
+      "State": "Passed",
+      "DurationSeconds": 0.0009588,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "AllInputGateClearsAllButtonsAndBothAxesAndCarriesTickMask",
+      "FullName": "PlayerControlLocksTests.AllInputGateClearsAllButtonsAndBothAxesAndCarriesTickMask",
+      "State": "Passed",
+      "DurationSeconds": 0.0013029,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "GameplayGateClearsNetworkGameplayWithoutBecomingAllInput",
+      "FullName": "PlayerControlLocksTests.GameplayGateClearsNetworkGameplayWithoutBecomingAllInput",
+      "State": "Passed",
+      "DurationSeconds": 0.0002671,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "LookGatePreservesMovementAndActions",
+      "FullName": "PlayerControlLocksTests.LookGatePreservesMovementAndActions",
+      "State": "Passed",
+      "DurationSeconds": 0.0002817,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MatchingReasonsStillOwnIndependentIdempotentLeases",
+      "FullName": "PlayerControlLocksTests.MatchingReasonsStillOwnIndependentIdempotentLeases",
+      "State": "Passed",
+      "DurationSeconds": 0.0019114,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "MovementGatePreservesLookAndFireButStopsLocomotionButtons",
+      "FullName": "PlayerControlLocksTests.MovementGatePreservesLookAndFireButStopsLocomotionButtons",
+      "State": "Passed",
+      "DurationSeconds": 0.0003817,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ReleasingTransitionDoesNotReleaseMovementOrLookOwners",
+      "FullName": "PlayerControlLocksTests.ReleasingTransitionDoesNotReleaseMovementOrLookOwners",
+      "State": "Passed",
+      "DurationSeconds": 0.0002262,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ClaimingLastRewardAllowsExperienceAgain",
+      "FullName": "PlayerExperienceRulesTests.ClaimingLastRewardAllowsExperienceAgain",
+      "State": "Passed",
+      "DurationSeconds": 0.0003419,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CrossingThresholdKeepsOverflowAndQueuesReward",
+      "FullName": "PlayerExperienceRulesTests.CrossingThresholdKeepsOverflowAndQueuesReward",
+      "State": "Passed",
+      "DurationSeconds": 0.0001814,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "DeadOrDisconnectedPlayerAndEnvironmentalKillGetNoExperience",
+      "FullName": "PlayerExperienceRulesTests.DeadOrDisconnectedPlayerAndEnvironmentalKillGetNoExperience",
+      "State": "Passed",
+      "DurationSeconds": 0.0002107,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "FlatRequirementHandlesLargeGrantWithoutOverflow",
+      "FullName": "PlayerExperienceRulesTests.FlatRequirementHandlesLargeGrantWithoutOverflow",
+      "State": "Passed",
+      "DurationSeconds": 0.0001782,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "LivingTeamGetsFullExperienceAndKillerGetsOneExtra",
+      "FullName": "PlayerExperienceRulesTests.LivingTeamGetsFullExperienceAndKillerGetsOneExtra",
+      "State": "Passed",
+      "DurationSeconds": 0.0001382,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "OneLargeGrantCanQueueSeveralRewards",
+      "FullName": "PlayerExperienceRulesTests.OneLargeGrantCanQueueSeveralRewards",
+      "State": "Passed",
+      "DurationSeconds": 0.0001856,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PendingRewardRejectsSubsequentGrant",
+      "FullName": "PlayerExperienceRulesTests.PendingRewardRejectsSubsequentGrant",
+      "State": "Passed",
+      "DurationSeconds": 0.0001817,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RequirementDoublesFromCurrentFivePointBaseline",
+      "FullName": "PlayerExperienceRulesTests.RequirementDoublesFromCurrentFivePointBaseline",
+      "State": "Passed",
+      "DurationSeconds": 0.0001646,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HostEntryRestoresLevelExperienceAndPendingRewards",
+      "FullName": "PlayerExperienceSaveBridgeTests.HostEntryRestoresLevelExperienceAndPendingRewards",
+      "State": "Passed",
+      "DurationSeconds": 0.0006379,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ResetRunRestoresDefaultHostExperience",
+      "FullName": "PlayerExperienceSaveBridgeTests.ResetRunRestoresDefaultHostExperience",
+      "State": "Passed",
+      "DurationSeconds": 0.0003351,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "WriteHostPreservesOtherRunFieldsAndOtherPlayers",
+      "FullName": "PlayerExperienceSaveBridgeTests.WriteHostPreservesOtherRunFieldsAndOtherPlayers",
+      "State": "Passed",
+      "DurationSeconds": 0.0002992,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CurrentCatalogPreservesFourLegacyRewardsAndAddsTenActiveSkills",
+      "FullName": "PlayerRewardCatalogTests.CurrentCatalogPreservesFourLegacyRewardsAndAddsTenActiveSkills",
+      "State": "Passed",
+      "DurationSeconds": 0.002011,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "EveryFirstPoolAbilityCanReplaceItsCategoryInStartingLoadout",
+      "FullName": "PlayerRewardCatalogTests.EveryFirstPoolAbilityCanReplaceItsCategoryInStartingLoadout",
+      "State": "Passed",
+      "DurationSeconds": 0.0006523,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ExpandedPoolShowsThreeChoicesAndStillSupportsTwoChoiceLayout",
+      "FullName": "PlayerRewardCatalogTests.ExpandedPoolShowsThreeChoicesAndStillSupportsTwoChoiceLayout",
+      "State": "Passed",
+      "DurationSeconds": 0.0199518,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HostDraftAndEquipmentRoundTripWithoutChangingExperience",
+      "FullName": "PlayerRewardSaveBridgeTests.HostDraftAndEquipmentRoundTripWithoutChangingExperience",
+      "State": "Passed",
+      "DurationSeconds": 0.001051,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ResetRunClearsDraftAndEquipment",
+      "FullName": "PlayerRewardSaveBridgeTests.ResetRunClearsDraftAndEquipment",
+      "State": "Passed",
+      "DurationSeconds": 0.0002341,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CatalogOrderDoesNotChangeDraft",
+      "FullName": "RewardDraftRulesTests.CatalogOrderDoesNotChangeDraft",
+      "State": "Passed",
+      "DurationSeconds": 0.0004779,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CurrentlyEquippedRepeatableRewardIsExcluded",
+      "FullName": "RewardDraftRulesTests.CurrentlyEquippedRepeatableRewardIsExcluded",
+      "State": "Passed",
+      "DurationSeconds": 0.0001771,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RepeatableRewardMayReturnButZeroWeightCannot",
+      "FullName": "RewardDraftRulesTests.RepeatableRewardMayReturnButZeroWeightCannot",
+      "State": "Passed",
+      "DurationSeconds": 0.0001743,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SameSeedAndPoolProduceSameThreeDistinctCandidates",
+      "FullName": "RewardDraftRulesTests.SameSeedAndPoolProduceSameThreeDistinctCandidates",
+      "State": "Passed",
+      "DurationSeconds": 0.0009636,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "TwoEligibleChoicesRemainTwoAndOwnedOncePerRunIsExcluded",
+      "FullName": "RewardDraftRulesTests.TwoEligibleChoicesRemainTwoAndOwnedOncePerRunIsExcluded",
+      "State": "Passed",
+      "DurationSeconds": 0.0001458,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SelectionPressStaysConsumedUntilThatButtonIsReleased(0)",
+      "FullName": "RewardMouseReleaseTests.SelectionPressStaysConsumedUntilThatButtonIsReleased(0)",
+      "State": "Passed",
+      "DurationSeconds": 0.0015166,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SelectionPressStaysConsumedUntilThatButtonIsReleased(1)",
+      "FullName": "RewardMouseReleaseTests.SelectionPressStaysConsumedUntilThatButtonIsReleased(1)",
+      "State": "Passed",
+      "DurationSeconds": 0.0001446,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SelectionPressStaysConsumedUntilThatButtonIsReleased(2)",
+      "FullName": "RewardMouseReleaseTests.SelectionPressStaysConsumedUntilThatButtonIsReleased(2)",
+      "State": "Passed",
+      "DurationSeconds": 0.0001321,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SelectionOnlyConsumesCombatWhileAltAndDraftAreActive",
+      "FullName": "RewardSelectionInputRulesTests.SelectionOnlyConsumesCombatWhileAltAndDraftAreActive",
+      "State": "Passed",
+      "DurationSeconds": 0.0003311,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ThreeChoicesMapLeftMiddleRight",
+      "FullName": "RewardSelectionInputRulesTests.ThreeChoicesMapLeftMiddleRight",
+      "State": "Passed",
+      "DurationSeconds": 0.0002193,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "TwoChoicesMapLeftAndRightOnly",
+      "FullName": "RewardSelectionInputRulesTests.TwoChoicesMapLeftAndRightOnly",
+      "State": "Passed",
+      "DurationSeconds": 0.0001588,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ActiveReadyVoteCancelsWhenItsTimeoutExpires(ReadyCheck,True,True)",
+      "FullName": "SafeHouseReadyRulesTests.ActiveReadyVoteCancelsWhenItsTimeoutExpires(ReadyCheck,True,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0004374,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ActiveReadyVoteCancelsWhenItsTimeoutExpires(Countdown,True,True)",
+      "FullName": "SafeHouseReadyRulesTests.ActiveReadyVoteCancelsWhenItsTimeoutExpires(Countdown,True,True)",
+      "State": "Passed",
+      "DurationSeconds": 6.45E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ActiveReadyVoteCancelsWhenItsTimeoutExpires(ReadyCheck,False,False)",
+      "FullName": "SafeHouseReadyRulesTests.ActiveReadyVoteCancelsWhenItsTimeoutExpires(ReadyCheck,False,False)",
+      "State": "Passed",
+      "DurationSeconds": 5.03E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ActiveReadyVoteCancelsWhenItsTimeoutExpires(WaitingForHost,True,False)",
+      "FullName": "SafeHouseReadyRulesTests.ActiveReadyVoteCancelsWhenItsTimeoutExpires(WaitingForHost,True,False)",
+      "State": "Passed",
+      "DurationSeconds": 4.73E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ActiveReadyVoteCancelsWhenItsTimeoutExpires(LoadingStage,True,False)",
+      "FullName": "SafeHouseReadyRulesTests.ActiveReadyVoteCancelsWhenItsTimeoutExpires(LoadingStage,True,False)",
+      "State": "Passed",
+      "DurationSeconds": 4.88E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ConnectedPlayerCanCancelAnActiveReadyVote(ReadyCheck,True,True)",
+      "FullName": "SafeHouseReadyRulesTests.ConnectedPlayerCanCancelAnActiveReadyVote(ReadyCheck,True,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0005506,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ConnectedPlayerCanCancelAnActiveReadyVote(Countdown,True,True)",
+      "FullName": "SafeHouseReadyRulesTests.ConnectedPlayerCanCancelAnActiveReadyVote(Countdown,True,True)",
+      "State": "Passed",
+      "DurationSeconds": 9.49E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ConnectedPlayerCanCancelAnActiveReadyVote(WaitingForHost,True,False)",
+      "FullName": "SafeHouseReadyRulesTests.ConnectedPlayerCanCancelAnActiveReadyVote(WaitingForHost,True,False)",
+      "State": "Passed",
+      "DurationSeconds": 5.12E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ConnectedPlayerCanCancelAnActiveReadyVote(LoadingStage,True,False)",
+      "FullName": "SafeHouseReadyRulesTests.ConnectedPlayerCanCancelAnActiveReadyVote(LoadingStage,True,False)",
+      "State": "Passed",
+      "DurationSeconds": 4.93E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ConnectedPlayerCanCancelAnActiveReadyVote(ReadyCheck,False,False)",
+      "FullName": "SafeHouseReadyRulesTests.ConnectedPlayerCanCancelAnActiveReadyVote(ReadyCheck,False,False)",
+      "State": "Passed",
+      "DurationSeconds": 4.86E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CountdownStartsCancelsOrLoadsFromAuthoritativeState(ReadyCheck,2,2,False,Start)",
+      "FullName": "SafeHouseReadyRulesTests.CountdownStartsCancelsOrLoadsFromAuthoritativeState(ReadyCheck,2,2,False,Start)",
+      "State": "Passed",
+      "DurationSeconds": 0.000651,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CountdownStartsCancelsOrLoadsFromAuthoritativeState(Countdown,2,1,False,Cancel)",
+      "FullName": "SafeHouseReadyRulesTests.CountdownStartsCancelsOrLoadsFromAuthoritativeState(Countdown,2,1,False,Cancel)",
+      "State": "Passed",
+      "DurationSeconds": 5.93E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CountdownStartsCancelsOrLoadsFromAuthoritativeState(Countdown,2,2,False,None)",
+      "FullName": "SafeHouseReadyRulesTests.CountdownStartsCancelsOrLoadsFromAuthoritativeState(Countdown,2,2,False,None)",
+      "State": "Passed",
+      "DurationSeconds": 4.35E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CountdownStartsCancelsOrLoadsFromAuthoritativeState(Countdown,2,2,True,Load)",
+      "FullName": "SafeHouseReadyRulesTests.CountdownStartsCancelsOrLoadsFromAuthoritativeState(Countdown,2,2,True,Load)",
+      "State": "Passed",
+      "DurationSeconds": 4.49E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ReadyCanToggleEitherDirectionDuringReadyCheck(ReadyCheck,False,True)",
+      "FullName": "SafeHouseReadyRulesTests.ReadyCanToggleEitherDirectionDuringReadyCheck(ReadyCheck,False,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0003434,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ReadyCanToggleEitherDirectionDuringReadyCheck(ReadyCheck,True,True)",
+      "FullName": "SafeHouseReadyRulesTests.ReadyCanToggleEitherDirectionDuringReadyCheck(ReadyCheck,True,True)",
+      "State": "Passed",
+      "DurationSeconds": 5.96E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ReadyCanToggleEitherDirectionDuringReadyCheck(Countdown,True,True)",
+      "FullName": "SafeHouseReadyRulesTests.ReadyCanToggleEitherDirectionDuringReadyCheck(Countdown,True,True)",
+      "State": "Passed",
+      "DurationSeconds": 5.01E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ReadyCanToggleEitherDirectionDuringReadyCheck(WaitingForHost,False,False)",
+      "FullName": "SafeHouseReadyRulesTests.ReadyCanToggleEitherDirectionDuringReadyCheck(WaitingForHost,False,False)",
+      "State": "Passed",
+      "DurationSeconds": 4.95E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ReadyCanToggleEitherDirectionDuringReadyCheck(LoadingStage,False,False)",
+      "FullName": "SafeHouseReadyRulesTests.ReadyCanToggleEitherDirectionDuringReadyCheck(LoadingStage,False,False)",
+      "State": "Passed",
+      "DurationSeconds": 4.8E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ReadyCheckRequiresWaitingHostInsideRange(WaitingForHost,True,True,True)",
+      "FullName": "SafeHouseReadyRulesTests.ReadyCheckRequiresWaitingHostInsideRange(WaitingForHost,True,True,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.0003469,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ReadyCheckRequiresWaitingHostInsideRange(WaitingForHost,False,True,False)",
+      "FullName": "SafeHouseReadyRulesTests.ReadyCheckRequiresWaitingHostInsideRange(WaitingForHost,False,True,False)",
+      "State": "Passed",
+      "DurationSeconds": 5.78E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ReadyCheckRequiresWaitingHostInsideRange(WaitingForHost,True,False,False)",
+      "FullName": "SafeHouseReadyRulesTests.ReadyCheckRequiresWaitingHostInsideRange(WaitingForHost,True,False,False)",
+      "State": "Passed",
+      "DurationSeconds": 5.33E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ReadyCheckRequiresWaitingHostInsideRange(ReadyCheck,True,True,False)",
+      "FullName": "SafeHouseReadyRulesTests.ReadyCheckRequiresWaitingHostInsideRange(ReadyCheck,True,True,False)",
+      "State": "Passed",
+      "DurationSeconds": 5.01E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StageStartsOnlyWhenEveryConnectedPlayerIsReady(0,0,False)",
+      "FullName": "SafeHouseReadyRulesTests.StageStartsOnlyWhenEveryConnectedPlayerIsReady(0,0,False)",
+      "State": "Passed",
+      "DurationSeconds": 0.0005799,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StageStartsOnlyWhenEveryConnectedPlayerIsReady(1,0,False)",
+      "FullName": "SafeHouseReadyRulesTests.StageStartsOnlyWhenEveryConnectedPlayerIsReady(1,0,False)",
+      "State": "Passed",
+      "DurationSeconds": 8.51E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StageStartsOnlyWhenEveryConnectedPlayerIsReady(1,1,True)",
+      "FullName": "SafeHouseReadyRulesTests.StageStartsOnlyWhenEveryConnectedPlayerIsReady(1,1,True)",
+      "State": "Passed",
+      "DurationSeconds": 7.82E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StageStartsOnlyWhenEveryConnectedPlayerIsReady(2,1,False)",
+      "FullName": "SafeHouseReadyRulesTests.StageStartsOnlyWhenEveryConnectedPlayerIsReady(2,1,False)",
+      "State": "Passed",
+      "DurationSeconds": 8.16E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "StageStartsOnlyWhenEveryConnectedPlayerIsReady(2,2,True)",
+      "FullName": "SafeHouseReadyRulesTests.StageStartsOnlyWhenEveryConnectedPlayerIsReady(2,2,True)",
+      "State": "Passed",
+      "DurationSeconds": 6.92E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "BossRuntimePlanOwnsMapObjectiveExtractionAndDefaultTiming",
+      "FullName": "StageRulesTests.BossRuntimePlanOwnsMapObjectiveExtractionAndDefaultTiming",
+      "State": "Passed",
+      "DurationSeconds": 0.0011107,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "BossTimeLimitCanBeEnabledWithoutChangingBossIdentity",
+      "FullName": "StageRulesTests.BossTimeLimitCanBeEnabledWithoutChangingBossIdentity",
+      "State": "Passed",
+      "DurationSeconds": 0.0001987,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CycleRulesMatchConfiguredLoop(1,4,1,0,False)",
+      "FullName": "StageRulesTests.CycleRulesMatchConfiguredLoop(1,4,1,0,False)",
+      "State": "Passed",
+      "DurationSeconds": 0.0005083,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CycleRulesMatchConfiguredLoop(2,4,2,1,False)",
+      "FullName": "StageRulesTests.CycleRulesMatchConfiguredLoop(2,4,2,1,False)",
+      "State": "Passed",
+      "DurationSeconds": 6.36E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CycleRulesMatchConfiguredLoop(4,4,4,3,True)",
+      "FullName": "StageRulesTests.CycleRulesMatchConfiguredLoop(4,4,4,3,True)",
+      "State": "Passed",
+      "DurationSeconds": 5.54E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CycleRulesMatchConfiguredLoop(5,4,1,0,False)",
+      "FullName": "StageRulesTests.CycleRulesMatchConfiguredLoop(5,4,1,0,False)",
+      "State": "Passed",
+      "DurationSeconds": 5.06E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "CycleRulesMatchConfiguredLoop(8,4,4,3,True)",
+      "FullName": "StageRulesTests.CycleRulesMatchConfiguredLoop(8,4,4,3,True)",
+      "State": "Passed",
+      "DurationSeconds": 5.28E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ExtractionCandidatesBelongOnlyToPublishedFinalChunk(2,2,True)",
+      "FullName": "StageRulesTests.ExtractionCandidatesBelongOnlyToPublishedFinalChunk(2,2,True)",
+      "State": "Passed",
+      "DurationSeconds": 0.000388,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ExtractionCandidatesBelongOnlyToPublishedFinalChunk(0,2,False)",
+      "FullName": "StageRulesTests.ExtractionCandidatesBelongOnlyToPublishedFinalChunk(0,2,False)",
+      "State": "Passed",
+      "DurationSeconds": 8.37E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ExtractionCandidatesBelongOnlyToPublishedFinalChunk(2,-1,False)",
+      "FullName": "StageRulesTests.ExtractionCandidatesBelongOnlyToPublishedFinalChunk(2,-1,False)",
+      "State": "Passed",
+      "DurationSeconds": 6.05E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ExtractionRequiresEveryLivingPlayerInside",
+      "FullName": "StageRulesTests.ExtractionRequiresEveryLivingPlayerInside",
+      "State": "Passed",
+      "DurationSeconds": 0.0001979,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ExtractionSelectionIsDeterministicAndReturnsOnlyEligibleCandidate",
+      "FullName": "StageRulesTests.ExtractionSelectionIsDeterministicAndReturnsOnlyEligibleCandidate",
+      "State": "Passed",
+      "DurationSeconds": 0.0005539,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RuntimePlanSeparatesBossFromOrdinaryTopology(1,4,Ordinary,1,0)",
+      "FullName": "StageRulesTests.RuntimePlanSeparatesBossFromOrdinaryTopology(1,4,Ordinary,1,0)",
+      "State": "Passed",
+      "DurationSeconds": 0.0006007,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RuntimePlanSeparatesBossFromOrdinaryTopology(2,4,Ordinary,2,1)",
+      "FullName": "StageRulesTests.RuntimePlanSeparatesBossFromOrdinaryTopology(2,4,Ordinary,2,1)",
+      "State": "Passed",
+      "DurationSeconds": 6.93E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RuntimePlanSeparatesBossFromOrdinaryTopology(3,4,Ordinary,3,2)",
+      "FullName": "StageRulesTests.RuntimePlanSeparatesBossFromOrdinaryTopology(3,4,Ordinary,3,2)",
+      "State": "Passed",
+      "DurationSeconds": 6E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RuntimePlanSeparatesBossFromOrdinaryTopology(4,4,Boss,4,0)",
+      "FullName": "StageRulesTests.RuntimePlanSeparatesBossFromOrdinaryTopology(4,4,Boss,4,0)",
+      "State": "Passed",
+      "DurationSeconds": 5.65E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RuntimePlanSeparatesBossFromOrdinaryTopology(5,4,Ordinary,1,0)",
+      "FullName": "StageRulesTests.RuntimePlanSeparatesBossFromOrdinaryTopology(5,4,Ordinary,1,0)",
+      "State": "Passed",
+      "DurationSeconds": 5.84E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RuntimePlanSeparatesBossFromOrdinaryTopology(4,5,UnsupportedOrdinary,4,3)",
+      "FullName": "StageRulesTests.RuntimePlanSeparatesBossFromOrdinaryTopology(4,5,UnsupportedOrdinary,4,3)",
+      "State": "Passed",
+      "DurationSeconds": 5.71E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RuntimePlanSeparatesBossFromOrdinaryTopology(5,5,Boss,5,0)",
+      "FullName": "StageRulesTests.RuntimePlanSeparatesBossFromOrdinaryTopology(5,5,Boss,5,0)",
+      "State": "Passed",
+      "DurationSeconds": 5.63E-05,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SplitAmmoAndWeaponIconWorkAfterLegacyTextIsDeleted(\"\")",
+      "FullName": "WeaponHudPresentationTests.SplitAmmoAndWeaponIconWorkAfterLegacyTextIsDeleted(\"\")",
+      "State": "Passed",
+      "DurationSeconds": 0.0062869,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SplitAmmoAndWeaponIconWorkAfterLegacyTextIsDeleted(\" / \")",
+      "FullName": "WeaponHudPresentationTests.SplitAmmoAndWeaponIconWorkAfterLegacyTextIsDeleted(\" / \")",
+      "State": "Passed",
+      "DurationSeconds": 0.0010147,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SpriteLessReloadBarRendersActualProgress(0.0f)",
+      "FullName": "WeaponHudPresentationTests.SpriteLessReloadBarRendersActualProgress(0.0f)",
+      "State": "Passed",
+      "DurationSeconds": 0.0032289,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SpriteLessReloadBarRendersActualProgress(0.25f)",
+      "FullName": "WeaponHudPresentationTests.SpriteLessReloadBarRendersActualProgress(0.25f)",
+      "State": "Passed",
+      "DurationSeconds": 0.0009762,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SpriteLessReloadBarRendersActualProgress(0.8f)",
+      "FullName": "WeaponHudPresentationTests.SpriteLessReloadBarRendersActualProgress(0.8f)",
+      "State": "Passed",
+      "DurationSeconds": 0.0007976,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ApprovedProfileExcludesObliqueAndReferencesRequestedSpark",
+      "FullName": "WeaponImpactEffectsTests.ApprovedProfileExcludesObliqueAndReferencesRequestedSpark",
+      "State": "Passed",
+      "DurationSeconds": 0.0025544,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "HoleAndSparkUseIndependentHitLayerMasks",
+      "FullName": "WeaponImpactEffectsTests.HoleAndSparkUseIndependentHitLayerMasks",
+      "State": "Passed",
+      "DurationSeconds": 0.0014442,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "InvalidHitOrMissingSurfaceCannotCreateFloatingHole",
+      "FullName": "WeaponImpactEffectsTests.InvalidHitOrMissingSurfaceCannotCreateFloatingHole",
+      "State": "Passed",
+      "DurationSeconds": 0.0027584,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "PerPlayerCapacityEvictsOldestAndTracksMovingSurface",
+      "FullName": "WeaponImpactEffectsTests.PerPlayerCapacityEvictsOldestAndTracksMovingSurface",
+      "State": "Passed",
+      "DurationSeconds": 0.0078291,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RequestedSparkExpiresAfterItsParticlesWithoutWaitingTenSecondDuration",
+      "FullName": "WeaponImpactEffectsTests.RequestedSparkExpiresAfterItsParticlesWithoutWaitingTenSecondDuration",
+      "State": "Passed",
+      "DurationSeconds": 0.0051057,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "SparkCapacityCompletionTimeoutAndDisposeAreBounded",
+      "FullName": "WeaponImpactEffectsTests.SparkCapacityCompletionTimeoutAndDisposeAreBounded",
+      "State": "Passed",
+      "DurationSeconds": 0.0034862,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "UnspawnedRelayDoesNotReadNetworkedStateOrPublish",
+      "FullName": "WeaponImpactEffectsTests.UnspawnedRelayDoesNotReadNetworkedStateOrPublish",
+      "State": "Passed",
+      "DurationSeconds": 0.0017072,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "NewShotCanJoinUnappliedRecoilWithoutLosingAngle",
+      "FullName": "WeaponRecoilApplicationTests.NewShotCanJoinUnappliedRecoilWithoutLosingAngle",
+      "State": "Passed",
+      "DurationSeconds": 0.000547,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "RecoilIsAppliedOverConfiguredSecondsWithoutChangingTotalAngle",
+      "FullName": "WeaponRecoilApplicationTests.RecoilIsAppliedOverConfiguredSecondsWithoutChangingTotalAngle",
+      "State": "Passed",
+      "DurationSeconds": 0.0004883,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    },
+    {
+      "Name": "ZeroDurationKeepsImmediateImpulse",
+      "FullName": "WeaponRecoilApplicationTests.ZeroDurationKeepsImmediateImpulse",
+      "State": "Passed",
+      "DurationSeconds": 0.0003983,
+      "Message": null,
+      "StackTrace": null,
+      "Output": ""
+    }
+  ],
+  "Total": 468,
+  "Passed": 467,
+  "Failed": 1,
+  "Skipped": 0
+}

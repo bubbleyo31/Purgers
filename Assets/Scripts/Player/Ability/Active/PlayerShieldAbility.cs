@@ -15,10 +15,11 @@ public sealed class PlayerShieldAbility : PlayerActiveAbilityBase, IPlayerIncomi
     public float CurrentShield => Ready && Phase == PlayerActiveAbilityPhase.Active ? ShieldHealth : 0f;
     public int IncomingDamageModifierPriority => 1000;
 
-    protected override void Activate()
+    protected override bool Activate()
     {
         ShieldHealth = Owner.Health.MaximumHealth * Mathf.Clamp01(maximumHealthFraction);
         BeginActive(ActiveAbilityRules.ShieldDuration(PlayerLevel, levelOneSeconds, secondsPerLevel));
+        return true;
     }
     public void ModifyIncomingDamage(ref DamageRequest request)
     {

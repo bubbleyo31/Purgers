@@ -26,7 +26,7 @@ public sealed class PlayerPrecisionLockAbility : PlayerActiveAbilityBase
     public override bool IsUsable => base.IsUsable && PlayerAbilityQualification.HasRangedWeapon(Owner);
     public bool IsLockActive => Ready && Phase == PlayerActiveAbilityPhase.Active;
 
-    protected override void Activate() => BeginActive(durationSeconds);
+    protected override bool Activate() { BeginActive(durationSeconds); return true; }
 
     public static bool TryModifyShot(Player owner, Vector3 origin, Vector3 rawDirection,
         float weaponRange, LayerMask weaponMask, out Vector3 direction)

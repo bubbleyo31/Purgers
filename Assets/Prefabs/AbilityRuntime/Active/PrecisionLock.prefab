@@ -66,6 +66,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   definition: {fileID: 11400000, guid: 2801d2c6f09f6824d8516db270d4d6e0, type: 2}
+  recoil:
+    cameraEnabled: 1
+    cameraTiming: 3
+    cameraAngles: {x: 0.5, y: 0}
+    cameraApplicationDuration: 0.06
+    cameraRecoveryDelay: 0.1
+    cameraRecoverySpeed: 20
+    movementEnabled: 0
+    movementTiming: 0
+    movementSpeed: 0
+    movementLocalDirection: {x: 0, y: 0, z: -1}
   _OwnerPlayerObject: {fileID: 0}
   _LoadoutSlotIndex: 0
 --- !u!114 &6365600779127209536
@@ -83,6 +94,17 @@ MonoBehaviour:
   cooldownSeconds: 12
   castDelaySeconds: 0
   useConditions: []
+  rangeGizmos:
+    enabled: 1
+    selectedOnly: 1
+    labels: 1
+    paths: 1
+    previewCollisions: 1
+    trajectorySeconds: 3
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+    labelSize: 13
+    labelOffset: {x: 0, y: 0.3, z: 0}
   _Phase: 0
   _ActivationSequence: 0
   durationSeconds: 2

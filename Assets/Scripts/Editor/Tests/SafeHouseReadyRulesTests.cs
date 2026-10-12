@@ -112,7 +112,7 @@ public sealed class SafeHouseReadyRulesTests
     }
 
     [TestCase(SafeHousePhase.ReadyCheck, true, true)]
-    [TestCase(SafeHousePhase.Countdown, true, true)]
+    [TestCase(SafeHousePhase.Countdown, true, false)]
     [TestCase(SafeHousePhase.ReadyCheck, false, false)]
     [TestCase(SafeHousePhase.WaitingForHost, true, false)]
     [TestCase(SafeHousePhase.LoadingStage, true, false)]
@@ -126,5 +126,21 @@ public sealed class SafeHouseReadyRulesTests
                 phase,
                 timeoutExpired),
             Is.EqualTo(expected));
+    }
+    [Test]
+    public void NewSafeHouseUsesOneSecondDepartureCountdown()
+    {
+        var root = new UnityEngine.GameObject("SafeHouse countdown defaults");
+        try
+        {
+            var flow = root.AddComponent<SafeHouseFlowController>();
+            var serialized = new UnityEditor.SerializedObject(flow);
+            Assert.That(serialized.FindProperty("countdownDurationSeconds").floatValue,
+                Is.EqualTo(1f));
+        }
+        finally
+        {
+            UnityEngine.Object.DestroyImmediate(root);
+        }
     }
 }

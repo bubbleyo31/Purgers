@@ -45,10 +45,14 @@ public sealed class PlayerPiercingCannonAbility : PlayerActiveAbilityBase
         if (beam != null) beam.enabled = false;
     }
 
-    protected override void Activate()
+    protected override bool Activate()
     {
-        if (!Authority) return;
-        Vector3 origin = ActiveAbilityPhysics.ShotOrigin(Owner, originHeight);
+        if (!Authority) return false;
+        if (!ActiveAbilityPhysics.TryGetShotOrigin(Owner, originHeight, 0f, hitMask, out Vector3 origin))
+        {
+            FinishAbility();
+            return false;
+        }
         Vector3 direction = Owner.Movement != null ? Owner.Movement.GetAimDirection() : Owner.transform.forward;
         direction.Normalize();
         hits.Clear();
@@ -87,6 +91,7 @@ public sealed class PlayerPiercingCannonAbility : PlayerActiveAbilityBase
         BeamTimer = TickTimer.CreateFromSeconds(Runner, beamVisibleSeconds);
         BeamVisualSequence = ActivationSequence;
         FinishAbility();
+        return true;
     }
 
     public override void Render()

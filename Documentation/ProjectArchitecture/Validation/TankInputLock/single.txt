@@ -1,0 +1,28 @@
+PASS Runner starts: Ok
+PASS equip Tank: 
+PASS hold beyond combo timeout causes no damage or shake
+PASS both timers advance from distinct origins
+PASS local Tank ViewModel is bound
+DIAG sample=True step=Light1 time=0.2 sampled=True hasState=True fps=328
+PASS Animator freezes exactly at configured preparation frame: speed=0 normalized=0.2 state=698723080 desired=698723080 driver=True active=True
+PASS RMB neither cancels nor guards
+PASS release damages enemy through authoritative resolver
+PASS one shake event at actual release swing
+PASS completion starts combo window for atk2
+PASS Animator speed restored after complete attack
+PASS preparation permits normal movement
+PASS long atk2 hold preserves atk3 and whiff shakes
+PASS third stage supports hold and wraps to atk1
+PASS early release preserves original windup
+PASS tap advances one step
+PASS successful F consumes charge and retains atk2
+PASS F clears cancelled timers
+PASS F without charge cannot cancel
+PASS rapid presses throughout windup active recovery cannot queue another attack
+PASS ignored presses advance combo only once
+PASS holding an ignored recovery press across completion cannot auto-start
+PASS fresh press after completion starts the correct next combo and can prepare
+PASS replace held weapon: 
+PASS re-equip Tank: 
+PASS replacement resets combo and timers
+PASS death clears pending attack

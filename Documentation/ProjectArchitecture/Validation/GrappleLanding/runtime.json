@@ -1,0 +1,35 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "mode": "Single",
+      "stateAuthority": true,
+      "checks": [
+        "PASS airborne attach is not armed",
+        "PASS first-pull landing keeps attached and submits pull",
+        "PASS startup landing receives existing jump",
+        "PASS startup jump reaches KCC velocity protection",
+        "PASS grounded startup does not inject a second jump",
+        "PASS airborne observation after pull arms landing",
+        "PASS normal later landing retracts",
+        "PASS retract resets startup snapshot",
+        "PASS ground launch jumps without claiming a pull",
+        "PASS first pull does not use pre-pull airborne observation",
+        "PASS subsequent simulation observation arms ground launch",
+        "PASS landing release toggle remains respected",
+        "PASS test timeout is expired",
+        "PASS blocked startup expires before another pull",
+        "PASS manual toggle can cancel startup",
+        "PASS hold release cancels startup",
+        "PASS aim cancels startup",
+        "PASS support tether bypasses startup and grounded cancellation",
+        "PASS left swing submits pull and survives startup landing",
+        "PASS left swing later landing retracts",
+        "PASS right swing submits pull and survives startup landing"
+      ],
+      "tick": 2795
+    },
+    "compiler": "codedom"
+  }
+}

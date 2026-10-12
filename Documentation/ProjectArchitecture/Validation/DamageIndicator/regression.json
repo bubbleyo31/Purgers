@@ -1,0 +1,36 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "710b07c0dade4393ab41f4003272dae7",
+      "status": "failed",
+      "mode": "EditMode",
+      "started_unix_ms": 1791630336005,
+      "finished_unix_ms": 1791630340570,
+      "last_update_unix_ms": 1791630340570,
+      "progress": {
+        "completed": 646,
+        "total": 661,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1791630340132,
+        "last_finished_test_full_name": "WeaponRewardTests.WeaponIdsRoundTrip(Support,\"weapon.support\")",
+        "last_finished_unix_ms": 1791630340132,
+        "stuck_suspected": false,
+        "editor_is_focused": true,
+        "blocked_reason": null,
+        "failures_so_far": [
+          {
+            "full_name": "BossStageAssetTests.GameSceneContainsBossAssetWiring",
+            "message": "  Expected: same as <MapChunk_Boss (MapChunk)>\r\n  But was:  <MapChunk_Boss (MapChunk)>\r\n"
+          }
+        ],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": null
+    },
+    "hint": null
+  }
+}

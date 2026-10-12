@@ -136,8 +136,8 @@ public sealed class GrappleEnergyNetworkVerification : MonoBehaviour
         yield return Publish(4, 75f, 35f, 75f, 75f);
         var energy = Own().GrappleCharges;
         energy.ConsumePullEnergy(74.5f);
-        Check(!energy.ConsumeCharge() && Near(energy.CurrentEnergy, .5f), "insufficient launch must not spend");
-        energy.ConsumePullEnergy(.5f);
+        Check(energy.HasCharge && energy.ConsumeCharge() && Near(energy.CurrentEnergy, 0f), "remaining energy permits one final launch");
+        Check(!energy.HasCharge, "final launch exhausts energy");
         Check(!energy.ConsumeCharge(), "empty launch rejected");
         yield return Publish(5, 0f, 35f, 75f, 75f);
         NetworkId oldId = Own().Object.Id;

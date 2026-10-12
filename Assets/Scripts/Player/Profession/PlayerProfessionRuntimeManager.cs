@@ -568,6 +568,50 @@ public class PlayerProfessionRuntimeManager :
     /// 只清除 WeaponAction，
     /// 不會影響其他封鎖來源。
     /// </summary>
+    [Networked, Capacity(3)]
+    private NetworkDictionary<PlayerProfessionType, WeaponQuickActionReserve> QuickActionReserves => default;
+
+    /// <summary>只供正式 Host 獎勵領取；拒絕同武器，成功後才由 GameLogic 扣獎勵。</summary>
+    public bool TryEquipRewardWeaponStateAuthority(PlayerProfessionType target, out string failureReason)
+    {
+        failureReason = string.Empty;
+        if (Object == null || !Object.IsValid || !Object.HasStateAuthority ||
+            profession == null || !Purgers.Progression.WeaponRewardRules.CanOffer(
+                profession.CurrentProfession, target))
+        {
+            failureReason = "目前無法裝備此武器，或已經裝備相同武器。";
+            return false;
+        }
+        if (!ApplyProfessionChangeStateAuthority(target, false))
+        {
+            failureReason = "新武器 Runtime 建立失敗；原武器及待選獎勵保留。";
+            return false;
+        }
+        return true;
+    }
+
+    private void PrepareOldWeaponForReplacement()
+    {
+        if (CurrentRuntimeObject == null || !CurrentRuntimeObject.IsValid) return;
+        GetComponent<PlayerQuickActionController>()?.PrepareForWeaponReplacement();
+        var dash = CurrentRuntimeObject.GetComponent<TankQuickDashAbility>();
+        if (dash != null)
+        {
+            dash.ForceCancelDash();
+            QuickActionReserves.Set(CurrentRuntimeProfession, dash.CaptureWeaponReserve());
+        }
+        CurrentRuntimeObject.GetComponent<TankMeleeCombo>()?.ResetForInterruption();
+        CurrentRuntimeObject.GetComponent<TankGuardAbility>()?.ForceEndGuardForQuickAction();
+        CurrentRuntimeObject.GetComponent<PlayerWeaponController>()?.InterruptCurrentWeapon(WeaponInterruptReason.Forced);
+        CurrentRuntimeObject.GetComponent<PlayerProfessionRuntime>()?.ClearLocalWeaponPresentation();
+    }
+
+    private void RestoreQuickActionReserve(NetworkObject target, PlayerProfessionType weapon)
+    {
+        if (QuickActionReserves.TryGet(weapon, out WeaponQuickActionReserve reserve))
+            target.GetComponent<TankQuickDashAbility>()?.RestoreWeaponReserve(reserve);
+    }
+
     private void ClearWeaponActionBlocks()
     {
         if (actionGate == null ||
@@ -589,7 +633,7 @@ public class PlayerProfessionRuntimeManager :
     /// <summary>
     /// State Authority 正式處理職業切換。
     /// </summary>
-    private void ApplyProfessionChangeStateAuthority(
+    private bool ApplyProfessionChangeStateAuthority(
         PlayerProfessionType newProfession,
         bool allowSameProfessionRefresh
     )
@@ -597,14 +641,14 @@ public class PlayerProfessionRuntimeManager :
         if (Object == null ||
             Object.HasStateAuthority == false)
         {
-            return;
+            return false;
         }
 
         if (IsValidProfession(
                 newProfession
             ) == false)
         {
-            return;
+            return false;
         }
 
         bool sameProfession =
@@ -618,7 +662,7 @@ public class PlayerProfessionRuntimeManager :
         if (sameProfession &&
             allowSameProfessionRefresh == false)
         {
-            return;
+            return false;
         }
 
         // =============================================================
@@ -645,7 +689,7 @@ public class PlayerProfessionRuntimeManager :
                 newProfession
             ) == false)
         {
-            return;
+            return false;
         }
 
         // =============================================================
@@ -668,13 +712,15 @@ public class PlayerProfessionRuntimeManager :
                 this
             );
 
-            return;
+            return false;
         }
         
         // =============================================================
         // Clear Old Weapon Action Blocks
         // =============================================================
 
+        PrepareOldWeaponForReplacement();
+        RestoreQuickActionReserve(newRuntime, newProfession);
         ClearWeaponActionBlocks();
 
         // =============================================================
@@ -741,6 +787,7 @@ public class PlayerProfessionRuntimeManager :
                 this
             );
         }
+        return true;
     }
 
     #endregion
@@ -757,64 +804,9 @@ public class PlayerProfessionRuntimeManager :
     /// 外部 Profession Change
     /// Runtime Missing Recovery。
     /// </summary>
-    private bool RebuildRuntime(
-        PlayerProfessionType targetProfession
-    )
+    private bool RebuildRuntime(PlayerProfessionType targetProfession)
     {
-        if (Object == null ||
-            Object.HasStateAuthority == false)
-        {
-            return false;
-        }
-
-        NetworkObject runtimePrefab =
-            GetRuntimePrefab(
-                targetProfession
-            );
-
-        if (ValidateRuntimePrefab(
-                runtimePrefab,
-                targetProfession
-            ) == false)
-        {
-            return false;
-        }
-
-        NetworkObject newRuntime =
-            SpawnRuntime(
-                runtimePrefab,
-                targetProfession
-            );
-
-        if (newRuntime == null)
-        {
-            return false;
-        }
-
-        // =============================================================
-        // Clear Old Weapon Action Blocks
-        // =============================================================
-
-        ClearWeaponActionBlocks();
-
-        NetworkObject oldRuntime =
-            CurrentRuntimeObject;
-
-        CurrentRuntimeObject =
-            newRuntime;
-
-        CurrentRuntimeProfession =
-            targetProfession;
-
-        if (oldRuntime != null &&
-            oldRuntime.IsValid)
-        {
-            Runner.Despawn(
-                oldRuntime
-            );
-        }
-
-        return true;
+        return ApplyProfessionChangeStateAuthority(targetProfession, true);
     }
 
     /// <summary>
@@ -826,39 +818,47 @@ public class PlayerProfessionRuntimeManager :
         PlayerProfessionType runtimeProfession
     )
     {
-        NetworkObject spawnedRuntime =
-            Runner.Spawn(
-                runtimePrefab,
+        try
+        {
+            NetworkObject spawnedRuntime =
+                Runner.Spawn(
+                    runtimePrefab,
 
-                transform.position,
+                    transform.position,
 
-                Quaternion.identity,
+                    Quaternion.identity,
 
-                Object.InputAuthority,
+                    Object.InputAuthority,
 
-                /*
-                 * 在 Runtime 真正同步給其他 Peer 前，
-                 * 先寫入 Owner 與 Profession。
-                 */
-                (runner, spawnedObject) =>
-                {
-                    PlayerProfessionRuntime runtime =
-                        spawnedObject
-                            .GetComponent<PlayerProfessionRuntime>();
-
-                    if (runtime == null)
+                    /*
+                     * 在 Runtime 真正同步給其他 Peer 前，
+                     * 先寫入 Owner 與 Profession。
+                     */
+                    (runner, spawnedObject) =>
                     {
-                        return;
+                        PlayerProfessionRuntime runtime =
+                            spawnedObject
+                                .GetComponent<PlayerProfessionRuntime>();
+
+                        if (runtime == null)
+                        {
+                            return;
+                        }
+
+                        runtime.InitializeBeforeSpawn(
+                            Object,
+                            runtimeProfession
+                        );
                     }
+                );
 
-                    runtime.InitializeBeforeSpawn(
-                        Object,
-                        runtimeProfession
-                    );
-                }
-            );
-
-        return spawnedRuntime;
+            return spawnedRuntime;
+        }
+        catch (System.Exception exception)
+        {
+            Debug.LogError("[PlayerProfessionRuntimeManager] 新武器建立失敗，保留原 Runtime：" + exception.Message, this);
+            return null;
+        }
     }
 
     #endregion

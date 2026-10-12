@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SortKey: 1197339857
   ObjectInterest: 1
-  Flags: 1
+  Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 1395867651394200436}
@@ -66,6 +66,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   definition: {fileID: 11400000, guid: acb9a5880071f9546abad5a8fdef3487, type: 2}
+  recoil:
+    cameraEnabled: 1
+    cameraTiming: 2
+    cameraAngles: {x: -5, y: 1}
+    cameraApplicationDuration: 0.06
+    cameraRecoveryDelay: 0.1
+    cameraRecoverySpeed: 20
+    movementEnabled: 0
+    movementTiming: 0
+    movementSpeed: 0
+    movementLocalDirection: {x: 0, y: 0, z: -1}
   _OwnerPlayerObject: {fileID: 0}
   _LoadoutSlotIndex: 0
 --- !u!114 &3543074204030490733
@@ -80,14 +91,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9687ce809e9bf7548afde047b3537107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldownSeconds: 12
+  cooldownSeconds: 0
   castDelaySeconds: 0.25
   useConditions: []
+  rangeGizmos:
+    enabled: 1
+    selectedOnly: 1
+    labels: 1
+    paths: 1
+    previewCollisions: 1
+    trajectorySeconds: 3
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+    labelSize: 13
+    labelOffset: {x: 0, y: 0.3, z: 0}
   _Phase: 0
   _ActivationSequence: 0
   baseDamage: 100
   maximumDistance: 60
-  originHeight: 1.5
+  originHeight: 1.25
   hitMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -95,3 +117,7 @@ MonoBehaviour:
   beamVisibleSeconds: 0.15
   beamWidth: 0.08
   beamColor: {r: 0.3, g: 1, b: 0.95, a: 1}
+  fireVfx:
+    prefab: {fileID: 0}
+    anchor: {fileID: 0}
+    lifetimeSeconds: 2

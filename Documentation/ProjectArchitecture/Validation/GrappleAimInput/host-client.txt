@@ -1,0 +1,10 @@
+PASS Host State/Input Authority: formal Aim input keeps Attached
+PASS Host Aim not consumed
+PASS Host release Aim keeps Attached
+PASS Late join observes Attached
+PASS Client Input Authority and Host both remain Attached after Aim press
+PASS Client and Host do not consume Aim
+PASS Held Aim keeps both peers Attached
+PASS Client Aim release keeps both peers Attached
+PASS Client local rope remains visible
+PASS Reconnect receives Attached without Aim lock

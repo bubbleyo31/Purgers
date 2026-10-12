@@ -28,3 +28,5 @@ MonoBehaviour:
   - GrappleFocusMovementAuthority
   incompatibleAbilities: []
   executionPriority: 110
+  requiresRangedWeapon: 0
+  enhancementDefinition: {fileID: 0}

@@ -1170,6 +1170,7 @@ public class TankAirDashAbility :
                  * 所以仍然必須播放一次特殊能力動畫。
                  */
                 AirDashSequence++;
+                GetComponent<PlayerAbilityRuntime>()?.ApplyAbilityRecoil(PlayerAbilityRecoilEvent.InstantActivation);
 
                 StartAbilityCooldown(
                     TankAirDashTargetType.Enemy
@@ -1228,6 +1229,7 @@ public class TankAirDashAbility :
          * 必須在這裡增加 Sequence，不能在讀到右鍵時就增加。
          */
         AirDashSequence++;
+        GetComponent<PlayerAbilityRuntime>()?.ApplyAbilityRecoil(PlayerAbilityRecoilEvent.InstantActivation);
 
         StartAbilityCooldown(
             ActiveDashTargetType

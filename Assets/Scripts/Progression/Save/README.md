@@ -25,3 +25,7 @@ Phase 4-E：Repository 建立新存檔時可接收 CycleLength，並原子寫入
 - 網路同步：搜尋 `[Networked]`、`[Rpc(`、`HasStateAuthority`、`IsSceneAuthority`。
 - 場景綁定：由 `[SerializeField]` 欄位名稱回到 Unity Inspector 找同名引用。
 
+
+## 2026-10-10 武器保存
+
+PlayerRewardSaveBridge／PlayerRewardSaveSnapshot 沿用 v3 已有 EquippedWeaponId 保存 Host 武器。新局／舊檔空值回退 Attack，訪客不寫入 Host 紀錄；F 冷卻不新增存檔欄位。正式規則：[46](../../../../Documentation/ProjectArchitecture/46_武器獎勵與換裝.md)。

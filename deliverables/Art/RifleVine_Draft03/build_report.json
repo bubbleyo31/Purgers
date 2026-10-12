@@ -1,0 +1,64 @@
+{
+  "baseline": {
+    "triangles": 67756,
+    "optic_triangles": 16040
+  },
+  "full": {
+    "meshes": 25,
+    "vertices": 28397,
+    "quads": 27293,
+    "triangles_faces": 20,
+    "ngons": 202,
+    "triangulated_triangles": 55748,
+    "materials": 12
+  },
+  "new_parts": {
+    "meshes": 9,
+    "vertices": 3498,
+    "quads": 3240,
+    "triangles_faces": 0,
+    "ngons": 0,
+    "triangulated_triangles": 6480,
+    "materials": 6
+  },
+  "optic": {
+    "meshes": 5,
+    "vertices": 1618,
+    "quads": 1432,
+    "triangles_faces": 0,
+    "ngons": 0,
+    "triangulated_triangles": 2864,
+    "materials": 5
+  },
+  "bones": 63,
+  "actions": {
+    "Appear": [
+      1.0,
+      11.0
+    ],
+    "idle": [
+      1.0,
+      61.0
+    ],
+    "melee": [
+      1.0,
+      24.0
+    ],
+    "Opening the scope": [
+      1.0,
+      4.0
+    ],
+    "Reload.001": [
+      1.0,
+      63.0
+    ],
+    "shoot": [
+      1.0,
+      2.0
+    ]
+  },
+  "source_blend_sha256": "b81b511ef23d706caec52ce7d3c969367eb7d4ca3c1c7b43fd50de8ed8bf9c98",
+  "approved_concept_sha256": "cd26135cdc0dad71840dee5474fc7efb94cf7639d422fb7c9b87ddcbc6363ff7",
+  "hands_unchanged": true,
+  "unity_import_verified": false
+}

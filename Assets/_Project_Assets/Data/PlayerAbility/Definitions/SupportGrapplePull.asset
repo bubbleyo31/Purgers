@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityId: grapple.hit.pull
   displayName: "\u920E\u7D22\u547D\u4E2D\u62C9\u53D6"
-  hudIcon: {fileID: 5555303564014642117, guid: 2d8bdf6bfb2cb784ea00e756d4eac0e3, type: 3}
+  hudIcon: {fileID: 21300000, guid: 91178d9c68ea8fc468512fe4694396c7, type: 3}
   category: 2
   runtimePrefab: {fileID: 8987989162901536377, guid: 39fbf2d474ed1594e81cb1fdded569c4,
     type: 3}
@@ -27,3 +27,5 @@ MonoBehaviour:
   - GrappleHitRopeAuthority
   incompatibleAbilities: []
   executionPriority: 220
+  requiresRangedWeapon: 0
+  enhancementDefinition: {fileID: 0}

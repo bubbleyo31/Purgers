@@ -110,8 +110,8 @@ public enum GrappleCancelReason : byte
     ProfessionInteraction = 7,
 
     /// <summary>
-    /// 玩家在普通 Attached 拉動期間按下 Aim，
-    /// 主動釋放 Grapple 並準備進入 GrappleAirborne。
+    /// 舊版 Aim 主動斷繩原因；保留數值相容性。
+    /// 正式輸入不再產生此原因。
     /// </summary>
     AimRelease = 8,
 
@@ -144,7 +144,10 @@ public enum GrappleCancelReason : byte
     /// 與 ManualToggle 分開保存原因，
     /// 避免未來輸入模式、音效或動畫需要分流時失去判斷依據。
     /// </summary>
-    ManualHoldReleased = 12
+    ManualHoldReleased = 12,
+
+    /// <summary>普通鉤索啟動起跳後仍無法離地；收繩但不建立釋放動能。</summary>
+    AutoReleaseStartupBlocked = 13
 }
 
 /// <summary>
@@ -312,9 +315,9 @@ public class PlayerGrapple : NetworkBehaviour
         "PreFire、Shooting 或 Attached 期間必須持續按住 Q，" +
         "放開 Q 就會立刻進入收繩。\n\n" +
         "射線沒有合法目標時不會發射，也不會消耗充能。\n" +
-        "Aim 主動斷繩、自動距離釋放、落地釋放、遮蔽釋放與" +
+        "右鍵不會取消鈎索。自動距離釋放、落地釋放、遮蔽釋放與" +
         "固定擺盪角度釋放仍維持原本規則。\n\n" +
-        "按住模式下，如果鈎索已因 Aim 或其他原因釋放，" +
+        "按住模式下，如果鈎索已因自動條件釋放，" +
         "即使 Q 仍按住也不會自動再次發射；" +
         "玩家必須放開 Q 後重新按下。")]
     private bool useHoldToMaintainGrappleInput =
@@ -509,12 +512,16 @@ public class PlayerGrapple : NetworkBehaviour
     [SerializeField]
     [Tooltip(
         "開啟後，普通地形 Grapple Attached 的玩家" +
-        "只要曾經確實離地，之後再次接觸地面就立即自動收繩。\n\n" +
+        "在實際提交拉力、並於後續模擬確認離地後，再次接觸地面就立即自動收繩。\n\n" +
         "不影響 Support 拉 Enemy／Player 的 Interaction Tether。\n\n" +
         "落地釋放不額外建立 Release Momentum，" +
         "避免玩家已經落地後又被水平速度再次推出。")]
     private bool releaseNormalGrappleOnLanding =
         true;
+
+    [SerializeField, Min(0.05f)]
+    [Tooltip("普通鉤索啟動時，從首次地面起跳嘗試開始，最多等待離地的秒數。預設 0.5 秒，最小 0.05 秒。逾時仍著地則收繩，避免低天花板或起跳衝量為零時卡住。只限制尚未完成啟動的鉤索，不延遲正常拉動後的落地取消；不影響 Support 特殊繫繩。")]
+    private float grappleStartupGroundedTimeout = 0.5f;
 
     #endregion
 
@@ -674,13 +681,13 @@ public class PlayerGrapple : NetworkBehaviour
     private NetworkBool HasApproachedPoint { get; set; }
 
     /// <summary>
-    /// 本次普通 Attached 是否已經至少有一個 Tick 確認玩家離地。
+    /// 本次普通 Attached 是否已提交拉力，並在後續 Tick 確認玩家離地。
     ///
     /// 不能只看當前 IsGrounded：
     /// BeginAttached 發生時，附著起跳衝量可能剛送入 KCC，
     /// 當 Tick 或下一個模擬入口仍可能暫時保留 Grounded。
     ///
-    /// 只有先確認離地，再確認落地，才屬於真正的 Landing Release。
+    /// 附著時仍在下墜不算完成啟動；只有拉動後確認離地，再落地才釋放。
     /// </summary>
     [Networked]
     private NetworkBool HasBeenAirborneDuringAttached
@@ -688,6 +695,10 @@ public class PlayerGrapple : NetworkBehaviour
         get;
         set;
     }
+
+    [Networked] private NetworkBool HasAppliedAttachedPull { get; set; }
+    [Networked] private NetworkBool HasAttemptedAttachedJump { get; set; }
+    [Networked] private TickTimer AttachedStartupGroundedTimer { get; set; }
 
     /// <summary>
     /// 本次鈎索確認命中成功時，玩家的水平視角角度。
@@ -866,13 +877,8 @@ public class PlayerGrapple : NetworkBehaviour
     }
 
     /// <summary>
-    /// Aim 是否已被「Attached 期間斷繩」消耗。
-    ///
-    /// true 時，Player 仍會保留 Look 與其他 Input，
-    /// 但不會把 Aim 交給目前 Profession Runtime。
-    ///
-    /// 玩家必須真正放開 Aim，這個鎖才會解除。
-    /// 下一次重新按下 Aim 才能啟動職業能力。
+    /// 舊版 Aim 斷繩消耗鎖。保留 Networked 配置以避免本次修正改動同步布局。
+    /// Simulate 每 Tick 清除此舊鎖；鈎索不再消耗右鍵，也不因右鍵封鎖 Aim／E。
     /// </summary>
     [Networked]
     private NetworkBool AimConsumedUntilReleased
@@ -1021,7 +1027,18 @@ public class PlayerGrapple : NetworkBehaviour
     /// <summary>
     /// 勾索是否可以重新使用。
     /// </summary>
+    private PlayerActionGate explosionActionGate;
+    private bool IsGrappleActionBlocked
+    {
+        get
+        {
+            if (explosionActionGate == null) explosionActionGate = GetComponent<PlayerActionGate>();
+            return explosionActionGate != null && explosionActionGate.IsFusionSpawned && explosionActionGate.IsBlocked(PlayerActionBlockMask.Grapple);
+        }
+    }
+
     public bool CanUseGrapple =>
+        !IsGrappleActionBlocked &&
         CurrentPhase ==
             GrapplePhase.Idle &&
         charges != null &&
@@ -1359,44 +1376,11 @@ public class PlayerGrapple : NetworkBehaviour
         float activeMovementInfluence
     )
     {
-        // =============================================================
-        // 1. 玩家真正放開 Aim 後解除消耗鎖
-        // =============================================================
+        // Aim 只交給既有武器／能力仲裁；不改鈎索階段或消耗輸入。
+        // 保留既有 Simulate 參數及 Networked 欄位，並清除舊快照可能留下的消耗鎖。
+        AimConsumedUntilReleased = false;
 
-        if (AimConsumedUntilReleased &&
-            aimHeld == false)
-        {
-            AimConsumedUntilReleased =
-                false;
-        }
-
-        // =============================================================
-        // 2. 普通 Attached Grapple：Aim 主動斷繩
-        // =============================================================
-
-        bool canReleaseWithAim =
-            aimPressed &&
-            CurrentPhase ==
-                GrapplePhase.Attached &&
-            SupportInteractionTetherActive ==
-                false;
-
-        if (canReleaseWithAim)
-        {
-            /*
-            * Aim 主動斷繩的優先序仍然最高。
-            *
-            * 即使開啟按住 Q 模式，
-            * Attached 期間按下 Aim 仍會立即釋放。
-            */
-            AimConsumedUntilReleased =
-                true;
-
-            BeginRetract(
-                GrappleCancelReason.AimRelease
-            );
-        }
-        else if (useHoldToMaintainGrappleInput)
+        if (useHoldToMaintainGrappleInput)
         {
             /*
             * 按住模式：
@@ -1503,7 +1487,7 @@ public class PlayerGrapple : NetworkBehaviour
             /*
             * 不能只檢查 grappleHeld。
             *
-            * 否則鈎索因 Aim 或自動條件收回後，
+            * 否則鈎索因自動條件收回後，
             * 玩家仍按住 Q 就會在回到 Idle 時自動連射。
             */
             if (grapplePressed)
@@ -1583,6 +1567,7 @@ public class PlayerGrapple : NetworkBehaviour
 
     private void TryStartGrapple()
     {
+        if (IsGrappleActionBlocked) return;
         if (CurrentPhase !=
             GrapplePhase.Idle)
         {
@@ -2247,13 +2232,13 @@ public class PlayerGrapple : NetworkBehaviour
                 * Support Tether 已在上方 Return / Break，
                 * 所以走到這裡的一定是拉動玩家本人的普通地形 Grapple。
                 */
-                if (kcc.Data.IsGrounded == false)
-                {
-                    HasBeenAirborneDuringAttached =
-                        true;
-                }
-                else if (releaseNormalGrappleOnLanding &&
-                        HasBeenAirborneDuringAttached)
+                HasBeenAirborneDuringAttached = GrappleLandingRules.ObserveAirborne(
+                    HasBeenAirborneDuringAttached, HasAppliedAttachedPull, kcc.Data.IsGrounded);
+                if (HasBeenAirborneDuringAttached)
+                    AttachedStartupGroundedTimer = TickTimer.None;
+
+                if (GrappleLandingRules.ShouldReleaseOnLanding(
+                    HasBeenAirborneDuringAttached, kcc.Data.IsGrounded, releaseNormalGrappleOnLanding))
                 {
                     /*
                     * 必須在 RecordRecentSpeed() 與 PullTowardPoint() 以前釋放，
@@ -2269,8 +2254,20 @@ public class PlayerGrapple : NetworkBehaviour
                     break;
                 }
 
+                if (GrappleLandingRules.ShouldAbortStartup(
+                    HasBeenAirborneDuringAttached, kcc.Data.IsGrounded,
+                    AttachedStartupGroundedTimer.Expired(Runner)))
+                {
+                    BeginRetract(GrappleCancelReason.AutoReleaseStartupBlocked);
+                    break;
+                }
+
                 RecordRecentSpeed();
                 PullTowardPoint();
+
+                // 啟動空檔才著地時也可接續起跳；在拉力寫入後保護起跳 Y，且每次最多一次。
+                if (IsNormalPlayerPullAttached)
+                    TryApplyAttachedStartupJump();
 
                 // 只有這個 Tick 確實維持普通玩家拉動才扣使用能量。
                 // 自動／手動釋放、Support Tether、跳躍及 Release Momentum 不走這個入口。
@@ -2384,15 +2381,11 @@ public class PlayerGrapple : NetworkBehaviour
         CurrentPhase =
             GrapplePhase.Attached;
 
-        /*
-        * 空中發射並命中的 Grapple，Attached 成立時可能已經離地，
-        * 因此直接保存目前狀態。
-        *
-        * 地面發射則先保持 false，等待附著起跳真正讓 KCC 離地。
-        */
-        HasBeenAirborneDuringAttached =
-            kcc != null &&
-            kcc.Data.IsGrounded == false;
+        // 附著不等於拉動。必須等實際拉力經 KCC 模擬後確認離地，才武裝落地釋放。
+        HasBeenAirborneDuringAttached = false;
+        HasAppliedAttachedPull = false;
+        HasAttemptedAttachedJump = false;
+        AttachedStartupGroundedTimer = TickTimer.None;
 
         PhaseTimer =
             TickTimer.None;
@@ -2632,20 +2625,7 @@ public class PlayerGrapple : NetworkBehaviour
             // 先使用 PlayerMovement 既有的 Jump Impulse 把角色抬起。
             //
             // 已在空中時不疊加；也不消耗二段跳。
-            bool appliedAttachJump =
-                movement != null &&
-                movement.TryApplyGrappleAttachJumpImpulse();
-
-            /*
-            * TryApplyGrappleAttachJumpImpulse 已把離地衝量寫入 DynamicVelocity。
-            * 先保存，讓 Grounded Tick 的 KCC Processor 不會把它摩擦掉。
-            */
-            if (appliedAttachJump)
-            {
-                SetProtectedAttachedDynamicVelocity(
-                    kcc.Data.DynamicVelocity
-                );
-            }
+            bool appliedAttachJump = TryApplyAttachedStartupJump();
 
             /*
              * [修正 CS0103 錯誤 2]
@@ -2744,6 +2724,9 @@ public class PlayerGrapple : NetworkBehaviour
 
         HasBeenAirborneDuringAttached =
             false;
+        HasAppliedAttachedPull = false;
+        HasAttemptedAttachedJump = false;
+        AttachedStartupGroundedTimer = TickTimer.None;
 
         /*
         * 方向只允許存活到本次 Grapple 釋放。
@@ -2912,20 +2895,6 @@ public class PlayerGrapple : NetworkBehaviour
 
 
         /*
-        * Aim 主動取消：
-        *
-        * 目前仍保留原本規則，
-        * 將釋放 Momentum 導向玩家目前的水平觀看方向。
-        *
-        * 這次只修改 Q2，因此不連帶更改 Aim Release。
-        */
-        bool aimRelease =
-            isNormalAttachedPlayerGrapple &&
-            cancelReason ==
-                GrappleCancelReason.AimRelease;
-
-
-        /*
         * 玩家進入 Grapple Release Distance 後的普通自動釋放。
         */
         bool distanceRelease =
@@ -2971,17 +2940,6 @@ public class PlayerGrapple : NetworkBehaviour
             StartReleaseMomentum(
                 1f,
                 false
-            );
-        }
-        else if (aimRelease)
-        {
-            /*
-            * Aim Release 暫時維持原規則：
-            * 使用玩家目前的水平觀看方向。
-            */
-            StartReleaseMomentum(
-                1f,
-                true
             );
         }
         else if (swingAngleRelease)
@@ -3992,6 +3950,7 @@ public class PlayerGrapple : NetworkBehaviour
             relativeVelocity +
             GrapplePointVelocity
         );
+        HasAppliedAttachedPull = true;
 
         return true;
     }
@@ -4013,6 +3972,22 @@ public class PlayerGrapple : NetworkBehaviour
         kcc.SetDynamicVelocity(
             velocity
         );
+    }
+
+    /// <summary>啟動期間最多嘗試一次既有起跳；狀態及逾時皆隨 Fusion 快照回滾。</summary>
+    private bool TryApplyAttachedStartupJump()
+    {
+        if (!GrappleLandingRules.ShouldRequestStartupJump(
+            HasBeenAirborneDuringAttached, HasAttemptedAttachedJump, kcc.Data.IsGrounded))
+            return false;
+
+        HasAttemptedAttachedJump = true;
+        AttachedStartupGroundedTimer = TickTimer.CreateFromSeconds(
+            Runner, Mathf.Max(0.05f, grappleStartupGroundedTimeout));
+        bool applied = movement != null && movement.TryApplyGrappleAttachJumpImpulse();
+        if (applied)
+            SetProtectedAttachedDynamicVelocity(kcc.Data.DynamicVelocity);
+        return applied;
     }
 
     /// <summary>
@@ -4166,8 +4141,7 @@ public class PlayerGrapple : NetworkBehaviour
             );
 
         if (HasApproachedPoint == false &&
-            speedTowardPoint >=
-            grappleApproachSpeedThreshold)
+            GrappleLandingRules.IsApproaching(speedTowardPoint, grappleApproachSpeedThreshold))
         {
             HasApproachedPoint =
                 true;
@@ -4178,10 +4152,8 @@ public class PlayerGrapple : NetworkBehaviour
             distance <=
             grappleReleaseDistance;
 
-        bool passedClosestPoint =
-            HasApproachedPoint &&
-            speedTowardPoint <=
-            -grappleReleaseAwaySpeed;
+        bool passedClosestPoint = GrappleLandingRules.HasPassedPoint(
+            HasApproachedPoint, speedTowardPoint, grappleReleaseAwaySpeed);
 
         if (reachedReleaseDistance)
         {
@@ -4243,6 +4215,7 @@ public class PlayerGrapple : NetworkBehaviour
         SetProtectedAttachedDynamicVelocity(
             newVelocity
         );
+        HasAppliedAttachedPull = true;
 
     }
 

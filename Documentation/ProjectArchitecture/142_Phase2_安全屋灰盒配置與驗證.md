@@ -11,7 +11,7 @@
 3. Host 走近藍色開始裝置，World Space 提示顯示「按 E 開始遊戲」。
 4. Host 按 E 後，所有玩家看到「全員準備」面板。
 5. 每位玩家按 TAB 切換準備／取消；新加入者預設未準備，離線者會從名單移除。
-6. 全員 Ready 後由 State Authority 倒數 3 秒；任何取消立即中止倒數，完成後載入 `Game`。
+6. 全員 Ready 後由 State Authority 倒數 1 秒；任何取消立即中止倒數，完成後載入 `Game`。
 
 Continue 會載入 Host 選擇的存檔後進入同一個 SafeHouse。Client 仍從 Party Menu 加入，不會建立或寫入本機存檔。
 
@@ -96,7 +96,7 @@ Build Settings 必須啟用：
 3. 確認進入 SafeHouse，玩家沒有穿地板，StageLevel 為 1。
 4. 遠離裝置時按 E 不應有反應；靠近後顯示提示。
 5. 按 E，確認 Ready 面板為已準備 0、未準備 1，且有一顆熄滅 LED。
-6. 按 TAB 亮燈並開始 3 秒倒數；再按 TAB 應取消倒數。重新準備後確認進入 Game。
+6. 按 TAB 亮燈並開始 1 秒倒數；再按 TAB 應取消倒數。重新準備後確認進入 Game。
 7. 在 Console／Debugger 檢查：一個 Running Host Runner、一個有效 GameLogic、一個 Player，且 `TryGetPlayerObject(LocalPlayer)` 成功。
 8. Console 不應新增 Error／Warning。
 
@@ -113,7 +113,7 @@ Phase 2 的 Host 單機流程與 Phase 4 前置-2 的 Editor Host＋獨立 Windo
 5. Client 靠近開始裝置不會看到 Host 的 E 提示，也不能開啟 Ready Check。
 6. Host 靠近並按 E；兩端都出現 Ready 面板。
 7. 先讓一端按 TAB，兩端都應顯示一亮一滅與 1／1；同一端再按 TAB，兩端回到 0／2，且不得切場。
-8. 兩端都 Ready 後應開始 3 秒倒數；倒數中一端取消，兩端立即回到 Ready Check。重新 Ready 並完成倒數後，兩端一起進入 Game。
+8. 兩端都 Ready 後應開始 1 秒倒數；倒數中一端取消，兩端立即回到 Ready Check。重新 Ready 並完成倒數後，兩端一起進入 Game。
 9. 在 Ready Check 期間讓 Client 離線，Host 的總人數應降為 1；若 Host 已 Ready，應符合剩餘全員 Ready 並進場。
 10. 在 Ready Check 期間加入新 Client，新玩家必須是未準備，不能沿用舊名額的 Ready。
 11. 確認每個 Runner 各自只有一個 GameLogic 與一個對應 PlayerObject，Console 無 Error／Warning。
@@ -122,6 +122,9 @@ Phase 2 的 Host 單機流程與 Phase 4 前置-2 的 Editor Host＋獨立 Windo
 
 - 已實作的是 `_Menu → SafeHouse → Game`。
 - `Game → SafeHouse` 需要 Phase 3 的撤離成功、限時／全滅失敗、StageLevel 提交與循環重設，現在尚未接入。
-- Ready 可用 TAB 雙向切換；全員準備後有 3 秒倒數，目前沒有 Ready Check 逾時或 Host 強制關閉。
+- Ready 可用 TAB 雙向切換；全員準備後有 1 秒倒數，投票預設 7 秒，出發期間暫停；ESC 可取消整票。最新規則及驗證見 [145](145_PrePhase4-2_安全屋鍵盤準備與HUD.md)。
 - 灰盒只提供空間與流程驗證；未建立商店、天賦、補給或正式美術。
 - Ready／取消／倒數中取消與切場已完成獨立 Host／Client 驗證；加入／離線的 Phase 2 規則仍應在變更連線生命週期時複驗。
+
+
+2026-10-10 局部核對：SafeHouseFlow 的出發秒數已為 1；未準備投票時限仍為 7，全員準備後暫停，取消準備時恢復餘額。設定及最新證據以 145 為準。

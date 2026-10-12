@@ -147,6 +147,23 @@ public class BulletTracerLineDrawer : MonoBehaviour
     /// 沒有指定材質時建立的 Runtime Material。
     /// </summary>
     private Material runtimeMaterial;
+    private readonly System.Collections.Generic.HashSet<GameObject> liveTracers =
+        new System.Collections.Generic.HashSet<GameObject>();
+
+    public void ClearTracers()
+    {
+        StopAllCoroutines();
+        foreach (var tracer in liveTracers)
+        {
+            if (tracer == null) continue;
+            tracer.SetActive(false);
+            if (Application.isPlaying) Destroy(tracer);
+            else DestroyImmediate(tracer);
+        }
+        liveTracers.Clear();
+    }
+
+    private void OnDisable() => ClearTracers();
 
     private PlayerProfessionRuntime professionRuntime;
 
@@ -176,11 +193,11 @@ public class BulletTracerLineDrawer : MonoBehaviour
 
     private void OnDestroy()
     {
+        ClearTracers();
         if (runtimeMaterial != null)
         {
-            Destroy(
-                runtimeMaterial
-            );
+            if (Application.isPlaying) Destroy(runtimeMaterial);
+            else DestroyImmediate(runtimeMaterial);
         }
     }
 
@@ -292,6 +309,8 @@ public class BulletTracerLineDrawer : MonoBehaviour
                 "BulletTracerLine"
             );
 
+        liveTracers.Add(tracerObject);
+
         if (tracerRoot != null)
         {
             tracerObject.transform.SetParent(
@@ -329,6 +348,7 @@ public class BulletTracerLineDrawer : MonoBehaviour
          */
         if (totalDistance <= 0.0001f)
         {
+            liveTracers.Remove(tracerObject);
             Destroy(
                 tracerObject
             );
@@ -703,6 +723,7 @@ public class BulletTracerLineDrawer : MonoBehaviour
          */
         if (rendererHiddenAfterHit)
         {
+            liveTracers.Remove(tracerObject);
             Destroy(
                 tracerObject
             );
@@ -776,6 +797,7 @@ public class BulletTracerLineDrawer : MonoBehaviour
         // Destroy
         // =============================================================
 
+        liveTracers.Remove(tracerObject);
         Destroy(
             tracerObject
         );

@@ -20,6 +20,76 @@ public class PlayerAbilityRuntime :
     [Tooltip("這顆 Runtime Prefab 對應的 Ability Definition。必須與 Loadout 裡引用的同一份資產一致。")]
     private PlayerAbilityDefinition definition;
 
+    [Header("E 專注能力後座力")]
+    [SerializeField, Tooltip("每顆技能 Runtime 各自配置鏡頭與移動後座力；預設停用且未設定時機。僅 GrappleFocus 模組成功施放事件可觸發，不套用到鉤索命中能力。")]
+    private PlayerAbilityRecoilSettings recoil = new PlayerAbilityRecoilSettings();
+
+    // 待施加與回正狀態由 State Authority 保存；Proxy 不重播觸發，只讀原 KCC 同步結果。
+    [Networked] private float PendingCameraPitch { get; set; }
+    [Networked] private float PendingCameraYaw { get; set; }
+    [Networked] private float CameraApplicationRemaining { get; set; }
+    [Networked] private float AccumulatedCameraPitch { get; set; }
+    [Networked] private TickTimer CameraRecoveryTimer { get; set; }
+    [Networked] private int CameraRecoilSequence { get; set; }
+    [Networked] private int LastCameraApplicationTick { get; set; }
+    [Networked] private int LastCameraRecoveryTick { get; set; }
+
+    [Networked] private Vector3 RemainingMovementRecoil { get; set; }
+    [Networked] private float MovementRecoilSeconds { get; set; }
+    [Networked] private int LastMovementRecoilTick { get; set; }
+    [Networked] private TickTimer MovementRecoilLifetime { get; set; }
+
+    /// <summary>既有 KCC PrepareData 每固定 Tick 消耗一次；碰撞丟失的位移不存回、不補發。</summary>
+    public Vector3 ConsumeMovementRecoil(float deltaTime)
+    {
+        if (!spawned || Object == null || !Object.IsValid || !Object.HasStateAuthority ||
+            LastMovementRecoilTick == Runner.Tick.Raw) return Vector3.zero;
+        LastMovementRecoilTick = Runner.Tick.Raw;
+        var owner = OwnerPlayer;
+        if (owner == null || owner.Object == null || !owner.Object.IsValid || !owner.Object.HasStateAuthority ||
+            owner.Health == null || !owner.Health.IsAlive || MovementRecoilLifetime.ExpiredOrNotRunning(Runner))
+        {
+            RemainingMovementRecoil = Vector3.zero; MovementRecoilSeconds = 0f;
+            return Vector3.zero;
+        }
+        var distance = RemainingMovementRecoil;
+        float remaining = MovementRecoilSeconds;
+        Vector3 delta = AbilityMovementRules.ConsumeLinearDecay(ref distance, ref remaining, deltaTime);
+        RemainingMovementRecoil = distance; MovementRecoilSeconds = remaining;
+        return delta;
+    }
+
+    /// <summary>由成功受理／施放入口呼叫；只由權威修改 Owner KCC，不以 RPC 或 Render 補播。</summary>
+    public void ApplyAbilityRecoil(PlayerAbilityRecoilEvent trigger, Vector2? releaseAim = null)
+    {
+        if (!spawned || Object == null || !Object.IsValid || !Object.HasStateAuthority ||
+            definition == null || definition.Category != PlayerAbilityCategory.GrappleFocus || recoil == null) return;
+        Player owner = OwnerPlayer;
+        if (owner == null || owner.Object == null || !owner.Object.IsValid || !owner.Object.HasStateAuthority ||
+            owner.Health == null || !owner.Health.IsAlive || owner.Movement == null || owner.Movement.KCC == null) return;
+        var data = owner.Movement.KCC.Data;
+        Vector2 aim = releaseAim ?? new Vector2(data.LookPitch, data.LookYaw);
+        Vector3 velocity = recoil.ResolveMovement(trigger, aim.x, aim.y);
+        Vector2 angles = recoil.ResolveCamera(trigger);
+        if (velocity != Vector3.zero)
+        {
+            float duration = recoil.MovementDecayDuration;
+            // 保留尚未施加的距離，再合併本次三角速度曲線面積；重觸發只重設衰減時間。
+            RemainingMovementRecoil += velocity * (duration * 0.5f);
+            MovementRecoilSeconds = duration;
+            // 保留派發到下一個 KCC Tick 的餘裕，避免 seconds→ticks 截斷吃掉最後一段。
+            MovementRecoilLifetime = TickTimer.CreateFromTicks(Runner, Mathf.CeilToInt(duration / Runner.DeltaTime) + 2);
+        }
+        if (angles == Vector2.zero) return;
+        CameraRecoilSequence++;
+        PendingCameraPitch += angles.x;
+        PendingCameraYaw += Mathf.Abs(angles.y) * (CameraRecoilSequence % 2 == 0 ? 1f : -1f);
+        CameraApplicationRemaining = recoil.CameraApplicationDuration;
+        CameraRecoveryTimer = TickTimer.CreateFromSeconds(Runner, recoil.CameraRecoveryDelay);
+        // 0 秒保留原立即施加契約；全勾且無前搖可同 Tick 觸發兩次。
+        if (CameraApplicationRemaining <= 0f) ApplyPendingCameraRecoil(true);
+    }
+
 
     [Networked]
     public NetworkObject OwnerPlayerObject
@@ -40,15 +110,64 @@ public class PlayerAbilityRuntime :
     private MonoBehaviour moduleBehaviour;
     private IPlayerAbilityRuntimeModule module;
     private bool moduleBound;
+    private bool spawned;
     private bool? lastProfessionAvailability;
 
+
+    /// <summary>先處理真正手動壓槍與既有回正，再讓成功施放把新角度排入。</summary>
+    private void ProcessCameraRecoilRecovery()
+    {
+        if (!spawned || Object == null || !Object.IsValid || !Object.HasStateAuthority) return;
+        var owner = OwnerPlayer;
+        if (owner == null || owner.Object == null || !owner.Object.IsValid || !owner.Object.HasStateAuthority || owner.Health == null || !owner.Health.IsAlive)
+        {
+            ResetCameraRecoil();
+            RemainingMovementRecoil = Vector3.zero; MovementRecoilSeconds = 0f;
+            MovementRecoilLifetime = TickTimer.None;
+            return;
+        }
+        if (owner.Movement == null || recoil == null || LastCameraRecoveryTick == Runner.Tick.Raw) return;
+        LastCameraRecoveryTick = Runner.Tick.Raw;
+        float accumulated = AccumulatedCameraPitch;
+        float manual = owner.Movement.ConsumeManualRecoilPitch(accumulated);
+        float step = WeaponRecoilRecovery.Step(ref accumulated, manual,
+            PendingCameraPitch != 0f || PendingCameraYaw != 0f,
+            CameraRecoveryTimer.ExpiredOrNotRunning(Runner), recoil.CameraRecoverySpeed, Runner.DeltaTime);
+        if (step > 0f)
+        {
+            float applied = owner.Movement.AddLookRotationImpulse(step, 0f);
+            accumulated -= step - applied;
+        }
+        AccumulatedCameraPitch = accumulated;
+    }
+
+    private void ApplyPendingCameraRecoil(bool immediate = false)
+    {
+        if (!spawned || Object == null || !Object.IsValid || !Object.HasStateAuthority) return;
+        var owner = OwnerPlayer;
+        if (owner == null || owner.Object == null || !owner.Object.IsValid || !owner.Object.HasStateAuthority || owner.Health == null || !owner.Health.IsAlive || owner.Movement == null) return;
+        if (!immediate && LastCameraApplicationTick == Runner.Tick.Raw) return;
+        LastCameraApplicationTick = Runner.Tick.Raw;
+        float pitch = PendingCameraPitch, yaw = PendingCameraYaw, remaining = CameraApplicationRemaining;
+        Vector2 step = WeaponRecoilApplication.Step(ref pitch, ref yaw, ref remaining, immediate ? 0f : Runner.DeltaTime);
+        PendingCameraPitch = pitch; PendingCameraYaw = yaw; CameraApplicationRemaining = remaining;
+        if (step != Vector2.zero)
+            AccumulatedCameraPitch += owner.Movement.AddLookRotationImpulse(step.x, step.y);
+    }
+
+    private void ResetCameraRecoil()
+    {
+        PendingCameraPitch = 0f; PendingCameraYaw = 0f; CameraApplicationRemaining = 0f;
+        AccumulatedCameraPitch = 0f; CameraRecoveryTimer = TickTimer.None;
+        CameraRecoilSequence = 0; LastCameraApplicationTick = int.MinValue; LastCameraRecoveryTick = int.MinValue;
+    }
 
     public PlayerAbilityDefinition Definition =>
         definition;
 
 
     public Player OwnerPlayer =>
-        OwnerPlayerObject != null
+        spawned && Object != null && Object.IsValid && OwnerPlayerObject != null
             ? OwnerPlayerObject.GetComponent<Player>()
             : null;
 
@@ -68,11 +187,25 @@ public class PlayerAbilityRuntime :
 
     public override void Spawned()
     {
+        spawned = true;
+        if (Object.HasStateAuthority)
+        {
+            ResetCameraRecoil();
+            RemainingMovementRecoil = Vector3.zero; MovementRecoilSeconds = 0f;
+            LastMovementRecoilTick = int.MinValue; MovementRecoilLifetime = TickTimer.None;
+        }
         ResolveModule();
         TryBindModule();
         RefreshProfessionAvailabilityNow();
     }
 
+
+    /// <summary>各端皆重試尚未解析的 Owner；遠端 Proxy 不依賴輸入或本機 HUD 才恢復綁定。</summary>
+    public override void Render()
+    {
+        if (spawned && Object != null && Object.IsValid && !moduleBound && TryBindModule())
+            RefreshProfessionAvailabilityNow();
+    }
 
     public override void Despawned(
         NetworkRunner runner,
@@ -90,6 +223,7 @@ public class PlayerAbilityRuntime :
             );
         }
 
+        spawned = false;
         module =
             null;
 
@@ -107,7 +241,15 @@ public class PlayerAbilityRuntime :
     /// <summary>
     /// 每 Tick 由 PlayerAbilityRuntimeManager 依穩定順序呼叫。
     /// </summary>
-    public void Simulate(
+    public void Simulate(NetInput input, NetworkButtons previousButtons)
+    {
+        ProcessCameraRecoilRecovery();
+        SimulateModule(input, previousButtons);
+        // 即使資格不符或按鍵被阻擋，已成功觸發的後座力仍完成施加／回正。
+        ApplyPendingCameraRecoil();
+    }
+
+    private void SimulateModule(
         NetInput input,
         NetworkButtons previousButtons
     )

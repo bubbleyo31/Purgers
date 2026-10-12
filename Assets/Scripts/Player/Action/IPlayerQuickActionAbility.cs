@@ -101,3 +101,8 @@ public interface IPlayerQuickActionAbility
         int activationSequence
     );
 }
+/// <summary>選用的 F 輸入上下文。只接收當 Tick 經控制鎖過濾的輸入，不自行輪詢裝置。</summary>
+public interface IPlayerQuickActionInputContext
+{
+    void SetQuickActionInput(NetInput input);
+}

@@ -1,0 +1,98 @@
+[
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\AbilityRuntime\\AttackGrappleMarkAbilityRuntime.prefab",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\AbilityRuntime\\SupportAerialAbilityRuntime.prefab",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\AbilityRuntime\\SupportGrapplePullAbilityRuntime.prefab",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\AbilityRuntime\\TankAirDashAbilityRuntime.prefab",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\AbilityRuntime\\TankGrappleGatherAbilityRuntime.prefab",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\AbilityRuntime\\Active\\Blink.prefab",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\AbilityRuntime\\Active\\BulletTime.prefab",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\AbilityRuntime\\Active\\Experience.prefab",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\AbilityRuntime\\Active\\Grenade.prefab",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\AbilityRuntime\\Active\\GrenadeProjectile.prefab",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\AbilityRuntime\\Active\\HealingPack.prefab",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\AbilityRuntime\\Active\\HealingPackProjectile.prefab",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\AbilityRuntime\\Active\\PiercingCannon.prefab",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\AbilityRuntime\\Active\\PrecisionLock.prefab",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\AbilityRuntime\\Active\\Ricochet.prefab",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\AbilityRuntime\\Active\\RicochetProjectile.prefab",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\AbilityRuntime\\Active\\Shield.prefab",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\AbilityRuntime\\Active\\Shockwave.prefab",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\AbilityRuntime\\Active\\Visuals\\GrenadeVisual.prefab",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\AbilityRuntime\\Active\\Visuals\\HealingPackVisual.prefab",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\AbilityRuntime\\Active\\Visuals\\RicochetVisual.prefab",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\ProfessionRuntime\\AttackProfessionRuntime.prefab",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\ProfessionRuntime\\SupportProfessionRuntime.prefab",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\ProfessionRuntime\\TankProfessionRuntime.prefab",
+    "Unchanged": true
+  }
+]

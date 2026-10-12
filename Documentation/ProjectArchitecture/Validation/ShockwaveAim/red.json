@@ -1,0 +1,40 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "1effbabaaecf4f7699b6b0379d2651ed",
+      "status": "failed",
+      "mode": "EditMode",
+      "started_unix_ms": 1791456700721,
+      "finished_unix_ms": 1791456704405,
+      "last_update_unix_ms": 1791456704405,
+      "progress": {
+        "completed": 2,
+        "total": 535,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1791456703959,
+        "last_finished_test_full_name": "ShockwaveVisualTests.AimedTravel_DoesNotDiscardVerticalDirection(40.0f,120.0f)",
+        "last_finished_unix_ms": 1791456703960,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "blocked_reason": null,
+        "failures_so_far": [
+          {
+            "full_name": "ShockwaveVisualTests.AimedTravel_DoesNotDiscardVerticalDirection(-35.0f,70.0f)",
+            "message": "  波的位移必須保留前搖結束時瞄準方向的 Pitch。\r\n  Expected: less than 0.00100000005f\r\n  But was:  3.00705791f\r\n"
+          },
+          {
+            "full_name": "ShockwaveVisualTests.AimedTravel_DoesNotDiscardVerticalDirection(40.0f,120.0f)",
+            "message": "  波的位移必須保留前搖結束時瞄準方向的 Pitch。\r\n  Expected: less than 0.00100000005f\r\n  But was:  3.42020082f\r\n"
+          }
+        ],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": null
+    },
+    "hint": null
+  }
+}

@@ -1,0 +1,17 @@
+PASS Runner starts: Ok
+PASS authored Menu HUD exists
+PASS authoritative damage pipeline accepts hit
+PASS health changes exactly once
+PASS RPC contains authority position snapshot
+PASS source movement does not change received position snapshot
+MEASURE wall entry response 52.6 ms (20ms polling resolution)
+PASS occlusion transitions need no additional hit
+PASS fully blocked result and HP remain unchanged
+PASS Runner starts: Ok
+PASS late join does not replay previous transient hit
+PASS client has input authority only
+PASS other player HUD receives no victim-only event
+PASS client cannot authorize damage or manufacture feedback
+PASS Runner starts: Ok
+PASS reconnect does not replay old damage RPC
+PASS respawn starts without old markers

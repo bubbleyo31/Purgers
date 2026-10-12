@@ -107,6 +107,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ownerPlayer: {fileID: 0}
   lightAttack1:
+    UseAnimationFrames: 1
+    FrameTiming:
+      ClipDuration: 1.042
+      FramesPerSecond: 24
+      PlaybackSpeed: 1.5
+    PreparationFrame: 4
+    DamageFrame: 5
+    RecoveryFrame: 10
     StartupDuration: 0.09
     ActiveDuration: 0
     RecoveryDuration: 0.328
@@ -114,8 +122,16 @@ MonoBehaviour:
     MaximumTargets: 0
     Range: 6
     SearchRadius: 10
-    FullAttackAngle: 120
+    FullAttackAngle: 160
   lightAttack2:
+    UseAnimationFrames: 1
+    FrameTiming:
+      ClipDuration: 1.042
+      FramesPerSecond: 24
+      PlaybackSpeed: 1.5
+    PreparationFrame: 4
+    DamageFrame: 5
+    RecoveryFrame: 10
     StartupDuration: 0.09
     ActiveDuration: 0
     RecoveryDuration: 0.328
@@ -123,8 +139,16 @@ MonoBehaviour:
     MaximumTargets: 0
     Range: 6
     SearchRadius: 10
-    FullAttackAngle: 120
+    FullAttackAngle: 160
   heavyAttack:
+    UseAnimationFrames: 1
+    FrameTiming:
+      ClipDuration: 1.042
+      FramesPerSecond: 24
+      PlaybackSpeed: 0.8
+    PreparationFrame: 3
+    DamageFrame: 5
+    RecoveryFrame: 10
     StartupDuration: 0.271
     ActiveDuration: 0.271
     RecoveryDuration: 0.72
@@ -133,8 +157,8 @@ MonoBehaviour:
     Range: 6
     SearchRadius: 10
     FullAttackAngle: 160
-  comboResetDuration: 1.4
-  allowAttackInputBuffer: 0
+  comboResetDuration: 2
+  allowAttackInputBuffer: 1
   light1WorldSwingCue: {fileID: 11400000, guid: dc6fbc449bc42b64b9aea7d9f6155b05,
     type: 2}
   light2WorldSwingCue: {fileID: 11400000, guid: c5d97de4809f34e40bc1b1b9ab2df78b,
@@ -160,6 +184,23 @@ MonoBehaviour:
   _NextComboStep: 0
   _CurrentPhase: 0
   _AttackSequence: 0
+  _SwingSequence: 0
+  _InterruptedSequence: 0
+  enablePreparedDash: 1
+  preparedDashRange: 25
+  preparedDashSpeed: 100
+  preparedDashStopDistance: 1
+  preparedDashAimHeight: 1.6
+  preparedDashTimeout: 0.7
+  preparedDashEnemyMask:
+    serializedVersion: 2
+    m_Bits: 512
+  preparedDashObstructionMask:
+    serializedVersion: 2
+    m_Bits: 4294966875
+  preparedDashAimHalfAngle: 15
+  _PreparedDashDurationSeconds: 0
+  _PreparedDashElapsedSeconds: 0
 --- !u!114 &400024891662209625
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,0 +1,40 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "a9cb0a96f682456396fd1c2a1680e739",
+      "status": "failed",
+      "mode": "EditMode",
+      "started_unix_ms": 1791645773143,
+      "finished_unix_ms": 1791645774911,
+      "last_update_unix_ms": 1791645774911,
+      "progress": {
+        "completed": 29,
+        "total": 662,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1791645774475,
+        "last_finished_test_full_name": "SafeHouseReadyRulesTests.StageStartsOnlyWhenEveryConnectedPlayerIsReady(2,2,True)",
+        "last_finished_unix_ms": 1791645774475,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "blocked_reason": null,
+        "failures_so_far": [
+          {
+            "full_name": "SafeHouseReadyRulesTests.ActiveReadyVoteCancelsWhenItsTimeoutExpires(Countdown,True,False)",
+            "message": "  Expected: False\r\n  But was:  True\r\n"
+          },
+          {
+            "full_name": "SafeHouseReadyRulesTests.NewSafeHouseUsesOneSecondDepartureCountdown",
+            "message": "  Expected: 1.0f\r\n  But was:  3.0f\r\n"
+          }
+        ],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": null
+    },
+    "hint": null
+  }
+}
