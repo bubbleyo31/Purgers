@@ -17,7 +17,7 @@ public enum PlayerAbilityCategory : byte
     GrappleFocus = 1,
 
     /// <summary>
-    /// 鈎索正式 Attached 到 Gameplay Target 時執行的能力。
+    /// 鈎索命中槽位。包含鉤頭 Attached 事件能力，以及鈎索期間接觸觸發的尖刺；條件由各模組決定。
     /// </summary>
     GrappleHit = 2
 }

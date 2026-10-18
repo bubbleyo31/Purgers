@@ -590,6 +590,14 @@ public class PlayerProfessionRuntimeManager :
         return true;
     }
 
+    /// <summary>捕食沿用武器既有中斷，不重建 Runtime 或清空裝備。</summary>
+    public void InterruptForCapture()
+    {
+        if (Object == null || !Object.IsValid || !Object.HasStateAuthority) return;
+        PrepareOldWeaponForReplacement();
+        CurrentRuntimeObject?.GetComponent<AttackFocusAbility>()?.CancelFocusFromExternalSystem();
+    }
+
     private void PrepareOldWeaponForReplacement()
     {
         if (CurrentRuntimeObject == null || !CurrentRuntimeObject.IsValid) return;
@@ -638,6 +646,7 @@ public class PlayerProfessionRuntimeManager :
         bool allowSameProfessionRefresh
     )
     {
+        if (actionGate != null && actionGate.IsCaptured) return false;
         if (Object == null ||
             Object.HasStateAuthority == false)
         {

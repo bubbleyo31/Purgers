@@ -14,6 +14,7 @@ public enum EnemyCombatOptionId : byte
     RangedAttackA = 3,
     RangedAttackB = 4,
     SuicidePounce = 5,
+    FlytrapCapture = 6,
     DefenseA = 10,
     DefenseB = 11
 }
@@ -180,6 +181,8 @@ public abstract class EnemyCombatOption : NetworkBehaviour
 
     /// <summary>能力是否提供定點敵人在沒有 Active Option 時使用的瞄準方式。</summary>
     public virtual bool SupportsBetweenActionAiming => false;
+    /// <summary>只允許轉向既有目標記憶，不授予開火視線。預設關閉。</summary>
+    public virtual bool SupportsRememberedTargetAiming => false;
 
     /// <summary>自爆等已承諾動作可在目標失效後完成固定落點；預設仍取消。</summary>
     public virtual bool ContinueWithoutTarget => false;

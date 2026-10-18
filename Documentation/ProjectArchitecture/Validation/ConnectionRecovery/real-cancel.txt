@@ -1,0 +1,4 @@
+START
+PASS real Photon StartGame cancelled through UI; main restored; new save rolled back
+PASS same connection reconnected; code=6IE5FN1L region=asia
+END runners=0 inputBlocked=False

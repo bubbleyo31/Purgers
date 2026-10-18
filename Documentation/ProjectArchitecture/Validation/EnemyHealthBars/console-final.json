@@ -1,0 +1,18 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Retrieved 3 log entries.\",\"data\":[\"Assets\\\\_Project_Assets\\\\VFX\\\\Mirza Beig\\\\Cinematic Explosions FREE\\\\Scripts\\\\DemoController.cs(19,16): warning CS0108: 'DemoController.camera' hides inherited member 'Component.camera'. Use the new keyword if hiding was intended.\\n\",\"Assets\\\\Scripts\\\\Tool\\\\Testing\\\\TankPreparationRuntimeVerification.cs(74,137): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'\\n\",\"<b><color=#cc7a00>MCP-FOR-UNITY</color></b>: [WebSocket] Unexpected receive error: WebSocket is not initialised\"]}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Retrieved 3 log entries.",
+    "data": [
+      "Assets\\_Project_Assets\\VFX\\Mirza Beig\\Cinematic Explosions FREE\\Scripts\\DemoController.cs(19,16): warning CS0108: 'DemoController.camera' hides inherited member 'Component.camera'. Use the new keyword if hiding was intended.\n",
+      "Assets\\Scripts\\Tool\\Testing\\TankPreparationRuntimeVerification.cs(74,137): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'Object'\n",
+      "<b><color=#cc7a00>MCP-FOR-UNITY</color></b>: [WebSocket] Unexpected receive error: WebSocket is not initialised"
+    ]
+  },
+  "isError": false
+}

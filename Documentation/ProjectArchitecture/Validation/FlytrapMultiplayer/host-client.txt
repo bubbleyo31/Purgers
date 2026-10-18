@@ -1,0 +1,33 @@
+PASS Runner starts: Ok
+PASS Runner starts: Ok
+PASS multiplayer capture permits actual weapon counterattack
+PASS client receives weapon permission
+CONTEXT weapon inputs from Host; room players=2
+PASS equip rifle: 
+PASS captured primary weapon applies real damage while held
+PASS captured weapon can reload
+PASS actual weapon kill releases in place
+PASS equip captured Tank: 
+PASS captured Tank holds weapon but cannot guard, quick dash or move
+PASS Tank preparation release swings without weapon-linked dash
+PASS captured Tank aimed away still misses (no automatic captor damage)
+PASS captured Tank aimed down damages real captor through existing resolver
+PASS downward Tank attack remains stationary
+PASS disconnect preserves weapon permission and preparation
+PASS Runner starts: Ok
+PASS joining player preserves weapon permission and preparation
+PASS late join and reconnect preserve replicated weapon permission
+PASS client cannot release authoritative capture
+CONTEXT weapon inputs from Client; room players=2
+PASS equip rifle: 
+PASS captured primary weapon applies real damage while held
+PASS captured weapon can reload
+PASS actual weapon kill releases in place
+PASS equip captured Tank: 
+PASS captured Tank holds weapon but cannot guard, quick dash or move
+PASS Tank preparation release swings without weapon-linked dash
+PASS captured Tank aimed away still misses (no automatic captor damage)
+PASS captured Tank aimed down damages real captor through existing resolver
+PASS downward Tank attack remains stationary
+PASS remote attacks are input authority only; Host applies damage
+PASS multiplayer total damage and ten-second cooldown remain unchanged

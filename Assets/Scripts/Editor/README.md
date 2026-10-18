@@ -22,3 +22,6 @@
 - 網路同步：搜尋 `[Networked]`、`[Rpc(`、`HasStateAuthority`、`IsSceneAuthority`。
 - 場景綁定：由 `[SerializeField]` 欄位名稱回到 Unity Inspector 找同名引用。
 
+
+- BeamPresentationSetup.Apply()：只配置 B／C Beam／PiercingCannon 的光束材質與等價前搖比例，不改 Scene；只在明確遷移時呼叫。
+

@@ -1,0 +1,15 @@
+PASS Runner starts host
+PASS load pre-baked Chunk navigation and automatic ground patrol
+PASS ground patrol point available
+PASS Director State Authority belongs to host
+PASS ground readiness uses actual mixed Prefab kind
+PASS zero-chance ground does not block flying and stationary on navigation
+PASS candidate build ready
+PASS one zone resolves Ground, FreeFlying and Stationary
+PASS Ground automatic patrol contract
+PASS FreeFlying automatic patrol contract
+PASS Stationary automatic patrol contract
+PASS automatic flight does not overwrite manual field
+FAIL System.InvalidOperationException: first stationary sample is physically occupied
+  at EnemySpawnCompositionVerification.Check (System.Boolean ok, System.String label) [0x0001f] in M:\UnityProject\Purgers\Assets\Scripts\Editor\EnemySpawnCompositionVerification.cs:28 
+  at EnemySpawnCompositionVerification.Begin (System.Boolean network, System.Int32 stationaryCount) [0x00a52] in M:\UnityProject\Purgers\Assets\Scripts\Editor\EnemySpawnCompositionVerification.cs:111 

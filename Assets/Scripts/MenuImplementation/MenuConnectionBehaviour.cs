@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MultiClimb.Menu
 {
-    public class MenuConnectionBehaviour : FusionMenuConnectionBehaviour
+    public partial class MenuConnectionBehaviour : FusionMenuConnectionBehaviour
     {
         [SerializeField] private FusionMenuConfig config;
         [Space]
@@ -18,6 +18,10 @@ namespace MultiClimb.Menu
             "既有 Continue 存檔保留自己的 Snapshot，不會被此值改寫。")]
         [SerializeField, Min(1)] private int newSaveCycleLength =
             GameSaveSchema.DefaultCycleLength;
+
+        [Header("連線等待")]
+        [Tooltip("選區、建立／加入房間及初次載入合計的等待上限（秒，最小 1，預設 30）。逾時後清理最多另等 5 秒，再回主選單重試；不影響已連線遊戲的斷線判定。")]
+        [SerializeField, Min(1)] private float connectionTimeoutSeconds = 30f;
 
         private IGameSaveRepository saveRepository;
 
@@ -32,11 +36,28 @@ namespace MultiClimb.Menu
 
         public override IFusionMenuConnection Create()
         {
-            return new MenuConnection(
+            var connection = new MenuConnection(
                 config,
                 networkRunnerPrefab,
                 SaveRepository,
-                newSaveCycleLength);
+                newSaveCycleLength,
+                connectionTimeoutSeconds);
+            connection.RoomClosed += () => ShowRoomClosed(connection);
+            connection.ConnectionAttemptFailed += ShowConnectionFailure;
+            return connection;
+        }
+
+        private void ShowConnectionFailure(string message)
+        {
+            if (!this || !Application.isPlaying) return;
+            var main = GetComponentInChildren<FusionMenuUIMain>(true);
+            if (!main) main = transform.root.GetComponentInChildren<FusionMenuUIMain>(true);
+            if (!main || main.Controller == null) return;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            main.Controller.Show<FusionMenuUIMain>();
+            // 取消直接返回；逾時／失敗在主選單上沿用既有 Popup。
+            if (!string.IsNullOrEmpty(message)) main.Controller.Popup(message, "連線未完成");
         }
 
         public bool TrySelectHostSave(

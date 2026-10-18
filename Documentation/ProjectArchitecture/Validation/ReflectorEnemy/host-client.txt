@@ -1,0 +1,76 @@
+PASS Runner starts: Ok
+PASS Ground spawn accepts existing patrol contract
+PASS active Ground AI does not patrol or chase
+PASS stationary Ground enemy still turns to shoot
+PASS autonomous movement disabled by existing owner
+PASS one living shot blocks repeated attacks beyond cooldown
+PASS shooting down does not reflect
+PASS Impact lifetime still blocks a new attack
+PASS reflect live outstanding shot
+PASS reflected shot continues to block next attack
+PASS shot expiry releases existing attack controller
+PASS full shield blocks rear damage
+PASS full shield blocks front damage
+PASS another shooter's projectile cannot open this shield
+PASS near-target homing activates
+PASS authoritative melee volume reflects projectile
+PASS reflection follows aim and clears homing
+PASS same projectile cannot reflect twice
+PASS reflection accepted with arbitrary aimed direction
+PASS reflected impact causes no HP damage
+PASS stun locks movement rotation and attacks
+PASS reflection opening rejects knockback without changing other enemies
+PASS stunned transform remains still
+PASS opening has orange front shield and hidden rear shield
+PASS Shield_Left stays orange during opening
+PASS Shield_Right stays orange during opening
+PASS Shield_Top stays orange during opening
+PASS Shield_Bottom stays orange during opening
+PASS five remaining sides block damage: (0.00, 0.00, -1.00)
+PASS five remaining sides block damage: (-1.00, 0.00, 0.00)
+PASS five remaining sides block damage: (1.00, 0.00, 0.00)
+PASS five remaining sides block damage: (0.00, 1.00, 0.00)
+PASS five remaining sides block damage: (0.00, -1.00, 0.00)
+PASS rear hit damages existing health during opening
+PASS recovery restores blue rear shield
+PASS Shield_Left recovers blue
+PASS Shield_Right recovers blue
+PASS Shield_Top recovers blue
+PASS Shield_Bottom recovers blue
+PASS restored shield blocks rear damage again
+PASS Rifle consumes shot at nearest projectile without piercing
+PASS shoot down never opens enemy shield
+PASS wall blocks remote projectile shoot down
+PASS expanded capture catches projectile beyond original melee range
+PASS rear threat fixture starts unaware
+PASS wall-truncated shot cannot create threat behind wall
+PASS passing shot alerts without damage
+PASS threat turn never moves fixed Ground enemy
+PASS Attack F Active callback reflects
+PASS equip Support: 
+PASS Support SMG destroys projectile without reflection
+PASS Support F Active callback reflects with pitch
+PASS equip Tank: 
+PASS Tank chainsaw damage callback reflects with pitch
+PASS Tank F damage segment reflects with pitch
+PASS dash reflection uses full 3D aim
+PASS wall blocks melee reflection
+PASS long opening for late join
+PASS Runner starts: Ok
+PASS client cannot author stun
+PASS Shield_Left stays orange during opening
+PASS Shield_Right stays orange during opening
+PASS Shield_Top stays orange during opening
+PASS Shield_Bottom stays orange during opening
+PASS late join hides rear shield locally
+PASS Runner starts: Ok
+PASS reconnect restores remaining shield state
+PASS Shield_Left stays orange during opening
+PASS Shield_Right stays orange during opening
+PASS Shield_Top stays orange during opening
+PASS Shield_Bottom stays orange during opening
+PASS remote Input Authority separated from State Authority
+PASS Input Authority cannot directly destroy enemy projectile
+PASS Input Authority cannot directly author reflection
+PASS client F input reflects through normal quick action and replication
+PASS client Fire NetInput destroys projectile and replicates disappearance

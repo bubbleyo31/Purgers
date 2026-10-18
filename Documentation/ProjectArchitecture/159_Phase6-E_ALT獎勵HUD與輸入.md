@@ -1,4 +1,4 @@
-﻿# Phase 6-E：ALT 獎勵 HUD 與輸入
+# Phase 6-E：ALT 獎勵 HUD 與輸入
 
 > **2026-09-24 後續狀態**：使用者回報 Phase 6 目前手動測試通過；本切片驗收狀態記為「通過（使用者回報）」。本次未重新執行 Play Mode 或收到逐項獨立 Host／Client 日誌，故下方「仍待實測」清單保留為先前證據快照，不等於本輪已對每項取得可重現證據。總狀態與既有自動測試失敗見 [130](130_回歸驗證與審查狀態.md)。
 
@@ -27,7 +27,7 @@ Host 本地點選先排入下一個 Fusion Tick，再由主要 `GameLogic` 在 `
 
 ## 開發者快速升級鍵
 
-Editor Play Mode／Development Build 中，在 Game 場景已顯示獎勵 HUD 且本機輸入未被轉場鎖定時，按一次 **F8**，只為按鍵者補足升下一級所差的經驗。即使游標暫時解鎖也可觸發。Host 本機要求排到主要 `GameLogic.FixedUpdateNetwork`；Client 使用開發版專用 RPC 向 State Authority 請求。Host 再檢查玩家存活、目前同步進度和權限，沿用 `TryAwardPlayerExperience` 產生待選獎勵及候選，不由 Client 或 HUD 直接改等級。已有待選獎勵時不再加經驗，須先完成選擇才能再次按 F8；正式非 Development Build 不含此輸入／RPC 入口。
+Editor Play Mode／Development Build 中，在 Game 場景已顯示獎勵 HUD 且本機輸入未被轉場鎖定時，按一次 **F8**，只為按鍵者補足升下一級所差的經驗。即使游標暫時解鎖也可觸發。Host 本機要求排到主要 `GameLogic.FixedUpdateNetwork`；Client 使用開發版專用 RPC 向 State Authority 請求。Host 再檢查玩家存活、目前同步進度和權限，沿用 `TryAwardPlayerExperience` 產生待選獎勵及候選，不由 Client 或 HUD 直接改等級。已有待選獎勵時仍可按 F8 追加升級與待領次數；正式非 Development Build 不含此輸入／RPC 入口。
 
 `DevelopmentLevelUpRulesTests` 先確認缺少實作時會失敗，完成後 3／3 通過；完整 `PurgersRegression` EditMode 執行 180 項，仍只有既有兩項 Boss 資產接線失敗。F8 的實際 Host／Client 按鍵、候選畫面與存檔生命週期仍需 Play Mode 驗收。
 
@@ -51,3 +51,26 @@ Editor Play Mode／Development Build 中，在 Game 場景已顯示獎勵 HUD �
 - 使用者確認保留四項 Catalog：命中標記、鈎索聚集、鈎索拉近、空中緩降；不加回空中衝刺。預設 Loadout 已裝備拉近與緩降，排除後剩標記與聚集，故只顯示左右卡，中鍵不領取。若將來合格池有三項，既有中卡與中鍵路由會自動啟用；不複製獎勵補第三項。
 - `InputManager.rewardMouseButtonsBlockedUntilRelease` 記錄每個已消耗滑鼠鍵；BeforeUpdate 以實際 Held 解除放開的位元，合併 NetworkButtons 後再清除被攔截的 Fire／Aim，包含尚未提交的舊輸入。中鍵目前沒有戰鬥用途，但同樣記錄到放開。
 - Host／State Authority 的版本檢查、抽選、裝備與扣獎勵責任不變；多人實戰仍待驗收。
+
+## 2026-10-13 安全屋操作與玩家 HUD（局部核對）
+
+最後核對日期：2026-10-13。核對來源：本節提及的現行類別及安全屋修改。
+
+安全屋允許 ALT 選擇既有待選獎勵及換裝。LocalPlayerRewardHUD 使用父層 SafeHouseHudController 的 Runner，只讀主要 GameLogic；不改經驗／Reward 或滑鼠消耗規則。正式安全屋尚待手動複製 Phase6RewardHud 完整子樹，不能把程式支援視為場景已接線。
+
+完整規則、責任、場景配置與驗收入口見 [145 安全屋](145_PrePhase4-2_安全屋鍵盤準備與HUD.md)；實際證據與限制見 [驗證紀錄](Validation/SafeHouseGameplay/README.md)。2026-10-13 後續依授權完成 SafeHouse Scene 技能／經驗 HUD 接線；Prefab 未改。
+
+
+## 2026-10-16 成長獎勵與技能掉落局部核對
+
+待領經驗條顯示實際 XP，屬性卡顯示下一階最終值；沿原三選一輸入與版號驗證，不因後續升級重抽已顯示候選。 詳見 [168 角色成長、被動與掉落](168_角色成長被動與技能掉落.md)。
+
+實作／資產與測試證據分開列於 168，未宣稱獨立多程序聯機或 Build 驗收。
+
+## 2026-10-17 Inspector 逐級經驗（局部核對）
+
+最後核對日期：2026-10-17。核對來源：PlayerExperienceSettings、PlayerExperienceRules、GameLogic、DevelopmentLevelUpRules、LocalPlayerRewardHUD。
+相關文件：[160 操作與正式規則](160_Phase6_經驗與獎勵數值調整手冊.md)、[驗證紀錄](Validation/ExperienceTable/README.md)。
+
+經驗需求由共用 Settings 逐級填寫；超出表格固定沿用最後一筆，不新增滿級。主要 GameLogic 在 Session 初始化保存獨立快照，Host 計算正式升級與 F8；NetworkPlayerExperience 增加 RequiredExperience，HUD 讀同步門檻，Client 不自行推算。切換場景不重讀表，Host／Client 必須同版。超額、待領獎勵、既有候選與存檔 schema 保留；詳細設定、舊進度處理和驗證邊界見 160 及驗證紀錄。
+

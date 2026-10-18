@@ -55,6 +55,7 @@ public sealed class LocalHealthSegmentView : MaskableGraphic
     private readonly List<CellTransition> transitions = new List<CellTransition>();
     private readonly List<Vector2> outlineBuffer = new List<Vector2>(64);
     private float lastPixelScale, shieldHealth, shieldCapacity, displayedHealth=-1, displayedMaximum=-1, displayedUnit;
+    private bool centerTeammateCells;
     public int VisibleHealthCells => healthCells.Count;
     public int VisibleShieldCells => shieldCells.Count;
     public int ShieldStartCell => healthCells.Count;
@@ -63,6 +64,9 @@ public sealed class LocalHealthSegmentView : MaskableGraphic
         health<=0 || float.IsNaN(health) || float.IsInfinity(health) ? 0 : Mathf.CeilToInt(health/Mathf.Max(1,unit));
 
     /// <summary>解除綁定時清除舊角色餘額、護盾與殘影。</summary>
+    public void ConfigureTeamInfoPresentation()
+    { segmentWidth=40; segmentGap=4; segmentSlant=6; cornerRadius=0; SetVerticesDirty(); }
+
     public void ResetPresentation()
     {
         healthCells.Reset(); shieldCells.Reset(); transitions.Clear();
@@ -77,7 +81,7 @@ public sealed class LocalHealthSegmentView : MaskableGraphic
         if(Mathf.Approximately(shieldHealth,value)) return;
         int old=shieldCells.Count;
         bool grant=shieldHealth<=0 && value>0;
-        shieldHealth=value;shieldCapacity=Mathf.Max(shieldCapacity,value);
+        shieldHealth=value;shieldCapacity=value > 0f ? Mathf.Max(shieldCapacity,value) : 0f;
         shieldCells.Sample(value,Mathf.Max(1,healthPerSegment),grant,false);
         Animate(old,shieldCells.Count,healthCells.Count,shieldColor);
         RefreshNumbers();SetVerticesDirty();
@@ -86,8 +90,14 @@ public sealed class LocalHealthSegmentView : MaskableGraphic
     protected override void OnDisable(){base.OnDisable();ResetPresentation();}
     private void Update()
     {
-        if(healthSource==null)return;
-        float unit=Mathf.Max(1,healthPerSegment),maximum=Mathf.Max(0,healthSource.maxValue),current=Mathf.Clamp(healthSource.value,0,maximum);
+        if(healthSource!=null) ApplyHealthSnapshot(healthSource.value,healthSource.maxValue);
+        UpdateTransitions();
+    }
+    /// <summary>本機呈現快照入口；不建立第二份生命狀態、不寫回來源。</summary>
+    public void ApplyHealthSnapshot(float current,float maximum)
+    {
+        float unit=Mathf.Max(1,healthPerSegment);
+        maximum=Mathf.Max(0,maximum);current=Mathf.Clamp(current,0,maximum);
         bool reset=displayedMaximum<0 || !Mathf.Approximately(maximum,displayedMaximum) || !Mathf.Approximately(unit,displayedUnit);
         bool changed=reset || !Mathf.Approximately(current,displayedHealth);
         if(changed){
@@ -96,15 +106,30 @@ public sealed class LocalHealthSegmentView : MaskableGraphic
             if(reset){transitions.Clear();shieldCells.Sample(shieldHealth,unit,true,false);}
             else Animate(old,healthCells.Count,0,healthyColor);
             displayedHealth=current;displayedMaximum=maximum;displayedUnit=unit;
-            if(current<=0){shieldHealth=0;shieldCells.Reset();}
+            if(current<=0){shieldHealth=shieldCapacity=0;shieldCells.Reset();}
             RefreshNumbers();SetVerticesDirty();
         }
+    }
+    private void UpdateTransitions()
+    {
         for(int i=transitions.Count-1;i>=0;i--){
             var t=transitions[i];t.Age+=Time.unscaledDeltaTime;
             if(t.Age>=animationDuration)transitions.RemoveAt(i);else transitions[i]=t;
             SetVerticesDirty();
         }
         float scale=ScreenPixelsPerUnit();if(!Mathf.Approximately(lastPixelScale,scale)){lastPixelScale=scale;SetVerticesDirty();}
+    }
+    /// <summary>只供新建隊友名條使用；既有本機 HUD 的人工設定不會呼叫此入口。</summary>
+    public void ConfigureTeammatePresentation(TeammateDisplaySettings settings)
+    {
+        if(settings==null)return;
+        bool changed=!centerTeammateCells || healthPerSegment!=settings.healthPerCell || lowHealthThreshold!=settings.lowHealthThreshold ||
+            healthyColor!=settings.healthColor || lowHealthColor!=settings.lowHealthColor || shieldColor!=settings.shieldColor;
+        healthPerSegment=Mathf.Max(1,settings.healthPerCell);lowHealthThreshold=settings.lowHealthThreshold;
+        healthyColor=settings.healthColor;lowHealthColor=settings.lowHealthColor;shieldColor=settings.shieldColor;
+        centerTeammateCells=true;
+        segmentSlant=0;segmentGap=2;segmentWidth=10;emptyColor=new Color(.12f,.15f,.16f,.55f);
+        if(changed)SetVerticesDirty();
     }
     private void RefreshNumbers()
     {
@@ -126,6 +151,8 @@ public sealed class LocalHealthSegmentView : MaskableGraphic
         float width=rectTransform.rect.width;
         float step=Mathf.Min(segmentWidth+segmentSlant+segmentGap,width/capacity);
         float gap=Mathf.Min(segmentGap,step*.18f),slant=Mathf.Min(segmentSlant,(step-gap)*.25f),body=step-gap-slant;
+        // Center the actual row, including empty cells, rather than the wider layout Rect.
+        float left=centerTeammateCells ? rectTransform.rect.center.x-(capacity*step-gap)*.5f : rectTransform.rect.xMin;
         Color health=displayedHealth/displayedMaximum<=lowHealthThreshold?lowHealthColor:healthyColor;
         for(int i=0;i<capacity;i++){
             Color tint=i<healthCells.Count?health:i<healthCells.Count+shieldCells.Count?shieldColor:emptyColor;
@@ -133,11 +160,11 @@ public sealed class LocalHealthSegmentView : MaskableGraphic
                 float a=Mathf.Clamp01(t.Age/Mathf.Max(.05f,animationDuration));
                 tint=Color.Lerp(healingColor,tint,a);tint.a*=Mathf.Lerp(.55f,1,a);
             }
-            AddSlantedQuad(vh,rectTransform.rect.xMin+i*step,rectTransform.rect.yMin,body,rectTransform.rect.height,tint,slant);
+            AddSlantedQuad(vh,left+i*step,rectTransform.rect.yMin,body,rectTransform.rect.height,tint,slant);
         }
         foreach(var t in transitions)if(!t.Healing && t.Index>=healthCells.Count+shieldCells.Count && t.Index<capacity){
             Color tint=damageColor;tint.a*=1-Mathf.Clamp01((t.Age/Mathf.Max(.05f,animationDuration)-.26f)/.74f);
-            AddSlantedQuad(vh,rectTransform.rect.xMin+t.Index*step,rectTransform.rect.yMin,body,rectTransform.rect.height,tint,slant);
+            AddSlantedQuad(vh,left+t.Index*step,rectTransform.rect.yMin,body,rectTransform.rect.height,tint,slant);
         }
     }
     private float ScreenPixelsPerUnit()

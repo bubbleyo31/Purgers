@@ -1,4 +1,4 @@
-using Fusion;
+﻿using Fusion;
 using UnityEngine;
 
 
@@ -66,6 +66,20 @@ public class FirstPersonViewModelActionAnimator :
     [SerializeField]
     [Tooltip("目前 Attack / Support ViewModel 使用的 Animator。通常就是這個 Prefab Root 上，同時包含 Base Layer 與 ADS Layer 的 Animator。若留空，Awake 時會自動從同一物件取得。")]
     private Animator animator;
+
+    public Transform AnimationTransform => animator != null ? animator.transform : null;
+    public int BindingVersion { get; private set; }
+
+    /// <summary>僅供本機換彈鏡頭讀取；未 Spawn、觀戰或來源解除時拒絕取樣。</summary>
+    public bool TryGetLocalReloadCameraState(out Player owner, out bool reloading)
+    {
+        owner = null;
+        reloading = false;
+        if (!isActiveAndEnabled || !TryReadWeaponState(out _, out reloading)) return false;
+        owner = boundProfession == PlayerProfessionType.Attack ? attackRifle.OwnerPlayer : supportSMG.OwnerPlayer;
+        return IsNetworkBehaviourReady(owner) && owner.Object.HasInputAuthority &&
+            LocalPlayerSpectatorController.IsViewedObject(owner.Object);
+    }
 
     #endregion
 
@@ -188,6 +202,9 @@ public class FirstPersonViewModelActionAnimator :
     // =====================================================================
     #region Animator Parameter Cache
 
+    private static readonly int ReloadPlaybackSpeedHash = Animator.StringToHash("ReloadPlaybackSpeed");
+    private bool hasReloadPlaybackSpeed;
+
     private int appearTriggerHash;
     private int shootTriggerHash;
     private int reloadingBoolHash;
@@ -223,6 +240,7 @@ public class FirstPersonViewModelActionAnimator :
             return;
         }
 
+        SynchronizeReloadPlaybackSpeed();
         ObserveReloadState();
         ObserveMeleeState();
         ObserveSuccessfulShot();
@@ -256,6 +274,7 @@ public class FirstPersonViewModelActionAnimator :
     {
         ResetAnimatorRuntimeParameters();
 
+        unchecked { BindingVersion++; }
         boundProfession =
             profession;
 
@@ -273,6 +292,7 @@ public class FirstPersonViewModelActionAnimator :
             newQuickActionController;
 
         InitializeWeaponObservation();
+        SynchronizeReloadPlaybackSpeed();
         InitializeQuickActionObservation();
 
         if (debugAnimation)
@@ -300,6 +320,7 @@ public class FirstPersonViewModelActionAnimator :
     {
         ResetAnimatorRuntimeParameters();
 
+        unchecked { BindingVersion++; }
         boundProfession =
             PlayerProfessionType.None;
 
@@ -419,6 +440,24 @@ public class FirstPersonViewModelActionAnimator :
 
     // =====================================================================
     #region Reload Observation
+
+    /// <summary>相對既有校準速度的倍率；零秒換彈不播放，保持安全預設。</summary>
+    public static float CalculateReloadPlaybackSpeed(float baseDuration, float cycleDuration)
+    {
+        return baseDuration > 0f && cycleDuration > 0f ? baseDuration / cycleDuration : 1f;
+    }
+
+    private void SynchronizeReloadPlaybackSpeed()
+    {
+        if (!hasReloadPlaybackSpeed) return;
+        float multiplier = 1f;
+        if (IsNetworkBehaviourReady(attackRifle) && attackRifle.IsReloading)
+            multiplier = CalculateReloadPlaybackSpeed(attackRifle.BaseReloadDurationSeconds, attackRifle.ReloadDurationSeconds);
+        else if (IsNetworkBehaviourReady(supportSMG) && supportSMG.IsReloading)
+            multiplier = CalculateReloadPlaybackSpeed(supportSMG.BaseReloadDurationSeconds, supportSMG.ReloadDurationSeconds);
+        // 只改 Reload State 的乘數；ADS 與其他動畫不受 Animator 全域速度影響。
+        animator.SetFloat(ReloadPlaybackSpeedHash, multiplier);
+    }
 
     /// <summary>
     /// 將 Gameplay IsReloading 同步到 Animator。
@@ -810,6 +849,8 @@ public class FirstPersonViewModelActionAnimator :
             return;
         }
 
+        if (hasReloadPlaybackSpeed) animator.SetFloat(ReloadPlaybackSpeedHash, 1f);
+
         if (hasAppearTrigger)
         {
             animator.ResetTrigger(
@@ -902,6 +943,8 @@ public class FirstPersonViewModelActionAnimator :
             Animator.StringToHash(
                 meleeActiveBoolParameter
             );
+
+        hasReloadPlaybackSpeed = HasAnimatorParameter("ReloadPlaybackSpeed", AnimatorControllerParameterType.Float);
 
         hasAppearTrigger =
             HasAnimatorParameter(

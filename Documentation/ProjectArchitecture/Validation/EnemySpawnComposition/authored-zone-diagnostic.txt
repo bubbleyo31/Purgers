@@ -1,0 +1,9 @@
+navReady=True
+EnemySpawnZone navFail=0 supportFail=30 boxFail=0 pathFail=225 pass=1745 floorY=0.1781921..1.791275 center=(2022.80, 1.00, 2214.80) gates=1
+EnemySpawnZone (1) navFail=2 supportFail=19 boxFail=5 pathFail=724 pass=1250 floorY=0.1781921..1.663351 center=(2089.30, 1.05, 2190.70) gates=1
+EnemySpawnZone (2) navFail=0 supportFail=0 boxFail=0 pathFail=706 pass=1294 floorY=0.1781845..0.1782074 center=(2010.20, 1.05, 2115.10) gates=1
+EnemySpawnZone (3) navFail=0 supportFail=0 boxFail=2 pathFail=24 pass=1974 floorY=0.1781693..0.1782074 center=(2112.10, 1.05, 2118.10) gates=1
+EnemySpawnZone (4) navFail=2 supportFail=0 boxFail=3 pathFail=733 pass=1262 floorY=0.1781921..2.015962 center=(1889.30, 1.05, 2153.30) gates=1
+EnemySpawnZone (5) navFail=8 supportFail=0 boxFail=1 pathFail=539 pass=1452 floorY=0.1781921..2.015962 center=(1840.10, 1.05, 2155.20) gates=1
+EnemySpawnZone (6) navFail=1 supportFail=0 boxFail=1 pathFail=616 pass=1382 floorY=0.1781921..2.015962 center=(1888.80, 1.05, 2140.10) gates=1
+EnemySpawnZone (7) navFail=0 supportFail=13 boxFail=0 pathFail=108 pass=1879 floorY=0.1781921..1.501925 center=(2009.90, 1.00, 2228.70) gates=1

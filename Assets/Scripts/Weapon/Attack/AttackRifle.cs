@@ -1,4 +1,4 @@
-using Fusion;
+﻿using Fusion;
 using System;
 using UnityEngine;
 
@@ -877,10 +877,21 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
     public int MagazineCapacity =>
         Mathf.Max(
             1,
-            magazineCapacity
+            magazineCapacity + Purgers.Progression.PlayerGrowth.MagazineBonus(ownerPlayer)
         );
 
-    public float ReloadDurationSeconds => Mathf.Max(0f, reloadDuration);
+    [Networked] private float ReloadDurationSnapshot { get; set; }
+    [Networked] private int GrowthMagazineApplied { get; set; }
+    /// <summary>未加速的校準換彈秒數，供 ViewModel 計算本次動畫倍率。</summary>
+    public float BaseReloadDurationSeconds => Mathf.Max(0f, reloadDuration);
+    public float ReloadDurationSeconds => IsReloading ? ReloadDurationSnapshot : Purgers.Progression.PlayerGrowth.Reload(ownerPlayer, reloadDuration);
+    public void RefreshGrowthMagazine()
+    {
+        if (Object == null || !Object.IsValid || !Object.HasStateAuthority) return;
+        int bonus = Purgers.Progression.PlayerGrowth.MagazineBonus(ownerPlayer);
+        MagazineAmmo = Mathf.Clamp(MagazineAmmo + Mathf.Max(0, bonus - GrowthMagazineApplied), 0, MagazineCapacity);
+        GrowthMagazineApplied = bonus;
+    }
 
     /// <summary>
     /// 是否使用無限備彈。
@@ -1092,6 +1103,7 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
     /// </summary>
     private void InitializeWeapon()
     {
+        GrowthMagazineApplied = Purgers.Progression.PlayerGrowth.MagazineBonus(ownerPlayer);
         MagazineAmmo =
             MagazineCapacity;
 
@@ -1312,6 +1324,7 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
         // -------------------------------------------------------------
 
         ShotSequence++;
+        ownerPlayer?.GetComponent<PlayerActionGate>()?.NotifyGunshot();
 
         // -------------------------------------------------------------
         // 取得射擊方向
@@ -1559,8 +1572,11 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
         // Photon Fusion Lag Compensation
         // =============================================================
 
+        bool playerShotResolved=false;
+        bool shotQueryValid=false;
         if (Runner.LagCompensation != null)
         {
+            shotQueryValid=true;
             HitOptions options =
                 HitOptions.IncludePhysX |
                 HitOptions.IgnoreInputAuthority;
@@ -1608,6 +1624,8 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
                 /*
                 * 原本的傷害處理完全保留。
                 */
+                if (EnemyProjectilePlayerShot.Resolve(ownerPlayer, origin, direction, ref tracerEndPoint)) return tracerEndPoint;
+                playerShotResolved=true;
                 ProcessHit(
                     hit,
                     shotDamageMultiplier,
@@ -1615,6 +1633,7 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
                 );
             }
 
+            if (shotQueryValid && !playerShotResolved) EnemyProjectilePlayerShot.Resolve(ownerPlayer, origin, direction, ref tracerEndPoint);
             return tracerEndPoint;
         }
 
@@ -1624,6 +1643,7 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
 
         if (allowPhysicsFallback == false)
         {
+            if (shotQueryValid && !playerShotResolved) EnemyProjectilePlayerShot.Resolve(ownerPlayer, origin, direction, ref tracerEndPoint);
             return tracerEndPoint;
         }
 
@@ -1632,9 +1652,11 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
 
         if (physicsScene.IsValid() == false)
         {
+            if (shotQueryValid && !playerShotResolved) EnemyProjectilePlayerShot.Resolve(ownerPlayer, origin, direction, ref tracerEndPoint);
             return tracerEndPoint;
         }
 
+        shotQueryValid=true;
         if (physicsScene.Raycast(
                 origin,
                 direction,
@@ -1657,6 +1679,8 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
             LagCompensatedHit convertedHit =
                 (LagCompensatedHit)physicsHit;
 
+            if (EnemyProjectilePlayerShot.Resolve(ownerPlayer, origin, direction, ref tracerEndPoint)) return tracerEndPoint;
+            playerShotResolved=true;
             ProcessHit(
                 convertedHit,
                 shotDamageMultiplier,
@@ -1664,6 +1688,7 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
             );
         }
 
+        if (shotQueryValid && !playerShotResolved) EnemyProjectilePlayerShot.Resolve(ownerPlayer, origin, direction, ref tracerEndPoint);
         return tracerEndPoint;
     }
 
@@ -2196,7 +2221,8 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
             return false;
         }
 
-        if (reloadDuration <= 0f)
+        ReloadDurationSnapshot = Purgers.Progression.PlayerGrowth.Reload(ownerPlayer, reloadDuration);
+        if (ReloadDurationSnapshot <= 0f)
         {
             CompleteReload();
             return true;
@@ -2208,7 +2234,7 @@ public class AttackRifle : NetworkBehaviour,ICombatDamageFeedbackSource
         ReloadTimer =
             TickTimer.CreateFromSeconds(
                 Runner,
-                reloadDuration
+                ReloadDurationSnapshot
             );
 
         if (debugRifle &&

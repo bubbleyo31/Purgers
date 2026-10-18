@@ -1,0 +1,22 @@
+Purgers | Failed(Child) | passed=1 failed=3 skipped=0 | One or more child tests had errors | 
+M:/UnityProject/Purgers/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll | Failed(Child) | passed=1 failed=3 skipped=0 | One or more child tests had errors | 
+SafeHouseHudPresentationTests | Failed(Child) | passed=1 failed=3 skipped=0 | One or more child tests had errors | 
+SafeHouseHudPresentationTests.DepartureShowsOnlyDepartureAndClearsOnDisable | Failed | passed=0 failed=1 skipped=0 |   readyTimerLabel
+  Expected: not null
+  But was:  null
+ | at SafeHouseHudPresentationTests.Set (System.String name, UnityEngine.Object value) [0x00012] in M:\UnityProject\Purgers\Assets\Scripts\Editor\Tests\SafeHouseHudPresentationTests.cs:37
+at SafeHouseHudPresentationTests.DepartureShowsOnlyDepartureAndClearsOnDisable () [0x00000] in M:\UnityProject\Purgers\Assets\Scripts\Editor\Tests\SafeHouseHudPresentationTests.cs:63
+
+SafeHouseHudPresentationTests.ExpandedMapLeavesCompactMaskAndReturnsToOriginalContent | Passed | passed=1 failed=0 skipped=0 |  | 
+SafeHouseHudPresentationTests.UnmigratedHudRetainsCombinedPrompts | Failed | passed=0 failed=1 skipped=0 |   Split vote presentation must consume a supplied authoritative snapshot.
+  Expected: not null
+  But was:  null
+ | at SafeHouseHudPresentationTests.Render (Purgers.GameFlow.SafeHouse.SafeHousePhase phase, System.Boolean ready, System.Single seconds) [0x00016] in M:\UnityProject\Purgers\Assets\Scripts\Editor\Tests\SafeHouseHudPresentationTests.cs:43
+at SafeHouseHudPresentationTests.UnmigratedHudRetainsCombinedPrompts () [0x00000] in M:\UnityProject\Purgers\Assets\Scripts\Editor\Tests\SafeHouseHudPresentationTests.cs:76
+
+SafeHouseHudPresentationTests.VoteCountdownAndLocalToggleUseSeparateLabels | Failed | passed=0 failed=1 skipped=0 |   readyTimerLabel
+  Expected: not null
+  But was:  null
+ | at SafeHouseHudPresentationTests.Set (System.String name, UnityEngine.Object value) [0x00012] in M:\UnityProject\Purgers\Assets\Scripts\Editor\Tests\SafeHouseHudPresentationTests.cs:37
+at SafeHouseHudPresentationTests.VoteCountdownAndLocalToggleUseSeparateLabels () [0x00000] in M:\UnityProject\Purgers\Assets\Scripts\Editor\Tests\SafeHouseHudPresentationTests.cs:51
+

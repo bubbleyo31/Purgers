@@ -29,13 +29,30 @@ public sealed class BattleHudReadabilityTests
     }
 
     [Test]
-    public void RewardBackdropIsDisabledAndStageTextUsesNotoBold()
+    public void RewardBackdropIsDisabledAndStageTextUsesApprovedFonts()
     {
         var prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/UI/StageHUD.prefab");
         var frame = prefab.transform.Find("ReferenceFrame");
         Assert.That(frame.Find("Phase6RewardHud/BackgroundDim").gameObject.activeSelf, Is.False);
+        var rankLabels = frame.GetComponentsInChildren<GrowthRewardRankView>(true)
+            .Select(view => new SerializedObject(view).FindProperty("rankLabel").objectReferenceValue as TMPro.TMP_Text)
+            .ToArray();
+        Assert.That(rankLabels.Length, Is.EqualTo(3));
+        Assert.That(rankLabels.All(label => label != null), Is.True);
         foreach (var text in frame.GetComponentsInChildren<TMPro.TMP_Text>(true))
-            Assert.That(text.font.sourceFontFile.name, Is.EqualTo("NotoSansTC-Bold"), text.name);
+        {
+            if (rankLabels.Contains(text))
+            {
+                Assert.That(AssetDatabase.GetAssetPath(text.font), Is.EqualTo(
+                    "Assets/_Project_Assets/UI/GrowthIcons/Fonts/PurgersRankSlab SDF.asset"), text.name);
+                Assert.That(text.font.atlasPopulationMode, Is.EqualTo(TMPro.AtlasPopulationMode.Static));
+            }
+            else
+            {
+                Assert.That(text.font.sourceFontFile, Is.Not.Null, text.name);
+                Assert.That(text.font.sourceFontFile.name, Is.EqualTo("NotoSansTC-Bold"), text.name);
+            }
+        }
     }
 
     private static void WithMesh(float health, System.Action<Mesh> check)

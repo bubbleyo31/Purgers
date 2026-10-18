@@ -43,3 +43,12 @@ Phase 4 前置-1：Host 在地圖準備完成且所有連線玩家的當次 Play
 ## 2026-10-08 Editor 開發者暫停
 
 InputManager 的可配置 F7 只在 Editor Host 蒐集意圖；StageFlowController 在權威 Tick 暫停／恢復 StageTimer，透過 Networked PausedStageTicks 供各端 HUD 固定剩餘秒數。不限時、到期與非 Active 拒收，Spawn／新關卡／結果提交清除；不停止遊戲或撤離倒數。設定與驗證見 [143](../../../../Documentation/ProjectArchitecture/143_Phase3_Level1關卡閉環配置與驗證.md)。
+
+
+## 2026-10-16 倒地救援接點
+
+倒地保留 PlayerHealth／原物件且仍須撤離；真正死亡才銜接原觀戰。安全屋外不排程自動復活，安全屋沿用原流程。正式規則、Inspector、HUD 人工接線及驗證入口見 `Documentation/ProjectArchitecture/62_倒地與隊友救援.md`。
+
+## 2026-10-18 全滅轉場
+
+CompleteStage 失敗存檔成功後，AllPlayersDead 設置 WipeTransitionPending。Wipe partial 在各端啟動原 LocalSceneTransition，Host 收齊當前 ActivePlayers 完成回報後才呼叫 BeginSafeHouseLoad；其他失敗與成功路徑不變。詳見架構文件 144。

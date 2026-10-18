@@ -9,6 +9,8 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyActor))]
 public sealed class EnemyMovementOwnership : MonoBehaviour
 {
+    [SerializeField, Tooltip("允許 AI 巡邏與追擊位移，預設開啟。關閉後站定射擊，仍允許攻擊轉向、地面落下與既有外力控制；不改變 Ground 生成分類。")]
+    private bool allowAutonomousMovement = true;
     private EnemyActor actor;
     private SupportGrapplePullReceiver supportPull;
     private TankGatherMovementReceiver tankGather;
@@ -23,7 +25,9 @@ public sealed class EnemyMovementOwnership : MonoBehaviour
           (actor.ActionGate != null && actor.ActionGate.IsFusionSpawned &&
            actor.ActionGate.GetLocks(EnemyActionLockSource.ExternalMovement) != EnemyActionLockFlags.None)));
 
-    public bool CanMove => Ready && !actor.IsStationary && !IsExternallyMoved &&
+    public bool AllowAutonomousMovement => allowAutonomousMovement;
+
+    public bool CanMove => allowAutonomousMovement && Ready && !actor.IsStationary && !IsExternallyMoved &&
         !actor.StateController.IsTimeFrozen &&
         actor.StateController.CanRunBrain &&
         !actor.StateController.IsUsingAction &&

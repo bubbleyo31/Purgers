@@ -11,7 +11,7 @@ using UnityEngine;
 [DisallowMultipleComponent]
 [RequireComponent(typeof(NetworkObject))]
 [RequireComponent(typeof(NetworkTransform))]
-public sealed class EnemyProjectile :
+public sealed partial class EnemyProjectile :
     NetworkBehaviour
 {
     [Header("投射物 碰撞")]
@@ -115,6 +115,9 @@ public sealed class EnemyProjectile :
     )
     {
         OwnerEnemy = ownerEnemy;
+        IsReflected = false;
+        HomingStarted = false;
+        HomingTarget = null;
         TravelDirection =
             direction.sqrMagnitude > 0.0001f
                 ? direction.normalized
@@ -153,8 +156,12 @@ public sealed class EnemyProjectile :
             return;
         }
 
+        TickHoming();
+
         float distance =
             TravelSpeed * Runner.DeltaTime;
+
+        if (IsReflected) { TickReflectedFlight(distance); return; }
 
         if (Runner.GetPhysicsScene().SphereCast(
                 transform.position,
@@ -178,6 +185,7 @@ public sealed class EnemyProjectile :
 
     public override void Render()
     {
+        PresentReflection();
         if (visualStateInitialized == false ||
             previousImpactState != HasImpacted)
         {
@@ -252,5 +260,6 @@ public sealed class EnemyProjectile :
     {
         collisionRadius = Mathf.Max(0.001f, collisionRadius);
         impactLifetimeSeconds = Mathf.Max(0f, impactLifetimeSeconds);
+        SyncCollisionVisual();
     }
 }

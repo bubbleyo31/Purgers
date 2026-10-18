@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 [Serializable]
@@ -35,6 +35,12 @@ public sealed class AbilityColorGradingSettings : ScriptableObject
     public AbilityColorGrade experience = new AbilityColorGrade {
         lift = new Vector4(1.04f,1.03f,.98f,0f), gamma = new Vector4(1.09f,1.07f,.94f,0f),
         gain = new Vector4(1.08f,1.06f,.98f,0f), strength = .7f };
+    [Header("不是今天：黃色閃爍")]
+    [Min(.1f), Tooltip("黃光明暗循環秒數，預設 0.75；僅控制呈現節奏，持續時間讀取玩家的無敵計時。")]
+    public float notTodayPulseSeconds = .75f;
+    public AbilityColorGrade notToday = new AbilityColorGrade {
+        lift = new Vector4(1.08f,1.06f,.94f,0f), gamma = new Vector4(1.22f,1.17f,.75f,0f),
+        gain = new Vector4(1.15f,1.12f,.88f,0f), strength = .9f };
     [Header("成功回血：很淺的綠色")]
     public AbilityColorGrade healing = new AbilityColorGrade {
         lift = new Vector4(.99f,1.025f,.995f,0f), gamma = new Vector4(.98f,1.06f,.99f,0f),

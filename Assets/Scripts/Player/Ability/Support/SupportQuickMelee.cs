@@ -678,6 +678,8 @@ public class SupportQuickMelee :
         Vector3 forward =
             GetMeleeForward();
 
+        EnemyProjectileReflection.ReflectMelee(ownerPlayer, origin, forward, meleeRange, searchRadius, maximumAttackAngle);
+
 
         Vector3 searchCenter =
             origin +

@@ -18,4 +18,15 @@ MonoBehaviour:
   weight: 1
   repeatPolicy: 1
   abilityDefinition: {fileID: 11400000, guid: a1817cbaee779a04b8bc0742a1f4920e, type: 2}
-  description: "\u56FA\u5B9A\u7BC4\u570D\u540D\u55AE\u6301\u7E8C 2 \u79D2\uFF1A\u6575\u4EBA\u66AB\u505C\uFF0C\u73A9\u5BB6\u79FB\u52D5\u653E\u6162\u4F46\u653B\u64CA\u8207\u8F49\u5411\u6B63\u5E38\uFF1B\u50B7\u5BB3\u65BC\u7D50\u675F\u7D50\u7B97\u3002"
+  description: "\u9032\u5165\u5B50\u5F48\u6642\u9593\uFF0C\u6575\u4EBA\u6703\u5728\u6642\u9593\u5167\u88AB\u5B9A\u8EAB\uFF0C\u50B7\u5BB3\u65BC\u7D50\u675F\u7D50\u7B97\u3002"
+  weaponProfession: 0
+  weaponDisplayName: 
+  weaponIcon: {fileID: 0}
+  growthKind: 0
+  growthValues: []
+  growthDisplayName: 
+  growthIcon: {fileID: 0}
+  growthRankBackground: {fileID: 0}
+  growthRankCenter: {x: 0.5, y: 0.5}
+  growthRankSize: {x: 0.4, y: 0.3}
+  growthIconScale: 1

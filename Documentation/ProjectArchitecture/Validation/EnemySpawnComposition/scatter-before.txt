@@ -1,0 +1,9 @@
+Purgers | Failed(Child) | passed=1 failed=1 skipped=0 | One or more child tests had errors | 
+M:/UnityProject/Purgers/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll | Failed(Child) | passed=1 failed=1 skipped=0 | One or more child tests had errors | 
+EnemySpawnCompositionTests | Failed(Child) | passed=0 failed=1 skipped=0 | One or more child tests had errors | 
+EnemySpawnCompositionTests.AllEnemyKindsScatterInsideMixedZoneRegardlessOfLegacyKind | Failed | passed=0 failed=1 skipped=0 |   Expected: not equal to (10.00, 3.00, 20.00)
+  But was:  (10.00, 3.00, 20.00)
+ | at EnemySpawnCompositionTests.AllEnemyKindsScatterInsideMixedZoneRegardlessOfLegacyKind () [0x0007f] in M:\UnityProject\Purgers\Assets\Scripts\Editor\Tests\EnemySpawnCompositionTests.cs:120
+
+EnemyStationaryTests | Passed | passed=1 failed=0 skipped=0 |  | 
+EnemyStationaryTests.StationarySpawnScattersInsideAuthoredBoxWithChunkTransform | Passed | passed=1 failed=0 skipped=0 |  | 

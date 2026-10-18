@@ -1,0 +1,30 @@
+PASS runner starts: Ok
+PASS runner starts: Ok
+PASS formal Loadout equips: 
+PASS idle remains invisible and untimed
+PASS hook flight does not enable spikes
+PASS eligible empty space stays armed without visuals or timer
+PASS multiple targets each receive one 1.5x hit despite multiple colliders
+PASS first effective hit starts visible effect
+PASS local visual is active in its owner runner scene
+PASS visual follows center and gameplay radius
+PASS damage does not consume boost
+PASS same tick repeat cannot duplicate damage
+PASS detach hides spikes and retains absolute deadline
+PASS release momentum is disabled by default
+PASS optional release momentum restores eligibility without refreshing
+PASS reattach uses current 2x boost after interval
+PASS repeat hits never refresh effect or cooldown deadline
+PASS high speed swept volume catches target between endpoints
+PASS world wall blocks contact damage
+PASS effect expires without grapple and enters cooldown
+PASS cooldown rejects collision damage
+PASS cooldown completion while attached returns to invisible armed state
+PASS fresh cycle damages and requests existing knockback
+PASS knockback travels outward horizontally
+PASS micro knockback adds no stun or second damage
+PASS remote input owner has presentation authority only
+PASS input authority cannot commit contact damage
+PASS runner starts: Ok
+PASS late join/reconnected observer receives current deadlines without restarting effect
+PASS owner death removes local visual eligibility

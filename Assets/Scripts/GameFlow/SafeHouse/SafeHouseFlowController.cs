@@ -135,8 +135,26 @@ namespace Purgers.GameFlow.SafeHouse
             }
         }
 
+        // 以 Runner 隔離，不依賴 ActiveScene 名稱；Fusion 可能搬移場景物件。
+        private static readonly Dictionary<NetworkRunner, SafeHouseFlowController> activeByRunner =
+            new Dictionary<NetworkRunner, SafeHouseFlowController>();
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetActiveFlows() => activeByRunner.Clear();
+
+        public static SafeHouseFlowController GetForRunner(NetworkRunner runner) => runner != null && activeByRunner.TryGetValue(runner, out var flow) && flow != null && flow.IsNetworkReady ? flow : null;
+        public static bool IsActiveFor(NetworkRunner runner) => runner != null &&
+            activeByRunner.TryGetValue(runner, out var flow) && flow != null && flow.IsNetworkReady;
+
+        public override void Despawned(NetworkRunner runner, bool hasState)
+        {
+            if (runner != null && activeByRunner.TryGetValue(runner, out var flow) && flow == this)
+                activeByRunner.Remove(runner);
+        }
+
         public override void Spawned()
         {
+            activeByRunner[Runner] = this;
             if (!Object.HasStateAuthority)
                 return;
 

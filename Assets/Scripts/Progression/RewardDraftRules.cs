@@ -54,7 +54,8 @@ namespace Purgers.Progression
             int playerLevel,
             ulong seed,
             IReadOnlyCollection<string> acquiredRewardIds,
-            IReadOnlyCollection<string> excludedRewardIds = null)
+            IReadOnlyCollection<string> excludedRewardIds = null,
+            float passiveChance = 0.05f)
         {
             if (pool == null || pool.Count == 0)
                 return Array.Empty<string>();
@@ -100,33 +101,42 @@ namespace Purgers.Progression
 
             var chosen = new List<string>(Math.Min(MaximumChoices, eligible.Count));
             ulong state = seed == 0 ? 0x9E3779B97F4A7C15UL : seed;
-            while (eligible.Count > 0 && chosen.Count < MaximumChoices)
+            int growthSlots = playerLevel % 3 == 0 ? 1 : 2;
+            for (int slot = 0; slot < MaximumChoices && eligible.Count > 0; slot++)
             {
-                ulong totalWeight = 0;
-                foreach (RewardDraftEntry entry in eligible)
-                    totalWeight += (ulong)entry.Weight;
-
-                state ^= state >> 12;
-                state ^= state << 25;
-                state ^= state >> 27;
-                ulong pick = (state * 2685821657736338717UL) % totalWeight;
-
-                for (int i = 0; i < eligible.Count; i++)
-                {
-                    ulong weight = (ulong)eligible[i].Weight;
-                    if (pick >= weight)
-                    {
-                        pick -= weight;
-                        continue;
-                    }
-
-                    chosen.Add(eligible[i].StableRewardId);
-                    eligible.RemoveAt(i);
-                    break;
-                }
+                bool growth = slot < growthSlots;
+                bool passive = growth && (Next(ref state) % 1000000UL) <
+                    (ulong)(Math.Max(0f, Math.Min(1f, passiveChance)) * 1000000f);
+                int index = Pick(eligible, ref state, growth ? (passive ? 2 : 1) : 0);
+                if (index < 0 && growth) index = Pick(eligible, ref state, passive ? 1 : 2);
+                if (index < 0) index = Pick(eligible, ref state, -1);
+                if (index < 0) break;
+                chosen.Add(eligible[index].StableRewardId);
+                eligible.RemoveAt(index);
             }
 
             return chosen.ToArray();
+        }
+        private static ulong Next(ref ulong state)
+        {
+            state ^= state >> 12; state ^= state << 25; state ^= state >> 27;
+            return unchecked(state * 2685821657736338717UL);
+        }
+        private static int Group(RewardCategory category) => category == RewardCategory.CharacterBonus ? 1 :
+            category == RewardCategory.OneShotAbility ? 2 : 0;
+        private static int Pick(List<RewardDraftEntry> pool, ref ulong state, int group)
+        {
+            ulong total = 0;
+            foreach (var entry in pool) if (group < 0 || Group(entry.Category) == group) total += (ulong)entry.Weight;
+            if (total == 0) return -1;
+            ulong pick = Next(ref state) % total;
+            for (int i = 0; i < pool.Count; i++)
+            {
+                if (group >= 0 && Group(pool[i].Category) != group) continue;
+                if (pick < (ulong)pool[i].Weight) return i;
+                pick -= (ulong)pool[i].Weight;
+            }
+            return -1;
         }
     }
 }

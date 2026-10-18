@@ -1,0 +1,1 @@
+PASS real Play Mode: authoritative snapshot formatting; real GameObject.SetActive(false) dispatches OnDisable and clears new and existing labels. Isolated local UI, no network simulation.

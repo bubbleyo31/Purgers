@@ -1,0 +1,109 @@
+Preview only. Original PNGs, imported textures, definitions and serialized HUD unchanged.
+Formal frame=(71.28525, 82.95008); inset=2; baseline square=49.75798
+Scale uses alpha>=16/255 support, excludes faint residue only from measurement. Full Sprite UV rendered; no masking/cropping. Candidate uses transient 256px mipmapped trilinear copy, mip bias -0.5. Additional 0.5 UI unit safety margin.
+MaximumHealth: source=1254; imported=256; candidateSide=68.858; increase=38.4%
+ReloadSpeed: source=1254; imported=256; candidateSide=66.602; increase=33.9%
+MeleeSpeed: source=1254; imported=256; candidateSide=69.614; increase=39.9%
+MagazineCapacity: source=1254; imported=256; candidateSide=64.429; increase=29.5%
+GrappleCost: source=1254; imported=256; candidateSide=62.555; increase=25.7%
+FocusCooldown: source=1254; imported=256; candidateSide=71.519; increase=43.7%
+HitCooldown: source=1254; imported=256; candidateSide=62.868; increase=26.3%
+RegenerationRate: source=1254; imported=256; candidateSide=64.487; increase=29.6%
+RegenerationDelay: source=1254; imported=256; candidateSide=63.850; increase=28.3%
+rank 1/1: fontSize=29.700; ink=(4.398, 22.007, 0.000); anchorError=0.000000
+rank 1/2: fontSize=29.700; ink=(14.200, 22.007, 0.000); anchorError=0.000000
+rank 1/3: fontSize=29.700; ink=(24.003, 22.007, 0.000); anchorError=0.000000
+rank 1/4: fontSize=29.700; ink=(25.632, 22.007, 0.000); anchorError=0.000000
+rank 1/5: fontSize=29.700; ink=(18.681, 22.007, 0.000); anchorError=0.000000
+magazine 2/1: centreX=0.493222; shiftX=2.2126; leftGap=8.5612; rightGap=8.5612
+rank 2/1: fontSize=19.586; ink=(2.901, 14.513, 0.000); anchorError=0.000000
+magazine 2/2: centreX=0.493222; shiftX=2.2126; leftGap=5.3291; rightGap=5.3291
+rank 2/2: fontSize=19.586; ink=(9.365, 14.513, 0.000); anchorError=0.000000
+magazine 2/3: centreX=0.493222; shiftX=2.2126; leftGap=2.0970; rightGap=2.0970
+rank 2/3: fontSize=19.586; ink=(15.829, 14.513, 0.000); anchorError=0.000000
+magazine 2/4: centreX=0.493222; shiftX=2.2126; leftGap=1.5597; rightGap=1.5597
+rank 2/4: fontSize=19.586; ink=(16.904, 14.513, 0.000); anchorError=0.000000
+rank 3/1: fontSize=30.329; ink=(4.491, 22.473, 0.000); anchorError=0.000000
+rank 3/2: fontSize=30.329; ink=(14.501, 22.473, 0.000); anchorError=0.000000
+rank 3/3: fontSize=30.329; ink=(24.511, 22.473, 0.000); anchorError=0.000000
+rank 3/4: fontSize=30.329; ink=(26.175, 22.473, 0.000); anchorError=0.000000
+magazine 4/1: centreX=0.521930; shiftX=2.0572; leftGap=8.0262; rightGap=8.0262
+rank 4/1: fontSize=17.544; ink=(2.598, 13.000, 0.000); anchorError=0.000000
+magazine 4/2: centreX=0.521930; shiftX=2.0572; leftGap=5.1312; rightGap=5.1312
+rank 4/2: fontSize=17.544; ink=(8.388, 13.000, 0.000); anchorError=0.000000
+magazine 4/3: centreX=0.521930; shiftX=2.0572; leftGap=2.2361; rightGap=2.2361
+rank 4/3: fontSize=17.544; ink=(14.178, 13.000, 0.000); anchorError=0.000000
+magazine 4/4: centreX=0.521930; shiftX=2.0572; leftGap=1.7549; rightGap=1.7549
+rank 4/4: fontSize=17.544; ink=(15.141, 13.000, 0.000); anchorError=0.000000
+rank 5/1: fontSize=13.627; ink=(2.018, 10.097, 0.000); anchorError=0.000000
+rank 5/2: fontSize=13.627; ink=(6.515, 10.097, 0.000); anchorError=0.000000
+rank 5/3: fontSize=13.627; ink=(11.013, 10.097, 0.000); anchorError=0.000000
+rank 5/4: fontSize=13.627; ink=(11.760, 10.097, 0.000); anchorError=0.000000
+rank 5/5: fontSize=13.627; ink=(8.571, 10.097, 0.000); anchorError=0.000000
+rank 6/1: fontSize=29.034; ink=(4.300, 21.513, 0.000); anchorError=0.000000
+rank 6/2: fontSize=29.034; ink=(13.882, 21.513, 0.000); anchorError=0.000000
+rank 6/3: fontSize=29.034; ink=(23.464, 21.513, 0.000); anchorError=0.000000
+rank 6/4: fontSize=29.034; ink=(25.057, 21.513, 0.000); anchorError=0.000000
+rank 6/5: fontSize=29.034; ink=(18.262, 21.513, 0.000); anchorError=0.000000
+rank 7/1: fontSize=13.695; ink=(2.028, 10.148, 0.000); anchorError=0.000000
+rank 7/2: fontSize=13.695; ink=(6.548, 10.148, 0.000); anchorError=0.000000
+rank 7/3: fontSize=13.695; ink=(11.068, 10.148, 0.000); anchorError=0.000000
+rank 7/4: fontSize=13.695; ink=(11.819, 10.148, 0.000); anchorError=0.000000
+rank 7/5: fontSize=13.695; ink=(8.614, 10.148, 0.000); anchorError=0.000000
+rank 8/1: fontSize=24.543; ink=(3.635, 18.185, 0.000); anchorError=0.000000
+rank 8/2: fontSize=24.543; ink=(11.734, 18.185, 0.000); anchorError=0.000000
+rank 8/3: fontSize=24.543; ink=(19.834, 18.185, 0.000); anchorError=0.000000
+rank 8/4: fontSize=24.543; ink=(21.181, 18.185, 0.000); anchorError=0.000000
+rank 8/5: fontSize=24.543; ink=(15.437, 18.185, 0.000); anchorError=0.000000
+rank 9/1: fontSize=24.300; ink=(3.599, 18.006, 0.000); anchorError=0.000000
+rank 9/2: fontSize=24.300; ink=(11.618, 18.006, 0.000); anchorError=0.000000
+rank 9/3: fontSize=24.300; ink=(19.638, 18.006, 0.000); anchorError=0.000000
+rank 9/4: fontSize=24.300; ink=(20.971, 18.006, 0.000); anchorError=0.000000
+rank 9/5: fontSize=24.300; ink=(15.285, 18.006, 0.000); anchorError=0.000000
+rank 1/5: fontSize=29.700; ink=(18.681, 22.007, 0.000); anchorError=0.000000
+magazine 2/4: centreX=0.493222; shiftX=2.2126; leftGap=1.5597; rightGap=1.5597
+rank 2/4: fontSize=19.586; ink=(16.904, 14.513, 0.000); anchorError=0.000000
+rank 3/4: fontSize=30.329; ink=(26.175, 22.473, 0.000); anchorError=0.000000
+magazine 4/4: centreX=0.521930; shiftX=2.0572; leftGap=1.7549; rightGap=1.7549
+rank 4/4: fontSize=17.544; ink=(15.141, 13.000, 0.000); anchorError=0.000000
+rank 5/3: fontSize=13.627; ink=(11.013, 10.097, 0.000); anchorError=0.000000
+rank 6/5: fontSize=29.034; ink=(18.262, 21.513, 0.000); anchorError=0.000000
+rank 7/3: fontSize=13.695; ink=(11.068, 10.148, 0.000); anchorError=0.000000
+rank 8/5: fontSize=24.543; ink=(15.437, 18.185, 0.000); anchorError=0.000000
+rank 9/5: fontSize=24.300; ink=(15.285, 18.006, 0.000); anchorError=0.000000
+rank 2/1: fontSize=19.586; ink=(2.901, 14.513, 0.000); anchorError=0.000000
+magazine 2/1: centreX=0.493222; shiftX=2.2126; leftGap=8.5612; rightGap=8.5612
+rank 2/1: fontSize=19.586; ink=(2.901, 14.513, 0.000); anchorError=0.000000
+rank 2/2: fontSize=19.586; ink=(9.365, 14.513, 0.000); anchorError=0.000000
+magazine 2/2: centreX=0.493222; shiftX=2.2126; leftGap=5.3291; rightGap=5.3291
+rank 2/2: fontSize=19.586; ink=(9.365, 14.513, 0.000); anchorError=0.000000
+rank 2/3: fontSize=19.586; ink=(15.829, 14.513, 0.000); anchorError=0.000000
+magazine 2/3: centreX=0.493222; shiftX=2.2126; leftGap=2.0970; rightGap=2.0970
+rank 2/3: fontSize=19.586; ink=(15.829, 14.513, 0.000); anchorError=0.000000
+rank 2/4: fontSize=19.586; ink=(16.904, 14.513, 0.000); anchorError=0.000000
+magazine 2/4: centreX=0.493222; shiftX=2.2126; leftGap=1.5597; rightGap=1.5597
+rank 2/4: fontSize=19.586; ink=(16.904, 14.513, 0.000); anchorError=0.000000
+rank 4/1: fontSize=17.544; ink=(2.598, 13.000, 0.000); anchorError=0.000000
+magazine 4/1: centreX=0.521930; shiftX=2.0572; leftGap=8.0262; rightGap=8.0262
+rank 4/1: fontSize=17.544; ink=(2.598, 13.000, 0.000); anchorError=0.000000
+rank 4/2: fontSize=17.544; ink=(8.388, 13.000, 0.000); anchorError=0.000000
+magazine 4/2: centreX=0.521930; shiftX=2.0572; leftGap=5.1312; rightGap=5.1312
+rank 4/2: fontSize=17.544; ink=(8.388, 13.000, 0.000); anchorError=0.000000
+rank 4/3: fontSize=17.544; ink=(14.178, 13.000, 0.000); anchorError=0.000000
+magazine 4/3: centreX=0.521930; shiftX=2.0572; leftGap=2.2361; rightGap=2.2361
+rank 4/3: fontSize=17.544; ink=(14.178, 13.000, 0.000); anchorError=0.000000
+rank 4/4: fontSize=17.544; ink=(15.141, 13.000, 0.000); anchorError=0.000000
+magazine 4/4: centreX=0.521930; shiftX=2.0572; leftGap=1.7549; rightGap=1.7549
+rank 4/4: fontSize=17.544; ink=(15.141, 13.000, 0.000); anchorError=0.000000
+rank 1/3: fontSize=29.700; ink=(24.003, 22.007, 0.000); anchorError=0.000000
+magazine 2/3: centreX=0.493222; shiftX=2.2126; leftGap=2.0970; rightGap=2.0970
+rank 2/3: fontSize=19.586; ink=(15.829, 14.513, 0.000); anchorError=0.000000
+rank 3/3: fontSize=30.329; ink=(24.511, 22.473, 0.000); anchorError=0.000000
+magazine 4/4: centreX=0.521930; shiftX=2.0572; leftGap=1.7549; rightGap=1.7549
+rank 4/4: fontSize=17.544; ink=(15.141, 13.000, 0.000); anchorError=0.000000
+rank 5/5: fontSize=13.627; ink=(8.571, 10.097, 0.000); anchorError=0.000000
+rank 6/5: fontSize=29.034; ink=(18.262, 21.513, 0.000); anchorError=0.000000
+rank 7/5: fontSize=13.695; ink=(8.614, 10.148, 0.000); anchorError=0.000000
+rank 8/5: fontSize=24.543; ink=(15.437, 18.185, 0.000); anchorError=0.000000
+rank 9/5: fontSize=24.300; ink=(15.285, 18.006, 0.000); anchorError=0.000000
+Passed actual CanvasRenderer checks=88 (full UV, four vertices, equal axis scale). Includes repeated renders.

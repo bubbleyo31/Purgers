@@ -350,7 +350,20 @@ public class Player :
 
         // Never read a process-local lock here: this also simulates remote players.
         Purgers.GameFlow.Control.PlayerControlLocks.Filter(ref input, input.BlockedControls);
-        bool movementLocked = Purgers.GameFlow.Control.PlayerControlLocks.BlocksMovement(input.BlockedControls);
+        if (input.SettingsMenuOpen)
+        {
+            // Preserve posture and physical momentum; do not pause the shared world.
+            input.Direction = Vector2.zero; input.LookDelta = Vector2.zero; input.Buttons = default;
+            input.Buttons.Set(InputButton.Crouch, slideController != null && slideController.IsCrouched);
+            sprintController?.ForceResetSprint();
+            grapple.CancelFromSpecialAbility(false, false);
+        }
+        health?.FilterRescueInput(ref input);
+        abilityRuntimeManager?.FilterLootInput(ref input);
+        var captureGate = GetComponent<PlayerActionGate>();
+        bool captured = captureGate != null && captureGate.IsCaptured;
+        if (captured) input = PlayerActionGate.FilterCapturedInput(input, captureGate.CanUseWeaponWhileCaptured);
+        bool movementLocked = captured || Purgers.GameFlow.Control.PlayerControlLocks.BlocksMovement(input.BlockedControls);
 
         if (grappleMomentumEnergy != null)
         {
@@ -450,6 +463,9 @@ public class Player :
         * Crouching = Inspector 設定的蹲走倍率
         * Sliding   = 0，由 Slide Processor 接管水平 Kinematic Velocity
         */
+        if (health != null && health.IsDowned)
+            nonGrappleMovementInfluence *= health.CrawlInputMultiplier;
+
         float slideMovementInfluence =
             slideController != null
                 ? slideController.MovementInputInfluence
@@ -500,6 +516,7 @@ public class Player :
         }
 
         bool sprintActive =
+            health != null && health.IsDowned ? false :
             sprintController != null
                 ? sprintController.IsSprintActive
                 : input.Buttons.IsSet(
@@ -630,13 +647,23 @@ public class Player :
             );
         }
         
+        bool teamCombatBlocked = (input.BlockedControls & Purgers.GameFlow.Control.PlayerControlMask.Combat) != 0;
+        if (teamCombatBlocked)
+        {
+            // 資訊窗不取消既有繩索；新 Q／E／側閃仍由同一輸入鎖擋下。
+            grapplePressed = false;
+            grappleHeld = grapple.IsGrappleControlActive;
+        }
+        grapple.SimulateSideDash(input, nonGrappleMovementInfluence);
         grapple.Simulate(
             grapplePressed,
             grappleHeld,
             aimPressed,
             aimHeld,
             input.Direction,
-            nonGrappleMovementInfluence
+            nonGrappleMovementInfluence,
+            (input.SettingsModes & Purgers.Settings.PlayerSettingsInputRules.Valid) != 0
+                ? (bool?)((input.SettingsModes & Purgers.Settings.PlayerSettingsInputRules.GrappleHold) != 0) : null
         );
 
         /*
@@ -646,6 +673,11 @@ public class Player :
          * Profession Runtime 的副本仍遵守既有移動／動作鎖。
          * 鈎索不再以右鍵斷繩，也不再因此消耗 Aim 或封鎖 Ability1。
          */
+        // 只遮罩 Gameplay E，安全屋終端機仍使用自己的互動入口。
+        var abilityGate = GetComponent<PlayerActionGate>();
+        if (abilityGate != null && abilityGate.IsBlocked(PlayerActionBlockMask.ActiveAbility))
+            input.Buttons.Set(InputButton.Ability1, false);
+
         NetInput professionInput =
             input;
 

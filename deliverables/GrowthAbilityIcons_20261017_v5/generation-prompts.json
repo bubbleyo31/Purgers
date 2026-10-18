@@ -1,0 +1,136 @@
+{
+  "version": "v5",
+  "mode": "built-in image_gen",
+  "scope": "4 revised icons;12 unchanged;not integrated into Unity",
+  "referenceRule": "Use latest user supplied oblique four-claw image and crossed gun silhouette",
+  "icons": [
+    {
+      "id": "S01_NotToday",
+      "name": "不是今天",
+      "file": "S01_NotToday.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v4/S01_NotToday.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "S02_SelfRevive",
+      "name": "我自己來",
+      "file": "S02_SelfRevive.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v4/S02_SelfRevive.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "S03_Adrenaline",
+      "name": "腎上腺素",
+      "file": "S03_Adrenaline.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v4/S03_Adrenaline.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "S04_CarnivorousTree",
+      "name": "食人樹",
+      "file": "S04_CarnivorousTree.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v4/S04_CarnivorousTree.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "S05_HardChoice",
+      "name": "真難抉擇",
+      "file": "S05_HardChoice.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v4/S05_HardChoice.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "S06_GunMaster",
+      "file": "S06_GunMaster.png",
+      "name": "槍械高手",
+      "refs": [
+        "C:/Users/hsuai/AppData/Local/Temp/codex-clipboard-7ee702f5-36d3-4d99-8e2f-37e7e4874381.png"
+      ],
+      "prompt": "Single white minimalist game icon on transparent background. Solid white silhouette with broad transparent negative-space separations, no colors, shading, texture, speckles, backdrop or labels. Precisely clean up and upscale the supplied white crossed two-gun silhouette. Preserve EXACT outlines, proportions, near-vertical X crossing angle, muzzles upper-left and upper-right, stocks lower-left and lower-right, central negative space. Remove grey background to genuine transparent. No added cartridges, vines, decoration, text, rails or guns. Do not redesign firearm profiles; this reference IS the final composition. Only smooth jagged small source edges, retaining distinctive gun shape. Center with 10% transparent margin.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-8931b013-f731-4bb7-b095-a9419767e4ee.png",
+      "status": "revised"
+    },
+    {
+      "id": "A01_MaxHealth_I",
+      "name": "最大生命 I",
+      "file": "A01_MaxHealth_I.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v4/A01_MaxHealth_I.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "A02_ReloadSpeed_I",
+      "name": "換彈速度 I",
+      "file": "A02_ReloadSpeed_I.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v4/A02_ReloadSpeed_I.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "A03_MeleeSpeed_I",
+      "name": "近戰攻速 I",
+      "file": "A03_MeleeSpeed_I.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v4/A03_MeleeSpeed_I.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "A04_MagazineCapacity_I",
+      "name": "彈匣容量 I",
+      "file": "A04_MagazineCapacity_I.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v4/A04_MagazineCapacity_I.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "A05_GrappleEnergy_I",
+      "name": "鈎索能量減耗 I",
+      "file": "A05_GrappleEnergy_I.png",
+      "refs": [
+        "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-93d2461f-f12d-4e10-85b8-f95bd152dc66.png"
+      ],
+      "prompt": "Single white minimalist game icon on transparent background. Solid white silhouette with broad transparent negative-space separations, no colors, shading, texture, speckles, backdrop or labels. Attribute variant of supplied FOUR-claw oblique grapple. Keep EXACT diagonal orientation and FOUR long angular arms opening to right/upper-right. Keep distinctive non-symmetrical perspective silhouette. Make central circular hub larger, 36% canvas diameter; turn its solid disc into thick white outline enclosing clear transparent interior. Place ONE very bold WHITE upright Roman numeral I with thick top and bottom bars in this hub. I height 70% inner diameter with obvious empty space all around, dominant clear numeral. Front-most claw must pass BEHIND this numeral hub, not cover numeral. No hinge seams or details. Add one horizontal minus sign in empty upper-right corner, isolated from all arms. Uniform scale to allow 10% outer margins. No extra shapes or claws.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-920db586-0374-4a30-9652-d7d8a7174a56.png",
+      "status": "revised"
+    },
+    {
+      "id": "A06_FocusCooldown_I",
+      "name": "專注技能冷卻減免 I",
+      "file": "A06_FocusCooldown_I.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v4/A06_FocusCooldown_I.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "A07_GrappleCooldown_I",
+      "file": "A07_GrappleCooldown_I.png",
+      "name": "鈎索技能冷卻減免 I",
+      "refs": [
+        "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-920db586-0374-4a30-9652-d7d8a7174a56.png"
+      ],
+      "prompt": "Precise local edit of this transparent white skill icon. Change ONLY the horizontal minus sign at upper-right into two right-facing chevrons >> occupying same upper-right region. Keep EVERYTHING ELSE identical including all FOUR long claw arms, especially the large diagonal front-most claw crossing BELOW the circular Roman I hub. Preserve numeral, circle, positions, size, all four prongs and white monochrome silhouette. Do not remove or shorten any prong. No other changes. Transparent background.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-b9c21f5d-f3f1-4967-83b9-f1a73a9d1f28.png",
+      "status": "revised"
+    },
+    {
+      "id": "A08_OutOfCombatRegen_I",
+      "name": "脫戰每秒回血 I",
+      "file": "A08_OutOfCombatRegen_I.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v4/A08_OutOfCombatRegen_I.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "A09_RegenDelay_I",
+      "name": "脫戰回血等待縮短 I",
+      "file": "A09_RegenDelay_I.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v4/A09_RegenDelay_I.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "B01_GrappleBase",
+      "file": "B01_GrappleBase.png",
+      "name": "鈎索共用基礎圖示",
+      "refs": [
+        "C:/Users/hsuai/AppData/Local/Temp/codex-clipboard-e8cd21c7-e192-4630-ae5c-d3b51501af3e.png"
+      ],
+      "prompt": "Single white minimalist game icon on transparent background. Solid white silhouette with broad transparent negative-space separations, no colors, shading, texture, speckles, backdrop or labels. Translate EXACT supplied mechanical FOUR-prong grappling claw silhouette into white icon. Preserve its oblique view, central circular hub at lower-left of center, all FOUR long bent rectangular arms opening toward upper-right/right, with front-most wide arm crossing diagonally in front. Follow each visible prong position from reference. DO NOT replace it with a symmetrical front-view ring or four corner hooks. Simplify surface shading and hinges to solid angular flat shapes, keep narrow transparent gaps at arm overlaps so all four claws remain legible. No cable or new parts, no numeral. Preserve the source aspect, entire shape inside 10% clear margins.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-93d2461f-f12d-4e10-85b8-f95bd152dc66.png",
+      "status": "revised"
+    }
+  ]
+}

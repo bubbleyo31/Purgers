@@ -1,0 +1,2 @@
+Enemy_Ranged_A poses=140 broad excess=0 hitboxes=8 head=1 deathRefs=8 missingScripts=0 broadRadius=12.30477
+Enemy_Ranged_B poses=140 broad excess=0 hitboxes=8 head=1 deathRefs=8 missingScripts=0 broadRadius=12.30477

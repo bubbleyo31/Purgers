@@ -1,0 +1,40 @@
+{
+  "success": true,
+  "message": "Test job status retrieved.",
+  "error": null,
+  "data": {
+    "job_id": "0b05bb802b7a441ca0ab8a0ab69d03df",
+    "status": "succeeded",
+    "mode": "EditMode",
+    "started_unix_ms": 1791952382481,
+    "finished_unix_ms": 1791952384608,
+    "last_update_unix_ms": 1791952384608,
+    "progress": {
+      "completed": 57,
+      "total": 895,
+      "current_test_full_name": null,
+      "current_test_started_unix_ms": 1791952384125,
+      "last_finished_test_full_name": "EnemyHealthBarWiringTests.SavedMenuHasExactlyOneConfiguredScreenSpaceHud",
+      "last_finished_unix_ms": 1791952384128,
+      "stuck_suspected": false,
+      "editor_is_focused": false,
+      "blocked_reason": null,
+      "failures_so_far": [],
+      "failures_capped": false
+    },
+    "error": null,
+    "result": {
+      "mode": "EditMode",
+      "summary": {
+        "total": 57,
+        "passed": 57,
+        "failed": 0,
+        "skipped": 0,
+        "durationSeconds": 0.8981658,
+        "resultState": "Passed"
+      },
+      "results": []
+    }
+  },
+  "hint": null
+}

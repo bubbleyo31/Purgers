@@ -1,0 +1,3 @@
+Reward cards bound: 6; energy centers bound: 2
+Implemented reward icons present: 34
+Textures: 25; RGBA32 pixel bytes: 6553600

@@ -1,0 +1,5 @@
+2026-10-14 Ground change: 8 asset tests executed; 5 passed, 3 expected failures before implementation.
+GroundPrototypeDisablesAutonomousTranslationAndKeepsGroundOwners: Expected Ground, was FreeFlying.
+ReflectorProjectileIsOnePointFiveTimesOriginalPrototypeDiameter: Expected 0.525, was 0.35.
+SixVisualShieldFacesEncloseBody: additionalShields property was null.
+MCP job: 0ec8eacc490040e2a8621bfeaf61bebe

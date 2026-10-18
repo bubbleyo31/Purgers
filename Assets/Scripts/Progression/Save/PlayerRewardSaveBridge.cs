@@ -5,6 +5,8 @@ namespace Purgers.Progression
 {
     public readonly struct PlayerRewardSaveSnapshot
     {
+        public readonly int HitLevel;
+        public readonly int FocusLevel;
         public readonly string EquippedWeaponId;
         public readonly string EquippedGrappleHitId;
         public readonly string EquippedGrappleFocusId;
@@ -12,8 +14,9 @@ namespace Purgers.Progression
         public readonly string[] AcquiredRewardIds;
 
         public PlayerRewardSaveSnapshot(string hitId, string focusId,
-            string[] pendingIds, string[] acquiredIds, string weaponId = null)
+            string[] pendingIds, string[] acquiredIds, string weaponId = null, int hitLevel = 1, int focusLevel = 1)
         {
+            HitLevel = Math.Max(1, hitLevel); FocusLevel = Math.Max(1, focusLevel);
             EquippedWeaponId = weaponId ?? string.Empty;
             EquippedGrappleHitId = hitId ?? string.Empty;
             EquippedGrappleFocusId = focusId ?? string.Empty;
@@ -35,7 +38,7 @@ namespace Purgers.Progression
                 entry.EquippedGrappleHitId,
                 entry.EquippedGrappleFocusId,
                 entry.PendingRewardCandidateIds.ToArray(),
-                entry.AcquiredRewardIds.ToArray(), entry.EquippedWeaponId);
+                entry.AcquiredRewardIds.ToArray(), entry.EquippedWeaponId, entry.EquippedHitLevel, entry.EquippedFocusLevel);
         }
 
         public static void WriteHost(GameSaveData save,
@@ -53,6 +56,7 @@ namespace Purgers.Progression
                 save.RunProgression.PlayerProgressionEntries.Add(entry);
             }
 
+            entry.EquippedHitLevel = snapshot.HitLevel; entry.EquippedFocusLevel = snapshot.FocusLevel;
             entry.EquippedWeaponId = snapshot.EquippedWeaponId;
             entry.EquippedGrappleHitId = snapshot.EquippedGrappleHitId;
             entry.EquippedGrappleFocusId = snapshot.EquippedGrappleFocusId;

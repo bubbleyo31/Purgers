@@ -1,0 +1,19 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "checks": [
+        "original 17 reward entries and serialized values unchanged",
+        "reward and ability HUD share approved Sprite",
+        "eligible at level 1",
+        "can be offered again after unequip",
+        "excluded when equipped"
+      ],
+      "count": 18,
+      "icon": "Assets/_Project_Assets/UI/GrappleAbilityIcons/05_GrappleHit_Spike.png",
+      "sceneDirty": false
+    },
+    "compiler": "codedom"
+  }
+}

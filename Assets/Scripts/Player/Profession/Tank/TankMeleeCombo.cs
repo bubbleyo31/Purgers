@@ -683,6 +683,8 @@ public partial class TankMeleeCombo :
 
     // =====================================================================
     [Networked] public TankMeleePreparationProgress Preparation { get; private set; }
+    [Networked] private float SwingSpeedSnapshot { get; set; }
+    private float GrowthSwingSpeed => Mathf.Max(1f, SwingSpeedSnapshot);
     [Networked] public int SwingSequence { get; private set; }
     [Networked] public int InterruptedSequence { get; private set; }
 
@@ -701,9 +703,9 @@ public partial class TankMeleeCombo :
         if (definition == null || !definition.UseAnimationFrames || !definition.HasValidFrameTiming) return false;
         float seconds = Preparation.CursorSeconds;
         if (CurrentPhase == TankMeleeAttackPhase.Active)
-            seconds = definition.ResolvedStartup + definition.ResolvedActive - (PhaseTimer.RemainingTime(Runner) ?? 0f);
+            seconds = definition.ResolvedStartup + definition.ResolvedActive - (PhaseTimer.RemainingTime(Runner) ?? 0f) * GrowthSwingSpeed;
         else if (CurrentPhase == TankMeleeAttackPhase.Recovery)
-            seconds = definition.ResolvedStartup + definition.ResolvedActive + definition.ResolvedRecovery - (PhaseTimer.RemainingTime(Runner) ?? 0f);
+            seconds = definition.ResolvedStartup + definition.ResolvedActive + definition.ResolvedRecovery - (PhaseTimer.RemainingTime(Runner) ?? 0f) * GrowthSwingSpeed;
         normalizedTime = Mathf.Clamp01(seconds / definition.FrameTiming.DurationSeconds);
         return true;
     }
@@ -1038,6 +1040,7 @@ public partial class TankMeleeCombo :
             ResetAttackState();
             return;
         }
+        SwingSpeedSnapshot = Purgers.Progression.PlayerGrowth.MeleeSpeed(ownerPlayer);
         Preparation = TankMeleePreparationProgress.Begin(held);
         AttackSequence++;
 
@@ -1064,7 +1067,7 @@ public partial class TankMeleeCombo :
             PhaseTimer =
                 TickTimer.CreateFromSeconds(
                     Runner,
-                    definition.ResolvedStartup
+                    definition.ResolvedStartup / GrowthSwingSpeed
                 );
         }
         else
@@ -1107,7 +1110,7 @@ public partial class TankMeleeCombo :
             }
             var progress = Preparation;
             bool strike = progress.Advance(deltaTime < 0f ? Runner.DeltaTime : deltaTime, held,
-                definition.FrameTiming.FrameToSeconds(definition.PreparationFrame), definition.ResolvedStartup);
+                definition.FrameTiming.FrameToSeconds(definition.PreparationFrame), definition.ResolvedStartup, GrowthSwingSpeed);
             Preparation = progress;
             CurrentPhase = progress.IsHolding ? TankMeleeAttackPhase.Preparing : TankMeleeAttackPhase.Startup;
             if (strike) EnterActivePhase();
@@ -1253,7 +1256,7 @@ public partial class TankMeleeCombo :
             PhaseTimer =
                 TickTimer.CreateFromSeconds(
                     Runner,
-                    definition.ResolvedActive
+                    definition.ResolvedActive / GrowthSwingSpeed
                 );
         }
         else
@@ -1285,7 +1288,7 @@ public partial class TankMeleeCombo :
             PhaseTimer =
                 TickTimer.CreateFromSeconds(
                     Runner,
-                    definition.ResolvedRecovery
+                    definition.ResolvedRecovery / GrowthSwingSpeed
                 );
 
             return;
@@ -1593,6 +1596,8 @@ public partial class TankMeleeCombo :
         Vector3 forward =
             GetMeleeForward();
 
+        EnemyProjectileReflection.ReflectMelee(ownerPlayer, origin, forward, definition.Range, definition.SearchRadius, definition.FullAttackAngle);
+
         if (debugDrawAttack)
         {
             Debug.DrawRay(
@@ -1859,10 +1864,15 @@ public partial class TankMeleeCombo :
     /// Tank 普通電鋸近戰使用水平 Yaw。
     ///
     /// 玩家上下看不會把整個扇形
-    /// 朝天空或地板旋轉。
+    /// 朝天空或地板旋轉；受困反擊例外，使用實際瞄準方向。
     /// </summary>
     private Vector3 GetMeleeForward()
     {
+        // 嘴邊掛點可能位於敵人上方；受困時可瞄準下方反擊，但仍走原近戰距離／扇形／LOS。
+        if (ownerPlayer != null && ownerMovement != null &&
+            ownerPlayer.GetComponent<PlayerActionGate>()?.CanUseWeaponWhileCaptured == true)
+            return ownerMovement.GetAimDirection();
+
         Vector3 forward;
 
         if (ownerMovement != null &&

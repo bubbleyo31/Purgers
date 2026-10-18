@@ -144,7 +144,7 @@ public class LocalPlayerSpeedSlider : MonoBehaviour
     {
         player = null;
         if (runner == null || !runner.IsRunning || !runner.LocalPlayer.IsRealPlayer ||
-            !runner.TryGetPlayerObject(runner.LocalPlayer, out NetworkObject playerObject) ||
+            !LocalPlayerSpectatorController.TryGetViewedPlayerObject(runner, out NetworkObject playerObject) ||
             playerObject == null || !playerObject.IsValid)
             return false;
 
@@ -180,7 +180,7 @@ public class LocalPlayerSpeedSlider : MonoBehaviour
     private bool HasValidLocalEnergy()
     {
         return boundEnergy != null && boundEnergy.Object != null &&
-               boundEnergy.Object.IsValid && boundEnergy.Object.HasInputAuthority;
+               boundEnergy.Object.IsValid && LocalPlayerSpectatorController.IsViewedObject(boundEnergy.Object);
     }
 
     private void RefreshEnergyGauge()
@@ -249,7 +249,8 @@ public class LocalPlayerSpeedSlider : MonoBehaviour
 
         bool show = stageFlowController != null &&
                     stageFlowController.IsExtractionAvailable &&
-                    stageFlowController.IsLocalPlayerInsideExtraction();
+                    stageFlowController.TryGetSelectedExtraction(out var point) &&
+                    boundPlayer != null && point.Contains(boundPlayer.transform.position);
         SetExtractionPromptVisible(show);
         if (!show || extractionPromptLabel == null)
             return;

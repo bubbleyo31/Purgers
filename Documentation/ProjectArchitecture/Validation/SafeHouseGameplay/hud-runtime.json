@@ -1,0 +1,15 @@
+{
+  "SafeHouseRunnerBound": true,
+  "battleAlpha": 1.0,
+  "experienceAlpha": 1.0,
+  "canPresentRewardSelection": true,
+  "level": "5",
+  "experience": "待選獎勵 ×4",
+  "prompt": "按住 <color=#FFFFFF>ALT</color> 選擇獎勵",
+  "promptAlpha": 0.9997049,
+  "grappleDisabledMark": true,
+  "gate": "Grapple, ActiveAbility",
+  "levelState": 5,
+  "pendingRewards": 4,
+  "experienceState": 50
+}

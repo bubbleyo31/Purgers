@@ -1,0 +1,40 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"4d065902323c46c7bc714d0edd169500\",\"status\":\"succeeded\",\"mode\":\"EditMode\",\"started_unix_ms\":1791942645086,\"finished_unix_ms\":1791942646452,\"last_update_unix_ms\":1791942646452,\"progress\":{\"completed\":31,\"total\":864,\"current_test_full_name\":null,\"current_test_started_unix_ms\":1791942646070,\"last_finished_test_full_name\":\"EnemyHealthBarVisibilityTests.WallInAnotherPhysicsSceneDoesNotOcclude\",\"last_finished_unix_ms\":1791942646071,\"stuck_suspected\":false,\"editor_is_focused\":true,\"blocked_reason\":null,\"failures_so_far\":[],\"failures_capped\":false},\"error\":null,\"result\":null},\"hint\":null}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "success": true,
+      "message": "Test job status retrieved.",
+      "error": null,
+      "data": {
+        "job_id": "4d065902323c46c7bc714d0edd169500",
+        "status": "succeeded",
+        "mode": "EditMode",
+        "started_unix_ms": 1791942645086,
+        "finished_unix_ms": 1791942646452,
+        "last_update_unix_ms": 1791942646452,
+        "progress": {
+          "completed": 31,
+          "total": 864,
+          "current_test_full_name": null,
+          "current_test_started_unix_ms": 1791942646070,
+          "last_finished_test_full_name": "EnemyHealthBarVisibilityTests.WallInAnotherPhysicsSceneDoesNotOcclude",
+          "last_finished_unix_ms": 1791942646071,
+          "stuck_suspected": false,
+          "editor_is_focused": true,
+          "blocked_reason": null,
+          "failures_so_far": [],
+          "failures_capped": false
+        },
+        "error": null,
+        "result": null
+      },
+      "hint": null
+    }
+  },
+  "isError": false
+}

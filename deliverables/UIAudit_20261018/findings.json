@@ -1,0 +1,499 @@
+[
+  {
+    "id": "UI-01",
+    "priority": "P1",
+    "kind": "確證：文案與現行操作矛盾",
+    "title": "兩項能力仍教玩家使用舊的瞄準操作",
+    "evidence": "Reward_SupportAerial 描述仍是「鈎索飛行時按住瞄準」；Reward_TankAirDash 仍是「按下瞄準」。現行能力走 Ability1；獎勵卡及 TAB tooltip 直接顯示 Description。",
+    "fix": "透過 Editor 更正正式 Definition 文案，沿現有能力規則描述啟動／結束條件；不改輸入或技能本身。",
+    "verify": "在獎勵卡及 TAB 核對兩處，同時自然使用能力確認按下、再次按下、條件不足等措辭準確。",
+    "sources": [
+      [
+        "Reward_SupportAerial.asset",
+        21,
+        "Assets/_Project_Assets/Data/Progression/Reward_SupportAerial.asset"
+      ],
+      [
+        "Reward_TankAirDash.asset",
+        21,
+        "Assets/_Project_Assets/Data/Progression/Reward_TankAirDash.asset"
+      ],
+      [
+        "LocalPlayerRewardHUD.cs",
+        285,
+        "Assets/Scripts/UI/Player/LocalPlayerRewardHUD.cs"
+      ],
+      [
+        "LocalTeamInfoPanel.View.cs",
+        286,
+        "Assets/Scripts/UI/TeamInfo/LocalTeamInfoPanel.View.cs"
+      ]
+    ]
+  },
+  {
+    "id": "UI-02",
+    "priority": "P2",
+    "kind": "確證：改鍵提示未全數同步",
+    "title": "世界拾取、瞬移、自救文案仍硬寫 E",
+    "evidence": "PlayerAbilityLootVisual 第96行固定「[E] 拾取 / 替換」，實際互動已由 PlayerBinding.Interact 取得。Blink 與 Reward_SelfRescue 的 Description 同樣硬寫 E；正式救援 HUD 已使用目前綁定。",
+    "fix": "世界提示沿用 PlayerSettingsService.Label；共用描述入口使用明確的 binding token，或改為「技能鍵／互動鍵」。不要全域替換字母 E，也不要新增一套輸入來源。",
+    "verify": "E、滑鼠側鍵、RightControl、未配置四種情況；獎勵卡、TAB、世界掉落與救援一致，保存重啟後仍一致。",
+    "sources": [
+      [
+        "PlayerAbilityLootVisual.cs",
+        96,
+        "Assets/Scripts/UI/Player/PlayerAbilityLootVisual.cs"
+      ],
+      [
+        "Blink.asset",
+        21,
+        "Assets/_Project_Assets/Data/PlayerAbility/Active/Rewards/Blink.asset"
+      ],
+      [
+        "Reward_SelfRescue.asset",
+        21,
+        "Assets/_Project_Assets/Data/Progression/Growth/Reward_SelfRescue.asset"
+      ],
+      [
+        "InputManager.cs",
+        516,
+        "Assets/Scripts/InputManager.cs"
+      ]
+    ]
+  },
+  {
+    "id": "UI-03",
+    "priority": "P2",
+    "kind": "設定推導＋正式元件離屏重現",
+    "title": "TAB 在 32:9 預設高度超出畫面",
+    "evidence": "1920×1080 reference、match=.5、824 高。3840×1080 的縮放為 √2，視窗約1165高。本輪用正式元件、同一公式與示例資料離屏重現標題／外框裁切。21:9 不可一概而論。",
+    "fix": "既有 window／Canvas 依可用寬高取最小等比縮放，保留1104×824及固定四列。提案圖以 Expand 等效比例展示；正式實作仍須驗 tooltip 與命中。",
+    "verify": "1280×720、1920×1080、1920×1200、2560×1080、3840×1080與5120×1440；四列外框、tooltip四角、滑鼠位置全部一致。",
+    "sources": [
+      [
+        "LocalTeamInfoPanel.View.cs",
+        70,
+        "Assets/Scripts/UI/TeamInfo/LocalTeamInfoPanel.View.cs"
+      ],
+      [
+        "TeamInfoPanel.asset",
+        43,
+        "Assets/Resources/Presentation/TeamInfoPanel.asset"
+      ]
+    ]
+  },
+  {
+    "id": "UI-04",
+    "priority": "P2",
+    "kind": "確證：產品邊界資訊缺口",
+    "title": "房間可配置12人，TAB只顯示4／4而沒有真實總人數",
+    "evidence": "MenuConfig 上限12；TAB使用 Math.Min(4, roster.Count)。固定四列是使用者已核准規格，因此這不是擅自改十二列的理由。",
+    "fix": "先保留四列，顯示真實在線總數與「顯示其中4人」。分頁／固定自己／房間上限屬後續產品決策；本次沒有改動規則。",
+    "verify": "1、4、5、12人；自己可定位、實際總人數正確、離線資料不殘留。尚未自然開12人房驗證。",
+    "sources": [
+      [
+        "MenuConfig.asset",
+        15,
+        "Assets/Settings/MenuConfig.asset"
+      ],
+      [
+        "LocalTeamInfoPanel.cs",
+        99,
+        "Assets/Scripts/UI/TeamInfo/LocalTeamInfoPanel.cs"
+      ]
+    ]
+  },
+  {
+    "id": "UI-05",
+    "priority": "P2",
+    "kind": "確證：有捲動，缺乏可發現提示",
+    "title": "15個成長項目時，後續一排不容易被發現",
+    "evidence": "已有 ScrollRect＋RectMask2D，並非無法捲動。正式304寬、gap8、minimum42，15項為5欄3列、size51.2、高185.6；viewport122。約63.6 UI單位在下方，沒有捲軸或續項提示。",
+    "fix": "只有溢出時顯示細捲軸、項目總數或底緣續項提示；保留原成長圖示、等距與固定四列。離屏提案只展示指示外觀，未驗拖曳互動。",
+    "verify": "1、8、15、64項；初次可知道還有內容、可到最後一項、懸停正確；減少項目後不留空白捲動位置。",
+    "sources": [
+      [
+        "LocalTeamInfoPanel.View.cs",
+        121,
+        "Assets/Scripts/UI/TeamInfo/LocalTeamInfoPanel.View.cs"
+      ],
+      [
+        "TeamInfoRules.cs",
+        39,
+        "Assets/Scripts/UI/TeamInfo/TeamInfoRules.cs"
+      ]
+    ]
+  },
+  {
+    "id": "UI-06",
+    "priority": "P2",
+    "kind": "程式推導：小字邊界",
+    "title": "長鍵名在小鍵帽中只能大幅縮字",
+    "evidence": "未列舉按鍵會變成 RIGHTCONTROL 等長字串；技能鍵帽約32×32，最小字級10，720p等比後可能只剩約6.7螢幕像素。未宣稱所有鍵已實機破版。",
+    "fix": "集中建立完整名稱／緊湊鍵帽兩種模式，例如 Right Control／R Ctrl、Left Bracket／[；有限加寬鍵帽並量測文字，不整套HUD放大。",
+    "verify": "所有可綁鍵的極端名稱、滑鼠側鍵、未配置，720p和1080p原生100%檢視。",
+    "sources": [
+      [
+        "PlayerSettingsData.cs",
+        40,
+        "Assets/Scripts/Settings/PlayerSettingsData.cs"
+      ],
+      [
+        "PlayerSettingsService.cs",
+        38,
+        "Assets/Scripts/Settings/PlayerSettingsService.cs"
+      ],
+      [
+        "ApprovedHudVisualSetup.cs",
+        87,
+        "Assets/Scripts/Editor/ApprovedHudVisualSetup.cs"
+      ]
+    ]
+  },
+  {
+    "id": "UI-07",
+    "priority": "P2",
+    "kind": "可讀性風險，未做自然觀看測試",
+    "title": "技能狀態字、武器名與部分階級在720p過細",
+    "evidence": "技能狀態10–14、TAB狀態11、武器最小11、HP最小12參考像素。縮到720p後約6.7–9.3px。成長III／IV也受完整圖示與卡片固定尺寸限制。",
+    "fix": "先訂最小支援解析度的閱讀驗收，再局部增加狀態區、關鍵字級或提供檢視資訊。維持完整sprite、PurgersRankSlab及各Definition階級中心，不全域Cover／zoom。",
+    "verify": "100%原生顯示、正常觀看距離、亮暗背景，逐一I–V及最長技能狀態。放大預覽不能代替這項驗收。",
+    "sources": [
+      [
+        "LocalPlayerBattleAbilityHUD.States.cs",
+        60,
+        "Assets/Scripts/UI/Player/LocalPlayerBattleAbilityHUD.States.cs"
+      ],
+      [
+        "LocalTeamInfoPanel.View.cs",
+        111,
+        "Assets/Scripts/UI/TeamInfo/LocalTeamInfoPanel.View.cs"
+      ],
+      [
+        "GrowthRewardRankView.cs",
+        1,
+        "Assets/Scripts/UI/Player/GrowthRewardRankView.cs"
+      ]
+    ]
+  },
+  {
+    "id": "UI-08",
+    "priority": "P3",
+    "kind": "確證邏輯＋極端字串風險",
+    "title": "長玩家名可能先吃掉「自己／已死亡」尾詞",
+    "evidence": "名稱先串上狀態，超330寬再從尾端Substring刪除；狀態先消失，也可能切開Unicode代理字元。死亡仍另有HP欄文字，不能說所有死亡提示都消失。",
+    "fix": "姓名與狀態分欄，或先保留尾詞寬度；用安全文字元素省略／TMP ellipsis。",
+    "verify": "長中文、拉丁字、emoji、組合字；自己與死亡狀態不被姓名擠掉。",
+    "sources": [
+      [
+        "LocalTeamInfoPanel.View.cs",
+        174,
+        "Assets/Scripts/UI/TeamInfo/LocalTeamInfoPanel.View.cs"
+      ]
+    ]
+  },
+  {
+    "id": "UI-09",
+    "priority": "P3",
+    "kind": "擴充風險，未證實正式文案破版",
+    "title": "Tooltip長標題及超長正文缺少最後一道限制",
+    "evidence": "正文已有GetPreferredValues增高並clamp位置；真正風險是332×30單行標題Overflow，以及正文高過整個畫面時無上限。",
+    "fix": "標題允許兩行並參與高度計算；正文有最大可用高度、超出時局部捲動。不要壓到難讀字級。",
+    "verify": "最長正式文案、臨時極長中文與無空白長字串；四角顯示與滑鼠懸停不跳動。",
+    "sources": [
+      [
+        "LocalTeamInfoPanel.View.cs",
+        95,
+        "Assets/Scripts/UI/TeamInfo/LocalTeamInfoPanel.View.cs"
+      ],
+      [
+        "LocalTeamInfoPanel.View.cs",
+        302,
+        "Assets/Scripts/UI/TeamInfo/LocalTeamInfoPanel.View.cs"
+      ]
+    ]
+  },
+  {
+    "id": "UI-10",
+    "priority": "P3",
+    "kind": "一致性及維護問題",
+    "title": "設定與HUD各自映射鍵名，格式不同",
+    "evidence": "PlayerSettingsSession 用 Space／L Shift／enum，PlayerSettingsData 用 SPACE／L SHIFT／全大寫enum。這不是按鍵功能失效。",
+    "fix": "沿既有設定責任集中一份鍵名格式來源，明確區分完整和緊湊顯示；避免第三份映射。",
+    "verify": "設定列表、提示預覽、技能、換彈、救援與安全屋語意一致。",
+    "sources": [
+      [
+        "PlayerSettingsSession.cs",
+        85,
+        "Assets/Scripts/Settings/PlayerSettingsSession.cs"
+      ],
+      [
+        "PlayerSettingsData.cs",
+        40,
+        "Assets/Scripts/Settings/PlayerSettingsData.cs"
+      ]
+    ]
+  },
+  {
+    "id": "ART-01",
+    "priority": "P2",
+    "kind": "確證源資料差異；美感需光學判斷",
+    "title": "右下武器縮圖的留白與基線尚未校準",
+    "evidence": "三圖均1254²，alpha≥128內容寬Attack1119、Support731、Tank1110；同方形fit下Support約為Attack的65%。右下HUD只有preserveAspect；TAB已經有TeamInfoSpriteCrop。",
+    "fix": "右下HUD使用可配置內容範圍、光學尺度、基線；不改原圖、不強行讓短槍與長槍等寬。診斷對照只提供校準方向，不能直接當成最終數值。",
+    "verify": "三武器換裝與換彈時輪廓完整、基線穩定、與彈量不打架；普通與packed sprite分別檢查。",
+    "sources": [
+      [
+        "LocalPlayerWeaponHUD.cs",
+        221,
+        "Assets/Scripts/UI/Player/Weapon/LocalPlayerWeaponHUD.cs"
+      ],
+      [
+        "LocalPlayerWeaponHUD.cs",
+        632,
+        "Assets/Scripts/UI/Player/Weapon/LocalPlayerWeaponHUD.cs"
+      ],
+      [
+        "TeamInfoSpriteCrop.cs",
+        14,
+        "Assets/Scripts/UI/TeamInfo/TeamInfoSpriteCrop.cs"
+      ]
+    ]
+  },
+  {
+    "id": "ART-02",
+    "priority": "P2",
+    "kind": "原生縮圖顯示的辨識風險",
+    "title": "16px狀態圖示的有效主形面積差距大",
+    "evidence": "頭頂icon16、自己24。雙眼alpha128高590/1254，放16方框後主形高約7.5px；禁止框幾乎滿框。本輪16／24／48／96來源合成中可見雙眼較弱，仍非世界背景實機測試。",
+    "fix": "在共同列高與可用框內做每圖光學校準；先測20／24px頭頂尺寸、留白及對比。保留批准的紫色雙眼、四爪禁止圖與無文字狀態列。",
+    "verify": "明暗／植被／多敵人與多狀態；不能只靠條色辨認。避免把橫向雙眼硬放到與圓形同高而擠壞列距。",
+    "sources": [
+      [
+        "StatusEffectHud.asset",
+        40,
+        "Assets/Resources/Presentation/StatusEffectHud.asset"
+      ],
+      [
+        "StatusEffectListView.cs",
+        45,
+        "Assets/Scripts/UI/Status/StatusEffectListView.cs"
+      ]
+    ]
+  },
+  {
+    "id": "ART-03",
+    "priority": "P3",
+    "kind": "審美取捨，非缺陷",
+    "title": "彩色立體狀態與單色技能剪影的材質語言不同",
+    "evidence": "狀態圖有高光、彩色體積與細節；技能／成長偏剪影，主HUD米白與深橄欖。兩套均包含已批准圖案。",
+    "fix": "先統一光學重量、間距、底色保護與飽和度使用。只有未來另獲重製授權才減內部高光，不更換主符號。",
+    "verify": "同畫面並列、亮暗背景和色覺模擬；緊急狀態仍有優先權，常駐效果不搶準星。",
+    "sources": [
+      [
+        "StatusEffectListView.cs",
+        64,
+        "Assets/Scripts/UI/Status/StatusEffectListView.cs"
+      ],
+      [
+        "StatusEffectHud.asset",
+        1,
+        "Assets/Resources/Presentation/StatusEffectHud.asset"
+      ]
+    ]
+  },
+  {
+    "id": "ART-04",
+    "priority": "P3",
+    "kind": "審美與小尺寸辨識取捨",
+    "title": "技能家族的實心度與內部細節差距大",
+    "evidence": "衝刺大實心箭頭、護盾大輪廓，瞬移／空中緩速有角色裝備內線，彈射為細折線。相同框尺寸不代表相同視覺重量。",
+    "fix": "第一步只校準每圖比例、背景對比和留白；保留人物造型與原姿勢。若之後批准精修，只刪除在目標尺寸無法辨認的內線。",
+    "verify": "48／60／80px無標題辨識測試、冷卻遮罩25／75%及灰化狀態，不只看大圖。",
+    "sources": [
+      [
+        "AbilityIconFrameFit.cs",
+        1,
+        "Assets/Scripts/UI/Player/AbilityIconFrameFit.cs"
+      ],
+      [
+        "PlayerAbilityDefinition.cs",
+        1,
+        "Assets/Scripts/Player/Ability/Loadout/PlayerAbilityDefinition.cs"
+      ]
+    ]
+  },
+  {
+    "id": "ART-05",
+    "priority": "觀察",
+    "kind": "已降級：不能由alpha統計判斷髒邊",
+    "title": "透明殘留未足以構成優先重畫理由",
+    "evidence": "S05有大量低alpha像素，S04口腔及武器周圍有可疑點。但本輪正式大小合成中，沒有證實嚴重游離髒塊；白圖在米白底低對比也不是正式Growth用法，正式會染深色。",
+    "fix": "暫不重製。若實際材質／大小仍見游離污染，再局部清理alpha；禁止整圖閾值化以免破壞抗鋸齒、骰點、孔洞。",
+    "verify": "正式Image.color、背景和匯入後貼圖重新合成；並保留逐像素原圖對照。",
+    "sources": [
+      [
+        "S05_HardChoice.png",
+        0,
+        "Assets/_Project_Assets/UI/GrowthIcons/V5/S05_HardChoice.png"
+      ],
+      [
+        "S04_CarnivorousTree.png",
+        0,
+        "Assets/_Project_Assets/UI/GrowthIcons/V5/S04_CarnivorousTree.png"
+      ]
+    ]
+  },
+  {
+    "id": "ART-06",
+    "priority": "P2",
+    "kind": "匯入資料確證，性能影響未量測",
+    "title": "資源預算應優先量測十個技能與三張武器圖",
+    "evidence": "本輪Unity實查：E_V4十張1024² RGBA32；武器三張1254² RGBA32；Growth已256²，不再列超大圖缺陷。單層RGBA原始像素理論量十技能40MiB、三武器約18MiB，不等於Build常駐。",
+    "fix": "保留高解析來源，依最大實際用途比較256／512／目前設定，再用Memory Profiler驗常駐、載入及視覺。不要盲目全塞Atlas，TeamInfoSpriteCrop目前跳過packed sprite。",
+    "verify": "技能遮罩、人物細線、成長階級、4K最大用途；Build平台格式、實際常駐、Draw Call與載入時間獨立量測。",
+    "sources": [
+      [
+        "TeamInfoSpriteCrop.cs",
+        14,
+        "Assets/Scripts/UI/TeamInfo/TeamInfoSpriteCrop.cs"
+      ],
+      [
+        "01_ExplosiveGrenade.png",
+        0,
+        "Assets/_Project_Assets/UI/AbilityIcons/E_V4/01_ExplosiveGrenade.png"
+      ],
+      [
+        "AttackWeapon.png",
+        0,
+        "Assets/_Project_Assets/UI/BattleHUD/WeaponIcon/AttackWeapon.png"
+      ]
+    ]
+  },
+  {
+    "id": "ART-07",
+    "priority": "P3",
+    "kind": "重複設定確證，成本待量測",
+    "title": "兩套同來源中文字型動態Atlas需查載入生命週期",
+    "evidence": "PlayerSettingsFont與NotoSansTC-Bold HUD SDF同source、dynamic、2048²、multiAtlas。相同來源不保證材質與生命週期相同；空fallback也不能直接判缺字。",
+    "fix": "先記錄同場景font／atlas／材質常駐與新增字形成本，再決定共享或分情境預熱。保留PurgersRankSlab；世界loot依font名稱尋找，也需同步評估。",
+    "verify": "繁中長名、罕用字、英數混排及首次開TAB卡頓；不能只以檔案大小決定合併。",
+    "sources": [
+      [
+        "PlayerSettingsFont.asset",
+        1,
+        "Assets/_Project_Assets/UI/PlayerSettings/PlayerSettingsFont.asset"
+      ],
+      [
+        "NotoSansTC-Bold HUD SDF.asset",
+        1,
+        "Assets/_Project_Assets/UI/BattleHUD/Fonts/NotoSansTC-Bold HUD SDF.asset"
+      ],
+      [
+        "PlayerAbilityLootVisual.cs",
+        48,
+        "Assets/Scripts/UI/Player/PlayerAbilityLootVisual.cs"
+      ]
+    ]
+  },
+  {
+    "id": "ART-08",
+    "priority": "P3",
+    "kind": "構圖風險，需實際寬高比驗收",
+    "title": "主選單插畫應保護角色、鋸身與操作區安全範圍",
+    "evidence": "MenuV2來源8268×4844約1.707:1；Cover不同寬高比必然裁切不同。實際匯入2048×1200 DXT1，不能說遊戲載入8K。現有插畫與筆刷有明確個性。",
+    "fix": "保留插畫、角色和Logo，先測16:10／16:9／21:9／32:9的焦點與按鈕安全區；需要時調既有fitter焦點，不重畫主構圖。",
+    "verify": "頭部、鋸身、右側文字互不競爭；4K清晰度不足才評估平台max，而非直接改8K。",
+    "sources": [
+      [
+        "MenuV2.jpg",
+        0,
+        "Assets/_Project_Assets/Image/Menu/MenuV2.jpg"
+      ]
+    ]
+  },
+  {
+    "id": "ART-09",
+    "priority": "P3",
+    "kind": "後續品牌用途建議",
+    "title": "Logo可有小尺寸衍生版，但現有主Logo不應重做",
+    "evidence": "金屬顆粒、藤葉、破口與黑輪廓在大尺寸有角色；縮到128px時可能競爭文字骨架。主選單約500寬不能直接判不可讀。",
+    "fix": "保留主Logo。只有要做載入角標／小標時，製作同設計減細節版本，不換品牌字形。",
+    "verify": "500／250／128px初次辨讀；目前未做使用者辨讀測試。",
+    "sources": [
+      [
+        "logo.png",
+        0,
+        "Assets/_Project_Assets/Image/Mark/logo.png"
+      ]
+    ]
+  },
+  {
+    "id": "VFX-01",
+    "priority": "P3",
+    "kind": "資料不規整確證，視覺影響待驗",
+    "title": "現役4×3槍口圖尺寸無法整除格數",
+    "evidence": "StylizedMuzzleFlash_4x3_2為1447×1087；MuzzleFlash.mat引用，程式固定1/4、1/3 UV。Bilinear／Clamp、無mipmap，不能另加mipmap串色指控；透明gutter夠大時可能完全不可見。",
+    "fix": "先逐幀檢查可見內容與邊界、pivot漂移。確有影響才用補透明畫布／整數格重排，保留火焰造型，避免整張重採樣。",
+    "verify": "12幀單張、實際連播、明暗背景、普通與消音武器；中心不漂移、不串格。",
+    "sources": [
+      [
+        "StylizedMuzzleFlash_4x3_2.png",
+        0,
+        "Assets/Art/VFX/MuzzleFlash/StylizedMuzzleFlash_4x3_2.png"
+      ],
+      [
+        "FirstPersonMuzzleFlash.cs",
+        214,
+        "Assets/Scripts/Player/ViewModel/FirstPersonMuzzleFlash.cs"
+      ],
+      [
+        "MuzzleFlash.mat",
+        27,
+        "Assets/Art/VFX/MuzzleFlash/MuzzleFlash.mat"
+      ]
+    ]
+  },
+  {
+    "id": "VFX-02",
+    "priority": "觀察",
+    "kind": "素材庫差異，非現役缺陷",
+    "title": "第三張斜彈孔匯入不同，不能據此刪除",
+    "evidence": "03為Repeat／Bilinear／alphaTransparency0，其餘01／02／04較一致；目前配置採另外三張，未確認03現役。正式彈孔每玩家上限32、size=.6。",
+    "fix": "記錄使用狀態與預定用途；啟用時再針對透明邊、斜面和距離驗收。世界貼花保留合理mipmap，不能把2D一律禁mipmap。",
+    "verify": "現役三張遠近、牆角、不同法線／亮暗材質與堆疊；03未引用不等於可刪。",
+    "sources": [
+      [
+        "BulletHole_03_Oblique.png.meta",
+        1,
+        "Assets/Art/VFX/BulletHoles/BulletHole_03_Oblique.png.meta"
+      ],
+      [
+        "WeaponImpactSettings.asset",
+        1,
+        "Assets/Art/VFX/BulletHoles/WeaponImpactSettings.asset"
+      ]
+    ]
+  },
+  {
+    "id": "UX-01",
+    "priority": "P3",
+    "kind": "已知暫用資產，非壞圖",
+    "title": "共用頭像面積大，但玩家辨識主要仍靠名字與色條",
+    "evidence": "Provider全員共用人形；TAB每列120×136、觀戰同provider。這是明確暫用設計，不是缺圖bug。",
+    "fix": "短期降低暫用頭像視覺重量，穩定名字／序號／色條；之後由同provider接正式經批准肖像。不要憑空生成不同角色暗示不存在的差異。",
+    "verify": "相同職業多人、同色／色覺模擬與觀戰切換，能可靠對應玩家。",
+    "sources": [
+      [
+        "SharedPlayerPortraitProvider.cs",
+        7,
+        "Assets/Scripts/UI/Player/SharedPlayerPortraitProvider.cs"
+      ],
+      [
+        "LocalTeamInfoPanel.View.cs",
+        104,
+        "Assets/Scripts/UI/TeamInfo/LocalTeamInfoPanel.View.cs"
+      ]
+    ]
+  }
+]

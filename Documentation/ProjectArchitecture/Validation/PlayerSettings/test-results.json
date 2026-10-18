@@ -1,0 +1,96 @@
+{
+  "date": "2026-10-18",
+  "focused": {
+    "testCases": [
+      "PlayerSettingsIntegrationTests.CaptureThenVoteConsumesEscapeWithoutOpeningMenu",
+      "PlayerSettingsIntegrationTests.DisplayRevertsWithoutWritingAnyPreferencesAndResetRemainsDraft",
+      "PlayerSettingsIntegrationTests.HeldCombatMustReleaseBeforeRearmingAndAimCancelsButCrouchPersists",
+      "PlayerSettingsIntegrationTests.ProductionControlsUseAlignedNativeWidgetsAndDynamicHints",
+      "PlayerSettingsIntegrationTests.ProductionSceneHasSingleSettingsEntryAndSeparateAudioParameters",
+      "PlayerSettingsIntegrationTests.UnsavedDiscardAndExplicitNoAreDifferentAndSaveFailureKeepsDraft",
+      "PlayerSettingsRuntimeTests.MenuKeepsSlideMomentumAndPerInputGrappleModeOverridesPrefab",
+      "PlayerSettingsTests.ConflictClearsWholeBindingAndCopyIsIndependent",
+      "PlayerSettingsTests.ModesTravelWithInputAndBadNumbersAreSanitized",
+      "PlayerSettingsTests.PersistenceIsIndependentAndAllowsUnboundKeys",
+      "PlayerSettingsTests.SprintToggleSecondPressAndStopCancelButReleaseKeepsRunning",
+      "RewardSelectionInputRulesTests.SelectionOnlyConsumesCombatWhileAltAndDraftAreActive",
+      "RewardSelectionInputRulesTests.ThreeChoicesMapLeftMiddleRight",
+      "RewardSelectionInputRulesTests.TwoChoicesMapLeftAndRightOnly"
+    ],
+    "passed": 14,
+    "failed": 0
+  },
+  "regression": {
+    "failures": [
+      {
+        "name": "BossStageAssetTests.GameSceneContainsBossAssetWiring",
+        "message": "  Expected: same as <MapChunk_Boss (MapChunk)>\n  But was:  <MapChunk_Boss (MapChunk)>\n"
+      },
+      {
+        "name": "EnemyFlytrapAssetTests.TimingDefaultsMatchApprovedRules",
+        "message": "  Expected: 0.5f\n  But was:  0.25f\n"
+      },
+      {
+        "name": "EnemyReflectorAssetTests.SeparatePrefabUsesExistingCombatAndHealthOwners",
+        "message": "  Expected: greater than 10.0f\n  But was:  10.0f\n"
+      },
+      {
+        "name": "ReloadCameraRuntimeTests.SpawnedLocalWeaponsDriveOnlyPresentationAndUnbindClearsIt",
+        "message": "System.NullReferenceException : Object reference not set to an instance of an object"
+      }
+    ],
+    "total": 1061,
+    "skipped": 1,
+    "passed": 1056,
+    "failed": 4
+  },
+  "evidence": {
+    "authority": "fresh Unity RunFinished XML; MCP job may remain stale across Domain Reload",
+    "focusedJob": "ec80c1108868414996566296d87a1bd7",
+    "regressionJob": "bcea7716c314420f8ea5c9710c428c8c"
+  },
+  "finalNoticeCleanupFocused": {
+    "passed": 10,
+    "failed": 0,
+    "skipped": 0,
+    "evidence": "Temp/GrappleFeedback/settings-notice-focused.xml"
+  },
+  "visualCleanup": {
+    "focusedPassed": 10,
+    "focusedFailed": 0,
+    "focusedJob": "d412dc16db6e4bbf9a8caa7b25acd384",
+    "regressionJob": "25adab1935ee4442ba5b9f8807fcd10e",
+    "regressionTotal": 1061,
+    "regressionPassed": 1056,
+    "regressionFailed": 4,
+    "regressionSkipped": 1,
+    "evidence": "Temp/GrappleFeedback/settings-flat-regression.xml",
+    "layouts": [
+      "1600x900",
+      "2560x900"
+    ]
+  },
+  "dropdownFix": {
+    "focusedPassed": 11,
+    "focusedFailed": 0,
+    "focusedJob": "62498950057e463297510a8c4ff9e773",
+    "regressionTotal": 1062,
+    "regressionPassed": 1057,
+    "regressionFailed": 4,
+    "regressionSkipped": 1,
+    "regressionJob": "785fcf40f63c4ea6b632d8268d82f92d",
+    "evidence": "Temp/GrappleFeedback/settings-dropdown-regression.xml",
+    "playmode": "dropdown-playmode.txt"
+  },
+  "regionWheel": {
+    "focusedPassed": 11,
+    "focusedFailed": 0,
+    "focusedJob": "e4ddf853e48b4baa98686ff6f477fe46",
+    "regressionTotal": 1078,
+    "regressionPassed": 1073,
+    "regressionFailed": 4,
+    "regressionSkipped": 1,
+    "regressionJob": "2508e912ef5344d3ae70f42e3dd724f0",
+    "playmode": "region-wheel.txt"
+  }
+}

@@ -1,0 +1,7 @@
+Source: Assets/_Project_Assets/Models/Claw/鈎爪-動畫.fbx
+Clip: 骨架|開啟
+FPS: 24
+Columns: front +Z / side +X / oblique
+row=0 time=0 bone=(0.90042, 0.00377, 0.00023, 0.43501)
+row=1 time=0.5416667 bone=(0.44678, 0.00284, 0.00248, 0.89463)
+row=2 time=1.083333 bone=(0.90042, 0.00377, 0.00023, 0.43501)

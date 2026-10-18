@@ -1,0 +1,29 @@
+PASS Runner starts: Ok
+PASS outside SafeHouse has no scene restrictions
+PASS registered SafeHouse belongs to its Runner
+PASS Q and E are blocked
+PASS weapons F movement and look stay available
+PASS initial loadout: 
+PASS loadout equip remains available: 
+PASS E rejected without cooldown through manager and direct entry
+PASS Q rejection preserves grapple energy
+PASS self damage rejected: Unknown
+PASS direct health entry rejected: Unknown
+PASS self damage rejected: Bullet
+PASS direct health entry rejected: Bullet
+PASS self damage rejected: Explosion
+PASS direct health entry rejected: Explosion
+PASS self damage rejected: Melee
+PASS direct health entry rejected: Melee
+PASS self damage rejected: Ability
+PASS direct health entry rejected: Ability
+PASS self damage rejected: Environment
+PASS direct health entry rejected: Environment
+PASS self damage rejected: DamageOverTime
+PASS direct health entry rejected: DamageOverTime
+PASS no HP loss or incoming modifier consumption
+PASS environment damage remains governed by existing rules
+PASS despawn removes SafeHouse context
+PASS leaving unlocks QE without clearing other restrictions
+PASS outside SafeHouse self damage and modifiers resume
+PASS E resumes outside SafeHouse

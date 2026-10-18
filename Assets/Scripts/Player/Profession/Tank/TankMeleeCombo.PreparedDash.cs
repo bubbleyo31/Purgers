@@ -39,7 +39,8 @@ public partial class TankMeleeCombo
     private readonly KCCShapeCastInfo preparedDashCast = new KCCShapeCastInfo();
     public bool IsPreparedDashing => Object != null && Object.IsValid && CurrentPhase == TankMeleeAttackPhase.PreparedDashing;
 
-    private bool PreparedDashDisplaced() => ownerMovement == null || ownerMovement.HasActiveAbilityDash ||
+    private bool PreparedDashDisplaced() => ownerMovement == null || ownerPlayer == null ||
+        ownerPlayer.GetComponent<PlayerActionGate>()?.IsCaptured == true || ownerMovement.HasActiveAbilityDash ||
         (ownerPlayer.SupportGrapplePlayerPullReceiver != null && ownerPlayer.SupportGrapplePlayerPullReceiver.IsPullActive) ||
         (ownerPlayer.Grapple != null && ownerPlayer.Grapple.IsNormalPlayerPullAttached);
 
@@ -62,7 +63,7 @@ public partial class TankMeleeCombo
         PreparedDashTarget = enemy.Object;
         PreparedDashLocalPoint = enemy.Object.transform.InverseTransformPoint(point);
         PreparedDashApproach = direction;
-        PreparedDashDurationSeconds = Mathf.Max(Runner.DeltaTime, TankPreparedDashRules.Duration(GetDefinition(CurrentStep)));
+        PreparedDashDurationSeconds = Mathf.Max(Runner.DeltaTime, TankPreparedDashRules.Duration(GetDefinition(CurrentStep)) / GrowthSwingSpeed);
         PreparedDashElapsedSeconds = 0f;
         PreparedDashBlocked = false;
         var progress = Preparation;
@@ -87,7 +88,7 @@ public partial class TankMeleeCombo
         var definition = GetDefinition(CurrentStep);
         var progress = Preparation;
         progress.CursorSeconds = Mathf.Min(definition.ResolvedStartup,
-            definition.FrameTiming.FrameToSeconds(definition.PreparationFrame) + PreparedDashElapsedSeconds);
+            definition.FrameTiming.FrameToSeconds(definition.PreparationFrame) + PreparedDashElapsedSeconds * GrowthSwingSpeed);
         Preparation = progress;
         if (Object.HasStateAuthority && PreparedDashElapsedSeconds + .00001f >= PreparedDashDurationSeconds)
         {

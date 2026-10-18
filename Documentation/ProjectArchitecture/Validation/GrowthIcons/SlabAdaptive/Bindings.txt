@@ -1,0 +1,7 @@
+Static font=True atlas=512x512 Alpha8
+StageHUD/GrowthRank font and material valid
+StageHUD/GrowthRank font and material valid
+StageHUD/GrowthRank font and material valid
+SafeHouseHUD/GrowthRank font and material valid
+SafeHouseHUD/GrowthRank font and material valid
+SafeHouseHUD/GrowthRank font and material valid

@@ -1,0 +1,15 @@
+PASS Runner first tick
+PASS default runtime
+PASS equip Tank: 
+PASS Tank owner binding
+PASS automatic local presentation binding
+PASS frozen target frame
+PASS frame identifies actual selected child collider
+PASS preview does not attack or damage
+PASS frame contains no text
+PASS exactly one target frame
+PASS ground ring fades in
+PASS ground mesh and supported URP shader are active
+FAIL actual KCC airborne: System.TimeoutException: actual KCC airborne
+  at TankIndicatorRuntimeVerification.Until (System.Func`1[TResult] condition, System.String stage) [0x00035] in M:\UnityProject\Purgers\Assets\Scripts\Editor\TankIndicatorRuntimeVerification.cs:35 
+  at TankIndicatorRuntimeVerification.Begin (System.Boolean network) [0x00bee] in M:\UnityProject\Purgers\Assets\Scripts\Editor\TankIndicatorRuntimeVerification.cs:125 

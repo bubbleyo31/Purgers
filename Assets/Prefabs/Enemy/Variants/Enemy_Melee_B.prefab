@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4576054156462946052
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4331562928064834075}
+  m_Layer: 0
+  m_Name: EnemyHealthBarAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4331562928064834075
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4576054156462946052}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.096362114, y: 5.2850523, z: 0.6078968}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5955246018422341145}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4056252191696044201
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -222,7 +253,7 @@ PrefabInstance:
     - target: {fileID: 7094443144932554358, guid: c076e2eaedb126a45936a2d47daa0e84,
         type: 3}
       propertyPath: NetworkedBehaviours.Array.size
-      value: 18
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 7094443144932554358, guid: c076e2eaedb126a45936a2d47daa0e84,
         type: 3}
@@ -299,6 +330,11 @@ PrefabInstance:
       propertyPath: NetworkedBehaviours.Array.data[17]
       value: 
       objectReference: {fileID: 7007924763275688944}
+    - target: {fileID: 7094443144932554358, guid: c076e2eaedb126a45936a2d47daa0e84,
+        type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[18]
+      value: 
+      objectReference: {fileID: 5700147928006768479}
     - target: {fileID: 7289299079362300785, guid: c076e2eaedb126a45936a2d47daa0e84,
         type: 3}
       propertyPath: maxHealth
@@ -388,7 +424,11 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 8673005045857769442, guid: c076e2eaedb126a45936a2d47daa0e84, type: 3}
     - {fileID: 4572211729385784017, guid: c076e2eaedb126a45936a2d47daa0e84, type: 3}
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7705653821546839728, guid: c076e2eaedb126a45936a2d47daa0e84,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4331562928064834075}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5378541382959265429, guid: c076e2eaedb126a45936a2d47daa0e84,
         type: 3}
@@ -402,6 +442,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: -5576047299705757704}
+    - targetCorrespondingSourceObject: {fileID: 5378541382959265429, guid: c076e2eaedb126a45936a2d47daa0e84,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5700147928006768479}
   m_SourcePrefab: {fileID: 100100000, guid: c076e2eaedb126a45936a2d47daa0e84, type: 3}
 --- !u!114 &210190012565180692 stripped
 MonoBehaviour:
@@ -499,6 +543,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2503a5cb0b30ed247b0f8d7c56e7c1b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &5955246018422341145 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7705653821546839728, guid: c076e2eaedb126a45936a2d47daa0e84,
+    type: 3}
+  m_PrefabInstance: {fileID: 4056252191696044201}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6047892364999099263 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -1466803553424063530, guid: c076e2eaedb126a45936a2d47daa0e84,
@@ -673,6 +723,22 @@ MonoBehaviour:
   invalidPathGizmoColor: {r: 1, g: 0.15, b: 0.1, a: 0.9}
   groundedProbeHitColor: {r: 0.2, g: 1, b: 0.2, a: 0.9}
   groundedProbeMissColor: {r: 1, g: 0.25, b: 0.1, a: 0.9}
+--- !u!114 &5700147928006768479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8281795378139313724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72d4a3a43a9133b4f92a9dfa84523fab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displayMode: 2
+  headAnchor: {fileID: 4331562928064834075}
+  bodyCenter: {x: -0.096362114, y: 2.7857995, z: 0.6078968}
+  bodySize: {x: 2.8837223, y: 4.898506, z: 3.2142677}
 --- !u!114 &8657311524672958628 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -4580652208118845427, guid: c076e2eaedb126a45936a2d47daa0e84,

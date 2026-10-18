@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 [DisallowMultipleComponent]
 [RequireComponent(typeof(EnemyActor))]
-public sealed class EnemyPerceptionController : NetworkBehaviour
+public sealed partial class EnemyPerceptionController : NetworkBehaviour
 {
     [Header("核心引用")]
     [SerializeField, Tooltip("同 Root 的 EnemyActor；留空自動取得。")]
@@ -90,6 +90,7 @@ public sealed class EnemyPerceptionController : NetworkBehaviour
     {
         Resolve();
         spawned = true;
+        previousDownedTargets.Clear();
         if (!HasStateAuthority) return;
         CurrentTarget = null;
         HasDirectSight = false;
@@ -121,6 +122,7 @@ public sealed class EnemyPerceptionController : NetworkBehaviour
         }
         if (enemyActor.StateController.CurrentBrainState == EnemyBrainState.Dormant) return;
 
+        TickPreviousRescueTargets();
         // 生命檢查每 Tick 執行，死亡／離線不用等下一輪視覺掃描。
         if (CurrentTarget != null && !IsValidAlivePlayer(CurrentTarget))
             ForgetTarget(false);

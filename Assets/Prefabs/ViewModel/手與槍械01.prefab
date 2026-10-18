@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 8552906104382845739}
   - component: {fileID: -2975519151712344130}
   - component: {fileID: -2833901242663394265}
+  - component: {fileID: 4352151124072830413}
   m_Layer: 8
   m_Name: "\u624B\u8207\u69CD\u68B001"
   m_TagString: Untagged
@@ -161,6 +162,28 @@ MonoBehaviour:
   screenHeight: 0.5
   framesPerSecond: 72
   imagePivot: {x: 0.55, y: 0.38}
+--- !u!114 &4352151124072830413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848604152209309553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e153138aa3fda34a8318fb9d4a4660a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionAnimator: {fileID: -2975519151712344130}
+  animatedModelRoot: {fileID: 1770512637392929429}
+  weaponRoot: {fileID: 1308300749014996848}
+  rotationGain: {x: 0.08, y: 0.08, z: 0.08}
+  maximumDegrees: 4
+  blendSeconds: 0.08
+  softenStartSpeed: 120
+  softenEndSpeed: 540
+  minimumTurnWeight: 0.2
+  turnResponseSeconds: 0.06
 --- !u!1 &4601342140807248328
 GameObject:
   m_ObjectHideFlags: 0
@@ -1369,6 +1392,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 3372123061689313399}
   m_SourcePrefab: {fileID: 100100000, guid: ff5f68dc736296242bfc09cd35b1dae3, type: 3}
+--- !u!4 &1308300749014996848 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 950437886886588942, guid: ff5f68dc736296242bfc09cd35b1dae3,
+    type: 3}
+  m_PrefabInstance: {fileID: 2240724027328439678}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1430402438431840303 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ff5f68dc736296242bfc09cd35b1dae3,

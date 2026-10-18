@@ -30,3 +30,11 @@
 ## 2026-10-10 受傷來源提示
 
 `LocalPlayerDamageIndicator` 訂閱本地受傷事件，使用固定世界位置快照顯示方向弧與倒三角；`DamageIndicatorSettings` 提供共用圖像、色彩、尺寸、時間與遮擋設定。`DamageIndicatorRules`／`DamageIndicatorOcclusionQuery` 處理方向、時序及限定 PhysicsScene／預算的持續遮擋；`DamageIndicatorGraphic` 提供可替換的 UI 幾何。正式配置與驗證見 [49](../../../../Documentation/ProjectArchitecture/49_玩家受傷來源指示.md)。
+
+## 2026-10-13 安全屋限制與 HUD（局部）
+
+安全屋 Q／E 經 PlayerActionGate 封鎖，玩家友傷／自傷經既有 DamageReceiverUtility／PlayerHealth 拒絕；普通武器與 ALT 獎勵維持。SafeHouseHudController.HudRunner 可供技能／經驗子 HUD 綁定；2026-10-13 已依使用者授權接到正式 SafeHouse 場景，保留原安全屋資訊。詳見 Documentation/ProjectArchitecture/145_PrePhase4-2_安全屋鍵盤準備與HUD.md 及 Validation/SafeHouseGameplay/README.md。
+
+## 2026-10-18 觀戰身分列
+
+LocalSpectatorHUD 只讀 LocalPlayerSpectatorController.Candidates／SpectatedPlayer；姓名取 GameLogic.TeammateIdentities，PlayerPortraitProvider 提供圖片，SharedPlayerPortraitProvider 為目前共用圖實作。Prefab 接入 _Menu ReferenceFrame；設定及驗證見架構文件 100 與 Validation/SpectatorSwitch。

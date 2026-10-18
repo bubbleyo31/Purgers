@@ -1,0 +1,16 @@
+PASS existing menu connection owner
+PASS Runner starts: Ok
+PASS Runner starts: Ok
+PASS Runner starts: Ok
+PASS Host receives validated names from both clients
+PASS Host receives exactly one departure
+PASS remaining Client receives reliable departure with accepted name
+PASS voluntary Client exit leaves room running without popup
+PASS Client exits network session before modal
+PASS exact room closed message
+PASS exact return button caption
+PASS only one enabled popup action
+PASS centered pane and return action
+PASS cursor released for popup
+PASS normal popup presentation restored
+PASS disconnect and shutdown callbacks produce one modal

@@ -1,0 +1,122 @@
+{
+  "red": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"67c3d1b285684118a573c4f61210f412\",\"status\":\"failed\",\"mode\":\"EditMode\",\"started_unix_ms\":1792149885935,\"finished_unix_ms\":1792149889517,\"last_update_unix_ms\":1792149889517,\"progress\":{\"completed\":7,\"total\":943,\"current_test_full_name\":null,\"current_test_started_unix_ms\":1792149889061,\"last_finished_test_full_name\":\"FirstPersonGogglesTests.ZeroThicknessOrOpacityRemovesAllGeometry\",\"last_finished_unix_ms\":1792149889062,\"stuck_suspected\":false,\"editor_is_focused\":false,\"blocked_reason\":null,\"failures_so_far\":[{\"full_name\":\"FirstPersonGogglesTests.MaximumThicknessLeavesCentralViewEmptyAndDoesNotReceiveClicks(1920,1080)\",\"message\":\"SetUp :   缺少已核准的護目鏡邊緣呈現元件。\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"FirstPersonGogglesTests.MaximumThicknessLeavesCentralViewEmptyAndDoesNotReceiveClicks(2560,1080)\",\"message\":\"SetUp :   缺少已核准的護目鏡邊緣呈現元件。\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"FirstPersonGogglesTests.MaximumThicknessLeavesCentralViewEmptyAndDoesNotReceiveClicks(1280,720)\",\"message\":\"SetUp :   缺少已核准的護目鏡邊緣呈現元件。\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"FirstPersonGogglesTests.MaximumThicknessLeavesCentralViewEmptyAndDoesNotReceiveClicks(1440,1080)\",\"message\":\"SetUp :   缺少已核准的護目鏡邊緣呈現元件。\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"FirstPersonGogglesTests.MissingRunnerHidesRimAndDisableKeepsItHidden\",\"message\":\"SetUp :   缺少已核准的護目鏡邊緣呈現元件。\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"FirstPersonGogglesTests.OpacityChangesAlphaWithoutMovingGeometry\",\"message\":\"SetUp :   缺少已核准的護目鏡邊緣呈現元件。\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"FirstPersonGogglesTests.ZeroThicknessOrOpacityRemovesAllGeometry\",\"message\":\"SetUp :   缺少已核准的護目鏡邊緣呈現元件。\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"}],\"failures_capped\":false},\"error\":null,\"result\":null},\"hint\":null}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "success": true,
+        "message": "Test job status retrieved.",
+        "error": null,
+        "data": {
+          "job_id": "67c3d1b285684118a573c4f61210f412",
+          "status": "failed",
+          "mode": "EditMode",
+          "started_unix_ms": 1792149885935,
+          "finished_unix_ms": 1792149889517,
+          "last_update_unix_ms": 1792149889517,
+          "progress": {
+            "completed": 7,
+            "total": 943,
+            "current_test_full_name": null,
+            "current_test_started_unix_ms": 1792149889061,
+            "last_finished_test_full_name": "FirstPersonGogglesTests.ZeroThicknessOrOpacityRemovesAllGeometry",
+            "last_finished_unix_ms": 1792149889062,
+            "stuck_suspected": false,
+            "editor_is_focused": false,
+            "blocked_reason": null,
+            "failures_so_far": [
+              {
+                "full_name": "FirstPersonGogglesTests.MaximumThicknessLeavesCentralViewEmptyAndDoesNotReceiveClicks(1920,1080)",
+                "message": "SetUp :   缺少已核准的護目鏡邊緣呈現元件。\r\n  Expected: not null\r\n  But was:  null\r\n"
+              },
+              {
+                "full_name": "FirstPersonGogglesTests.MaximumThicknessLeavesCentralViewEmptyAndDoesNotReceiveClicks(2560,1080)",
+                "message": "SetUp :   缺少已核准的護目鏡邊緣呈現元件。\r\n  Expected: not null\r\n  But was:  null\r\n"
+              },
+              {
+                "full_name": "FirstPersonGogglesTests.MaximumThicknessLeavesCentralViewEmptyAndDoesNotReceiveClicks(1280,720)",
+                "message": "SetUp :   缺少已核准的護目鏡邊緣呈現元件。\r\n  Expected: not null\r\n  But was:  null\r\n"
+              },
+              {
+                "full_name": "FirstPersonGogglesTests.MaximumThicknessLeavesCentralViewEmptyAndDoesNotReceiveClicks(1440,1080)",
+                "message": "SetUp :   缺少已核准的護目鏡邊緣呈現元件。\r\n  Expected: not null\r\n  But was:  null\r\n"
+              },
+              {
+                "full_name": "FirstPersonGogglesTests.MissingRunnerHidesRimAndDisableKeepsItHidden",
+                "message": "SetUp :   缺少已核准的護目鏡邊緣呈現元件。\r\n  Expected: not null\r\n  But was:  null\r\n"
+              },
+              {
+                "full_name": "FirstPersonGogglesTests.OpacityChangesAlphaWithoutMovingGeometry",
+                "message": "SetUp :   缺少已核准的護目鏡邊緣呈現元件。\r\n  Expected: not null\r\n  But was:  null\r\n"
+              },
+              {
+                "full_name": "FirstPersonGogglesTests.ZeroThicknessOrOpacityRemovesAllGeometry",
+                "message": "SetUp :   缺少已核准的護目鏡邊緣呈現元件。\r\n  Expected: not null\r\n  But was:  null\r\n"
+              }
+            ],
+            "failures_capped": false
+          },
+          "error": null,
+          "result": null
+        },
+        "hint": null
+      }
+    },
+    "isError": false
+  },
+  "focused": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"e9af68cc20ef407cb8d15ddb51e8eca3\",\"status\":\"succeeded\",\"mode\":\"EditMode\",\"started_unix_ms\":1792150386636,\"finished_unix_ms\":1792150390701,\"last_update_unix_ms\":1792150390701,\"progress\":{\"completed\":9,\"total\":945,\"current_test_full_name\":null,\"current_test_started_unix_ms\":1792150390035,\"last_finished_test_full_name\":\"FirstPersonGogglesWiringTests.PrefabStretchesAndCarriesItsRendererWithoutInputOrNetworkComponents\",\"last_finished_unix_ms\":1792150390037,\"stuck_suspected\":false,\"editor_is_focused\":false,\"blocked_reason\":null,\"failures_so_far\":[],\"failures_capped\":false},\"error\":null,\"result\":{\"mode\":\"EditMode\",\"summary\":{\"total\":9,\"passed\":9,\"failed\":0,\"skipped\":0,\"durationSeconds\":0.4671225,\"resultState\":\"Passed\"},\"results\":[]}},\"hint\":null}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "success": true,
+        "message": "Test job status retrieved.",
+        "error": null,
+        "data": {
+          "job_id": "e9af68cc20ef407cb8d15ddb51e8eca3",
+          "status": "succeeded",
+          "mode": "EditMode",
+          "started_unix_ms": 1792150386636,
+          "finished_unix_ms": 1792150390701,
+          "last_update_unix_ms": 1792150390701,
+          "progress": {
+            "completed": 9,
+            "total": 945,
+            "current_test_full_name": null,
+            "current_test_started_unix_ms": 1792150390035,
+            "last_finished_test_full_name": "FirstPersonGogglesWiringTests.PrefabStretchesAndCarriesItsRendererWithoutInputOrNetworkComponents",
+            "last_finished_unix_ms": 1792150390037,
+            "stuck_suspected": false,
+            "editor_is_focused": false,
+            "blocked_reason": null,
+            "failures_so_far": [],
+            "failures_capped": false
+          },
+          "error": null,
+          "result": {
+            "mode": "EditMode",
+            "summary": {
+              "total": 9,
+              "passed": 9,
+              "failed": 0,
+              "skipped": 0,
+              "durationSeconds": 0.4671225,
+              "resultState": "Passed"
+            },
+            "results": []
+          }
+        },
+        "hint": null
+      }
+    },
+    "isError": false
+  }
+}

@@ -1,3 +1,4 @@
+using Purgers.Settings;
 using TMPro;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace Purgers.GameFlow.SafeHouse
         private void Awake()
         {
             if (promptLabel)
-                promptLabel.text = "按 E 開始遊戲";
+                promptLabel.text = $"按 {PlayerSettingsService.Label(PlayerBinding.Interact)} 開始遊戲";
 
             SetPromptVisible(false);
         }
@@ -26,12 +27,14 @@ namespace Purgers.GameFlow.SafeHouse
         private void Update()
         {
             bool canInteract =
+                !PlayerSettingsMenu.IsOpen && !Purgers.GameFlow.Control.LocalPlayerControl.AllInputBlocked &&
                 flowController != null &&
                 flowController.CanLocalHostOpenReadyCheck();
 
+            if (promptLabel) promptLabel.text = $"按 {PlayerSettingsService.Label(PlayerBinding.Interact)} 開始遊戲";
             SetPromptVisible(canInteract);
 
-            if (canInteract && Input.GetKeyDown(KeyCode.E))
+            if (canInteract && PlayerSettingsService.Down(PlayerBinding.Interact))
                 flowController.RequestOpenReadyCheck();
         }
 

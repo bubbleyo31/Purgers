@@ -1,0 +1,16 @@
+PASS Runner started Ok
+PASS Runner started Ok
+PASS Host State Authority / Client Input Authority separated
+PASS aim loops restored on both peers
+PASS prefire cannot commit shot
+PASS charge replaces owned aim loop
+PASS actual shot uses release aim, not locked preview
+PASS fire stops charge loops
+PASS one particle burst on each peer
+PASS shot narrows over time
+PASS shot endpoints stay frozen while owner turns
+PASS disconnect disposes replica presentation
+PASS Runner started Ok
+FAIL late join restores active aim loop: System.TimeoutException: late join restores active aim loop
+  at BeamRuntimeVerification.Until (System.Func`1[TResult] condition, System.String stage, System.Single seconds) [0x00036] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\BeamRuntimeVerification.cs:80 
+  at BeamRuntimeVerification.Begin () [0x00e43] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\BeamRuntimeVerification.cs:155 

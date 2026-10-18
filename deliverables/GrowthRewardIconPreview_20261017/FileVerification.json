@@ -1,0 +1,80 @@
+{
+  "ComparedSourceFiles": 87,
+  "ChangedSources": [],
+  "Images": [
+    {
+      "Name": "After_1080p_1to1.png",
+      "Bytes": 384532,
+      "Width": 560,
+      "Height": 1120
+    },
+    {
+      "Name": "After_BeforeMagazineCentering.png",
+      "Bytes": 384485,
+      "Width": 560,
+      "Height": 1120
+    },
+    {
+      "Name": "Before_1080p_1to1.png",
+      "Bytes": 351889,
+      "Width": 560,
+      "Height": 1120
+    },
+    {
+      "Name": "Cards_1_1920x1080.png",
+      "Bytes": 258466,
+      "Width": 1920,
+      "Height": 1080
+    },
+    {
+      "Name": "Cards_1_NativeCrop.png",
+      "Bytes": 119717,
+      "Width": 640,
+      "Height": 360
+    },
+    {
+      "Name": "Cards_2_1280x720.png",
+      "Bytes": 123617,
+      "Width": 1280,
+      "Height": 720
+    },
+    {
+      "Name": "Cards_2_1920x1080.png",
+      "Bytes": 261353,
+      "Width": 1920,
+      "Height": 1080
+    },
+    {
+      "Name": "Cards_2_NativeCrop.png",
+      "Bytes": 121529,
+      "Width": 640,
+      "Height": 360
+    },
+    {
+      "Name": "Cards_3_1920x1080.png",
+      "Bytes": 262935,
+      "Width": 1920,
+      "Height": 1080
+    },
+    {
+      "Name": "Cards_3_NativeCrop.png",
+      "Bytes": 121737,
+      "Width": 640,
+      "Height": 360
+    },
+    {
+      "Name": "MagazineCentering_1to1.png",
+      "Bytes": 138438,
+      "Width": 800,
+      "Height": 360
+    },
+    {
+      "Name": "Overview_1to1.png",
+      "Bytes": 181082,
+      "Width": 600,
+      "Height": 500
+    }
+  ],
+  "PreviewOnly": true,
+  "MagazineRankChecks": 8
+}

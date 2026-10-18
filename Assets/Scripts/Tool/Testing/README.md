@@ -35,3 +35,6 @@
 此驗證工具複製 Photon AppSettings，將兩端 FixedRegion 固定為 asia，避免 Editor／Player 各自快取不同最佳區域而找不到房間；不修改原設定資產或正式 MenuConnection。
 
 2026-10-02：GrappleEnergyNetworkVerification 只在明確 --grapple-energy-test 參數下建立 Development 雙程序探針，使用獨立存檔。受控扣款不代表自然出鈎物理驗收；見 [鈎索架構](../../../../Documentation/ProjectArchitecture/30_鈎索系統.md)。
+
+- BeamRuntimeVerification.Begin()：Editor 專用，PlayUnfocused 且無運行中 Runner 時明確啟動；使用暫時 Host／Client、靜音測試 Cue 與延長時窗驗證雷射，不保存資產。敵人使用受控階段注入，不代表自然 AI／獨立 Player 驗收；結果 Temp/BeamPresentation/host-client.txt。
+

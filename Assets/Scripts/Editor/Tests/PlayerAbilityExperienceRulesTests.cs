@@ -45,16 +45,16 @@ public sealed class PlayerAbilityExperienceRulesTests
     }
 
     [Test]
-    public void PendingRecipientKeepsItsShareButCannotRedirectItToAnotherPlayer()
+    public void PendingRecipientAccumulatesItsShareWithoutRedirectingIt()
     {
         var shares = (KeyValuePair<int, int>[])Rules().GetMethod("CreateEqualShares").Invoke(null,
             new object[] { 4, 1, new[] { 1, 2 } });
         PlayerExperienceState pending = new PlayerExperienceState(1, 0, 1);
-        PlayerExperienceState refused = PlayerExperienceRules.Award(pending, shares[0].Value);
+        PlayerExperienceState rewarded = PlayerExperienceRules.Award(pending, shares[0].Value);
         PlayerExperienceState other = PlayerExperienceRules.Award(new PlayerExperienceState(1, 0, 0),
             shares[1].Value);
-        Assert.That(refused.Experience, Is.Zero);
-        Assert.That(refused.PendingRewards, Is.EqualTo(1));
+        Assert.That(rewarded.Experience, Is.EqualTo(3));
+        Assert.That(rewarded.PendingRewards, Is.EqualTo(1));
         Assert.That(other.Experience, Is.EqualTo(2));
     }
 

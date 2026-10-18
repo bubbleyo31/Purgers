@@ -1,0 +1,11 @@
+PASS Runner starts: Ok
+PASS startup reads synchronized timer near frame zero
+PASS body stays grounded before frame eight
+PASS real Animator enters Pounce with root motion off
+PASS takeoff occurs at frame eight; observed seconds=0.359375
+PASS tail pose reached before flight deadline
+PASS presentation driver holds final normalized pose
+PASS airborne bones remain at final pose
+PASS flight deadline remains 0.6 seconds; observed=0.609375
+PASS explosion hides all 22 model renderers
+PASS runtime collision capsule preserves 2.1 meter height

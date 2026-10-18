@@ -35,6 +35,34 @@ public static class PlayerBulletTimeSessionRegistry
         return false;
     }
 
+    public static void GetEnemyStatusDeadline(EnemyActor enemy, out TickTimer deadline, out float span)
+    {
+        deadline = TickTimer.None; span = 0f;
+        if (enemy == null || !enemy.IsFusionSpawned) return;
+        for (int i = 0; i < sessions.Count; i++)
+        {
+            var session = sessions[i];
+            if (session != null && session.AffectsEnemy(enemy)) SelectDeadline(session, ref deadline, ref span);
+        }
+    }
+
+    public static void GetPlayerStatusDeadline(Player player, out TickTimer deadline, out float span)
+    {
+        deadline = TickTimer.None; span = 0f;
+        if (player == null || player.Object == null || !player.Object.IsValid) return;
+        for (int i = 0; i < sessions.Count; i++)
+        {
+            var session = sessions[i];
+            if (session != null && session.AffectsPlayer(player)) SelectDeadline(session, ref deadline, ref span);
+        }
+    }
+
+    private static void SelectDeadline(PlayerBulletTimeAbility session, ref TickTimer deadline, ref float span)
+    {
+        if ((session.StatusDeadline.RemainingTime(session.Runner) ?? 0f) <= (deadline.RemainingTime(session.Runner) ?? 0f)) return;
+        deadline = session.StatusDeadline; span = session.StatusSpan;
+    }
+
     public static float GetPlayerMovementMultiplier(Player player)
     {
         float multiplier = 1f;

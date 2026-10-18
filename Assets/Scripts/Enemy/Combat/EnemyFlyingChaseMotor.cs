@@ -13,6 +13,24 @@ using UnityEngine;
 public sealed class EnemyFlyingChaseMotor :
     EnemyChaseMotor
 {
+    [SerializeField, Tooltip("飛行碰撞膠囊底部相對 Root 的垂直偏移（公尺）。與巡邏使用相同校準值。")]
+    private float bodyBaseOffset = 0f;
+    protected override float CollisionBaseOffset => bodyBaseOffset;
+
+    private readonly Collider[] passageOverlapBuffer = new Collider[1];
+
+    /// <summary>與巡邏／出生規劃相同的查詢，未 Spawn 時也可用於配置驗證。</summary>
+    public bool IsPassageClear(PhysicsScene physics, Vector3 from, Vector3 to) =>
+        EnemyCollisionPassage.IsClear(physics, from, to,
+            new EnemyCollisionEnvelope(bodyRadius, bodyHeight, bodyBaseOffset),
+            collisionSkin, obstacleMask, passageOverlapBuffer);
+
+    protected override bool IsSegmentClear(Vector3 from, Vector3 to) =>
+        IsPassageClear(Runner.GetPhysicsScene(), from, to);
+
+    protected override bool IsMovementStartClear(PhysicsScene physics, Vector3 rootPosition) =>
+        IsPassageClear(physics, rootPosition, rootPosition);
+
     [Header("追逐 B：射程帶")]
 
     [SerializeField]
@@ -258,7 +276,7 @@ public sealed class EnemyFlyingChaseMotor :
         Vector3 eye =
             candidate +
             Vector3.up *
-            Mathf.Max(bodyRadius, bodyHeight * 0.75f);
+            (bodyBaseOffset + Mathf.Max(bodyRadius, bodyHeight * 0.75f));
 
         Vector3 offset =
             targetPosition - eye;
@@ -327,6 +345,7 @@ public sealed class EnemyFlyingChaseMotor :
 
     private void DrawCollisionCapsuleAt(Vector3 rootPosition)
     {
+        rootPosition += Vector3.up * bodyBaseOffset;
         Vector3 bottom =
             rootPosition +
             Vector3.up * (bodyRadius + collisionSkin);
@@ -353,6 +372,8 @@ public sealed class EnemyFlyingChaseMotor :
 
     private void DrawCapsulePassage(Vector3 from, Vector3 to)
     {
+        from += Vector3.up * bodyBaseOffset;
+        to += Vector3.up * bodyBaseOffset;
         Vector3 fromBottom =
             from + Vector3.up * (bodyRadius + collisionSkin);
         Vector3 fromTop =

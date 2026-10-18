@@ -1,0 +1,23 @@
+PASS Runner started Ok
+PASS Runner started Ok
+PASS Host State Authority / Client Input Authority separated
+PASS aim loops restored on both peers
+PASS prefire cannot commit shot
+PASS charge replaces owned aim loop
+PASS actual shot uses release aim, not locked preview
+PASS fire stops charge loops
+PASS one particle burst on each peer
+PASS prepare and fire one-shots play once on each peer
+PASS shot narrows over time
+PASS shot endpoints stay frozen while owner turns
+PASS disconnect disposes replica presentation
+PASS Runner started Ok
+INFO reconnect Phase=Casting remaining=73.76563 usable=True
+PASS late join does not replay old transient events
+PASS cancellation releases loop
+PASS B single burst on both peers
+PASS B frozen shot geometry
+PASS B no lingering loops
+PASS C_Beam single burst on both peers
+PASS C_Beam frozen shot geometry
+PASS C_Beam no lingering loops

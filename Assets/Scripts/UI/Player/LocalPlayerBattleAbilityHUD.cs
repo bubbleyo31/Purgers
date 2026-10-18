@@ -7,13 +7,17 @@ using UnityEngine.UI;
 
 /// <summary>只讀本機玩家的 Loadout 與鈎索充能，呈現戰鬥 HUD。</summary>
 [DisallowMultipleComponent]
-public sealed class LocalPlayerBattleAbilityHUD : MonoBehaviour
+public sealed partial class LocalPlayerBattleAbilityHUD : MonoBehaviour
 {
+    /// <summary>唯讀佔位供中央資訊列避讓，包含名稱與秒數；不改施法條位置或計時。</summary>
+    public RectTransform VisibleTimedAbilityRect => timedAbilityRoot != null && timedAbilityRoot.activeInHierarchy &&
+        (visualGroup == null || visualGroup.alpha > 0f) ? timedAbilityRoot.transform as RectTransform : null;
     [SerializeField] private RectTransform slotsRoot;
     [SerializeField] private GameObject slotTemplate;
     // Retained for old prefab serialization; both categories now share the center.
     [SerializeField, HideInInspector] private Vector2 focusIconOffset;
-    [SerializeField] private Vector2 focusKeyOffset;
+    // Retained for prefab serialization; all ability keycaps now share one alignment.
+    [SerializeField, HideInInspector] private Vector2 focusKeyOffset;
     [SerializeField] private Image grappleFill;
     [SerializeField] private GameObject emptyGrappleMark;
     [SerializeField] private TMP_Text grappleKeyLabel;
@@ -47,7 +51,10 @@ public sealed class LocalPlayerBattleAbilityHUD : MonoBehaviour
     private Color slotUnavailableColor = new Color32(111, 115, 99, 255);
     private readonly List<SlotView> views = new List<SlotView>();
     private StageHudController stageHud;
+    private Purgers.GameFlow.SafeHouse.SafeHouseHudController safeHouseHud;
     private InputManager inputManager;
+    private bool observing;
+    private HudKeyPromptLayout grapplePromptLayout;
 
     private sealed class SlotView
     {
@@ -59,13 +66,23 @@ public sealed class LocalPlayerBattleAbilityHUD : MonoBehaviour
         public TMP_Text CooldownText;
         public TMP_Text KeyText;
         public Image KeyBackground;
-        public Vector2 KeyPosition;
+        public HudKeyPromptLayout PromptLayout;
+        public AbilitySlotStateGraphic StateGraphic;
+        public TMP_Text StateLabel;
+        public Color IconColor;
+        public readonly AbilitySlotReadyPulse Pulse = new AbilitySlotReadyPulse();
     }
 
     private void Awake()
     {
         stageHud = GetComponentInParent<StageHudController>();
+        safeHouseHud = GetComponentInParent<Purgers.GameFlow.SafeHouse.SafeHouseHudController>();
         if (slotTemplate != null) slotTemplate.SetActive(false);
+        if (grappleKeyLabel != null)
+        {
+            if (grappleKeyBackground == null) grappleKeyBackground = grappleKeyLabel.transform.parent.GetComponent<Image>();
+            grapplePromptLayout = new HudKeyPromptLayout(grappleKeyLabel, grappleKeyBackground, grappleFill != null ? grappleFill.rectTransform : null);
+        }
         if (grappleFill != null)
         {
             grappleFill.type = Image.Type.Filled;
@@ -78,15 +95,21 @@ public sealed class LocalPlayerBattleAbilityHUD : MonoBehaviour
 
     private void Update()
     {
-        NetworkRunner runner = stageHud != null ? stageHud.HudRunner : null;
+        NetworkRunner runner = safeHouseHud != null ? safeHouseHud.HudRunner : stageHud != null ? stageHud.HudRunner : null;
         if (runner == null || !runner.IsRunning || !runner.LocalPlayer.IsRealPlayer ||
-            !runner.TryGetPlayerObject(runner.LocalPlayer, out NetworkObject playerObject) ||
+            !LocalPlayerSpectatorController.TryGetViewedPlayerObject(runner, out NetworkObject playerObject) ||
             playerObject == null || !playerObject.IsValid)
         {
             Hide();
             return;
         }
 
+        observing = playerObject.InputAuthority != runner.LocalPlayer;
+        if (viewedPlayer != playerObject)
+        {
+            foreach (SlotView view in views) view.Pulse.Reset();
+            viewedPlayer = playerObject;
+        }
         PlayerGrappleCharges charges = playerObject.GetComponent<PlayerGrappleCharges>();
         PlayerAbilityRuntimeManager manager = playerObject.GetComponent<PlayerAbilityRuntimeManager>();
         if (charges == null || manager == null)
@@ -107,7 +130,11 @@ public sealed class LocalPlayerBattleAbilityHUD : MonoBehaviour
         if (timedAbilityRoot != null) timedAbilityRoot.SetActive(false);
         if (visualGroup != null) visualGroup.alpha = 0f;
         foreach (SlotView view in views)
+        {
+            view.Pulse.Reset();
             if (view.Root != null) view.Root.SetActive(false);
+        }
+        viewedPlayer = null;
     }
 
     private void RefreshTimedAbility(Player player, PlayerAbilityRuntimeManager manager)
@@ -165,9 +192,9 @@ public sealed class LocalPlayerBattleAbilityHUD : MonoBehaviour
         bool blocked = gate != null && gate.IsFusionSpawned && gate.IsBlocked(PlayerActionBlockMask.Grapple);
         if (emptyGrappleMark != null) emptyGrappleMark.SetActive(!charges.HasCharge || blocked);
         KeyCode key = inputManager != null ? inputManager.GrappleKey : KeyCode.Q;
-        if (grappleKeyLabel != null) grappleKeyLabel.text = key.ToString().ToUpperInvariant();
+        grapplePromptLayout?.Refresh(key);
         if (grappleKeyBackground != null)
-            grappleKeyBackground.color = Input.GetKey(key)
+            grappleKeyBackground.color = blocked ? slotUnavailableColor : (!observing && Input.GetKey(key))
                 ? new Color(0.2f, 0.78f, 0.95f, 0.95f)
                 : new Color32(204, 190, 199, 255);
     }
@@ -189,7 +216,7 @@ public sealed class LocalPlayerBattleAbilityHUD : MonoBehaviour
                 if (view != null) BindView(view, runtime, category);
             }
         }
-        for (int i = shown; i < views.Count; i++) views[i].Root.SetActive(false);
+        for (int i = shown; i < views.Count; i++) { views[i].Root.SetActive(false); views[i].Pulse.Reset(); }
     }
 
     private SlotView GetView(int index)
@@ -215,7 +242,9 @@ public sealed class LocalPlayerBattleAbilityHUD : MonoBehaviour
             view.Icon.preserveAspect = true;
         }
         if (view.Fallback != null) CenterSlotContent(view.Fallback.rectTransform);
-        if(view.KeyBackground!=null)view.KeyPosition=view.KeyBackground.rectTransform.anchoredPosition;
+        if (view.KeyBackground != null)
+            view.PromptLayout = new HudKeyPromptLayout(view.KeyText, view.KeyBackground, root.transform as RectTransform);
+        PrepareSlotState(view);
         views.Add(view);
         return view;
     }
@@ -231,7 +260,7 @@ public sealed class LocalPlayerBattleAbilityHUD : MonoBehaviour
     {
         view.Root.SetActive(true);
         bool focus=category==PlayerAbilityCategory.GrappleFocus;
-        if(view.KeyBackground!=null)view.KeyBackground.rectTransform.anchoredPosition=view.KeyPosition+(focus?focusKeyOffset:Vector2.zero);
+
         Sprite icon = runtime.Definition.HudIcon;
         if (view.Icon != null)
         {
@@ -245,44 +274,20 @@ public sealed class LocalPlayerBattleAbilityHUD : MonoBehaviour
             view.Fallback.text = runtime.TryGetModule<IPlayerAbilityHudState>(out _) && !string.IsNullOrEmpty(label)
                 ? label.Substring(0, Mathf.Min(2, label.Length)) : "✶";
         }
-        float cooldown = 0f;
-        if (runtime.TryGetModule<IPlayerAbilityHudState>(out var activeHud))
-            cooldown = activeHud.CooldownRemainingSeconds;
-        else if (runtime.TryGetModule(out SupportAerialAbility aerial))
-            cooldown = aerial.CooldownRemainingSeconds;
-        else if (runtime.TryGetModule(out TankAirDashAbility dash))
-            cooldown = dash.CooldownRemainingSeconds;
-        bool cooling = cooldown > 0.01f;
-        bool active = activeHud != null && activeHud.IsAbilityActive;
-        if (view.CooldownShade != null) view.CooldownShade.gameObject.SetActive(cooling && !active);
-        if (view.CooldownText != null)
-        {
-            view.CooldownText.gameObject.SetActive(cooling || active);
-            if (active)
-            {
-                view.CooldownText.color = new Color(.25f, 1f, .9f);
-                view.CooldownText.text = activeHud.ActiveRemainingSeconds > .01f
-                    ? Mathf.CeilToInt(activeHud.ActiveRemainingSeconds).ToString() : "…";
-            }
-            else if (cooling)
-            {
-                view.CooldownText.color = Color.white;
-                view.CooldownText.text = Mathf.CeilToInt(cooldown).ToString();
-            }
-        }
+        AbilitySlotPresentationState state = AbilitySlotHudSnapshot.Read(runtime, IsLocalSlotInputBlocked(runtime));
+        PresentSlotState(view, state, runtime);
         KeyCode key = category == PlayerAbilityCategory.GrappleFocus
             ? (inputManager != null ? inputManager.GrappleFocusKey : KeyCode.E)
             : (inputManager != null ? inputManager.GrappleKey : KeyCode.Q);
-        if (view.KeyText != null) view.KeyText.text = key.ToString().ToUpperInvariant();
+        bool blocked = !state.CanPress;
+        view.PromptLayout?.Refresh(key);
         if (view.KeyBackground != null)
-            view.KeyBackground.color = Input.GetKey(key)
+            view.KeyBackground.color = blocked ? slotUnavailableColor : (!observing && Input.GetKey(key))
                 ? slotPressedColor
                 : slotReadyColor;
         if (view.Background != null)
-            view.Background.color = runtime.IsAvailableForCurrentProfession &&
-                (!runtime.TryGetModule<IPlayerAbilityHudState>(out var availabilityHud) || availabilityHud.IsUsable)
-                ? slotReadyColor
-                : slotUnavailableColor;
+            view.Background.color = state.Phase == AbilitySlotVisualPhase.Cooling || state.Phase == AbilitySlotVisualPhase.Ready ||
+                state.CanPress ? slotReadyColor : slotUnavailableColor;
     }
 
     private static void CenterSlotContent(RectTransform rect)
@@ -293,3 +298,6 @@ public sealed class LocalPlayerBattleAbilityHUD : MonoBehaviour
         rect.anchoredPosition = Vector2.zero;
     }
 }
+
+
+

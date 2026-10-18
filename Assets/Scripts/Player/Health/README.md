@@ -20,3 +20,8 @@
 - 網路同步：搜尋 `[Networked]`、`[Rpc(`、`HasStateAuthority`、`IsSceneAuthority`。
 - 場景綁定：由 `[SerializeField]` 欄位名稱回到 Unity Inspector 找同名引用。
 
+
+
+## 2026-10-16 倒地救援接點
+
+倒地保留 PlayerHealth／原物件且仍須撤離；真正死亡才銜接原觀戰。安全屋外不排程自動復活，安全屋沿用原流程。正式規則、Inspector、HUD 人工接線及驗證入口見 `Documentation/ProjectArchitecture/62_倒地與隊友救援.md`。

@@ -1232,6 +1232,17 @@ public class FirstPersonViewModelMotionController :
     #region Public Binding
 
 
+    /// <summary>明確綁定觀戰來源；同目標不重置平滑，退出時只清除仍相符的來源。</summary>
+    public void BindObservedProfession(PlayerProfession profession)
+    {
+        if (ownerProfession != profession) BindOwnerProfession(profession);
+    }
+
+    public void ClearObservedProfession(PlayerProfession profession)
+    {
+        if (ownerProfession == profession) BindOwnerProfession(null);
+    }
+
     /// <summary>
     /// 外部 Local View 系統可以直接綁定
     /// 真正的本地 PlayerProfession。
@@ -1366,7 +1377,7 @@ public class FirstPersonViewModelMotionController :
 
             if (ownerObject != null &&
                 ownerObject.IsValid &&
-                ownerObject.HasInputAuthority)
+                LocalPlayerSpectatorController.IsViewedObject(ownerObject))
             {
                 return;
             }
@@ -1425,7 +1436,7 @@ public class FirstPersonViewModelMotionController :
             if (candidate == null ||
                 candidate.Object == null ||
                 candidate.Object.IsValid == false ||
-                candidate.Object.HasInputAuthority == false)
+                !LocalPlayerSpectatorController.IsViewedObject(candidate.Object))
             {
                 continue;
             }

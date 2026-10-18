@@ -1,0 +1,38 @@
+[
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Scripts\\UI\\Chat\\NetworkChatSystem.cs",
+    "Hash": "917A5E93F5F456E374FEB7A73F988BDD092068FB22AE7E21C2E3808071BD21AA"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Scripts\\MenuImplementation\\MenuConnection.cs",
+    "Hash": "D9A0373E43033FE803A2E100CB641A034BA99BA02CEE84B26F7F8748D3295E76"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Scripts\\MenuImplementation\\MenuConnectionBehaviour.cs",
+    "Hash": "5E2C5144A23B8D7B2982DAB217AB8EEF559BD3A9F64095274231E238FC65364B"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Scripts\\MenuImplementation\\MenuConnection.SessionEnd.cs",
+    "Hash": "69E22E293C5E6A7CD8BF4B4F8F88AECB078A0EEFABAEF1BBCDF55A4D5322639B"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Scripts\\MenuImplementation\\MenuConnectionBehaviour.RoomClosed.cs",
+    "Hash": "EB6D38E627B60BF78B06A80B2E36F12E4840648B11C32BC98941C4089D900EC0"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Scripts\\MenuImplementation\\MenuSessionEndState.cs",
+    "Hash": "1DDD15E3798C5B27D2C503E0B7F4CA16E5D4E39F1F959F45B0A1BF19A836B087"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Scripts\\Editor\\Tests\\NetworkChatDepartureTests.cs",
+    "Hash": "1FF1E4FBDBACFD96A7C65E69E3B106A16EF46BEE75E54D8BA09DD6DCDAE9B2F0"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Scripts\\Editor\\Tests\\MenuSessionEndTests.cs",
+    "Hash": "1E9B1B85AB07E9E1E6083ED08B27062E5A0D8F253DCF0D2E8B6D15695DD5BC41"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Scripts\\Tool\\Testing\\RoomClosureRuntimeVerification.cs",
+    "Hash": "55FC47EE74986C4665F834172DB08F88CEE22E2DBAC0F2BB65952CE274140187"
+  }
+]

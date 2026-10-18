@@ -11,7 +11,7 @@ using UnityEngine;
 /// </summary>
 [DisallowMultipleComponent]
 [RequireComponent(typeof(PlayerProfession))]
-public class PlayerAbilityRuntimeManager :
+public partial class PlayerAbilityRuntimeManager :
     NetworkBehaviour
 {
     public const int MaximumAbilityRuntimeSlots =
@@ -21,7 +21,7 @@ public class PlayerAbilityRuntimeManager :
     [Header("起始能力配置")]
 
     [SerializeField]
-    [Tooltip("玩家 Spawn 後由 State Authority 套用的起始 Loadout。槽位種類與數量由該 Loadout 的 Slot Layout 決定。")]
+    [Tooltip("玩家 Spawn 後使用此 Loadout 的 Slot Layout；新輪不自動裝備其技能清單，由開局獎勵或存檔填入空槽。")]
     private PlayerAbilityLoadoutDefinition startingLoadout;
 
 
@@ -114,8 +114,8 @@ public class PlayerAbilityRuntimeManager :
             return;
         }
 
-        if (TryApplyLoadoutStateAuthority(
-                startingLoadout,
+        if (TryApplyDefinitionsStateAuthority(
+                startingLoadout.SlotLayout, System.Array.Empty<PlayerAbilityDefinition>(),
                 out string failureReason
             ) == false)
         {
@@ -136,6 +136,7 @@ public class PlayerAbilityRuntimeManager :
     {
         if (hasState)
         {
+            DespawnBonusRuntimes(runner);
             DespawnAllActiveRuntimes(
                 runner
             );
@@ -271,51 +272,7 @@ public class PlayerAbilityRuntimeManager :
 
 public bool TryEquipRewardAbilityStateAuthority(PlayerAbilityDefinition selected, out string failureReason)
     {
-        failureReason = string.Empty;
-        if (Object == null || !Object.HasStateAuthority ||
-            !StartingLoadoutApplied || LoadoutRevision <= 0)
-        {
-            failureReason = "能力 Loadout 尚未由 State Authority 初始化。";
-            return false;
-        }
-        if (selected == null || startingLoadout == null ||
-            startingLoadout.SlotLayout == null)
-        {
-            failureReason = "獎勵能力或槽位配置不存在。";
-            return false;
-        }
-
-        var definitions = new List<PlayerAbilityDefinition>();
-        int replacementIndex = -1;
-        for (int slot = 0; slot < MaximumAbilityRuntimeSlots; slot++)
-        {
-            if (!ActiveAbilityRuntimeObjects.TryGet(slot, out NetworkObject runtimeObject) ||
-                runtimeObject == null || !runtimeObject.IsValid)
-                continue;
-            PlayerAbilityRuntime runtime = runtimeObject.GetComponent<PlayerAbilityRuntime>();
-            if (runtime == null || runtime.Definition == null)
-            {
-                failureReason = "目前能力 Runtime 缺少 Definition。";
-                return false;
-            }
-            if (runtime.Definition.Category == selected.Category)
-                replacementIndex = definitions.Count;
-            definitions.Add(runtime.Definition);
-        }
-
-        if (replacementIndex >= 0)
-        {
-            if (definitions[replacementIndex] == selected)
-                return true;
-            definitions[replacementIndex] = selected;
-        }
-        else
-        {
-            definitions.Add(selected);
-        }
-
-        return TryApplyDefinitionsStateAuthority(
-            startingLoadout.SlotLayout, definitions, out failureReason);
+        return TryEquipSingleStateAuthority(selected, null, out failureReason);
     }
 
 public string[] GetEquippedAbilityIds()
@@ -360,6 +317,12 @@ public string[] GetEquippedAbilityIds()
         NetInput legacyInput
     )
     {
+        var actionGate = GetComponent<PlayerActionGate>();
+        if (actionGate != null && actionGate.IsBlocked(PlayerActionBlockMask.ActiveAbility))
+        {
+            input.Buttons.Set(InputButton.Ability1, false);
+            legacyInput.Buttons.Set(InputButton.Ability1, false);
+        }
         RefreshOrderedRuntimeCache();
 
         for (int i = 0;
@@ -374,12 +337,14 @@ public string[] GetEquippedAbilityIds()
                 continue;
             }
 
+            if (runtime.IsBonusCast) continue;
             // 新 E 不沿用舊空中技能的鈎索／職業過濾；全域控制鎖已由 Player 與技能共用入口處理。
             runtime.Simulate(
                 runtime.TryGetModule<PlayerActiveAbilityBase>(out _) ? input : legacyInput,
                 previousButtons
             );
         }
+        TickBonusAbility(input);
     }
 
 
@@ -470,7 +435,9 @@ public string[] GetEquippedAbilityIds()
         where TModule : class
     {
         RefreshOrderedRuntimeCache();
-
+        foreach (var extra in orderedRuntimeCache)
+            if (extra != null && extra.IsBonusCast && extra.RefreshProfessionAvailabilityNow() &&
+                extra.TryGetModule<IPlayerAbilityHudState>(out var extraHud) && extraHud.IsAbilityActive && extra.TryGetModule<TModule>(out module)) return true;
         for (int i = 0;
             i < orderedRuntimeCache.Count;
             i++)
@@ -686,6 +653,7 @@ public string[] GetEquippedAbilityIds()
             }
         }
 
+        CollectBonusRuntimes(orderedRuntimeCache);
         orderedRuntimeCache.Sort(
             CompareRuntimes
         );

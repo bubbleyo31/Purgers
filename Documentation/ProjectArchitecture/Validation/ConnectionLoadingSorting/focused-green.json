@@ -1,0 +1,42 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "f3895b99c397491595d59a441f1ac816",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1792160075044,
+      "finished_unix_ms": 1792160076695,
+      "last_update_unix_ms": 1792160076695,
+      "progress": {
+        "completed": 5,
+        "total": 961,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1792160076288,
+        "last_finished_test_full_name": "ConnectionLoadingSortingTests.ShowLoadingRendersAboveGameplayAndContinueUi(200)",
+        "last_finished_unix_ms": 1792160076289,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 5,
+          "passed": 5,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 0.3261049,
+          "resultState": "Passed"
+        },
+        "results": []
+      }
+    },
+    "hint": null
+  }
+}

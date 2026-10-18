@@ -1,0 +1,24 @@
+PASS Runner starts: Ok
+PASS stationary silent standing player is safe
+PASS silent crouch walking is safe
+PASS wall blocks gunshot detection
+PASS body path rejects obstacle even with eye line available
+PASS open capsule path accepted
+PASS discovery does not acquire capture gate
+PASS early windup tracks moving player
+PASS movement input remains available before impact
+PASS locked direction stays fixed and launch does not capture
+PASS sidestep makes vine miss
+PASS miss recovery prevents immediate retry
+PASS miss recovery is independent of feeding cooldown
+PASS continuous sweep stops at thin wall instead of hitting player behind it
+PASS first actual player is captured instead of original aimed player
+PASS intercepted player releases on despawn
+PASS new high rail blocks full body pull route
+PASS impact cannot pull player through newly blocked route
+PASS death cancels prepared strike without delayed capture
+PASS discovery starts tracking without locking player
+PASS capture owns exclusive gate and blocks active actions
+FAIL vine impact starts capture: System.InvalidOperationException: solo capture allows primary weapon fire
+  at EnemyFlytrapRuntimeVerification.Check (System.Boolean condition, System.String message) [0x0001f] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\EnemyFlytrapRuntimeVerification.cs:25 
+  at EnemyFlytrapRuntimeVerification.Begin (System.Boolean multiplayer) [0x00b59] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\EnemyFlytrapRuntimeVerification.cs:61 

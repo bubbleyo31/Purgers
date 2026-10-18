@@ -1,0 +1,18 @@
+PASS existing audio service is present
+PASS existing camera shake is present
+PASS Runner started: Ok
+PASS zero energy has no launch or shake
+PASS invalid target has no shot
+PASS action gate rejects without feedback
+PASS successful Q shakes before prefire completes
+PASS shot does not play impact early
+PASS arrival plays one impact
+PASS held state never repeats one-shot events
+PASS impact source is at world hit point and uses 3D spatialization
+PASS pull uses a 3D looping source
+PASS Q release does not shake or launch
+PASS cancel before arrival has no impact or pull loop
+PASS hold Q launches and shakes exactly once
+FAIL ordinary pull restored: System.TimeoutException: ordinary pull restored
+  at GrappleFeedbackRuntimeVerification.Until (System.Func`1[TResult] test, System.String stage, System.Single seconds) [0x00036] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\GrappleFeedbackRuntimeVerification.cs:35 
+  at GrappleFeedbackRuntimeVerification.Begin (System.Boolean multiplayer) [0x010ab] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\GrappleFeedbackRuntimeVerification.cs:117 

@@ -1,0 +1,2 @@
+PASS Runner starts: Ok
+VIDEO M:\UnityProject\Purgers\deliverables\Recordings\Enemy_Suicide_PlayMode.mp4 frames=550 replayFrames=61

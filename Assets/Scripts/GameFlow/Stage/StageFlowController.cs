@@ -11,7 +11,7 @@ namespace Purgers.GameFlow.Stage
 {
     [DisallowMultipleComponent]
     [RequireComponent(typeof(NetworkObject))]
-    public sealed class StageFlowController : NetworkBehaviour, IPlayerLeft
+    public sealed partial class StageFlowController : NetworkBehaviour, IPlayerLeft
     {
         [Header("地圖")]
         [Tooltip(
@@ -154,6 +154,7 @@ namespace Purgers.GameFlow.Stage
 
         public override void Spawned()
         {
+            wipeSpawned = true;
             RebuildExtractionPointList();
             ApplyExtractionVisuals();
 
@@ -171,6 +172,7 @@ namespace Purgers.GameFlow.Stage
             ObjectiveKind = runtimePlan.ObjectiveKind;
             LoadedPlayers.Clear();
             FailureReason = StageFailureReason.None;
+            WipeTransitionPending = false; wipeReadyPlayers.Clear();
             extractionSelectionAttempted = false;
             StageTimer = TickTimer.None;
             PausedStageTicks = 0;
@@ -198,6 +200,9 @@ namespace Purgers.GameFlow.Stage
             {
                 case StagePhase.Initializing:
                     TryInitializeStage();
+                    break;
+                case StagePhase.Failed:
+                    TickWipeTransition();
                     break;
                 case StagePhase.Active:
                     EvaluateActiveStage();
@@ -254,12 +259,16 @@ namespace Purgers.GameFlow.Stage
                 TryBindExtractionPointsToFinalChunk();
             ApplyExtractionVisuals();
             TryReportLocalLoad();
+            RenderWipeTransition();
         }
 
         public void PlayerLeft(PlayerRef player)
         {
             if (Object.HasStateAuthority)
+            {
                 LoadedPlayers.Remove(player);
+                wipeReadyPlayers.Remove(player);
+            }
         }
 
         private void TryReportLocalLoad()
@@ -663,7 +672,12 @@ namespace Purgers.GameFlow.Stage
                     this);
             }
 
-            BeginSafeHouseLoad();
+            if (!succeeded && failureReason == StageFailureReason.AllPlayersDead)
+            {
+                wipeReadyPlayers.Clear();
+                WipeTransitionPending = true;
+            }
+            else BeginSafeHouseLoad();
         }
 
         private void BeginSafeHouseLoad()
@@ -718,7 +732,7 @@ namespace Purgers.GameFlow.Stage
                 PlayerHealth health =
                     playerObject.GetComponent<PlayerHealth>();
 
-                if (health == null || !health.IsAlive)
+                if (health == null || !PlayerRescueRules.RequiresExtraction(health.IsDead))
                     continue;
 
                 livingCount++;

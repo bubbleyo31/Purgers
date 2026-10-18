@@ -1,0 +1,24 @@
+PASS Runner starts host
+PASS load pre-baked Chunk navigation and automatic ground patrol
+PASS ground patrol point available
+PASS Director State Authority belongs to host
+PASS candidate build ready
+PASS one zone resolves Ground, FreeFlying and Stationary
+PASS Ground automatic patrol contract
+PASS FreeFlying automatic patrol contract
+PASS Stationary automatic patrol contract
+PASS automatic flight does not overwrite manual field
+PASS Ground spawned specified quantity 2
+PASS FreeFlying spawned specified quantity 2
+PASS Stationary spawned specified quantity 1
+PASS Enemy_Ranged_A(Clone) patrol bound before Spawned
+PASS Enemy_Ranged_A(Clone) patrol bound before Spawned
+PASS Enemy_Melee_A(Clone) patrol bound before Spawned
+PASS Enemy_Melee_A(Clone) patrol bound before Spawned
+PASS completed activation has no remaining plan
+PASS successful mixed activation enters FIFO once
+PASS Runner starts client
+PASS client replicas cannot own gameplay authority
+PASS client generates no patrol areas
+PASS Runner starts client
+PASS late join and reconnect preserve spawned composition

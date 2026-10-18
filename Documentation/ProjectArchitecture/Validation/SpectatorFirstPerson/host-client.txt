@@ -1,0 +1,20 @@
+PASS Runner starts: Ok
+PASS Runner starts: Ok
+PASS existing scene camera and spectator reused
+PASS client HUD source resolves host replica
+PASS missing object cannot be presented
+PASS observed body hidden with shadows retained
+PASS observed player hand and weapon instantiated
+PASS ViewModel reads observed profession
+PASS observer uses read-only weapon binding
+PASS health HUD binds target health
+PASS ammo HUD resolves target runtime
+PASS target damage snapshot replicated without local HP writes
+PASS 20 first-person poses preserve pitch/yaw with no parent-child drift
+PASS observed ADS drives existing camera FOV
+PASS exit restores observed body's previous render mode
+PASS respawn restores own HUD source
+PASS respawn restores normal local weapon binding
+PASS no target returns no HUD source
+PASS despawned target leaves no first person weapon behind
+PASS no target clears old health HUD binding

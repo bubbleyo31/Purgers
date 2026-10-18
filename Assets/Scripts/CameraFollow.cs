@@ -46,6 +46,18 @@ public class CameraFollow : MonoBehaviour
     private static CameraFollow singleton;
 
     private Transform target;
+    private bool hasWorldPose;
+    private Vector3 worldPosition;
+    private Quaternion worldRotation;
+
+    /// <summary>以擁有者識別提交世界姿態，不追隨擁有者 Transform，避免父相機追逐子物件的回授。</summary>
+    public void SetWorldPose(Transform owner, Vector3 position, Quaternion rotation)
+    {
+        target = owner;
+        hasWorldPose = owner != null;
+        worldPosition = position;
+        worldRotation = rotation;
+    }
 
     private void Awake()
     {
@@ -69,8 +81,8 @@ public class CameraFollow : MonoBehaviour
         * 先完成 CameraRig 的位置與旋轉。
         */
         transform.SetPositionAndRotation(
-            target.position,
-            target.rotation
+            hasWorldPose ? worldPosition : target.position,
+            hasWorldPose ? worldRotation : target.rotation
         );
 
         /*
@@ -90,6 +102,7 @@ public class CameraFollow : MonoBehaviour
     )
     {
         target = newTarget;
+        hasWorldPose = false;
     }
 
     /// <summary>
@@ -103,6 +116,7 @@ public class CameraFollow : MonoBehaviour
         if (target == oldTarget)
         {
             target = null;
+            hasWorldPose = false;
         }
     }
 }

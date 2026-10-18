@@ -49,6 +49,8 @@ public class PlayerIncomingDamageModifierBridge :
     MonoBehaviour,
     IDamageRequestModifier
 {
+    private readonly List<PlayerAbilityRuntime> extraRuntimeBuffer = new List<PlayerAbilityRuntime>();
+
     // =====================================================================
     #region Player Core 引用
 
@@ -156,6 +158,16 @@ public class PlayerIncomingDamageModifierBridge :
                     !resolvedModifierBehaviours.Contains(behaviour))
                     resolvedModifierBehaviours.Add(behaviour);
             }
+        if (abilities != null)
+        {
+            extraRuntimeBuffer.Clear();
+            var extras = extraRuntimeBuffer;
+            abilities.CollectBonusRuntimes(extras);
+            foreach (var runtime in extras)
+                if (runtime != null && runtime.RefreshProfessionAvailabilityNow() &&
+                    runtime.TryGetModule<IPlayerIncomingDamageModifier>(out var modifier) && modifier is MonoBehaviour extra && extra.isActiveAndEnabled)
+                    resolvedModifierBehaviours.Add(extra);
+        }
         resolvedModifierBehaviours.Sort(CompareModifierPriority);
 
         // =============================================================

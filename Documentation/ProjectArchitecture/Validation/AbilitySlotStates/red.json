@@ -1,0 +1,124 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "c2b41bb95f1a4d2eaaf5d11061571338",
+      "status": "failed",
+      "mode": "EditMode",
+      "started_unix_ms": 1792267979406,
+      "finished_unix_ms": 1792267982121,
+      "last_update_unix_ms": 1792267982121,
+      "progress": {
+        "completed": 24,
+        "total": 1155,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1792267981661,
+        "last_finished_test_full_name": "AbilitySlotPresentationTests.SwitchingOwnerOrHidingNeverReplaysCooldownCompletion",
+        "last_finished_unix_ms": 1792267981661,
+        "stuck_suspected": false,
+        "editor_is_focused": true,
+        "blocked_reason": null,
+        "failures_so_far": [
+          {
+            "full_name": "AbilitySlotPresentationTests.BlockedCompletionDoesNotFlashLaterWhenControlReturns",
+            "message": "  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "AbilitySlotPresentationTests.CompletionFlashesOnceAndDecaysWithoutRestarting",
+            "message": "  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "AbilitySlotPresentationTests.ExistingPrefabTemplateCreatesWholeSlotOverlayWithoutChangingSourceArtOrKeyLayout",
+            "message": "  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "AbilitySlotPresentationTests.InvalidDurationCannotBecomeAnInventedCountdown(float.NaN,12.0f)",
+            "message": "  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "AbilitySlotPresentationTests.InvalidDurationCannotBecomeAnInventedCountdown(3.0f,float.PositiveInfinity)",
+            "message": "  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "AbilitySlotPresentationTests.InvalidDurationCannotBecomeAnInventedCountdown(3.0f,0.0f)",
+            "message": "  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "AbilitySlotPresentationTests.LateObservationUsesFullCooldownRatherThanRemainingTime",
+            "message": "  尚未提供技能槽徑向冷卻規則。\r\n  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "AbilitySlotPresentationTests.RadialShadeCoversWholeSquareAndRetreatsClockwise(1.0f,6400.0f)",
+            "message": "  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "AbilitySlotPresentationTests.RadialShadeCoversWholeSquareAndRetreatsClockwise(0.75f,4800.0f)",
+            "message": "  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "AbilitySlotPresentationTests.RadialShadeCoversWholeSquareAndRetreatsClockwise(0.5f,3200.0f)",
+            "message": "  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "AbilitySlotPresentationTests.RadialShadeCoversWholeSquareAndRetreatsClockwise(0.25f,1600.0f)",
+            "message": "  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "AbilitySlotPresentationTests.RadialShadeCoversWholeSquareAndRetreatsClockwise(0.0f,0.0f)",
+            "message": "  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "AbilitySlotPresentationTests.ReadyFlashOnlyOccursOnObservedCooldownCompletion(True,False,True,True)",
+            "message": "  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "AbilitySlotPresentationTests.ReadyFlashOnlyOccursOnObservedCooldownCompletion(True,False,False,False)",
+            "message": "  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "AbilitySlotPresentationTests.ReadyFlashOnlyOccursOnObservedCooldownCompletion(False,False,True,False)",
+            "message": "  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "AbilitySlotPresentationTests.ReadyFlashOnlyOccursOnObservedCooldownCompletion(True,True,True,False)",
+            "message": "  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "AbilitySlotPresentationTests.RecastAndToggleLabelsNeverPretendToBeCooldown(\"Recast\",True,False,\"再次施放\")",
+            "message": "  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "AbilitySlotPresentationTests.RecastAndToggleLabelsNeverPretendToBeCooldown(\"Recast\",False,False,\"待命\")",
+            "message": "  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "AbilitySlotPresentationTests.RecastAndToggleLabelsNeverPretendToBeCooldown(\"Active\",True,True,\"再次按下結束\")",
+            "message": "  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "AbilitySlotPresentationTests.RecastAndToggleLabelsNeverPretendToBeCooldown(\"Active\",True,False,\"效果持續\")",
+            "message": "  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "AbilitySlotPresentationTests.RecastAndToggleLabelsNeverPretendToBeCooldown(\"Awaiting\",False,False,\"等待拾取\")",
+            "message": "  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "AbilitySlotPresentationTests.RecastAndToggleLabelsNeverPretendToBeCooldown(\"Cooling\",False,False,\"\")",
+            "message": "  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "AbilitySlotPresentationTests.SwitchingOwnerOrHidingNeverReplaysCooldownCompletion",
+            "message": "  Expected: not null\r\n  But was:  null\r\n"
+          }
+        ],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": null
+    },
+    "hint": null
+  }
+}

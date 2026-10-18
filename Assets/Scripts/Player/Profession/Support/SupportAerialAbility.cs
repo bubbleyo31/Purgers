@@ -54,7 +54,7 @@ public class SupportAerialAbility :
     IPlayerProfessionRuntimeModule,
     IPlayerAbilityRuntimeModule,
     IPlayerMovementInputModifier,
-    IPlayerAbilityHudState
+    IPlayerAbilityHudState, IPlayerAbilityCooldownSource
 {
     /// <summary>
     /// 此能力由 GrappleAirborne 專注輸入管線驅動。
@@ -166,6 +166,11 @@ public class SupportAerialAbility :
     /// <summary>State Authority 在啟動時保存總長，供各端與晚加入 HUD 計算比例。</summary>
     [Networked]
     private float ActiveDurationSeconds { get; set; }
+
+    public bool HudCanPress => IsUsable && Object != null && Object.IsValid && ownerPlayer != null &&
+        ownerPlayer.Health != null && ownerPlayer.Health.IsAlive && ownerMovement != null && ownerMovement.KCC != null &&
+        ownerStateMachine != null && !IsFocusInputBlocked(default) &&
+        (IsAbilityActive || CanBeginAbility(true));
 
 
     /// <summary>
@@ -344,6 +349,8 @@ public class SupportAerialAbility :
     ///
     /// 未冷卻時回傳 0。
     /// </summary>
+    [Networked] private float CooldownDuration { get; set; }
+    public float CooldownDurationSeconds => fusionSpawned && Object != null && Object.IsValid ? CooldownDuration : 0f;
     public float CooldownRemainingSeconds
     {
         get
@@ -935,12 +942,13 @@ public class SupportAerialAbility :
         // ★ B 規則：結束後才開始完整冷卻
         // =============================================================
 
+        CooldownDuration = Purgers.Progression.PlayerGrowth.Cooldown(ownerPlayer, PlayerAbilityCategory.GrappleFocus, cooldownDuration);
         if (cooldownDuration > 0f)
         {
             CooldownTimer =
                 TickTimer.CreateFromSeconds(
                     Runner,
-                    cooldownDuration
+                    CooldownDuration
                 );
         }
         else

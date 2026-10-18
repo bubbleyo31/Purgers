@@ -1,0 +1,7 @@
+leftCard icon=True rankView=True fit=True
+frame=(71.28525, 82.95008)
+middleCard icon=True rankView=True fit=True
+frame=(71.28525, 82.95008)
+rightCard icon=True rankView=True fit=True
+frame=(71.28525, 82.95008)
+Scene inspection read-only; closed without save=True

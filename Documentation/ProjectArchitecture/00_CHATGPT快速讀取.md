@@ -1,3 +1,27 @@
+> **2026-10-18 三種雷射四階段呈現（局部核對）**：遠程 B／定點 C Beam／玩家貫穿砲共用細線瞄準、中線蓄力、粗亮光束與粒子、收細至零。寬度／色彩／前搖比例／粒子及四階段音效接口各自 Inspector 可調；聲音沿 GameplayAudioService，傷害沿原 State Authority。正式資產已配置，音效 Cue 留空。設定見 [108](108_雷射四階段視聽呈現.md)，驗證及待驗邊界見 [紀錄](Validation/BeamPresentation/README.md)。
+
+> **2026-10-18 右下技能槽**：整格順時針冷卻遮罩＋置中白字，完成一次亮光；淡金二次施放與青色持續效果外框，保留原技能規則。沿 TAB 共用冷卻資料，不另開計時。先讀 [ABILITY-SLOT-STATE](關鍵詞規則索引.md#ability-slot-state)、[107 設定](107_右下技能槽狀態呈現.md) 與 [驗證](Validation/AbilitySlotStates/README.md)。
+
+> **2026-10-18 TAB 隊伍資訊窗（局部核對）**：已加入四人等高固定窗、全部裝備技能與動態被動／成長、整格徑向冷卻及懸停。沿 Ready 共鍵，安全屋投票優先；Combat＋Look 鎖沿 NetInput 傳到 Host，保留移動。正式設定、責任與驗證見 [106](106_TAB隊伍資訊窗.md)／[紀錄](Validation/TeamInfo/README.md)。
+
+> **2026-10-18 異常狀態 HUD**：怪物／隊友在血條上方、自己在準心下方顯示純圖示＋量條，列內維持固定順位向下排列；自己的血條回原位置；有異常的滿血怪物也顯示血條，標記只看自己施加的。沿原 timer／progress，同種最大期限與明確刷新不混淆；新增同步分母供晚加入恢復。先讀 [STATUS-EFFECT-HUD](關鍵詞規則索引.md#status-effect-hud)、[105 規則與設定](105_異常狀態圖示與持續量條.md)、[驗證](Validation/StatusEffects/README.md)。
+
+> **新功能按鍵同步規則（2026-10-18）**：新增、修改或移除正式玩家操作，必須同批同步 ESC 自訂按鍵庫、預設綁定、實際輸入、UI 圖片／文字提示與保存相容性；共用 Q／E 沿原群組。詳見 [PLAYER-SETTINGS](關鍵詞規則索引.md#player-settings) 與 [104 第 6.1 節](104_ESC選單與玩家設定.md)。
+
+> **2026-10-18 ESC 與玩家設定已正式接線**：沿已確認 Unity 版面，主選單與遊戲 ESC 共用設定。改鍵、操作模式與 HUD 同步，聲音預聽、本機偏好保存、Host 保存後離房均接既有 owner。先讀 [PLAYER-SETTINGS](關鍵詞規則索引.md#player-settings)、[104 完整規則與責任入口](104_ESC選單與玩家設定.md)、[正式整合驗證](Validation/PlayerSettings/README.md)。獨立預覽保留，不能替代正式驗證。
+
+> **2026-10-17 區域與連線恢復（局部更新）**：Asia 已補回且保留原區域索引；Best 開房先取得實際區域再編碼，Client 固定按代碼加入。連線預設 30 秒期限，取消／逾時清理最多另等 5 秒後返回主選單；舊 Best 代碼需同版重開。沿用現有存檔／轉場／房間關閉責任。規則見 [10](10_網路連線與輸入.md)，測試及實機邊界見 [紀錄](Validation/ConnectionRecovery/README.md)。
+
+> **2026-10-17 玩家離開與房間關閉（局部更新）**：Host 保存已驗證名稱並廣播玩家離開；已連線 Client 非主動斷線後，清理 Session 並沿用置中 Popup 顯示「房間已關閉」，唯一操作「回到主畫面」。主動離開／取消／加入失敗不誤報，未改 Scene／Prefab。設定見 [100](100_UI觀戰與聊天.md)，驗證與剩餘限制見 [紀錄](Validation/RoomClosure/README.md)。
+
+> **2026-10-17 屬性獎勵圖示沿用基準**：後續屬性功能沿用完整圖示／右上符號、專用粗襯線各階適配及彈匣內左右等距；保持固定中心與既有卡片版面。先讀 [ATTRIBUTE-REWARD-ICONS](關鍵詞規則索引.md#attribute-reward-icons) 及 [168 正式規則](168_角色成長被動與技能掉落.md#attribute-reward-icon-standard)，新底圖依自身輪廓校準，不複製其他圖的倍率／中心。已套用與驗證邊界見 [紀錄](Validation/GrowthIcons/SlabAdaptive/README.md)。
+
+> **2026-10-16 第一人稱護目鏡**：已確認 Lethal Company 式柔邊內襯，厚度／透明度可調；已直接配置 _Menu 的 PlayerHUDCanvas，位於既有 HUD 下方且不接收點擊。沿用本機／觀戰來源，無玩家隱藏，不改相機或權威玩法。設定見 [103](103_第一人稱護目鏡效果.md)，測試與限制見 [紀錄](Validation/FirstPersonGoggles/README.md)。
+
+> **2026-10-14 EnemySpawnZone 混合清單**：同區可放地面／飛行／定點敵人，各項獨立出現機率與抽中生成數量；Host 一次擲骰後按既有間隔逐隻生成，依 Prefab 自動綁定巡邏。所有種類（含 Stationary）在 Box 內隨機散布，占用時換點重試；Stationary 不自動貼地。舊清單與人工引用相容，正式資產需手動配置；上限、出生安全及期限仍有效。規則與 Inspector 見 [164](164_Phase10_怪物生成區與Encounter守則.md)，證據見 [紀錄](Validation/EnemySpawnComposition/README.md)。
+
+> **2026-10-14 鈎索尖刺**：新增 GrappleHit 槽位的玩家周圍接觸技能；首次有效命中才啟動效果，斷繩不暫停期限，讀當下增傷量條、不消耗，附向外微擊退。獨立資產、已確認的 V2 圖示與正式獎勵池接線已完成；可由獎勵流程取得，手動裝備、Inspector 與驗證邊界見 [33](33_鈎索尖刺技能.md)／[紀錄](Validation/GrappleSpike/README.md)。
+
 > **2026-10-11 E 切換操作**：空中緩速維持原 GrappleAirborne／落地規則，改按 E 啟動、放開維持、再次按下結束；子彈時間再次按下沿正常流程結算。兩項從結束時開始完整冷卻，人工資產數值未改。規則見 [41](41_玩家能力Loadout.md)／[42](42_E主動技能規格與強化預留.md)，驗證邊界見 [紀錄](Validation/AbilityToggle/README.md)。
 
 > **2026-10-10 安全屋出發（局部核對）**：全員準備後立即進入 1 秒倒數；State Authority 保存同步剩餘投票 Tick 並停止投票計時，HUD 只顯示出發。取消準備／新加入恢復原投票餘額，ESC 仍取消整票。SafeHouse 場景已設為 1 秒；設定與證據見 [145](145_PrePhase4-2_安全屋鍵盤準備與HUD.md)。
@@ -328,3 +352,127 @@ TankMeleeCombo 新增 PreparedDashing：停格放開時，由 Host 優先查直�
 既有 `PlayerActionGate.ExplosionStatus` partial 管理鈎索封鎖及各次緩速，`PlayerGrapple` 出鈎與 `LocalPlayerBattleAbilityHUD` 禁用標記共用 Gate；`PlayerMovement` 只修正地面走跑位移，保留空中慣性。新增 Networked 狀態需 Host／Client 同版。`EnemySuicideSetup` 只建立缺失灰盒資產；`EnemySuicideRulesTests`／`EnemySuicideAssetTests` 及 `EnemySuicideRuntimeVerification` 提供聚焦與隔離驗證入口。正式場景／生成區未自動接線，準心遮擋只預留圖檔。
 
 完整定案、Inspector 數值、動畫需求與手動配置見 [92 自爆撲擊敵人](92_自爆撲擊敵人.md)，實際測試及多人邊界見 [驗證紀錄](Validation/SuicideEnemy/README.md)。本節不代表其他模組重新驗收。
+
+## 2026-10-12 定點捕食原型（局部核對）
+
+新增獨立方塊捕食怪 Enemy_Flytrap。定點 360 度感應、安全蹲行／靜止、藤蔓命中後封鎖、嘴邊起算分段扣生命、擊殺解救與 10 秒冷卻；沿用 Combat Decision、ActionGate、KCC 與 PlayerHealth。未自動放置場景／生成區。
+
+完整規則、原型設定、動畫接口與驗證邊界見 [93 定點捕食植物](93_定點捕食植物.md) 及 [驗證紀錄](Validation/FlytrapEnemy/README.md)。
+
+2026-10-13 修訂：發現只啟動蓄勢追蹤，接著固定方向、藤蔓直線刺出，第一個實際命中且拉入路徑暢通的玩家才取得捕食鎖；落空有獨立收招。取代指定必中。 規則與設定見 [93](93_定點捕食植物.md)，本輪驗證見 [FlytrapStrike](Validation/FlytrapStrike/README.md)。
+
+## 2026-10-13 鈎索飛行雙擊側移（局部核對）
+
+最後核對日期：2026-10-13。核對來源：InputManager、NetInput、Player、PlayerGrapple.SideDash、GrappleSideDashRules、PlayerGrappleCharges、PlayerMovement、PlayerSlideController、PlayerBlinkAbility。
+
+新增普通鈎索空中拉動／釋放後飛行的 AA／DD 側移：第二次按下時鎖定畫面水平左右；成功即斷繩，保留原飛行／重力並經原 KCC 追加有限側移。20 m、150 m/s、0.25 s 窗口、1 s 共用冷卻均獨立配置；扣兩倍單次出鈎費用，正能量不足額仍能用並扣至零。Host 決定結果、Input Authority 預測，不新增移動 Processor 或能量系統。E 閃現實際衝刺互斥；NetInput／Networked layout 已增加，Host／Client 必須同版。未自動保存 Scene／Prefab。
+
+PlayerGrapple.SideDash 是原 PlayerGrapple 的 partial，持有同步側移／輸入消耗／冷卻；GrappleSideDashRules 只負責純規則，GrappleSideDashRuntimeVerification 是明確啟動的 Editor 隔離 Runner 驗證。完整規則、Inspector 與手動驗收見 [32 鈎索飛行雙擊側移](32_鈎索飛行雙擊側移.md)，證據與限制見 [驗證紀錄](Validation/GrappleSideDash/README.md)。本節不表示其他模組重新完成驗收。
+
+## 2026-10-13 安全屋操作與玩家 HUD（局部核對）
+
+最後核對日期：2026-10-13。核對來源：本節提及的現行類別及安全屋修改。
+
+安全屋沿用 ActionGate 限制 Q／E，保留武器／F 與終端機 E；玩家友傷／自傷在護盾與延後傷害前拒絕。玩家 HUD 支援 SafeHouseHudController 的 Runner；正式安全屋尚需手動加入既有經驗／技能 HUD 子樹。
+
+完整規則、責任、場景配置與驗收入口見 [145 安全屋](145_PrePhase4-2_安全屋鍵盤準備與HUD.md)；實際證據與限制見 [驗證紀錄](Validation/SafeHouseGameplay/README.md)。2026-10-13 後續依授權完成 SafeHouse Scene 技能／經驗 HUD 接線；Prefab 未改。
+
+
+## 2026-10-13 隊友辨識顯示（局部核對）
+
+沿用主要 GameLogic 的持續生命週期，新增隊友名稱／固定辨識色／死亡位置的權威快照；聊天名稱仍走原註冊 RPC。LocalTeammateHUD 只讀 PlayerHealth／PlayerShieldAbility，分格生命與護盾共用 LocalHealthSegmentView；殘血僅生命格變紅。畫面外為同色箭頭，地圖新增同色隊友／死亡標記，角色輪廓由 URP 本機 Renderer Feature 處理。
+
+UI Prefab 與設定已建立；2026-10-13 經使用者授權，已接入 _Menu、KCC_Player 頭頂錨點與 8 個身體 Renderer，以及三個品質等級的輪廓 Renderer Feature。完整規則、Inspector 與手動驗收見 [101 隊友辨識與穿牆顯示](101_隊友辨識與穿牆顯示.md)，驗證與限制見 [紀錄](Validation/Teammates/README.md)。本節不代表其他系統重新驗收。
+
+## 2026-10-13 反彈護盾遠程敵人（局部核對）
+
+新增 `Enemy_Ranged_Reflector` 基礎 3D 原型：沿既有單發 Projectile，近距有限轉向追蹤，Attack／Support F、Tank F／電鋸可依完整準星方向反彈。原射手被反彈彈命中只觸發預設 2 秒可調暈眩與背部破綻；Host 擁有結果、Client 讀同步狀態改護盾色。`EnemyStateController.TryBeginTimedStun` 沿用原 AbilityControl 鎖與計時，取消 Pull／Gather／攻擊。原 Ranged A 不啟用反彈，正式 Scene／生成區未自動配置。完整規則、Inspector、資產及驗證邊界見 [94](94_反彈護盾遠程敵人.md)。
+
+## 2026-10-14 反彈敵人射線互動（局部核對）
+
+本反彈敵人選用單發留場限制、較寬的近戰抓彈範圍、槍擊反彈及近失彈警覺。AttackRifle／SupportSMG 沿原權威查詢取得世界終點與該發實際射擊方向，交給 `EnemyProjectilePlayerShot` 比較前方最近專用子彈；攔截成功時消耗玩家射線，將敵彈沿完整射擊方向直線反彈，未攔截才執行原 ProcessHit。打回原射手觸發暈眩／背盾開口但不扣血（取代先前消彈規則）；`EnemyReflectorShield.ShotThreat` 將穿越感應盒的有效線段送到原 Awareness 的警戒佇列。敵人轉向仍由 Combat Decision 仲裁；單發追蹤引用由 State Authority 同步，Client 只讀呈現。原 Ranged A 預設不開啟上述選項。參數、Gizmos 與驗證邊界見 [94](94_反彈護盾遠程敵人.md)。
+## 2026-10-14 鈎索尖刺（局部核對）
+
+最後核對日期：2026-10-14。核對來源：PlayerGrappleSpikeAbility、GrappleSpikeRules、GrappleSpikeAssetSetup。
+新增 `grapple.spike`／PlayerGrappleSpikeAbility：GrappleHit 槽位的鈎索接觸尖刺，沿用 Loadout、動能增傷、正式 Damage 與敵人擊退。首次有效接觸才計時；斷繩不暫停期限；視覺僅於有效鈎索條件顯示。獨立資產已建立，玩家／Scene／獎勵池接線仍人工處理。
+設定與定案見 [33 鈎索尖刺](33_鈎索尖刺技能.md)；實際驗證與限制見 [紀錄](Validation/GrappleSpike/README.md)。
+
+
+
+## 2026-10-14 一般與大型敵人百分比分格血條（局部核對）
+
+最後核對日期：2026-10-14。核對來源：EnemyHealthBarTarget、LocalEnemyHealthBarHUD、EnemyHealthBarRules、EnemyHealthBarVisibility、EnemyHealthBarGraphic、EnemyHealthBarSettings、EnemyHealthBarSetup。
+
+新增本機敵人血條呈現：沿用 TestDamageReceiver 權威同步生命，固定格數代表百分比並允許部分填格；不穿牆、不顯示畫面外箭頭。大型一般敵人頭頂出框但身體可見時使用畫面內備用位置；Boss 排除。Target 在 Spawned 後 Render 讀快照，HUD 按同 Runner 世界相機／PhysicsScene 判定呈現，未新增 HP／RPC／Networked 欄位，未修改隊友整格規則。
+
+獨立 Settings 與 UI Prefab 已提供；已依後續「自動接線」授權保存 _Menu 唯一 HUD 與 9 個一般敵人 Prefab，Boss／共用基底未修改，新增呈現 NetworkBehaviour 後 Host／Client 需同版。Rules 負責比例與定位、Visibility 負責近遠平面裁切及有限遮擋採樣、Graphic 畫百分比格、Setup 僅建立缺失資產，Wiring 補齊核准清單的缺失接線並保留人工值；三份聚焦測試及 EnemyHealthBarRuntimeVerification 提供隔離驗證。設定、起始值與手動步驟見 [102 敵人百分比分格血條](102_敵人百分比分格血條.md)；實際測試結果與未驗邊界見 [驗證紀錄](Validation/EnemyHealthBars/README.md)。
+
+
+## 2026-10-14 第一人稱觀戰（局部核對）
+
+LocalPlayerSpectatorController 沿用現有 CameraFollow、ViewModel 與 HUD。相機以世界姿態快照解除 CameraRig 父子跟隨回授；只讀呈現路由由本機角色或同 Runner 的觀戰目標提供。觀戰模型不改遠端武器槍口引用，HUD 不代替隊友操作，重生／目標失效清理。設定、驗證及私有 RPC／獨立程序限制見 [100](100_UI觀戰與聊天.md) 與 [驗證紀錄](Validation/SpectatorFirstPerson/README.md)。本輪未實作倒地救援或更改自動重生。
+
+
+## 2026-10-16 倒地與隊友救援（局部核對）
+
+最後核對日期：2026-10-16。核對來源：PlayerHealth.Rescue、GameLogic.Rescue／RescueBounds、PlayerActionGate.Rescue、Player、PlayerSlideController、PlayerAbilityRuntime、EnemyPerceptionController.Rescue、StageFlowController、LocalPlayerRescueHUD。
+安全屋外致命傷現進入可爬行倒地，30 秒期限、隊友按 E 五秒救起 35% HP，救援暫停期限；無健康成員兩秒後死亡。正式死亡等待安全屋，不再在關卡內自動重生；安全屋原自動復活保留。倒地仍須撤離、死亡排除；地圖底部以下可調高度立即死亡。HUD 獨立 Prefab 已提供，正式場景需手動加入。
+完整規則、Inspector 初始值、人工 HUD 接線與驗收：[62 倒地與隊友救援](62_倒地與隊友救援.md)。實際驗證與限制：[紀錄](Validation/PlayerRescue/README.md)。
+
+
+## 2026-10-16 捕食原地釋放與單人武器（局部核對）
+
+捕食規則更新：正常／提前釋放均原地解除；實際房間一人時可主武器攻擊與換彈，技能及坦克武器位移持續封鎖。沿用 PlayerActionGate、Player 輸入過濾、KCC、既有武器與傷害入口；Host 同步人數決定的武器權限，吞食傷害仍維持抓取時快照。 正式規則與設定見 [93](93_定點捕食植物.md)，本輪驗證見 [FlytrapSolo](Validation/FlytrapSolo/README.md)。
+
+
+## 2026-10-16 成長獎勵與技能掉落局部核對
+
+本輪成長已沿既有 GameLogic／Health／武器／技能 owner 接入；待選時繼續加經驗、開局空特殊技能加一次抽選、9 種階級屬性及 6 種被動、技能 Runtime 掉落／拾取，詳見 [168 角色成長、被動與掉落](168_角色成長被動與技能掉落.md)。原本待選鎖經驗及替換即 Despawn 的敘述已被本次規則取代。
+
+實作／資產與測試證據分開列於 168，未宣稱獨立多程序聯機或 Build 驗收。
+
+2026-10-16 局部資料流：技能 Runtime 同步掉落座標 → 本機金色圖示與既有小地圖標記池；武器換彈時長快照 → ViewModel 的 Reload 專屬倍率。權威、探索及原動畫校準值維持。規則與設定見 [168](168_角色成長被動與技能掉落.md)，驗證見 [LootPresentation](Validation/LootPresentation/README.md)。
+
+## 2026-10-17 換彈鏡頭旋轉（局部核對）
+
+已依使用者確認新增可選的兩槍 Root 旋轉取樣、獨立幅度與快速轉頭減弱；沿用 ActionAnimator 武器狀態及 FirstPersonHitCameraShake 合成，不改玩法 Look／換彈／FOV。兩槍 Prefab 已依後續授權掛載並接好 Root，Scene 沿用既有接線；正式設定見 [70](70_第一人稱模型與動畫.md#reload-camera-motion)，驗證邊界見 [紀錄](Validation/ReloadCamera/README.md)。關鍵詞索引新條目仍待使用者確認收錄。
+
+## 2026-10-17 保命免控與護盾空格（局部核對）
+
+不是今天成功保命後沿 ActionGate 解除控場並在原 3 秒內免控；本機相機沿子彈時間的 LGG 系統呈現黃光閃爍。快速護盾消失會清除 UI 額外容量，保留實際生命上限。 詳細規則見 [168](168_角色成長被動與技能掉落.md)，驗證見 [紀錄](Validation/NotTodayShield/README.md)。
+
+
+## 2026-10-17 多人捕食反擊（局部核對）
+
+2026-10-17 修訂（取代上輪單人限定）：單人／多人受困都可使用主武器與換彈，技能、移動及 Tank 武器衝刺仍封鎖；人數變動不再取消武器動作，吞食傷害仍使用捕捉時房間人數快照。 規則與設定見 [93](93_定點捕食植物.md)，驗證見 [FlytrapMultiplayer](Validation/FlytrapMultiplayer/README.md)。
+
+## 2026-10-17 鈎索世界音效與發射震動（局部核對）
+
+合法啟動時只震動自己的畫面；鉤頭射出、命中點各播放一次 3D 聲，普通玩家拉動期間播放跟隨式 Loop，結束拉動後淡出 0.15 秒，下次正式射出強制中斷舊尾音。沿用 PlayerGrapple、NetworkPlayerAudioEmitter、GameplayAudioService 與 FirstPersonHitCameraShake；原本機風聲保持獨立。Loop 依同步狀態恢復，新增 Networked 音效選擇與射出序號欄位要求 Host／Client 同版。三個使用者提供 MP3 的 Cue 已登錄 Catalog 並接入 KCC_Player，驗證狀態見 [紀錄](Validation/GrappleFeedback/README.md)；正式規則與 Inspector 見 [30 鈎索](30_鈎索系統.md#2026-10-17-鈎索世界音效與成功出鈎震動)。
+## 2026-10-17 Inspector 逐級經驗（局部核對）
+
+最後核對日期：2026-10-17。核對來源：PlayerExperienceSettings、PlayerExperienceRules、GameLogic、DevelopmentLevelUpRules、LocalPlayerRewardHUD。
+相關文件：[160 操作與正式規則](160_Phase6_經驗與獎勵數值調整手冊.md)、[驗證紀錄](Validation/ExperienceTable/README.md)。
+
+經驗需求由共用 Settings 逐級填寫；超出表格固定沿用最後一筆，不新增滿級。主要 GameLogic 在 Session 初始化保存獨立快照，Host 計算正式升級與 F8；NetworkPlayerExperience 增加 RequiredExperience，HUD 讀同步門檻，Client 不自行推算。切換場景不重讀表，Host／Client 必須同版。超額、待領獎勵、既有候選與存檔 schema 保留；詳細設定、舊進度處理和驗證邊界見 160 及驗證紀錄。
+
+
+## 2026-10-18 觀戰與全滅轉場（局部核對）
+
+死亡觀戰沿用 LocalPlayerSpectatorController：固定 Q／E 循環切同 Runner 健康／倒地隊友，LocalSpectatorHUD 讀 GameLogic 同步姓名與可替換頭像 Provider。全員正式死亡仍由 StageFlowController 權威提交結果，Networked pending → 每端 LocalSceneTransition 淡黑／淡音 1.5 秒 → 完成後停 2 秒並回報 → Host 等待當前玩家全數完成後切 SafeHouse → 玩家相機就緒後恢復 1.5 秒。音訊沿用 Mixer，臨時衰減不改玩家設定。
+
+正式規則、接線與邊界：[100](100_UI觀戰與聊天.md)、[144](144_PrePhase4-1_共用控制與轉場.md)、[驗證](Validation/SpectatorSwitch/README.md)。索引入口 SPECTATOR-SWITCH／TEAM-WIPE-TRANSITION。
+
+## 2026-10-18 電鋸本機距離圈與目標框（局部核對）
+
+最後核對日期：2026-10-18。核對來源：TankMeleeCombo.Preview、TankPreparedDashPreviewQuery、LocalTankPreparedDashIndicator。
+
+Tank 原 Runtime Render 提供唯讀預備快照，由 LocalTankPreparedDashIndicator 僅替已註冊的實際 Input Authority 玩家顯示地面距離圈及停格單一目標框。空中圈淡出；框無文字，大型敵人只框選中受擊區域。此提示不跟隨觀戰對象，不寫網路狀態，也不改原紅色準心、Host 選敵或傷害／位移。範圍沿原 Prepared Dash Range；正式設定見 [48](48_Tank預備衝刺與共用敵人準心.md)，實測與限制見 [驗證](Validation/TankIndicator/README.md)。
+
+## 2026-10-18 電鋸格檔成長（局部核對）
+
+核對來源：本節所列程式；實作／資產／驗證階段見 [109_電鋸格檔耐力與屬性強化](109_電鋸格檔耐力與屬性強化.md)。
+
+電鋸格檔沿用 TankGuardAbility，三項防禦普通屬性接既有成長／獎勵／存檔。自己格檔列與異常列共用 HUD 區域，施法條原位置保留；詳見 [109_電鋸格檔耐力與屬性強化](109_電鋸格檔耐力與屬性強化.md)。
+
+> **2026-10-18 HUD 改鍵提示**：鈎索能量及技能槽鍵帽在改鍵後保留原背景、依文字調整寬度，統一內距與上方間隔；長字縮小但不裁切。實作、尺寸與驗證見 [PLAYER-SETTINGS／HUD 鍵帽](關鍵詞規則索引.md#player-settings) 與 [167](167_已確認HUD美術與整格血量.md#2026-10-18-hud-改鍵提示鍵帽局部核對)。

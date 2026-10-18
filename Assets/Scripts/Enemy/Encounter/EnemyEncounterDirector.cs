@@ -13,7 +13,7 @@ namespace Purgers.Enemy.Encounter
     /// </summary>
     [DisallowMultipleComponent]
     [RequireComponent(typeof(NetworkObject))]
-    public sealed class EnemyEncounterDirector : NetworkBehaviour
+    public sealed partial class EnemyEncounterDirector : NetworkBehaviour
     {
         // 小於 EnemyGroundPatrolNavigator 預設的 0.3m NavMesh 貼合距離。
         private const float GroundSpawnMaximumSupportOffset = 0.25f;
@@ -78,6 +78,15 @@ namespace Purgers.Enemy.Encounter
         {
             public EnemySpawnZone Zone;
             public EnemySpawnApproachGate[] Gates;
+            public readonly List<CandidateRuntime> Candidates = new List<CandidateRuntime>();
+        }
+
+        private sealed class CandidateRuntime
+        {
+            public NetworkPrefabRef Prefab;
+            public string PrefabName;
+            public EnemyLocomotionKind Kind;
+            public EnemySpawnEntry Entry;
             public EnemyPatrolArea PatrolArea;
             public List<EnemyFlyingPatrolNavigator> FlyingNavigators;
             public float FlyingMinimumTravel;
@@ -117,7 +126,15 @@ namespace Purgers.Enemy.Encounter
         private EnemySpawnApproachGate pendingGate;
         private Vector3 pendingForward;
         private PlayerRef pendingPlayer;
-        private int pendingCount;
+        private readonly List<SpawnBatch> pendingBatches = new List<SpawnBatch>();
+        private int pendingBatchIndex;
+        private bool pendingSucceeded;
+
+        private sealed class SpawnBatch
+        {
+            public CandidateRuntime Candidate;
+            public int Remaining;
+        }
         private float pendingExpiresAt;
         private float nextSpawnTime;
         private float nextCleanupTime;
@@ -135,7 +152,7 @@ namespace Purgers.Enemy.Encounter
             zones.Clear();
             ownedEnemies.Clear();
             previousPlayers.Clear();
-            pendingZone = null;
+            CancelPendingActivation();
             zonesBuilt = false;
         }
 
@@ -159,7 +176,7 @@ namespace Purgers.Enemy.Encounter
 
             if (stageFlow.Phase != StagePhase.Active || stageFlow.IsBossStage)
             {
-                pendingZone = null;
+                CancelPendingActivation();
                 previousPlayers.Clear();
                 return;
             }
@@ -200,7 +217,7 @@ namespace Purgers.Enemy.Encounter
             ownedEnemies.Clear();
             previousPlayers.Clear();
             players.Clear();
-            pendingZone = null;
+            CancelPendingActivation();
             zonesBuilt = false;
         }
 
@@ -208,20 +225,11 @@ namespace Purgers.Enemy.Encounter
         {
             if (!mapState.IsReady || mapSelection.Alignment == null) return false;
             navigation = mapSelection.Alignment.RuntimeNavigation;
-            // 僅地面區等待 Ground Patrol Area；定點與飛行區不以地面導航作為生成前提。
-            bool requiresGroundNavigation = false;
-            foreach (MapChunk candidateChunk in mapState.Chunks)
-            {
-                if (candidateChunk == null) continue;
-                foreach (EnemySpawnZone candidateZone in candidateChunk.GetComponentsInChildren<EnemySpawnZone>(true))
-                    if (candidateZone.isActiveAndEnabled &&
-                        candidateZone.GetComponentInParent<MapChunk>() == candidateChunk &&
-                        candidateZone.LocomotionKind == EnemyLocomotionKind.Ground)
-                        requiresGroundNavigation = true;
-            }
-            if (requiresGroundNavigation && (navigation == null || !navigation.IsReady ||
-                navigation.GeneratedGroundAreas.Count != mapState.Chunks.Count)) return false;
-
+            // 先等地面資料，避免飛行候選在每個等待 Tick 反覆規劃／銷毀。
+            if ((navigation == null || !navigation.IsReady ||
+                navigation.GeneratedGroundAreas.Count != mapState.Chunks.Count) && HasActiveGroundCandidates())
+                return false;
+            ClearGeneratedFlyingAreas();
             zones.Clear();
             for (int chunkIndex = 0; chunkIndex < mapState.Chunks.Count; chunkIndex++)
             {
@@ -234,34 +242,14 @@ namespace Purgers.Enemy.Encounter
                         continue;
 
                     EnemySpawnApproachGate[] gates = zone.GetGates();
-                    EnemyPatrolArea area = null;
-                    List<EnemyFlyingPatrolNavigator> flyingNavigators = null;
-                    float flyingMinimumTravel = 0f;
-                    if (zone.LocomotionKind == EnemyLocomotionKind.Ground)
-                        area = navigation.GeneratedGroundAreas[chunkIndex];
-                    else if (zone.LocomotionKind == EnemyLocomotionKind.FreeFlying && gates.Length > 0)
+                    if (gates.Length == 0)
                     {
-                        if (!TryResolveFlyingArea(zone, out area, out flyingNavigators, out flyingMinimumTravel))
-                            continue;
-                    }
-                    int patrolPointCount = area != null ? area.PointCount : 0;
-                    MapChunk areaChunk = area != null ? area.GetComponentInParent<MapChunk>() : null;
-                    if (gates.Length == 0 || !zone.IsPatrolConfigurationValid(area, chunk))
-                    {
-                        Debug.LogError(
-                            $"[Enemy Encounter] {zone.name} 無法登記。" +
-                            $" Gate 數量: {gates.Length};" +
-                            $" 移動類型: {zone.LocomotionKind};" +
-                            $" Patrol Area: {(area != null ? area.name : "無")};" +
-                            $" 巡邏點: {patrolPointCount};" +
-                            $" Area 所屬 Chunk: {(areaChunk != null ? areaChunk.name + "#" + areaChunk.GetInstanceID() : "無")};" +
-                            $" 預期 Chunk: {chunk.name}#{chunk.GetInstanceID()}。",
-                            zone);
+                        Debug.LogError($"[Enemy Encounter] {zone.name} 缺少啟動 Gate，無法登記。", zone);
                         continue;
                     }
-
-                    zones.Add(new ZoneRuntime { Zone = zone, Gates = gates, PatrolArea = area,
-                        FlyingNavigators = flyingNavigators, FlyingMinimumTravel = flyingMinimumTravel });
+                    var runtime = new ZoneRuntime { Zone = zone, Gates = gates };
+                    if (!TryBuildCandidates(runtime, chunk, chunkIndex)) return false;
+                    if (runtime.Candidates.Count > 0 || zone.UsesEnemyEntries) zones.Add(runtime);
                 }
             }
             zonesBuilt = true;
@@ -271,16 +259,16 @@ namespace Purgers.Enemy.Encounter
             return true;
         }
 
-        private bool TryResolveFlyingArea(EnemySpawnZone zone, out EnemyPatrolArea area,
+        private bool TryResolveFlyingArea(EnemySpawnZone zone, NetworkPrefabRef candidatePrefab, out EnemyPatrolArea area,
             out List<EnemyFlyingPatrolNavigator> navigators, out float minimumTravel)
         {
             area = zone.FlyingPatrolArea;
             navigators = new List<EnemyFlyingPatrolNavigator>();
             minimumTravel = 0f;
-            // 同區可混抽不同尺寸 Prefab；所有候選都必須能使用這份巡邏節點。
+            // 每種 Prefab 使用自己的實際膠囊；大型敵人不會限制同區小型敵人的巡邏範圍。
             try
             {
-                foreach (NetworkPrefabRef prefab in zone.EnemyPrefabs)
+                foreach (NetworkPrefabRef prefab in new[] { candidatePrefab })
                 {
                     if (!prefab.IsValid) continue;
                     NetworkPrefabId id = Runner.Prefabs.GetId((NetworkObjectGuid)prefab);
@@ -308,8 +296,10 @@ namespace Purgers.Enemy.Encounter
             if (area != null) return true; // 保留既有手動引用，不覆寫、不銷毀。
             PhysicsScene physics = Runner.GetPhysicsScene();
             List<EnemyFlyingPatrolNavigator> profiles = navigators;
+            Bounds spawnBounds = zone.SpawnLocalBounds;
+            spawnBounds.center += zone.transform.InverseTransformVector(FlyingSpawnRootOffset(profiles));
             List<Vector3> points = EnemyFlyingPatrolPlanner.Plan(
-                zone.transform.localToWorldMatrix, zone.FlyingPatrolLocalBounds, zone.SpawnLocalBounds,
+                zone.transform.localToWorldMatrix, zone.FlyingPatrolLocalBounds, spawnBounds,
                 zone.FlyingPatrolSamplesPerAxis, zone.FlyingPatrolMaximumPoints,
                 Mathf.Max(zone.FlyingPatrolMinimumSpacing, minimumTravel * 2f + 0.01f),
                 (from, to) => IsFlyingPassageClear(profiles, physics, from, to));
@@ -317,11 +307,11 @@ namespace Purgers.Enemy.Encounter
             {
                 Debug.LogWarning($"[Enemy Encounter] {zone.name} 無法自動建立飛行巡邏區：" +
                     "找不到至少 2 個可從出生盒連通的空中節點。請檢查出生盒與巡邏盒重疊、取樣密度、" +
-                    "Enemy Prefab 的膠囊尺寸及 Obstacle Mask。此區停用，其他區照常。", zone);
+                    "Enemy Prefab 的膠囊尺寸及 Obstacle Mask。此飛行候選停用，其他候選與區域照常。", zone);
                 return false;
             }
 
-            var root = new GameObject("RuntimeFlyingPatrolArea");
+            var root = new GameObject($"RuntimeFlyingPatrolArea_{generatedFlyingAreas.Count}");
             root.transform.SetParent(zone.transform, false);
             var pointRoot = new GameObject("PatrolPoints");
             pointRoot.transform.SetParent(root.transform, false);
@@ -332,11 +322,20 @@ namespace Purgers.Enemy.Encounter
                 point.transform.position = points[i];
             }
             area = root.AddComponent<EnemyPatrolArea>();
-            area.ConfigureRuntime($"flying_runtime_{zone.GetInstanceID()}", pointRoot.transform, 0f);
+            area.ConfigureRuntime($"flying_runtime_{zone.GetInstanceID()}_{generatedFlyingAreas.Count}", pointRoot.transform, 0f);
             generatedFlyingAreas.Add(area);
             if (debugEncounter)
                 Debug.Log($"[Enemy Encounter] {zone.name} 自動建立 {points.Count} 個飛行巡邏點。", zone);
             return true;
+        }
+
+        private static Vector3 FlyingSpawnRootOffset(List<EnemyFlyingPatrolNavigator> navigators)
+        {
+            float lift = 0f;
+            if (navigators != null)
+                foreach (var navigator in navigators)
+                    if (navigator != null) lift = Mathf.Max(lift, navigator.SpawnRootOffset.y);
+            return Vector3.up * lift;
         }
 
         private static bool IsFlyingPassageClear(List<EnemyFlyingPatrolNavigator> navigators,
@@ -348,16 +347,16 @@ namespace Purgers.Enemy.Encounter
             return true;
         }
 
-        private bool HasFlyingPatrolPath(ZoneRuntime zone, Vector3 position)
+        private bool HasFlyingPatrolPath(ZoneRuntime zone, CandidateRuntime candidate, Vector3 position)
         {
             if (zone.Zone.UsesAutomaticFlyingPatrol &&
                 !zone.Zone.FlyingPatrolLocalBounds.Contains(zone.Zone.transform.InverseTransformPoint(position)))
                 return false;
             PhysicsScene physics = Runner.GetPhysicsScene();
-            for (int i = 0; i < zone.PatrolArea.PointCount; i++)
-                if (zone.PatrolArea.TryGetPoint(i, position, out Vector3 point) &&
-                    Vector3.Distance(position, point) > zone.FlyingMinimumTravel &&
-                    IsFlyingPassageClear(zone.FlyingNavigators, physics, position, point))
+            for (int i = 0; i < candidate.PatrolArea.PointCount; i++)
+                if (candidate.PatrolArea.TryGetPoint(i, position, out Vector3 point) &&
+                    Vector3.Distance(position, point) > candidate.FlyingMinimumTravel &&
+                    IsFlyingPassageClear(candidate.FlyingNavigators, physics, position, point))
                     return true;
             return false;
         }
@@ -438,35 +437,59 @@ namespace Purgers.Enemy.Encounter
             }
 
             if (chosen == null) return;
-            if (!TrySpawnOne(chosen, chosenGate, chosenPlayer, chosenForward)) return;
-
-            EnemySpawnZone released = recentZones.MarkSuccessful(chosen.Zone);
+            BuildActivationBatches(chosen);
+            if (pendingBatches.Count == 0) return; // 全部未抽中，不鎖區、不留下補發。
             pendingZone = chosen;
             pendingGate = chosenGate;
             pendingForward = chosenForward;
             pendingPlayer = chosenPlayer;
-            pendingCount = chosen.Zone.EnemiesPerActivation - 1;
+            pendingBatchIndex = 0;
+            pendingSucceeded = false;
             pendingExpiresAt = Time.time + activationLifetimeSeconds;
-            if (pendingCount <= 0) pendingZone = null;
-            if (debugEncounter)
-                Debug.Log($"[Enemy Encounter] {chosen.Zone.name} 成功啟動；解鎖 {(released != null ? released.name : "無")}。", chosen.Zone);
+            ContinuePendingActivation();
         }
 
         private void ContinuePendingActivation()
         {
-            if (pendingCount <= 0 || Time.time > pendingExpiresAt ||
-                !TryGetPlayer(pendingPlayer, out _) ||
-                !TrySpawnOne(pendingZone, pendingGate, pendingPlayer, pendingForward))
+            if (pendingZone == null || Time.time > pendingExpiresAt ||
+                !TryGetPlayer(pendingPlayer, out _))
             {
-                pendingZone = null;
+                CancelPendingActivation();
                 return;
             }
 
-            pendingCount--;
-            if (pendingCount <= 0) pendingZone = null;
+            while (pendingBatchIndex < pendingBatches.Count)
+            {
+                SpawnBatch batch = pendingBatches[pendingBatchIndex];
+                if (!TrySpawnOne(pendingZone, batch.Candidate, pendingGate, pendingPlayer, pendingForward))
+                {
+                    // 此種出生失敗便取消其剩餘數量，其他已抽中的種類仍可嘗試。
+                    pendingBatchIndex++;
+                    continue;
+                }
+                if (!pendingSucceeded)
+                {
+                    EnemySpawnZone released = recentZones.MarkSuccessful(pendingZone.Zone);
+                    if (debugEncounter)
+                        Debug.Log($"[Enemy Encounter] {pendingZone.Zone.name} 成功啟動；解鎖 {(released != null ? released.name : "無")}。", pendingZone.Zone);
+                    pendingSucceeded = true;
+                }
+                if (--batch.Remaining <= 0) pendingBatchIndex++;
+                if (pendingBatchIndex >= pendingBatches.Count) CancelPendingActivation();
+                return; // 全場間隔仍限制每次只出生一隻。
+            }
+            CancelPendingActivation();
         }
 
-        private bool TrySpawnOne(ZoneRuntime zone, EnemySpawnApproachGate gate, PlayerRef triggerPlayer, Vector3 approachForward)
+        private void CancelPendingActivation()
+        {
+            pendingZone = null;
+            pendingBatches.Clear();
+            pendingBatchIndex = 0;
+            pendingSucceeded = false;
+        }
+
+        private bool TrySpawnOne(ZoneRuntime zone, CandidateRuntime candidate, EnemySpawnApproachGate gate, PlayerRef triggerPlayer, Vector3 approachForward)
         {
             if (zone == null || gate == null || !zone.Zone.isActiveAndEnabled)
                 return false;
@@ -474,7 +497,7 @@ namespace Purgers.Enemy.Encounter
                 CountAliveInZone(zone.Zone) >= maximumAlivePerZone ||
                 ownedEnemies.Count >= maximumOwnedNetworkObjects)
             {
-                LogSkip(zone.Zone, "全場／單區存活數或 NetworkObject 預算已滿");
+                LogSkip(zone.Zone, $"{candidate.PrefabName} [{candidate.Kind}] 全場／單區存活數或 NetworkObject 預算已滿");
                 return false;
             }
             if (!TryGetPlayer(triggerPlayer, out PlayerSnapshot player))
@@ -482,28 +505,18 @@ namespace Purgers.Enemy.Encounter
                 LogSkip(zone.Zone, "觸發玩家已離開或死亡");
                 return false;
             }
-            if (!zone.Zone.TryChoosePrefab(out NetworkPrefabRef prefab))
-            {
-                LogSkip(zone.Zone, "沒有有效的 Enemy Network Prefab");
+            if (!TrySelectSpawnPosition(zone, candidate, approachForward, player, out Vector3 position))
                 return false;
-            }
-            if (!TrySelectSpawnPosition(zone, approachForward, player, out Vector3 position))
-            {
-                LogSkip(zone.Zone, zone.Zone.RequireSpawnOcclusion
-                    ? "出生盒內沒有同時符合前方、距離、導航、占用與全員遮擋的點"
-                    : "出生盒內沒有同時符合前方、距離、導航與占用的點（已略過出生遮擋）");
-                return false;
-            }
 
             bool setupValid = true;
             NetworkObject spawned = Runner.Spawn(
-                prefab, position, zone.Zone.transform.rotation, PlayerRef.None,
+                candidate.Prefab, position, zone.Zone.transform.rotation, PlayerRef.None,
                 (spawnRunner, spawnedObject) =>
                 {
                     EnemyActor actor = spawnedObject.GetComponent<EnemyActor>();
                     if (actor == null || actor.Definition == null ||
-                        actor.Definition.LocomotionKind != zone.Zone.LocomotionKind ||
-                        !actor.TryInitializePatrolBeforeSpawn(zone.PatrolArea))
+                        actor.Definition.LocomotionKind != candidate.Kind ||
+                        !actor.TryInitializePatrolBeforeSpawn(candidate.PatrolArea))
                     {
                         setupValid = false;
                         Debug.LogError("[Enemy Encounter] Prefab 移動類型或出生前巡邏契約無效；Stationary 必須移除巡邏／追逐 Brain 與 Navigator。", spawnedObject);
@@ -518,6 +531,8 @@ namespace Purgers.Enemy.Encounter
             }
 
             ownedEnemies.Add(new OwnedEnemy { Object = spawned, Zone = zone.Zone });
+            if (debugEncounter)
+                Debug.Log($"[Enemy Encounter] {zone.Zone.name} 生成 {candidate.PrefabName} [{candidate.Kind}]，位置 {position}。", zone.Zone);
             nextSpawnTime = Time.time + minimumSecondsBetweenSpawns;
             return true;
         }
@@ -530,37 +545,54 @@ namespace Purgers.Enemy.Encounter
 
         private bool TrySelectSpawnPosition(
             ZoneRuntime zone,
+            CandidateRuntime profile,
             Vector3 approachForward,
             PlayerSnapshot player,
             out Vector3 position)
         {
             position = default;
+            // 每個候選只記錄第一個拒絕原因；維持原有檢查順序及短路行為。
+            int navRejected = 0, supportRejected = 0, boundsRejected = 0, patrolRejected = 0;
+            int distanceRejected = 0, forwardRejected = 0, occupiedRejected = 0, visibilityRejected = 0;
             for (int attempt = 0; attempt < candidateAttempts; attempt++)
             {
-                Vector3 candidate = zone.Zone.RandomPoint();
-                if (zone.Zone.LocomotionKind == EnemyLocomotionKind.Ground)
+                Vector3 candidate = zone.Zone.RandomPoint(profile.Kind);
+                if (profile.Kind == EnemyLocomotionKind.FreeFlying)
+                    candidate += FlyingSpawnRootOffset(profile.FlyingNavigators);
+                if (profile.Kind == EnemyLocomotionKind.Ground)
                 {
-                    if (!navigation.TrySampleGroundPosition(candidate, groundSampleDistance, out candidate) ||
-                        !EnemyEncounterRules.TryProjectGroundSpawn(
-                            Runner.GetPhysicsScene(), candidate, worldOcclusionMask,
-                            GroundSpawnMaximumSupportOffset, out candidate) ||
-                        !zone.Zone.Contains(candidate) || !HasGroundPatrolPath(candidate, zone.PatrolArea))
-                        continue;
+                    if (!navigation.TrySampleGroundPosition(candidate, groundSampleDistance, out candidate))
+                    { navRejected++; continue; }
+                    if (!EnemyEncounterRules.TryProjectGroundSpawn(
+                        Runner.GetPhysicsScene(), candidate, worldOcclusionMask,
+                        GroundSpawnMaximumSupportOffset, out candidate))
+                    { supportRejected++; continue; }
+                    if (!zone.Zone.Contains(candidate))
+                    { boundsRejected++; continue; }
+                    if (!HasGroundPatrolPath(candidate, profile.PatrolArea))
+                    { patrolRejected++; continue; }
                 }
-                else if (zone.Zone.LocomotionKind == EnemyLocomotionKind.FreeFlying && !HasFlyingPatrolPath(zone, candidate))
-                {
-                    continue;
-                }
+                else if (profile.Kind == EnemyLocomotionKind.FreeFlying && !HasFlyingPatrolPath(zone, profile, candidate))
+                { patrolRejected++; continue; }
 
-                if (Vector3.Distance(player.Position, candidate) > maximumSpawnDistanceFromTrigger ||
-                    Vector3.Dot(candidate - player.Position, approachForward) < minimumForwardDistance ||
-                    IsOccupied(candidate) || !PassesPlayerVisibilityChecks(
-                        Runner.GetPhysicsScene(), candidate, zone.Zone.RequireSpawnOcclusion))
-                    continue;
+                if (Vector3.Distance(player.Position, candidate) > maximumSpawnDistanceFromTrigger)
+                { distanceRejected++; continue; }
+                if (Vector3.Dot(candidate - player.Position, approachForward) < minimumForwardDistance)
+                { forwardRejected++; continue; }
+                if (IsOccupied(candidate))
+                { occupiedRejected++; continue; }
+                if (!PassesPlayerVisibilityChecks(Runner.GetPhysicsScene(), candidate, zone.Zone.RequireSpawnOcclusion))
+                { visibilityRejected++; continue; }
 
                 position = candidate;
                 return true;
             }
+            if (debugEncounter)
+                LogSkip(zone.Zone, $"{profile.PrefabName} [{profile.Kind}] 出生取樣 {candidateAttempts} 次全部失敗；" +
+                    $"NavMesh={navRejected}、貼地={supportRejected}、盒外={boundsRejected}、巡邏路徑={patrolRejected}、" +
+                    $"超出最遠距離={distanceRejected}、不在前方={forwardRejected}、占用={occupiedRejected}、" +
+                    $"玩家過近／遮擋={visibilityRejected}；遮擋要求={zone.Zone.RequireSpawnOcclusion}；" +
+                    $"玩家={player.Position}、穿越方向={approachForward}");
             return false;
         }
 

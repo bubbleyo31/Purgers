@@ -98,6 +98,18 @@ public class NetworkPlayerAudioEmitter :
     #region Public State Authority API
 
     /// <summary>
+    /// 各端依已同步的持續狀態重建 3D Loop；不發送一次性的 Start/Stop RPC。
+    /// 變體與 Pitch 由呼叫端的 State Authority 選定並同步。呼叫端必須保存服務與 handle 並清理。
+    /// </summary>
+    public int StartFollowingWorldLoop(GameplayAudioCue cue, byte variant, float pitch)
+    {
+        if (Object == null || !Object.IsValid || cue == null || audioCatalog == null ||
+            !audioCatalog.ContainsCue(cue) || GameplayAudioService.Instance == null) return -1;
+        return GameplayAudioService.Instance.StartWorldLoop(cue, variant, pitch,
+            defaultWorldAudioOrigin != null ? defaultWorldAudioOrigin : transform);
+    }
+
+    /// <summary>
     /// 在預設 Player Audio Origin 播放世界 OneShot。
     ///
     /// 只能由已確認 Gameplay 事件成立的 State Authority 呼叫。

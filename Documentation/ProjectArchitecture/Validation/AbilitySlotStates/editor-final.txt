@@ -1,0 +1,11 @@
+2026-10-18 Final Editor verification
+Project: M:/UnityProject/Purgers
+Unity: 2022.3.62f1
+isPlaying=false
+isCompiling=false
+NetworkRunner count=0
+activeScene=Assets/Scenes/_Menu.unity
+activeScene.isDirty=false
+PlayerSettings.runInBackground=true
+Console read (error, warning): 0 entries
+PlayUnfocused verified before tests; no foreground operations used.

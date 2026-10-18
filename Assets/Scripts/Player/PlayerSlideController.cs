@@ -638,6 +638,8 @@ public class PlayerSlideController :
 
 
     private float standingHeight;
+    /// <summary>供強制位移做完整站立膠囊的預先碰撞檢查。</summary>
+    public float StandingHeight => standingHeight;
 
     private float auxiliaryStandingHeight;
 
@@ -1068,6 +1070,15 @@ public class PlayerSlideController :
             TryRegisterProcessor();
         }
 
+        var rescueHealth = GetComponent<PlayerHealth>();
+        if (rescueHealth != null && rescueHealth.IsRescueReady && rescueHealth.IsDowned)
+        {
+            if (IsSliding) EndSlide(false, "Downed");
+            IgnoreCrouchUntilReleasedAfterSlideJump = false;
+            EnsureCrouched();
+            return;
+        }
+
         bool physicalCrouchHeld =
             input.Buttons.IsSet(
                 InputButton.Crouch
@@ -1129,8 +1140,8 @@ public class PlayerSlideController :
             if (movementHardLocked)
             {
                 EndSlide(
-                    false,
-                    "Higher Priority Movement"
+                    input.SettingsMenuOpen,
+                    input.SettingsMenuOpen ? "Settings Menu" : "Higher Priority Movement"
                 );
             }
             else if (jumpedThisTick ||
@@ -1790,6 +1801,9 @@ public class PlayerSlideController :
     }
 
 
+    /// <summary>受困來源立即中止滑鏟，不留下釋放後的速度。</summary>
+    public void CancelForCapture() => EndSlide(false, "Captured");
+
     private void EndSlide(
         bool preserveHorizontalVelocity,
         string reason,
@@ -2161,7 +2175,7 @@ public class PlayerSlideController :
         // 向上後座力走 ExternalDelta；避免 GroundSnap 因 DynamicVelocity 沒有向上值而吸回地面。
         if (movement != null && movement.HasUpwardAbilityRecoil)
             targetKCC.SuppressProcessors<GroundSnapProcessor>();
-        if (movement != null && movement.HasActiveAbilityDash)
+        if ((movement != null && movement.HasActiveAbilityDash) || (grapple != null && grapple.IsSideDashing))
         {
             targetKCC.SuppressProcessors<StepUpProcessor>();
             return;

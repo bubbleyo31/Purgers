@@ -1,0 +1,113 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"5b6b9d8349b74b00926307c024660b02\",\"status\":\"failed\",\"mode\":\"EditMode\",\"started_unix_ms\":1791942033518,\"finished_unix_ms\":1791942034649,\"last_update_unix_ms\":1791942034649,\"progress\":{\"completed\":18,\"total\":851,\"current_test_full_name\":null,\"current_test_started_unix_ms\":1791942034262,\"last_finished_test_full_name\":\"EnemyHealthBarTests.PercentageFillsPartialCell(2.0f,9,1.0f)\",\"last_finished_unix_ms\":1791942034262,\"stuck_suspected\":false,\"editor_is_focused\":true,\"blocked_reason\":null,\"failures_so_far\":[{\"full_name\":\"EnemyHealthBarTests.FallbackHasHysteresisBeforeReturningToHead\",\"message\":\"  敵人血條規則尚未實作\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyHealthBarTests.GiantKeepsBarInsideOffsetViewportWhenHeadLeavesScreen\",\"message\":\"  敵人血條規則尚未實作\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyHealthBarTests.InvalidHealthCannotProduceInvalidGeometry(float.NaN,100.0f)\",\"message\":\"  敵人血條規則尚未實作\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyHealthBarTests.InvalidHealthCannotProduceInvalidGeometry(10.0f,0.0f)\",\"message\":\"  敵人血條規則尚未實作\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyHealthBarTests.InvalidHealthCannotProduceInvalidGeometry(10.0f,float.PositiveInfinity)\",\"message\":\"  敵人血條規則尚未實作\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyHealthBarTests.MaximumHealthDoesNotChangePercentage(76.0f,100.0f)\",\"message\":\"  敵人血條規則尚未實作\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyHealthBarTests.MaximumHealthDoesNotChangePercentage(7600.0f,10000.0f)\",\"message\":\"  敵人血條規則尚未實作\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyHealthBarTests.OffscreenBodyNeverProducesGiantEdgeMarker\",\"message\":\"  敵人血條規則尚未實作\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyHealthBarTests.OrdinaryEnemyDoesNotClampOffscreenAnchorToEdge\",\"message\":\"  敵人血條規則尚未實作\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyHealthBarTests.PercentageFillsPartialCell(1.0f,0,1.0f)\",\"message\":\"  敵人血條規則尚未實作\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyHealthBarTests.PercentageFillsPartialCell(1.0f,9,1.0f)\",\"message\":\"  敵人血條規則尚未實作\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyHealthBarTests.PercentageFillsPartialCell(0.76f,6,1.0f)\",\"message\":\"  敵人血條規則尚未實作\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyHealthBarTests.PercentageFillsPartialCell(0.76f,7,0.6f)\",\"message\":\"  敵人血條規則尚未實作\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyHealthBarTests.PercentageFillsPartialCell(0.76f,8,0.0f)\",\"message\":\"  敵人血條規則尚未實作\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyHealthBarTests.PercentageFillsPartialCell(0.001f,0,0.01f)\",\"message\":\"  敵人血條規則尚未實作\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyHealthBarTests.PercentageFillsPartialCell(0.0f,0,0.0f)\",\"message\":\"  敵人血條規則尚未實作\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyHealthBarTests.PercentageFillsPartialCell(-1.0f,0,0.0f)\",\"message\":\"  敵人血條規則尚未實作\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyHealthBarTests.PercentageFillsPartialCell(2.0f,9,1.0f)\",\"message\":\"  敵人血條規則尚未實作\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"}],\"failures_capped\":false},\"error\":null,\"result\":null},\"hint\":null}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "success": true,
+      "message": "Test job status retrieved.",
+      "error": null,
+      "data": {
+        "job_id": "5b6b9d8349b74b00926307c024660b02",
+        "status": "failed",
+        "mode": "EditMode",
+        "started_unix_ms": 1791942033518,
+        "finished_unix_ms": 1791942034649,
+        "last_update_unix_ms": 1791942034649,
+        "progress": {
+          "completed": 18,
+          "total": 851,
+          "current_test_full_name": null,
+          "current_test_started_unix_ms": 1791942034262,
+          "last_finished_test_full_name": "EnemyHealthBarTests.PercentageFillsPartialCell(2.0f,9,1.0f)",
+          "last_finished_unix_ms": 1791942034262,
+          "stuck_suspected": false,
+          "editor_is_focused": true,
+          "blocked_reason": null,
+          "failures_so_far": [
+            {
+              "full_name": "EnemyHealthBarTests.FallbackHasHysteresisBeforeReturningToHead",
+              "message": "  敵人血條規則尚未實作\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyHealthBarTests.GiantKeepsBarInsideOffsetViewportWhenHeadLeavesScreen",
+              "message": "  敵人血條規則尚未實作\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyHealthBarTests.InvalidHealthCannotProduceInvalidGeometry(float.NaN,100.0f)",
+              "message": "  敵人血條規則尚未實作\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyHealthBarTests.InvalidHealthCannotProduceInvalidGeometry(10.0f,0.0f)",
+              "message": "  敵人血條規則尚未實作\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyHealthBarTests.InvalidHealthCannotProduceInvalidGeometry(10.0f,float.PositiveInfinity)",
+              "message": "  敵人血條規則尚未實作\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyHealthBarTests.MaximumHealthDoesNotChangePercentage(76.0f,100.0f)",
+              "message": "  敵人血條規則尚未實作\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyHealthBarTests.MaximumHealthDoesNotChangePercentage(7600.0f,10000.0f)",
+              "message": "  敵人血條規則尚未實作\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyHealthBarTests.OffscreenBodyNeverProducesGiantEdgeMarker",
+              "message": "  敵人血條規則尚未實作\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyHealthBarTests.OrdinaryEnemyDoesNotClampOffscreenAnchorToEdge",
+              "message": "  敵人血條規則尚未實作\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyHealthBarTests.PercentageFillsPartialCell(1.0f,0,1.0f)",
+              "message": "  敵人血條規則尚未實作\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyHealthBarTests.PercentageFillsPartialCell(1.0f,9,1.0f)",
+              "message": "  敵人血條規則尚未實作\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyHealthBarTests.PercentageFillsPartialCell(0.76f,6,1.0f)",
+              "message": "  敵人血條規則尚未實作\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyHealthBarTests.PercentageFillsPartialCell(0.76f,7,0.6f)",
+              "message": "  敵人血條規則尚未實作\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyHealthBarTests.PercentageFillsPartialCell(0.76f,8,0.0f)",
+              "message": "  敵人血條規則尚未實作\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyHealthBarTests.PercentageFillsPartialCell(0.001f,0,0.01f)",
+              "message": "  敵人血條規則尚未實作\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyHealthBarTests.PercentageFillsPartialCell(0.0f,0,0.0f)",
+              "message": "  敵人血條規則尚未實作\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyHealthBarTests.PercentageFillsPartialCell(-1.0f,0,0.0f)",
+              "message": "  敵人血條規則尚未實作\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyHealthBarTests.PercentageFillsPartialCell(2.0f,9,1.0f)",
+              "message": "  敵人血條規則尚未實作\r\n  Expected: not null\r\n  But was:  null\r\n"
+            }
+          ],
+          "failures_capped": false
+        },
+        "error": null,
+        "result": null
+      },
+      "hint": null
+    }
+  },
+  "isError": false
+}

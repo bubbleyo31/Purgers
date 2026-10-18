@@ -18,10 +18,14 @@ public sealed class PlayerPiercingCannonAbility : PlayerActiveAbilityBase
     private bool useSubtickAccuracy = true;
     [SerializeField, Min(0.01f), Tooltip("各端顯示砲擊直線的秒數，只控制本機視覺，不影響傷害或冷卻。")]
     private float beamVisibleSeconds = 0.15f;
-    [SerializeField, Min(0.001f), Tooltip("砲擊示意線寬，公尺。正式 VFX 可在之後替換本機呈現。")]
-    private float beamWidth = 0.08f;
-    [SerializeField, Tooltip("砲擊示意線顏色。")]
+    [SerializeField, HideInInspector]
+    private float beamWidth = 0.08f; // 保留舊序列化值；四階段啟用時由 presentation 控制。
+    [SerializeField, HideInInspector]
     private Color beamColor = new Color(0.3f, 1f, 0.95f, 1f);
+    [Header("四階段雷射")]
+    [SerializeField, Range(0f, 1f), Tooltip("細線占共用 Cast Delay Seconds 的比例，其餘為中線蓄力。0 全中線、1 全細線；不改出手時間或鎖定準星。")]
+    private float aimStageRatio = .55f;
+    [SerializeField] private BeamPresentationSettings presentation = new BeamPresentationSettings();
     [Header("可替換本機特效")]
     [SerializeField, Tooltip("確認射出時在各端播放一次。留空維持示意線；Anchor 是相對發射位置的外觀偏移，不改命中射線。特效可實作 IPlayerAbilityLocalVfxReceiver 取得被牆截斷的終點。")]
     private PlayerAbilityLocalVfxSlot fireVfx = new PlayerAbilityLocalVfxSlot();
@@ -33,16 +37,12 @@ public sealed class PlayerPiercingCannonAbility : PlayerActiveAbilityBase
     private readonly List<LagCompensatedHit> hits = new List<LagCompensatedHit>();
     private readonly HashSet<MonoBehaviour> receivers = new HashSet<MonoBehaviour>();
     private RaycastHit[] physicsHits = new RaycastHit[16];
-    private LineRenderer beam;
-    private Material beamMaterial;
-    private int renderedVisualSequence = -1;
-    private bool customBeamPresented;
+    private BeamPresentationRuntime visual;
+    [Networked] private float BeamDuration { get; set; }
 
     public override void Spawned()
     {
-        renderedVisualSequence = -1;
-        customBeamPresented = false;
-        if (beam != null) beam.enabled = false;
+        visual?.Hide();
     }
 
     protected override bool Activate()
@@ -88,7 +88,8 @@ public sealed class PlayerPiercingCannonAbility : PlayerActiveAbilityBase
                 hit.Distance, ActiveAbilityRules.PiercingDamage(baseDamage, penetrations), DamageType.Ability, ActivationSequence);
             penetrations++;
         }
-        BeamTimer = TickTimer.CreateFromSeconds(Runner, beamVisibleSeconds);
+        BeamDuration = Mathf.Max(Runner.DeltaTime, beamVisibleSeconds);
+        BeamTimer = TickTimer.CreateFromSeconds(Runner, BeamDuration);
         BeamVisualSequence = ActivationSequence;
         FinishAbility();
         return true;
@@ -96,34 +97,48 @@ public sealed class PlayerPiercingCannonAbility : PlayerActiveAbilityBase
 
     public override void Render()
     {
-        if (!Ready) return;
-        bool visible = !BeamTimer.ExpiredOrNotRunning(Runner);
-        if (visible && renderedVisualSequence != BeamVisualSequence)
+        if (!Ready) { visual?.Hide(); return; }
+        if (presentation == null) presentation = new BeamPresentationSettings { shotWidth = beamWidth, shotColor = beamColor };
+        if (visual == null) visual = new BeamPresentationRuntime(transform);
+        float remaining = BeamPresentationRules.Remaining(BeamTimer, Object, Runner);
+        bool casting = Phase == PlayerActiveAbilityPhase.Casting && IsUsable;
+        bool fired = !casting && remaining > 0f;
+        var stage = casting
+            ? (BeamPresentationRules.IsCharging(ActiveRemainingSeconds, PhaseDurationSeconds, aimStageRatio)
+                ? BeamPresentationStage.Charge : BeamPresentationStage.Aim)
+            : fired ? BeamPresentationStage.Fired : BeamPresentationStage.Hidden;
+        Vector3 start = BeamStart, end = BeamEnd;
+        if (casting && !TryPreviewRay(out start, out end)) stage = BeamPresentationStage.Hidden;
+        bool custom = fireVfx != null && fireVfx.HasValidPrefab;
+        bool newShot = visual.Present(presentation, stage, fired ? BeamVisualSequence : ActivationSequence, start, end,
+            BeamPresentationRules.ShotScale(remaining, BeamDuration, presentation.collapse), !custom);
+        if (newShot && custom)
         {
-            renderedVisualSequence = BeamVisualSequence;
-            Vector3 direction = BeamEnd - BeamStart;
-            Quaternion rotation = direction.sqrMagnitude > 0.000001f ? Quaternion.LookRotation(direction) : Quaternion.identity;
-            customBeamPresented = fireVfx != null && fireVfx.TryPlay(transform, BeamStart, rotation, BeamEnd);
+            Vector3 direction = end - start;
+            Quaternion rotation = direction.sqrMagnitude > .000001f ? Quaternion.LookRotation(direction) : Quaternion.identity;
+            fireVfx.TryPlay(transform, start, rotation, end);
         }
-        visible &= !customBeamPresented;
-        if (visible && beam == null)
-        {
-            var visual = new GameObject("Piercing Cannon Beam (Local)");
-            visual.transform.SetParent(transform, false);
-            beam = visual.AddComponent<LineRenderer>();
-            Shader shader = Shader.Find("Sprites/Default");
-            if (shader != null) { beamMaterial = new Material(shader); beam.sharedMaterial = beamMaterial; }
-            beam.useWorldSpace = true;
-            beam.positionCount = 2;
-            beam.startWidth = beam.endWidth = beamWidth;
-            beam.startColor = beam.endColor = beamColor;
-        }
-        if (beam == null) return;
-        beam.enabled = visible;
-        if (visible) { beam.SetPosition(0, BeamStart); beam.SetPosition(1, BeamEnd); }
     }
-    private void OnDestroy()
+    // 各端只查視覺遮擋，預告不寫入 BeamStart/End，也不送傷害。
+    private bool TryPreviewRay(out Vector3 start, out Vector3 end)
     {
-        if (beamMaterial != null) Destroy(beamMaterial);
+        end = default;
+        if (!ActiveAbilityPhysics.TryGetShotOrigin(Owner, originHeight, 0f, hitMask, out start)) return false;
+        Vector3 direction = Owner.Movement != null ? Owner.Movement.GetAimDirection() : Owner.transform.forward;
+        end = start + direction.normalized * maximumDistance;
+        int count = ActiveAbilityPhysics.SphereCastSorted(Runner.GetPhysicsScene(), start, direction,
+            maximumDistance, 0f, hitMask, Owner.Object, ref physicsHits);
+        for (int i = 0; i < count; i++)
+        {
+            var receiver = ActiveAbilityPhysics.ResolveReceiver(physicsHits[i].collider.gameObject);
+            if (receiver != null && !(receiver is PlayerHealth)) continue;
+            end = physicsHits[i].point;
+            break;
+        }
+        return true;
     }
+    public override void Despawned(NetworkRunner runner, bool hasState) => DisposePresentation();
+    private void OnDisable() => DisposePresentation();
+    private void OnDestroy() => DisposePresentation();
+    private void DisposePresentation() { visual?.Dispose(); visual = null; }
 }

@@ -1,0 +1,168 @@
+{
+  "version": "v3",
+  "mode": "built-in image_gen; one asset per call",
+  "scope": "6 revised icons; 10 copied unchanged; not integrated into Unity",
+  "grappleRule": "Mechanical three-claw device represents grapple body. Existing special Pull large hook remains unchanged.",
+  "referenceSources": [
+    {
+      "file": "references/RSh-12.jpg",
+      "url": "https://www.imfdb.org/wiki/File:RSh-12.jpg",
+      "role": "appearance reference, not part of generated icon"
+    }
+  ],
+  "icons": [
+    {
+      "id": "S01_NotToday",
+      "name": "不是今天",
+      "file": "S01_NotToday.png",
+      "oldFile": "S01_NotToday.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v2/S01_NotToday.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "S02_SelfRevive",
+      "name": "我自己來",
+      "file": "S02_SelfRevive.png",
+      "oldFile": "S02_SelfRevive.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v2/S02_SelfRevive.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "S03_Adrenaline",
+      "file": "S03_Adrenaline.png",
+      "name": "腎上腺素",
+      "refs": [
+        "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v2/S03_Adrenaline.png"
+      ],
+      "prompt": "Create one square minimalist WHITE game HUD pictogram on transparent background. Broad solid white geometry with clean transparent negative spaces. NO stippling, dirt, grunge, grey shading, thin outlines, glow, backdrop or labels. Keep 12% clear margins. REDESIGN this adrenaline emblem to be substantially different in composition and stylization. Keep only the heart plus syringe concept. Make compact angular anatomical heart at CENTER RIGHT, tilted clockwise 20 degrees, with only TWO short blocky artery stubs and TWO broad angular negative-space chamber cuts, not realistic branching veins. ONE modern medical syringe on LEFT, almost vertical, leaning right 15 degrees, needle DOWN with a small gap from heart. Simple flat T-plunger, no finger rings, only two thick measurement cutouts. Heart slightly overlaps the right edge of syringe lower barrel. Strong graphic compact emblem. No arrows or numbers or blood drops. Avoid copying old diagonal injection composition.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-e62df221-5a41-47b6-9d9a-bba1c55a4299.png",
+      "status": "revised",
+      "oldFile": "S03_Adrenaline.png"
+    },
+    {
+      "id": "S04_CarnivorousTree",
+      "name": "食人樹",
+      "file": "S04_CarnivorousTree.png",
+      "oldFile": "S04_CarnivorousTree.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v2/S04_CarnivorousTree.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "S05_HardChoice",
+      "name": "真難抉擇",
+      "file": "S05_HardChoice.png",
+      "oldFile": "S05_HardChoice.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v2/S05_HardChoice.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "S06_GunMaster",
+      "file": "S06_GunMaster.png",
+      "oldFile": "S06_JohnWick.png",
+      "name": "槍械高手",
+      "refs": [
+        "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v2/S06_JohnWick.png",
+        "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v3/references/RSh-12.jpg"
+      ],
+      "prompt": "Create one square minimalist WHITE game HUD pictogram on transparent background. Broad solid white geometry with clean transparent negative spaces. NO stippling, dirt, grunge, grey shading, thin outlines, glow, backdrop or labels. Keep 12% clear margins. Image1 is composition to keep; image2 is exact firearm appearance reference. Replace two semiautomatic pistols with TWO identical mirrored RSh-12 REVOLVERS. Preserve crossed X layout, muzzles toward upper left/right, grips toward bottom left/right, THREE cartridges underneath. Match reference large cylinder, long massive rectangular barrel shroud with stepped top rail, LOWER muzzle bore aligned with bottom of cylinder, single rear grip, single trigger guard in front of grip. Broad transparent cuts define cylinder and trigger guard. Clear cylinder on each gun, keep them visible away from central overlap. No slide ejection ports, no magazine. Simple coherent side silhouettes, no mechanical internals. No text.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-d6e1bdee-a15c-4369-8ab4-0e4d1db41d24.png",
+      "status": "revised"
+    },
+    {
+      "id": "A01_MaxHealth_I",
+      "name": "最大生命 I",
+      "file": "A01_MaxHealth_I.png",
+      "oldFile": "A01_MaxHealth_I.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v2/A01_MaxHealth_I.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "A02_ReloadSpeed_I",
+      "file": "A02_ReloadSpeed_I.png",
+      "name": "換彈速度 I",
+      "refs": [
+        "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v2/A02_ReloadSpeed_I.png"
+      ],
+      "prompt": "Create one square minimalist WHITE game HUD pictogram on transparent background. Broad solid white geometry with clean transparent negative spaces. NO stippling, dirt, grunge, grey shading, thin outlines, glow, backdrop or labels. Keep 12% clear margins. Edit supplied icon narrowly. Keep upright magazine, top cartridge, outline and large central Roman I in same arrangement. REMOVE the right-side upward arrow and both motion dashes below it completely. Put ONLY two bold right-facing fast-forward chevrons reading >> at UPPER RIGHT outside magazine, separated by transparent space. No other arrows. Preserve clear center I.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-3eec2d4e-134a-47c6-b650-3bf818bb81ca.png",
+      "status": "revised",
+      "oldFile": "A02_ReloadSpeed_I.png"
+    },
+    {
+      "id": "A03_MeleeSpeed_I",
+      "name": "近戰攻速 I",
+      "file": "A03_MeleeSpeed_I.png",
+      "oldFile": "A03_MeleeSpeed_I.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v2/A03_MeleeSpeed_I.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "A04_MagazineCapacity_I",
+      "name": "彈匣容量 I",
+      "file": "A04_MagazineCapacity_I.png",
+      "oldFile": "A04_MagazineCapacity_I.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v2/A04_MagazineCapacity_I.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "A05_GrappleEnergy_I",
+      "file": "A05_GrappleEnergy_I.png",
+      "name": "鈎索能量減耗 I",
+      "refs": [
+        "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-c3259555-346a-43f6-bc35-b86b355967d5.png"
+      ],
+      "prompt": "Create one square minimalist WHITE game HUD pictogram on transparent background. Broad solid white geometry with clean transparent negative spaces. NO stippling, dirt, grunge, grey shading, thin outlines, glow, backdrop or labels. Keep 12% clear margins. Precise edit of supplied THREE-CLAW mechanical grapple logo. Keep identical three angular articulated fingers, spherical circular hub, rear block and cable. Scale whole device uniformly down to 78%, centered slightly lower-left to leave top-right modifier space. Add bold upright Roman numeral I at exact center of the hub's empty circular opening, with wide top/bottom bars and clean gap all around. Add ONE large isolated MINUS SIGN at upper-right. Preserve exact base silhouette, do not change claw poses or add more fingers. No arrows.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-f1c58bbc-6cbe-4e68-85c8-0cdec35b5726.png",
+      "status": "revised",
+      "oldFile": "A05_GrappleEnergy_I.png"
+    },
+    {
+      "id": "A06_FocusCooldown_I",
+      "name": "專注技能冷卻減免 I",
+      "file": "A06_FocusCooldown_I.png",
+      "oldFile": "A06_FocusCooldown_I.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v2/A06_FocusCooldown_I.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "A07_GrappleCooldown_I",
+      "file": "A07_GrappleCooldown_I.png",
+      "name": "鈎索技能冷卻減免 I",
+      "refs": [
+        "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-c3259555-346a-43f6-bc35-b86b355967d5.png"
+      ],
+      "prompt": "Create one square minimalist WHITE game HUD pictogram on transparent background. Broad solid white geometry with clean transparent negative spaces. NO stippling, dirt, grunge, grey shading, thin outlines, glow, backdrop or labels. Keep 12% clear margins. Precise edit of supplied THREE-CLAW mechanical grapple logo. Keep identical three angular articulated fingers, spherical circular hub, rear block and cable. Scale whole device uniformly down to 78%, centered slightly lower-left to leave top-right modifier space. Add bold upright Roman numeral I at exact center of the hub's empty circular opening, with wide top/bottom bars and clean gap all around. Add TWO large isolated right-facing chevrons reading >> at upper-right. Preserve exact base silhouette, do not change claw poses or add more fingers. No circular arrows or clocks.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-1f4316fe-4caf-4835-b933-425cf6a31f7c.png",
+      "status": "revised",
+      "oldFile": "A07_GrappleCooldown_I.png"
+    },
+    {
+      "id": "A08_OutOfCombatRegen_I",
+      "name": "脫戰每秒回血 I",
+      "file": "A08_OutOfCombatRegen_I.png",
+      "oldFile": "A08_OutOfCombatRegen_I.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v2/A08_OutOfCombatRegen_I.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "A09_RegenDelay_I",
+      "name": "脫戰回血等待縮短 I",
+      "file": "A09_RegenDelay_I.png",
+      "oldFile": "A09_RegenDelay_I.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v2/A09_RegenDelay_I.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "B01_GrappleBase",
+      "file": "B01_GrappleBase.png",
+      "name": "鈎索共用基礎圖示",
+      "refs": [
+        "C:/Users/hsuai/AppData/Local/Temp/codex-clipboard-cbd6f61a-61af-4438-8519-e335a1fab1c9.png"
+      ],
+      "prompt": "Create one square minimalist WHITE game HUD pictogram on transparent background. Broad solid white geometry with clean transparent negative spaces. NO stippling, dirt, grunge, grey shading, thin outlines, glow, backdrop or labels. Keep 12% clear margins. Interpret the supplied mechanical GRAPPLING CLAW as a simple white icon. Single device, slightly three-quarter front view. Exactly THREE bent angular articulated fingers around a large spherical central hub, partly OPEN, each with one clear hinge and one inward angled gripping tip. One upper finger, two lower side fingers. Short rear square attachment block and short thick cable trailing lower-left. Large circular hub outlined in thick white with a CLEAR EMPTY transparent center, reserved for future rank numeral; no spokes crossing its center. Distinct silhouette, do not resemble a J hook, anchor or human hand. Preserve reference spherical core and angular articulated prongs; no extra prongs, no text, no numeral.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-c3259555-346a-43f6-bc35-b86b355967d5.png",
+      "status": "revised",
+      "oldFile": "B01_GrappleBase.png"
+    }
+  ]
+}

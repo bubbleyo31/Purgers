@@ -1,0 +1,4 @@
+PASS Runner starts: Ok
+FAIL System.TimeoutException: airborne loot falls
+  at RewardGrowthRuntimeVerification.Until (System.Func`1[TResult] predicate, System.String label, System.Single seconds) [0x00036] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\RewardGrowthRuntimeVerification.cs:31 
+  at RewardGrowthRuntimeVerification.Begin (System.Boolean lootOnly) [0x00535] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\RewardGrowthRuntimeVerification.cs:67 

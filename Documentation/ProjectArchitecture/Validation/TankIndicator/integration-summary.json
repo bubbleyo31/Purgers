@@ -1,0 +1,24 @@
+{
+  "status": "integrated_and_verified",
+  "originalGameplaySourcesUnchanged": true,
+  "focusedPassed": 46,
+  "files": [
+    "Assets\\Resources\\Presentation\\TankGroundRange.shader",
+    "Assets\\Scripts\\Editor\\TankIndicatorRuntimeVerification.cs",
+    "Assets\\Scripts\\Editor\\Tests\\TankPreparedDashIndicatorTests.cs",
+    "Assets\\Scripts\\Player\\Profession\\Tank\\TankMeleeCombo.Preview.cs",
+    "Assets\\Scripts\\Player\\Profession\\Tank\\TankPreparedDashPreviewQuery.cs",
+    "Assets\\Scripts\\UI\\Player\\LocalTankPreparedDashIndicator.cs",
+    "Assets\\Scripts\\UI\\Player\\LocalTankPreparedDashIndicator.Ground.cs",
+    "Assets\\Scripts\\UI\\Player\\TankPreparedDashIndicatorRules.cs",
+    "Assets\\Scripts\\UI\\Player\\TankPreparedDashIndicatorSettings.cs",
+    "Assets\\Scripts\\UI\\Player\\TankTargetBracketGraphic.cs",
+    "Assets/Scripts/Editor/TankIndicatorTestResults.cs"
+  ],
+  "hostClientChecks": 34,
+  "regressionSkipped": 2,
+  "singleChecks": 26,
+  "regressionExistingFailures": 4,
+  "regressionPassed": 1173,
+  "date": "2026-10-18"
+}

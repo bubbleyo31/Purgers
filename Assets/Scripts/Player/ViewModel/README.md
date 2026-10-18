@@ -28,3 +28,9 @@
 - 網路同步：搜尋 `[Networked]`、`[Rpc(`、`HasStateAuthority`、`IsSceneAuthority`。
 - 場景綁定：由 `[SerializeField]` 欄位名稱回到 Unity Inspector 找同名引用。
 
+
+## 2026-10-17 可選換彈鏡頭
+
+- `FirstPersonReloadCameraMotion.cs`：掛在每把槍的 ViewModel 根，手動指定已啟用模型與槍械 Root，取旋轉並依主動轉頭減弱。
+- `ReloadCameraMotion.cs`：純取樣基準、限幅及退場狀態。
+- 使用既有 ActionAnimator 武器來源及 FirstPersonHitCameraShake 的 owner 合成入口；Scene／Prefab 未自動配置。設定與驗證見 [架構 70](../../../../Documentation/ProjectArchitecture/70_第一人稱模型與動畫.md#reload-camera-motion)。

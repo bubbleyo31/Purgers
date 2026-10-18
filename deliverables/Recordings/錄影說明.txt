@@ -1,0 +1,13 @@
+自爆敵人看門菇驗收錄影
+
+Enemy_Suicide_PlayMode.mp4：1280×720、30 FPS、正常速度、無聲。
+內容：待機、原巡邏 Brain／烘焙 NavMesh 移動、感知與警戒後追逐、正式 CombatDecision 起撲、空中保持、爆炸，以及近身零預警自爆。
+Enemy_Suicide_Pounce_Slow.mp4：同一次實錄的撲擊片段，重複原畫格形成 0.25 倍速，並非修改 Gameplay 時序。
+
+使用隔離 Single Runner 與臨時地板／攝影機；載入既有 Phase10 NavMesh 的平面區，不執行 Runtime Bake。起始感知暫停以便拍待機及巡邏，之後放行正式感知、警戒、追逐與戰鬥 Brain；近身段放行正式 CombatDecision 自行引爆。未更改 Prefab 攻擊數值、原始模型、正式 Scene 或生成器。這是受控場地實際 Play Mode 錄製，不是正式關卡多人遊玩或效能驗收。
+
+攝影機跟隨敵人；非玩家第一人稱。右方目標是專案玩家的既有第一人稱手部／武器呈現，並未另外建人物模型。影片未包含血條 HUD 與傷害／Debuff UI 的驗收。
+
+RecordingHelper.cs.txt 保存這次臨時錄製工具來源（不參與 Unity 編譯）；完成後已移除 Assets 內臨時錄製腳本。
+qa_*.png 為錄影時保存的狀態畫格；不是替代影片。
+輸出檢查：Unity VideoPlayer 已成功 Prepare 並解碼兩個 MP4；正常版約 18.30 秒、慢速版約 8.13 秒，均為 1280×720／30 FPS。正常影片約 5.68 MB，慢速影片約 1.98 MB。播放擷取圖：decoded_normal.png、decoded_slow.png。

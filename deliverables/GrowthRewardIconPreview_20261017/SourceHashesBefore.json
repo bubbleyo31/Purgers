@@ -1,0 +1,346 @@
+[
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\UI\\StageHUD.prefab",
+    "Hash": "965BC15CEFE000EB82D9016E3C36C8E4D9EE24777E6240CD4B034812D3C8AB5E"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Scenes\\SafeHouse.unity",
+    "Hash": "08A73BBD7C565589203036AE60FB19D774F3F014F5DA3C507D92105D3405BA80"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Scenes\\_Menu.unity",
+    "Hash": "05294960D1A9BF6E2AE2565AD27856F0739E83DCB3357AA6326B27DAF13C791C"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Scripts\\UI\\Player\\AbilityIconFrameFit.cs",
+    "Hash": "E413BEFF8A217D9EBA2DB10046B50094FBCE993FCE8B0561D0904F03E6309DEA"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Scripts\\UI\\Player\\GrowthRewardRankView.cs",
+    "Hash": "555DA261FB8503BEEE6DC3D89E798B042B4BDA4535D904DEA86E21CCEF193198"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\A01_MaxHealth_I.png",
+    "Hash": "58A9BD3D28EC20B167A242027D1BD6CB65182109614F7409F96600A3E180A4A3"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\A01_MaxHealth_I.png.meta",
+    "Hash": "5BE80B2A5A974B1644D2E9382A90C637988C11C55A0A47B2B03AC9A5C1E1D322"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\A02_ReloadSpeed_I.png",
+    "Hash": "066001F3F75A2052ED240F2D4A6FE44CE9388BF37B8E8D75E0536B95F3DB28BE"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\A02_ReloadSpeed_I.png.meta",
+    "Hash": "778DEC96CF79862381B8D152C90BA68A693732C3B1637EDBC507B2F5D9786B5B"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\A03_MeleeSpeed_I.png",
+    "Hash": "8B6DEE04A217E229D3DE8359B055D69B6CA02D94597A332CD3A4FEA2DDDF2DBB"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\A03_MeleeSpeed_I.png.meta",
+    "Hash": "BE6BC80719FC90949B15FA039B315FE518DFF5B2B2C835CFC6EA4029AB4FA6CA"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\A04_MagazineCapacity_I.png",
+    "Hash": "36DB2FC52A2C76509B72B66DEA35D926941F59797F7340AE75D3273E22500384"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\A04_MagazineCapacity_I.png.meta",
+    "Hash": "35E463D54B536E72966CE34DF0772F41D0D7BBB392F63E58657EBB3E20DFB53F"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\A05_GrappleEnergy_I.png",
+    "Hash": "B9C4FE3A23CF554807DB7D3E9A0F6B3089FBCB9964ABFD90D31D95EC1B44604A"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\A05_GrappleEnergy_I.png.meta",
+    "Hash": "F10591008BF0B02EBB4BC28E71CD016115D9420744DD00030B328430E02D0162"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\A06_FocusCooldown_I.png",
+    "Hash": "419CFA618CEA841D7510AA8DEB62737E9A734D59BD52FF4D7BD5FDB905B10545"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\A06_FocusCooldown_I.png.meta",
+    "Hash": "C4CE527F1EF5EFFD4C0CAB30A740715063265670F127561452EB23034D70C872"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\A07_GrappleCooldown_I.png",
+    "Hash": "B7AB1E89E203BB30B06E7720441B68C6174FA8601FDD978F6C1806B3B36DCC6C"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\A07_GrappleCooldown_I.png.meta",
+    "Hash": "EF2F2A426E05C9EF780B0CED27656D23CF2A96457DCC5B382DB8A04E4E2D5BAD"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\A08_OutOfCombatRegen_I.png",
+    "Hash": "3D653D164B4B42CD7B98BED4334985029D0DBE35E194F26A44AC40607F91106F"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\A08_OutOfCombatRegen_I.png.meta",
+    "Hash": "CA686C7AE87B48364AC5FF031A3FFBA11EA145F9B0734805B76A9DAF4AC28A48"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\A09_RegenDelay_I.png",
+    "Hash": "9D38CDA80676F2F163A19AC776158CC845EF2D0A06DBB61394C9B316BA9EAC9D"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\A09_RegenDelay_I.png.meta",
+    "Hash": "83F9B53AA4EAF3CD39B0DEB439D9B61D583A5D697D0592D3BB4449F15B1DD9AD"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\B01_GrappleBase.png",
+    "Hash": "B575F0BE994E31CF39F2EA0752D07F410C6649EB5012F31AACC3E716CBC3281D"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\B01_GrappleBase.png.meta",
+    "Hash": "CBAA32763F398BE27FD52DF9AA888F642DEFDA8A71880C06A4F729A454B329F6"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds.meta",
+    "Hash": "3705FA827A863C54A1B6C8900B2C439AF4AB61F0738C3281245DC2A7F26AC11A"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\S01_NotToday.png",
+    "Hash": "8E79337118FB97AA7EC3E56238A09D84D36D970A789F3D009CDF8EB471D945F3"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\S01_NotToday.png.meta",
+    "Hash": "1ED1FF95DFF1DB04A727358D69811C8D43663BBC3281DCA857F17D6E915261D2"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\S02_SelfRevive.png",
+    "Hash": "6BCB83CB08B9ED936E9C010B2C61E61C91FB482DCAF62E7D8E1B9BDB63EDDF00"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\S02_SelfRevive.png.meta",
+    "Hash": "0EFEF0A8BE12976BEE402D3BE2F080DF21B2C609C4E9E71A0E7E6B3ACF99629B"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\S03_Adrenaline.png",
+    "Hash": "AACDD523FD542976E66B5C4693EA4593CEE5B17515049FC0D8D03042618EC7E9"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\S03_Adrenaline.png.meta",
+    "Hash": "B8E1BD764C22CF5A64B850EF090F47CE71379CB10898CA3D87E9E93895E6AB83"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\S04_CarnivorousTree.png",
+    "Hash": "F51FBD802D7E39F831DF538D15510646AE9223B9DD297E109A721E8895734D33"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\S04_CarnivorousTree.png.meta",
+    "Hash": "7393DCA198D611210A57405BB6A65523A1577DE0D6457F66F7808093363A5BA8"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\S05_HardChoice.png",
+    "Hash": "9B9BFB98C674E5AFEC273F5AB8F515D0EBE131667FE2903688A126756402D67A"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\S05_HardChoice.png.meta",
+    "Hash": "475B8AE5C3FF57C91DFA82B24C296C96720F26D23DDEB49E57C454ECC8997693"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\S06_GunMaster.png",
+    "Hash": "00347B34E96A5131343091F2A2209229BFF22CE7C6F156D7DD6DACC96FA8316D"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\S06_GunMaster.png.meta",
+    "Hash": "5079039B10F19CA7AB13E9440A3A67C8D63760487E7AF985799964E669981694"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A01_MaxHealth_Base.png",
+    "Hash": "42C676C6A570DBE147600734759C8CC3BC5916B61B9654250A662200436483D4"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A01_MaxHealth_Base.png.meta",
+    "Hash": "AADABA35505562629E8A8E648FA701A2F932B166106F7220A8764EE22DDA7F38"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A02_ReloadSpeed_Base.png",
+    "Hash": "581B51D76DE468ABBBAC8EBA71DC5CE2DD9A7FB6645708E4551525A5075E5F19"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A02_ReloadSpeed_Base.png.meta",
+    "Hash": "20400D354E44899F749A157053E255E27710FEEEF0D575DBFFEA998C962CA213"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A03_MeleeSpeed_Base.png",
+    "Hash": "7FCBD31FE06E2D7CD7C07A0FF3E1C21936EF0D501E21AA5E421C6D1CE637FC23"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A03_MeleeSpeed_Base.png.meta",
+    "Hash": "94A634683E4CF00ACFA146686E8F2BC3FCFC27043B20D0CB6AFAB97DF4530B49"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A04_MagazineCapacity_Base.png",
+    "Hash": "2C9F2D768DE018198888E83A8C495791C15BC817587C8FF8CE96B820B3FECBEE"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A04_MagazineCapacity_Base.png.meta",
+    "Hash": "204EC0D8071BEDCBA37A70FFF5D29077A637B719B3D5B341C01CA1124A4B1875"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A05_GrappleEnergy_Base.png",
+    "Hash": "A1BD00867A1322947FDE6648F9AB21520648FEFE7FCD8836110FC729F5D9C1CA"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A05_GrappleEnergy_Base.png.meta",
+    "Hash": "8B74D56C04476525E67BF6C6E56AA5B10500985CFCE22EF54036BD3EB9A8A064"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A06_FocusCooldown_Base.png",
+    "Hash": "390B1831B3D549FB7BD3BA8149E2104F79B38FFD581CC7493BEEAB60A9952A3D"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A06_FocusCooldown_Base.png.meta",
+    "Hash": "818CCB221181CEF470ABC9532B00C6E6759079B737BF2308B2CF1DBF9049019F"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A07_GrappleCooldown_Base.png",
+    "Hash": "3741FF2DA17A45998376C8D79F32506AEED46DC4EAE66E483DE9B278C7130F17"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A07_GrappleCooldown_Base.png.meta",
+    "Hash": "EB6CF8926218B8AF7735843D1A0C035E5D6D54039911B856FEBCBED772ED7317"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A08_OutOfCombatRegen_Base.png",
+    "Hash": "05BFB5EEA849CEBD9FC0335F42678666095A7426CE83453B9C3EAB36CE9AB6EF"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A08_OutOfCombatRegen_Base.png.meta",
+    "Hash": "82128551E0F35BC3987F83DBEB67D9AB30BA954DAF57C4305C5A237F9A8E5680"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A09_RegenDelay_Base.png",
+    "Hash": "723A7E35E523C4FDF879A6176E30464BCA60AB1D0997E7C488477299AEBA57B0"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A09_RegenDelay_Base.png.meta",
+    "Hash": "075A8FB5DED53921E00A01E352D347BD6718639E2EFFC80FB47EC2EFBF6A7049"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_Adrenaline.asset",
+    "Hash": "B53D339B4F8D31BF3F68F252340B2263483A55E2B737E7BC3560846D8E2F28A8"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_Adrenaline.asset.meta",
+    "Hash": "5C4F106FD5FC30232EBA020466C2559C1B3D116C63583FF3FC41951EA1E74F7F"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_CarnivorousTree.asset",
+    "Hash": "B3F4258A9AA6AF9542136751CE57D7867831D75B97A1FABFD10AA22FB01B04AB"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_CarnivorousTree.asset.meta",
+    "Hash": "6B54CAA5320BE6475290C22724DA0F650F1A82F66298F685744E015D15C3D7F9"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_FocusCooldown.asset",
+    "Hash": "1876E116F37A80A9EDD02DAD15597F92827416D477E26140790D0D15CFFE2834"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_FocusCooldown.asset.meta",
+    "Hash": "18519CB030A62DDB8079CEB2C39E0083D444CD14EE364FFB15A4FCF381CBC1FC"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_GrappleCost.asset",
+    "Hash": "B5B19C766177311ED587FF5AF7D7EAE6BA3C58FB8CFDA29FB59CFA22CD3478D4"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_GrappleCost.asset.meta",
+    "Hash": "1E0A788FEA923CE168C62C5E594C8C801AEF1CFBC65C4B9BEA044CF918A3D03C"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_HitCooldown.asset",
+    "Hash": "8374E8F1076B642CCCB4C3CA3C870CB342DEFA0950477047138C676EAC6CC5BA"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_HitCooldown.asset.meta",
+    "Hash": "6438714042506AED4DF921401B58281936555C3812B65C256F35FFFA650D556B"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_Indecision.asset",
+    "Hash": "C81CD443C3DE8A664FEC472801DD1D855292A33A23FB995EAEE43F5AA55201C7"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_Indecision.asset.meta",
+    "Hash": "4478092B647F4A39130B8D033445C5353BECC606ECC82DF9056617B06F22156B"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_JohnWick.asset",
+    "Hash": "5295C8CAAE3BC99D85601EB2747EBAA142D4F0903D246E7FBE170AF0DAB3C4F0"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_JohnWick.asset.meta",
+    "Hash": "53665FE7E6CAB909D6F3535EA9F3F348B076F103EE1A86D92A88D558A7EE6F2B"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_MagazineCapacity.asset",
+    "Hash": "0EFABF472C7AD9583D601BD237430DA6E3D1C95C1BCD0BED04FDDCE1EB0F26D6"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_MagazineCapacity.asset.meta",
+    "Hash": "BD5122844E2A29B13663755D64AD3779A993EBBC599415A413077D5F1781E4D4"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_MaximumHealth.asset",
+    "Hash": "FC0A9D31EE8F10C3DCC3148548E6D68E596BC37A3A572F3BB10028EAC53F9B0F"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_MaximumHealth.asset.meta",
+    "Hash": "3EE42FEC92A5D29B82A4E67AF72C26048C93FBBB5B85B86E814BE967DA34EEB1"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_MeleeSpeed.asset",
+    "Hash": "0F4218B082F90F1037A26BAAC6A4E9AA31AFD4221A3853CA18256E159737E544"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_MeleeSpeed.asset.meta",
+    "Hash": "913D85D9B4BA5B890EE3B60F64C5615F92E583F7175B6038EEF1F0339D3F7010"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_NotToday.asset",
+    "Hash": "4073F7A1A02875DD9E5F9D14BF6E73BF7FF3D71019F1E2927C7C402C690BAA55"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_NotToday.asset.meta",
+    "Hash": "81AF45B8AA0F1897FA9D2E59693E490F8053F6EFEB02D504FEA9B57EEA31445F"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_RegenerationDelay.asset",
+    "Hash": "83BA01C9CE0CC3DE4FBE87CF47280D95C1437AC56D9B52AF0DDF9454108B2A0F"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_RegenerationDelay.asset.meta",
+    "Hash": "A1065A4DE1876DC66E03D94073F3608CF2EC71ACA8AFEF1B8E326D17D960D27E"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_RegenerationRate.asset",
+    "Hash": "4FC5ADCFFB027695036B681B51634EFBB0625CFC828E48A44D9AE6551DB278FB"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_RegenerationRate.asset.meta",
+    "Hash": "091A7CDC47A3CB71348200C6D9A7DA3339F134600CF3396BC62F0A4DB575B280"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_ReloadSpeed.asset",
+    "Hash": "C09566514CBBC72C527BEBDAB9DB25E5506FBDA3D96A575D2CA09F69612CFF60"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_ReloadSpeed.asset.meta",
+    "Hash": "D9D0438C8394CB688D5C4C5FAEEC64A684715D63C69C48E1E0516F505E404857"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_SelfRescue.asset",
+    "Hash": "B974BDBC7C6DB6117D154DEF21D631F554721F5C9B0B4EF5F79ACBD2699D6F59"
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_SelfRescue.asset.meta",
+    "Hash": "154F78CC640B4852658DFC63B2436E268D464A66ACA4358C08CAC6E00EC2E264"
+  }
+]

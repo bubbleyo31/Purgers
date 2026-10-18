@@ -132,7 +132,7 @@ MonoBehaviour:
   movement: {fileID: 0}
   worldGunshotCue: {fileID: 11400000, guid: d0fd5051fdad8264ca202422133d3982, type: 2}
   worldGunshotVolumeScale: 0.5
-  magazineCapacity: 30
+  magazineCapacity: 20
   ammoSupplyMode: 1
   startingReserveAmmo: 180
   reloadDuration: 1.987
@@ -145,8 +145,8 @@ MonoBehaviour:
     m_Bits: 513
   useSubtickAccuracy: 1
   allowPhysicsFallback: 1
-  baseDamage: 20
-  damageFalloffStartDistance: 30
+  baseDamage: 40
+  damageFalloffStartDistance: 150
   damageFalloffEndDistance: 150
   minimumDamageMultiplier: 0.85
   headshotMultiplier: 2

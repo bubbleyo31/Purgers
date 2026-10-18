@@ -463,6 +463,8 @@ public class SupportGrapplePlayerPullReceiver :
         PlayerRef sourcePlayer
     )
     {
+        var captureGate = GetComponent<PlayerActionGate>();
+        if (captureGate != null && captureGate.IsCaptured) return false;
         // =============================================================
         // Spawn Guard
         // =============================================================

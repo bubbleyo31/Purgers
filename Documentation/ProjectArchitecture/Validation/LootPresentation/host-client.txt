@@ -1,0 +1,18 @@
+PASS Runner starts: Ok
+PASS Runner starts: Ok
+PASS grant ReloadSpeed: 
+PASS accelerated reload starts
+PASS host animation follows 10 percent reload bonus
+PASS client animation follows replicated cycle snapshot
+PASS grant ReloadSpeed: 
+PASS mid-reload growth does not speed up current animation
+PASS both animators reset multiplier after reload completion
+PASS next reload starts
+PASS next reload applies 15 percent tier on both peers
+PASS unbinding clears old multiplier
+PASS both peers expose dropped skill map position
+PASS map reads authoritative loot coordinate instead of owner transform
+PASS other Runner loot is excluded
+PASS client creates icon plus gold frame backing and beacon
+PASS world presentation adds no colliders or network objects
+PASS picked-up skills immediately cease to be map candidates

@@ -12,7 +12,16 @@ namespace Purgers.Progression
         [SerializeField] private PlayerRewardDefinition[] rewards =
             Array.Empty<PlayerRewardDefinition>();
 
+        [Header("抽選分類配額")]
+        [SerializeField, Range(0f, 1f), Tooltip("每個成長候選獨立改抽特殊被動的機率。預設 0.05；特殊被動內部再按各自 Weight 抽選。不足時跨組補位。")]
+        private float specialPassiveChance = .05f;
+        public float SpecialPassiveChance => Mathf.Clamp01(specialPassiveChance);
         public IReadOnlyList<PlayerRewardDefinition> Rewards => rewards;
+        public PlayerRewardDefinition FindGrowth(PlayerGrowthKind kind)
+        {
+            foreach (var reward in rewards) if (reward != null && reward.GrowthKind == kind && reward.IsImplementedGrowthReward) return reward;
+            return null;
+        }
 
         public bool TryFind(string rewardId, out PlayerRewardDefinition reward)
         {

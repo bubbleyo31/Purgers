@@ -1,0 +1,226 @@
+[
+  {
+    "file": "S01_NotToday.png",
+    "bytes": 488766,
+    "width": 1254,
+    "height": 1254,
+    "pixelFormat": "Format32bppArgb",
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "unchangedHashMatch": true
+  },
+  {
+    "file": "S02_SelfRevive.png",
+    "bytes": 663689,
+    "width": 1254,
+    "height": 1254,
+    "pixelFormat": "Format32bppArgb",
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "unchangedHashMatch": true
+  },
+  {
+    "file": "S03_Adrenaline.png",
+    "bytes": 526055,
+    "width": 1254,
+    "height": 1254,
+    "pixelFormat": "Format32bppArgb",
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "unchangedHashMatch": true
+  },
+  {
+    "file": "S04_CarnivorousTree.png",
+    "bytes": 692474,
+    "width": 1254,
+    "height": 1254,
+    "pixelFormat": "Format32bppArgb",
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "unchangedHashMatch": true
+  },
+  {
+    "file": "S05_HardChoice.png",
+    "bytes": 665486,
+    "width": 1254,
+    "height": 1254,
+    "pixelFormat": "Format32bppArgb",
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "unchangedHashMatch": true
+  },
+  {
+    "file": "S06_GunMaster.png",
+    "bytes": 476227,
+    "width": 1254,
+    "height": 1254,
+    "pixelFormat": "Format32bppArgb",
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "unchangedHashMatch": null
+  },
+  {
+    "file": "A01_MaxHealth_I.png",
+    "bytes": 497737,
+    "width": 1254,
+    "height": 1254,
+    "pixelFormat": "Format32bppArgb",
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "unchangedHashMatch": true
+  },
+  {
+    "file": "A02_ReloadSpeed_I.png",
+    "bytes": 435718,
+    "width": 1254,
+    "height": 1254,
+    "pixelFormat": "Format32bppArgb",
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "unchangedHashMatch": true
+  },
+  {
+    "file": "A03_MeleeSpeed_I.png",
+    "bytes": 408888,
+    "width": 1254,
+    "height": 1254,
+    "pixelFormat": "Format32bppArgb",
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "unchangedHashMatch": true
+  },
+  {
+    "file": "A04_MagazineCapacity_I.png",
+    "bytes": 385774,
+    "width": 1254,
+    "height": 1254,
+    "pixelFormat": "Format32bppArgb",
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "unchangedHashMatch": true
+  },
+  {
+    "file": "A05_GrappleEnergy_I.png",
+    "bytes": 474563,
+    "width": 1254,
+    "height": 1254,
+    "pixelFormat": "Format32bppArgb",
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "unchangedHashMatch": null
+  },
+  {
+    "file": "A06_FocusCooldown_I.png",
+    "bytes": 584429,
+    "width": 1254,
+    "height": 1254,
+    "pixelFormat": "Format32bppArgb",
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "unchangedHashMatch": true
+  },
+  {
+    "file": "A07_GrappleCooldown_I.png",
+    "bytes": 512736,
+    "width": 1254,
+    "height": 1254,
+    "pixelFormat": "Format32bppArgb",
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "unchangedHashMatch": null
+  },
+  {
+    "file": "A08_OutOfCombatRegen_I.png",
+    "bytes": 463531,
+    "width": 1254,
+    "height": 1254,
+    "pixelFormat": "Format32bppArgb",
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "unchangedHashMatch": true
+  },
+  {
+    "file": "A09_RegenDelay_I.png",
+    "bytes": 486583,
+    "width": 1254,
+    "height": 1254,
+    "pixelFormat": "Format32bppArgb",
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "unchangedHashMatch": true
+  },
+  {
+    "file": "B01_GrappleBase.png",
+    "bytes": 436803,
+    "width": 1254,
+    "height": 1254,
+    "pixelFormat": "Format32bppArgb",
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "unchangedHashMatch": null
+  }
+]

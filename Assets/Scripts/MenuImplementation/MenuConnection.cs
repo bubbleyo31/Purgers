@@ -11,19 +11,21 @@ using UnityEngine.SceneManagement;
 
 namespace MultiClimb.Menu
 {
-    public class MenuConnection : IFusionMenuConnection
+    public partial class MenuConnection : IFusionMenuConnection
     {
         public MenuConnection(
             IFusionMenuConfig config,
             NetworkRunner runnerPrefab,
             IGameSaveRepository saveRepository,
-            int newSaveCycleLength = GameSaveSchema.DefaultCycleLength)
+            int newSaveCycleLength = GameSaveSchema.DefaultCycleLength,
+            float connectionTimeoutSeconds = 30f)
         {
             _config = config;
             _runnerPrefab = runnerPrefab;
             _saveRepository = saveRepository ??
                 throw new ArgumentNullException(nameof(saveRepository));
             _newSaveCycleLength = Math.Max(1, newSaveCycleLength);
+            _connectionTimeoutSeconds = Math.Max(1f, connectionTimeoutSeconds);
         }
 
         public string SessionName { get; private set; }
@@ -32,6 +34,7 @@ namespace MultiClimb.Menu
         public string AppVersion { get; private set; }
         public List<string> Usernames { get; private set; }
         public bool IsConnected => _runner && _runner.IsRunning;
+        public NetworkRunner Runner => _runner;
         public int Ping => (int)(IsConnected ? _runner.GetPlayerRtt(_runner.LocalPlayer) * 1000 : 0);
 
         private NetworkRunner _runnerPrefab;
@@ -41,12 +44,14 @@ namespace MultiClimb.Menu
         private readonly int _newSaveCycleLength;
         private GameSaveData _selectedHostSave;
         private bool _connectingSafeCheck;
-        private CancellationTokenSource _cancellationTokenSource;
-        private CancellationToken _cancellationToken;
+        private readonly float _connectionTimeoutSeconds;
+        private MenuConnectionAttempt _attempt;
+        private TaskCompletionSource<bool> _connectFinished;
+        public event Action<string> ConnectionAttemptFailed;
 
         public async Task<ConnectResult> ConnectAsync(IFusionMenuConnectArgs connectArgs)
         {
-            if (_connectingSafeCheck)
+            if (_connectingSafeCheck || IsConnected || !_sessionCleanup.IsCompleted || _roomClosedAwaitingAcknowledgement)
             {
                 return CreateFailedResult(
                     "目前已有連線流程正在執行。",
@@ -55,12 +60,24 @@ namespace MultiClimb.Menu
             }
 
             _connectingSafeCheck = true;
+            _connectFinished = new TaskCompletionSource<bool>();
+            var attempt = _attempt = new MenuConnectionAttempt(TimeSpan.FromSeconds(_connectionTimeoutSeconds));
+            var elapsed = System.Diagnostics.Stopwatch.StartNew();
             string newlyCreatedSaveId = null;
+            NetworkRunner runner = null;
+            ConnectResult result = null;
 
             try
             {
                 if (!TryResolveLaunchScene(connectArgs, out string sceneError))
-                    return CreateFailedResult(sceneError);
+                    return result = CreateFailedResult(sceneError);
+
+                // Client 只信任代碼；不使用本機 PreferredRegion 或 Best 快取。
+                bool joining = !connectArgs.Creating && !string.IsNullOrEmpty(connectArgs.Session);
+                connectArgs.Region = joining
+                    ? MenuRegionRouting.Decode(_config, connectArgs.Session.Trim().ToUpperInvariant())
+                    : MenuRegionRouting.Normalize(connectArgs.Region);
+                if (joining) connectArgs.Session = connectArgs.Session.Trim().ToUpperInvariant();
 
                 if (!TryPrepareSaveContext(
                         connectArgs,
@@ -70,15 +87,14 @@ namespace MultiClimb.Menu
                         out newlyCreatedSaveId,
                         out string saveError))
                 {
-                    return CreateFailedResult(saveError);
+                    return result = CreateFailedResult(saveError);
                 }
 
-                if (_runner && _runner.IsRunning)
-                    await _runner.Shutdown();
-
-                _runner = CreateRunner();
+                runner = _runner = CreateRunner();
+                ObserveSession(runner);
+                var session = _sessionEnd;
                 GameSaveRuntimeContext saveContext =
-                    GetOrAddSaveContext(_runner);
+                    GetOrAddSaveContext(runner);
 
                 if (accessMode == GameSaveAccessMode.HostWritable)
                     saveContext.InitializeHost(_saveRepository, launchSave);
@@ -86,15 +102,31 @@ namespace MultiClimb.Menu
                     saveContext.InitializeClientReadOnly();
 
                 var sceneManager =
-                    _runner.gameObject.AddComponent<NetworkSceneManagerDefault>();
+                    runner.gameObject.AddComponent<NetworkSceneManagerDefault>();
                 sceneManager.IsSceneTakeOverEnabled = false;
 
                 FusionAppSettings appSettings = CopyAppSettings(connectArgs);
+                GameMode gameMode = ResolveGameMode(connectArgs, forceHost);
+
+                if (!joining)
+                {
+                    if (string.IsNullOrEmpty(connectArgs.Region))
+                    {
+                        LogConnectStage("選擇區域", elapsed.Elapsed.TotalSeconds);
+                        // 在同一 Runner 先連上 Lobby；沿用 Photon 的測速／快取與後續連線。
+                        var lobby = await attempt.WaitAsync(JoinLobbyAsync(runner, gameMode, appSettings, attempt.Token));
+                        if (!lobby.Ok) throw new InvalidOperationException("無法取得伺服器區域：" + lobby.ShutdownReason);
+                        connectArgs.Region = MenuRegionRouting.Normalize(GetLobbyRegion(runner));
+                        appSettings.FixedRegion = Region = connectArgs.Region;
+                    }
+                    connectArgs.Session = MenuRegionRouting.Encode(_config, _config.CodeGenerator.Create(), connectArgs.Region);
+                }
+                attempt.Token.ThrowIfCancellationRequested();
 
                 var args = new StartGameArgs
                 {
                     CustomPhotonAppSettings = appSettings,
-                    GameMode = ResolveGameMode(connectArgs, forceHost),
+                    GameMode = gameMode,
                     SessionName = SessionName = connectArgs.Session,
                     PlayerCount = MaxPlayerCount = connectArgs.MaxPlayerCount
                 };
@@ -105,93 +137,115 @@ namespace MultiClimb.Menu
                     LoadSceneMode.Additive);
                 args.Scene = sceneInfo;
 
-                _cancellationTokenSource?.Dispose();
-                _cancellationTokenSource = new CancellationTokenSource();
-                _cancellationToken = _cancellationTokenSource.Token;
-                args.StartGameCancellationToken = _cancellationToken;
+                args.StartGameCancellationToken = attempt.Token;
 
-                int regionIndex =
-                    _config.AvailableRegions.IndexOf(connectArgs.Region);
-                args.SessionNameGenerator = () =>
-                    _config.CodeGenerator.EncodeRegion(
-                        _config.CodeGenerator.Create(),
-                        regionIndex);
-
+                LogConnectStage("建立／加入房間 region=" + connectArgs.Region, elapsed.Elapsed.TotalSeconds);
                 StartGameResult startGameResult =
-                    await _runner.StartGame(args);
-                var connectResult = new ConnectResult
+                    await attempt.WaitAsync(StartRunnerAsync(runner, args));
+                result = new ConnectResult
                 {
-                    Success = startGameResult.Ok,
+                    Success = startGameResult.Ok && !session.HasEnded && ReferenceEquals(_runner, runner),
                     FailReason = ResolveConnectFailReason(
                         startGameResult.ShutdownReason),
                     DebugMessage = startGameResult.Ok
-                        ? string.Empty
+                        ? "連線已結束，請重新連線。"
                         : $"Fusion 啟動失敗：{startGameResult.ShutdownReason}"
                 };
 
-                if (connectResult.Success)
+                if (result.Success)
                 {
-                    SessionName = _runner.SessionInfo.Name;
+                    session.MarkConnected(runner.IsClient);
+                    _multiplePeerSession = runner.Config.PeerMode == NetworkProjectConfig.PeerModes.Multiple;
+                    SessionName = runner.SessionInfo.Name;
+                    Region = MenuRegionRouting.Normalize(runner.SessionInfo.Region);
                     _selectedHostSave = null;
+                    result.DebugMessage = string.Empty;
+                    LogConnectStage("完成 region=" + Region, elapsed.Elapsed.TotalSeconds);
                 }
-                else
-                {
-                    RollbackSaveLaunch(newlyCreatedSaveId);
-                }
-
-                return connectResult;
+                return result;
+            }
+            catch (OperationCanceledException)
+            {
+                return result = CreateFailedResult(attempt.CancelledByUser ? string.Empty :
+                    $"連線逾時（{_connectionTimeoutSeconds:0} 秒），請檢查網路或指定伺服器區域後重試。",
+                    attempt.CancelledByUser ? ConnectFailReason.UserRequest : ConnectFailReason.Disconnect);
             }
             catch (Exception exception)
             {
-                RollbackSaveLaunch(newlyCreatedSaveId);
-                Debug.LogException(exception);
-                return CreateFailedResult(
+                // 網路／代碼錯誤交給既有 Popup；避免正常取消變成 Console 例外。
+                return result = CreateFailedResult(
                     $"連線流程發生例外：{exception.Message}");
             }
             finally
             {
+                if (result == null || !result.Success)
+                {
+                    _sessionEnd?.MarkLocalExit();
+                    attempt.CancelByUser(); // 停止仍在執行的底層工作；保留上方已判定的失敗原因。
+                    if (runner)
+                    {
+                        if (_sessionCleanup.IsCompleted)
+                            _sessionCleanup = EndSessionAsync(runner, ConnectFailReason.UserRequest, false);
+                        await _sessionCleanup;
+                    }
+                    RollbackSaveLaunch(newlyCreatedSaveId);
+                    SessionName = Region = null;
+                    LogConnectStage("已清理：" + (result?.DebugMessage ?? "取消"), elapsed.Elapsed.TotalSeconds);
+                }
+                attempt.Dispose();
+                _attempt = null;
                 _connectingSafeCheck = false;
+                _connectFinished.TrySetResult(true);
+                if (result != null && !result.Success && ConnectionAttemptFailed != null)
+                {
+                    result.CustomResultHandling = true;
+                    ConnectionAttemptFailed.Invoke(result.DebugMessage);
+                }
             }
         }
 
         public async Task DisconnectAsync(int reason)
         {
-            if (!_runner)
+            _sessionEnd?.MarkLocalExit();
+            if (_attempt != null)
+            {
+                _attempt.CancelByUser();
+                // ConnectAsync 負責本次 Runner 與新存檔清理；不可互相等待 Disconnect。
+                await _connectFinished.Task;
+                return;
+            }
+            if (!_sessionCleanup.IsCompleted)
+            {
+                await _sessionCleanup;
+                return;
+            }
+
+            var runner = _runner;
+            if (!runner)
             {
                 _selectedHostSave = null;
                 return;
             }
-
-            var peerMode = _runner.Config?.PeerMode;
-            _cancellationTokenSource?.Cancel();
-
-            if (_runner.IsRunning)
-            {
-                await _runner.Shutdown(
-                    shutdownReason: ResolveShutdownReason(reason));
-            }
-
-            if (_runner.TryGetComponent(
-                    out GameSaveRuntimeContext saveContext))
-            {
-                saveContext.Clear();
-            }
-
-            _selectedHostSave = null;
-
-            if (peerMode is NetworkProjectConfig.PeerModes.Multiple) return;
-
-            for (int i = SceneManager.sceneCount - 1; i > 0; i--)
-            {
-                SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(i));
-            }
+            _sessionCleanup = EndSessionAsync(runner, reason, false);
+            await _sessionCleanup;
         }
 
         public Task<List<FusionMenuOnlineRegion>> RequestAvailableOnlineRegionsAsync(IFusionMenuConnectArgs connectArgs)
         {
-            // Force best region
-            return Task.FromResult(new List<FusionMenuOnlineRegion>() { new FusionMenuOnlineRegion() { Code = string.Empty, Ping = 0 } });
+            // 保留 SDK Party 的固定索引。真正 Best 選區在可取消的 ConnectAsync 內。
+            return Task.FromResult(MenuRegionRouting.CreateCatalog(_config));
         }
+
+        protected virtual Task<StartGameResult> JoinLobbyAsync(NetworkRunner runner, GameMode mode,
+            FusionAppSettings settings, CancellationToken token) => runner.JoinSessionLobby(
+                mode == GameMode.Shared ? SessionLobby.Shared : SessionLobby.ClientServer,
+                customAppSettings: settings, cancellationToken: token, useCachedRegions: true);
+
+        protected virtual string GetLobbyRegion(NetworkRunner runner) => runner.LobbyInfo.Region;
+        protected virtual Task<StartGameResult> StartRunnerAsync(NetworkRunner runner, StartGameArgs args) => runner.StartGame(args);
+
+        private static void LogConnectStage(string stage, double seconds) =>
+            Debug.Log($"[MenuConnection] {stage} elapsed={seconds:0.00}s");
 
         public void SetSessionUsernames(List<string> usernames)
         {
@@ -380,7 +434,7 @@ namespace MultiClimb.Menu
             }
         }
 
-        private NetworkRunner CreateRunner()
+        protected virtual NetworkRunner CreateRunner()
         {
             if (_runnerPrefab)
                 return UnityEngine.Object.Instantiate(_runnerPrefab);

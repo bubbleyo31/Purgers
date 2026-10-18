@@ -1,0 +1,40 @@
+PASS connect Host: Ok
+PASS Runner first tick
+PASS enemy first valid snapshot
+PASS full health initially hidden
+PASS authoritative stun starts without damage
+PASS full health status forces health visibility
+PASS shorter stun overlap does not refill
+PASS longer stun resets denominator
+PASS connect Client: Ok
+PASS Runner first tick
+PASS late join receives current stun
+PASS late join uses shared denominator rather than full bar
+PASS client cannot change authoritative stun
+PASS mark dictionaries and spans replicate
+PASS each marker reads independent duration
+PASS no observer identity never exposes marks
+PASS explicit mark refresh refills even when shorter
+PASS enemy source rejects wrong Runner
+PASS formal players ready on both peers
+PASS shorter grapple block preserves progress
+PASS strong short slow controls gameplay independently of HUD union
+PASS weak long slow remains visible after strongest expires
+PASS teammate snapshot matches authoritative slow duration
+PASS observer is neither target input nor state authority
+PASS remote player retains input authority separation
+PASS cleanse removes negative status bars on both peers
+PASS equip production bullet time: 
+PASS bullet time module ready
+PASS bullet time appears on player and enemy
+PASS bullet status does not depend on slow multiplier
+PASS bullet time pauses underlying stun bar
+PASS bullet status replicated to non-authority observer
+PASS self reads bullet-only snapshot after cleanse
+PASS manual cancellation removes bullet status on both peers
+PASS connect Client: Ok
+PASS Runner first tick
+PASS reconnect restores active target
+PASS reconnect cannot refill old stun
+PASS death removes all enemy status presentation
+PASS despawn clears status target

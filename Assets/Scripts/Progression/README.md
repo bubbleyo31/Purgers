@@ -12,7 +12,7 @@
 
 | 檔案 | 職責 |
 |---|---|
-| `PlayerExperienceRules.cs` | Phase 6-A 的純資料規則：全隊共享經驗、擊殺者 +1、升級需求、超額經驗、待選獎勵期間停止收經驗。尚未與擊殺／Fusion Runtime 接線。 |
+| `PlayerExperienceRules.cs` | 純規則：共享擊殺經驗、逐級需求與固定表尾、超額與待領累加，由 GameLogic 權威流程呼叫。 |
 | `Save/PlayerExperienceSaveBridge.cs` | Phase 6-B 將 Host 的同步經驗資料還原／寫回 `host` 存檔記錄；訪客進度不使用 Host 身分寫檔。 |
 
 存檔與 Runner Context 請繼續閱讀 `Save/README.md`。
@@ -27,3 +27,5 @@
 ## 2026-10-10 武器獎勵
 
 WeaponRewardRules 提供三武器穩定 ID 與已裝排除。PlayerRewardDefinition／Catalog 支援 Weapon；GameLogic 經既有 Profession Runtime 換裝。正式規則：[46](../../../Documentation/ProjectArchitecture/46_武器獎勵與換裝.md)。
+
+2026-10-17：PlayerExperienceSettings 共用 Inspector 逐級表；Host 保存 Session 快照，HUD 讀同步門檻。設定見 Documentation/ProjectArchitecture/160_Phase6_經驗與獎勵數值調整手冊.md。

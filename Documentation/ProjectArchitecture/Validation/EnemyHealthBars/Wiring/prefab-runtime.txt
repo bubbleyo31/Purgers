@@ -1,0 +1,37 @@
+START Enemy_Melee_A
+PASS Enemy_Melee_A real prefab spawn, snapshot and visible bar
+PASS Enemy_Melee_A authoritative health 76 percent
+PASS Enemy_Melee_A despawn clears bar
+START Enemy_Melee_B
+PASS Enemy_Melee_B real prefab spawn, snapshot and visible bar
+PASS Enemy_Melee_B authoritative health 76 percent
+PASS Enemy_Melee_B despawn clears bar
+START Enemy_Ranged_A
+PASS Enemy_Ranged_A real prefab spawn, snapshot and visible bar
+PASS Enemy_Ranged_A authoritative health 76 percent
+PASS Enemy_Ranged_A despawn clears bar
+START Enemy_Ranged_B
+PASS Enemy_Ranged_B real prefab spawn, snapshot and visible bar
+PASS Enemy_Ranged_B authoritative health 76 percent
+PASS Enemy_Ranged_B despawn clears bar
+START Enemy_Ranged_C_Beam
+PASS Enemy_Ranged_C_Beam real prefab spawn, snapshot and visible bar
+PASS Enemy_Ranged_C_Beam authoritative health 76 percent
+PASS Enemy_Ranged_C_Beam despawn clears bar
+START Enemy_Ranged_C_Projectile
+PASS Enemy_Ranged_C_Projectile real prefab spawn, snapshot and visible bar
+PASS Enemy_Ranged_C_Projectile authoritative health 76 percent
+PASS Enemy_Ranged_C_Projectile despawn clears bar
+START Enemy_Ranged_Reflector
+PASS Enemy_Ranged_Reflector real prefab spawn, snapshot and visible bar
+PASS Enemy_Ranged_Reflector authoritative health 76 percent
+PASS Enemy_Ranged_Reflector despawn clears bar
+START Enemy_Flytrap
+PASS Enemy_Flytrap real prefab spawn, snapshot and visible bar
+PASS Enemy_Flytrap authoritative health 76 percent
+PASS Enemy_Flytrap despawn clears bar
+START Enemy_Suicide
+PASS Enemy_Suicide real prefab spawn, snapshot and visible bar
+PASS Enemy_Suicide authoritative health 76 percent
+PASS Enemy_Suicide despawn clears bar
+COMPLETE 27 checks across 9 actual prefab assets

@@ -1,0 +1,48 @@
+PASS Runner starts: Ok
+PASS Runner starts: Ok
+PASS basic grapple and starting gun retained
+PASS new run has no equipped special skills
+PASS level one opening reward
+PASS XP while reward pending
+PASS queued XP does not reroll shown options
+PASS client cannot grant authoritative XP
+PASS grant MaximumHealth: 
+PASS grant MaximumHealth: 
+PASS two HP tiers yield 140 and top up only added amount
+PASS grant MagazineCapacity: 
+PASS grant JohnWick: 
+PASS capacity adds five plus John Wick ten bullets
+PASS reload starts
+PASS grant ReloadSpeed: 
+PASS running reload retains duration snapshot
+PASS grant NotToday: 
+PASS grant SelfRescue: 
+PASS grant Adrenaline: 
+PASS Not Today intercepts before down at 25 percent
+PASS lethal interception consumes only Not Today
+PASS three second invulnerability rejects second lethal hit
+PASS down consumes temporary passives, keeps self rescue
+PASS John Wick loss clears excess bullets
+PASS all down waits past normal two seconds for self rescuer
+PASS self rescue pauses own bleedout
+PASS interruption retains passive
+PASS self rescue requires ten seconds and restores 35 percent of 140
+PASS successful self rescue consumes passive, retains attribute rank
+PASS grant SelfRescue: 
+PASS teammate rescue preserves self rescue passive
+PASS equip hit: 
+PASS equip first focus: 
+PASS replace focus: 
+PASS old skill becomes loot retaining level and cooldown
+PASS focus replacement preserves other slot runtime
+PASS ground cooldown continues
+PASS actual E pickup candidate passes range aim and occlusion
+PASS actual pickup consumes E and transfers skill
+PASS picked skill retains level and remaining cooldown
+PASS grant CarnivorousTree: 
+PASS actual enemy damage resolved
+PASS lifesteal is five percent actual enemy HP damage
+PASS grant RegenerationDelay: 
+FAIL System.Exception: regeneration waits for unlock delay
+  at RewardGrowthRuntimeVerification.Check (System.Boolean ok, System.String message) [0x0001f] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\RewardGrowthRuntimeVerification.cs:27 
+  at RewardGrowthRuntimeVerification.Begin () [0x017a3] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\RewardGrowthRuntimeVerification.cs:157 

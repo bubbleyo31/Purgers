@@ -1,0 +1,13 @@
+PASS Runner starts: Ok
+PASS authority accepts existing name pipeline
+PASS first player is red
+PASS Runner starts: Ok
+PASS authority names second player
+PASS client cannot overwrite authoritative names
+PASS same blue identity on all peers
+PASS onscreen teammate has no duplicate arrow
+PASS arrow has no duplicate nameplate
+PASS death marker survives player despawn
+PASS respawn retains identity and color
+PASS Runner starts: Ok
+PASS other player's color never renumbered

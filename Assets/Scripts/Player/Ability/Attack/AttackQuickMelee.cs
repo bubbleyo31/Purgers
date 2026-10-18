@@ -811,6 +811,8 @@ public class AttackQuickMelee :
         Vector3 forward =
             GetMeleeForward();
 
+        EnemyProjectileReflection.ReflectMelee(ownerPlayer, origin, forward, meleeRange, searchRadius, maximumAttackAngle);
+
         /*
          * Overlap Sphere 不放在玩家正中心。
          *

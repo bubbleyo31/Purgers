@@ -77,6 +77,34 @@ public class FirstPersonHitCameraShake : MonoBehaviour
     [Tooltip("真正接受 Camera Shake 的視覺根節點。建議建立 CameraEffectsRoot，並把 World Camera、Weapon Camera、ViewModelRoot 都放在它下面。不要直接指定 CameraRig，避免與 CameraFollow 同時修改同一個 Transform。")]
     private Transform cameraEffectsRoot;
 
+    // 單一 Transform 寫入者：命中震動與可選換彈旋轉在這裡合成。
+    private Object reloadRotationOwner;
+    private Quaternion reloadRotation = Quaternion.identity;
+    private Quaternion shakeRotation = Quaternion.identity;
+    public Transform EffectsRoot => cameraEffectsRoot;
+
+    public void SetReloadRotation(Object owner, Quaternion rotation)
+    {
+        if (owner == null || !isActiveAndEnabled || cameraEffectsRoot == null) return;
+        reloadRotationOwner = owner;
+        reloadRotation = rotation;
+        ApplyEffectRotation();
+    }
+
+    public void ClearReloadRotation(Object owner)
+    {
+        if (reloadRotationOwner != owner) return;
+        reloadRotationOwner = null;
+        reloadRotation = Quaternion.identity;
+        ApplyEffectRotation();
+    }
+
+    private void ApplyEffectRotation()
+    {
+        if (cameraEffectsRoot == null) return;
+        cameraEffectsRoot.localRotation = baseLocalRotation * reloadRotation * shakeRotation;
+    }
+
     #endregion
 
     // =====================================================================
@@ -439,6 +467,10 @@ public class FirstPersonHitCameraShake : MonoBehaviour
 
     private void OnDisable()
     {
+        if (currentShakeRoutine != null) StopCoroutine(currentShakeRoutine);
+        currentShakeRoutine = null;
+        reloadRotationOwner = null;
+        reloadRotation = Quaternion.identity;
         /*
          * 如果物件在震動途中被關閉，
          * 一定要恢復基準 Transform。
@@ -448,6 +480,8 @@ public class FirstPersonHitCameraShake : MonoBehaviour
 
     private void OnDestroy()
     {
+        reloadRotationOwner = null;
+        reloadRotation = Quaternion.identity;
         ResetShakeTransform();
 
         if (Singleton == this)
@@ -783,6 +817,13 @@ public class FirstPersonHitCameraShake : MonoBehaviour
     // =====================================================================
     #region Shake 核心
 
+    /// <summary>成功出鈎的純視覺回饋；沿用唯一相機效果合成入口，不產生攻擊／命中事件。</summary>
+    public void PlayGrappleLaunchShake(float duration, float positionAmplitude, float rotationAmplitude)
+    {
+        if (!isActiveAndEnabled) return;
+        PlayShake(Mathf.Max(0f, duration), Mathf.Max(0f, positionAmplitude), Mathf.Max(0f, rotationAmplitude));
+    }
+
     /// <summary>
     /// 播放指定參數的 Camera Shake。
     ///
@@ -981,11 +1022,8 @@ public class FirstPersonHitCameraShake : MonoBehaviour
                 baseLocalPosition +
                 positionOffset;
 
-            cameraEffectsRoot.localRotation =
-                baseLocalRotation *
-                Quaternion.Euler(
-                    rotationOffset
-                );
+            shakeRotation = Quaternion.Euler(rotationOffset);
+            ApplyEffectRotation();
 
             yield return null;
         }
@@ -1016,8 +1054,8 @@ public class FirstPersonHitCameraShake : MonoBehaviour
         cameraEffectsRoot.localPosition =
             baseLocalPosition;
 
-        cameraEffectsRoot.localRotation =
-            baseLocalRotation;
+        shakeRotation = Quaternion.identity;
+        ApplyEffectRotation();
     }
 
     #endregion

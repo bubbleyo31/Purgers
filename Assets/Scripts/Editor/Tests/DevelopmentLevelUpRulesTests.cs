@@ -18,10 +18,10 @@ public sealed class DevelopmentLevelUpRulesTests
     }
 
     [Test]
-    public void PendingRewardCannotBeSkippedByDebugKey()
+    public void PendingRewardDoesNotBlockAnotherDebugLevel()
     {
         Assert.That(DevelopmentLevelUpRules.ExperienceToNextLevel(
-            new PlayerExperienceState(3, 0, 1)), Is.Zero);
+            new PlayerExperienceState(3, 0, 1)), Is.EqualTo(20));
     }
 
     [Test]

@@ -1,0 +1,19 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>屬性獎勵圖示｜正式尺寸預覽</title><style>
+:root{color-scheme:dark;font-family:system-ui,"Microsoft JhengHei",sans-serif;background:#181d23;color:#e5e7e0}body{max-width:1240px;margin:32px auto;padding:0 24px}h1{font-size:28px}p{line-height:1.8;max-width:1000px}.status{color:#e3cc66}button,a{color:#eee4b8}button{padding:10px 16px;background:#343b3e;border:1px solid #69716d;border-radius:6px;cursor:pointer}button.on{background:#6c6340}.scroll{overflow:auto;margin:20px 0;border:1px solid #3e4649;border-radius:8px}.scroll img{display:block;max-width:none}.compare{display:flex;gap:12px}.compare img{width:560px;height:1120px}.notice{color:#bfc8c6}li{line-height:1.9}section{padding:20px 0;border-bottom:1px solid #394144}a{text-underline-offset:3px}</style>
+<h1>屬性獎勵圖示：正式尺寸預覽</h1><p><a href="SlabRank/index.html">最新：粗襯線／各階適配（已核准並套用）</a></p><p class="status">已依核准版本套用正式 UI（2026-10-17）。圖示完整、階級清楚，兩項彈匣數字左右等距；原始 PNG 與卡片版面保留。</p>
+<p>以 StageHUD 的實際六角底板 <strong>71.28525 × 82.95008</strong> 渲染。下方圖片保留原生像素尺寸；請用瀏覽器 100% 縮放查看，不以放大底板代替清晰度。</p>
+<section><h2>正式套用結果</h2><p>下方為最新粗襯線／各階適配樣式的正式元件渲染，共 42 階級，已核對文字中心與完整圖示；後續比較圖保留核准前的歷史預覽。前一版本聚焦測試 13／13；完整回歸 981 通過、2 範圍外失敗、1 略過。Bold 調整已重新編譯及渲染核對，未重跑完整回歸。</p><div class="scroll"><img src="../../Documentation/ProjectArchitecture/Validation/GrowthIcons/SlabAdaptive/Applied_1080p_1to1.png" width="560" height="1120" alt="正式UI全部42階級"></div><p><a href="../../Documentation/ProjectArchitecture/Validation/GrowthIcons/ApprovedSize/README.md">正式套用驗證紀錄</a></p></section><section><h2>換彈速度／彈匣容量：左右留白校正</h2><p>每組左為上一版預覽，右為本次校正。以數字高度涵蓋範圍內的彈匣內壁界定左右留白；只水平移動數字，字級、垂直位置、原圖與角落符號保持原樣。I～IV 共 8 組已檢查左右留白相等。</p><div class="scroll"><img src="MagazineCentering_1to1.png?v=2" width="800" height="360" alt="彈匣等級左右等距比較"></div></section><section><h2>九種屬性比較</h2><p>每組左邊是修正前版本，右邊是已核准預覽。原圖與右上符號完整繪出，不裁圖、不拉伸。</p><div class="scroll"><img src="Overview_1to1.png?v=2" width="600" height="500" alt="九種屬性正式尺寸前後比較"></div></section>
+<section><h2>全部 42 個階級</h2><div><button id="after" class="on" onclick="show('after')">修正預覽</button> <button id="before" onclick="show('before')">目前版本</button> <button id="both" onclick="show('both')">並排比較</button></div><div class="scroll"><div class="compare"><img id="beforeImage" src="Before_1080p_1to1.png?v=2" width="560" height="1120" style="display:none" alt="目前全部階級"><img id="afterImage" src="After_1080p_1to1.png?v=2" width="560" height="1120" alt="修正全部階級"></div></div></section>
+<section><h2>原本三張卡片的版面</h2><p>保留正式卡片座標與底板，使用暫時資料顯示圖示。這是 Unity 隔離 UI 渲染，不是自然遊戲截圖。</p>
+<p><a href="Cards_1_1920x1080.png">生命／換彈／近戰 1080p</a> · <a href="Cards_2_1920x1080.png">彈匣／減耗／專注 1080p</a> · <a href="Cards_3_1920x1080.png">鈎索冷卻／回血／等待 1080p</a> · <a href="Cards_2_1280x720.png">720p 檢查</a></p>
+<div class="scroll"><img src="Cards_2_1280x720.png?v=2" width="1280" height="720" alt="原卡片版面720p"></div></section>
+<section><h2>本次修正方案</h2><ul><li>圖案依可見輪廓等比放大，約由 49.76 增加至 62.55～71.52 UI 單位；底板尺寸不變。</li><li>完整 Sprite UV 繪製，角落符號不裁切。縮放計算忽略極淡背景殘留，但沒有刪除或改寫任何 PNG 像素。</li><li>階級數字沿用原字框；換彈速度與彈匣容量的水平中心已依內壁校正，其餘保留既有中心，使用核准粗襯線，依各階字寬適配原字框，以字形可見範圍置中；保留 TMP Bold，專用字形本身具備厚實橫槓。</li><li>正式九張屬性底圖已加入 Mipmap／Trilinear、mip bias -0.5，減少縮小後細邊鋸齒。原始 PNG 不變。</li></ul>
+<p class="notice">已檢查 42 個階級的字元、文字框與中心誤差，以及實際 CanvasRenderer 的完整 UV、四頂點及等比幾何。正式 Runtime 已套用，完整回歸結果見上方紀錄；未執行獨立 Host／Client；720p 的鈎索小圓內數字仍受原始留白空間限制，請以預覽確認是否符合期待。</p>
+<p><a href="Verification.txt">幾何與文字檢查紀錄</a> · <a href="FileVerification.json">資產雜湊與圖片檔案核對</a> · <a href="RenderPreview.cs.txt">可重現的 Unity 預覽程式</a></p></section>
+<script>function show(m){document.getElementById('beforeImage').style.display=m==='after'?'none':'block';document.getElementById('afterImage').style.display=m==='before'?'none':'block';for(const x of ['after','before','both'])document.getElementById(x).classList.toggle('on',x===m)}</script></html>
+
+
+
+
+
+

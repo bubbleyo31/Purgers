@@ -39,3 +39,9 @@ Phase 4 前置-1：終端機與 Ready 請求遵守 AllInput 鎖。切場前重�
 核對來源：SafeHouseFlowController／SafeHouseReadyRules／SafeHouseHudController 與 SafeHouse 場景。
 全員準備即進入 1 秒出發，優先於同 Tick 投票逾時。State Authority 保存同步 PausedReadyCheckTicks、停止投票 Timer；HUD 只顯示出發秒數。取消準備／新加入恢復原投票餘額；ESC 取消整票。場景既有 Countdown Duration Seconds 由 Editor 改為 1，Ready Check Timeout Seconds 保留 7。
 設定、手動操作與驗證見 [145 安全屋 Ready Check](../../../../Documentation/ProjectArchitecture/145_PrePhase4-2_安全屋鍵盤準備與HUD.md)。
+## 2026-10-13 安全屋限制與 HUD（局部）
+
+安全屋 Q／E 經 PlayerActionGate 封鎖，玩家友傷／自傷經既有 DamageReceiverUtility／PlayerHealth 拒絕；普通武器與 ALT 獎勵維持。SafeHouseHudController.HudRunner 可供技能／經驗子 HUD 綁定；2026-10-13 已依使用者授權接到正式 SafeHouse 場景，保留原安全屋資訊。詳見 Documentation/ProjectArchitecture/145_PrePhase4-2_安全屋鍵盤準備與HUD.md 及 Validation/SafeHouseGameplay/README.md。
+
+## 2026-10-17 左上外觀
+使用者指定第一張切角預覽，TopLeftColumn 納入既有 ReferenceFrame，沿用 UtilityPlate／HUD 字型；投票秒數接到 SafeHouseHudController.readyTimerLabel，原準備按鈕保留，新鍵帽是呈現。未接線可沿用舊合併文字。小地圖圖資、35／55 公尺、M 展開 600×600、投票請求與權威時序不變。Inspector 與驗證狀態見 145 文件「安全屋小地圖與投票外觀」。

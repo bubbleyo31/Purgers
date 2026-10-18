@@ -35,7 +35,7 @@ public sealed class EnemyStationaryTests
         finally { UnityEngine.Object.DestroyImmediate(obj); }
     }
     [Test]
-    public void StationarySpawnUsesAuthoredCenterWithChunkTransform()
+    public void StationarySpawnScattersInsideAuthoredBoxWithChunkTransform()
     {
         var obj = new GameObject("Authored Turret Position");
         var randomState = UnityEngine.Random.state;
@@ -48,9 +48,18 @@ public sealed class EnemyStationaryTests
             data.ApplyModifiedPropertiesWithoutUndo();
             obj.transform.SetPositionAndRotation(new Vector3(14f, 9f, 2f), Quaternion.Euler(0f, 73f, 0f));
             obj.transform.localScale = new Vector3(2f, 1f, 3f);
-            Vector3 expected = obj.transform.TransformPoint(new Vector3(2f, 3f, -4f));
-            for (int i = 0; i < 8; i++)
-                Assert.That(Vector3.Distance(zone.RandomPoint(), expected), Is.LessThan(0.0001f));
+            UnityEngine.Random.InitState(9812);
+            Vector3 center = obj.transform.TransformPoint(new Vector3(2f, 3f, -4f));
+            Vector3 first = zone.RandomPoint();
+            bool scattered = false;
+            for (int i = 0; i < 64; i++)
+            {
+                Vector3 sample = zone.RandomPoint();
+                Assert.That(zone.Contains(sample), Is.True, "Every root stays within the transformed box.");
+                scattered |= Vector3.Distance(first, sample) > 1f;
+            }
+            Assert.That(scattered, Is.True, "Stationary describes movement after spawn, not a shared spawn point.");
+            Assert.That(first, Is.Not.EqualTo(center));
             Assert.That(zone.UsesAutomaticFlyingPatrol, Is.False);
         }
         finally { UnityEngine.Random.state = randomState; UnityEngine.Object.DestroyImmediate(obj); }

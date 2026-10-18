@@ -1,0 +1,26 @@
+PASS Runner starts: Ok
+PASS Runner starts: Ok
+PASS 死亡前已看見本機角色
+PASS 權威正式死亡入口成功
+PASS 死亡者排除，單一候選觀戰
+PASS 單一候選切換保持原玩家
+PASS Runner starts: Ok
+PASS 晚加入不打斷目前目標
+PASS E 入口切下一位
+PASS Q 入口切上一位
+PASS 向前循環到最後一位
+PASS 倒地仍可觀戰且不強制換目標
+PASS Client 不可自行決定正式死亡
+PASS 正式 HUD 讀同步玩家名稱及倒地狀態
+PASS 共用頭像已接線
+PASS 控制鎖阻擋切換
+PASS 目標正式死亡自動改看下一位
+PASS 無效／離線成員不留在名單
+PASS 黑幕與聲音同時漸變
+PASS 淡出加完成後停留，未提前準備切場
+PASS Host 等待較晚 Client 回報
+PASS 全滅黑幕中禁止切換
+PASS 每位仍連線玩家以自己的 PlayerRef 回報
+PASS 取消清除黑幕、音量衰減與輸入鎖
+PASS 載入尚未完成持續全黑靜音
+PASS 玩家相機就緒後 1.5 秒恢復畫面聲音

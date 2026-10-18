@@ -282,3 +282,18 @@ PlayerShockwaveVisual 保留材質／貼圖／Prefab 引用，改為上下同寬
 `SupportAerialAbility` 實作 `IPlayerAbilityHudState`，使用上述中央 `TimedAbilityBar` 顯示 Definition 名稱、「效果持續」、一位小數秒數及剩餘比例。技能槽同步使用既有作用中秒數樣式；結束後照常顯示冷卻。再次按下 E、落地或到期等既有結束路徑立即讓快照隱藏。HUD 可用底色沿用職業限制，不新增空中資格判定。
 
 總長由 State Authority 啟動時保存，不依本機首次看到的剩餘時間、也不依啟動後改動的 Inspector 值重建。本輪不調整時間／倍率資產，不重建 UI、不改 Prefab 接線與外觀。既有 StageHUD 引用即可使用。驗證與多人限制見 [本輪紀錄](Validation/AerialTimedHud/README.md)。
+
+## 2026-10-17 保命免控與護盾空格（局部核對）
+
+新增「不是今天」黃色閃爍，沿 PlayerAbilityColorGrading 唯一 LGG compositor，讀權威無敵剩餘時間；notTodayPulseSeconds 預設 0.75、strength 0.9，完整設定見 168。護盾峰值容量只保留至當次盾值歸零，不再留下額外空格，正式規則同步至 167。 詳細規則見 [168](168_角色成長被動與技能掉落.md)，驗證見 [紀錄](Validation/NotTodayShield/README.md)。
+
+## 2026-10-18 右下技能槽狀態呈現（局部核對）
+
+最後核對日期：2026-10-18。核對來源：LocalPlayerBattleAbilityHUD.States、AbilitySlotHudSnapshot 與原技能 Runtime。
+
+右下技能槽冷卻統一整格順時針遮罩＋置中白色倒數；完成短促亮一次。閃現待命為淡金期限外框，作用中為青色外框；只有原本可提前結束的技能顯示「再次按下結束」。精確作用／待命秒數沿中央條，不再放進槽內冷卻字位置。 完整定案、Inspector 與驗證邊界見 [107 右下技能槽狀態呈現](107_右下技能槽狀態呈現.md)。
+
+## 2026-10-18 貫穿砲四階段呈現（局部核對）
+
+PlayerPiercingCannonAbility 在原 Casting 期間顯示細線／中線預告，Aim Stage Ratio 分段但不鎖準星；正式 Activate 仍取出手瞬間位置、方向。內建正式光束改為亮核、一次性粒子及粗細平滑歸零，新增 BeamDuration 同步分母。原 beamWidth／beamColor 保留為舊資料回退，正式調整移至 Presentation；fireVfx 自訂插槽仍可替代發射段。共用四個 GameplayAudioCue 接口目前留空，尚無正式音檔。完整 Inspector、責任與驗證見 [108](108_雷射四階段視聽呈現.md)／[紀錄](Validation/BeamPresentation/README.md)。
+

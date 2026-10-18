@@ -71,6 +71,14 @@ These rules apply to Hermes, Codex, Claude Code, and other coding agents working
 - Do not introduce DOTween, UniTask, Cinemachine, Addressables, a dependency-injection framework, or a paid asset merely for convenience. Add one only when a concrete feature has an owner, migration plan, and measurable benefit.
 - Existing custom FOV, camera shake, and screen transition systems have gameplay-specific ownership and must not be silently replaced by a generic tween/camera package.
 
+## 背景託管不搶焦點
+
+- Unity MCP／Agent 背景託管時，預設使用者正在其他視窗工作。不得主動將 Unity 或測試 Player 帶到前景、切換應用程式、聚焦 EditorWindow，或以桌面點擊／模擬鍵鼠操作干擾使用者；不得以搶焦點作為 MCP 逾時、背景節流或測試卡頓的恢復手段。
+- 優先使用 MCP 資料查詢、Console、測試結果及不需要聚焦的相機離屏渲染。呼叫截圖或開啟 Editor 視窗前，確認實作沒有 `Focus()`、`GetWindow` 預設聚焦、`Show()` 或前景啟用等副作用；不可只依工具名稱判斷安全。現有 MCP 的 Scene View 截圖會呼叫 `sceneView.Focus()`，背景託管期間不可使用這條截圖路徑。
+- Game View 進入播放時使用 `PlayUnfocused`，不啟用 Play Focused／Play Maximized；保留 `Run In Background`。後者僅確保背景執行，不是防止搶焦點的保證。這些是本機 Editor／版面設定；新建 Game View、切換 Layout 或升級 Unity 後須重新核對，不可為核對而聚焦視窗。
+- 必須取得前景焦點的視覺／輸入驗證，先記錄具體待驗項目，繼續不依賴焦點的工作，待使用者明確允許該前景操作後才執行。未執行的驗證必須標示待驗，不可宣稱通過。
+- 不為避免搶焦點而擅自修改 Windows 全域焦點／登錄設定、安裝攔截程式、強制最小化視窗，或直接修改 `Library/PackageCache` 套件程式。若安全的背景路徑不足，先回報具體觸發操作與限制。
+
 ## Verification targets
 
 - No new Unity compile errors or warnings attributable to the change.

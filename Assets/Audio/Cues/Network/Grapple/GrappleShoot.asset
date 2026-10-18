@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fc0d95d8b6364349aa666fb50892c12, type: 3}
+  m_Name: GrappleShoot
+  m_EditorClassIdentifier: 
+  networkId: 20
+  networkDelivery: 0
+  clips:
+  - {fileID: 8300000, guid: 67c02badf064ef94089d960fb13e52f9, type: 3}
+  volume: 0.5
+  minimumPitch: 1
+  maximumPitch: 1
+  outputMixerGroup: {fileID: 0}
+  worldSpatialBlend: 1
+  worldRolloffMode: 1
+  worldMinimumDistance: 4
+  worldMaximumDistance: 100
+  worldDopplerLevel: 0

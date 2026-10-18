@@ -16,6 +16,9 @@ public sealed partial class EnemyStateController
     [Networked] private float AbilityKnockbackSpeed { get; set; }
     [Networked] private Vector3 AbilityKnockbackDirection { get; set; }
     [Networked] private TickTimer AbilityStunTimer { get; set; }
+    [Networked] private float StunHudSpan { get; set; }
+    public StatusEffectSnapshot StunStatus => fusionSpawned && Object != null && Object.IsValid && IsAlive
+        ? StatusEffectSnapshot.FromTimer(StatusEffectKind.Stun, Runner, AbilityStunTimer, StunHudSpan) : default;
     [Networked] private NetworkBool AbilityControlOwned { get; set; }
     [Networked] private NetworkBool AbilityWallHitCommitted { get; set; }
     private DamageRequest abilityWallDamage;
@@ -71,6 +74,25 @@ public sealed partial class EnemyStateController
         return true;
     }
 
+    /// <summary>共用定時暈眩入口；取消當前位移／攻擊，由原受控 owner 持有與釋放鎖。</summary>
+    public bool TryBeginTimedStun(float seconds)
+    {
+        if (!CanWriteState() || !IsAlive || seconds <= 0f) return false;
+        GetComponent<SupportGrapplePullReceiver>()?.CancelPull();
+        GetComponent<TankGatherMovementReceiver>()?.CancelForTimedStun();
+        AbilityKnockbackRemaining = 0f;
+        AbilityKnockbackSpeed = 0f;
+        AbilityControlOwned = true;
+        float remaining = AbilityStunTimer.RemainingTime(Runner) ?? 0f;
+        AbilityStunTimer = TickTimer.CreateFromSeconds(Runner, Mathf.Max(remaining, seconds));
+        StunHudSpan = StatusEffectRules.SpanAfterUpdate(remaining, StunHudSpan,
+            AbilityStunTimer.RemainingTime(Runner) ?? 0f);
+        AcquireAbilityMovement();
+        GetComponent<EnemyCombatDecisionController>()?.CancelForExternalControl();
+        TrySetControlState(EnemyControlState.Stunned);
+        return true;
+    }
+
     private void AcquireAbilityMovement()
     {
         if (AbilityMovementStarted) return;
@@ -82,6 +104,7 @@ public sealed partial class EnemyStateController
 
     private void ResetAbilityControl()
     {
+        StunHudSpan = 0f;
         AbilityMovementStarted = false;
         AbilityKnockbackRemaining = 0f;
         AbilityKnockbackSpeed = 0f;
@@ -107,12 +130,7 @@ public sealed partial class EnemyStateController
         }
 
         AcquireAbilityMovement();
-        var navigator = GetComponent<EnemyPatrolNavigator>();
-        float shapeRadius = navigator != null ? navigator.BodyRadius : 0.35f;
-        float shapeHeight = navigator != null ? navigator.BodyHeight : 1.8f;
-        Bounds bounds = abilityBody != null ? abilityBody.bounds :
-            new Bounds(transform.position + Vector3.up * shapeHeight * .5f,
-                new Vector3(shapeRadius * 2f, shapeHeight, shapeRadius * 2f));
+        Bounds bounds = GetAbilityControlCollisionBounds();
         float radius = Mathf.Max(0.02f, Mathf.Min(bounds.extents.x, bounds.extents.z));
         float halfSegment = Mathf.Max(0f, bounds.extents.y - radius);
         Vector3 bottom = bounds.center - Vector3.up * halfSegment + Vector3.up * controlCollisionSkin;
@@ -157,11 +175,24 @@ public sealed partial class EnemyStateController
                 if (IsAlive && abilityWallStunSeconds > 0f)
                 {
                     AbilityStunTimer = TickTimer.CreateFromSeconds(Runner, abilityWallStunSeconds);
+                    StunHudSpan = AbilityStunTimer.RemainingTime(Runner) ?? 0f;
                     TrySetControlState(EnemyControlState.Stunned);
                 }
             }
         }
         if (!IsAbilityKnockbackActive && !IsAbilityStunned) ReleaseAbilityControl();
+    }
+
+    private Bounds GetAbilityControlCollisionBounds()
+    {
+        var navigator = GetComponent<EnemyPatrolNavigator>();
+        float shapeRadius = navigator != null ? navigator.BodyRadius : 0.35f;
+        float shapeHeight = navigator != null ? navigator.BodyHeight : 1.8f;
+        // 飛行受擊膠囊可能是某一條觸鬚；位移避障須沿整體 Navigator 包絡。
+        bool flying = navigator is EnemyFlyingPatrolNavigator;
+        return !flying && abilityBody != null ? abilityBody.bounds :
+            new Bounds(transform.position + Vector3.up * (shapeHeight * .5f + (flying ? navigator.BodyBaseOffset : 0f)),
+                new Vector3(shapeRadius * 2f, shapeHeight, shapeRadius * 2f));
     }
 
     private void ReleaseAbilityControl()

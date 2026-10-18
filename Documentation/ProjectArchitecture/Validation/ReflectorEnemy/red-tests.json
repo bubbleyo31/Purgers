@@ -1,0 +1,81 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"ff83f7c2312b43e4bad6a64020feb912\",\"status\":\"failed\",\"mode\":\"EditMode\",\"started_unix_ms\":1791904826090,\"finished_unix_ms\":1791904830196,\"last_update_unix_ms\":1791904830196,\"progress\":{\"completed\":10,\"total\":800,\"current_test_full_name\":null,\"current_test_started_unix_ms\":1791904829703,\"last_finished_test_full_name\":\"EnemyReflectorRulesTests.UnknownDirectionCannotBypassShield\",\"last_finished_unix_ms\":1791904829703,\"stuck_suspected\":false,\"editor_is_focused\":false,\"blocked_reason\":null,\"failures_so_far\":[{\"full_name\":\"EnemyReflectorRulesTests.HomingRequiresTargetAndNearDistance(False,2.0f,False)\",\"message\":\"  尚未接入反彈護盾敵人的共用規則\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyReflectorRulesTests.HomingRequiresTargetAndNearDistance(True,8.0f,False)\",\"message\":\"  尚未接入反彈護盾敵人的共用規則\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyReflectorRulesTests.HomingRequiresTargetAndNearDistance(True,2.0f,True)\",\"message\":\"  尚未接入反彈護盾敵人的共用規則\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyReflectorRulesTests.HomingTurnIsBounded\",\"message\":\"  尚未接入反彈護盾敵人的共用規則\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyReflectorRulesTests.OnlyRearIncomingDamagePassesDuringOpening(False,0.0f,False)\",\"message\":\"  尚未接入反彈護盾敵人的共用規則\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyReflectorRulesTests.OnlyRearIncomingDamagePassesDuringOpening(True,0.0f,True)\",\"message\":\"  尚未接入反彈護盾敵人的共用規則\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyReflectorRulesTests.OnlyRearIncomingDamagePassesDuringOpening(True,180.0f,False)\",\"message\":\"  尚未接入反彈護盾敵人的共用規則\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyReflectorRulesTests.OnlyRearIncomingDamagePassesDuringOpening(True,90.0f,False)\",\"message\":\"  尚未接入反彈護盾敵人的共用規則\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyReflectorRulesTests.ReflectedShotNeverHomes\",\"message\":\"  尚未接入反彈護盾敵人的共用規則\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"EnemyReflectorRulesTests.UnknownDirectionCannotBypassShield\",\"message\":\"  尚未接入反彈護盾敵人的共用規則\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"}],\"failures_capped\":false},\"error\":null,\"result\":null},\"hint\":null}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "success": true,
+      "message": "Test job status retrieved.",
+      "error": null,
+      "data": {
+        "job_id": "ff83f7c2312b43e4bad6a64020feb912",
+        "status": "failed",
+        "mode": "EditMode",
+        "started_unix_ms": 1791904826090,
+        "finished_unix_ms": 1791904830196,
+        "last_update_unix_ms": 1791904830196,
+        "progress": {
+          "completed": 10,
+          "total": 800,
+          "current_test_full_name": null,
+          "current_test_started_unix_ms": 1791904829703,
+          "last_finished_test_full_name": "EnemyReflectorRulesTests.UnknownDirectionCannotBypassShield",
+          "last_finished_unix_ms": 1791904829703,
+          "stuck_suspected": false,
+          "editor_is_focused": false,
+          "blocked_reason": null,
+          "failures_so_far": [
+            {
+              "full_name": "EnemyReflectorRulesTests.HomingRequiresTargetAndNearDistance(False,2.0f,False)",
+              "message": "  尚未接入反彈護盾敵人的共用規則\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyReflectorRulesTests.HomingRequiresTargetAndNearDistance(True,8.0f,False)",
+              "message": "  尚未接入反彈護盾敵人的共用規則\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyReflectorRulesTests.HomingRequiresTargetAndNearDistance(True,2.0f,True)",
+              "message": "  尚未接入反彈護盾敵人的共用規則\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyReflectorRulesTests.HomingTurnIsBounded",
+              "message": "  尚未接入反彈護盾敵人的共用規則\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyReflectorRulesTests.OnlyRearIncomingDamagePassesDuringOpening(False,0.0f,False)",
+              "message": "  尚未接入反彈護盾敵人的共用規則\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyReflectorRulesTests.OnlyRearIncomingDamagePassesDuringOpening(True,0.0f,True)",
+              "message": "  尚未接入反彈護盾敵人的共用規則\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyReflectorRulesTests.OnlyRearIncomingDamagePassesDuringOpening(True,180.0f,False)",
+              "message": "  尚未接入反彈護盾敵人的共用規則\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyReflectorRulesTests.OnlyRearIncomingDamagePassesDuringOpening(True,90.0f,False)",
+              "message": "  尚未接入反彈護盾敵人的共用規則\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyReflectorRulesTests.ReflectedShotNeverHomes",
+              "message": "  尚未接入反彈護盾敵人的共用規則\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "EnemyReflectorRulesTests.UnknownDirectionCannotBypassShield",
+              "message": "  尚未接入反彈護盾敵人的共用規則\r\n  Expected: not null\r\n  But was:  null\r\n"
+            }
+          ],
+          "failures_capped": false
+        },
+        "error": null,
+        "result": null
+      },
+      "hint": null
+    }
+  },
+  "isError": false
+}

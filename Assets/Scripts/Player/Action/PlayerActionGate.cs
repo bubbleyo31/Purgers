@@ -1,4 +1,4 @@
-using Fusion;
+﻿using Fusion;
 using UnityEngine;
 
 /// <summary>
@@ -122,8 +122,13 @@ public partial class PlayerActionGate : NetworkBehaviour
     {
         get
         {
+            if (!IsFusionSpawned) return PlayerActionBlockMask.None;
             int combined =
+                (int)Purgers.GameFlow.SafeHouse.SafeHouseGameplayRules.BlockedActions(
+                    Purgers.GameFlow.SafeHouse.SafeHouseFlowController.IsActiveFor(Runner)) |
                 (IsExplosionGrappleBlocked ? (int)PlayerActionBlockMask.Grapple : 0) |
+                (IsCaptured ? (int)CaptureBlocks : 0) |
+                (int)RescueBlockedActions |
                 QuickActionBlockMask |
                 StatusEffectBlockMask |
                 DeathBlockMask |
@@ -144,6 +149,7 @@ public partial class PlayerActionGate : NetworkBehaviour
     public override void Spawned()
     {
         InitializeExplosionStatus();
+        InitializeCapture();
         /*
          * State Authority 建立正式初始狀態。
          *
@@ -235,7 +241,7 @@ public partial class PlayerActionGate : NetworkBehaviour
             case PlayerActionBlockSource.StatusEffect:
             {
                 StatusEffectBlockMask =
-                    value;
+                    IsCrowdControlImmune ? 0 : value;
 
                 break;
             }

@@ -538,8 +538,9 @@ public class PlayerAimController : NetworkBehaviour
     public override void Render()
     {
         if (Object == null ||
-            Object.HasInputAuthority == false)
+            !LocalPlayerSpectatorController.IsViewedObject(ownerPlayer != null ? ownerPlayer.Object : Object))
         {
+            RemoveFovRequest();
             return;
         }
 
@@ -580,7 +581,7 @@ public class PlayerAimController : NetworkBehaviour
     private void EnsureFovRequest()
     {
         if (Object == null ||
-            Object.HasInputAuthority == false)
+            !LocalPlayerSpectatorController.IsViewedObject(ownerPlayer != null ? ownerPlayer.Object : Object))
         {
             return;
         }

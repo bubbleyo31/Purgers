@@ -45,3 +45,16 @@ Host 存檔升至 v3，新增待選候選 ID、已領 ID、已裝鈎索能力 ID
 先前『武器僅預留分類』已由本次取代：正式池保留十四技能並追加三武器。Host 候選與領取前排除目前武器，領取分流至原 Profession Runtime，成功才扣待選；SavedProfessions 與原 EquippedWeaponId 保存武器。
 
 正式規則／Inspector 入口見 [46](46_武器獎勵與換裝.md)，證據見 [驗證紀錄](Validation/WeaponRewards/README.md)。
+
+
+## 2026-10-14 鈎索尖刺入池（局部資產核對）
+
+正式 PlayerRewardCatalog 保留原 17 項並追加 Reward_GrappleSpike，合計 18 項。grapple.spike 屬 GrappleHit，最低等級 1、權重 1、Repeatable；沿用已裝備排除、同槽替換與 State Authority 領取。獎勵圖示由能力 Definition.HudIcon 共用使用者確認的 V2 圖，不改 HUD 資料流或既有候選。設定位置見 [33](33_鈎索尖刺技能.md)，本輪驗證見 [紀錄](Validation/GrappleSpike/RewardIcon/README.md)。
+
+
+
+## 2026-10-16 成長獎勵與技能掉落局部核對
+
+目前池為 18 既有裝備加 15 成長（9 屬性、6 被動），共 33。依目標等級配置成長／裝備格，每成長格獨立 5% 被動，可跨組補位。Host 按類型發放，技能只替換同槽並掉落。schema v4 保存成長與技能等級；上方 v3／只含技能切片為歷史。 詳見 [168 角色成長、被動與掉落](168_角色成長被動與技能掉落.md)。
+
+實作／資產與測試證據分開列於 168，未宣稱獨立多程序聯機或 Build 驗收。

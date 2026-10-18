@@ -1,0 +1,12 @@
+PASS Runner starts: Ok
+PASS Runner first tick
+PASS host presents spawned live enemy
+PASS authoritative damage immediately presents 76 percent
+PASS large body remains visible when head leaves frame
+PASS opaque wall immediately hides large enemy bar
+PASS bar returns after wall clears
+PASS explicit hidden mode excludes inherited Boss presentation
+PASS normal presentation can resume
+PASS death hides bars on every peer
+PASS despawn removes registered target
+PASS despawn leaves no orphan bar

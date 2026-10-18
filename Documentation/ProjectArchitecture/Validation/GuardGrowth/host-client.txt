@@ -1,0 +1,43 @@
+PASS Runner starts: Ok
+PASS Runner starts: Ok
+PASS production local health HUD exists
+PASS rifle excludes guard attributes
+PASS equip chainsaw: 
+PASS serialized base 40 percent / 100
+PASS bound client HUD shows guard
+PASS authority blocks 40 and spends 40
+PASS client HUD value follows replicated 60 / 100
+PASS Input Authority cannot apply damage modifier result
+PASS guarding never regenerates
+PASS release starts base three second wait
+PASS input block prevents guard but does not pause recovery
+PASS base recovery is 25 per second
+PASS zero stamina enters five second break
+PASS grant GuardCooldown: 
+PASS grant GuardStamina: 
+PASS capacity grant during break does not refill
+PASS cooldown grant does not rewrite active timer
+PASS held input cannot guard or recover during break
+PASS break expiry starts recovery without instant refill or extra delay
+PASS auto guard stops regeneration at first positive stamina
+PASS next delay samples five percent reduction
+PASS grant GuardReduction: 
+PASS grant GuardReduction: 
+PASS grant GuardReduction: 
+PASS grant GuardReduction: 
+PASS grant GuardReduction: 
+PASS grant GuardStamina: 
+PASS grant GuardStamina: 
+PASS grant GuardCooldown: 
+PASS grant GuardCooldown: 
+PASS grant GuardCooldown: 
+PASS grant GuardCooldown: 
+PASS maximum growth 90 percent / 400
+PASS max cooldown gives 3.5 second break
+PASS max capacity recovers 100 per second independent of cooldown
+PASS Runner starts: Ok
+PASS late join receives defense ranks
+PASS swap away: 
+PASS weapon swap clears client guard HUD
+PASS swap retains attributes
+PASS swap back: 

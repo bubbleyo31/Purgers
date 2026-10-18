@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08bbd30a7e32d984b8055256abda38c8, type: 3}
+  m_Name: TeamInfoPanel
+  m_EditorClassIdentifier: 
+  font: {fileID: 11400000, guid: 397856c0676c8dd42961519f24479511, type: 2}
+  rankFont: {fileID: 11400000, guid: bf254c7f254c9a4429c8beebf35e484d, type: 2}
+  portraits: {fileID: 11400000, guid: 0c8fb00b466659f46aaf67ac70a519be, type: 2}
+  catalog: {fileID: 11400000, guid: 5bfbe4aeef8deff42a19f61b0c18321d, type: 2}
+  skillBackground: {fileID: 21300000, guid: 19c8cb36a5eb283469736dba33df4f4d, type: 3}
+  growthBackground: {fileID: 21300000, guid: 0d4693b0a14933d45bc6ae3e570b8f43, type: 3}
+  weaponContent:
+  - sprite: {fileID: 21300000, guid: 8094f05be6080ce42b725801d5404d01, type: 3}
+    contentUV:
+      serializedVersion: 2
+      x: 0.060606062
+      y: 0.24800637
+      width: 0.8931419
+      height: 0.38118023
+  - sprite: {fileID: 21300000, guid: b0e7b3f23d81b5a4f8624484b8c0804a, type: 3}
+    contentUV:
+      serializedVersion: 2
+      x: 0.17145136
+      y: 0.22488038
+      width: 0.5845295
+      height: 0.4059011
+  - sprite: {fileID: 21300000, guid: ddfe9f76c39ffe249a37127bc335c23b, type: 3}
+    contentUV:
+      serializedVersion: 2
+      x: 0.068580545
+      y: 0.29744816
+      width: 0.8867624
+      height: 0.31180224
+  referenceResolution: {x: 1920, y: 1080}
+  windowSize: {x: 1104, y: 824}
+  scale: 1
+  preferredIconSize: 68
+  minimumIconSize: 42
+  iconGap: 8
+  cooldownOpacity: 0.62

@@ -23,6 +23,11 @@ public sealed class LocalMinimapController : MonoBehaviour
     private KeyCode expandKey = KeyCode.M;
     [SerializeField, Min(1), Tooltip("撤離與其他敏感標記的個人發現半徑；共享探索與展開不會增加此距離。")]
     private float markerDiscoveryRadius = 30f;
+    [Header("掉落技能標記")]
+    [SerializeField, Tooltip("已發現掉落技能的實心方塊顏色；不會揭開迷霧或穿牆發現物品。")]
+    private Color lootMarkerColor = new Color32(255, 195, 45, 255);
+    [SerializeField, Min(1f), Tooltip("掉落技能方塊邊長，單位為 UI 像素。預設 9，一般與展開地圖相同。")]
+    private float lootMarkerSize = 9f;
     // Retain the old serialized field until an explicit scene migration; it has no rendering cost.
 #pragma warning disable CS0414
     [SerializeField, HideInInspector] private int textureResolution = 256;
@@ -30,6 +35,8 @@ public sealed class LocalMinimapController : MonoBehaviour
 
     private RectTransform viewport, terrainRoot, overlayRoot, markerRoot;
     private Image playerDot, playerHeading;
+    private readonly System.Collections.Generic.List<TeammateMarkerGraphic> teammateMarkers = new();
+    public int VisibleTeammateCount { get; private set; }
     private bool isExpanded, lastShared;
     private int localPlayerId;
     private StageFlowController stage;
@@ -56,6 +63,7 @@ public sealed class LocalMinimapController : MonoBehaviour
         public Image Image;
         public Transform Target;
         public EnemyActor Enemy;
+        public PlayerAbilityRuntime Loot;
         public bool IsEnemy;
     }
 
@@ -63,6 +71,7 @@ public sealed class LocalMinimapController : MonoBehaviour
     public float CurrentWorldWidth => isExpanded ? Mathf.Max(compactWorldWidth + 1, expandedWorldWidth) : compactWorldWidth;
     public int VisibleMarkerCount { get; private set; }
     public int VisibleEnemyCount { get; private set; }
+    public int VisibleLootCount { get; private set; }
     // Compatibility diagnostics now count cached grid cells, not viewport pixels.
     public int ExploredPixelCount { get; private set; }
     public int TerrainPixelCount { get; private set; }
@@ -146,22 +155,23 @@ public sealed class LocalMinimapController : MonoBehaviour
         var runner = isSafeHouse ? (safeHouse.IsNetworkReady ? safeHouse.Runner : null)
             : (map != null && map.IsNetworkReady ? map.Runner : null);
         bool valid = runner != null && (isSafeHouse || (map.IsReady && map.HasExplorationSnapshot)) &&
-            LocalSceneTransition.TryGetReadyLocalPlayer(runner, out _) && !LocalPlayerControl.AllInputBlocked &&
-            runner.TryGetPlayerObject(runner.LocalPlayer, out player) && player != null;
+            (LocalPlayerSpectatorController.IsObserving(runner) || LocalSceneTransition.TryGetReadyLocalPlayer(runner, out _)) &&
+            !runner.IsSceneManagerBusy && !LocalPlayerControl.AllInputBlocked &&
+            LocalPlayerSpectatorController.TryGetViewedPlayerObject(runner, out player) && player != null;
         if (valid)
         {
             var health = player.GetComponent<PlayerHealth>();
             valid = health != null && health.IsAlive;
         }
         if (!valid && isExpanded) SetExpanded(false);
-        else if (valid && Input.GetKeyDown(expandKey)) SetExpanded(!isExpanded);
+        else if (valid && !Purgers.Settings.PlayerSettingsMenu.IsOpen && (Purgers.Settings.PlayerSettingsService.IsInitialized ? Purgers.Settings.PlayerSettingsService.Down(Purgers.Settings.PlayerBinding.Map) : Input.GetKeyDown(expandKey))) SetExpanded(!isExpanded);
         viewport.gameObject.SetActive(valid);
         if (placeholder != null) placeholder.SetActive(!valid);
         if (!valid) return;
 
         if (isSafeHouse) EnsureSafeHouseTile();
         else EnsureTiles();
-        if (!isSafeHouse && (localPlayerId != map.Runner.LocalPlayer.RawEncoded || lastShared != (bool)map.SharedExploration))
+        if (!isSafeHouse && (localPlayerId != LocalPlayerSpectatorController.ViewedPlayer(map.Runner).RawEncoded || lastShared != (bool)map.SharedExploration))
             RebuildExploration();
         using (BuildMarker.Auto())
         {
@@ -200,26 +210,64 @@ public sealed class LocalMinimapController : MonoBehaviour
             foreach (var tile in tiles) tile.Cache.FlushExploration();
             if (!isSafeHouse) RefreshMarkers(center);
         }
-        VisibleMarkerCount = VisibleEnemyCount = 0;
+        VisibleMarkerCount = VisibleEnemyCount = VisibleLootCount = 0;
         foreach (var marker in markers)
         {
-            bool show = marker.Target != null && (!marker.IsEnemy ||
+            bool show = !isSafeHouse && marker.Target != null && (!marker.IsEnemy ||
                 (marker.Enemy != null && marker.Enemy.IsFusionSpawned && marker.Enemy.Object != null &&
                  marker.Enemy.Object.IsValid && marker.Enemy.IsAlive));
+            Vector3 worldPosition = marker.Target != null ? marker.Target.position : Vector3.zero;
+            if (marker.Loot != null)
+                show &= TryReadLootPosition(marker.Loot, runner, out worldPosition);
             if (show)
             {
-                Vector3 delta = marker.Target.position - center;
+                Vector3 delta = worldPosition - center;
                 Vector2 position = new(delta.x * scale, delta.z * scale);
                 show = Mathf.Abs(position.x) < viewport.rect.width * 0.5f &&
                        Mathf.Abs(position.y) < viewport.rect.height * 0.5f;
                 marker.Image.rectTransform.anchoredPosition = position;
             }
             marker.Image.gameObject.SetActive(show);
-            if (show) { if (marker.IsEnemy) VisibleEnemyCount++; else VisibleMarkerCount++; }
+            if (show) { if (marker.Loot != null) VisibleLootCount++; else if (marker.IsEnemy) VisibleEnemyCount++; else VisibleMarkerCount++; }
         }
+        UpdateTeammates(runner, center, scale);
         Vector3 forward = player.transform.forward;
         playerHeading.rectTransform.anchoredPosition = new Vector2(forward.x, forward.z).normalized * 7;
         playerHeading.rectTransform.localRotation = Quaternion.Euler(0, 0, -Mathf.Atan2(forward.x, forward.z) * Mathf.Rad2Deg);
+    }
+
+    private void UpdateTeammates(NetworkRunner runner, Vector3 center, float scale)
+    {
+        VisibleTeammateCount = 0;
+        int used = 0;
+        var logic = GameLogic.GetPrimaryForRunner(runner);
+        if (logic != null && logic.IsTeammateRosterReady)
+        {
+            if (logic.TryGetTeammateIdentity(LocalPlayerSpectatorController.ViewedPlayer(runner), out var self))
+                playerDot.color = playerHeading.color = TeammateDisplayRules.IdentityColor(self.ColorSlot);
+            foreach (var player in runner.ActivePlayers)
+            {
+                if (player == LocalPlayerSpectatorController.ViewedPlayer(runner) || !logic.TryGetTeammateIdentity(player, out var identity) ||
+                    !logic.TryGetTeammateTarget(player, out _, out var position, out bool dead)) continue;
+                if (used == teammateMarkers.Count)
+                {
+                    var rect = CreateRect("Teammate", markerRoot);
+                    var graphic = rect.gameObject.AddComponent<TeammateMarkerGraphic>();
+                    teammateMarkers.Add(graphic);
+                }
+                var marker = teammateMarkers[used++];
+                Vector3 delta = position - center;
+                Vector2 point = new Vector2(delta.x * scale, delta.z * scale);
+                bool show = Mathf.Abs(point.x) < viewport.rect.width * .5f - 7 && Mathf.Abs(point.y) < viewport.rect.height * .5f - 7;
+                marker.rectTransform.anchoredPosition = point;
+                marker.rectTransform.sizeDelta = Vector2.one * (dead ? 15 : 9);
+                marker.color = TeammateDisplayRules.IdentityColor(identity.ColorSlot);
+                marker.SetShape(dead ? TeammateMarkerGraphic.Shape.Death : TeammateMarkerGraphic.Shape.MapDot);
+                marker.gameObject.SetActive(show);
+                if (show) VisibleTeammateCount++;
+            }
+        }
+        for (int i = used; i < teammateMarkers.Count; i++) teammateMarkers[i].gameObject.SetActive(false);
     }
 
     private void EnsureTiles()
@@ -279,7 +327,7 @@ public sealed class LocalMinimapController : MonoBehaviour
 
     private void RebuildExploration()
     {
-        localPlayerId = map.Runner.LocalPlayer.RawEncoded;
+        localPlayerId = LocalPlayerSpectatorController.ViewedPlayer(map.Runner).RawEncoded;
         lastShared = map.SharedExploration;
         foreach (var tile in tiles) tile.Cache.ClearExploration();
         foreach (var word in map.Exploration.Snapshot()) OnExplorationChanged(word);
@@ -297,7 +345,7 @@ public sealed class LocalMinimapController : MonoBehaviour
 
     private void RefreshMarkers(Vector3 center)
     {
-        foreach (var marker in markers) { marker.Target = null; marker.Enemy = null; }
+        foreach (var marker in markers) { marker.Target = null; marker.Enemy = null; marker.Loot = null; }
         int used = 0;
         if (stage != null && stage.IsExtractionAvailable && stage.TryGetSelectedExtraction(out var point) &&
             CanShow(center, point.transform.position)) UseMarker(used++, point.transform, null);
@@ -310,6 +358,28 @@ public sealed class LocalMinimapController : MonoBehaviour
             if (enemy != null && enemy.isActiveAndEnabled && enemy.IsFusionSpawned && enemy.Object != null &&
                 enemy.Object.IsValid && enemy.Runner == map.Runner && enemy.IsAlive && CanShow(center, enemy.transform.position))
                 UseMarker(used++, enemy.transform, enemy);
+        foreach (var loot in PlayerAbilityRuntime.LiveRuntimes)
+            if (TryReadLootPosition(loot, map.Runner, out var position) && CanShow(center, position))
+                UseLootMarker(used++, loot);
+    }
+
+    // Lifecycle check precedes every Networked read, including between candidate refreshes.
+    private static bool TryReadLootPosition(PlayerAbilityRuntime loot, NetworkRunner runner, out Vector3 position)
+    {
+        position = Vector3.zero;
+        if (loot == null || loot.Object == null || !loot.Object.IsValid || loot.Runner != runner || !loot.IsWorldLoot)
+            return false;
+        position = loot.LootPosition;
+        return true;
+    }
+
+    private void UseLootMarker(int index, PlayerAbilityRuntime loot)
+    {
+        UseMarker(index, loot.transform, null);
+        var marker = markers[index];
+        marker.Loot = loot;
+        marker.Image.color = lootMarkerColor;
+        marker.Image.rectTransform.sizeDelta = Vector2.one * Mathf.Max(1f, lootMarkerSize);
     }
 
     private void UseMarker(int index, Transform target, EnemyActor enemy)
@@ -322,7 +392,8 @@ public sealed class LocalMinimapController : MonoBehaviour
             playerHeading.transform.SetAsLastSibling();
         }
         var marker = markers[index];
-        marker.Target = target; marker.Enemy = enemy; marker.IsEnemy = enemy != null;
+        marker.Target = target; marker.Enemy = enemy; marker.Loot = null; marker.IsEnemy = enemy != null;
+        marker.Image.rectTransform.sizeDelta = Vector2.one * 7f;
         marker.Image.color = marker.IsEnemy ? new Color32(255, 85, 83, 255) : new Color32(80, 255, 140, 255);
         marker.Image.rectTransform.localRotation = Quaternion.Euler(0, 0, marker.IsEnemy ? 45 : 0);
     }

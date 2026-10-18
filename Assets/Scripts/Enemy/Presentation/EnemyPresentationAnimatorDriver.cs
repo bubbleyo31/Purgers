@@ -91,6 +91,10 @@ public sealed class EnemyPresentationAnimatorDriver :
     private string combatPhaseIntName =
         "CombatActionPhase";
 
+    [Header("自爆撲擊動畫取樣（選用）")]
+    [SerializeField, Tooltip("Float：自爆撲擊 State 的 Motion Time 參數。留空停用；該 State 必須開啟 Time Parameter，播放倍率僅讀 EnemySuicideAttack 的幀時序。")]
+    private string pounceNormalizedTimeName = "";
+
     [Header("移動平滑與動畫基準")]
 
     [SerializeField]
@@ -147,6 +151,8 @@ public sealed class EnemyPresentationAnimatorDriver :
     private UnityEvent onCombatActionStarted =
         new UnityEvent();
 
+    private EnemySuicideAttack suicideAttack;
+    private int pounceNormalizedTimeHash;
     private int aliveHash;
     private int alertedHash;
     private int announcingHash;
@@ -312,6 +318,11 @@ public sealed class EnemyPresentationAnimatorDriver :
             isAnnouncing
         );
 
+        // 共用 Animator 的唯一寫入者。讀同步計時可直接恢復晚綁定／晚加入的空中姿勢。
+        if (pounceNormalizedTimeHash != 0 && suicideAttack != null &&
+            suicideAttack.TryGetPounceAnimationTime(out float pounceTime))
+            SetFloat(pounceNormalizedTimeHash, pounceTime);
+
         ObserveCombatEvent(combatReady);
     }
 
@@ -381,6 +392,7 @@ public sealed class EnemyPresentationAnimatorDriver :
 
     private void ResolveReferences()
     {
+        if (suicideAttack == null) suicideAttack = GetComponentInParent<EnemySuicideAttack>();
         if (actor == null)
         {
             actor = GetComponentInParent<EnemyActor>();
@@ -430,6 +442,7 @@ public sealed class EnemyPresentationAnimatorDriver :
             return;
         }
 
+        pounceNormalizedTimeHash = FindParameter(pounceNormalizedTimeName, AnimatorControllerParameterType.Float);
         aliveHash = FindParameter(
             aliveBoolName,
             AnimatorControllerParameterType.Bool

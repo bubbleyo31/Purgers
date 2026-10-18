@@ -1,0 +1,338 @@
+[
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Scripts\\UI\\Player\\AbilityIconFrameFit.cs",
+    "Before": "E413BEFF8A217D9EBA2DB10046B50094FBCE993FCE8B0561D0904F03E6309DEA",
+    "After": "F4632D9EE81654B3B51857078F831D57E84927A552272F063ECB024FE8E87256",
+    "Unchanged": false
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Scripts\\UI\\Player\\GrowthRewardRankView.cs",
+    "Before": "555DA261FB8503BEEE6DC3D89E798B042B4BDA4535D904DEA86E21CCEF193198",
+    "After": "48050BDDD9A655137CADB6F8A7FA3CDA6AA86D52A2B054ED7B29630B0B225E34",
+    "Unchanged": false
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Scripts\\Progression\\PlayerRewardDefinition.cs",
+    "Before": "98A467869A91EFF22A99AB10ACE079163F8E8FCE4651663DB1B63BE629C9D395",
+    "After": "8A6EE5FD314602430E65394DF4FD8CE4738204E77692FAB09B3D44BB29254FD5",
+    "Unchanged": false
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Scripts\\Editor\\GrowthIconSetup.cs",
+    "Before": "1CA97B2E1F8587A99F3C72557E22BD5EC465C65439AC15ED333D9DA09F197506",
+    "After": "E2A010DDBE77C115F75BA7F1DA3C63DFBA075BF682536D40CE8C7AC2F2B58064",
+    "Unchanged": false
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Scripts\\Editor\\Tests\\GrowthIconIntegrationTests.cs",
+    "Before": "F6A88F0D3C4AFD493798E9EBECB15EA670931FD180FCC1B681B0A2D2A62C288E",
+    "After": "5250E785996C5BC69CBF214FE5C56B4CE50B191574F8D97CEBE4EDAC46E3EBDD",
+    "Unchanged": false
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Scenes\\_Menu.unity",
+    "Before": "05294960D1A9BF6E2AE2565AD27856F0739E83DCB3357AA6326B27DAF13C791C",
+    "After": "05294960D1A9BF6E2AE2565AD27856F0739E83DCB3357AA6326B27DAF13C791C",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Scenes\\SafeHouse.unity",
+    "Before": "08A73BBD7C565589203036AE60FB19D774F3F014F5DA3C507D92105D3405BA80",
+    "After": "08A73BBD7C565589203036AE60FB19D774F3F014F5DA3C507D92105D3405BA80",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\UI\\StageHUD.prefab",
+    "Before": "965BC15CEFE000EB82D9016E3C36C8E4D9EE24777E6240CD4B034812D3C8AB5E",
+    "After": "965BC15CEFE000EB82D9016E3C36C8E4D9EE24777E6240CD4B034812D3C8AB5E",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_Adrenaline.asset",
+    "Before": "B53D339B4F8D31BF3F68F252340B2263483A55E2B737E7BC3560846D8E2F28A8",
+    "After": "B53D339B4F8D31BF3F68F252340B2263483A55E2B737E7BC3560846D8E2F28A8",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_Adrenaline.asset.meta",
+    "Before": "5C4F106FD5FC30232EBA020466C2559C1B3D116C63583FF3FC41951EA1E74F7F",
+    "After": "5C4F106FD5FC30232EBA020466C2559C1B3D116C63583FF3FC41951EA1E74F7F",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_CarnivorousTree.asset",
+    "Before": "B3F4258A9AA6AF9542136751CE57D7867831D75B97A1FABFD10AA22FB01B04AB",
+    "After": "B3F4258A9AA6AF9542136751CE57D7867831D75B97A1FABFD10AA22FB01B04AB",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_CarnivorousTree.asset.meta",
+    "Before": "6B54CAA5320BE6475290C22724DA0F650F1A82F66298F685744E015D15C3D7F9",
+    "After": "6B54CAA5320BE6475290C22724DA0F650F1A82F66298F685744E015D15C3D7F9",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_FocusCooldown.asset",
+    "Before": "1876E116F37A80A9EDD02DAD15597F92827416D477E26140790D0D15CFFE2834",
+    "After": "720175B0B36AC649D73656FDD636ED0158FC5591DF04131B670BCBBF455667A8",
+    "Unchanged": false
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_FocusCooldown.asset.meta",
+    "Before": "18519CB030A62DDB8079CEB2C39E0083D444CD14EE364FFB15A4FCF381CBC1FC",
+    "After": "18519CB030A62DDB8079CEB2C39E0083D444CD14EE364FFB15A4FCF381CBC1FC",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_GrappleCost.asset",
+    "Before": "B5B19C766177311ED587FF5AF7D7EAE6BA3C58FB8CFDA29FB59CFA22CD3478D4",
+    "After": "C3E39E14B705DDF4CBFDFF751285B2ACE5624C55D684A54CA33DEC8C23A6F664",
+    "Unchanged": false
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_GrappleCost.asset.meta",
+    "Before": "1E0A788FEA923CE168C62C5E594C8C801AEF1CFBC65C4B9BEA044CF918A3D03C",
+    "After": "1E0A788FEA923CE168C62C5E594C8C801AEF1CFBC65C4B9BEA044CF918A3D03C",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_HitCooldown.asset",
+    "Before": "8374E8F1076B642CCCB4C3CA3C870CB342DEFA0950477047138C676EAC6CC5BA",
+    "After": "CF10FCB7B6BC6E8DAE6A61C0D6E158ABB6C966AF80E59D680D7635F67BA3A114",
+    "Unchanged": false
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_HitCooldown.asset.meta",
+    "Before": "6438714042506AED4DF921401B58281936555C3812B65C256F35FFFA650D556B",
+    "After": "6438714042506AED4DF921401B58281936555C3812B65C256F35FFFA650D556B",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_Indecision.asset",
+    "Before": "C81CD443C3DE8A664FEC472801DD1D855292A33A23FB995EAEE43F5AA55201C7",
+    "After": "C81CD443C3DE8A664FEC472801DD1D855292A33A23FB995EAEE43F5AA55201C7",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_Indecision.asset.meta",
+    "Before": "4478092B647F4A39130B8D033445C5353BECC606ECC82DF9056617B06F22156B",
+    "After": "4478092B647F4A39130B8D033445C5353BECC606ECC82DF9056617B06F22156B",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_JohnWick.asset",
+    "Before": "5295C8CAAE3BC99D85601EB2747EBAA142D4F0903D246E7FBE170AF0DAB3C4F0",
+    "After": "5295C8CAAE3BC99D85601EB2747EBAA142D4F0903D246E7FBE170AF0DAB3C4F0",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_JohnWick.asset.meta",
+    "Before": "53665FE7E6CAB909D6F3535EA9F3F348B076F103EE1A86D92A88D558A7EE6F2B",
+    "After": "53665FE7E6CAB909D6F3535EA9F3F348B076F103EE1A86D92A88D558A7EE6F2B",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_MagazineCapacity.asset",
+    "Before": "0EFABF472C7AD9583D601BD237430DA6E3D1C95C1BCD0BED04FDDCE1EB0F26D6",
+    "After": "2D71779ED950590B34EBEF5F68CE1E3B501DBBE9B1E6762A3DDC26B411AB1B7A",
+    "Unchanged": false
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_MagazineCapacity.asset.meta",
+    "Before": "BD5122844E2A29B13663755D64AD3779A993EBBC599415A413077D5F1781E4D4",
+    "After": "BD5122844E2A29B13663755D64AD3779A993EBBC599415A413077D5F1781E4D4",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_MaximumHealth.asset",
+    "Before": "FC0A9D31EE8F10C3DCC3148548E6D68E596BC37A3A572F3BB10028EAC53F9B0F",
+    "After": "F41D9AF7199D9896F7286FA6F5E3F97C616D3695D2B57B1A389D904F8F7995FA",
+    "Unchanged": false
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_MaximumHealth.asset.meta",
+    "Before": "3EE42FEC92A5D29B82A4E67AF72C26048C93FBBB5B85B86E814BE967DA34EEB1",
+    "After": "3EE42FEC92A5D29B82A4E67AF72C26048C93FBBB5B85B86E814BE967DA34EEB1",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_MeleeSpeed.asset",
+    "Before": "0F4218B082F90F1037A26BAAC6A4E9AA31AFD4221A3853CA18256E159737E544",
+    "After": "B58B948B0AB4182CC869155857E2520D0A5E61BE9EE071C9E312E9D2C2BE951A",
+    "Unchanged": false
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_MeleeSpeed.asset.meta",
+    "Before": "913D85D9B4BA5B890EE3B60F64C5615F92E583F7175B6038EEF1F0339D3F7010",
+    "After": "913D85D9B4BA5B890EE3B60F64C5615F92E583F7175B6038EEF1F0339D3F7010",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_NotToday.asset",
+    "Before": "4073F7A1A02875DD9E5F9D14BF6E73BF7FF3D71019F1E2927C7C402C690BAA55",
+    "After": "4073F7A1A02875DD9E5F9D14BF6E73BF7FF3D71019F1E2927C7C402C690BAA55",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_NotToday.asset.meta",
+    "Before": "81AF45B8AA0F1897FA9D2E59693E490F8053F6EFEB02D504FEA9B57EEA31445F",
+    "After": "81AF45B8AA0F1897FA9D2E59693E490F8053F6EFEB02D504FEA9B57EEA31445F",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_RegenerationDelay.asset",
+    "Before": "83BA01C9CE0CC3DE4FBE87CF47280D95C1437AC56D9B52AF0DDF9454108B2A0F",
+    "After": "8B9946EC5FD8A7CA8295D3497DFBD39021224D79F0F9666DE1835D11B5B292F8",
+    "Unchanged": false
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_RegenerationDelay.asset.meta",
+    "Before": "A1065A4DE1876DC66E03D94073F3608CF2EC71ACA8AFEF1B8E326D17D960D27E",
+    "After": "A1065A4DE1876DC66E03D94073F3608CF2EC71ACA8AFEF1B8E326D17D960D27E",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_RegenerationRate.asset",
+    "Before": "4FC5ADCFFB027695036B681B51634EFBB0625CFC828E48A44D9AE6551DB278FB",
+    "After": "275E1077C6139B8D3D1D9F910C14220A27CB6A0B64885D521D51FCD7D5DE9D98",
+    "Unchanged": false
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_RegenerationRate.asset.meta",
+    "Before": "091A7CDC47A3CB71348200C6D9A7DA3339F134600CF3396BC62F0A4DB575B280",
+    "After": "091A7CDC47A3CB71348200C6D9A7DA3339F134600CF3396BC62F0A4DB575B280",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_ReloadSpeed.asset",
+    "Before": "C09566514CBBC72C527BEBDAB9DB25E5506FBDA3D96A575D2CA09F69612CFF60",
+    "After": "6E44449C6B55A8D863BCFF4B21A42BBE382ABB4E009EC3E876730124B1D7B3E6",
+    "Unchanged": false
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_ReloadSpeed.asset.meta",
+    "Before": "D9D0438C8394CB688D5C4C5FAEEC64A684715D63C69C48E1E0516F505E404857",
+    "After": "D9D0438C8394CB688D5C4C5FAEEC64A684715D63C69C48E1E0516F505E404857",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_SelfRescue.asset",
+    "Before": "B974BDBC7C6DB6117D154DEF21D631F554721F5C9B0B4EF5F79ACBD2699D6F59",
+    "After": "B974BDBC7C6DB6117D154DEF21D631F554721F5C9B0B4EF5F79ACBD2699D6F59",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_SelfRescue.asset.meta",
+    "Before": "154F78CC640B4852658DFC63B2436E268D464A66ACA4358C08CAC6E00EC2E264",
+    "After": "154F78CC640B4852658DFC63B2436E268D464A66ACA4358C08CAC6E00EC2E264",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A01_MaxHealth_Base.png",
+    "Before": "42C676C6A570DBE147600734759C8CC3BC5916B61B9654250A662200436483D4",
+    "After": "42C676C6A570DBE147600734759C8CC3BC5916B61B9654250A662200436483D4",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A01_MaxHealth_Base.png.meta",
+    "Before": "AADABA35505562629E8A8E648FA701A2F932B166106F7220A8764EE22DDA7F38",
+    "After": "B4C8E8F7964CBA37EF1B7D93BA737A53419828BBF96474A23ABE7B480052297C",
+    "Unchanged": false
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A02_ReloadSpeed_Base.png",
+    "Before": "581B51D76DE468ABBBAC8EBA71DC5CE2DD9A7FB6645708E4551525A5075E5F19",
+    "After": "581B51D76DE468ABBBAC8EBA71DC5CE2DD9A7FB6645708E4551525A5075E5F19",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A02_ReloadSpeed_Base.png.meta",
+    "Before": "20400D354E44899F749A157053E255E27710FEEEF0D575DBFFEA998C962CA213",
+    "After": "D8C59EAE1543E3C410C55387E7E05B0DBAF8E665429A97B3C8B920822CF98F92",
+    "Unchanged": false
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A03_MeleeSpeed_Base.png",
+    "Before": "7FCBD31FE06E2D7CD7C07A0FF3E1C21936EF0D501E21AA5E421C6D1CE637FC23",
+    "After": "7FCBD31FE06E2D7CD7C07A0FF3E1C21936EF0D501E21AA5E421C6D1CE637FC23",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A03_MeleeSpeed_Base.png.meta",
+    "Before": "94A634683E4CF00ACFA146686E8F2BC3FCFC27043B20D0CB6AFAB97DF4530B49",
+    "After": "0610F8980BB942A6AC04685EA29961AA8D14E78C414118221728EE80107867C0",
+    "Unchanged": false
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A04_MagazineCapacity_Base.png",
+    "Before": "2C9F2D768DE018198888E83A8C495791C15BC817587C8FF8CE96B820B3FECBEE",
+    "After": "2C9F2D768DE018198888E83A8C495791C15BC817587C8FF8CE96B820B3FECBEE",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A04_MagazineCapacity_Base.png.meta",
+    "Before": "204EC0D8071BEDCBA37A70FFF5D29077A637B719B3D5B341C01CA1124A4B1875",
+    "After": "491186870EC3593FA72C93E19F47817708E81AD5CDC15808495E682C015BC770",
+    "Unchanged": false
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A05_GrappleEnergy_Base.png",
+    "Before": "A1BD00867A1322947FDE6648F9AB21520648FEFE7FCD8836110FC729F5D9C1CA",
+    "After": "A1BD00867A1322947FDE6648F9AB21520648FEFE7FCD8836110FC729F5D9C1CA",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A05_GrappleEnergy_Base.png.meta",
+    "Before": "8B74D56C04476525E67BF6C6E56AA5B10500985CFCE22EF54036BD3EB9A8A064",
+    "After": "88110A55EE4D849FEBF1296A6E2D81D4E1B8848FCC304FE4F9A6875FA1C99A3E",
+    "Unchanged": false
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A06_FocusCooldown_Base.png",
+    "Before": "390B1831B3D549FB7BD3BA8149E2104F79B38FFD581CC7493BEEAB60A9952A3D",
+    "After": "390B1831B3D549FB7BD3BA8149E2104F79B38FFD581CC7493BEEAB60A9952A3D",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A06_FocusCooldown_Base.png.meta",
+    "Before": "818CCB221181CEF470ABC9532B00C6E6759079B737BF2308B2CF1DBF9049019F",
+    "After": "A9D67EB369B343A52C6126DFBF5CCB22C70A9121F9B2BC84DCBB7CDAC83FDBB1",
+    "Unchanged": false
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A07_GrappleCooldown_Base.png",
+    "Before": "3741FF2DA17A45998376C8D79F32506AEED46DC4EAE66E483DE9B278C7130F17",
+    "After": "3741FF2DA17A45998376C8D79F32506AEED46DC4EAE66E483DE9B278C7130F17",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A07_GrappleCooldown_Base.png.meta",
+    "Before": "EB6CF8926218B8AF7735843D1A0C035E5D6D54039911B856FEBCBED772ED7317",
+    "After": "18F054A62AF98E241AFA8A88D56442B6E9AC03B916F7036D5F53600C2477BCAD",
+    "Unchanged": false
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A08_OutOfCombatRegen_Base.png",
+    "Before": "05BFB5EEA849CEBD9FC0335F42678666095A7426CE83453B9C3EAB36CE9AB6EF",
+    "After": "05BFB5EEA849CEBD9FC0335F42678666095A7426CE83453B9C3EAB36CE9AB6EF",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A08_OutOfCombatRegen_Base.png.meta",
+    "Before": "82128551E0F35BC3987F83DBEB67D9AB30BA954DAF57C4305C5A237F9A8E5680",
+    "After": "AFCFE3E430CF6BDB6066B6E3D9F1008C329C56458640AB5325171D0DA226F833",
+    "Unchanged": false
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A09_RegenDelay_Base.png",
+    "Before": "723A7E35E523C4FDF879A6176E30464BCA60AB1D0997E7C488477299AEBA57B0",
+    "After": "723A7E35E523C4FDF879A6176E30464BCA60AB1D0997E7C488477299AEBA57B0",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\GrowthIcons\\V5\\RankBackgrounds\\A09_RegenDelay_Base.png.meta",
+    "Before": "075A8FB5DED53921E00A01E352D347BD6718639E2EFFC80FB47EC2EFBF6A7049",
+    "After": "821976CBA65A678B580D547A4138A85E189A6F1D317F4039C1ECF8A2EB4954CF",
+    "Unchanged": false
+  }
+]

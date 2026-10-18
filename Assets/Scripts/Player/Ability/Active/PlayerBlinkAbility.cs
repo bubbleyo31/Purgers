@@ -21,6 +21,11 @@ public sealed class PlayerBlinkAbility : PlayerActiveAbilityBase
     [Networked] private NetworkBool ObstacleReached { get; set; }
     private readonly KCCShapeCastInfo castInfo = new KCCShapeCastInfo();
     public bool IsDashing => Ready && Phase == PlayerActiveAbilityPhase.Dashing;
+    public override bool HudCanRecast => Ready && Phase == PlayerActiveAbilityPhase.Armed &&
+        !PhaseTimer.ExpiredOrNotRunning(Runner) &&
+        !(Owner.GetComponent<PlayerActionGate>()?.IsBlocked(PlayerActionBlockMask.Movement) ?? false) &&
+        !(Owner.SupportGrapplePlayerPullReceiver != null && Owner.SupportGrapplePlayerPullReceiver.IsPullActive) &&
+        !(Owner.Grapple != null && Owner.Grapple.IsSideDashing) && Owner.Movement != null && Owner.Movement.KCC != null;
 
     protected override void OnActivationAccepted(NetInput input)
     {
@@ -37,6 +42,7 @@ public sealed class PlayerBlinkAbility : PlayerActiveAbilityBase
         if (gate != null && gate.IsBlocked(PlayerActionBlockMask.Movement)) return false;
         if (PhaseTimer.ExpiredOrNotRunning(Runner)) { FinishAbility(); return false; }
         if (Owner.SupportGrapplePlayerPullReceiver != null && Owner.SupportGrapplePlayerPullReceiver.IsPullActive) return false;
+        if (Owner.Grapple != null && Owner.Grapple.IsSideDashing) return false;
         KCC kcc = Owner.Movement.KCC;
         if (kcc == null) return false;
         DashDirection = ActiveControlRules.ResolveDashDirection(input.Direction, kcc.Data.LookYaw);

@@ -10,6 +10,12 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyMovementOwnership))]
 public sealed class EnemyFlyingPatrolNavigator : EnemyPatrolNavigator
 {
+    [SerializeField, Tooltip("飛行碰撞膠囊底部相對 Root 的垂直偏移（公尺）。依巡邏／追逐動作範圍校準，可為負；預設 0 保留舊設定。")]
+    private float bodyBaseOffset = 0f;
+    protected override float CollisionBaseOffset => bodyBaseOffset;
+    /// <summary>出生盒沿既有底部基準取樣；只有包絡低於 Root 的飛行 Prefab 補償 Root 高度。</summary>
+    public Vector3 SpawnRootOffset => Vector3.up * Mathf.Max(0f, -bodyBaseOffset);
+
     [Header("飛行巡邏碰撞 視覺輔助線")]
 
     [SerializeField]
@@ -126,6 +132,7 @@ public sealed class EnemyFlyingPatrolNavigator : EnemyPatrolNavigator
     /// <summary>以與實際碰撞查詢完全相同的中心與半徑畫出垂直膠囊。</summary>
     private void DrawCollisionCapsuleAt(Vector3 rootPosition)
     {
+        rootPosition += Vector3.up * bodyBaseOffset;
         Vector3 bottom =
             rootPosition +
             Vector3.up * (bodyRadius + collisionSkin);
@@ -153,6 +160,8 @@ public sealed class EnemyFlyingPatrolNavigator : EnemyPatrolNavigator
     /// <summary>畫出膠囊從起點掃掠到終點時的外側通道線。</summary>
     private void DrawCapsulePassage(Vector3 from, Vector3 to)
     {
+        from += Vector3.up * bodyBaseOffset;
+        to += Vector3.up * bodyBaseOffset;
         Vector3 fromBottom =
             from + Vector3.up * (bodyRadius + collisionSkin);
         Vector3 fromTop =

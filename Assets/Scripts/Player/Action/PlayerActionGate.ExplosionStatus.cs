@@ -23,6 +23,7 @@ public partial class PlayerActionGate
         ExplosionGrappleTimer = TickTimer.None;
         ExplosionSlowTimer = TickTimer.None;
         ExplosionSlowStrength = 0f;
+        ResetExplosionHudMetadata(); BulletTimeHudClock = default;
     }
     public override void Despawned(NetworkRunner runner, bool hasState)
     {
@@ -37,18 +38,23 @@ public partial class PlayerActionGate
         {
             explosionSlows.Clear(); ExplosionGrappleTimer = TickTimer.None;
         }
+        TickCaptureLifetime();
         UpdateExplosionSlows();
+        TickStatusHud();
     }
     /// <summary>爆炸有效命中後由 State Authority 呼叫。斷鈎保留既有速度，不建立額外釋放加速。</summary>
     public void ApplyExplosionStatus(float grappleSeconds, float slowStrength, float slowSeconds)
     {
         if (!IsFusionSpawned || !Object.HasStateAuthority) return;
         var health = GetComponent<PlayerHealth>();
-        if (health == null || !health.IsAlive) return;
+        if (health == null || !health.IsAlive || IsCrowdControlImmune) return;
         var grapple = GetComponent<PlayerGrapple>();
         if (grapple != null) grapple.CancelFromSpecialAbility(false, false);
         if (grappleSeconds > (ExplosionGrappleTimer.RemainingTime(Runner) ?? 0f))
+        {
             ExplosionGrappleTimer = TickTimer.CreateFromSeconds(Runner, grappleSeconds);
+            GrappleHudSpan = ExplosionGrappleTimer.RemainingTime(Runner) ?? 0f;
+        }
         if (slowStrength > 0f && slowSeconds > 0f)
             explosionSlows.Add(new ExplosionSlowEntry { Strength = Mathf.Clamp01(slowStrength), Timer = TickTimer.CreateFromSeconds(Runner, slowSeconds) });
         UpdateExplosionSlows();
@@ -57,13 +63,16 @@ public partial class PlayerActionGate
     {
         float strongest = 0f;
         TickTimer expiry = TickTimer.None;
+        TickTimer lastExpiry = TickTimer.None;
         for (int i = explosionSlows.Count - 1; i >= 0; i--)
         {
             var item = explosionSlows[i];
             if (item.Timer.ExpiredOrNotRunning(Runner)) { explosionSlows.RemoveAt(i); continue; }
+            if ((item.Timer.RemainingTime(Runner) ?? 0f) > (lastExpiry.RemainingTime(Runner) ?? 0f)) lastExpiry = item.Timer;
             if (item.Strength > strongest || (item.Strength == strongest && (item.Timer.RemainingTime(Runner) ?? 0f) > (expiry.RemainingTime(Runner) ?? 0f)))
             { strongest = item.Strength; expiry = item.Timer; }
         }
         ExplosionSlowStrength = strongest; ExplosionSlowTimer = expiry;
+        SlowHudClock = SlowHudClock.Updated(Runner, lastExpiry, lastExpiry.RemainingTime(Runner) ?? 0f);
     }
 }

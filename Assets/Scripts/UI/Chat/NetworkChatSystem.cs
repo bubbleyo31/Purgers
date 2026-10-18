@@ -122,6 +122,10 @@ public sealed class NetworkChatSystem :
     // =====================================================================
     #region Debug
 
+    [SerializeField]
+    [Tooltip("玩家離開時的聊天格式；{0} 使用 Host 已驗證並保存的名稱。空值或格式錯誤使用預設文字。")]
+    private string playerLeftMessageFormat = "{0} 離開了遊戲";
+
     [Header("除錯")]
 
     [SerializeField]
@@ -167,9 +171,9 @@ public sealed class NetworkChatSystem :
     /// 僅由 State Authority 使用。
     /// 防止同一 PlayerRef 重複送出名稱後產生多次加入訊息。
     /// </summary>
-    private readonly HashSet<PlayerRef>
+    private readonly Dictionary<PlayerRef, string>
         registeredPlayers =
-            new HashSet<PlayerRef>();
+            new Dictionary<PlayerRef, string>();
 
     /// <summary>
     /// 本機是否已送出自己的名稱註冊要求。
@@ -261,7 +265,7 @@ public sealed class NetworkChatSystem :
     }
 
     /// <summary>
-    /// State Authority 在玩家真正離開 Session 時清除註冊紀錄。
+    /// State Authority 在玩家真正離開 Session 時廣播保存的名稱，再清除註冊紀錄。
     ///
     /// 不在死亡 Despawn 時清除，因為死亡重生仍是同一個 PlayerRef，
     /// 絕對不能再次顯示「加入了遊戲」。
@@ -270,15 +274,27 @@ public sealed class NetworkChatSystem :
         PlayerRef player
     )
     {
-        if (Object == null ||
+        if (Object == null || !Object.IsValid ||
+            !enabled || Runner == null || !Runner.IsRunning ||
             Object.HasStateAuthority == false)
         {
             return;
         }
 
-        registeredPlayers.Remove(
-            player
-        );
+        if (!TryTakeDepartingPlayerName(player, out string acceptedName))
+            return;
+
+        NextMessageSequence++;
+        RPC_BroadcastPlayerLeft(NextMessageSequence, acceptedName);
+    }
+
+    private bool TryTakeDepartingPlayerName(PlayerRef player, out string acceptedName)
+    {
+        if (!registeredPlayers.TryGetValue(player, out acceptedName))
+            return false;
+
+        registeredPlayers.Remove(player);
+        return true;
     }
 
     #endregion
@@ -461,9 +477,7 @@ public sealed class NetworkChatSystem :
             return;
         }
 
-        if (registeredPlayers.Add(
-                sourcePlayer
-            ) == false)
+        if (registeredPlayers.ContainsKey(sourcePlayer))
         {
             /*
              * 同一 PlayerRef 已註冊。
@@ -478,10 +492,14 @@ public sealed class NetworkChatSystem :
                 sourcePlayer
             );
 
+        // 不依賴 GameLogic.PlayerLeft 與本元件回呼的先後順序。
+        registeredPlayers.Add(sourcePlayer, sanitizedName);
         NextMessageSequence++;
 
         NetworkString<_32> acceptedName =
             sanitizedName;
+
+        GameLogic.GetPrimaryForRunner(Runner)?.SetTeammateNameStateAuthority(sourcePlayer, acceptedName);
 
         RPC_BroadcastPlayerJoined(
             NextMessageSequence,
@@ -523,6 +541,18 @@ public sealed class NetworkChatSystem :
         NetworkString<_32> acceptedPlayerName
     )
     {
+        ReceivePlayerPresenceMessage(sequence, acceptedPlayerName.ToString(), false);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All,
+        Channel = RpcChannel.Reliable, TickAligned = false, InvokeLocal = true)]
+    private void RPC_BroadcastPlayerLeft(int sequence, NetworkString<_32> acceptedPlayerName)
+    {
+        ReceivePlayerPresenceMessage(sequence, acceptedPlayerName.ToString(), true);
+    }
+
+    private void ReceivePlayerPresenceMessage(int sequence, string playerName, bool hasLeft)
+    {
         if (sequence <=
             lastReceivedSequence)
         {
@@ -532,18 +562,14 @@ public sealed class NetworkChatSystem :
         lastReceivedSequence =
             sequence;
 
-        string playerName =
-            acceptedPlayerName.ToString();
-
-        string messageText =
-            FormatPlayerJoinedMessage(
-                playerName
-            );
+        string messageText = hasLeft
+            ? FormatPlayerLeftMessage(playerName)
+            : FormatPlayerJoinedMessage(playerName);
 
         AddLocalMessage(
             new LocalChatMessage(
                 sequence,
-                LocalChatMessageKind.PlayerJoined,
+                hasLeft ? LocalChatMessageKind.PlayerLeft : LocalChatMessageKind.PlayerJoined,
                 playerName,
                 messageText
             )
@@ -708,6 +734,21 @@ public sealed class NetworkChatSystem :
         return fallbackName;
     }
 
+    private string FormatPlayerLeftMessage(string playerName)
+    {
+        if (string.IsNullOrWhiteSpace(playerLeftMessageFormat))
+            return $"{playerName} 離開了遊戲";
+        try
+        {
+            return string.Format(playerLeftMessageFormat, playerName);
+        }
+        catch (FormatException)
+        {
+            Debug.LogWarning("[NetworkChatSystem] 玩家離開格式錯誤，使用預設格式。", this);
+            return $"{playerName} 離開了遊戲";
+        }
+    }
+
     private string FormatPlayerJoinedMessage(
         string playerName
     )
@@ -782,7 +823,8 @@ public enum LocalChatMessageKind : byte
 {
     System = 0,
     PlayerJoined = 1,
-    PlayerMessage = 2
+    PlayerMessage = 2,
+    PlayerLeft = 3
 }
 
 

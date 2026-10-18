@@ -1,0 +1,15 @@
+PASS Runner starts: Ok
+PASS initial threshold
+PASS Runner starts: Ok
+PASS client cannot grant XP
+PASS authoritative grant
+PASS multi-level overflow and fixed tail with pending rewards
+PASS client receives Host threshold despite different local table
+PASS HUD snapshot available
+PASS HUD presents Host denominator
+PASS F8 authority path
+PASS F8 fills exact custom requirement
+PASS Runner starts: Ok
+PASS late join receives current level and threshold
+PASS scene configuration adoption retains Session table
+PASS failed run resets synchronized threshold

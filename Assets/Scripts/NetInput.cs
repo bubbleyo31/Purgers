@@ -122,6 +122,8 @@ public enum InputButton
 /// </summary>
 public struct NetInput : INetworkInput
 {
+    public byte SettingsModes;
+    public NetworkBool SettingsMenuOpen;
     // Transmitted with the input tick, so Host and prediction use the same gates.
     public Purgers.GameFlow.Control.PlayerControlMask BlockedControls;
 
@@ -150,4 +152,10 @@ public struct NetInput : INetworkInput
 /// Y：Yaw
     /// </summary>
     public Vector2 LookDelta;
+
+    // Raw press history survives render frames between input ticks. Host validates window, gates and cost.
+    public int SideTapSequence;
+    public int SideTapDirection;
+    public int PreviousSideTapDirection;
+    public float SideTapInterval;
 }

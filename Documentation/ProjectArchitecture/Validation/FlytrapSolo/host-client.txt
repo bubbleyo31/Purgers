@@ -1,0 +1,62 @@
+PASS Runner starts: Ok
+PASS stationary silent standing player is safe
+PASS silent crouch walking is safe
+PASS wall blocks gunshot detection
+PASS body path rejects obstacle even with eye line available
+PASS open capsule path accepted
+PASS discovery does not acquire capture gate
+PASS early windup tracks moving player
+PASS movement input remains available before impact
+PASS locked direction stays fixed and launch does not capture
+PASS sidestep makes vine miss
+PASS miss recovery prevents immediate retry
+PASS miss recovery is independent of feeding cooldown
+PASS continuous sweep stops at thin wall instead of hitting player behind it
+PASS first actual player is captured instead of original aimed player
+PASS intercepted player releases on despawn
+PASS new high rail blocks full body pull route
+PASS impact cannot pull player through newly blocked route
+PASS death cancels prepared strike without delayed capture
+PASS discovery starts tracking without locking player
+PASS capture owns exclusive gate and blocks active actions
+PASS solo capture allows primary weapon fire
+PASS another trap cannot acquire same victim
+PASS player held at mouth
+PASS pull travel does not damage
+PASS first damage waits for half-second interval (tick observation)
+PASS first solo bite is five percent maximum health
+PASS animation progress tracks partial feeding time
+PASS movement and active inputs cannot escape
+PASS solo loses exactly half maximum health and releases
+PASS normal release stays at mouth instead of capture start
+PASS survival starts ten-second cooldown
+PASS cooldown cannot capture
+PASS early rescue never teleports
+PASS kill immediately releases without waiting for death animation
+PASS release preserves another source's lock
+PASS rescue cancels unpaid damage
+PASS enemy despawn cannot strand victim
+PASS non-divisible timing preserves total budget
+PASS equip solo rifle: 
+PASS solo primary weapon applies real damage while held
+PASS solo captured weapon can reload
+PASS actual weapon kill releases in place
+PASS equip captured Tank: 
+PASS captured Tank holds weapon but cannot guard, quick dash or move
+PASS Tank preparation release swings without weapon-linked dash
+PASS captured Tank aimed away still misses (no automatic captor damage)
+PASS captured Tank aimed down damages real captor through existing resolver
+PASS downward Tank attack remains stationary
+PASS Runner starts: Ok
+PASS late join resolves captor
+PASS multiplayer capture blocks weapons on both peers
+PASS client cannot release authoritative capture
+PASS last remaining player regains weapon permission
+PASS Runner starts: Ok
+PASS network rescue never teleports
+PASS both peers remain unlocked during tracking
+PASS client receives same frozen strike direction
+PASS client movement dodges authoritative straight vine
+PASS remote player authority separated
+PASS kill starts same ten-second cooldown
+PASS after impact client input cannot escape; multiplayer loses 100 percent maximum health

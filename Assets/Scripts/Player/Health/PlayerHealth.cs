@@ -253,7 +253,7 @@ public struct PlayerDamageReceivedInfo
 /// </summary>
 [DisallowMultipleComponent]
 [RequireComponent(typeof(NetworkObject))]
-public class PlayerHealth :
+public partial class PlayerHealth :
     NetworkBehaviour,
     IDamageReceiver,
     IBlockedDamageFeedbackReceiver,
@@ -443,7 +443,7 @@ public class PlayerHealth :
     public float MaximumHealth =>
         Mathf.Max(
             1f,
-            maximumHealth
+            maximumHealth + Purgers.Progression.PlayerGrowth.Value(GrowthOwner, Purgers.Progression.PlayerGrowthKind.MaximumHealth)
         );
 
     /// <summary>
@@ -545,6 +545,7 @@ public class PlayerHealth :
 
     public override void Spawned()
     {
+        rescueSpawned = true;
         if (Object.HasStateAuthority)
         {
             if (startWithFullHealth)
@@ -565,6 +566,7 @@ public class PlayerHealth :
             NetworkIsDead =
                 CurrentHealth <= 0f;
 
+            ResetRescueState();
             ClearLastDamageSourceState();
         }
 
@@ -585,6 +587,13 @@ public class PlayerHealth :
     #endregion
 
     // =====================================================================
+    /// <summary>共用傷害入口在防禦消耗前查詢；直接 ReceiveDamage 也遵守同一規則。</summary>
+    public bool RejectsSafeHousePlayerDamage(DamageRequest request) =>
+        Object != null && Object.IsValid &&
+        Purgers.GameFlow.SafeHouse.SafeHouseGameplayRules.BlocksPlayerDamage(
+            Purgers.GameFlow.SafeHouse.SafeHouseFlowController.IsActiveFor(Runner),
+            Purgers.GameFlow.SafeHouse.SafeHouseGameplayRules.HasPlayerSource(request));
+
     #region IDamageReceiver
 
     /// <summary>
@@ -633,6 +642,11 @@ public class PlayerHealth :
         // 已死亡
         // =============================================================
 
+        if (RejectsSafeHousePlayerDamage(request))
+            return DamageResult.CreateRejected(request, gameObject, DamageRejectReason.FriendlyFireBlocked);
+
+        NotifyGrowthCombat();
+        if (IsNotTodayInvulnerable) return DamageResult.CreateRejected(request, gameObject, DamageRejectReason.FullyBlocked, true, true);
         if (IsAlive == false)
         {
             return
@@ -705,13 +719,17 @@ public class PlayerHealth :
         bool killedPlayer =
             CurrentHealth <= 0f;
 
+        if (killedPlayer && TryPreventLethalDamage()) killedPlayer = false;
+
         if (killedPlayer)
         {
-            CurrentHealth =
-                0f;
-
-            NetworkIsDead =
-                true;
+            CurrentHealth = 0f;
+            if (UsesTeammateRescue)
+            {
+                BeginDownedStateAuthority();
+                killedPlayer = false;
+            }
+            else NetworkIsDead = true;
         }
 
         bool wasBlocked =
@@ -1401,6 +1419,7 @@ public class PlayerHealth :
         NetworkIsDead =
             false;
 
+        ResetRescueState();
         ClearLastDamageSourceState();
     }
 

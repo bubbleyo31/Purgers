@@ -1,0 +1,12 @@
+{
+  "total": 521,
+  "groups": {
+    "other_texture": 381,
+    "other_sprite": 32,
+    "project_image": 11,
+    "project_ui": 82,
+    "project_vfx": 15
+  },
+  "source_bytes": 705106864,
+  "note": "Source files only; not build inclusion or GPU memory."
+}

@@ -1,0 +1,77 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"d383a995e8f74050a2486bd9b8dd9946\",\"status\":\"failed\",\"mode\":\"EditMode\",\"started_unix_ms\":1792262186639,\"finished_unix_ms\":1792262190189,\"last_update_unix_ms\":1792262190189,\"progress\":{\"completed\":9,\"total\":1086,\"current_test_full_name\":null,\"current_test_started_unix_ms\":1792262189747,\"last_finished_test_full_name\":\"SpectatorSwitchTests.WipeHoldStartsOnlyAfterBothVisualAndAudioComplete\",\"last_finished_unix_ms\":1792262189748,\"stuck_suspected\":false,\"editor_is_focused\":false,\"blocked_reason\":null,\"failures_so_far\":[{\"full_name\":\"SpectatorSwitchTests.DownedTargetsRemainEligibleUntilDeath(False,False,True)\",\"message\":\"  Missing approved behavior: SpectatorSelectionRules\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"SpectatorSwitchTests.DownedTargetsRemainEligibleUntilDeath(False,True,True)\",\"message\":\"  Missing approved behavior: SpectatorSelectionRules\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"SpectatorSwitchTests.DownedTargetsRemainEligibleUntilDeath(True,False,False)\",\"message\":\"  Missing approved behavior: SpectatorSelectionRules\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"SpectatorSwitchTests.SelectionWrapsAndHandlesEmptyRoster(3,2,1,0)\",\"message\":\"  Missing approved behavior: SpectatorSelectionRules\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"SpectatorSwitchTests.SelectionWrapsAndHandlesEmptyRoster(3,0,-1,2)\",\"message\":\"  Missing approved behavior: SpectatorSelectionRules\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"SpectatorSwitchTests.SelectionWrapsAndHandlesEmptyRoster(1,0,1,0)\",\"message\":\"  Missing approved behavior: SpectatorSelectionRules\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"SpectatorSwitchTests.SelectionWrapsAndHandlesEmptyRoster(0,-1,1,-1)\",\"message\":\"  Missing approved behavior: SpectatorSelectionRules\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"SpectatorSwitchTests.WipeApiLivesOnExistingTransitionOwner\",\"message\":\"  Expected: not null\\r\\n  But was:  null\\r\\n\"},{\"full_name\":\"SpectatorSwitchTests.WipeHoldStartsOnlyAfterBothVisualAndAudioComplete\",\"message\":\"  Missing approved behavior: Purgers.GameFlow.Transition.WipeTransitionClock\\r\\n  Expected: not null\\r\\n  But was:  null\\r\\n\"}],\"failures_capped\":false},\"error\":null,\"result\":null},\"hint\":null}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "success": true,
+      "message": "Test job status retrieved.",
+      "error": null,
+      "data": {
+        "job_id": "d383a995e8f74050a2486bd9b8dd9946",
+        "status": "failed",
+        "mode": "EditMode",
+        "started_unix_ms": 1792262186639,
+        "finished_unix_ms": 1792262190189,
+        "last_update_unix_ms": 1792262190189,
+        "progress": {
+          "completed": 9,
+          "total": 1086,
+          "current_test_full_name": null,
+          "current_test_started_unix_ms": 1792262189747,
+          "last_finished_test_full_name": "SpectatorSwitchTests.WipeHoldStartsOnlyAfterBothVisualAndAudioComplete",
+          "last_finished_unix_ms": 1792262189748,
+          "stuck_suspected": false,
+          "editor_is_focused": false,
+          "blocked_reason": null,
+          "failures_so_far": [
+            {
+              "full_name": "SpectatorSwitchTests.DownedTargetsRemainEligibleUntilDeath(False,False,True)",
+              "message": "  Missing approved behavior: SpectatorSelectionRules\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "SpectatorSwitchTests.DownedTargetsRemainEligibleUntilDeath(False,True,True)",
+              "message": "  Missing approved behavior: SpectatorSelectionRules\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "SpectatorSwitchTests.DownedTargetsRemainEligibleUntilDeath(True,False,False)",
+              "message": "  Missing approved behavior: SpectatorSelectionRules\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "SpectatorSwitchTests.SelectionWrapsAndHandlesEmptyRoster(3,2,1,0)",
+              "message": "  Missing approved behavior: SpectatorSelectionRules\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "SpectatorSwitchTests.SelectionWrapsAndHandlesEmptyRoster(3,0,-1,2)",
+              "message": "  Missing approved behavior: SpectatorSelectionRules\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "SpectatorSwitchTests.SelectionWrapsAndHandlesEmptyRoster(1,0,1,0)",
+              "message": "  Missing approved behavior: SpectatorSelectionRules\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "SpectatorSwitchTests.SelectionWrapsAndHandlesEmptyRoster(0,-1,1,-1)",
+              "message": "  Missing approved behavior: SpectatorSelectionRules\r\n  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "SpectatorSwitchTests.WipeApiLivesOnExistingTransitionOwner",
+              "message": "  Expected: not null\r\n  But was:  null\r\n"
+            },
+            {
+              "full_name": "SpectatorSwitchTests.WipeHoldStartsOnlyAfterBothVisualAndAudioComplete",
+              "message": "  Missing approved behavior: Purgers.GameFlow.Transition.WipeTransitionClock\r\n  Expected: not null\r\n  But was:  null\r\n"
+            }
+          ],
+          "failures_capped": false
+        },
+        "error": null,
+        "result": null
+      },
+      "hint": null
+    }
+  },
+  "isError": false
+}

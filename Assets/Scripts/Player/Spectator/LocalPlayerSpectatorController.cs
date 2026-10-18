@@ -12,7 +12,8 @@ using UnityEngine;
 /// 1. 不需要 NetworkObject。
 /// 2. 不修改其他 Player 的 Input Authority。
 /// 3. 不修改其他 Player 的 Camera 或 ViewModel。
-/// 4. 只改變本機場景 CameraFollow 的 Target。
+/// 4. 向本機 CameraFollow 提交被觀戰者眼睛的世界姿態。
+/// 5. 沿用既有 ViewModel／HUD 只讀呈現被觀戰者資料。
 ///
 /// ====================================================================
 ///
@@ -43,7 +44,7 @@ using UnityEngine;
 /// </summary>
 [DefaultExecutionOrder(-50)]
 [DisallowMultipleComponent]
-public class LocalPlayerSpectatorController :
+public partial class LocalPlayerSpectatorController :
     MonoBehaviour
 {
     // =====================================================================
@@ -82,7 +83,7 @@ public class LocalPlayerSpectatorController :
 
     [Header("第三人稱觀戰位置")]
 
-    [SerializeField]
+    [SerializeField, HideInInspector]
     [Min(0f)]
     [Tooltip(
         "觀戰 Camera 位於目標水平觀看方向後方的距離，單位為世界單位。" +
@@ -90,14 +91,14 @@ public class LocalPlayerSpectatorController :
     private float spectatorDistance =
         4f;
 
-    [SerializeField]
+    [SerializeField, HideInInspector]
     [Tooltip(
         "觀戰 Camera 相對於目標 CamTarget 額外增加的垂直高度，" +
         "單位為世界單位。建議第一輪使用 0.75。")]
     private float spectatorHeight =
         0.75f;
 
-    [SerializeField]
+    [SerializeField, HideInInspector]
     [Tooltip(
         "觀戰 Camera 相對目標水平右方的肩膀偏移。\n\n" +
         "正值在目標右肩；負值在左肩；0 位於正後方。" +
@@ -105,7 +106,7 @@ public class LocalPlayerSpectatorController :
     private float spectatorShoulderOffset =
         0.6f;
 
-    [SerializeField]
+    [SerializeField, HideInInspector]
     [Min(0f)]
     [Tooltip(
         "Camera 看向目標 CamTarget 前方多少距離，" +
@@ -120,7 +121,7 @@ public class LocalPlayerSpectatorController :
 
     [Header("觀戰鏡頭平滑")]
 
-    [SerializeField]
+    [SerializeField, HideInInspector]
     [Min(0f)]
     [Tooltip(
         "觀戰 Camera 位置追蹤速度。\n\n" +
@@ -129,7 +130,7 @@ public class LocalPlayerSpectatorController :
     private float spectatorPositionSharpness =
         15f;
 
-    [SerializeField]
+    [SerializeField, HideInInspector]
     [Min(0f)]
     [Tooltip(
         "觀戰 Camera 旋轉追蹤速度。\n\n" +
@@ -145,14 +146,14 @@ public class LocalPlayerSpectatorController :
 
     [Header("觀戰鏡頭障礙物修正")]
 
-    [SerializeField]
+    [SerializeField, HideInInspector]
     [Tooltip(
         "會阻擋第三人稱觀戰 Camera 的場景 Layer。\n\n" +
         "建議只勾選 Environment／Ground／Wall 等實體場景 Layer，" +
         "不要勾選 Player、Hitbox、Trigger 或 Ignore Raycast。")]
     private LayerMask spectatorCollisionMask;
 
-    [SerializeField]
+    [SerializeField, HideInInspector]
     [Min(0.01f)]
     [Tooltip(
         "Camera 從目標視線位置向理想 Camera 位置檢查障礙時使用的 SphereCast 半徑。" +
@@ -161,7 +162,7 @@ public class LocalPlayerSpectatorController :
     private float spectatorCollisionRadius =
         0.2f;
 
-    [SerializeField]
+    [SerializeField, HideInInspector]
     [Min(0f)]
     [Tooltip(
         "SphereCast 命中牆面後，Camera 額外向目標方向保留多少距離，" +
@@ -340,16 +341,8 @@ public class LocalPlayerSpectatorController :
             }
         }
 
-        if (spectatorActive)
-        {
-            if (IsCurrentSpectatorTargetValid() == false)
-            {
-                ClearSpectatorTarget();
-                TryAcquireSpectatorTarget();
-            }
-        }
+        if (spectatorActive) UpdateSpectatorSelection();
     }
-
     private void LateUpdate()
     {
         if (spectatorActive == false ||
@@ -358,11 +351,12 @@ public class LocalPlayerSpectatorController :
             return;
         }
 
-        UpdateSpectatorCameraPose();
+        if (!IsTransitionBlocked) UpdateFirstPersonPresentation();
     }
 
     private void OnDisable()
     {
+        activeControllers.Remove(this);
         ExitSpectatorMode();
     }
 
@@ -492,6 +486,7 @@ public class LocalPlayerSpectatorController :
 
     private void ExitSpectatorMode()
     {
+        candidates.Clear(); lastTargetSlot = -1; switchKeysArmed = false;
         waitingForSpectator =
             false;
 
@@ -519,114 +514,30 @@ public class LocalPlayerSpectatorController :
 
     private bool TryAcquireSpectatorTarget()
     {
-        if (runner == null ||
-            runner.IsRunning == false)
+        RefreshCandidates();
+        if (candidates.Count == 0)
         {
+            if (debugSpectator && !loggedNoSpectatorTarget)
+                Debug.Log("[Spectator] 等待可觀戰隊友（包含倒地玩家）。", this);
+            loggedNoSpectatorTarget = true;
             return false;
         }
-
-        foreach (
-            PlayerRef candidatePlayer
-                in runner.ActivePlayers
-        )
-        {
-            // 絕對不能觀戰自己正在等待重生的 PlayerRef。
-            if (candidatePlayer ==
-                runner.LocalPlayer)
-            {
-                continue;
-            }
-
-            if (runner.TryGetPlayerObject(
-                    candidatePlayer,
-                    out NetworkObject candidateObject
-                ) == false ||
-                candidateObject == null ||
-                candidateObject.IsValid == false)
-            {
-                continue;
-            }
-
-            Player candidatePlayerBehaviour =
-                candidateObject.GetComponent<Player>();
-
-            if (candidatePlayerBehaviour == null ||
-                candidatePlayerBehaviour.Health == null ||
-                candidatePlayerBehaviour.Health.IsAlive == false ||
-                candidatePlayerBehaviour.Movement == null ||
-                candidatePlayerBehaviour.Movement.CamTarget == null)
-            {
-                continue;
-            }
-
-            spectatedPlayer =
-                candidatePlayer;
-
-            spectatedPlayerObject =
-                candidateObject;
-
-            spectatedPlayerBehaviour =
-                candidatePlayerBehaviour;
-
-            spectatedMovement =
-                candidatePlayerBehaviour.Movement;
-
-            hasValidSpectatorPose =
-                false;
-
-            loggedNoSpectatorTarget =
-                false;
-
-            /*
-             * 場景 CameraFollow 改跟隨本控制器自己的 Transform。
-             *
-             * 本控制器 LateUpdate 會計算第三人稱位置，
-             * CameraFollow 再於自己的 LateUpdate 套用該位置。
-             */
-            if (CameraFollow.Singleton != null)
-            {
-                CameraFollow.Singleton.SetTarget(
-                    transform
-                );
-            }
-
-            if (debugSpectator)
-            {
-                Debug.Log(
-                    $"[Spectator] 觀戰目標已切換。" +
-                    $"\nTarget Player：{spectatedPlayer}" +
-                    $"\nTarget Object：{spectatedPlayerObject.name}",
-                    this
-                );
-            }
-
-            return true;
-        }
-
-        if (debugSpectator &&
-            loggedNoSpectatorTarget == false)
-        {
-            loggedNoSpectatorTarget =
-                true;
-
-            Debug.Log(
-                "[Spectator] 目前沒有其他存活玩家可供觀戰，Camera 保持最後位置。",
-                this
-            );
-        }
-
-        return false;
+        foreach (var player in candidates)
+            if (Slot(player) > lastTargetSlot) return SelectTarget(player);
+        return SelectTarget(candidates[0]);
     }
-
     private bool IsCurrentSpectatorTargetValid()
     {
-        if (spectatedPlayer ==
+        if (!IsConnectedCandidate(spectatedPlayer) || spectatedPlayer ==
                 PlayerRef.None ||
             spectatedPlayerObject == null ||
             spectatedPlayerObject.IsValid == false ||
+            spectatedPlayerObject.Runner != runner ||
+            spectatedPlayerObject.InputAuthority != spectatedPlayer ||
             spectatedPlayerBehaviour == null ||
             spectatedPlayerBehaviour.Health == null ||
-            spectatedPlayerBehaviour.Health.IsAlive == false ||
+            !spectatedPlayerBehaviour.Health.IsRescueReady ||
+            spectatedPlayerBehaviour.Health.IsDead ||
             spectatedMovement == null ||
             spectatedMovement.CamTarget == null)
         {
@@ -638,6 +549,7 @@ public class LocalPlayerSpectatorController :
 
     private void ClearSpectatorTarget()
     {
+        ClearObservedPresentation();
         /*
          * 只有 CameraFollow 目前仍跟隨本控制器 Transform 時才會清除。
          *
@@ -672,7 +584,8 @@ public class LocalPlayerSpectatorController :
     // =====================================================================
     #region Spectator Camera Pose
 
-    private void UpdateSpectatorCameraPose()
+    // 僅保留舊序列化參數的相容運算，現行生命週期不呼叫此第三人稱路徑。
+    private void UpdateLegacyThirdPersonCameraPose()
     {
         Transform targetCameraAnchor =
             spectatedMovement.CamTarget;

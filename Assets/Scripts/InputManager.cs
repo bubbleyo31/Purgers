@@ -1,3 +1,4 @@
+using Purgers.Settings;
 using Fusion;
 using Fusion.Sockets;
 using System;
@@ -49,11 +50,31 @@ public class InputManager :
     /// </summary>
     private NetInput accumulatedInput;
 
+    // 本機呈現只讀當幀輸入，不消耗 Fusion 累積輸入；未更新／被封鎖時回零。
+    private Vector2 frameLookDelta;
+    private int frameLookNumber = -1;
+    public Vector2 CurrentFrameLookDelta => isActiveAndEnabled && frameLookNumber == Time.frameCount
+        ? frameLookDelta : Vector2.zero;
+
     /// <summary>
     /// 上一次 OnInput 已經提交資料後，
     /// 下一個 BeforeUpdate 是否應該重置輸入。
     /// </summary>
     private bool resetInput;
+    private NetInput sideTapHistory;
+    private float lastSideTapTime;
+
+    private void CollectSideTap()
+    {
+        bool left = PlayerSettingsService.Down(PlayerBinding.Left);
+        bool right = PlayerSettingsService.Down(PlayerBinding.Right);
+        if (!left && !right) return;
+        sideTapHistory.PreviousSideTapDirection = sideTapHistory.SideTapDirection;
+        sideTapHistory.SideTapDirection = left == right ? 0 : left ? -1 : 1;
+        sideTapHistory.SideTapInterval = Time.unscaledTime - lastSideTapTime;
+        lastSideTapTime = Time.unscaledTime;
+        unchecked { sideTapHistory.SideTapSequence++; }
+    }
 
     [Header("戰鬥按鍵")]
     [SerializeField] private KeyCode grappleKey = KeyCode.Q;
@@ -65,16 +86,24 @@ public class InputManager :
     [Tooltip("Editor Host 暫停／恢復目前關卡限制時間的按鍵，預設 F7；None 停用。只在 Play Mode 生效，Client 與所有 Build 不受理；不影響遊戲速度、技能或撤離倒數。")]
     [SerializeField] private KeyCode developmentStageTimerPauseKey = KeyCode.F7;
 
-    public KeyCode GrappleKey => grappleKey;
-    public KeyCode GrappleFocusKey => grappleFocusKey;
-    public KeyCode ReloadKey => reloadKey;
-    public KeyCode RewardHoldKey => rewardHoldKey;
-    public string RewardHoldKeyLabel => rewardHoldKey == KeyCode.LeftAlt ||
-        rewardHoldKey == KeyCode.RightAlt ? "ALT" :
-        rewardHoldKey.ToString().ToUpperInvariant();
-    public bool IsRewardHoldKeyPressed => Input.GetKey(rewardHoldKey) ||
-        (rewardHoldKey == KeyCode.LeftAlt && Input.GetKey(KeyCode.RightAlt));
-
+    public KeyCode GrappleKey => PlayerSettingsService.IsInitialized ? PlayerSettingsService.Key(PlayerBinding.Grapple) : grappleKey;
+    public KeyCode GrappleFocusKey => PlayerSettingsService.IsInitialized ? PlayerSettingsService.Key(PlayerBinding.Interact) : grappleFocusKey;
+    public KeyCode ReloadKey => PlayerSettingsService.IsInitialized ? PlayerSettingsService.Key(PlayerBinding.Reload) : reloadKey;
+    public KeyCode RewardHoldKey => PlayerSettingsService.IsInitialized ? PlayerSettingsService.Key(PlayerBinding.Rewards) : rewardHoldKey;
+    public string RewardHoldKeyLabel => PlayerSettingsData.KeyLabel(RewardHoldKey);
+    public bool IsRewardHoldKeyPressed => !LocalTeamInfoPanel.IsOpenFor(Runner) && RewardHoldKey != KeyCode.None && Input.GetKey(RewardHoldKey);
+    readonly PlayerSettingsIntent settingsIntent = new PlayerSettingsIntent();
+    uint allowedHeld;
+    uint PhysicalHeld()
+    {
+        uint held = 0;
+        for (int i = 0; i < 16; i++)
+            if (PlayerSettingsService.Held((PlayerBinding)i)) held |= 1u << i;
+        return held;
+    }
+    bool Held(PlayerBinding action) => (allowedHeld & PlayerSettingsIntent.Bit(action)) != 0;
+    bool Pressed(PlayerBinding action) => Held(action) && PlayerSettingsService.Down(action);
+    void SettingsChanged() { ClearPendingInput(); }
     [SerializeField, Min(0f)]
     [Tooltip("安全屋與關卡載入完成後的黑幕淡入秒數；使用 Unscaled Time。")]
     private float sceneFadeDuration = 1.5f;
@@ -130,12 +159,28 @@ public class InputManager :
     private void Awake()
     {
         rewardRunner = GetComponent<NetworkRunner>();
-        LocalPlayerControl.Locks.Changed += ClearPendingInput;
+        LocalTeamInfoPanel.EnsureForRunner(rewardRunner);
+        LocalPlayerControl.Locks.Changed += ControlLocksChanged;
+        PlayerSettingsService.Changed += SettingsChanged;
     }
 
-    private void ClearPendingInput()
+    private PlayerControlMask lastControlMask;
+    private void ControlLocksChanged()
     {
+        var mask = LocalPlayerControl.Locks.Mask;
+        bool teamTransition = ((mask | lastControlMask) & PlayerControlMask.Combat) != 0 &&
+            ((mask ^ lastControlMask) & ~(PlayerControlMask.Combat | PlayerControlMask.Look)) == 0;
+        lastControlMask = mask;
+        ClearPendingInputCore(teamTransition ? LocalTeamInfoPanel.CombatBindings : uint.MaxValue);
+    }
+    private void ClearPendingInput() => ClearPendingInputCore(uint.MaxValue);
+    private void ClearPendingInputCore(uint rearmMask)
+    {
+        settingsIntent.BlockHeld(PhysicalHeld() & rearmMask);
+        frameLookDelta = Vector2.zero;
+        frameLookNumber = -1;
         accumulatedInput = default;
+        sideTapHistory.SideTapDirection = sideTapHistory.PreviousSideTapDirection = 0;
         resetInput = false;
         IsRewardSelectionActive = false;
         pendingHostRewardChoice = false;
@@ -146,7 +191,8 @@ public class InputManager :
 
     private void OnDestroy()
     {
-        LocalPlayerControl.Locks.Changed -= ClearPendingInput;
+        LocalPlayerControl.Locks.Changed -= ControlLocksChanged;
+        PlayerSettingsService.Changed -= SettingsChanged;
         if (sceneTransition != null)
             sceneTransition.Cancel();
     }
@@ -161,6 +207,8 @@ public class InputManager :
     /// </summary>
     void IBeforeUpdate.BeforeUpdate()
     {
+        frameLookDelta = Vector2.zero;
+        frameLookNumber = Time.frameCount;
         int heldMouseButtons = (Input.GetMouseButton(0) ? 1 : 0) |
             (Input.GetMouseButton(1) ? 2 : 0) |
             (Input.GetMouseButton(2) ? 4 : 0);
@@ -186,32 +234,23 @@ public class InputManager :
         // 游標切換
         // -------------------------------------------------------------
 
-        bool toggleCursor =
-            Input.GetKeyDown(KeyCode.Return) ||
-            Input.GetKeyDown(KeyCode.KeypadEnter) ||
-            Input.GetKeyDown(KeyCode.Escape);
-
-        if (toggleCursor)
+        PlayerSettingsMenu.Instance?.ProcessEscape();
+        LocalTeamInfoPanel.ProcessInput(Runner);
+        uint physicalHeld = PhysicalHeld();
+        if (PlayerSettingsMenu.IsOpen || PlayerControlLocks.BlocksGameplay(LocalPlayerControl.Locks.Mask))
         {
-            if (Cursor.lockState ==
-                CursorLockMode.Locked)
-            {
-                Cursor.lockState =
-                    CursorLockMode.None;
-
-                Cursor.visible =
-                    true;
-            }
-            else
-            {
-                Cursor.lockState =
-                    CursorLockMode.Locked;
-
-                Cursor.visible =
-                    false;
-            }
+            settingsIntent.BlockHeld(physicalHeld);
+            ClearPendingInput();
+            return;
         }
-
+        if (LocalPlayerSpectatorController.GetForRunner(Runner)?.IsSpectating == true)
+        {
+            ClearPendingInput(); // 死亡期間消耗按住狀態，重生必須放開再按。
+            return;
+        }
+        bool teamOpen = LocalTeamInfoPanel.IsOpenFor(Runner);
+        if (teamOpen) settingsIntent.BlockHeld(physicalHeld & LocalTeamInfoPanel.CombatBindings);
+        allowedHeld = settingsIntent.Rearm(physicalHeld);
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
         RefreshDebugLevelUp();
 #endif
@@ -223,8 +262,7 @@ public class InputManager :
         // 游標未鎖定時，不接受角色操作
         // -------------------------------------------------------------
 
-        if (Cursor.lockState !=
-            CursorLockMode.Locked)
+        if (Cursor.lockState != CursorLockMode.Locked && !teamOpen)
         {
             accumulatedInput =
                 default;
@@ -234,7 +272,13 @@ public class InputManager :
             return;
         }
 
-        RefreshRewardSelection();
+        if (!teamOpen) RefreshRewardSelection();
+        else IsRewardSelectionActive = false;
+        if (IsRewardSelectionActive)
+        {
+            uint combat = PlayerSettingsIntent.Bit(PlayerBinding.Fire) | PlayerSettingsIntent.Bit(PlayerBinding.Aim) | PlayerSettingsIntent.Bit(PlayerBinding.Interact);
+            settingsIntent.BlockHeld(physicalHeld & combat); allowedHeld &= ~combat;
+        }
 
         NetworkButtons currentButtons =
             default;
@@ -272,6 +316,11 @@ public class InputManager :
          * 否則 Fusion OnInput 沒有剛好在這個 Unity Frame
          * 執行時可能漏掉滑鼠 Delta。
          */
+        var preferences = PlayerSettingsService.Current;
+        lookRotationDelta.x *= preferences.total * preferences.vertical;
+        lookRotationDelta.y *= preferences.total * preferences.horizontal;
+        if (PlayerControlLocks.BlocksLook(LocalPlayerControl.Locks.Mask)) lookRotationDelta = Vector2.zero;
+        frameLookDelta = lookRotationDelta;
         accumulatedInput.LookDelta +=
             lookRotationDelta;
 
@@ -279,28 +328,29 @@ public class InputManager :
         // WASD
         // =============================================================
 
+        if (!teamOpen) CollectSideTap();
         Vector2 moveDirection =
             Vector2.zero;
 
-        if (Input.GetKey(KeyCode.W))
+        if (PlayerSettingsService.Held(PlayerBinding.Forward))
         {
             moveDirection +=
                 Vector2.up;
         }
 
-        if (Input.GetKey(KeyCode.S))
+        if (PlayerSettingsService.Held(PlayerBinding.Back))
         {
             moveDirection +=
                 Vector2.down;
         }
 
-        if (Input.GetKey(KeyCode.A))
+        if (PlayerSettingsService.Held(PlayerBinding.Left))
         {
             moveDirection +=
                 Vector2.left;
         }
 
-        if (Input.GetKey(KeyCode.D))
+        if (PlayerSettingsService.Held(PlayerBinding.Right))
         {
             moveDirection +=
                 Vector2.right;
@@ -321,9 +371,7 @@ public class InputManager :
          */
         currentButtons.Set(
             InputButton.Jump,
-            Input.GetKeyDown(
-                KeyCode.Space
-            )
+            Pressed(PlayerBinding.Jump)
         );
 
         // =============================================================
@@ -355,9 +403,7 @@ public class InputManager :
         */
         currentButtons.Set(
             InputButton.Grapple,
-            Input.GetKey(
-                grappleKey
-            )
+            Held(PlayerBinding.Grapple)
         );
 
         // =============================================================
@@ -369,9 +415,7 @@ public class InputManager :
          */
         currentButtons.Set(
             InputButton.Sprint,
-            Input.GetKey(
-                KeyCode.LeftShift
-            )
+            Held(PlayerBinding.Sprint)
         );
 
         // =============================================================
@@ -389,9 +433,7 @@ public class InputManager :
         */
         currentButtons.Set(
             InputButton.Crouch,
-            Input.GetKey(
-                KeyCode.LeftControl
-            )
+            settingsIntent.Crouch(Held(PlayerBinding.Crouch), Pressed(PlayerBinding.Crouch), preferences.crouchToggle)
         );
 
         // =============================================================
@@ -412,7 +454,7 @@ public class InputManager :
          */
         currentButtons.Set(
             InputButton.Fire,
-            !IsRewardSelectionActive && Input.GetMouseButton(0)
+            !IsRewardSelectionActive && Held(PlayerBinding.Fire)
         );
 
         // =============================================================
@@ -433,7 +475,7 @@ public class InputManager :
          */
         currentButtons.Set(
             InputButton.Aim,
-            !IsRewardSelectionActive && Input.GetMouseButton(1)
+            !IsRewardSelectionActive && settingsIntent.Aim(Held(PlayerBinding.Aim), Pressed(PlayerBinding.Aim), preferences.aimToggle)
         );
 
         // =============================================================
@@ -445,9 +487,7 @@ public class InputManager :
          */
         currentButtons.Set(
             InputButton.Reload,
-            Input.GetKeyDown(
-                reloadKey
-            )
+            Pressed(PlayerBinding.Reload)
         );
 
         /*
@@ -461,9 +501,7 @@ public class InputManager :
         */
         currentButtons.Set(
             InputButton.QuickAction,
-            Input.GetKeyDown(
-                KeyCode.F
-            )
+            Pressed(PlayerBinding.QuickAction)
         );
 
         // =============================================================
@@ -476,7 +514,7 @@ public class InputManager :
          */
         currentButtons.Set(
             InputButton.Ability1,
-            !IsRewardSelectionActive && Input.GetKey(grappleFocusKey)
+            !IsRewardSelectionActive && Held(PlayerBinding.Interact)
         );
 
         // =============================================================
@@ -504,9 +542,9 @@ public class InputManager :
             rewardMouseButtonsBlockedUntilRelease |= heldMouseButtons;
 
         // Filter after accumulation so pre-ALT buffered combat cannot leak either.
-        if (selectionActive || (rewardMouseButtonsBlockedUntilRelease & 1) != 0)
+        if (selectionActive || (PlayerSettingsService.Key(PlayerBinding.Fire) == KeyCode.Mouse0 && (rewardMouseButtonsBlockedUntilRelease & 1) != 0))
             accumulatedInput.Buttons.Set(InputButton.Fire, false);
-        if (selectionActive || (rewardMouseButtonsBlockedUntilRelease & 2) != 0)
+        if (selectionActive || (PlayerSettingsService.Key(PlayerBinding.Aim) == KeyCode.Mouse1 && (rewardMouseButtonsBlockedUntilRelease & 2) != 0))
             accumulatedInput.Buttons.Set(InputButton.Aim, false);
         if (selectionActive)
             accumulatedInput.Buttons.Set(InputButton.Ability1, false);
@@ -568,6 +606,7 @@ public class InputManager :
     {
         if (developmentStageTimerPauseKey == KeyCode.None ||
             !Input.GetKeyDown(developmentStageTimerPauseKey) ||
+            Array.IndexOf(PlayerSettingsService.Current.keys, developmentStageTimerPauseKey) >= 0 ||
             !Application.isPlaying || !DevelopmentToolsPolicy.IsEnabled ||
             rewardRunner == null || !rewardRunner.IsRunning || !rewardRunner.IsServer ||
             !rewardRunner.LocalPlayer.IsRealPlayer)
@@ -585,6 +624,7 @@ public class InputManager :
     private void RefreshDebugLevelUp()
     {
         if (!Input.GetKeyDown(KeyCode.F8) ||
+            Array.IndexOf(PlayerSettingsService.Current.keys, KeyCode.F8) >= 0 ||
             !DevelopmentToolsPolicy.IsEnabled ||
             rewardRunner == null || !rewardRunner.IsRunning ||
             !rewardRunner.LocalPlayer.IsRealPlayer ||
@@ -616,7 +656,13 @@ public class InputManager :
         NetworkInput input
     )
     {
+        accumulatedInput.SideTapSequence = sideTapHistory.SideTapSequence;
+        accumulatedInput.SideTapDirection = sideTapHistory.SideTapDirection;
+        accumulatedInput.PreviousSideTapDirection = sideTapHistory.PreviousSideTapDirection;
+        accumulatedInput.SideTapInterval = sideTapHistory.SideTapInterval;
         PlayerControlLocks.Filter(ref accumulatedInput, LocalPlayerControl.Locks.Mask);
+        accumulatedInput.SettingsModes = PlayerSettingsInputRules.Modes(PlayerSettingsService.Current);
+        accumulatedInput.SettingsMenuOpen = PlayerSettingsMenu.IsGameplayMenuOpen;
         // -------------------------------------------------------------
         // 移動輸入正規化
         // -------------------------------------------------------------

@@ -3160,15 +3160,15 @@ MonoBehaviour:
   stageFlow: {fileID: 1462861022}
   mapState: {fileID: 1462861025}
   mapSelection: {fileID: 415321709}
-  maximumAliveEnemies: 12
-  maximumAlivePerZone: 3
+  maximumAliveEnemies: 50
+  maximumAlivePerZone: 20
   maximumOwnedNetworkObjects: 20
-  minimumSecondsBetweenSpawns: 0.75
+  minimumSecondsBetweenSpawns: 0.02
   recentLockedZoneCount: 5
   maximumSweepDistance: 200
-  activationLifetimeSeconds: 3
+  activationLifetimeSeconds: 10
   maximumSpawnDistanceFromTrigger: 150
-  minimumForwardDistance: 2
+  minimumForwardDistance: 0
   candidateAttempts: 16
   groundSampleDistance: 2
   minimumPlayerDistance: 8
@@ -3178,7 +3178,7 @@ MonoBehaviour:
   spawnOccupancyMask:
     serializedVersion: 2
     m_Bits: 576
-  spawnOccupancyRadius: 0.75
+  spawnOccupancyRadius: 2
   spawnOccupancyCenterHeight: 0.9
   cleanupDistance: 200
   cleanupDelaySeconds: 8
@@ -5734,90 +5734,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1655280636}
     m_Modifications:
-    - target: {fileID: 1128277685751221939, guid: 1bcb643b06b812846ba14e22f9febcb6,
+    - target: {fileID: 556414991676992100, guid: 1bcb643b06b812846ba14e22f9febcb6,
         type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 53.99011
-      objectReference: {fileID: 0}
-    - target: {fileID: 1128277685751221939, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 60.274925
+      propertyPath: enemyEntries.Array.data[2].count
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1354308968404919108, guid: 1bcb643b06b812846ba14e22f9febcb6,
         type: 3}
-      propertyPath: locomotionKind
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1354308968404919108, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: enemiesPerActivation
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1354308968404919108, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: requireSpawnOcclusion
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1354308968404919108, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: enemyPrefabs.Array.data[0].RawGuidValue.Array.data[0]
-      value: 6073673562176830903
-      objectReference: {fileID: 0}
-    - target: {fileID: 1354308968404919108, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: enemyPrefabs.Array.data[0].RawGuidValue.Array.data[1]
-      value: -8498968959092176664
+      propertyPath: enemyEntries.Array.data[2].count
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2038543456123650491, guid: 1bcb643b06b812846ba14e22f9febcb6,
         type: 3}
-      propertyPath: locomotionKind
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2038543456123650491, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: enemiesPerActivation
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2038543456123650491, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: requireSpawnOcclusion
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2038543456123650491, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: enemyPrefabs.Array.data[0].RawGuidValue.Array.data[0]
-      value: 6073673562176830903
-      objectReference: {fileID: 0}
-    - target: {fileID: 2038543456123650491, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: enemyPrefabs.Array.data[0].RawGuidValue.Array.data[1]
-      value: -8498968959092176664
+      propertyPath: enemyEntries.Array.data[2].count
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2225447974596857288, guid: 1bcb643b06b812846ba14e22f9febcb6,
         type: 3}
-      propertyPath: locomotionKind
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2225447974596857288, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: enemiesPerActivation
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2225447974596857288, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: requireSpawnOcclusion
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2225447974596857288, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: enemyPrefabs.Array.data[0].RawGuidValue.Array.data[0]
-      value: 6073673562176830903
-      objectReference: {fileID: 0}
-    - target: {fileID: 2225447974596857288, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: enemyPrefabs.Array.data[0].RawGuidValue.Array.data[1]
-      value: -8498968959092176664
+      propertyPath: enemyEntries.Array.data[2].count
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3056059368759674483, guid: 1bcb643b06b812846ba14e22f9febcb6,
         type: 3}
@@ -5869,70 +5804,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3200236581616159627, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3248225720826178369, guid: 1bcb643b06b812846ba14e22f9febcb6,
         type: 3}
-      propertyPath: locomotionKind
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3248225720826178369, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: enemiesPerActivation
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3248225720826178369, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: requireSpawnOcclusion
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3248225720826178369, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: enemyPrefabs.Array.data[0].RawGuidValue.Array.data[0]
-      value: 6073673562176830903
-      objectReference: {fileID: 0}
-    - target: {fileID: 3248225720826178369, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: enemyPrefabs.Array.data[0].RawGuidValue.Array.data[1]
-      value: -8498968959092176664
-      objectReference: {fileID: 0}
-    - target: {fileID: 6475743290879891988, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -104.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 6475743290879891988, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 110.20001
+      propertyPath: enemyEntries.Array.data[2].count
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6500994818849835643, guid: 1bcb643b06b812846ba14e22f9febcb6,
         type: 3}
-      propertyPath: locomotionKind
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6500994818849835643, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: enemiesPerActivation
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6500994818849835643, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: requireSpawnOcclusion
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6500994818849835643, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: enemyPrefabs.Array.data[0].RawGuidValue.Array.data[0]
-      value: -3101632310648573561
-      objectReference: {fileID: 0}
-    - target: {fileID: 6500994818849835643, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: enemyPrefabs.Array.data[0].RawGuidValue.Array.data[1]
-      value: 8985167793618825064
+      propertyPath: enemyEntries.Array.data[2].count
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7032530407859815205, guid: 1bcb643b06b812846ba14e22f9febcb6,
         type: 3}
@@ -5941,88 +5821,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7314078300854576006, guid: 1bcb643b06b812846ba14e22f9febcb6,
         type: 3}
-      propertyPath: locomotionKind
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7314078300854576006, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: enemiesPerActivation
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7314078300854576006, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: requireSpawnOcclusion
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7314078300854576006, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: enemyPrefabs.Array.data[0].RawGuidValue.Array.data[0]
-      value: 6073673562176830903
-      objectReference: {fileID: 0}
-    - target: {fileID: 7314078300854576006, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: enemyPrefabs.Array.data[0].RawGuidValue.Array.data[1]
-      value: -8498968959092176664
+      propertyPath: enemyEntries.Array.data[2].count
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8925340402065349239, guid: 1bcb643b06b812846ba14e22f9febcb6,
         type: 3}
-      propertyPath: locomotionKind
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8925340402065349239, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: enemiesPerActivation
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8925340402065349239, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: flyingPatrolBoxSize.x
-      value: 160
-      objectReference: {fileID: 0}
-    - target: {fileID: 8925340402065349239, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: flyingPatrolBoxSize.y
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8925340402065349239, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: flyingPatrolBoxSize.z
-      value: 160
-      objectReference: {fileID: 0}
-    - target: {fileID: 8925340402065349239, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: requireSpawnOcclusion
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8925340402065349239, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: enemyPrefabs.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8925340402065349239, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: flyingPatrolBoxCenter.y
-      value: 38.97
-      objectReference: {fileID: 0}
-    - target: {fileID: 8925340402065349239, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: enemyPrefabs.Array.data[0].RawGuidValue.Array.data[0]
-      value: 6073673562176830903
-      objectReference: {fileID: 0}
-    - target: {fileID: 8925340402065349239, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: enemyPrefabs.Array.data[0].RawGuidValue.Array.data[1]
-      value: -8498968959092176664
-      objectReference: {fileID: 0}
-    - target: {fileID: 8925340402065349239, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: enemyPrefabs.Array.data[1].RawGuidValue.Array.data[0]
-      value: -3120311786621604923
-      objectReference: {fileID: 0}
-    - target: {fileID: 8925340402065349239, guid: 1bcb643b06b812846ba14e22f9febcb6,
-        type: 3}
-      propertyPath: enemyPrefabs.Array.data[1].RawGuidValue.Array.data[1]
-      value: 6368312982802144747
+      propertyPath: enemyEntries.Array.data[2].count
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

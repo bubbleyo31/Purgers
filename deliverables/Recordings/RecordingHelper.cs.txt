@@ -1,0 +1,177 @@
+#if UNITY_EDITOR
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Fusion;
+using UnityEditor;
+using UnityEditor.Media;
+using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
+
+/// <summary>明確啟動的 Play Mode 錄影工具；只建立臨時場地，不修改正式資產。</summary>
+public static partial class EnemySuicideRuntimeVerification
+{
+    public static async void RecordVideo()
+    {
+        if (!Application.isPlaying || host != null || NetworkRunner.Instances.Any(r => r.IsRunning))
+            throw new InvalidOperationException("需要沒有 Runner 的 Play Mode。");
+        Status = "錄影準備"; network = false; report.Clear(); session = "suicide-video";
+        NavMeshDataInstance nav = default;
+        SuicideVideoCapture capture = null;
+        try
+        {
+            host = await Connect(true);
+            nav = NavMesh.AddNavMeshData(AssetDatabase.LoadAssetAtPath<NavMeshData>("Assets/Prefabs/Map/NavMesh-MapChunk_Prototype_Phase10.asset"), Origin, Quaternion.identity);
+            NavMesh.SamplePosition(Origin, out var ground, 1f, -1);
+            var origin = ground.position;
+            var material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+            material.color = new Color(.16f,.19f,.22f); temporary.Add(material);
+            var floor = GameObject.CreatePrimitive(PrimitiveType.Cube); temporary.Add(floor); host.MoveToRunnerScene(floor);
+            floor.transform.position = origin - Vector3.up * .5f + Vector3.forward * 15;
+            floor.transform.localScale = new Vector3(70,1,90); floor.GetComponent<Renderer>().sharedMaterial = material;
+            var lineMaterial = new Material(Shader.Find("Universal Render Pipeline/Unlit")); lineMaterial.color = new Color(.28f,.36f,.4f); temporary.Add(lineMaterial);
+            for (int i=-5;i<=25;i++)
+            {
+                var line=GameObject.CreatePrimitive(PrimitiveType.Cube);temporary.Add(line);host.MoveToRunnerScene(line);
+                UnityEngine.Object.Destroy(line.GetComponent<Collider>()); line.transform.position=origin+new Vector3(0,.006f,i*2);
+                line.transform.localScale=new Vector3(38,.01f,.025f);line.GetComponent<Renderer>().sharedMaterial=lineMaterial;
+            }
+            var areaGo = new GameObject("Recording patrol area"); temporary.Add(areaGo);host.MoveToRunnerScene(areaGo);areaGo.transform.position=origin;
+            area=areaGo.AddComponent<EnemyPatrolArea>();var points=new GameObject("Points").transform;points.SetParent(areaGo.transform,false);
+            var point=new GameObject("Walk endpoint").transform;point.SetParent(points,false);point.localPosition=Vector3.forward*8;
+            area.ConfigureRuntime("suicide-recording",points,0);
+            var player=host.Spawn(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/KCC_Player.prefab").GetComponent<NetworkObject>(),
+                origin+Vector3.forward*34,Quaternion.identity,host.LocalPlayer);host.SetPlayerObject(host.LocalPlayer,player);
+            await Task.Delay(300);player.GetComponent<Player>().enabled=false;
+            var enemy=SpawnEnemy(origin); // 隔離工具先停用決策，依拍攝段落逐步放行原 Brain。
+            var lamp=new GameObject("Recording key light");temporary.Add(lamp);host.MoveToRunnerScene(lamp);
+            var light=lamp.AddComponent<Light>();light.type=LightType.Directional;light.intensity=1.5f;lamp.transform.rotation=Quaternion.Euler(45,-35,0);
+            var cameraGo=new GameObject("Suicide recording camera");temporary.Add(cameraGo);host.MoveToRunnerScene(cameraGo);
+            var camera=cameraGo.AddComponent<Camera>();camera.clearFlags=CameraClearFlags.SolidColor;camera.backgroundColor=new Color(.055f,.075f,.10f);
+            camera.fieldOfView=48;camera.nearClipPlane=.1f;camera.farClipPlane=180;camera.allowHDR=false;camera.depth=100;
+            capture=cameraGo.AddComponent<SuicideVideoCapture>();capture.Begin(camera,enemy,origin);
+            Status="錄影中";
+            await Task.Delay(2000);
+            var patrol=enemy.GetComponent<EnemyIdlePatrolBrain>();patrol.enabled=true;
+            Invoke(patrol,"TryCreatePatrolRequest");
+            await Task.Delay(4500);
+            foreach(var behaviour in new UnityEngine.Behaviour[]{enemy.GetComponent<EnemyPerceptionController>(),enemy.GetComponent<EnemyAwarenessBrain>(),
+                enemy.GetComponent<EnemyChaseBrain>(),enemy.GetComponent<EnemyCombatDecisionController>()})behaviour.enabled=true;
+            capture.StageLabel="發現玩家 → 追逐 → 撲擊";
+            await Until(()=>enemy==null || !enemy.IsValid || enemy.GetComponent<EnemySuicideAttack>().HasExploded,"waiting actual AI explosion");
+            await Task.Delay(4000);
+            capture.StageLabel="近身零預警自爆";
+            var close=SpawnEnemy(player.transform.position+Vector3.back*2);
+            capture.Follow=close;capture.ResetCamera();
+            await Task.Delay(1500);
+            close.GetComponent<EnemyCombatDecisionController>().enabled=true;
+            await Task.Delay(4500);
+            capture.Finish();
+            report.Add("VIDEO "+capture.Output+" frames="+capture.Frames+" replayFrames="+capture.ReplayFrames);
+            Status="錄影完成";
+        }
+        catch(Exception ex){Status="錄影失敗";report.Add(ex.ToString());Debug.LogError(ex);}
+        finally
+        {
+            if(capture!=null)capture.Finish();
+            if(host!=null){await host.Shutdown();host=null;}
+            if(nav.valid)nav.Remove();
+            foreach(var obj in temporary)if(obj!=null)UnityEngine.Object.Destroy(obj);temporary.Clear();
+            Directory.CreateDirectory("deliverables/Recordings");File.WriteAllLines("deliverables/Recordings/Suicide_recording_log.txt",report);
+        }
+    }
+}
+
+public sealed class SuicideVideoCapture : MonoBehaviour
+{
+    public NetworkObject Follow;
+    public string StageLabel="待機 → 地面巡邏";
+    public string Output {get;private set;}
+    public int Frames {get;private set;}
+    public int ReplayFrames => replay.Count;
+    private Camera view;
+    private RenderTexture target;
+    private Texture2D pixels;
+    private MediaEncoder encoder;
+    private Text caption;
+    private Vector3 lastPosition;
+    private float start, next, replayUntil=-1;
+    private bool running, wasAction;
+    private readonly List<byte[]> replay=new List<byte[]>();
+    private Font font;
+    private string stateName="Idle";
+    private readonly HashSet<string> snapshots=new HashSet<string>();
+    public void Begin(Camera camera,NetworkObject enemy,Vector3 origin)
+    {
+        view=camera;Follow=enemy;lastPosition=origin;ResetCamera();
+        target=new RenderTexture(1280,720,24,RenderTextureFormat.ARGB32);target.Create();view.targetTexture=target;
+        pixels=new Texture2D(1280,720,TextureFormat.RGBA32,false);
+        Directory.CreateDirectory("deliverables/Recordings");Output=Path.GetFullPath("deliverables/Recordings/Enemy_Suicide_PlayMode.mp4");
+        encoder=new MediaEncoder(Output,new VideoTrackAttributes{frameRate=new MediaRational(30),width=1280,height=720,includeAlpha=false,bitRateMode=VideoBitrateMode.High});
+        var canvasGo=new GameObject("Recording captions",typeof(Canvas));canvasGo.transform.SetParent(transform,false);
+        var canvas=canvasGo.GetComponent<Canvas>();canvas.renderMode=RenderMode.ScreenSpaceCamera;canvas.worldCamera=view;canvas.planeDistance=1;canvas.sortingOrder=300;
+        var label=new GameObject("Caption",typeof(RectTransform),typeof(CanvasRenderer),typeof(Text));label.transform.SetParent(canvasGo.transform,false);
+        caption=label.GetComponent<Text>();font=Font.CreateDynamicFontFromOSFont("Microsoft JhengHei",30);caption.font=font;caption.fontSize=26;caption.color=Color.white;
+        caption.alignment=TextAnchor.UpperLeft;caption.horizontalOverflow=HorizontalWrapMode.Overflow;
+        var rect=label.GetComponent<RectTransform>();rect.anchorMin=new Vector2(0,1);rect.anchorMax=new Vector2(1,1);rect.pivot=new Vector2(0,1);rect.anchoredPosition=new Vector2(22,-18);rect.sizeDelta=new Vector2(-44,120);
+        start=Time.realtimeSinceStartup;next=start;running=true;StartCoroutine(Capture());
+    }
+    public void ResetCamera()
+    {
+        if(Follow!=null)lastPosition=Follow.transform.position;
+        if(view!=null){view.transform.position=lastPosition+new Vector3(8,4,-7);view.transform.LookAt(lastPosition+Vector3.up);}
+    }
+    private void LateUpdate()
+    {
+        string state="爆炸 / 消散";
+        if(Follow!=null && Follow.IsValid)
+        {
+            lastPosition=Follow.transform.position;
+            var attack=Follow.GetComponent<EnemySuicideAttack>();var combat=Follow.GetComponent<EnemyCombatDecisionController>();
+            bool action=combat.IsActionActive;
+            if(action&&!wasAction && StageLabel.StartsWith("發現"))replayUntil=Time.realtimeSinceStartup+2f;
+            wasAction=action;
+            state=attack.HasExploded?"爆炸":attack.IsAirborne?"空中：飛行 0.6 秒 / 尾姿保持":action?"起撲：第 8 幀離地":Follow.GetComponent<EnemyActor>().StateController.CurrentBrainState.ToString();
+        }
+        var desired=lastPosition+new Vector3(8,4,-7);
+        view.transform.position=Vector3.Lerp(view.transform.position,desired,1-Mathf.Exp(-Time.unscaledDeltaTime*7));
+        view.transform.LookAt(lastPosition+Vector3.up);
+        stateName=state;
+        caption.text="看門菇  |  Unity Play Mode 實錄\n"+StageLabel+"  ·  "+state+"\n正式 Prefab 數值 / 臨時驗收場地 / 無聲";
+    }
+    private IEnumerator Capture()
+    {
+        while(running)
+        {
+            yield return new WaitForEndOfFrame();
+            float now=Time.realtimeSinceStartup;
+            if(now<next)continue;
+            var old=RenderTexture.active;RenderTexture.active=target;pixels.ReadPixels(new Rect(0,0,1280,720),0,0,false);pixels.Apply(false);RenderTexture.active=old;
+            int wanted=Mathf.FloorToInt((now-start)*30)+1;
+            int copies=wanted-Frames;
+            while(Frames<wanted){if(!encoder.AddFrame(pixels))throw new InvalidOperationException("錄影編碼器拒絕畫格");Frames++;}
+            if(replayUntil>now){var bytes=pixels.EncodeToPNG();for(int i=0;i<copies;i++)replay.Add(bytes);}
+            if(Frames%60<2)File.WriteAllBytes("deliverables/Recordings/latest.jpg",pixels.EncodeToJPG(85));
+            if(snapshots.Add(stateName))File.WriteAllBytes("deliverables/Recordings/qa_"+snapshots.Count+".png",pixels.EncodeToPNG());
+            next=now+1f/30f;
+        }
+    }
+    public void Finish()
+    {
+        if(!running)return;running=false;StopAllCoroutines();encoder.Dispose();encoder=null;
+        var decoded=new Texture2D(2,2);
+        if(replay.Count>0)
+        {
+            using(var slow=new MediaEncoder(Path.GetFullPath("deliverables/Recordings/Enemy_Suicide_Pounce_Slow.mp4"),
+                new VideoTrackAttributes{frameRate=new MediaRational(30),width=1280,height=720,includeAlpha=false,bitRateMode=VideoBitrateMode.High}))
+                foreach(var bytes in replay){decoded.LoadImage(bytes);pixels.SetPixels32(decoded.GetPixels32());pixels.Apply(false);for(int i=0;i<4;i++)if(!slow.AddFrame(pixels))throw new InvalidOperationException("慢速編碼拒絕畫格");}
+        }
+        Destroy(decoded);
+        view.targetTexture=null;target.Release();Destroy(target);Destroy(pixels);Destroy(font);
+    }
+}
+#endif

@@ -22,3 +22,7 @@
 - 網路同步：搜尋 `[Networked]`、`[Rpc(`、`HasStateAuthority`、`IsSceneAuthority`。
 - 場景綁定：由 `[SerializeField]` 欄位名稱回到 Unity Inspector 找同名引用。
 
+
+## 2026-10-18 轉場增益
+
+GameplayAudioTransitionGain 將既有玩家 Master dB 與暫時轉場增益合成，不改偏好。Set／Release 使用 owner 管理，多 owner 取最小值；LocalSceneTransition 負責生命週期。完整規則見架構文件 80、144。

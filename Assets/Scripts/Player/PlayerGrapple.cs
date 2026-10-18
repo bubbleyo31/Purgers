@@ -180,7 +180,7 @@ public enum GrappleCancelReason : byte
 [RequireComponent(typeof(PlayerGrappleCharges))]
 [RequireComponent(typeof(PlayerGrappleInteractionController))]
 [RequireComponent(typeof(PlayerProfession))]
-public class PlayerGrapple : NetworkBehaviour
+public partial class PlayerGrapple : NetworkBehaviour
 {
     // =====================================================================
     #region 引用
@@ -1038,7 +1038,7 @@ public class PlayerGrapple : NetworkBehaviour
     }
 
     public bool CanUseGrapple =>
-        !IsGrappleActionBlocked &&
+        !IsGrappleActionBlocked && !IsSideDashing &&
         CurrentPhase ==
             GrapplePhase.Idle &&
         charges != null &&
@@ -1373,14 +1373,15 @@ public class PlayerGrapple : NetworkBehaviour
         bool aimPressed,
         bool aimHeld,
         Vector2 moveInput,
-        float activeMovementInfluence
+        float activeMovementInfluence,
+        bool? holdMode = null
     )
     {
         // Aim 只交給既有武器／能力仲裁；不改鈎索階段或消耗輸入。
         // 保留既有 Simulate 參數及 Networked 欄位，並清除舊快照可能留下的消耗鎖。
         AimConsumedUntilReleased = false;
 
-        if (useHoldToMaintainGrappleInput)
+        if (holdMode ?? useHoldToMaintainGrappleInput)
         {
             /*
             * 按住模式：
@@ -1791,6 +1792,8 @@ public class PlayerGrapple : NetworkBehaviour
             0f;
 
         ResetRecentSpeedPeak();
+
+        NotifyGrappleLaunchAccepted();
 
         if (grapplePreFireDelay > 0f)
         {
@@ -2296,6 +2299,7 @@ public class PlayerGrapple : NetworkBehaviour
 
     private void BeginShooting()
     {
+        NotifyGrappleShot();
         Vector3 start =
             GetSimulationRopeStartPosition();
 
@@ -2372,6 +2376,7 @@ public class PlayerGrapple : NetworkBehaviour
     /// </summary>
     private void BeginAttached()
     {
+        NotifyGrappleImpact();
         // =============================================================
         // 1. 正式進入 Attached
         // =============================================================
@@ -4567,9 +4572,9 @@ public class PlayerGrapple : NetworkBehaviour
             return;
         }
 
-        UpdateReleaseMomentumDirectionFromInput(
-            moveInput
-        );
+        // Dash holds flight heading; A/D specifies only the extra side displacement during this slice.
+        if (!IsSideDashing)
+            UpdateReleaseMomentumDirectionFromInput(moveInput);
 
         /*
         * 必須先套用本 Tick 主動 WASD 方向，再處理牆面。
@@ -5042,6 +5047,7 @@ public class PlayerGrapple : NetworkBehaviour
         bool clearExistingMomentum = true
     )
     {
+        if (sideDashSpawned) SideDashActive = false;
         if (clearExistingMomentum)
         {
             StopReleaseMomentum(

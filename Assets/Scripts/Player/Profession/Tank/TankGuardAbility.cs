@@ -1,5 +1,6 @@
 using Fusion;
 using UnityEngine;
+using Purgers.Progression;
 
 /// <summary>
 /// Tank 防禦目前主要階段。
@@ -20,7 +21,7 @@ public enum TankGuardPhase : byte
     /// <summary>
     /// 防禦耐力耗盡後的破防冷卻。
     ///
-    /// 這個階段下一步接 Damage Pipeline 時才會真正使用。
+    /// 由正式受傷管線觸發。
     /// </summary>
     BrokenCooldown = 2
 }
@@ -137,15 +138,15 @@ public class TankGuardAbility :
 
     [SerializeField]
     [Min(1f)]
-    [Tooltip("Tank 防禦耐力最大值。目前先使用 100。下一階段接上 Damage Pipeline 後，被成功阻擋的傷害會消耗這個數值。")]
+    [Tooltip("未強化的格檔耐力上限，至少 1。屬性額外增加 100／200／300；實際擋掉多少傷害就消耗多少耐力。")]
     private float maximumGuardStamina =
         100f;
 
     [SerializeField]
     [Range(0f, 1f)]
-    [Tooltip("Guard 可以阻擋多少比例的進入傷害。0.7 代表理論上最多阻擋 70% 傷害。下一階段接入 Damage Pipeline 時才正式使用。")]
+    [Tooltip("未強化減傷比例（0～1），正式基準 0.4。防禦減傷屬性加百分點，最終仍受剩餘耐力限制。")]
     private float guardDamageReduction =
-        0.7f;
+        0.4f;
 
     [SerializeField]
     [Min(0f)]
@@ -161,9 +162,9 @@ public class TankGuardAbility :
 
     [SerializeField]
     [Min(0f)]
-    [Tooltip("Guard 耐力完全耗盡後的破防冷卻時間，單位為秒。目前設計為 10 秒。冷卻完成後會直接恢復完整耐力。")]
+    [Tooltip("耐力耗盡後不能防禦的基礎秒數，至少 0，正式基準 5 秒。受防禦冷卻強化縮短；到期後正常恢復，不回滿、不再等一般恢復延遲。")]
     private float brokenCooldownDuration =
-        10f;
+        5f;
 
     #endregion
 
@@ -195,7 +196,7 @@ public class TankGuardAbility :
     /// <summary>
     /// Guard 目前剩餘耐力。
     ///
-    /// 下一階段真正受到傷害時才會開始消耗。
+    /// 由 State Authority 在實際格檔時消耗。
     /// </summary>
     [Networked]
     public float CurrentStamina
@@ -233,40 +234,58 @@ public class TankGuardAbility :
     /// Tank 現在是否真正處於 Guard。
     /// </summary>
     public bool IsGuarding =>
-        CurrentPhase ==
+        IsNetworkReady && CurrentPhase ==
         TankGuardPhase.Guarding;
 
     /// <summary>
     /// 是否正在破防冷卻。
     /// </summary>
     public bool IsBrokenCooldown =>
-        CurrentPhase ==
+        IsNetworkReady && CurrentPhase ==
         TankGuardPhase.BrokenCooldown;
 
     /// <summary>
     /// Guard 最大耐力。
     /// </summary>
-    public float MaximumGuardStamina =>
-        maximumGuardStamina;
+    private bool spawned;
+    public bool IsNetworkReady => spawned && Object != null && Object.IsValid;
+    [Networked] private float AppliedMaximumStamina { get; set; }
+    public float MaximumGuardStamina => IsNetworkReady
+        ? Mathf.Max(1f, AppliedMaximumStamina) : Mathf.Max(1f, maximumGuardStamina);
+    public float RecoveryDelayRemainingSeconds => IsNetworkReady && Runner != null
+        ? StaminaRecoveryDelayTimer.RemainingTime(Runner) ?? 0f : 0f;
+    public bool IsRecovering => IsNetworkReady && !IsGuarding && !IsBrokenCooldown &&
+        CurrentStamina < MaximumGuardStamina && RecoveryDelayRemainingSeconds <= 0f;
+
+    /// <summary>Host 在領獎與每個有效模擬 Tick 更新容量；晚綁定 Owner、換回武器也沿此入口。</summary>
+    public void RefreshGrowthCapacity()
+    {
+        if (!IsNetworkReady || !Object.HasStateAuthority || ownerPlayer == null) return;
+        float capacity = TankGuardRules.Capacity(maximumGuardStamina,
+            PlayerGrowth.Value(ownerPlayer, PlayerGrowthKind.GuardStamina));
+        if (Mathf.Approximately(capacity, AppliedMaximumStamina)) return;
+        CurrentStamina = TankGuardRules.ResizeStamina(CurrentStamina, AppliedMaximumStamina, capacity, IsBrokenCooldown);
+        AppliedMaximumStamina = capacity;
+    }
 
     /// <summary>
     /// Guard 傷害減免比例。
     ///
-    /// 下一階段 Damage Bridge 會使用。
+    /// 由既有 Damage Bridge 呼叫本 Modifier 使用。
     /// </summary>
-    public float GuardDamageReduction =>
-        guardDamageReduction;
+    public float GuardDamageReduction => TankGuardRules.Reduction(guardDamageReduction,
+        PlayerGrowth.Value(ownerPlayer, PlayerGrowthKind.GuardReduction));
 
     /// <summary>
     /// 目前 Guard 耐力百分比。
     ///
-    /// 未來 HUD 可以直接使用。
+    /// HUD 僅讀同步的當前值與容量。
     /// </summary>
     public float StaminaNormalized =>
-        maximumGuardStamina > 0f
+        IsNetworkReady
             ? Mathf.Clamp01(
                 CurrentStamina /
-                maximumGuardStamina
+                MaximumGuardStamina
             )
             : 0f;
 
@@ -274,7 +293,7 @@ public class TankGuardAbility :
     /// 破防剩餘秒數。
     /// </summary>
     public float BrokenCooldownRemainingSeconds =>
-        Runner != null
+        IsNetworkReady && Runner != null
             ? BrokenCooldownTimer
                 .RemainingTime(Runner)
                 ?? 0f
@@ -384,16 +403,14 @@ public class TankGuardAbility :
 
     public override void Spawned()
     {
+        spawned = true;
         if (Object.HasStateAuthority)
         {
             CurrentPhase =
                 TankGuardPhase.Ready;
 
-            CurrentStamina =
-                Mathf.Max(
-                    1f,
-                    maximumGuardStamina
-                );
+            AppliedMaximumStamina = Mathf.Max(1f, maximumGuardStamina);
+            CurrentStamina = AppliedMaximumStamina;
 
             StaminaRecoveryDelayTimer =
                 TickTimer.None;
@@ -406,6 +423,11 @@ public class TankGuardAbility :
     #endregion
 
     // =====================================================================
+    public override void Despawned(NetworkRunner runner, bool hasState)
+    {
+        spawned = false;
+    }
+
     #region Simulation
 
     /// <summary>
@@ -413,10 +435,11 @@ public class TankGuardAbility :
     /// TankProfessionRuntimeDriver 呼叫。
     /// </summary>
     public void Simulate(
-        NetInput input
+        NetInput input,
+        bool allowGuardInput = true
     )
     {
-        if (ownerPlayer == null ||
+        if (!IsNetworkReady || ownerPlayer == null ||
             ownerStateMachine == null)
         {
             return;
@@ -426,6 +449,7 @@ public class TankGuardAbility :
         // 1. Broken Cooldown
         // =============================================================
 
+        RefreshGrowthCapacity();
         TickBrokenCooldown();
 
         // =============================================================
@@ -433,6 +457,12 @@ public class TankGuardAbility :
         // =============================================================
 
         TickStaminaRecovery();
+        // 動作互斥只阻擋舉防；不能讓攻擊／衝刺暫停既有耐力恢復。
+        if (!allowGuardInput)
+        {
+            EndGuard("Action gate");
+            return;
+        }
 
         // =============================================================
         // 3. Right Mouse Hold
@@ -510,6 +540,7 @@ public class TankGuardAbility :
     /// </summary>
     private bool CanStartGuard()
     {
+        if (!IsNetworkReady) return false;
         // -------------------------------------------------------------
         // Quick Dash 位移／Dash 後 Recovery 禁止 Guard
         // -------------------------------------------------------------
@@ -570,13 +601,13 @@ public class TankGuardAbility :
     /// Guard 立即結束。
     /// Stamina = 0。
     /// 不進普通三秒恢復。
-    /// 10 秒內不能再次 Guard。
+    /// 基礎 5 秒內不能再次 Guard，減免在開始時取樣。
     ///
     /// ------------------------------------------------------------
     ///
-    /// 10 秒結束後：
+    /// 破防到期後：
     ///
-    /// Stamina 直接回滿。
+    /// Stamina 從零正常恢復，不另等一般延遲。
     /// Phase → Ready。
     /// </summary>
     private void EnterBrokenCooldown()
@@ -601,7 +632,7 @@ public class TankGuardAbility :
         BrokenCooldownTimer =
             TickTimer.CreateFromSeconds(
                 Runner,
-                brokenCooldownDuration
+                PlayerGrowth.Reduce(ownerPlayer, PlayerGrowthKind.GuardCooldown, brokenCooldownDuration)
             );
 
         if (debugGuard &&
@@ -609,7 +640,7 @@ public class TankGuardAbility :
         {
             Debug.Log(
                 $"[Tank Guard] Guard Broken" +
-                $"\nCooldown：{brokenCooldownDuration:F2} 秒" +
+                $"\nCooldown：{BrokenCooldownRemainingSeconds:F2} 秒" +
                 $"\nStamina：0",
                 this
             );
@@ -716,12 +747,12 @@ public class TankGuardAbility :
          * 才需要啟動三秒恢復等待。
          */
         if (CurrentStamina <
-            maximumGuardStamina)
+            MaximumGuardStamina)
         {
             StaminaRecoveryDelayTimer =
                 TickTimer.CreateFromSeconds(
                     Runner,
-                    staminaRecoveryDelay
+                    PlayerGrowth.Reduce(ownerPlayer, PlayerGrowthKind.GuardCooldown, staminaRecoveryDelay)
                 );
         }
 
@@ -797,10 +828,7 @@ public class TankGuardAbility :
     #region Stamina Recovery
 
     /// <summary>
-    /// 目前先建立完整恢復邏輯。
-    ///
-    /// 下一階段 Guard 真正消耗 Stamina 後
-    /// 就會直接開始工作。
+    /// 一般等待／破防到期後恢復；防禦與破防期間不恢復。
     /// </summary>
     private void TickStaminaRecovery()
     {
@@ -811,10 +839,10 @@ public class TankGuardAbility :
         }
 
         if (CurrentStamina >=
-            maximumGuardStamina)
+            MaximumGuardStamina)
         {
             CurrentStamina =
-                maximumGuardStamina;
+                MaximumGuardStamina;
 
             StaminaRecoveryDelayTimer =
                 TickTimer.None;
@@ -836,17 +864,8 @@ public class TankGuardAbility :
         StaminaRecoveryDelayTimer =
             TickTimer.None;
 
-        float recoveryPerSecond =
-            maximumGuardStamina *
-            staminaRecoveryFractionPerSecond;
-
-        CurrentStamina =
-            Mathf.Min(
-                maximumGuardStamina,
-                CurrentStamina +
-                recoveryPerSecond *
-                Runner.DeltaTime
-            );
+        CurrentStamina = TankGuardRules.Recovery(CurrentStamina, MaximumGuardStamina,
+            staminaRecoveryFractionPerSecond, Runner.DeltaTime);
     }
 
     private void TickBrokenCooldown()
@@ -865,18 +884,16 @@ public class TankGuardAbility :
         BrokenCooldownTimer =
             TickTimer.None;
 
-        CurrentStamina =
-            maximumGuardStamina;
-
-        CurrentPhase =
-            TankGuardPhase.Ready;
+        // 保留零耐力，這個 Tick 後續恢復一次；若仍按住，既有 CanStartGuard 自動舉防。
+        StaminaRecoveryDelayTimer = TickTimer.None;
+        CurrentPhase = TankGuardPhase.Ready;
 
         if (debugGuard &&
             Object.HasStateAuthority)
         {
             Debug.Log(
                 $"[Tank Guard] Broken Cooldown Finished" +
-                $"\nStamina 已恢復到：{CurrentStamina:F1}",
+                $"\n破防結束，開始恢復；目前耐力：{CurrentStamina:F1}",
                 this
             );
         }
@@ -932,31 +949,31 @@ public class TankGuardAbility :
     /// 目前規則：
     ///
     /// Incoming Damage = 100
-    /// Reduction = 70%
+    /// Reduction = 40%（未強化）
     /// Stamina = 100
     ///
     /// ↓
     ///
-    /// 想阻擋 70
-    /// 實際阻擋 70
+    /// 想阻擋 40
+    /// 實際阻擋 40
     ///
     /// ↓
     ///
-    /// RequestedDamage = 30
-    /// Stamina = 30
-    /// BlockedDamage += 70。
+    /// RequestedDamage = 60
+    /// Stamina = 60
+    /// BlockedDamage += 40。
     ///
     /// ====================================================================
     ///
     /// 如果：
     ///
     /// Incoming Damage = 100
-    /// Reduction = 70%
+    /// Reduction = 40%（未強化）
     /// Stamina = 20
     ///
     /// ↓
     ///
-    /// 理論想擋 70
+    /// 理論想擋 40
     /// 但只有 20 Stamina
     ///
     /// ↓
@@ -968,7 +985,7 @@ public class TankGuardAbility :
     ///
     /// ↓
     ///
-    /// Broken Cooldown 10 秒。
+    /// 基礎 Broken Cooldown 5 秒。
     ///
     /// ====================================================================
     ///
@@ -985,7 +1002,7 @@ public class TankGuardAbility :
         // State Authority Only
         // =============================================================
 
-        if (Object == null ||
+        if (!IsNetworkReady ||
             Object.HasStateAuthority == false)
         {
             return;
@@ -1030,10 +1047,7 @@ public class TankGuardAbility :
         // 理論阻擋量
         // =============================================================
 
-        float reductionFraction =
-            Mathf.Clamp01(
-                guardDamageReduction
-            );
+        float reductionFraction = GuardDamageReduction;
 
         float desiredBlockedDamage =
             incomingDamage *
@@ -1051,14 +1065,7 @@ public class TankGuardAbility :
         * Stamina 20
         * 最多就只能再阻擋 20 Damage。
         */
-        float actualBlockedDamage =
-            Mathf.Min(
-                desiredBlockedDamage,
-                Mathf.Max(
-                    0f,
-                    CurrentStamina
-                )
-            );
+        float actualBlockedDamage = TankGuardRules.BlockedDamage(incomingDamage, reductionFraction, CurrentStamina);
 
         if (actualBlockedDamage <= 0f)
         {

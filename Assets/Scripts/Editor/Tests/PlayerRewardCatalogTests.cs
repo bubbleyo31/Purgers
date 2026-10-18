@@ -1,3 +1,4 @@
+using System.Linq;
 using NUnit.Framework;
 using Purgers.Progression;
 using UnityEditor;
@@ -6,7 +7,7 @@ using UnityEditor;
 public sealed class PlayerRewardCatalogTests
 {
     [Test]
-    public void CurrentCatalogPreservesAbilitiesAndAddsThreeWeapons()
+    public void CurrentCatalogPreservesEquipmentAndAddsEighteenGrowthRewards()
     {
         PlayerRewardCatalog catalog = AssetDatabase.LoadAssetAtPath<PlayerRewardCatalog>(
             "Assets/Resources/Progression/PlayerRewardCatalog.asset");
@@ -14,8 +15,11 @@ public sealed class PlayerRewardCatalogTests
         Assert.That(catalog, Is.Not.Null);
         Assert.That(catalog.TryBuildDraftPool(out RewardDraftEntry[] pool,
             out string error), Is.True, error);
-        // 原四項、十項新 E 與三把武器同池；原先排除的 AirDash 維持原樣。
-        Assert.That(pool.Length, Is.EqualTo(17));
+        // 既有 18 項裝備加上 12 種屬性與 6 種特殊被動；AirDash 維持原樣。
+        Assert.That(pool.Length, Is.EqualTo(36));
+        Assert.That(catalog.Rewards.Count(r => r.IsImplementedGrowthReward && PlayerGrowthRules.IsAttribute(r.GrowthKind)), Is.EqualTo(12));
+        Assert.That(catalog.Rewards.Count(r => r.IsImplementedGrowthReward && !PlayerGrowthRules.IsAttribute(r.GrowthKind)), Is.EqualTo(6));
+        Assert.That(catalog.Rewards.Count(r => !r.IsImplementedGrowthReward), Is.EqualTo(18));
         foreach (PlayerRewardDefinition reward in catalog.Rewards)
         {
             Assert.That(reward.IsImplementedReward, Is.True,

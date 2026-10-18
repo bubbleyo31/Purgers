@@ -1,0 +1,121 @@
+// Preview-only Unity MCP execute_code method body; no saved asset changes.
+if (UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode) throw new System.InvalidOperationException("Requires Edit Mode.");
+string output="Documentation/ProjectArchitecture/Validation/GrowthIcons/ApprovedSize";
+var originalScene=UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+var scene=UnityEditor.SceneManagement.EditorSceneManager.NewScene(UnityEditor.SceneManagement.NewSceneSetup.EmptyScene,UnityEditor.SceneManagement.NewSceneMode.Additive);
+var cleanup=new System.Collections.Generic.List<UnityEngine.Object>();
+var report=new System.Collections.Generic.List<string>();
+int meshChecks=0;
+var previousTarget=RenderTexture.active;
+try {
+var root=new GameObject("GrowthPreviewOnly",typeof(RectTransform),typeof(Canvas));
+UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(root,scene);
+root.layer=31;
+var canvas=root.GetComponent<Canvas>(); canvas.renderMode=RenderMode.WorldSpace;
+var rootRect=(RectTransform)root.transform;
+var camGo=new GameObject("PreviewCamera",typeof(Camera));
+UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(camGo,scene);
+var camera=camGo.GetComponent<Camera>(); camera.scene=scene;camera.enabled=false;
+camera.transform.position=new Vector3(0,0,-10);camera.orthographic=true;
+camera.clearFlags=CameraClearFlags.SolidColor;camera.backgroundColor=new Color32(24,29,35,255);
+camera.cullingMask=1<<31;camera.nearClipPlane=.1f;camera.farClipPlane=20;canvas.worldCamera=camera;
+var prefab=UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(GrowthIconSetup.StagePath);
+var source=prefab.transform.Find("ReferenceFrame/Phase6RewardHud/ChoiceWindow/LeftCard");
+var sourceWindow=prefab.transform.Find("ReferenceFrame/Phase6RewardHud/ChoiceWindow");
+var font=UnityEditor.AssetDatabase.LoadAssetAtPath<TMPro.TMP_FontAsset>("Assets/_Project_Assets/UI/BattleHUD/Fonts/NotoSansTC-Bold HUD SDF.asset");
+var rewards=new Purgers.Progression.PlayerRewardDefinition[10];
+
+for(int k=1;k<=9;k++)rewards[k]=UnityEditor.AssetDatabase.LoadAssetAtPath<Purgers.Progression.PlayerRewardDefinition>("Assets/_Project_Assets/Data/Progression/Growth/Reward_"+(Purgers.Progression.PlayerGrowthKind)k+".asset");
+var sourcePlate=(RectTransform)source.Find("IconPlate");
+System.Action<GameObject> layer=go=>{foreach(var t in go.GetComponentsInChildren<Transform>(true))t.gameObject.layer=31;};
+System.Action<string,Vector2,Vector2,float> text=(value,pos,size,fs)=>{
+var go=new GameObject("Caption",typeof(RectTransform),typeof(TMPro.TextMeshProUGUI));go.transform.SetParent(root.transform,false);
+var t=go.GetComponent<TMPro.TextMeshProUGUI>();t.font=font;t.fontSize=fs;t.text=value;t.alignment=TMPro.TextAlignmentOptions.Center;
+t.color=new Color32(229,231,224,255);t.raycastTarget=false;t.rectTransform.sizeDelta=size;t.rectTransform.anchoredPosition=pos;layer(go);
+};
+System.Func<TMPro.TMP_Text,Bounds> inkBounds=t=>{
+Vector2 lo=new Vector2(float.PositiveInfinity,float.PositiveInfinity),hi=new Vector2(float.NegativeInfinity,float.NegativeInfinity);
+for(int i=0;i<t.textInfo.characterCount;i++){var c=t.textInfo.characterInfo[i];if(!c.isVisible)continue;
+var m=c.textElement.glyph.metrics;float scale=c.scale;
+var a=new Vector2(c.origin+m.horizontalBearingX*scale,c.baseLine+(m.horizontalBearingY-m.height)*scale);
+var b=a+new Vector2(m.width,m.height)*scale;lo=Vector2.Min(lo,a);hi=Vector2.Max(hi,b);
+}
+return new Bounds((lo+hi)*.5f,hi-lo);
+};
+System.Action<GameObject,int,int,bool> present=(card,kind,rank,candidate)=>{
+var icon=card.transform.Find("Icon").GetComponent<UnityEngine.UI.Image>();
+icon.GetComponent<GrowthRewardRankView>().Present(rewards[kind],rank);
+var label=icon.transform.Find("GrowthRank").GetComponent<TMPro.TMP_Text>();
+label.ForceMeshUpdate(true);
+var expected=icon.GetComponent<AbilityIconFrameFit>().SpritePointToLocal(rewards[kind].GrowthRankCenter);
+float error=Vector3.Distance(label.rectTransform.localPosition+inkBounds(label).center,expected);
+if(error>.002f||label.textInfo.characterCount!=label.text.Length)throw new System.InvalidOperationException("Formal rank alignment failed");
+report.Add("rank "+kind+"/"+rank+": fontSize="+label.fontSize.ToString("F3")+"; ink="+inkBounds(label).size.ToString("F3")+"; anchorError="+error.ToString("F6"));
+layer(card);
+};
+System.Action<string,int,int,Rect?> render=(filename,width,height,crop)=>{
+var rt=new RenderTexture(width,height,24,RenderTextureFormat.ARGB32);cleanup.Add(rt);rt.antiAliasing=1;
+camera.targetTexture=rt;camera.aspect=(float)width/height;
+
+Canvas.ForceUpdateCanvases();
+foreach(var im in root.GetComponentsInChildren<UnityEngine.UI.Image>(true)){
+if(im.gameObject.name!="Icon"||!im.gameObject.activeInHierarchy)continue;
+var fit=im.GetComponent<AbilityIconFrameFit>();if(fit==null||!fit.FitWholeSprite)continue;
+var mesh=im.canvasRenderer.GetMesh();
+meshChecks++;
+if(mesh.vertexCount!=4)throw new System.InvalidOperationException("Expected complete uncut sprite quad");
+var uv=mesh.uv;Vector2 uvMin=Vector2.one,uvMax=Vector2.zero;
+foreach(var p in uv){uvMin=Vector2.Min(uvMin,p);uvMax=Vector2.Max(uvMax,p);}
+if(Vector2.Distance(uvMin,Vector2.zero)>.0001f||Vector2.Distance(uvMax,Vector2.one)>.0001f)throw new System.InvalidOperationException("Sprite corner UV clipped");
+var size=mesh.bounds.size;if(Mathf.Abs(size.x-size.y)>.001f)throw new System.InvalidOperationException("Sprite aspect distorted");
+}
+
+camera.Render();RenderTexture.active=rt;
+Rect region=crop.HasValue?crop.Value:new Rect(0,0,width,height);
+var png=new Texture2D((int)region.width,(int)region.height,TextureFormat.RGBA32,false);cleanup.Add(png);
+png.ReadPixels(region,0,0);png.Apply();System.IO.File.WriteAllBytes(output+"/"+filename,ImageConversion.EncodeToPNG(png));
+RenderTexture.active=previousTarget;camera.targetTexture=null;
+};
+System.Action clear=()=>{for(int i=root.transform.childCount-1;i>=0;i--)UnityEngine.Object.DestroyImmediate(root.transform.GetChild(i).gameObject);};
+for(int mode=1;mode<2;mode++){
+clear();rootRect.sizeDelta=new Vector2(560,1120);camera.orthographicSize=560;
+text(mode==0?"目前版本｜正式尺寸":"修正預覽｜正式尺寸",new Vector2(0,528),new Vector2(540,40),22);
+text("六角底板 71.29 × 82.95｜每格保留原始尺寸",new Vector2(0,495),new Vector2(540,26),14);
+for(int kind=1;kind<=9;kind++){
+float y=412-(kind-1)*112;text(rewards[kind].DisplayName,new Vector2(0,y+48),new Vector2(540,24),14);
+int max=Purgers.Progression.PlayerGrowthRules.MaximumRank(rewards[kind].GrowthKind);
+for(int rank=1;rank<=max;rank++){
+var card=UnityEngine.Object.Instantiate(source.gameObject,root.transform,false);card.SetActive(true);
+foreach(Transform ch in card.transform)ch.gameObject.SetActive(ch.name=="Icon"||ch.name=="IconPlate");
+present(card,kind,rank,mode==1);var plate=(RectTransform)card.transform.Find("IconPlate");
+Vector3 current=root.transform.InverseTransformPoint(plate.TransformPoint(plate.rect.center));
+card.transform.localPosition+=new Vector3(-204+(rank-1)*102,y-7,0)-current;
+if(Vector2.Distance(plate.rect.size,sourcePlate.rect.size)>.0001f)throw new System.InvalidOperationException("Frame size changed");
+}}
+render(mode==0?"Before_1080p_1to1.png":"Applied_1080p_1to1.png",560,1120,null);
+}
+
+for(int group=0;group<3;group++){
+clear();rootRect.sizeDelta=new Vector2(1920,1080);camera.orthographicSize=540;
+var window=UnityEngine.Object.Instantiate(sourceWindow.gameObject,root.transform,false);window.SetActive(true);
+foreach(var cg in window.GetComponentsInChildren<CanvasGroup>(true))cg.alpha=1;
+for(int index=0;index<3;index++){
+int kind=group*3+index+1;var card=window.transform.Find(new[]{"LeftCard","MiddleCard","RightCard"}[index]).gameObject;card.SetActive(true);
+int rank=group==0?3:Purgers.Progression.PlayerGrowthRules.MaximumRank(rewards[kind].GrowthKind);
+present(card,kind,rank,true);
+foreach(var t in card.GetComponentsInChildren<TMPro.TMP_Text>(true)){
+if(t.gameObject.name=="Title")t.text=rewards[kind].DisplayName+" · "+rank+" 階";
+if(t.gameObject.name=="Description")t.text=rewards[kind].Description;
+if(t.gameObject.name=="FallbackIcon")t.gameObject.SetActive(false);
+}}
+layer(window);
+render("Cards_"+(group+1)+"_1920x1080.png",1920,1080,null);
+render("Cards_"+(group+1)+"_NativeCrop.png",1920,1080,new Rect(610,90,640,360));
+if(group==1)render("Cards_2_1280x720.png",1280,720,null);
+}
+
+report.Add("Actual formal CanvasRenderer checks="+meshChecks);
+System.IO.File.WriteAllLines(output+"/FormalRenderChecks.txt",report);
+return string.Join("\n",report.ToArray());
+}finally{RenderTexture.active=previousTarget;UnityEngine.SceneManagement.SceneManager.SetActiveScene(originalScene);UnityEditor.SceneManagement.EditorSceneManager.CloseScene(scene,true);foreach(var o in cleanup)if(o!=null)UnityEngine.Object.DestroyImmediate(o);}
+

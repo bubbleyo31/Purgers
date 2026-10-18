@@ -1,0 +1,10 @@
+PASS No Runner: goggles hidden in menu
+PASS Existing Host/Client spectator scenario: 通過
+PASS Host local first-person shows goggles
+PASS Late-joining Client local first-person shows goggles
+PASS Client death switches goggles source to observed teammate
+PASS Respawn rebinds goggles to own player
+PASS No surviving target clears goggles
+PASS Shutdown clears presentation without stale player
+PASS Effect cannot intercept UI input
+PASS Runtime stays below existing HUD

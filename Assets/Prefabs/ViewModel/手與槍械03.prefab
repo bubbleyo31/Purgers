@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4726268772022160571}
   - component: {fileID: 477691572819387254}
   - component: {fileID: -9033354266198122984}
+  - component: {fileID: 227159653150108476}
   m_Layer: 8
   m_Name: "\u624B\u8207\u69CD\u68B003"
   m_TagString: Untagged
@@ -128,6 +129,28 @@ MonoBehaviour:
   screenHeight: 0.18
   framesPerSecond: 72
   imagePivot: {x: 0.5, y: 0.38}
+--- !u!114 &227159653150108476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848604152209309553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e153138aa3fda34a8318fb9d4a4660a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionAnimator: {fileID: 477691572819387254}
+  animatedModelRoot: {fileID: 7927214089668517094}
+  weaponRoot: {fileID: 7257837168253864195}
+  rotationGain: {x: 0.06, y: 0.06, z: 0.06}
+  maximumDegrees: 4
+  blendSeconds: 0.08
+  softenStartSpeed: 120
+  softenEndSpeed: 540
+  minimumTurnWeight: 0.2
+  turnResponseSeconds: 0.06
 --- !u!1 &3034502018096103776
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,6 +386,12 @@ PrefabInstance:
 --- !u!4 &2916549528000385269 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4751310922446760952, guid: a43f265f0350ba44ca8a9fc66c2e39fa,
+    type: 3}
+  m_PrefabInstance: {fileID: 7604792289521875725}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7257837168253864195 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 950437886886588942, guid: a43f265f0350ba44ca8a9fc66c2e39fa,
     type: 3}
   m_PrefabInstance: {fileID: 7604792289521875725}
   m_PrefabAsset: {fileID: 0}

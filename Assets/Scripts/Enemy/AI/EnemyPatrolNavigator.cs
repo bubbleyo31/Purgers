@@ -43,6 +43,8 @@ public abstract class EnemyPatrolNavigator : MonoBehaviour
     public float Speed => patrolSpeed;
     public float BodyRadius => Mathf.Max(0.01f, bodyRadius);
     public float BodyHeight => Mathf.Max(BodyRadius * 2f, bodyHeight);
+    public float BodyBaseOffset => CollisionBaseOffset;
+    protected virtual float CollisionBaseOffset => 0f;
     public abstract EnemyLocomotionKind SupportedLocomotion { get; }
 
     /// <summary>最近一次 TryBegin 失敗的穩定分類；成功時為 None。</summary>
@@ -159,18 +161,9 @@ public abstract class EnemyPatrolNavigator : MonoBehaviour
     /// <summary>供 Host 以 Prefab 膠囊規劃飛行點；不讀 Networked 或 Actor 生命週期。</summary>
     protected bool IsSegmentClear(PhysicsScene physics, Vector3 from, Vector3 to)
     {
-        if (!physics.IsValid() || obstacleMask.value == 0 || bodyRadius <= 0f ||
-            bodyHeight < bodyRadius * 2f || collisionSkin <= 0f) return false;
-        Vector3 bottom = from + Vector3.up * (bodyRadius + collisionSkin);
-        Vector3 top = from + Vector3.up * Mathf.Max(bodyRadius + collisionSkin, bodyHeight - bodyRadius);
-        // 單一暫存槽已足以回答是否重疊；不需要列出全部碰撞器。
-        if (physics.OverlapCapsule(bottom, top, bodyRadius, overlapBuffer,
-            obstacleMask, QueryTriggerInteraction.Ignore) > 0) return false;
-        Vector3 delta = to - from;
-        float distance = delta.magnitude;
-        return distance < 0.00001f || !physics.CapsuleCast(bottom, top, bodyRadius,
-            delta / distance, out _, distance + collisionSkin, obstacleMask,
-            QueryTriggerInteraction.Ignore);
+        return EnemyCollisionPassage.IsClear(physics, from, to,
+            new EnemyCollisionEnvelope(bodyRadius, bodyHeight, CollisionBaseOffset),
+            collisionSkin, obstacleMask, overlapBuffer);
     }
     private readonly Collider[] overlapBuffer = new Collider[1];
 

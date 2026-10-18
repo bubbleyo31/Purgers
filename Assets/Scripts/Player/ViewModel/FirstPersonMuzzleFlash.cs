@@ -129,7 +129,7 @@ public sealed class FirstPersonMuzzleFlash : MonoBehaviour
     {
         sequence = state = 0;
         eligible = false;
-        if (!Ready(owner) || !owner.Object.HasInputAuthority || !Ready(ownerProfession) ||
+        if (!Ready(owner) || !LocalPlayerSpectatorController.IsViewedObject(owner.Object) || !Ready(ownerProfession) ||
             ownerProfession.CurrentProfession != profession || !Ready(health) || !Ready(gate) ||
             muzzle == null || !muzzle.gameObject.activeInHierarchy || viewCamera == null ||
             !viewCamera.isActiveAndEnabled || flashMaterial == null || flashMaterial.mainTexture == null ||

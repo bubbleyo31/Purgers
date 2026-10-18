@@ -826,7 +826,7 @@ Transform:
   m_GameObject: {fileID: 1029125958549127469}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.316013, y: 25.95, z: -91.42295}
+  m_LocalPosition: {x: 0, y: 25.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -874,7 +874,7 @@ Transform:
   m_GameObject: {fileID: 1029537705405026225}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.5417251, z: -0, w: 0.8405558}
-  m_LocalPosition: {x: 40.834282, y: 23.95, z: 55.70063}
+  m_LocalPosition: {x: 0, y: 23.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1141,14 +1141,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1381452374345542432}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.6502607, z: -0, w: 0.7597112}
-  m_LocalPosition: {x: -5.8999996, y: 1.05, z: 119.20001}
+  m_LocalRotation: {x: -0, y: -0.7124004, z: -0, w: 0.70177317}
+  m_LocalPosition: {x: 10.2, y: 1.05, z: 115.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1878975547191149550}
   m_Father: {fileID: 3056059368759674483}
-  m_LocalEulerAnglesHint: {x: 0, y: -81.123, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90.861, z: 0}
 --- !u!114 &2038543456123650491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1162,12 +1162,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnBoxCenter: {x: 0, y: 0, z: 0}
-  spawnBoxSize: {x: 12, y: 2.07, z: 12}
+  spawnBoxSize: {x: 50.8, y: 2.07, z: 49.1}
+  requireSpawnOcclusion: 0
+  enemyEntries:
+  - prefab:
+      RawGuidValue: 6ad1e91c9b7e15043985d7066c0f9238
+    chancePercent: 100
+    count: 1
+  - prefab:
+      RawGuidValue: c56bf451f66cb2d4eb1d6ec6eaca6058
+    chancePercent: 100
+    count: 1
+  - prefab:
+      RawGuidValue: b73d3bd3ec054a54e8483ddcc2980d8a
+    chancePercent: 100
+    count: 5
+  - prefab:
+      RawGuidValue: f743f1965bb816246a0ff0e7d5c6ffbd
+    chancePercent: 100
+    count: 1
+  - prefab:
+      RawGuidValue: b794c64a65445f6478f6548a53539abb
+    chancePercent: 100
+    count: 1
   locomotionKind: 0
-  enemyPrefabs:
-  - RawGuidValue: d54a1a58e54f96b4a8852a3cc1b8032b
+  enemyPrefabs: []
+  enemiesPerActivation: 5
   flyingPatrolArea: {fileID: 0}
-  enemiesPerActivation: 1
   flyingPatrolBoxCenter: {x: 0, y: 6, z: 0}
   flyingPatrolBoxSize: {x: 40, y: 12, z: 40}
   flyingPatrolSamplesPerAxis: 5
@@ -1737,7 +1758,7 @@ Transform:
   m_GameObject: {fileID: 2564517172059382748}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.3703734, z: -0, w: 0.92888296}
-  m_LocalPosition: {x: 77.931244, y: 25.95, z: 32.414833}
+  m_LocalPosition: {x: 0, y: 25.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1867,14 +1888,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2725699619933944129}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.7185203, z: -0, w: 0.695506}
-  m_LocalPosition: {x: -171.9, y: 1.05, z: 60.200012}
+  m_LocalRotation: {x: -0, y: -0.99448174, z: -0, w: 0.10491009}
+  m_LocalPosition: {x: -110.7, y: 1.05, z: 153.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5625720721917611063}
   m_Father: {fileID: 3056059368759674483}
-  m_LocalEulerAnglesHint: {x: 0, y: -91.865, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -167.956, z: 0}
 --- !u!114 &2225447974596857288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1888,12 +1909,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnBoxCenter: {x: 0, y: 0, z: 0}
-  spawnBoxSize: {x: 12, y: 2.07, z: 12}
+  spawnBoxSize: {x: 50.8, y: 2.07, z: 49.1}
+  requireSpawnOcclusion: 0
+  enemyEntries:
+  - prefab:
+      RawGuidValue: 6ad1e91c9b7e15043985d7066c0f9238
+    chancePercent: 100
+    count: 1
+  - prefab:
+      RawGuidValue: c56bf451f66cb2d4eb1d6ec6eaca6058
+    chancePercent: 100
+    count: 1
+  - prefab:
+      RawGuidValue: b73d3bd3ec054a54e8483ddcc2980d8a
+    chancePercent: 100
+    count: 5
+  - prefab:
+      RawGuidValue: f743f1965bb816246a0ff0e7d5c6ffbd
+    chancePercent: 100
+    count: 1
+  - prefab:
+      RawGuidValue: b794c64a65445f6478f6548a53539abb
+    chancePercent: 100
+    count: 1
   locomotionKind: 0
-  enemyPrefabs:
-  - RawGuidValue: d54a1a58e54f96b4a8852a3cc1b8032b
+  enemyPrefabs: []
+  enemiesPerActivation: 5
   flyingPatrolArea: {fileID: 0}
-  enemiesPerActivation: 1
   flyingPatrolBoxCenter: {x: 0, y: 6, z: 0}
   flyingPatrolBoxSize: {x: 40, y: 12, z: 40}
   flyingPatrolSamplesPerAxis: 5
@@ -3472,7 +3514,7 @@ Transform:
   m_GameObject: {fileID: 4022149873627453656}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.6502607, z: -0, w: 0.7597112}
-  m_LocalPosition: {x: 153.1, y: 1.05, z: 19.200012}
+  m_LocalPosition: {x: 112.1, y: 1.05, z: 118.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3492,12 +3534,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnBoxCenter: {x: 0, y: 0, z: 0}
-  spawnBoxSize: {x: 12, y: 2.07, z: 12}
+  spawnBoxSize: {x: 50.8, y: 2.07, z: 49.1}
+  requireSpawnOcclusion: 0
+  enemyEntries:
+  - prefab:
+      RawGuidValue: 6ad1e91c9b7e15043985d7066c0f9238
+    chancePercent: 100
+    count: 1
+  - prefab:
+      RawGuidValue: c56bf451f66cb2d4eb1d6ec6eaca6058
+    chancePercent: 100
+    count: 1
+  - prefab:
+      RawGuidValue: b73d3bd3ec054a54e8483ddcc2980d8a
+    chancePercent: 100
+    count: 5
+  - prefab:
+      RawGuidValue: f743f1965bb816246a0ff0e7d5c6ffbd
+    chancePercent: 100
+    count: 1
+  - prefab:
+      RawGuidValue: b794c64a65445f6478f6548a53539abb
+    chancePercent: 100
+    count: 1
   locomotionKind: 0
-  enemyPrefabs:
-  - RawGuidValue: d54a1a58e54f96b4a8852a3cc1b8032b
+  enemyPrefabs: []
+  enemiesPerActivation: 5
   flyingPatrolArea: {fileID: 0}
-  enemiesPerActivation: 1
   flyingPatrolBoxCenter: {x: 0, y: 6, z: 0}
   flyingPatrolBoxSize: {x: 40, y: 12, z: 40}
   flyingPatrolSamplesPerAxis: 5
@@ -3530,7 +3593,7 @@ Transform:
   m_GameObject: {fileID: 4025099194992066154}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.00018260768}
-  m_LocalPosition: {x: -53, y: 26.95, z: 26}
+  m_LocalPosition: {x: 0, y: 26.95, z: 0}
   m_LocalScale: {x: 1, y: 0.60090244, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3669,14 +3732,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4456714408084444788}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.7185203, z: -0, w: 0.695506}
-  m_LocalPosition: {x: -110.9, y: 1.05, z: 131.20001}
+  m_LocalRotation: {x: -0, y: -0.9559633, z: -0, w: 0.29348618}
+  m_LocalPosition: {x: -111.2, y: 1.05, z: 140.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1128277685751221939}
   m_Father: {fileID: 3056059368759674483}
-  m_LocalEulerAnglesHint: {x: 0, y: -91.865, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -145.866, z: 0}
 --- !u!114 &8925340402065349239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3690,12 +3753,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnBoxCenter: {x: 0, y: 0, z: 0}
-  spawnBoxSize: {x: 12, y: 2.07, z: 12}
+  spawnBoxSize: {x: 50.8, y: 2.07, z: 49.1}
+  requireSpawnOcclusion: 0
+  enemyEntries:
+  - prefab:
+      RawGuidValue: 6ad1e91c9b7e15043985d7066c0f9238
+    chancePercent: 100
+    count: 1
+  - prefab:
+      RawGuidValue: c56bf451f66cb2d4eb1d6ec6eaca6058
+    chancePercent: 100
+    count: 1
+  - prefab:
+      RawGuidValue: b73d3bd3ec054a54e8483ddcc2980d8a
+    chancePercent: 100
+    count: 5
+  - prefab:
+      RawGuidValue: f743f1965bb816246a0ff0e7d5c6ffbd
+    chancePercent: 100
+    count: 1
+  - prefab:
+      RawGuidValue: b794c64a65445f6478f6548a53539abb
+    chancePercent: 100
+    count: 1
   locomotionKind: 0
-  enemyPrefabs:
-  - RawGuidValue: d54a1a58e54f96b4a8852a3cc1b8032b
+  enemyPrefabs: []
+  enemiesPerActivation: 5
   flyingPatrolArea: {fileID: 0}
-  enemiesPerActivation: 1
   flyingPatrolBoxCenter: {x: 0, y: 6, z: 0}
   flyingPatrolBoxSize: {x: 40, y: 12, z: 40}
   flyingPatrolSamplesPerAxis: 5
@@ -4405,6 +4489,54 @@ MonoBehaviour:
   selectedVisualRoot: {fileID: 7181407512479882644}
   drawGizmos: 1
   gizmoColor: {r: 0.1, g: 0.95, b: 0.75, a: 0.65}
+--- !u!1 &5385804425094497071
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2469885833473673970}
+  - component: {fileID: 6932785382355382720}
+  m_Layer: 0
+  m_Name: EnemySpawnApproachGate
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2469885833473673970
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5385804425094497071}
+  serializedVersion: 2
+  m_LocalRotation: {x: -2.9103827e-11, y: 0.77363473, z: 9.094946e-13, w: -0.6336319}
+  m_LocalPosition: {x: 0, y: 27, z: 0}
+  m_LocalScale: {x: 1, y: 0.60090244, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8012043575294878135}
+  m_LocalEulerAnglesHint: {x: 0, y: 258.637, z: 0}
+--- !u!114 &6932785382355382720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5385804425094497071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bbaccdbcabd4f98bb3e969c81df1bb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  width: 64.8
+  height: 55.8
+  gizmoColor: {r: 1, g: 0.75, b: 0.1, a: 0.8}
+  bidirectional: 1
 --- !u!1 &5453626370977546656
 GameObject:
   m_ObjectHideFlags: 0
@@ -4700,7 +4832,7 @@ Transform:
   m_GameObject: {fileID: 5811317702381032068}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 118.1, y: 1.05, z: 129.20001}
+  m_LocalPosition: {x: 89.3, y: 1.05, z: 190.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4720,12 +4852,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnBoxCenter: {x: 0, y: 0, z: 0}
-  spawnBoxSize: {x: 12, y: 2.07, z: 12}
+  spawnBoxSize: {x: 50.8, y: 2.07, z: 49.1}
+  requireSpawnOcclusion: 0
+  enemyEntries:
+  - prefab:
+      RawGuidValue: 6ad1e91c9b7e15043985d7066c0f9238
+    chancePercent: 100
+    count: 1
+  - prefab:
+      RawGuidValue: c56bf451f66cb2d4eb1d6ec6eaca6058
+    chancePercent: 100
+    count: 1
+  - prefab:
+      RawGuidValue: b73d3bd3ec054a54e8483ddcc2980d8a
+    chancePercent: 100
+    count: 5
+  - prefab:
+      RawGuidValue: f743f1965bb816246a0ff0e7d5c6ffbd
+    chancePercent: 100
+    count: 1
+  - prefab:
+      RawGuidValue: b794c64a65445f6478f6548a53539abb
+    chancePercent: 100
+    count: 1
   locomotionKind: 0
-  enemyPrefabs:
-  - RawGuidValue: d54a1a58e54f96b4a8852a3cc1b8032b
+  enemyPrefabs: []
+  enemiesPerActivation: 5
   flyingPatrolArea: {fileID: 0}
-  enemiesPerActivation: 1
   flyingPatrolBoxCenter: {x: 0, y: 6, z: 0}
   flyingPatrolBoxSize: {x: 40, y: 12, z: 40}
   flyingPatrolSamplesPerAxis: 5
@@ -5246,14 +5399,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6555873244637899784}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 57.1, y: 1.05, z: 204.20001}
+  m_LocalRotation: {x: 0.00029569305, y: 0.74910253, z: -0.00004521598, w: 0.662454}
+  m_LocalPosition: {x: 22.8, y: 1, z: 214.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8589500165890671828}
   m_Father: {fileID: 3056059368759674483}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.026, y: 97.025, z: 0.022}
 --- !u!114 &6500994818849835643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5267,12 +5420,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnBoxCenter: {x: 0, y: 0, z: 0}
-  spawnBoxSize: {x: 12, y: 2.07, z: 12}
+  spawnBoxSize: {x: 50.8, y: 2.07, z: 49.1}
+  requireSpawnOcclusion: 0
+  enemyEntries:
+  - prefab:
+      RawGuidValue: 6ad1e91c9b7e15043985d7066c0f9238
+    chancePercent: 100
+    count: 1
+  - prefab:
+      RawGuidValue: c56bf451f66cb2d4eb1d6ec6eaca6058
+    chancePercent: 100
+    count: 1
+  - prefab:
+      RawGuidValue: b73d3bd3ec054a54e8483ddcc2980d8a
+    chancePercent: 100
+    count: 5
+  - prefab:
+      RawGuidValue: f743f1965bb816246a0ff0e7d5c6ffbd
+    chancePercent: 100
+    count: 1
+  - prefab:
+      RawGuidValue: b794c64a65445f6478f6548a53539abb
+    chancePercent: 100
+    count: 1
   locomotionKind: 0
-  enemyPrefabs:
-  - RawGuidValue: d54a1a58e54f96b4a8852a3cc1b8032b
+  enemyPrefabs: []
+  enemiesPerActivation: 5
   flyingPatrolArea: {fileID: 0}
-  enemiesPerActivation: 1
   flyingPatrolBoxCenter: {x: 0, y: 6, z: 0}
   flyingPatrolBoxSize: {x: 40, y: 12, z: 40}
   flyingPatrolSamplesPerAxis: 5
@@ -5305,7 +5479,7 @@ Transform:
   m_GameObject: {fileID: 6572210590657933961}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.3120562, z: -0, w: 0.95006365}
-  m_LocalPosition: {x: -128.5318, y: 22.95, z: 47.20779}
+  m_LocalPosition: {x: 0, y: 22.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5787,6 +5961,7 @@ Transform:
   - {fileID: 1456696553451552249}
   - {fileID: 4911683372166950356}
   - {fileID: 6475743290879891988}
+  - {fileID: 8012043575294878135}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8815924923811743303
@@ -6825,7 +7000,7 @@ Transform:
   m_GameObject: {fileID: 8750933466017039744}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.8064056, z: -0, w: 0.5913629}
-  m_LocalPosition: {x: -66, y: 26.95, z: 75}
+  m_LocalPosition: {x: 0, y: 26.95, z: 0}
   m_LocalScale: {x: 1, y: 0.60090244, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6873,7 +7048,7 @@ Transform:
   m_GameObject: {fileID: 8800569835264422187}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -60.386383, y: 22.95, z: 112.024475}
+  m_LocalPosition: {x: 0, y: 22.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6978,6 +7153,85 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &8947717301981993039
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8012043575294878135}
+  - component: {fileID: 556414991676992100}
+  m_Layer: 0
+  m_Name: EnemySpawnZone (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8012043575294878135
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8947717301981993039}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.00029569305, y: 0.74910253, z: -0.00004521598, w: 0.662454}
+  m_LocalPosition: {x: 9.9, y: 1, z: 228.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2469885833473673970}
+  m_Father: {fileID: 3056059368759674483}
+  m_LocalEulerAnglesHint: {x: 0.026, y: 97.025, z: 0.022}
+--- !u!114 &556414991676992100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8947717301981993039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2375a2554764c47838d19e2d070a871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnBoxCenter: {x: 0, y: 0, z: 0}
+  spawnBoxSize: {x: 50.8, y: 2.07, z: 49.1}
+  requireSpawnOcclusion: 0
+  enemyEntries:
+  - prefab:
+      RawGuidValue: 6ad1e91c9b7e15043985d7066c0f9238
+    chancePercent: 100
+    count: 1
+  - prefab:
+      RawGuidValue: c56bf451f66cb2d4eb1d6ec6eaca6058
+    chancePercent: 100
+    count: 1
+  - prefab:
+      RawGuidValue: b73d3bd3ec054a54e8483ddcc2980d8a
+    chancePercent: 100
+    count: 5
+  - prefab:
+      RawGuidValue: f743f1965bb816246a0ff0e7d5c6ffbd
+    chancePercent: 100
+    count: 1
+  - prefab:
+      RawGuidValue: b794c64a65445f6478f6548a53539abb
+    chancePercent: 100
+    count: 1
+  locomotionKind: 0
+  enemyPrefabs: []
+  enemiesPerActivation: 5
+  flyingPatrolArea: {fileID: 0}
+  flyingPatrolBoxCenter: {x: 0, y: 6, z: 0}
+  flyingPatrolBoxSize: {x: 40, y: 12, z: 40}
+  flyingPatrolSamplesPerAxis: 5
+  flyingPatrolMaximumPoints: 16
+  flyingPatrolMinimumSpacing: 4
+  gizmoColor: {r: 1, g: 0.2, b: 0.45, a: 0.7}
 --- !u!1 &8993455801751211414
 GameObject:
   m_ObjectHideFlags: 0
@@ -7298,14 +7552,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9138763757799200622}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.7185203, z: -0, w: 0.695506}
+  m_LocalRotation: {x: -0, y: -0.8403428, z: -0, w: 0.5420553}
   m_LocalPosition: {x: -159.9, y: 1.05, z: 155.20001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4971171491709534586}
   m_Father: {fileID: 3056059368759674483}
-  m_LocalEulerAnglesHint: {x: 0, y: -91.865, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -114.353, z: 0}
 --- !u!114 &1354308968404919108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7319,12 +7573,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnBoxCenter: {x: 0, y: 0, z: 0}
-  spawnBoxSize: {x: 12, y: 2.07, z: 12}
+  spawnBoxSize: {x: 50.8, y: 2.07, z: 49.1}
+  requireSpawnOcclusion: 0
+  enemyEntries:
+  - prefab:
+      RawGuidValue: 6ad1e91c9b7e15043985d7066c0f9238
+    chancePercent: 100
+    count: 1
+  - prefab:
+      RawGuidValue: c56bf451f66cb2d4eb1d6ec6eaca6058
+    chancePercent: 100
+    count: 1
+  - prefab:
+      RawGuidValue: b73d3bd3ec054a54e8483ddcc2980d8a
+    chancePercent: 100
+    count: 5
+  - prefab:
+      RawGuidValue: f743f1965bb816246a0ff0e7d5c6ffbd
+    chancePercent: 100
+    count: 1
+  - prefab:
+      RawGuidValue: b794c64a65445f6478f6548a53539abb
+    chancePercent: 100
+    count: 1
   locomotionKind: 0
-  enemyPrefabs:
-  - RawGuidValue: d54a1a58e54f96b4a8852a3cc1b8032b
+  enemyPrefabs: []
+  enemiesPerActivation: 5
   flyingPatrolArea: {fileID: 0}
-  enemiesPerActivation: 1
   flyingPatrolBoxCenter: {x: 0, y: 6, z: 0}
   flyingPatrolBoxSize: {x: 40, y: 12, z: 40}
   flyingPatrolSamplesPerAxis: 5

@@ -14,7 +14,7 @@ public struct TankMeleePreparationProgress : INetworkStruct
         new TankMeleePreparationProgress { Released = !held, ButtonHeldSeconds = Mathf.Max(0f, bufferedHeldSeconds) };
 
     /// <returns>本 Tick 是否應正式出手。呼叫方出手後不得再次呼叫本方法。</returns>
-    public bool Advance(float deltaTime, bool held, float preparationSeconds, float damageSeconds)
+    public bool Advance(float deltaTime, bool held, float preparationSeconds, float damageSeconds, float playbackSpeed = 1f)
     {
         float dt = Mathf.Max(0f, deltaTime);
         if (!Released)
@@ -33,12 +33,13 @@ public struct TankMeleePreparationProgress : INetworkStruct
             PreparedSeconds += dt;
             return false;
         }
-        float next = CursorSeconds + dt;
+        float speed = Mathf.Max(1f, playbackSpeed);
+        float next = CursorSeconds + dt * speed;
         if (!Released && next >= preparationSeconds)
         {
             CursorSeconds = preparationSeconds;
             IsHolding = true;
-            PreparedSeconds = Mathf.Max(0f, next - preparationSeconds);
+            PreparedSeconds = Mathf.Max(0f, next - preparationSeconds) / speed;
             return false;
         }
         CursorSeconds = Mathf.Min(next, damageSeconds);

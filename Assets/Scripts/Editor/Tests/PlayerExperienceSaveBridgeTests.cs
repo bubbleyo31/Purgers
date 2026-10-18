@@ -60,6 +60,6 @@ public sealed class PlayerExperienceSaveBridgeTests
 
         Assert.That(restored.Level, Is.EqualTo(1));
         Assert.That(restored.Experience, Is.Zero);
-        Assert.That(restored.PendingRewards, Is.Zero);
+        Assert.That(restored.PendingRewards, Is.EqualTo(1));
     }
 }

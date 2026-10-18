@@ -1,0 +1,65 @@
+{
+  "missingScripts": 0,
+  "references": {
+    "flowController": true,
+    "stageLevelLabel": true,
+    "objectiveLabel": true,
+    "readyPanelRoot": true,
+    "readyLedLabel": true,
+    "readyStatusLabel": true,
+    "readyButton": true,
+    "readyButtonLabel": true,
+    "readyTimerLabel": true
+  },
+  "compactWorldWidth": 35.0,
+  "expandedWorldWidth": 55.0,
+  "expandKey": 109,
+  "cartography": "Assets/Prefabs/Map/SafeHouse_Cartography.asset",
+  "networkMapUnset": true,
+  "controllers": 1,
+  "minimaps": 1,
+  "texts": [
+    {
+      "name": "Title",
+      "overflow": false,
+      "characters": 38,
+      "fontSize": 16.55
+    },
+    {
+      "name": "Status",
+      "overflow": false,
+      "characters": 12,
+      "fontSize": 25.0
+    },
+    {
+      "name": "Label",
+      "overflow": false,
+      "characters": 4,
+      "fontSize": 23.0
+    },
+    {
+      "name": "Label",
+      "overflow": false,
+      "characters": 3,
+      "fontSize": 23.0
+    },
+    {
+      "name": "VoteTimer",
+      "overflow": false,
+      "characters": 6,
+      "fontSize": 25.0
+    },
+    {
+      "name": "Label",
+      "overflow": false,
+      "characters": 3,
+      "fontSize": 23.0
+    },
+    {
+      "name": "CancelHint",
+      "overflow": false,
+      "characters": 4,
+      "fontSize": 23.0
+    }
+  ]
+}

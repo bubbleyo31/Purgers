@@ -971,6 +971,13 @@ public class TankGatherMovementReceiver :
     /// <summary>
     /// 結束這次 Enemy Gather Movement。
     /// </summary>
+    /// <summary>僅由權威受控狀態停止聚怪，避免暈眩期間繼續寫入位置。</summary>
+    public void CancelForTimedStun()
+    {
+        if (fusionSpawned && Object != null && Object.IsValid && Object.HasStateAuthority)
+            CompleteGather("Timed stun");
+    }
+
     private void CompleteGather(
         string reason
     )

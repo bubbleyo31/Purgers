@@ -290,10 +290,9 @@ public sealed class EnemyCombatDecisionController :
     private void TickStationaryTargetAim(in EnemyCombatContext context)
     {
         // Active Option 在上方已獨占 Tick；冷卻瞄準只使用非攻擊期間的旋轉權。
-        if (!enemyActor.IsStationary || !movementOwnership.CanRotate ||
+        if ((!enemyActor.IsStationary && movementOwnership.AllowAutonomousMovement) || !movementOwnership.CanRotate ||
             enemyActor.StateController.CurrentBrainState == EnemyBrainState.Dormant ||
-            !IsTargetValid(context.Target) ||
-            !(perception.HasDirectSight || perception.IsInsideLockedTargetRetention))
+            !IsTargetValid(context.Target))
             return;
 
         // 同一 Tick 只委派給一個能力，不讓多個 Option 同時寫 Root 朝向。
@@ -303,6 +302,7 @@ public sealed class EnemyCombatDecisionController :
             if (option == null || !option.isActiveAndEnabled ||
                 option.OptionId == EnemyCombatOptionId.None ||
                 !option.SupportsBetweenActionAiming ||
+                (!(perception.HasDirectSight || perception.IsInsideLockedTargetRetention) && !option.SupportsRememberedTargetAiming) ||
                 (aimingOption != null && option.Priority <= aimingOption.Priority))
                 continue;
             aimingOption = option;

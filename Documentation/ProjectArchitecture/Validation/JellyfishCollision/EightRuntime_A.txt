@@ -1,0 +1,38 @@
+通過 34
+PASS Runner starts: Ok
+PASS existing patrol spawn contract binds
+PASS Runner starts: Ok
+PASS Host owns NPC results; Client is proxy
+INFO Jellyfish Host uniqueIndices=8 manager=True
+PASS 8 hitboxes register under one root on Jellyfish Host
+PASS only small bell is Head; part multiplier is one
+PASS pose binding survives spawn
+INFO Jellyfish Client uniqueIndices=1 manager=False
+PASS 8 hitboxes register under one root on Jellyfish Client
+PASS only small bell is Head; part multiplier is one
+PASS pose binding survives spawn
+PASS live Animator changes collision pose
+PASS PhysX and Fusion dimensions agree on Jellyfish Host
+PASS PhysX and Fusion dimensions agree on Jellyfish Client
+PASS Client lag ray identifies upper small bell as Head
+PASS large bell stays Body
+PASS normal damage through existing receiver
+PASS headshot classification through existing receiver
+PASS multiple hitboxes do not duplicate selected-hit damage
+PASS proxy cannot commit health damage
+PASS both allow clear passage
+PASS both reject wall
+PASS both reject occupied start
+PASS Runner starts: Ok
+INFO Jellyfish Client uniqueIndices=1 manager=False
+PASS 8 hitboxes register under one root on Jellyfish Client
+PASS only small bell is Head; part multiplier is one
+PASS pose binding survives spawn
+PASS PhysX and Fusion dimensions agree on Jellyfish Client
+PASS late join receives health
+PASS death disables every part on Jellyfish Host
+PASS death disables Fusion root on Jellyfish Host
+PASS death disables every part on Jellyfish Client
+PASS death disables Fusion root on Jellyfish Client
+PASS death disables every part on Jellyfish Client
+PASS death disables Fusion root on Jellyfish Client

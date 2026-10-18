@@ -1,0 +1,6 @@
+PASS Runner starts: Ok
+PASS Runner starts: Ok
+FAIL client capture permission: System.InvalidOperationException: multiplayer capture permits actual weapon counterattack
+  at EnemyFlytrapRuntimeVerification.Check (System.Boolean condition, System.String message) [0x0001f] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\EnemyFlytrapRuntimeVerification.cs:26 
+  at EnemyFlytrapRuntimeVerification.VerifyMultiplayerCounterattack (Player player, Fusion.NetworkObject prefab) [0x001f7] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\EnemyFlytrapRuntimeVerification.cs:181 
+  at EnemyFlytrapRuntimeVerification.Begin (System.Boolean multiplayer, System.Boolean counterattackOnly) [0x004a7] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\EnemyFlytrapRuntimeVerification.cs:51 

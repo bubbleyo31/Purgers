@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
@@ -10,7 +10,7 @@ using UnityEngine.Rendering.Universal;
 public sealed class PlayerAbilityColorGrading : MonoBehaviour
 {
     [Header("技能畫面設定")]
-    [SerializeField, Tooltip("四種效果的 Lift／Gamma／Gain。留空讀 Resources/Presentation/ActiveAbilityColorGrading。")]
+    [SerializeField, Tooltip("技能與保命效果的 Lift／Gamma／Gain。留空讀 Resources/Presentation/ActiveAbilityColorGrading。")]
     private AbilityColorGradingSettings settings;
     private Player owner;
     private PlayerHealth observedHealth;
@@ -140,9 +140,11 @@ public sealed class PlayerAbilityColorGrading : MonoBehaviour
         Vector4 weights = new Vector4(Mathf.SmoothStep(0f,1f,bulletWeight) * settings.bulletTime.strength,
             Mathf.SmoothStep(0f,1f,precisionWeight) * settings.precisionLock.strength,
             Mathf.SmoothStep(0f,1f,experienceWeight) * settings.experience.strength, heal * settings.healing.strength);
-        float total = weights.x+weights.y+weights.z+weights.w;
+        float notTodayWeight = settings.notToday == null ? 0f : AbilityColorGradingRules.NotTodayPulse(
+            owner.Health.NotTodayRemainingSeconds, owner.Health.NotTodayDurationSeconds, settings.notTodayPulseSeconds) * settings.notToday.strength;
+        float total = weights.x+weights.y+weights.z+weights.w+notTodayWeight;
         if (total <= .0001f) return;
-        if (total > 1f) weights /= total;
+        if (total > 1f) { weights /= total; notTodayWeight /= total; }
         var data = camera.GetComponent<UniversalAdditionalCameraData>();
         if (data == null || data.volumeLayerMask.value == 0) return;
         int layer=0;
@@ -154,6 +156,12 @@ public sealed class PlayerAbilityColorGrading : MonoBehaviour
         grading.lift.value = Combine(baseline.lift.value, settings.bulletTime.lift, settings.precisionLock.lift, settings.experience.lift, settings.healing.lift, weights);
         grading.gamma.value = Combine(baseline.gamma.value, settings.bulletTime.gamma, settings.precisionLock.gamma, settings.experience.gamma, settings.healing.gamma, weights);
         grading.gain.value = Combine(baseline.gain.value, settings.bulletTime.gain, settings.precisionLock.gain, settings.experience.gain, settings.healing.gain, weights);
+        if (settings.notToday != null)
+        {
+            grading.lift.value = AbilityColorGradingRules.AddTint(grading.lift.value, settings.notToday.lift, notTodayWeight);
+            grading.gamma.value = AbilityColorGradingRules.AddTint(grading.gamma.value, settings.notToday.gamma, notTodayWeight);
+            grading.gain.value = AbilityColorGradingRules.AddTint(grading.gain.value, settings.notToday.gain, notTodayWeight);
+        }
         runtimeVolume.enabled = true;
         activeRenderCamera = camera;
         if (!data.renderPostProcessing) { data.renderPostProcessing = true; temporarilyEnabledPost = data; }

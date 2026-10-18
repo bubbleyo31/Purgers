@@ -1,0 +1,7 @@
+MenuSceneUnchanged=True
+FinalEditorPlayMode=False
+FinalSceneDirty=False
+FinalCompileFailed=False
+FinalConsoleErrors=0
+PlayerMissingScripts=0
+ThreeCuesValid=True

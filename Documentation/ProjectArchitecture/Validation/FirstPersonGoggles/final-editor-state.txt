@@ -1,0 +1,8 @@
+Final Editor state: Edit Mode; sceneDirty=False; scriptCompilationFailed=False.
+Configured PlayerHUDCanvas/FirstPersonGoggles: Thickness=1, Opacity=0.94.
+Canvas sortingOrder=-10; overrideSorting=True; Rect=1920x1080; scale=(1,1,1).
+Missing scripts on configured effect=0.
+Final _Menu baseline comparison: only new PrefabInstance / stripped RectTransform and one parent child reference.
+Existing WholeHealthValue serialized text restored to baseline 100 / 100 via Editor API.
+Last Play Mode Console query: 0 errors / warnings.
+Git diff --check existing _Menu empty YAML field whitespace predates this task (absent from task baseline diff); no manual YAML cleanup performed.

@@ -4,6 +4,8 @@ namespace Purgers.Progression
 {
     public struct PlayerRewardNetworkState : INetworkStruct
     {
+        public int EquippedHitLevel;
+        public int EquippedFocusLevel;
         public int ChoiceCount;
         public int DraftRevision;
         public NetworkString<_64> Choice0;

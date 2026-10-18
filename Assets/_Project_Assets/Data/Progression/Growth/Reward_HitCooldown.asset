@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da3361bca07116044af1dc0ef46a900c, type: 3}
+  m_Name: Reward_HitCooldown
+  m_EditorClassIdentifier: 
+  stableRewardId: growth.hitcooldown
+  category: 4
+  minimumPlayerLevel: 1
+  weight: 1
+  repeatPolicy: 1
+  abilityDefinition: {fileID: 0}
+  description: "\u7E2E\u77ED\u920E\u7D22\u6280\u80FD\u4E0B\u4E00\u6B21\u51B7\u537B\u3002"
+  weaponProfession: 0
+  weaponDisplayName: 
+  weaponIcon: {fileID: 0}
+  growthKind: 7
+  growthValues:
+  - 0.1
+  - 0.2
+  - 0.3
+  - 0.4
+  - 0.5
+  growthDisplayName: "\u920E\u7D22\u6280\u80FD\u51B7\u537B\u6E1B\u514D"
+  growthIcon: {fileID: 21300000, guid: 73cde794f8991904a926cd3198f85b6d, type: 3}
+  growthRankBackground: {fileID: 21300000, guid: d3ef8b28c8e06f744ba5503af93da03c,
+    type: 3}
+  growthRankCenter: {x: 0.395, y: 0.43}
+  growthRankSize: {x: 0.2, y: 0.18}
+  growthIconScale: 1.2634706

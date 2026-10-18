@@ -1,0 +1,7 @@
+{
+  "protected_file_count": 1692,
+  "changed": [],
+  "missing": [],
+  "report_broken_local_links": [],
+  "note": "Hashes compare audit-start against audit-end on selected source/scene/UI/presentation folders; not a whole-repository or build validation."
+}

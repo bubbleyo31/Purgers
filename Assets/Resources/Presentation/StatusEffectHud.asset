@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8869863c89bb02d46b5b3140a5f6b66c, type: 3}
+  m_Name: StatusEffectHud
+  m_EditorClassIdentifier: 
+  styles:
+  - kind: 0
+    icon: {fileID: 3286842472681867803, guid: 0b94ffcc9c2439546ad9798b0f050ef5, type: 3}
+    barColor: {r: 1, g: 0.8, b: 0.19215687, a: 1}
+  - kind: 1
+    icon: {fileID: -4229746076213977070, guid: 0b94ffcc9c2439546ad9798b0f050ef5, type: 3}
+    barColor: {r: 1, g: 0.7411765, b: 0.16862746, a: 1}
+  - kind: 2
+    icon: {fileID: 21300000, guid: c68f476a5f9ea4e4298ba33aa9ae4831, type: 3}
+    barColor: {r: 0.70980394, g: 0.28235295, b: 1, a: 1}
+  - kind: 3
+    icon: {fileID: -6103316046288401962, guid: 0b94ffcc9c2439546ad9798b0f050ef5, type: 3}
+    barColor: {r: 1, g: 0.39215687, b: 0.43529412, a: 1}
+  - kind: 4
+    icon: {fileID: -3493955658183190599, guid: 0b94ffcc9c2439546ad9798b0f050ef5, type: 3}
+    barColor: {r: 1, g: 0.60784316, b: 0.24705882, a: 1}
+  - kind: 5
+    icon: {fileID: -6688462803170280830, guid: 0b94ffcc9c2439546ad9798b0f050ef5, type: 3}
+    barColor: {r: 0.5686275, g: 0.972549, b: 0.21568628, a: 1}
+  - kind: 6
+    icon: {fileID: 21300000, guid: bddededf2d6936244ac78bb664602e0d, type: 3}
+    barColor: {r: 1, g: 0.36078432, b: 0.39215687, a: 1}
+  - kind: 7
+    icon: {fileID: -4050609045912860250, guid: 0b94ffcc9c2439546ad9798b0f050ef5, type: 3}
+    barColor: {r: 0.27450982, g: 0.7607843, b: 0.96862745, a: 1}
+  worldIconSize: 16
+  worldBarHeight: 4
+  worldRowGap: 3
+  selfIconSize: 24
+  selfBarHeight: 6
+  selfRowGap: 4
+  selfWidth: 280
+  selfCrosshairOffset: 80
+  guardFontSize: 14
+  guardWidthMultiplier: 1.1
+  guardBarHeight: 8
+  guardStatusGap: 8
+  guardFillColor: {r: 0.835, g: 0.769, b: 0.369, a: 1}
+  guardTextColor: {r: 0.945, g: 0.929, b: 0.851, a: 1}
+  guardWarningColor: {r: 0.929, g: 0.506, b: 0.459, a: 1}
+  guardRecoveryColor: {r: 0.718, g: 0.804, b: 0.651, a: 1}
+  healthGap: 5
+  iconBarGap: 5
+  emptyColor: {r: 0.12, g: 0.16, b: 0.2, a: 0.9}

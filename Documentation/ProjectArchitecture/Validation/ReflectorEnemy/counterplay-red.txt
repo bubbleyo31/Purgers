@@ -1,0 +1,3 @@
+2026-10-14: 21 focused tests executed before implementation. Three intended failures: missing counterplay serialized options, reflection-padding rule, shot-sphere segment rule.
+Two additional prior tests used stale hardcoded defaults (stun 2 vs user 4 seconds; projectile diameter .525 vs user 1 metre). Current user values were preserved; tests now verify valid timing and diameter/radius consistency.
+Job: 0e5e9ec127d94c9d9ba1055fb0e90c5c

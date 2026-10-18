@@ -1,0 +1,3 @@
+2026-10-14 EnemyReflector EditMode: total=22 passed=22 failed=0 skipped=0.
+Job a62a1046637d4b52b48ccd88dbf03a96
+Includes capture padding, finite shot segment, opt-in assets, visual/collision world size under nonuniform parent scale.

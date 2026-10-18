@@ -1,0 +1,26 @@
+PASS Runner starts: Ok
+PASS Runner starts: Ok
+PASS scene contains production local health HUD
+PASS yellow effect uses naturally bound client Input Authority owner
+PASS grant NotToday: 
+PASS capture accepted before immunity
+PASS explosion restrictions active before lethal hit
+PASS lethal interception grants invulnerability and control immunity
+PASS trigger immediately clears capture grapple lock and slow
+PASS negative locks cleared while System lock is preserved
+PASS capture rejected throughout immunity
+PASS new status masks and explosion debuffs rejected
+PASS client effect reads synchronized remaining lifetime
+PASS damage blocked during the same protection window
+PASS camera render callbacks valid: 
+PASS actual client URP stack pulses yellow, frames=389 redDeltaRange=0.000846982..0.198
+PASS expiry leaves no active yellow volume or timer
+PASS cleansed effects do not resume after immunity expires
+PASS new debuffs accepted after expiry
+PASS new capture accepted after expiry
+PASS client cannot perform authoritative cleanse
+PASS authority cleanup releases captured player
+PASS shield equipped
+PASS shield activates through normal ability input path
+PASS active shield adds temporary capacity
+PASS expired shield removes empty extra cells: capacity=0 healthCells=10/10 maxHP=100/100

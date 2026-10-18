@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da3361bca07116044af1dc0ef46a900c, type: 3}
+  m_Name: Reward_MeleeSpeed
+  m_EditorClassIdentifier: 
+  stableRewardId: growth.meleespeed
+  category: 4
+  minimumPlayerLevel: 1
+  weight: 1
+  repeatPolicy: 1
+  abilityDefinition: {fileID: 0}
+  description: "\u8FD1\u6230\u653B\u901F\u589E\u52A0\u3002"
+  weaponProfession: 0
+  weaponDisplayName: 
+  weaponIcon: {fileID: 0}
+  growthKind: 3
+  growthValues:
+  - 0.05
+  - 0.1
+  - 0.15
+  - 0.2
+  growthDisplayName: "\u8FD1\u6230\u653B\u901F"
+  growthIcon: {fileID: 21300000, guid: 8e4c2c3ea1ba1f74684aabdeeabbe889, type: 3}
+  growthRankBackground: {fileID: 21300000, guid: 264a8335d736e3b44800cf537a6b70c2,
+    type: 3}
+  growthRankCenter: {x: 0.58, y: 0.43}
+  growthRankSize: {x: 0.4, y: 0.4}
+  growthIconScale: 1.3990455

@@ -64,3 +64,5 @@ M:/UnityProject/Purgers/Documentation/ProjectArchitecture
 共用控制票證、黑幕與所有連線玩家載入完成後啟動計時，詳見 [144_PrePhase4-1_共用控制與轉場.md](144_PrePhase4-1_共用控制與轉場.md)。本輪核對 187 支 C#；多人驗證狀態以 144 的實際紀錄為準。
 
 - 2026-10-04：十項 E 主動技能已建立資產與獎勵池；[測試與多人驗收邊界](Validation/ActiveAbilities/README.md)。
+
+- [109 電鋸格檔耐力與屬性強化](109_電鋸格檔耐力與屬性強化.md)：基礎／成長、破防恢復、中央 HUD 與驗證。

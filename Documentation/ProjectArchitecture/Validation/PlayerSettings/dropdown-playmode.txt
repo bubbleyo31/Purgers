@@ -1,0 +1,4 @@
+PASS production main SettingsButton -> connection tab; ReturnTo=Main, region enabled.
+PASS expanded menu=32000, blocker=32001, choices=32002; options receive top EventSystem raycast after layout frame.
+PASS native pointerClick selected us, Draft.region=1; Saved remains unchanged (no user preference write).
+PASS list closed; discarded draft and returned to main menu.

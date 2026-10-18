@@ -1,0 +1,22 @@
+PASS Runner starts: Ok
+PASS stationary silent standing player is safe
+PASS silent crouch walking is safe
+PASS wall blocks gunshot detection
+PASS body path rejects obstacle even with eye line available
+PASS open capsule path accepted
+PASS capture owns exclusive gate and blocks active actions
+PASS another trap cannot acquire same victim
+PASS player held at mouth
+PASS pull travel does not damage
+PASS first damage waits for half-second interval
+PASS first solo bite is five percent maximum health
+PASS animation progress tracks partial feeding time
+PASS movement and active inputs cannot escape
+PASS solo loses exactly half maximum health and releases
+PASS survival starts ten-second cooldown
+PASS cooldown cannot capture
+PASS kill immediately releases without waiting for death animation
+PASS release preserves another source's lock
+PASS rescue cancels unpaid damage
+PASS enemy despawn cannot strand victim
+PASS non-divisible timing preserves total budget

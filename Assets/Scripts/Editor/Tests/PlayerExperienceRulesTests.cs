@@ -57,14 +57,14 @@ public sealed class PlayerExperienceRulesTests
     }
 
     [Test]
-    public void PendingRewardRejectsSubsequentGrant()
+    public void PendingRewardStillAccumulatesExperienceAndQueuesLevels()
     {
         var current = new PlayerExperienceState(2, 3, 1);
         var result = PlayerExperienceRules.Award(current, 100);
 
-        Assert.That(result.Level, Is.EqualTo(current.Level));
-        Assert.That(result.Experience, Is.EqualTo(current.Experience));
-        Assert.That(result.PendingRewards, Is.EqualTo(current.PendingRewards));
+        Assert.That(result.Level, Is.EqualTo(5));
+        Assert.That(result.Experience, Is.EqualTo(33));
+        Assert.That(result.PendingRewards, Is.EqualTo(4));
     }
 
     [Test]

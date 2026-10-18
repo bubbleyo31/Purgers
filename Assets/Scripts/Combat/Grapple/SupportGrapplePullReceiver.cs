@@ -93,6 +93,11 @@ public enum SupportGrapplePullPhase : byte
 public class SupportGrapplePullReceiver :
     NetworkBehaviour
 {
+    [Networked] private float FreezeHudSpan { get; set; }
+    public StatusEffectSnapshot RootStatus => fusionSpawned && Object != null && Object.IsValid &&
+        CurrentPhase == SupportGrapplePullPhase.Frozen
+        ? StatusEffectSnapshot.FromTimer(StatusEffectKind.Root, Runner, PhaseTimer, FreezeHudSpan) : default;
+
     // =====================================================================
     #region Timing
 
@@ -727,6 +732,7 @@ public class SupportGrapplePullReceiver :
                     Runner,
                     enemyFreezeDuration
                 );
+            FreezeHudSpan = PhaseTimer.RemainingTime(Runner) ?? 0f;
 
 
             if (debugPull)

@@ -57,7 +57,7 @@ public sealed class EnemySuicideAttack : EnemyCombatOption, IEnemyFatalHitPolicy
     [Header("爆炸：幾何與傷害")]
     [SerializeField, Min(.01f), Tooltip("殺傷球體半徑，公尺；直徑等於兩倍半徑，並控制爆炸 VFX 比例。")]
     private float explosionRadius = 3f;
-    [SerializeField, Tooltip("爆炸中心相對敵人 Root 的本地位移，公尺；預設位於 1 公尺灰盒身體中心。")]
+    [SerializeField, Tooltip("爆炸中心相對敵人 Root 的本地位移，公尺；應對齊模型與碰撞體的身體中心。")]
     private Vector3 explosionCenterOffset = new Vector3(0f, .5f, 0f);
     [SerializeField, Min(0f), Tooltip("爆炸中心傷害；與外緣傷害之間按距離線性衰減。")]
     private float centerDamage = 40f;
@@ -108,6 +108,17 @@ public sealed class EnemySuicideAttack : EnemyCombatOption, IEnemyFatalHitPolicy
     private Vector3 previousEnemyCenter;
     private NetworkId previouslyTrackedPlayer;
     private RaycastHit[] sightHits = new RaycastHit[16];
+    /// <summary>僅供統一動畫入口讀取；不新增本機時鐘或 Animator 傷害事件。</summary>
+    public bool TryGetPounceAnimationTime(out float normalizedTime)
+    {
+        normalizedTime = 0f;
+        if (!spawned || Object == null || !Object.IsValid || Runner == null ||
+            !useAnimationFrameTiming || takeoffTiming == null || !takeoffTiming.IsValid ||
+            HasExploded || Stationary || !PhaseTimer.IsRunning) return false;
+        normalizedTime = EnemySuicideRules.PounceNormalizedTime(takeoffTiming, takeoffFrame,
+            flightSeconds, IsAirborne, PhaseTimer.RemainingTime(Runner) ?? 0f);
+        return true;
+    }
     public float ExplosionRadius => explosionRadius;
     public Vector3 ExplosionCenter => transform.TransformPoint(explosionCenterOffset);
     public override bool ContinueWithoutTarget => true;

@@ -1,6 +1,8 @@
 # Phase 10：怪物生成區與 Encounter 守則
 
-> **2026-10-02 Ranged C 定點砲台**：新增獨立光束／投射物 Prefab，整隻原地轉向、不巡邏、不追逐位移。Stationary 的 Encounter 使用人工出生中心，測試生成器使用指定 Transform，皆不需地面／飛行巡邏區。聚焦 29/29 與受控 Single Runner 攻擊／位置不變已驗證；獨立 Host／Client 與自然 Encounter 待驗。完整回歸仍有既有 6 項失敗。設定與證據見 [165 Ranged C 定點砲台](165_RangedC_定點砲台與生成配置.md)。
+> **2026-10-14 混合敵人清單（最新規則）**：同一 Zone 可混放 Ground／FreeFlying／Stationary；每個項目各自設定「出現機率 (%)＋抽中生成數量」，每次啟動只判定一次。新清單非空時取代舊 Locomotion Kind／Enemy Prefabs／Enemies Per Activation，空清單保留舊候選／數量設定，出生位置仍採新版盒內散布。自動依 Prefab Definition 綁定巡邏區；所有種類在出生 Box 內隨機散布，占用時換點重試；設定與驗證見本文末節及 [紀錄](Validation/EnemySpawnComposition/README.md)。
+
+> **2026-10-02 Ranged C 定點砲台**：新增獨立光束／投射物 Prefab，整隻原地轉向、不巡邏、不追逐位移。Stationary 的 Encounter 原使用人工出生中心（2026-10-14 已改為 Box 內散布），測試生成器使用指定 Transform，皆不需地面／飛行巡邏區。聚焦 29/29 與受控 Single Runner 攻擊／位置不變已驗證；獨立 Host／Client 與自然 Encounter 待驗。完整回歸仍有既有 6 項失敗。設定與證據見 [165 Ranged C 定點砲台](165_RangedC_定點砲台與生成配置.md)。
 
 > 最後核對日期：2026-09-30（自動飛行巡邏與 EnemySpawnZone 整合局部核對）
 > 核對來源：`Assets/Scripts/Enemy/Encounter/`、`MapRuntimeNavigationPrototype.cs`、`StageFlowController.cs`、`NetworkMapState.cs`、`MapChunk_Prototype.prefab`、`Enemy_Melee_A.prefab`、`Game.unity`
@@ -22,14 +24,14 @@
 
 | 程式 | 責任 |
 |---|---|
-| `EnemySpawnZone` | Prefab 局部出生盒、同類型敵人候選、一次啟動數量、自動飛行巡邏盒與可選人工 Area；不自行生成。 |
+| `EnemySpawnZone` | Prefab 局部出生盒、混合敵人獨立機率／數量、舊清單相容、自動飛行巡邏盒與可選人工 Area；不自行生成。 |
 | `EnemySpawnApproachGate` | 無 Collider 的單向／雙向矩形平面、穿越方向與 Scene Gizmo；不直接觸發 `Runner.Spawn`。 |
 | `EnemyEncounterRules`／`RecentZoneLock<T>` | Tick 線段穿門檻、地面出生點的短距離 Collider 投影，以及最近成功區的固定容量輪替。 |
 | `EnemyEncounterDirector` | 普通關卡的 Host 權威候選、預算、可見性、逐隻生成及落後清理；建立／清理本輪 Zone 自動飛行 Area 並在出生前綁定。 |
 | `EnemyFlyingPatrolPlanner` | 有界立體取樣、出生盒可達的最大連通集合、保留連通性的點數限制；不移動敵人。 |
 | `MapRuntimeNavigationPrototype.TrySampleGroundPosition` | 使用原有 Agent Type 在預烘焙 NavMesh 投影地面出生點；不執行 Runtime BuildNavMesh。 |
 
-正式 Encounter 沿用 `EnemyIdlePatrolBrain.TryInitializePatrolAreaBeforeSpawn`，在 `Runner.Spawn` 的 `onBeforeSpawned` 指定實際巡邏區。地面區使用當次 Chunk 對應的 Runtime Ground Patrol Area；飛行區的 `Flying Patrol Area` 留空時，由 Host Director 在該 Zone 的立體巡邏盒內自動生成 `EnemyPatrolArea`；有指定時保留同一 Chunk 內的人工巡邏區。區域的 `Enemy Prefabs` 必須全部與其 `Locomotion Kind` 相同；遇到不一致，Host 會立即 Despawn 該次不合規物件並報錯。
+正式 Encounter 沿用 `EnemyIdlePatrolBrain.TryInitializePatrolAreaBeforeSpawn`，在 `Runner.Spawn` 的 `onBeforeSpawned` 指定實際巡邏區。地面區使用當次 Chunk 對應的 Runtime Ground Patrol Area；飛行區的 `Flying Patrol Area` 留空時，由 Host Director 在該 Zone 的立體巡邏盒內自動生成 `EnemyPatrolArea`；有指定時保留同一 Chunk 內的人工巡邏區。舊版 `Enemy Prefabs` 仍要求符合 `Locomotion Kind`。新版 `Enemy Entries` 依各 Prefab 的 Definition 辨識移動類型，不使用 Zone 的舊類型欄位；無效候選在登記時排除並回報，出生前仍核對類型與巡邏契約。
 
 地面出生先取樣該 Chunk 的預烘焙 NavMesh，再以 `World Occlusion Mask` 射向距離不超過 0.25 公尺的實體地板，將 Root 放到 Collider 表面；找不到地板、超過落差、離開出生盒或沒有通往巡邏點的完整路徑，都拒絕該候選。此檢查不會在 Runtime 重烘焙導航。
 
@@ -39,7 +41,7 @@
 
 此 Prefab 引用 Editor 重新烘焙的 `NavMesh-MapChunk_Prototype_Phase10.asset`。`Game.unity` 原先額外掛載的舊整場景 NavMesh 與 Chunk 資料重疊，會讓出生點取樣到高於實體地板的舊面；現已在 Unity Editor 清除該 Scene 的 NavMesh 參照。普通地圖仍由每個 Chunk 的預烘焙資料及 Runtime Link 提供導航。
 
-## 手動配置順序
+## 手動配置順序（舊版空清單模式；混合清單見末節）
 
 1. 在現有 Game Scene、已有 `StageFlowController`／`NetworkMapState` 的 **Scene NetworkObject** 上增加 `EnemyEncounterDirector`。指定同一 Runner 的 `Stage Flow`、`Map State` 和本場景 `Map Selection`。不建立第二個 Stage owner 或新的 NetworkObject。Boss Scene 不必配置。
 2. 在欲使用的 `MapChunk` Prefab 下建立一或多個 `EnemySpawnZone` 子物件。設定出生盒中心與完整尺寸，並用 Scene Gizmo 確認位於可藏身的地方。地面區需讓盒體包含可用的烘焙 NavMesh；飛行區調整自動巡邏盒（青色 Gizmo），或指定該 Prefab 內人工巡邏區。
@@ -108,7 +110,7 @@ Game Scene 的 `Debug Encounter` 已開啟，可從 Console 查看成功或跳�
 
 ## 自動飛行巡邏（2026-09-30）
 
-### 使用方式
+### 舊版同類型清單的使用方式（混合清單見末節）
 
 1. `EnemySpawnZone.Locomotion Kind` 設為 `Free Flying`，候選只能放已登記的飛行 Enemy Prefab。
 2. `Flying Patrol Area` **留空即自動規劃**；原有人工引用仍優先使用，不必移除、不改欄位名稱。
@@ -127,7 +129,7 @@ Game Scene 的 `Debug Encounter` 已開啟，可從 Console 查看成功或跳�
 ### 責任與限制
 
 - 地面巡邏仍由 `MapRuntimeNavigationPrototype` 按 Chunk 建立；飛行巡邏按 **Zone** 規劃，因為不同 Zone 有不同飛行範圍與敵人膠囊。沒有新增 Map owner 或移動 owner，也不執行 Runtime NavMesh Bake。
-- Director 在既有 State Authority／Server 檢查之後、地圖與地面導航就緒時，一次讀取候選 Fusion Prefab；取其 `EnemyFlyingPatrolNavigator` 的實際 Body Radius、Height、Skin、Obstacle Mask。全部候選都必須能通過，不使用另一套固定小尺寸探針。
+- Director 在既有 State Authority／Server 檢查之後、地圖與地面導航就緒時，一次讀取候選 Fusion Prefab；取其 `EnemyFlyingPatrolNavigator` 的實際 Body Radius、Height、Skin、Obstacle Mask。各飛行 Prefab 分別規劃並驗證自己的巡邏點；同 Prefab 的重複項目共用規劃結果。不使用另一套固定小尺寸探針。
 - 共用現有 Navigator 的膠囊 Overlap／Cast；以零長度查詢排除占用點，再檢查雙向直線通道。選擇至少包含一個合法出生樣本的最大連通集合；規劃結果對相同幾何／設定為固定結果。
 - AI 繼續由 `EnemyIdlePatrolBrain` 選點及 `EnemyFlyingPatrolNavigator` 移動，每次移動仍檢查動態障礙；自動點集合不是完整三維尋路系統，不保證能繞到指定目的地。障礙變動不會每 Tick 重建整區。
 - `onBeforeSpawned` 仍直接綁定實際 Area。Client 不建立自動巡邏點、不執行 AI；接收既有 NetworkObject 移動同步。Director Despawn 時只銷毀自己建立的 Area，人工引用保留；Chunk／場景卸載也會銷毀其子階層。
@@ -156,3 +158,50 @@ Game Scene 的 `Debug Encounter` 已開啟，可從 Console 查看成功或跳�
 測試時先在目標 MapChunk Prefab 的 Zone 取消勾選，再重新開始本輪並穿越 Gate；或者只改 Play Mode 中 Host 實際生成的 Chunk／Zone，結束後不保存。直接可見且通過其他條件時應可生成；保持勾選、相同可見點應被拒絕。兩種設定下，離任一玩家太近或被占用的點皆應被拒絕。已成功的 Zone 仍在輪替鎖定內，切換開關不會解鎖或直接生成；重測首次啟動需重開本輪。
 
 本次未改 Scene／Prefab 設定。新增 8 項 EditMode 測試先確認失敗，再與 Encounter／Stationary 合計 29/29 通過，含真實 PhysicsScene 的有牆／無牆、開關、任一玩家最小距離。完整回歸及 Play Mode／多人驗證邊界見 [130](130_回歸驗證與審查狀態.md)。
+
+## 2026-10-14 混合種類、獨立機率與指定數量
+
+最後核對日期：2026-10-14（局部核對）。核對來源：`EnemySpawnZone.cs`、`EnemyEncounterDirector.cs`、`EnemyEncounterDirector.Composition.cs`。
+
+### 已確認規則
+
+- 同一個 Zone 可以混放地面、飛行與定點敵人；使用 Prefab 上的 `EnemyActor.Definition.LocomotionKind` 自動辨識，無須逐項指定巡邏區。
+- 每次 Gate 啟動機會，各清單項目獨立擲骰一次。機率不正規化，總和不必等於 100%；0% 永不出現，100% 必定抽中。全部未抽中時不生成、不進成功區 FIFO。
+- 每項抽中後要求生成其指定數量。例如 A：60%／3 隻、B：30%／2 隻；可能只抽中 A、只抽中 B、兩者都中（共要求 5 隻）或都不中。分批過程不重新擲骰。
+- 混合清單非空時，舊 `Enemies Per Activation` 不再限制這份清單；空清單維持舊版等機率逐名額抽選。同一 Prefab 重複填入代表兩個獨立項目，不會合併機率。
+- 依清單順序逐種、逐隻生成，仍共用 Director 的生成間隔、全場／單區存活數、NetworkObject 預算、有效出生位置與啟動期限。某種出生失敗取消其剩餘數量，繼續嘗試其他已抽中的種類；沒有跨啟動補發。達到上限可能使後面的項目無法生成，並不保證抽中數量全部落地。
+- 第一次實際成功生成才將 Zone 放入最近成功區 FIFO；同次其餘敵人不重複加入。期限、玩家離開／死亡、關卡非 Active 與 Despawn 清除待生成計畫。
+
+### 自動分配與幾何限制
+
+| 類型 | 分配方式 | 出生位置 |
+|---|---|---|
+| Ground | 所在 Chunk 的 Runtime Ground Patrol Area；依既有預烘焙 NavMesh 規劃 | 出生盒取樣、NavMesh 投影、貼實體地板及完整巡邏路徑檢查 |
+| FreeFlying | 人工 `Flying Patrol Area` 留空時，按各 Prefab 實際膠囊產生 Zone 子階層巡邏區；人工引用仍優先 | 出生盒與飛行巡邏盒重疊，且能直達有效巡邏點 |
+| Stationary | 不需要 Area | 在出生盒內隨機散布，不自動貼地；出生後不自主位移 |
+
+不建立新 AI、移動 owner 或 Runtime NavMesh Bake。Client 不擲骰、不生成巡邏點，沿用 Fusion 的敵人與位移同步。混合清單的自動飛行盒會顯示預覽；清單只有地面或定點時不會因此建立飛行區。
+
+**出生散布（2026-10-14 使用者修訂）**：所有種類每次嘗試在出生盒內重新隨機取點，Stationary 不再固定中心。遇到占用沿 Director 的 Candidate Attempts 繼續換點；預設最多 16 次，盒內已滿或其他條件全部失敗時仍可拒絕，不保證任意數量必有合法位置。Stationary 的高度直接使用盒內取樣值，請人工調整 Box 高度與平台範圍；不額外建立導航或自動貼地。
+
+### Inspector 操作
+
+1. 保留既有 Zone／Gate 階層，展開 `Enemy Spawn Zone > 混合敵人清單 > Enemy Entries`。
+2. 增加項目，分別設定「敵人 Prefab」「出現機率 (%)」（0～100）及「抽中生成數量」（至少 1；新項目程式預設 100%、1 隻）。Prefab 必須已登記於 Fusion。每項的 `Locomotion Kind（自動）` 直接讀取該 Prefab 的 EnemyDefinition，只讀顯示 Ground／FreeFlying／Stationary，不用手動選擇；混合清單非空時隱藏舊版 Zone 的 Locomotion Kind、Enemy Prefabs、Enemies Per Activation。
+3. 地面沿用所在 Chunk；飛行的 `Flying Patrol Area` 留空即可自動分配，仍需將出生盒與青色飛行巡邏盒放在可用空間；定點需人工配置出生盒完整範圍與高度。
+4. 檢查 Director 的上限與期限是否容納需求。程式預設單區最多 3 隻、全場最多 12 隻、間隔 0.75 秒、期限 3 秒；實際 Inspector 已保存值優先。抽中 5 隻不會自動調高這些值。
+5. Play Mode 從 Gate 正確方向穿越；驗收 100% 固定組合、0% 不出現、多種同中與數量、Ground／Flying 綁定及 Stationary 多隻散布與占用換點。另驗證 Host／Client、晚加入與重連。
+
+本次沒有自動遷移或保存正式 Scene／Prefab。原 `enemyPrefabs`、`locomotionKind`、`enemiesPerActivation` 欄位與 API 保留，避免既有序列化引用遺失。新清單填入後舊欄位不生效；若要停用生成，將新清單所有機率設為 0%，不要清空新清單後意外回到舊版來源。
+
+驗證結果、受控環境與自然操作尚未覆蓋的項目見 [混合生成驗證紀錄](Validation/EnemySpawnComposition/README.md)。
+## 2026-10-14 混合清單的拒絕診斷
+
+Debug Encounter 開啟時，生成與預算拒絕包含實際 Prefab 名稱及自動辨識的 Locomotion Kind；出生候選全失敗時列出各項第一拒絕原因次數，以及玩家位置和穿越方向。每個候選只計一次，數字總和等於 Candidate Attempts；不是每項條件獨立失敗率。
+
+混合清單按清單順序逐隻生成，後面條目仍受單區上限與啟動期限限制。當每種 100% 而總需求高於上限，不能期待全部出現；高速玩家亦可能在後續生成前已經超過出生盒，使所有點無法通過前方檢查。先前 Stationary 固定中心的 Gate 衝突，已依使用者新要求改為盒內散布；仍只接受位於玩家前方的合法隨機位置。配置診斷與驗證限制見 [實際 Prefab 診斷](Validation/EnemySpawnComposition/README.md)。
+## 2026-10-18 負底部偏移飛行 Prefab 的出生補償
+
+校準後水母的碰撞包絡低於 Root 2.65 公尺。EnemyEncounterDirector 對每個飛行候選，將既有出生盒的取樣視為包絡底部基準，再加 Navigator.SpawnRootOffset 到實際 Root；自動飛行巡邏的出生種子也使用同一偏移，且仍須通過原巡邏盒範圍、占用、可達、前方、距離及遮擋檢查。此補償由 bodyBaseOffset 推導，不新增生成 owner、不改 MapChunk 出生盒。零偏移飛行資產、Ground／Stationary 維持原位置規則。
+
+MapChunk_Prototype 八區以新包絡直接使用舊 Root 高度時均為 0 可達點；補償後均恢復 16 點。詳見[校準設定與驗證](Validation/JellyfishCollision/README.md)。

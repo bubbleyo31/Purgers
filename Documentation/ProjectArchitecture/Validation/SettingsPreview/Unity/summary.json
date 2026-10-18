@@ -1,0 +1,15 @@
+{
+  "Scope": "Isolated Unity settings preview; production not integrated",
+  "FocusedTotal": 10,
+  "FocusedPassed": 10,
+  "RegressionTotal": "1050",
+  "RegressionPassed": "1045",
+  "RegressionFailed": "4",
+  "RegressionSkipped": "1",
+  "ProductionBaselineFiles": 1446,
+  "ProductionBaselineChanged": 0,
+  "Scene": "Assets/SettingsPreview/SettingsPreview.unity",
+  "BuildSettingsChanged": false,
+  "PlayMode": "Controlled native UI events; no physical foreground input",
+  "RestoredScene": "Assets/Scenes/_Menu.unity"
+}

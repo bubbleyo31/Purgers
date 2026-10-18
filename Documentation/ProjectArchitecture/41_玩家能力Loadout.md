@@ -1,3 +1,5 @@
+> **2026-10-18 隊伍窗唯讀介面（局部）**：IPlayerAbilityCooldownSource 提供本次權威冷卻分母；ActiveBase／SupportAerial／TankAirDash 在原開始點同步，尖刺沿原 Tick snapshot。Runtime.TryReadPresentation 同時處理 transfer 冷卻與可用性，不讀 Bonus Cast 為持有。詳見 [106](106_TAB隊伍資訊窗.md)。
+
 # 玩家能力 Loadout 架構
 
 > **2026-10-04 E 主動技能原型已接入**：十項跨職業 E 沿用 GrappleFocus 分類及同槽互斥，現有獎勵池保留四項並追加十項。新增條件與共用 Definition 強化接口；強化仍不啟用、不清空動能，原空中緩速／衝刺維持原樣。設定、暫定規則與驗收見 [42 E 主動技能規格與驗收](42_E主動技能規格與強化預留.md)；驗證見 [紀錄](Validation/ActiveAbilities/README.md)。
@@ -52,7 +54,7 @@ Fusion `NetworkDictionary` 的容量固定為八格，這只是編譯期技術�
 | 分類 | 觸發管線 | 初始能力 |
 |---|---|---|
 | `GrappleFocus` | 進入 GrappleAirborne 後讀取 InputButton.Ability1（預設 E） | `SupportAerialAbility`、`TankAirDashAbility` |
-| `GrappleHit` | 鈎索正式 Attached 到 Gameplay Target 後 | `AttackGrappleMarkAbility`、`TankGrappleGatherAbility`、`SupportGrapplePullAbility` |
+| `GrappleHit` | 鉤頭 Attached 事件，或模組定義的鈎索期間接觸偵測 | Mark／Gather／Pull；另有 `PlayerGrappleSpikeAbility`（見 33） |
 
 分類由能力程式的 `IPlayerAbilityCategorized.AbilityCategory` 宣告，Definition 也保存分類。兩者必須一致，避免只靠 Inspector 把命中能力錯配到專注槽。
 
@@ -174,7 +176,7 @@ Tools → Player Ability → 建立初始能力 Runtime 與 Loadout
 3. 建立只有一個能力模組的 Network Runtime Prefab。
 4. 建立穩定且唯一的 Ability ID。
 5. 設定職業限制、重複規則、互斥與 Execution Priority。
-6. 若是 GrappleHit，補 Router 事件／Mask 與 Target Capability。
+6. GrappleHit 若需要鉤頭目標事件，補 Router 事件／Mask 與 Target Capability；玩家周圍接觸型能力沿用 SimulateAbility，不新增無用 Router 分支。
 7. 若會修改移動、傷害或 Action，接入既有 Modifier／Gate，不另建平行仲裁。
 8. 以單機 State Authority、Host／Client、切職業、換 Loadout、能力中途取消與冷卻延續逐項驗證。
 
@@ -262,3 +264,49 @@ Runtime 新增 Networked RemainingMovementRecoil、MovementRecoilSeconds、LastM
 子彈時間作用中再次按下沿原 FinishAbility 提前結算，完整結束規則見 [42](42_E主動技能規格與強化預留.md)。資產不改：SupportAerialAbilityRuntime Prefab 最長 1 秒、CD 5 秒、速度倍率 0.5；BulletTime Prefab 作用 5 秒、CD 3 秒、前搖 0 秒（2026-10-11 磁碟快照；Scene Override 另計）。
 
 驗證與限制：[本輪紀錄](Validation/AbilityToggle/README.md)。
+
+## 2026-10-12 定點捕食原型（局部核對）
+
+PlayerAbilityRuntime 的共用可用性加入 Owner 受困判斷，透過既有 SetProfessionAvailable(false) 結束已啟動／待施放能力，保留裝備及冷卻；清除未施加的移動後座力，釋放後恢復資格。已存在的世界投射物不抹除。
+
+完整規則、原型設定、動畫接口與驗證邊界見 [93 定點捕食植物](93_定點捕食植物.md) 及 [驗證紀錄](Validation/FlytrapEnemy/README.md)。
+
+## 2026-10-13 鈎索側移與 E 閃現互斥（局部核對）
+
+最後核對日期：2026-10-13。核對來源：PlayerGrapple.SideDash、PlayerBlinkAbility。
+
+AA／DD 側移是既有鈎索的移動操作，不新增 E 能力、不佔用 Loadout 槽。側移與 E 閃現的實際衝刺互斥；先待命的閃現仍需合法第二次 E 才發動。同 Tick 先受理側移，拒絕閃現衝刺不消耗其待命。完整規則、獨立設定及驗證見 [32 鈎索飛行雙擊側移](32_鈎索飛行雙擊側移.md) 與 [驗證紀錄](Validation/GrappleSideDash/README.md)。
+## 2026-10-13 安全屋操作與玩家 HUD（局部核對）
+
+最後核對日期：2026-10-13。核對來源：PlayerAbilityRuntimeManager、PlayerActiveAbilityBase、LocalPlayerBattleAbilityHUD。
+
+PlayerAbilityRuntimeManager 在安全屋遮罩新舊能力的 Ability1；PlayerActiveAbilityBase 以 ActionGate.ActiveAbility 限制 IsUsable 與直接施放。Loadout／Reward 裝備入口不封鎖，拒絕按 E 不新增冷卻。LocalPlayerBattleAbilityHUD 保留裝備槽並讀 Gate 呈現禁用。
+
+完整規則、責任、場景配置與驗收入口見 [145 安全屋](145_PrePhase4-2_安全屋鍵盤準備與HUD.md)；實際證據與限制見 [驗證紀錄](Validation/SafeHouseGameplay/README.md)。2026-10-13 後續依授權完成 SafeHouse Scene 技能／經驗 HUD 接線；Prefab 未改。
+
+## 2026-10-14 鈎索尖刺（局部核對）
+
+最後核對日期：2026-10-14。核對來源：PlayerGrappleSpikeAbility、GrappleSpikeRules、GrappleSpikeAssetSetup。
+新增 GrappleHit 槽位的持續接觸型技能 grapple.spike。此類別是裝備分類：原 Mark／Pull／Gather 仍由 Router 的 Attached 事件觸發；尖刺透過既有 SimulateAbility 讀取有效鈎索狀態並掃掠玩家周圍，不新增 Router Mask。尖刺不加入 GrappleHitRopeAuthority，仍遵守容量與禁止重複裝備。後續新增能力檢查表第 6 點的 Router／Capability 擴充，只適用於需要鉤頭目標事件的能力。
+設定與定案見 [33 鈎索尖刺](33_鈎索尖刺技能.md)；實際驗證與限制見 [紀錄](Validation/GrappleSpike/README.md)。
+
+
+
+## 2026-10-16 倒地與隊友救援（局部核對）
+
+最後核對日期：2026-10-16。核對來源：PlayerHealth.Rescue、GameLogic.Rescue／RescueBounds、PlayerActionGate.Rescue、Player、PlayerSlideController、PlayerAbilityRuntime、EnemyPerceptionController.Rescue、StageFlowController、LocalPlayerRescueHUD。
+PlayerAbilityRuntime 的可用性新增有效已生成 Owner 的健康條件，倒地暫停模組並沿用 SetProfessionAvailable 收尾；不重建 Loadout 或冷卻。Player 分派技能前消耗救援 E，同一次按住必須放開才恢復技能用途。
+完整規則、Inspector 與人工接線見 [62](62_倒地與隊友救援.md)；實際驗證見 [紀錄](Validation/PlayerRescue/README.md)。
+
+
+## 2026-10-16 成長獎勵與技能掉落局部核對
+
+起始 Loadout 只沿用槽位配置，正式新輪不套預設特殊技能；存檔裝備仍由 GameLogic 復原。同類領取只替換該 Runtime，舊物件帶等級與冷卻掉地，另一槽保留；額外專注獨立於槽位。 詳見 [168 角色成長、被動與掉落](168_角色成長被動與技能掉落.md)。
+
+實作／資產與測試證據分開列於 168，未宣稱獨立多程序聯機或 Build 驗收。
+
+## 2026-10-18 右下技能槽狀態呈現（局部核對）
+
+最後核對日期：2026-10-18。核對來源：LocalPlayerBattleAbilityHUD.States、AbilitySlotHudSnapshot 與原技能 Runtime。
+
+右下技能格沿用既有 PlayerAbilityRuntime.TryReadPresentation／IPlayerAbilityCooldownSource 的剩餘與總長。新增技能唯讀 HudCanPress／HudCanRecast／HudCanEndActive 提示，正式受理仍在原技能與 ActionGate。未變更 Loadout、冷卻起點、掉落／拾取、再按結算或權威結果。 完整定案、Inspector 與驗證邊界見 [107 右下技能槽狀態呈現](107_右下技能槽狀態呈現.md)。

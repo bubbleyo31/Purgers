@@ -22,6 +22,16 @@ public sealed class EnemyRangedBeamAttack :
     [Tooltip("Hitscan 會命中的 Layer。必須包含 Player 與場景實體，不可包含 Enemy Layer。")]
     private LayerMask beamHitMask;
 
+    [Header("前搖分段比例")]
+    [SerializeField, Tooltip("使用 Tracking Seconds + Locked Delay Seconds 的總時間，依下方比例切成追蹤細線／鎖定中線。關閉保留原獨立秒數。")]
+    private bool useWindupStageRatio;
+    [SerializeField, Range(0f, 1f), Tooltip("追蹤細線占總前搖比例；其餘為真正鎖定期。改比例會改變敵人的可閃避窗口，但不改總前搖。")]
+    private float trackingStageRatio = .5f;
+    public float TrackingDuration => useWindupStageRatio
+        ? Mathf.Max(0f, trackingSeconds + lockedDelaySeconds) * Mathf.Clamp01(trackingStageRatio) : trackingSeconds;
+    public float LockedDuration => useWindupStageRatio
+        ? Mathf.Max(0f, trackingSeconds + lockedDelaySeconds) * (1f - Mathf.Clamp01(trackingStageRatio)) : lockedDelaySeconds;
+
     [Header("遠程 B 時間")]
 
     [SerializeField]
@@ -183,6 +193,12 @@ public sealed class EnemyRangedBeamAttack :
         private set;
     }
 
+    [Networked] public Vector3 ShotStartPoint { get; private set; }
+    [Networked] public Vector3 ShotEndPoint { get; private set; }
+    [Networked] public float ShotVisualDuration { get; private set; }
+    public float ShotVisualRemaining => Object != null && Object.IsValid
+        ? BeamPresentationRules.Remaining(ShotVisualTimer, Object, Runner) : 0f;
+
     public bool IsShotVisualActive =>
         Object != null &&
         Object.IsValid &&
@@ -210,6 +226,8 @@ public sealed class EnemyRangedBeamAttack :
             BeamEndPoint = BeamStartPoint;
             BeamVisualEndPoint = BeamStartPoint;
             BeamShotSequence = 0;
+            ShotStartPoint = ShotEndPoint = BeamStartPoint;
+            ShotVisualDuration = 0f;
             LastShotHitPlayer = false;
         }
     }
@@ -253,7 +271,7 @@ public sealed class EnemyRangedBeamAttack :
         ScheduleNextTrackingTargetRefresh();
         PhaseTimer = TickTimer.CreateFromSeconds(
             Runner,
-            trackingSeconds
+            TrackingDuration
         );
 
         context.Controller.TrySetActionPhase(
@@ -302,10 +320,10 @@ public sealed class EnemyRangedBeamAttack :
                     // 不在切換瞬間偷抓一次新位置造成線段突然跳動。
                     TrackingTargetRefreshTimer = TickTimer.None;
                     PhaseTimer =
-                        lockedDelaySeconds > 0f
+                        LockedDuration > 0f
                             ? TickTimer.CreateFromSeconds(
                                 Runner,
-                                lockedDelaySeconds
+                                LockedDuration
                             )
                             : TickTimer.None;
 
@@ -464,6 +482,8 @@ public sealed class EnemyRangedBeamAttack :
             lockedDistance
         );
 
+        ShotStartPoint = BeamStartPoint;
+        ShotEndPoint = BeamVisualEndPoint;
         BeamShotSequence++;
         LastShotHitPlayer = false;
 
@@ -509,14 +529,8 @@ public sealed class EnemyRangedBeamAttack :
                 direction * castDistance;
         }
 
-        ShotVisualTimer =
-            TickTimer.CreateFromSeconds(
-                Runner,
-                Mathf.Max(
-                    Runner.DeltaTime,
-                    shotBeamVisibleSeconds
-                )
-            );
+        ShotVisualDuration = Mathf.Max(Runner.DeltaTime, shotBeamVisibleSeconds);
+        ShotVisualTimer = TickTimer.CreateFromSeconds(Runner, ShotVisualDuration);
 
         if (debugBeamAttack)
         {

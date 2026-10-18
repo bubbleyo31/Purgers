@@ -200,10 +200,17 @@ public class TankProfessionRuntimeDriver :
             return;
         }
 
-        if ((OwnerPlayer.Health != null && !OwnerPlayer.Health.IsAlive) ||
-            Purgers.GameFlow.Control.PlayerControlLocks.BlocksGameplay(input.BlockedControls))
+        if (OwnerPlayer.Health != null && !OwnerPlayer.Health.IsAlive)
         {
             meleeCombo?.ResetForInterruption();
+            guardAbility?.ForceEndGuardForQuickAction();
+            return;
+        }
+        if (Purgers.GameFlow.Control.PlayerControlLocks.BlocksGameplay(input.BlockedControls))
+        {
+            meleeCombo?.ResetForInterruption();
+            // 輸入封鎖禁止舉防，但不暫停原耐力恢復／破防計時。
+            guardAbility?.Simulate(input, false);
             return;
         }
         RefreshLoadoutAbilityReferences();
@@ -286,19 +293,13 @@ public class TankProfessionRuntimeDriver :
         * GrappleAirborne
         * → Air Special。
         */
-        if (guardAbility != null &&
-            !(input.Buttons.IsSet(InputButton.Fire) && !guardAbility.IsGuarding) &&
-            (quickDashAbility == null ||
-            quickDashAbility.IsCombatActionLocked == false) &&
-            (airDashAbility == null ||
-            airDashAbility.IsDashing == false) &&
-            (grappleGatherAbility == null ||
-            grappleGatherAbility
-                .IsPlayerGatherDashing == false))
+        if (guardAbility != null)
         {
-            guardAbility.Simulate(
-                input
-            );
+            bool allowGuard = !(input.Buttons.IsSet(InputButton.Fire) && !guardAbility.IsGuarding) &&
+                (quickDashAbility == null || !quickDashAbility.IsCombatActionLocked) &&
+                (airDashAbility == null || !airDashAbility.IsDashing) &&
+                (grappleGatherAbility == null || !grappleGatherAbility.IsPlayerGatherDashing);
+            guardAbility.Simulate(input, allowGuard);
         }
 
         // =============================================================

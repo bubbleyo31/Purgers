@@ -110,3 +110,12 @@ Host 發布 Chunk Catalog 索引、內容版本、世界位置／旋轉、開口
 - Console 無 Error／Warning；ClientPlayer log 無 Exception／Error／FAIL。測試 Client 已關閉、Editor 返回 _Menu；沒有修改正式存檔或場景／Prefab 接線。
 
 證據：[一般畫面](Validation/Phase4-4/Cached-Compact.png)、[展開畫面](Validation/Phase4-4/Cached-Expanded.png)、[原版64耗時](Validation/Phase4-4/Baseline-64-ms.txt)、[原版256耗時](Validation/Phase4-4/Baseline-256-ms.txt)、[快取耗時](Validation/Phase4-4/Cached-ms.txt)、[索引後耗時](Validation/Phase4-4/Indexed-ms.txt)、[幀取樣](Validation/Phase4-4/FrameSample.txt)、[共享快取](Validation/Phase4-4/CachedSharing.txt)、[動態標記](Validation/Phase4-4/CachedMarkers.txt)、[Host](Validation/Phase4-4/Cached-Host.log)、[Client](Validation/Phase4-4/Cached-Client.log)。
+
+
+## 2026-10-13 隊友顯示接點（局部核對）
+
+新增隊友顯示只讀既有權威生命／護盾；共用 LocalHealthSegmentView 的整格呈現，生命低於或等於可調門檻時變紅，淡金護盾接在同一列。死亡位置由原 GameLogic 在移除角色前保存。小地圖新增同 Runner 隊友／死亡標記，不套用敵人的探索限制；顏色與頭頂名條、箭頭、輪廓一致。本機 HUD 人工值及傷害／重生規則未變。詳見 [101](101_隊友辨識與穿牆顯示.md) 與 [驗證紀錄](Validation/Teammates/README.md)。
+
+## 2026-10-16 地上技能金色標記
+
+LocalMinimapController 的既有標記池新增同 Runner 的技能掉落：從有效 PlayerAbilityRuntime.IsWorldLoot／LootPosition 讀取，金色實心方塊預設 9 像素。沿用 CanShow 的距離／高度／探索／地形視線條件，不擴大迷霧揭露；候選 10 Hz，位置逐幀跟隨，拾取與 Despawn 立即隱藏。重用標記時還原原有撤離／敵人大小及顏色；SafeHouse 不顯示 Game 掉落。設定位於原元件「掉落技能標記」，VisibleLootCount 供診斷，既有敵人／撤離計數含義保留。完整規則見 [168](168_角色成長被動與技能掉落.md)，證據見 [紀錄](Validation/LootPresentation/README.md)。

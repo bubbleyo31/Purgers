@@ -26,6 +26,9 @@ public sealed class AbilityIconFrameFit : BaseMeshEffect
     [Tooltip("等比填滿後的額外倍率；1～2，1 為剛好覆蓋框架，增大會裁掉更多邊緣。透明留白也屬原圖的一部分；此值不修改圖片資產。")]
     [SerializeField, Range(1f, 2f)] private float zoom = 1f;
 
+    public void ConfigureFrame(RectTransform target, FrameShape frameShape, float padding = 2f)
+    { frame = target; shape = frameShape; inset = Mathf.Max(0, padding); if (graphic != null) graphic.SetVerticesDirty(); }
+
     private static readonly Vector2[] Rectangle = {
         new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 1), new Vector2(1, 0)
     };
@@ -33,6 +36,40 @@ public sealed class AbilityIconFrameFit : BaseMeshEffect
         new Vector2(.5f, 0), new Vector2(0, .25f), new Vector2(0, .75f),
         new Vector2(.5f, 1), new Vector2(1, .75f), new Vector2(1, .25f)
     };
+
+    private bool fitWholeSprite;
+    /// <summary>成長圖示保留角落語意符號；其他技能預設維持既有 Cover。</summary>
+    public bool FitWholeSprite
+    {
+        get => fitWholeSprite;
+        set
+        {
+            if (fitWholeSprite == value) return;
+            fitWholeSprite = value;
+            if (graphic != null) graphic.SetVerticesDirty();
+        }
+    }
+
+    private float wholeSpriteScaleMultiplier = 1f;
+    /// <summary>完整圖示模式的作者校準倍率；只等比放大完整 UV，階級座標沿同一映射。</summary>
+    public float WholeSpriteScaleMultiplier
+    {
+        get => wholeSpriteScaleMultiplier;
+        set
+        {
+            float clamped = Mathf.Clamp(value, 1f, 2f);
+            if (wholeSpriteScaleMultiplier == clamped) return;
+            wholeSpriteScaleMultiplier = clamped;
+            if (graphic != null) graphic.SetVerticesDirty();
+        }
+    }
+    private float WholeSpriteScale(Vector2 size, Vector2 source)
+    {
+        float scale = Mathf.Min(size.x / source.x, size.y / source.y);
+        if (shape == FrameShape.Hexagon)
+            scale = Mathf.Min(scale, 1f / (source.y / size.y + .5f * source.x / size.x));
+        return scale * wholeSpriteScaleMultiplier;
+    }
 
     private Rect lastRect;
     private Matrix4x4 lastRelativeMatrix;
@@ -69,6 +106,18 @@ public sealed class AbilityIconFrameFit : BaseMeshEffect
         if (size.x <= 0f || size.y <= 0f || sprite.rect.width <= 0f || sprite.rect.height <= 0f)
             return;
 
+        if (fitWholeSprite)
+        {
+            Vector2 fitted = sprite.rect.size * WholeSpriteScale(size, sprite.rect.size);
+            Vector4 uv = DataUtility.GetOuterUV(sprite);
+            Matrix4x4 matrix = image.rectTransform.worldToLocalMatrix * target.localToWorldMatrix;
+            for (int i = 0; i < Rectangle.Length; i++)
+                AddVertex(vertices, Rectangle[i], bounds.center, fitted, Vector2.one, uv, matrix, image.color);
+            vertices.AddTriangle(0, 1, 2);
+            vertices.AddTriangle(2, 3, 0);
+            return;
+        }
+
         // Cover：兩軸共用較大的縮放倍率；UV 向中心收縮，維持原圖比例並裁除溢出部分。
         float scale = Mathf.Max(size.x / sprite.rect.width, size.y / sprite.rect.height)
             * Mathf.Clamp(zoom, 1f, 2f);
@@ -82,6 +131,20 @@ public sealed class AbilityIconFrameFit : BaseMeshEffect
             AddVertex(vertices, outline[i], bounds.center, size, visibleFraction, outerUv, relative, image.color);
         for (int i = 0; i < outline.Length; i++)
             vertices.AddTriangle(0, i + 1, (i + 1) % outline.Length + 1);
+    }
+
+
+    /// <summary>將原圖 0～1 座標轉成 Image 本地座標，供中央階級文字沿用同一個 Cover 映射。</summary>
+    public Vector3 SpritePointToLocal(Vector2 point)
+    {
+        Image image = GetComponent<Image>();
+        Sprite sprite = image.overrideSprite != null ? image.overrideSprite : image.sprite;
+        RectTransform target = frame != null ? frame : image.rectTransform;
+        Vector2 size = target.rect.size - Vector2.one * (Mathf.Max(0f, inset) * 2f);
+        if (sprite == null || size.x <= 0 || size.y <= 0) return Vector3.zero;
+        float scale = fitWholeSprite ? WholeSpriteScale(size, sprite.rect.size) : Mathf.Max(size.x / sprite.rect.width, size.y / sprite.rect.height) * Mathf.Clamp(zoom, 1f, 2f);
+        Vector2 position = target.rect.center + Vector2.Scale(point - Vector2.one * .5f, sprite.rect.size * scale);
+        return image.rectTransform.worldToLocalMatrix.MultiplyPoint3x4(target.TransformPoint(position));
     }
 
     private static void AddVertex(VertexHelper vertices, Vector2 point, Vector2 center,

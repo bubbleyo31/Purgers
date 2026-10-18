@@ -1,0 +1,65 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"6abd4f85ac35464f8c7b1bdf0efa4901\",\"status\":\"failed\",\"mode\":\"EditMode\",\"started_unix_ms\":1792221553796,\"finished_unix_ms\":1792221563591,\"last_update_unix_ms\":1792221563591,\"progress\":{\"completed\":6,\"total\":1026,\"current_test_full_name\":null,\"current_test_started_unix_ms\":1792221562915,\"last_finished_test_full_name\":\"PlayerExperienceTableTests.RewardCapacityAndNonPositiveGrantsArePreserved\",\"last_finished_unix_ms\":1792221562916,\"stuck_suspected\":false,\"editor_is_focused\":false,\"blocked_reason\":null,\"failures_so_far\":[{\"full_name\":\"PlayerExperienceTableTests.EachLevelUsesItsRowAndLastRowRepeats\",\"message\":\"  Expected: 15\\r\\n  But was:  10\\r\\n\"},{\"full_name\":\"PlayerExperienceTableTests.FlatTailHandlesHugeGrantWithoutLoopingPerLevel\",\"message\":\"  Expected: 2147483647\\r\\n  But was:  29\\r\\n\"},{\"full_name\":\"PlayerExperienceTableTests.InvalidRowsClampToOneAndMissingTableKeepsLegacyCurve\",\"message\":\"  Expected: 1\\r\\n  But was:  5\\r\\n\"},{\"full_name\":\"PlayerExperienceTableTests.LowerLaterRowsAreAllowed\",\"message\":\"  Expected: 4\\r\\n  But was:  3\\r\\n\"},{\"full_name\":\"PlayerExperienceTableTests.MultipleLevelsPreserveOverflowAndExistingRewards\",\"message\":\"  Expected: 3\\r\\n  But was:  8\\r\\n\"},{\"full_name\":\"PlayerExperienceTableTests.RewardCapacityAndNonPositiveGrantsArePreserved\",\"message\":\"  Expected: 2147483624\\r\\n  But was:  2147483634\\r\\n\"}],\"failures_capped\":false},\"error\":null,\"result\":null},\"hint\":null}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "success": true,
+      "message": "Test job status retrieved.",
+      "error": null,
+      "data": {
+        "job_id": "6abd4f85ac35464f8c7b1bdf0efa4901",
+        "status": "failed",
+        "mode": "EditMode",
+        "started_unix_ms": 1792221553796,
+        "finished_unix_ms": 1792221563591,
+        "last_update_unix_ms": 1792221563591,
+        "progress": {
+          "completed": 6,
+          "total": 1026,
+          "current_test_full_name": null,
+          "current_test_started_unix_ms": 1792221562915,
+          "last_finished_test_full_name": "PlayerExperienceTableTests.RewardCapacityAndNonPositiveGrantsArePreserved",
+          "last_finished_unix_ms": 1792221562916,
+          "stuck_suspected": false,
+          "editor_is_focused": false,
+          "blocked_reason": null,
+          "failures_so_far": [
+            {
+              "full_name": "PlayerExperienceTableTests.EachLevelUsesItsRowAndLastRowRepeats",
+              "message": "  Expected: 15\r\n  But was:  10\r\n"
+            },
+            {
+              "full_name": "PlayerExperienceTableTests.FlatTailHandlesHugeGrantWithoutLoopingPerLevel",
+              "message": "  Expected: 2147483647\r\n  But was:  29\r\n"
+            },
+            {
+              "full_name": "PlayerExperienceTableTests.InvalidRowsClampToOneAndMissingTableKeepsLegacyCurve",
+              "message": "  Expected: 1\r\n  But was:  5\r\n"
+            },
+            {
+              "full_name": "PlayerExperienceTableTests.LowerLaterRowsAreAllowed",
+              "message": "  Expected: 4\r\n  But was:  3\r\n"
+            },
+            {
+              "full_name": "PlayerExperienceTableTests.MultipleLevelsPreserveOverflowAndExistingRewards",
+              "message": "  Expected: 3\r\n  But was:  8\r\n"
+            },
+            {
+              "full_name": "PlayerExperienceTableTests.RewardCapacityAndNonPositiveGrantsArePreserved",
+              "message": "  Expected: 2147483624\r\n  But was:  2147483634\r\n"
+            }
+          ],
+          "failures_capped": false
+        },
+        "error": null,
+        "result": null
+      },
+      "hint": null
+    }
+  },
+  "isError": false
+}

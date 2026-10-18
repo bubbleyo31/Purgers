@@ -1,0 +1,19 @@
+PASS Runner starts: Ok
+PASS Runner first tick
+PASS initial full enemy stays hidden
+PASS authoritative damage opens percentage bar
+PASS host hides damaged enemy after ten seconds
+PASS Runner starts: Ok
+PASS Runner first tick
+PASS late join opens local window for damaged snapshot
+PASS late join does not refresh host deadline
+PASS client has no health authority
+PASS client cannot change health or wake host bar
+PASS unchanged injured snapshots expire on all peers
+PASS HUD reenable cannot restart expired deadline
+PASS new damage reopens bars on all peers
+PASS second damage extends window beyond first hit deadline
+PASS healing to full stays visible as a fresh change
+PASS healed full health hides after ten unchanged seconds
+PASS hidden full enemy reopens after new damage
+PASS death hides immediately before timeout

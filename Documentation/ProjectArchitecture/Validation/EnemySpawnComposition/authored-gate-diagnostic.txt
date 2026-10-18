@@ -1,0 +1,24 @@
+navigation=True
+progress=0.1 Enemy_Ranged_A legal=88/100
+progress=0.1 Enemy_Ranged_B legal=88/100
+progress=0.1 Enemy_Suicide legal=100/100
+progress=0.1 Enemy_Ranged_Reflector legal=100/100
+progress=0.1 Enemy_Flytrap legal=0/100
+progress=10 Enemy_Ranged_A legal=53/100
+progress=10 Enemy_Ranged_B legal=53/100
+progress=10 Enemy_Suicide legal=94/100
+progress=10 Enemy_Ranged_Reflector legal=94/100
+progress=10 Enemy_Flytrap legal=0/100
+progress=20 Enemy_Ranged_A legal=1/100
+progress=20 Enemy_Ranged_B legal=1/100
+progress=20 Enemy_Suicide legal=43/100
+progress=20 Enemy_Ranged_Reflector legal=43/100
+progress=20 Enemy_Flytrap legal=0/100
+progress=30 Enemy_Ranged_A legal=0/100
+progress=30 Enemy_Ranged_B legal=0/100
+progress=30 Enemy_Suicide legal=0/100
+progress=30 Enemy_Ranged_Reflector legal=0/100
+progress=30 Enemy_Flytrap legal=0/100
+SPAWNED Enemy_Suicide(Clone) Ground
+SPAWNED Enemy_Suicide(Clone) Ground
+SPAWNED Enemy_Ranged_A(Clone) FreeFlying

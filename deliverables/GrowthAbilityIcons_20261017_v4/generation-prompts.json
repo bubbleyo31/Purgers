@@ -1,0 +1,137 @@
+{
+  "version": "v4",
+  "mode": "built-in image_gen",
+  "scope": "4 revised;12 unchanged;art review only",
+  "grappleRule": "FOUR claws for grapple body; special Pull large hook unchanged",
+  "icons": [
+    {
+      "id": "S01_NotToday",
+      "name": "不是今天",
+      "file": "S01_NotToday.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v3/S01_NotToday.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "S02_SelfRevive",
+      "name": "我自己來",
+      "file": "S02_SelfRevive.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v3/S02_SelfRevive.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "S03_Adrenaline",
+      "name": "腎上腺素",
+      "file": "S03_Adrenaline.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v3/S03_Adrenaline.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "S04_CarnivorousTree",
+      "name": "食人樹",
+      "file": "S04_CarnivorousTree.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v3/S04_CarnivorousTree.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "S05_HardChoice",
+      "name": "真難抉擇",
+      "file": "S05_HardChoice.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v3/S05_HardChoice.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "S06_GunMaster",
+      "file": "S06_GunMaster.png",
+      "name": "槍械高手",
+      "refs": [
+        "M:/UnityProject/Purgers/deliverables/Art/RifleVine_Draft03/Previews/01_Rifle_Side.png",
+        "M:/UnityProject/Purgers/deliverables/Art/SMGBloom_Draft01/Previews/01_SMG_Side.png"
+      ],
+      "prompt": "One square WHITE monochrome flat game HUD icon on transparent background. Extremely simple solid silhouette, broad transparent negative spaces, no shading, no texture, no speckles, no thin internal lines. Large deliberate shapes readable at 48px. Create emblem of EXACTLY TWO DIFFERENT EXISTING GAME GUNS from the two supplied side-view references, crossed in an X. Image1 RifleVine bullpup RIFLE with large rear stock, magazine BEHIND pistol grip, small tubular optic and thick short muzzle: runs lower-left stock to upper-right muzzle. Image2 SMGBloom compact SMG with short rear stock, long magazine protruding from pistol grip, small open reflex sight: runs lower-right stock to upper-left muzzle. Preserve each reference's distinctive profile and proportions. These are NOT handguns or revolvers. Cross bodies cleanly with clear foreground/background occlusion and generous open spaces. Simplify vines to ONE broad curved cutout per gun; omit tiny flowers, wood grain and hardware. Keep 3 small cartridge silhouettes beneath X as in established perk layout, separated from grips. No hands, words or numbers. White silhouettes only.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-60202f78-3dbd-42df-bde4-57840131d5eb.png",
+      "status": "revised"
+    },
+    {
+      "id": "A01_MaxHealth_I",
+      "name": "最大生命 I",
+      "file": "A01_MaxHealth_I.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v3/A01_MaxHealth_I.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "A02_ReloadSpeed_I",
+      "name": "換彈速度 I",
+      "file": "A02_ReloadSpeed_I.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v3/A02_ReloadSpeed_I.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "A03_MeleeSpeed_I",
+      "name": "近戰攻速 I",
+      "file": "A03_MeleeSpeed_I.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v3/A03_MeleeSpeed_I.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "A04_MagazineCapacity_I",
+      "name": "彈匣容量 I",
+      "file": "A04_MagazineCapacity_I.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v3/A04_MagazineCapacity_I.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "A05_GrappleEnergy_I",
+      "name": "鈎索能量減耗 I",
+      "file": "A05_GrappleEnergy_I.png",
+      "refs": [
+        "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-5ddbd0e5-e806-415a-aceb-5f08ab60d1e8.png"
+      ],
+      "prompt": "One square WHITE monochrome flat game HUD icon on transparent background. Extremely simple solid silhouette, broad transparent negative spaces, no shading, no texture, no speckles, no thin internal lines. Large deliberate shapes readable at 48px. Edit supplied simplified FOUR-CLAW grapple silhouette. Preserve its four thick single-piece angled claws and large hollow circular hub, no mechanical detail. Scale full grapple uniformly to 78% canvas, centered slightly lower-left leaving space for upper-right modifier. Add HUGE bold white upright Roman numeral I in hub center, with broad horizontal top and bottom bars. I height should fill 80% of hub EMPTY inner diameter and its width 45% of inner diameter; thick vertical stem. Numeral must dominate center and remain completely separated from ring by broad clear transparent gaps. At upper-right, add ONE bold horizontal minus sign, separated from upper-right claw. Keep four claws distinctly visible, no added claws. Crisp solid shapes, no textures, no thin lines.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-3f7c51f2-f162-4f3a-b9a7-92b05300c23d.png",
+      "status": "revised"
+    },
+    {
+      "id": "A06_FocusCooldown_I",
+      "name": "專注技能冷卻減免 I",
+      "file": "A06_FocusCooldown_I.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v3/A06_FocusCooldown_I.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "A07_GrappleCooldown_I",
+      "name": "鈎索技能冷卻減免 I",
+      "file": "A07_GrappleCooldown_I.png",
+      "refs": [
+        "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-5ddbd0e5-e806-415a-aceb-5f08ab60d1e8.png"
+      ],
+      "prompt": "One square WHITE monochrome flat game HUD icon on transparent background. Extremely simple solid silhouette, broad transparent negative spaces, no shading, no texture, no speckles, no thin internal lines. Large deliberate shapes readable at 48px. Edit supplied simplified FOUR-CLAW grapple silhouette. Preserve its four thick single-piece angled claws and large hollow circular hub, no mechanical detail. Scale full grapple uniformly to 78% canvas, centered slightly lower-left leaving space for upper-right modifier. Add HUGE bold white upright Roman numeral I in hub center, with broad horizontal top and bottom bars. I height should fill 80% of hub EMPTY inner diameter and its width 45% of inner diameter; thick vertical stem. Numeral must dominate center and remain completely separated from ring by broad clear transparent gaps. At upper-right, add TWO bold right-facing fast-forward chevrons >>, separated from upper-right claw. Keep four claws distinctly visible, no added claws. Crisp solid shapes, no textures, no thin lines.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-d94e22b3-1b22-4819-bb89-f42430c2bce3.png",
+      "status": "revised"
+    },
+    {
+      "id": "A08_OutOfCombatRegen_I",
+      "name": "脫戰每秒回血 I",
+      "file": "A08_OutOfCombatRegen_I.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v3/A08_OutOfCombatRegen_I.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "A09_RegenDelay_I",
+      "name": "脫戰回血等待縮短 I",
+      "file": "A09_RegenDelay_I.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v3/A09_RegenDelay_I.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "B01_GrappleBase",
+      "file": "B01_GrappleBase.png",
+      "name": "鈎索共用基礎圖示",
+      "refs": [
+        "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v3/B01_GrappleBase.png"
+      ],
+      "prompt": "One square WHITE monochrome flat game HUD icon on transparent background. Extremely simple solid silhouette, broad transparent negative spaces, no shading, no texture, no speckles, no thin internal lines. Large deliberate shapes readable at 48px. Redesign supplied mechanical grapple as FOUR CLAWS, not three. Use a straight FRONT VIEW of a broad simple circular hub with an enormous EMPTY transparent center. FOUR equally spaced short bent gripping claws extending diagonally upper-left, upper-right, lower-left, lower-right around hub. Each claw is ONE solid angular bent shape with one inward tip, NO hinge blocks, bolts, seams or perspective bevels. Four claws clearly separated. Hub outer diameter 55% canvas, inner open diameter 43% canvas reserved for a large Roman numeral later. Very short broad cable connector below hub between bottom claws. All silhouette within 12% margins. No number, arrow, modifier or text.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-5ddbd0e5-e806-415a-aceb-5f08ab60d1e8.png",
+      "status": "revised"
+    }
+  ]
+}

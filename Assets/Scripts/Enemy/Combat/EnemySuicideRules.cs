@@ -3,6 +3,17 @@ using UnityEngine;
 /// <summary>自爆共用純規則；遊戲傷害、Inspector 與 Gizmo 使用同一個半徑定義。</summary>
 public static class EnemySuicideRules
 {
+    /// <summary>讀權威階段剩餘時間；在尾幀鉗住，不循環，也不延長飛行期限。</summary>
+    public static float PounceNormalizedTime(AnimationFrameTiming timing, float takeoffFrame,
+        float flightSeconds, bool airborne, float phaseRemaining)
+    {
+        if (timing == null || !timing.IsValid) return 0f;
+        float seconds = airborne
+            ? timing.FrameToSeconds(takeoffFrame) + Mathf.Max(0f, flightSeconds - phaseRemaining)
+            : Mathf.Max(0f, timing.FrameToSeconds(takeoffFrame) - phaseRemaining);
+        return Mathf.Clamp01(seconds / timing.DurationSeconds);
+    }
+
     public static float Falloff(float distance, float radius, float center, float edge)
     {
         if (radius <= 0f || distance > radius || float.IsNaN(distance)) return 0f;

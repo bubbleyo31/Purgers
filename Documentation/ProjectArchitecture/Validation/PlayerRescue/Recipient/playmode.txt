@@ -1,0 +1,13 @@
+PASS formal HUD hidden with no Runner in main menu
+PASS Runner starts: Ok
+PASS Runner starts: Ok
+PASS formal Canvas stays active, healthy player has no rescue prompt
+PASS out of range has no rescue prompt
+PASS nearby E button visible with empty ring
+PASS rescue status and partial radial ring show on formal Canvas
+PASS release returns to E prompt with empty ring
+PASS 35 percent revived and formal HUD hidden
+PASS local downed shows countdown and empty ring
+PASS downed player has no E key or square background
+PASS being rescued shows status and progress without E key
+PASS death clears rescue prompt during spectator transition

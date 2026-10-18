@@ -58,3 +58,29 @@
 ## 驗收重點
 
 三段點按不衝刺；停格放開有目標先衝再砍，無目標／隔牆原地揮擊。檢查地面與空中、貼身不倒退、衝刺途中突然出現障礙、敵人移動／死亡、死亡／換裝／控制鎖、Combo 接續與兩種計時。所有武器確認紅色準心、移開／遮擋恢復與原透明度，以及無鈎索充能時仍有敵人顏色提示。Host 與 Client 分別操作；晚加入／重連不可補播先前出手。各項實際證據與限制見驗證紀錄。
+
+## 2026-10-16 捕食原地釋放與單人武器（局部核對）
+
+PreparedDashDisplaced 加入受困判斷，與既有 Movement Gate 一起禁止捕食中的預備衝刺及其速度輸出。單人仍能預備／放開後依原動畫出傷幀原地攻擊；不改近戰距離、扇形或 LOS，也不放行 F／E／右鍵。 正式規則與設定見 [93](93_定點捕食植物.md)，本輪驗證見 [FlytrapSolo](Validation/FlytrapSolo/README.md)。
+
+單人受困反擊時，Tank 的 GetMeleeForward 使用實際上下瞄準方向，解決嘴邊高於敵人時水平近戰打不到的問題；未受困仍採原水平 Yaw。距離、扇形及遮擋判定不變，不自動命中捕食者。
+
+
+## 2026-10-17 多人捕食反擊（局部核對）
+
+受困上下瞄準與原地近戰不再限定單人；CanUseWeaponWhileCaptured 在多人亦成立。PreparedDashDisplaced 的受困防線維持，沒有放行預備衝刺、F／E 或右鍵。 規則與設定見 [93](93_定點捕食植物.md)，驗證見 [FlytrapMultiplayer](Validation/FlytrapMultiplayer/README.md)。
+
+
+## 2026-10-18 本機地面距離圈與無文字目標框
+
+使用者已確認灰盒互動預覽，並要求只有操作者自己可見、空中地面圈淡出、鎖定框不含文字。原紅色準心仍只辨識敵人，不表示可衝刺；原攻擊與衝刺規則保持。
+
+`TankMeleeCombo.Preview` 在原 Runtime 的 Render 階段建立本機顯示入口；Input Authority、Runner.LocalPlayer、已註冊 PlayerObject 與目前武器需一致，死亡／觀戰／換裝／控制封鎖不顯示。普通預備階段淡圈，停格後有符合原選敵距離、角度、遮擋與停靠條件的目標才顯示一個橘色四角框。空中只移除地面圈，合法目標框仍顯示。
+
+本機 `TankPreparedDashPreviewQuery` 使用同 Runner PhysX 查詢與原存活敵人／錐形規則，保存實際命中的子 Collider；不寫網路狀態、不授權位移／傷害。與 Host Lag Compensation 的時間快照不同，仍以放開時的原權威查詢為準。
+
+一般敵人框住有效受擊 Collider 的整體範圍；大型敵人使用選中子 Collider 的 Hitbox 幾何，無 Hitbox 時回退該 Collider，不聚合整隻大型敵人。只有整體大碰撞盒的資產不能由提示程式憑空拆成部位。
+
+設定位於 TankProfessionRuntime 的 Tank Melee Combo → 本機預備距離圈與目標框；框色 #FF8024、1080p 粗細／角長／留白 5／24／12 像素、大型門檻 4 公尺、同部位平滑 0.06 秒。圈讀原 Prepared Dash Range，世界線寬 0.045 公尺、96 段、地面查詢間隔 0.08 秒、淡出 0.24 秒、地面取樣高差上下 1.5 公尺、相鄰高差上限 0.6 公尺。地面圈只是水平距離參考；缺地面與過大高差不連線，深度測試防止透牆。
+
+場景／Prefab 不需新增掛線或保存；本機呈現由 Runtime 建立並隨 Despawn 清理。單 Runner 使用 Camera.main，同 Editor 多 Runner 必須明確 SetWorldCamera，避免錯用他人的視角。實際測試及剩餘邊界見 [驗證紀錄](Validation/TankIndicator/README.md)。

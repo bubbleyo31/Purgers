@@ -200,6 +200,12 @@ public sealed class EnemyAwarenessBrain : NetworkBehaviour
         damagePending = true;
     }
 
+    /// <summary>權威射線的近失彈情報沿用受傷警戒佇列、節流與群體通知，不製造假傷害。</summary>
+    public bool QueuePlayerShotThreat(NetworkObject attacker)
+    {
+        if (!IsEligibleForSharedAlert || perception == null || !perception.IsFusionSpawned || !perception.IsValidAlivePlayer(attacker)) return false;
+        pendingAttacker=attacker.InputAuthority;damagePending=true;return true;
+    }
     public void ReceiveSharedAlert(NetworkObject target, Vector3 position, EnemyAwarenessBrain source)
     {
         if (!IsEligibleForSharedAlert || perception == null || !perception.IsFusionSpawned) return;

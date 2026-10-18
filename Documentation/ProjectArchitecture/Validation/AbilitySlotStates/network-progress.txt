@@ -1,0 +1,31 @@
+Skill slot HUD Host/Client
+BEGIN Host/Client connection
+PASS Host/Client connection
+BEGIN network tick
+PASS network tick
+BEGIN Host/Client connection
+PASS Host/Client connection
+BEGIN network tick
+PASS network tick
+BEGIN late join Blink
+PASS late join Blink
+BEGIN late join armed snapshot
+PASS late join armed snapshot
+BEGIN cooldown replicated
+PASS cooldown replicated
+BEGIN Host/Client connection
+PASS Host/Client connection
+BEGIN network tick
+PASS network tick
+BEGIN reconnect cooldown object
+PASS reconnect cooldown object
+BEGIN reconnect full cooldown duration
+PASS reconnect full cooldown duration
+BEGIN client owned Blink
+PASS client owned Blink
+BEGIN Client first press armed
+PASS Client first press armed
+BEGIN Client release
+PASS Client release
+BEGIN Client second press cooldown
+PASS Client second press cooldown

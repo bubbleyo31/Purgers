@@ -21,6 +21,17 @@ MonoBehaviour:
   - usw
   - eu
   - sa
+  - asia
+  - au
+  - cae
+  - hk
+  - in
+  - jp
+  - za
+  - kr
+  - tr
+  - uae
+  - ussc
   _availableScenes:
   - Name: SafeHouse
     ScenePath: Assets/Scenes/SafeHouse.unity

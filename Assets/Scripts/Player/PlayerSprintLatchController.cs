@@ -16,7 +16,7 @@ using UnityEngine;
 /// Sprint Active = true
 /// ↓
 /// 放開 Shift 不取消
-/// 再按一次 Shift 也不取消
+/// 再按一次 Shift 取消
 /// ↓
 /// 直到 WASD 回到停止區間才取消 Sprint。
 ///
@@ -98,7 +98,7 @@ public class PlayerSprintLatchController :
     /// <summary>
     /// 玩家是否已經按下 Shift 並進入 Sprint 鎖定。
     ///
-    /// 放開或再次按下 Shift 都不會取消；
+    /// 切換模式放開 Shift 不取消，再按一次取消；按住模式放開即取消。
     /// 只有移動輸入回到停止區間才會重置。
     /// </summary>
     [Networked]
@@ -207,33 +207,11 @@ public class PlayerSprintLatchController :
                 InputButton.Sprint
             );
 
-        /*
-         * Shift 只負責啟動。
-         *
-         * 已經 Sprint Active 時：
-         * - 放開 Shift：不處理。
-         * - 再按 Shift：不處理。
-         *
-         * 所以它不是 Hold，也不是 Toggle。
-         */
-        if (IsSprintActive == false &&
-            sprintPressed)
-        {
-            IsSprintActive =
-                true;
-
-            SprintRampProgress =
-                0f;
-
-            if (debugSprint)
-            {
-                Debug.Log(
-                    "[Sprint] 已鎖定跑步；放開 Shift 不會取消。",
-                    this
-                );
-            }
-        }
-
+        bool holdMode = (input.SettingsModes & Purgers.Settings.PlayerSettingsInputRules.SprintHold) != 0;
+        bool next = Purgers.Settings.PlayerSettingsInputRules.SprintActive(IsSprintActive,
+            sprintPressed, input.Buttons.IsSet(InputButton.Sprint), true, holdMode);
+        if (!next) { ResetSprint("Sprint cancelled"); return; }
+        if (!IsSprintActive) { IsSprintActive = true; SprintRampProgress = 0; }
         if (IsSprintActive == false)
         {
             return;

@@ -1,3 +1,4 @@
+using Purgers.Settings;
 using System.Collections.Generic;
 using System.Text;
 using Fusion;
@@ -32,6 +33,10 @@ namespace Purgers.GameFlow.SafeHouse
         [SerializeField] private Button readyButton;
         [SerializeField] private TMP_Text readyButtonLabel;
 
+        [Header("新版投票呈現（可選）")]
+        [Tooltip("獨立顯示投票／出發秒數。指定後，狀態列只顯示人數，準備按鈕文字不再重複 TAB／ESC；鍵帽由場景配置。留空沿用舊版合併文字。")]
+        [SerializeField] private TMP_Text readyTimerLabel;
+
         private readonly List<SafeHousePlayerReadyState> readyStates =
             new List<SafeHousePlayerReadyState>(12);
         private readonly StringBuilder ledText = new StringBuilder(256);
@@ -39,6 +44,9 @@ namespace Purgers.GameFlow.SafeHouse
         private int hudStageLevel;
         private int hudSceneHandle;
         private bool hasHudClaim;
+
+        /// <summary>子層玩家 HUD 共用安全屋的 Runner 與生命週期，不另搶 HUD ownership。</summary>
+        public NetworkRunner HudRunner => hasHudClaim ? hudRunner : null;
 
         private void Awake()
         {
@@ -96,48 +104,68 @@ namespace Purgers.GameFlow.SafeHouse
 
             if (!Purgers.GameFlow.Control.LocalPlayerControl.AllInputBlocked &&
                 phase != SafeHousePhase.LoadingStage &&
-                Input.GetKeyDown(KeyCode.Escape))
+                PlayerSettingsMenu.Instance == null && Input.GetKeyDown(KeyCode.Escape))
             {
                 flowController.RequestCancelLocalReadyCheck();
             }
             else if (!Purgers.GameFlow.Control.LocalPlayerControl.AllInputBlocked &&
                      phase != SafeHousePhase.LoadingStage &&
-                     Input.GetKeyDown(KeyCode.Tab))
+                     !PlayerSettingsMenu.IsOpen && !Input.GetKeyDown(KeyCode.Escape) && LocalTeamInfoPanel.ReadyPressed(flowController.Runner))
             {
                 flowController.RequestToggleLocalReady();
             }
 
             int readyCount = flowController.ReadyPlayerCount;
             int connectedCount = flowController.ConnectedPlayerCount;
+            UpdateReadyLeds();
+            RenderReadyPresentation(phase, readyCount, connectedCount,
+                flowController.IsLocalPlayerReady,
+                phase == SafeHousePhase.Countdown
+                    ? flowController.RemainingCountdownSeconds
+                    : flowController.RemainingReadyCheckSeconds);
+        }
+
+        // Presentation only: the caller supplies the existing authoritative timer snapshot.
+        private void RenderReadyPresentation(SafeHousePhase phase, int readyCount,
+            int connectedCount, bool localReady, float remainingSeconds)
+        {
             int unreadyCount = Mathf.Max(0, connectedCount - readyCount);
-            bool localReady = flowController.IsLocalPlayerReady;
             bool loading = phase == SafeHousePhase.LoadingStage;
             bool countingDown = phase == SafeHousePhase.Countdown;
+            int seconds = Mathf.CeilToInt(remainingSeconds);
+            string timerTitle = countingDown ? "出發" : "投票";
 
-            UpdateReadyLeds();
+            if (readyTimerLabel)
+                SetTextIfChanged(readyTimerLabel, loading ? "載入中" :
+                    $"{timerTitle} <color=#E5C45E>{seconds}</color> 秒");
 
             if (readyStatusLabel)
             {
                 string status = loading
                     ? "正在載入關卡…"
-                    : countingDown
-                        ? $"已準備 {readyCount}　未準備 {unreadyCount}　" +
-                          $"出發 {Mathf.CeilToInt(flowController.RemainingCountdownSeconds)}"
-                        : $"已準備 {readyCount}　未準備 {unreadyCount}　" +
-                          $"投票 {Mathf.CeilToInt(flowController.RemainingReadyCheckSeconds)}";
+                    : $"已準備 {readyCount}　未準備 {unreadyCount}" +
+                      (readyTimerLabel ? string.Empty : $"　{timerTitle} {seconds}");
                 SetTextIfChanged(readyStatusLabel, status);
             }
 
             if (readyButton)
                 readyButton.interactable = !loading;
 
+            if (readyButton)
+            {
+                var keycap = readyButton.transform.Find("Keycap");
+                if (keycap) PlayerSettingsService.SetPrompt(keycap.GetComponentInChildren<TMP_Text>(true), PlayerBinding.Ready);
+            }
+
             if (readyButtonLabel)
             {
                 string prompt = loading
                     ? "載入中"
-                    : localReady
-                        ? "TAB  取消準備　ESC  取消投票"
-                        : "TAB  準備　ESC  取消投票";
+                    : readyTimerLabel
+                        ? (localReady ? "取消準備" : "準備")
+                        : localReady
+                        ? $"{PlayerSettingsService.Label(PlayerBinding.Ready)}  取消準備　ESC  取消投票"
+                        : $"{PlayerSettingsService.Label(PlayerBinding.Ready)}  準備　ESC  取消投票";
                 SetTextIfChanged(readyButtonLabel, prompt);
             }
         }
@@ -212,6 +240,14 @@ namespace Purgers.GameFlow.SafeHouse
                 readyLedLabel.text = string.Empty;
             if (readyStatusLabel)
                 readyStatusLabel.text = string.Empty;
+            if (readyTimerLabel)
+                readyTimerLabel.text = string.Empty;
+            if (readyButton)
+            {
+                var keycap = readyButton.transform.Find("Keycap");
+                if (keycap) PlayerSettingsService.SetPrompt(keycap.GetComponentInChildren<TMP_Text>(true), PlayerBinding.Ready);
+            }
+
             if (readyButtonLabel)
                 readyButtonLabel.text = string.Empty;
             if (readyButton)
@@ -251,8 +287,8 @@ namespace Purgers.GameFlow.SafeHouse
             {
                 ledText.Append(
                     readyStates[i].IsReady
-                        ? "<color=#53F28B>●</color>"
-                        : "<color=#425269>●</color>");
+                        ? (readyTimerLabel ? "<color=#83CC72>●</color>" : "<color=#53F28B>●</color>")
+                        : (readyTimerLabel ? "<color=#B2B6AE>○</color>" : "<color=#425269>●</color>"));
 
                 if (i + 1 < readyStates.Count)
                     ledText.Append("  ");

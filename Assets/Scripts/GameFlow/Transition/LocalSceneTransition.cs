@@ -7,7 +7,7 @@ namespace Purgers.GameFlow.Transition
 {
     /// <summary>Owned by the Runner; scene callbacks do not own player spawning.</summary>
     [DisallowMultipleComponent]
-    public sealed class LocalSceneTransition : MonoBehaviour
+    public sealed partial class LocalSceneTransition : MonoBehaviour
     {
         private NetworkRunner runner;
         private IDisposable loadingLock;
@@ -35,11 +35,12 @@ namespace Purgers.GameFlow.Transition
 
         public void BeginLoad()
         {
+            wipePreparing = false;
             loadingLock = loadingLock ?? LocalPlayerControl.Acquire(PlayerControlMask.AllInput, "Scene load");
             IsLocalLoadComplete = false;
             sceneLoadDone = revealing = false;
             preservingConnectUi =
-                MenuConnectionUiTransitionGate.IsConnectUiVisible;
+                !wipeAudio && MenuConnectionUiTransitionGate.IsConnectUiVisible;
 
             // Keep Fusion Menu's connection animation visible during the
             // initial Menu -> gameplay load. Other scene changes cover the
@@ -62,6 +63,8 @@ namespace Purgers.GameFlow.Transition
 
         private void Update()
         {
+            if (runner == null || !runner.IsRunning) { Cancel(); return; }
+            if (wipePreparing) { TickWipe(); return; }
             if (!IsTransitioning || runner == null)
                 return;
             if (!revealing)
@@ -79,10 +82,13 @@ namespace Purgers.GameFlow.Transition
                     Fade.SetImmediate(1f);
 
                 preservingConnectUi = false;
+                if (wipeAudio) Fade.FadeDuration = WipeTransitionClock.FadeSeconds;
                 Fade.FadeIn();
             }
+            if (wipeAudio) GameplayAudioTransitionGain.Set(this, 1f - Fade.Alpha);
             if (!Fade.IsFading)
             {
+                ResetWipe();
                 loadingLock.Dispose();
                 loadingLock = null;
             }
@@ -90,6 +96,7 @@ namespace Purgers.GameFlow.Transition
 
         public void Cancel()
         {
+            ResetWipe();
             loadingLock?.Dispose();
             loadingLock = null;
             sceneLoadDone = revealing = preservingConnectUi =

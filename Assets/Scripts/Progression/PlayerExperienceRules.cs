@@ -16,6 +16,18 @@ namespace Purgers.Progression
 
     public static class PlayerExperienceRules
     {
+        /// <summary>One row per level transition; the last row repeats indefinitely.</summary>
+        public static int RequiredExperience(int level, System.Collections.Generic.IReadOnlyList<int> requirements)
+        {
+            if (requirements == null || requirements.Count == 0)
+                return RequiredExperience(level);
+            int index = System.Math.Min(System.Math.Max(1, level) - 1, requirements.Count - 1);
+            return System.Math.Max(1, requirements[index]);
+        }
+
+        public static PlayerExperienceState Award(PlayerExperienceState current, int amount,
+            System.Collections.Generic.IReadOnlyList<int> requirements)
+            => AwardCore(current, amount, requirements, DefaultBaseRequirement, DefaultGrowthMultiplier);
         public const int DefaultBaseRequirement = 5;
         public const int DefaultGrowthMultiplier = 2;
         public const int DefaultKillerBonus = 1;
@@ -61,46 +73,44 @@ namespace Purgers.Progression
             int amount,
             int baseRequirement = DefaultBaseRequirement,
             int growthMultiplier = DefaultGrowthMultiplier)
+            => AwardCore(current, amount, null, baseRequirement, growthMultiplier);
+
+        private static PlayerExperienceState AwardCore(
+            PlayerExperienceState current, int amount,
+            System.Collections.Generic.IReadOnlyList<int> requirements,
+            int baseRequirement, int growthMultiplier)
         {
-            if (amount <= 0 || current.PendingRewards > 0)
+            if (amount <= 0)
                 return current;
 
             int level = System.Math.Max(1, current.Level);
             int pending = System.Math.Max(0, current.PendingRewards);
-            long experience = System.Math.Max(0, current.Experience);
-            experience += amount;
-
-            if (growthMultiplier <= 1)
-            {
-                int required = RequiredExperience(
-                    level, baseRequirement, growthMultiplier);
-                long gainedLevels = System.Math.Min(
-                    experience / required,
-                    System.Math.Min((long)int.MaxValue - level,
-                        (long)int.MaxValue - pending));
-                level += (int)gainedLevels;
-                pending += (int)gainedLevels;
-                experience -= gainedLevels * required;
-            }
+            long experience = (long)System.Math.Max(0, current.Experience) + amount;
+            bool hasTable = requirements != null && requirements.Count > 0;
 
             while (level < int.MaxValue && pending < int.MaxValue)
             {
-                int required = RequiredExperience(
-                    level, baseRequirement, growthMultiplier);
+                int required = hasTable
+                    ? RequiredExperience(level, requirements)
+                    : RequiredExperience(level, baseRequirement, growthMultiplier);
                 if (experience < required)
                     break;
 
-                experience -= required;
-                level++;
-                pending++;
+                // Constant tail must not iterate billions of levels for a large grant.
+                bool constantTail = hasTable ? level >= requirements.Count : growthMultiplier <= 1;
+                long gained = constantTail ? experience / required : 1;
+                gained = System.Math.Min(gained, System.Math.Min(
+                    (long)int.MaxValue - level, (long)int.MaxValue - pending));
+                level += (int)gained;
+                pending += (int)gained;
+                experience -= gained * required;
+                if (constantTail)
+                    break;
             }
 
-            return new PlayerExperienceState(
-                level,
-                (int)System.Math.Min(int.MaxValue, experience),
-                pending);
+            return new PlayerExperienceState(level,
+                (int)System.Math.Min(int.MaxValue, experience), pending);
         }
-
         public static PlayerExperienceState ClaimReward(
             PlayerExperienceState current)
         {

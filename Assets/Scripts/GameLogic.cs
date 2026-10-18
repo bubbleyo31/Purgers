@@ -9,12 +9,14 @@ public struct NetworkPlayerExperience : INetworkStruct
     public int Level;
     public int Experience;
     public int PendingRewards;
+    public int RequiredExperience;
 
-    public NetworkPlayerExperience(PlayerExperienceState state)
+    public NetworkPlayerExperience(PlayerExperienceState state, int requiredExperience)
     {
         Level = state.Level;
         Experience = state.Experience;
         PendingRewards = state.PendingRewards;
+        RequiredExperience = Math.Max(1, requiredExperience);
     }
 
     public PlayerExperienceState ToState() =>
@@ -48,7 +50,7 @@ public struct NetworkPlayerExperience : INetworkStruct
 /// 可以在玩家物件消失的三秒期間繼續保存 Respawn Timer。
 /// </summary>
 [DisallowMultipleComponent]
-public class GameLogic :
+public partial class GameLogic :
     NetworkBehaviour,
     IPlayerJoined,
     IPlayerLeft,
@@ -311,6 +313,7 @@ public class GameLogic :
         }
 
         primaryByRunner[Runner] = this;
+        teammateRosterSpawned = true;
         ResolveRewardCatalog();
         // Fusion Multi-Peer attaches scene objects under a scene root on Client.
         // MakeDontDestroyOnLoad requires a root (or its own persistence-root child).
@@ -322,6 +325,7 @@ public class GameLogic :
             return;
         }
 
+        ResolveExperienceRequirements();
         ReconcileConnectedPlayers();
 
         /*
@@ -360,6 +364,8 @@ public class GameLogic :
         if (suppressRespawnForSceneTransition)
             return;
 
+        TickGrowthStateAuthority();
+        TickTeamRescueStateAuthority();
         ProcessPendingPlayerDeaths();
         ProcessExpiredRespawnTimers();
         RestoreSelectedRewardAbilities();
@@ -394,6 +400,7 @@ public class GameLogic :
          */
         bool refillGrappleEnergy = suppressRespawnForSceneTransition;
         suppressRespawnForSceneTransition = false;
+        ResolveExperienceRequirements();
         ReconcileConnectedPlayers();
         // 只在正式關卡／安全屋轉場補滿，不能因額外載入場景或晚加入而替其他玩家補能量。
         if (refillGrappleEnergy)
@@ -413,6 +420,7 @@ public class GameLogic :
         if (Object == null || !Object.HasStateAuthority)
             return;
 
+        PlayerAbilityRuntime.ClearWorldLoot(Runner);
         suppressRespawnForSceneTransition = true;
         pendingDeathPlayers.Clear();
         pendingDeathBuffer.Clear();
@@ -434,6 +442,7 @@ public class GameLogic :
             primaryByRunner.Remove(runner);
         }
 
+        teammateRosterSpawned = false;
         UnsubscribeAllPlayerDeaths();
 
         pendingDeathPlayers.Clear();
@@ -459,6 +468,7 @@ public class GameLogic :
         }
 
         EnsurePlayerExperience(player);
+        EnsureTeammateIdentity(player);
 
         if (TryAdoptExistingPlayer(player))
             return;
@@ -499,7 +509,9 @@ public class GameLogic :
             player
         );
 
+        TeammateIdentities.Remove(player);
         PlayerExperiences.Remove(player);
+        PlayerGrowthStates.Remove(player);
         PlayerRewardDrafts.Remove(player);
         acquiredRewardIdsByPlayer.Remove(player);
         restoredRewardLoadoutByPlayer.Remove(player);
@@ -565,6 +577,11 @@ public class GameLogic :
             ? (Transform[])sceneGameLogic.playerSpawnPoints.Clone()
             : Array.Empty<Transform>();
         fallbackSpawnPosition = sceneGameLogic.fallbackSpawnPosition;
+        mapBottomReference = sceneGameLogic.mapBottomReference;
+        fallDeathDistanceBelowMap = sceneGameLogic.fallDeathDistanceBelowMap;
+        rescueMap = null;
+        rescueMapRevision = -1;
+        nextRescueMapSearch = 0;
         initialSpawnPrototype = sceneGameLogic.initialSpawnPrototype;
         if (sceneGameLogic.rewardCatalog != null)
             rewardCatalog = sceneGameLogic.rewardCatalog;
@@ -582,6 +599,7 @@ public class GameLogic :
         foreach (PlayerRef player in Runner.ActivePlayers)
         {
             EnsurePlayerExperience(player);
+            EnsureTeammateIdentity(player);
             if (!TryAdoptExistingPlayer(player) &&
                 !RespawnTimers.ContainsKey(player))
             {
@@ -593,13 +611,20 @@ public class GameLogic :
     public bool TryGetPlayerExperience(
         PlayerRef player,
         out PlayerExperienceState state)
+        => TryGetPlayerExperience(player, out state, out _);
+
+    public bool TryGetPlayerExperience(
+        PlayerRef player, out PlayerExperienceState state, out int requiredExperience)
     {
         state = default;
+        requiredExperience = 0;
         if (Object == null || !Object.IsValid ||
-            !PlayerExperiences.TryGet(player, out NetworkPlayerExperience value))
+            !PlayerExperiences.TryGet(player, out NetworkPlayerExperience value) ||
+            value.RequiredExperience <= 0)
             return false;
 
         state = value.ToState();
+        requiredExperience = value.RequiredExperience;
         return true;
     }
 
@@ -627,13 +652,13 @@ public class GameLogic :
         }
 
         PlayerExperienceState before = value.ToState();
-        PlayerExperienceState after = PlayerExperienceRules.Award(before, amount);
+        PlayerExperienceState after = PlayerExperienceRules.Award(before, amount, experienceRequirements);
         if (after.Level == before.Level &&
             after.Experience == before.Experience &&
             after.PendingRewards == before.PendingRewards)
             return false;
 
-        PlayerExperiences.Set(player, new NetworkPlayerExperience(after));
+        PlayerExperiences.Set(player, CreateNetworkExperience(after));
         // 升級結果已由 State Authority 提交，同步套用鈎索新上限及 Inspector 補充方式。
         if (playerBehaviour.GrappleCharges != null)
             playerBehaviour.GrappleCharges.SynchronizeLevelStateAuthority();
@@ -660,7 +685,7 @@ public class GameLogic :
             !TryGetPlayerExperience(player, out PlayerExperienceState current))
             return false;
 
-        int amount = DevelopmentLevelUpRules.ExperienceToNextLevel(current);
+        int amount = DevelopmentLevelUpRules.ExperienceToNextLevel(current, experienceRequirements);
         return amount > 0 && TryAwardPlayerExperienceCore(player, amount, applyAbilityMultiplier: false);
     }
 #endif
@@ -714,7 +739,11 @@ public class GameLogic :
         }
 
         // 武器獎勵沿用既有職業 Runtime；不重建獨立 Q/E。
-        if (reward.IsImplementedWeaponReward)
+        if (reward.IsImplementedGrowthReward)
+        {
+            if (!TryGrantGrowth(player, playerBehaviour, reward, out failureReason)) return false;
+        }
+        else if (reward.IsImplementedWeaponReward)
         {
             var weapons = playerBehaviour.GetComponent<PlayerProfessionRuntimeManager>();
             if (weapons == null ||
@@ -724,6 +753,9 @@ public class GameLogic :
         }
         else
         {
+            var currentAbility = playerBehaviour.AbilityRuntimeManager.GetCategoryRuntime(reward.AbilityDefinition.Category);
+            if (currentAbility != null && currentAbility.Definition == reward.AbilityDefinition)
+            { failureReason = "已裝備此技能；待選獎勵保留。"; return false; }
             // 候選建立後仍可能換武器；失敗不扣待選數、不改候選或取得紀錄。
             if (!PlayerAbilityQualification.IsAllowed(playerBehaviour, reward.AbilityDefinition))
             {
@@ -736,10 +768,12 @@ public class GameLogic :
                     reward.AbilityDefinition, out failureReason))
                 return false;
 
+            var equippedRuntime = playerBehaviour.AbilityRuntimeManager.GetCategoryRuntime(reward.AbilityDefinition.Category);
+            equippedRuntime.RequiredPlayerLevel = reward.MinimumPlayerLevel;
             if (reward.Category == RewardCategory.GrappleHit)
-                draft.EquippedGrappleHitId = rewardId;
+            { draft.EquippedGrappleHitId = rewardId; draft.EquippedHitLevel = equippedRuntime.SkillLevel; }
             else
-                draft.EquippedGrappleFocusId = rewardId;
+            { draft.EquippedGrappleFocusId = rewardId; draft.EquippedFocusLevel = equippedRuntime.SkillLevel; }
         }
 
         if (!acquiredRewardIdsByPlayer.TryGetValue(player,
@@ -751,7 +785,7 @@ public class GameLogic :
         acquired.Add(rewardId);
 
         PlayerExperiences.Set(player,
-            new NetworkPlayerExperience(
+            CreateNetworkExperience(
                 PlayerExperienceRules.ClaimReward(xp.ToState())));
         draft.SetChoices(null);
         PlayerRewardDrafts.Set(player, draft);
@@ -858,7 +892,8 @@ public class GameLogic :
             new PlayerRewardSaveSnapshot(
                 draft.EquippedGrappleHitId.ToString(),
                 draft.EquippedGrappleFocusId.ToString(),
-                choices, acquiredIds, GetSavedWeaponId(Runner.LocalPlayer)));
+                choices, acquiredIds, GetSavedWeaponId(Runner.LocalPlayer), draft.EquippedHitLevel, draft.EquippedFocusLevel));
+        WriteHostGrowth(save);
         return true;
     }
 
@@ -876,8 +911,9 @@ public class GameLogic :
         foreach (PlayerRef player in players)
         {
             PlayerExperiences.Set(player,
-                new NetworkPlayerExperience(new PlayerExperienceState(1, 0, 0)));
+                CreateNetworkExperience(new PlayerExperienceState(1, 0, 1)));
             PlayerRewardDrafts.Set(player, default);
+            PlayerGrowthStates.Set(player, default);
             SavedProfessions.Set(player, PlayerProfessionType.Attack);
             if (Players.TryGet(player, out Player current) && current != null)
             {
@@ -890,12 +926,32 @@ public class GameLogic :
         missingRewardDraftLogged.Clear();
     }
 
+    // This detached table belongs to the persistent primary GameLogic, never to a Scene.
+    private int[] experienceRequirements;
+
+    private void ResolveExperienceRequirements()
+    {
+        if (experienceRequirements != null) return;
+        var settings = Resources.Load<PlayerExperienceSettings>(PlayerExperienceSettings.ResourcePath);
+        if (settings == null || !settings.HasRequirements)
+            Debug.LogWarning("[GameLogic] 逐級經驗設定缺少或為空，暫用舊版需求；請開啟 Tools/Purgers/Progression/開啟逐級經驗設定。", this);
+        experienceRequirements = settings != null
+            ? settings.CreateSnapshot() : PlayerExperienceSettings.CreateLegacyRequirements();
+    }
+
+    private NetworkPlayerExperience CreateNetworkExperience(PlayerExperienceState state)
+    {
+        ResolveExperienceRequirements();
+        return new NetworkPlayerExperience(state,
+            PlayerExperienceRules.RequiredExperience(state.Level, experienceRequirements));
+    }
+
     private void EnsurePlayerExperience(PlayerRef player)
     {
         if (PlayerExperiences.ContainsKey(player))
             return;
 
-        PlayerExperienceState initial = new PlayerExperienceState(1, 0, 0);
+        PlayerExperienceState initial = new PlayerExperienceState(1, 0, 1);
         if (player == Runner.LocalPlayer)
         {
             GameSaveRuntimeContext context =
@@ -904,7 +960,8 @@ public class GameLogic :
                 initial = PlayerExperienceSaveBridge.ReadHost(context.ActiveSave);
         }
 
-        PlayerExperiences.Set(player, new NetworkPlayerExperience(initial));
+        PlayerExperiences.Set(player, CreateNetworkExperience(initial));
+        ReadHostGrowth(player);
 
         PlayerRewardSaveSnapshot rewards =
             new PlayerRewardSaveSnapshot(null, null, null, null);
@@ -918,6 +975,7 @@ public class GameLogic :
 
         var rewardState = new PlayerRewardNetworkState
         {
+            EquippedHitLevel = rewards.HitLevel, EquippedFocusLevel = rewards.FocusLevel,
             EquippedGrappleHitId = rewards.EquippedGrappleHitId,
             EquippedGrappleFocusId = rewards.EquippedGrappleFocusId
         };
@@ -992,6 +1050,13 @@ public class GameLogic :
                     exclusions.Add(reward.StableRewardId);
                 continue;
             }
+            if (reward.IsImplementedGrowthReward)
+            {
+                if (!PlayerGrowthRules.CanOffer(GetPlayerGrowth(player), reward.GrowthKind,
+                    PlayerAbilityQualification.HasRangedWeapon(playerBehaviour), PlayerAbilityQualification.HasGuardWeapon(playerBehaviour)))
+                    exclusions.Add(reward.StableRewardId);
+                continue;
+            }
             if (reward.AbilityDefinition == null) continue;
             if (!PlayerAbilityQualification.IsAllowed(playerBehaviour, reward.AbilityDefinition) ||
                 equippedSet.Contains(reward.AbilityDefinition.AbilityId)) exclusions.Add(reward.StableRewardId);
@@ -1000,7 +1065,7 @@ public class GameLogic :
         ulong seed = RewardDraftSeed(player, targetLevel,
             draft.DraftRevision);
         string[] choices = RewardDraftRules.Draw(pool, targetLevel, seed,
-            acquired, exclusions);
+            acquired, exclusions, rewardCatalog.SpecialPassiveChance);
         if (choices.Length == 0)
         {
             if (missingRewardDraftLogged.Add(player))
@@ -1047,9 +1112,9 @@ public class GameLogic :
                 continue;
 
             if (!TryRestoreRewardAbility(manager,
-                    draft.EquippedGrappleHitId.ToString()) ||
+                    draft.EquippedGrappleHitId.ToString(), draft.EquippedHitLevel) ||
                 !TryRestoreRewardAbility(manager,
-                    draft.EquippedGrappleFocusId.ToString()))
+                    draft.EquippedGrappleFocusId.ToString(), draft.EquippedFocusLevel))
                 continue;
 
             restoredRewardLoadoutByPlayer[pair.Key] = playerBehaviour;
@@ -1057,7 +1122,7 @@ public class GameLogic :
     }
 
     private bool TryRestoreRewardAbility(
-        PlayerAbilityRuntimeManager manager, string rewardId)
+        PlayerAbilityRuntimeManager manager, string rewardId, int skillLevel)
     {
         if (string.IsNullOrEmpty(rewardId))
             return true;
@@ -1066,8 +1131,10 @@ public class GameLogic :
                 out PlayerRewardDefinition reward) ||
             !reward.IsImplementedAbilityReward)
             return false;
-        return manager.TryEquipRewardAbilityStateAuthority(
-            reward.AbilityDefinition, out _);
+        if (!manager.TryEquipRewardAbilityStateAuthority(reward.AbilityDefinition, out _)) return false;
+        var runtime = manager.GetCategoryRuntime(reward.AbilityDefinition.Category);
+        runtime.SkillLevel = Mathf.Max(1, skillLevel); runtime.RequiredPlayerLevel = reward.MinimumPlayerLevel;
+        return true;
     }
 
     private bool TryAdoptExistingPlayer(PlayerRef player)
@@ -1086,6 +1153,7 @@ public class GameLogic :
             return false;
 
         Players.Set(player, playerBehaviour);
+        SetTeammateLife(player, !playerBehaviour.Health.IsAlive, playerObject.transform.position);
         SubscribeToPlayerDeath(player, playerBehaviour.Health);
         SavePlayerProfession(player, playerBehaviour.Profession);
         return true;
@@ -1257,6 +1325,7 @@ public class GameLogic :
             player,
             playerObject
         );
+        SetTeammateLife(player, false, playerObject.transform.position);
 
         SubscribeToPlayerDeath(
             player,
@@ -1562,6 +1631,7 @@ public class GameLogic :
             return;
         }
 
+        SetTeammateLife(player, true, currentPlayer.transform.position);
         pendingDeathPlayers.Add(
             player
         );
@@ -1677,6 +1747,13 @@ public class GameLogic :
             return;
         }
 
+        if (UsesTeammateRescue)
+        {
+            // None 是等安全屋的死亡名單；防止 Reconcile 把缺少物件當成初次加入。
+            RespawnTimers.Set(player, TickTimer.None);
+            return;
+        }
+
         float safeRespawnDelay =
             Mathf.Max(
                 0f,
@@ -1738,9 +1815,7 @@ public class GameLogic :
                 in RespawnTimers
         )
         {
-            if (pair.Value.ExpiredOrNotRunning(
-                    Runner
-                ))
+            if (pair.Value.IsRunning && pair.Value.Expired(Runner))
             {
                 expiredRespawnBuffer.Add(
                     pair.Key

@@ -40,3 +40,7 @@ MCP 回歸進度在含 EnterPlayMode 的測試 Domain Reload 後停留於 34／7
 本次新增獨立 Enemy_Suicide Prefab 與 ED_Suicide Definition；Prefab 無缺失腳本／斷裂引用，只有一個攻擊選項，沒有模型、Animator 或 NavMeshAgent。所有平衡數值、幀時序、範圍及 VFX 基準皆在 Inspector；準心遮擋只保留 Sprite 欄位。
 
 規則索引新條目尚待使用者確認，建議關鍵詞：自爆怪、撲擊、EnemySuicideAttack、距離衰減、鈎索封鎖；路由至 92 文件。
+
+## 2026-10-16 模型替換後續
+
+Enemy_Suicide 已換為約 2.1m 看門菇及四支動畫，原始 FBX 保留。上文「無模型／Animator」屬 2026-10-11 灰盒歷史狀態；目前接線與測試請看 [模型替換驗證](Model_20261016.md)。舊 Scene 備份及未恢復的預覽物件決策保持原紀錄。

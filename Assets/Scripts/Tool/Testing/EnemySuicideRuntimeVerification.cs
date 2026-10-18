@@ -11,7 +11,7 @@ using UnityEditor;
 using UnityEngine;
 
 /// <summary>明確啟動的隔離 Runner 驗證；不保存正式場景與 Prefab，不取代自然多人操作驗收。</summary>
-public static class EnemySuicideRuntimeVerification
+public static partial class EnemySuicideRuntimeVerification
 {
     public static string Status { get; private set; } = "尚未執行";
     public static string Stage { get; private set; } = "";
@@ -126,7 +126,7 @@ public static class EnemySuicideRuntimeVerification
             player.GetComponent<PlayerMovement>().ApplyActiveAbilityMotion(kcc,motion);
             Check(motion.ExternalDelta==Vector3.zero,"air motion receives no explosion slow correction");
             Stage="bounded pounce";
-            var jumper=SpawnEnemy(Origin+Vector3.forward*6);var attack=jumper.GetComponent<EnemySuicideAttack>();Set(attack,"requireNavMeshLanding",false);Set(attack,"preparationSeconds",0f);
+            var jumper=SpawnEnemy(Origin+Vector3.forward*6);var attack=jumper.GetComponent<EnemySuicideAttack>();Set(attack,"requireNavMeshLanding",false);Set(attack,"preparationSeconds",0f);Set(attack,"useAnimationFrameTiming",false);
             var perception=jumper.GetComponent<EnemyPerceptionController>();typeof(EnemyPerceptionController).GetProperty("CurrentTarget").SetValue(perception,player);
             typeof(EnemyPerceptionController).GetProperty("HasDirectSight").SetValue(perception,true);
             var context=new EnemyCombatContext(jumper.GetComponent<EnemyCombatDecisionController>(),jumper.GetComponent<EnemyActor>(),perception,player,Origin,6f,host.DeltaTime);

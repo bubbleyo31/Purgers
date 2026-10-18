@@ -7,7 +7,7 @@ using Assert = NUnit.Framework.Assert;
 [Category("PurgersRegression")]
 public sealed class EnemySuicideAssetTests
 {
-    [Test] public void GrayboxUsesExistingOwnersAndOneUniqueAttack()
+    [Test] public void PrefabUsesExistingOwnersAndOneUniqueAttack()
     {
         var root=AssetDatabase.LoadAssetAtPath<GameObject>(EnemySuicideSetup.PrefabPath);
         Assert.That(root,Is.Not.Null);
@@ -19,7 +19,7 @@ public sealed class EnemySuicideAssetTests
         Assert.That(root.GetComponent<EnemyCombatDecisionController>(),Is.Not.Null);
         Assert.That(root.GetComponent<EnemyDeathLifecycleController>(),Is.Not.Null);
         Assert.That(root.GetComponent<HitboxRoot>().Hitboxes.Length,Is.EqualTo(1));
-        Assert.That(root.GetComponentsInChildren<Animator>().Length,Is.Zero);
+        Assert.That(root.GetComponentsInChildren<Animator>().Length,Is.EqualTo(1));
         Assert.That(root.GetComponentsInChildren<UnityEngine.AI.NavMeshAgent>().Length,Is.Zero);
     }
     [Test] public void VfxReferenceMatchesUsersPrefabAndDiameter()

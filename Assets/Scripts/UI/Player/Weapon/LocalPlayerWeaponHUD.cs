@@ -296,7 +296,7 @@ public class LocalPlayerWeaponHUD :
         InputManager input = runner != null ? runner.GetComponent<InputManager>() : null;
         KeyCode key = input != null ? input.ReloadKey : KeyCode.R;
         if (reloadKeyLabel != null)
-            reloadKeyLabel.text = key.ToString().ToUpperInvariant();
+            Purgers.Settings.PlayerSettingsService.SetPrompt(reloadKeyLabel, key);
         if (reloadKeyBackground != null)
             reloadKeyBackground.color = Input.GetKey(key)
                 ? new Color(0.2f, 0.78f, 0.95f, 0.95f)
@@ -439,8 +439,7 @@ public class LocalPlayerWeaponHUD :
             return false;
         }
 
-        if (runner.TryGetPlayerObject(
-                runner.LocalPlayer,
+        if (LocalPlayerSpectatorController.TryGetViewedPlayerObject(runner,
                 out NetworkObject playerObject
             ) == false ||
             playerObject == null ||

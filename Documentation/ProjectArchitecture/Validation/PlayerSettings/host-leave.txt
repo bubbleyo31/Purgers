@@ -1,0 +1,10 @@
+PASS formal SafeHouse loaded: 
+PASS pause room code reads current session
+PASS Host sees save and leave
+PASS same Runner safe house flow resolved
+PASS menu observes authoritative vote
+PASS vote ESC keeps current menu level
+PASS ESC cancels whole vote before closing pause menu
+PASS failed disk write retains room and retry dialog
+PASS Host progress saved to isolated repository before leave
+PASS return to main and release gameplay lock

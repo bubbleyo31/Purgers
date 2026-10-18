@@ -355,8 +355,7 @@ public class LocalPlayerGrappleAimIndicator :
             return false;
         }
 
-        if (runner.TryGetPlayerObject(
-                runner.LocalPlayer,
+        if (LocalPlayerSpectatorController.TryGetViewedPlayerObject(runner,
                 out NetworkObject playerObject
             ) == false ||
             playerObject == null ||

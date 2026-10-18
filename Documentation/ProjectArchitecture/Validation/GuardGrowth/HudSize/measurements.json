@@ -1,0 +1,71 @@
+{
+  "rows": [
+    {
+      "text": "格檔",
+      "font": 14,
+      "preferredWidth": 28.99,
+      "preferredHeight": 20.28,
+      "allocatedWidth": 172.98,
+      "allocatedHeight": 21
+    },
+    {
+      "text": "70 / 400",
+      "font": 14,
+      "preferredWidth": 59.94,
+      "preferredHeight": 20.28,
+      "allocatedWidth": 106.02,
+      "allocatedHeight": 21
+    },
+    {
+      "text": "等待恢復 3.0s",
+      "font": 14,
+      "preferredWidth": 95.02,
+      "preferredHeight": 20.28,
+      "allocatedWidth": 172.98,
+      "allocatedHeight": 21
+    },
+    {
+      "text": "70 / 400",
+      "font": 14,
+      "preferredWidth": 59.94,
+      "preferredHeight": 20.28,
+      "allocatedWidth": 106.02,
+      "allocatedHeight": 21
+    },
+    {
+      "text": "破防",
+      "font": 14,
+      "preferredWidth": 28.99,
+      "preferredHeight": 20.28,
+      "allocatedWidth": 172.98,
+      "allocatedHeight": 21
+    },
+    {
+      "text": "3.5s",
+      "font": 14,
+      "preferredWidth": 30.94,
+      "preferredHeight": 20.28,
+      "allocatedWidth": 106.02,
+      "allocatedHeight": 21
+    },
+    {
+      "text": "恢復中",
+      "font": 14,
+      "preferredWidth": 43.97,
+      "preferredHeight": 20.28,
+      "allocatedWidth": 172.98,
+      "allocatedHeight": 21
+    },
+    {
+      "text": "70 / 400",
+      "font": 14,
+      "preferredWidth": 59.94,
+      "preferredHeight": 20.28,
+      "allocatedWidth": 106.02,
+      "allocatedHeight": 21
+    }
+  ],
+  "barWidth": 279,
+  "barHeight": 8,
+  "offsetFourStatuses": 57
+}

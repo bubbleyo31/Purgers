@@ -166,6 +166,7 @@ public class ProfessionViewModelManager :
     /// 只會是這台裝置真正控制的 Player。
     /// </summary>
     private PlayerProfession targetProfession;
+    private bool observedPresentationOnly;
 
     /// <summary>
     /// 本地玩家的 Profession Runtime Manager。
@@ -618,16 +619,18 @@ public class ProfessionViewModelManager :
     /// 真正 AttackRifle
     /// 每次由 Current Runtime 動態解析。
     /// </summary>
-    public void SetTarget(
-        PlayerProfession profession
-    )
+    public void SetTarget(PlayerProfession profession) => SetPresentationTarget(profession, false);
+
+    /// <summary>觀戰只讀動畫／武器狀態，不將本機模型槍口寫入遠端 Gameplay。</summary>
+    public void SetObservedTarget(PlayerProfession profession) => SetPresentationTarget(profession, true);
+
+    private void SetPresentationTarget(PlayerProfession profession, bool observedOnly)
     {
         // =============================================================
         // 同一 Player
         // =============================================================
 
-        if (targetProfession ==
-            profession)
+        if (targetProfession == profession && observedPresentationOnly == observedOnly)
         {
             return;
         }
@@ -638,6 +641,7 @@ public class ProfessionViewModelManager :
 
         ClearCurrentViewModel();
 
+        observedPresentationOnly = observedOnly;
         targetProfession =
             profession;
 
@@ -1374,9 +1378,8 @@ public class ProfessionViewModelManager :
         // 正式 Muzzle Binding
         // =============================================================
 
-        BindCurrentGameplayWeaponMuzzle(
-            profession
-        );
+        if (!observedPresentationOnly)
+            BindCurrentGameplayWeaponMuzzle(profession);
 
         BindCurrentMuzzleFlash(profession);
     }
@@ -2257,7 +2260,7 @@ public class ProfessionViewModelManager :
         // Attack
         // =============================================================
 
-        if (targetAttackRifle != null)
+        if (!observedPresentationOnly && targetAttackRifle != null)
         {
             targetAttackRifle
                 .ClearTracerMuzzlePoint(
@@ -2282,7 +2285,7 @@ public class ProfessionViewModelManager :
         // Support
         // =============================================================
 
-        if (targetSupportSMG != null)
+        if (!observedPresentationOnly && targetSupportSMG != null)
         {
             targetSupportSMG
                 .ClearTracerMuzzlePoint(

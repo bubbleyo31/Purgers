@@ -41,8 +41,8 @@ public class PlayerGrappleCharges : NetworkBehaviour
     public bool HasCharge => HasValidState && IsInitialized && GrappleEnergyRules.CanLaunch(CurrentEnergy, LaunchEnergyCost);
     public float NormalizedEnergy => HasValidState && IsInitialized && MaximumEnergy > 0f
         ? Mathf.Clamp01(CurrentEnergy / MaximumEnergy) : 0f;
-    public float LaunchEnergyCost => Mathf.Max(0f, launchEnergyCost);
-    public float PullEnergyPerSecond => Mathf.Max(0f, pullEnergyPerSecond);
+    public float LaunchEnergyCost => Purgers.Progression.PlayerGrowth.Reduce(GetComponent<Player>(), Purgers.Progression.PlayerGrowthKind.GrappleCost, launchEnergyCost);
+    public float PullEnergyPerSecond => Purgers.Progression.PlayerGrowth.Reduce(GetComponent<Player>(), Purgers.Progression.PlayerGrowthKind.GrappleCost, pullEnergyPerSecond);
     public GrappleEnergyLevelUpMode LevelUpMode => levelUpMode;
 
     // 舊公開介面保留為唯讀相容層；正式 HUD 使用浮點能量，避免把尾數截斷。
@@ -100,6 +100,14 @@ public class PlayerGrappleCharges : NetworkBehaviour
             !GrappleEnergyRules.TryConsumeLaunch(CurrentEnergy, LaunchEnergyCost, out float remaining)) return false;
         CurrentEnergy = remaining;
         if (debugCharges) Debug.Log($"[鈎索能量] 發射後：{CurrentEnergy:F2}/{MaximumEnergy:F2}", this);
+        return true;
+    }
+
+    /// <summary>側移沿用唯一能量持有者；有剩餘即可扣兩倍出鈎費用，最低為零。</summary>
+    public bool ConsumeSideDashEnergy()
+    {
+        if (!CanSimulate || !IsInitialized || !HasCharge) return false;
+        CurrentEnergy = GrappleSideDashRules.EnergyAfterDash(CurrentEnergy, LaunchEnergyCost);
         return true;
     }
 

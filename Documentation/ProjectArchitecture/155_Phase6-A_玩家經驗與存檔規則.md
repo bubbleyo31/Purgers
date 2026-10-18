@@ -9,16 +9,16 @@
 ## 已實作規則
 
 - 每隻敵人提供一筆基礎經驗。當下連線且存活的玩家各取得完整基礎經驗；擊殺者額外預設 1 點。無有效玩家擊殺者時不發放。
-- 新玩家等級 1；升級門檻預設依序 10、20、40。基礎需求、成長倍率與擊殺加成都由純規則參數控制。
+- 新玩家等級 1；目前升級門檻預設依序 5、10、20。基礎需求、成長倍率與擊殺加成都由純規則參數控制。
 - 同一筆經驗超過門檻時保留超額，可一次跨過多級並增加同數量的待選獎勵。
-- 玩家只要還有待選獎勵，之後的經驗不再加入；領完最後一份才恢復。
+- 玩家有待選獎勵時仍繼續累積經驗與升級；已產生候選不因此重抽。
 - 對於極大整數輸入，需求與經驗計算使用飽和保護，避免整數溢出或倍率為 1 時逐級跑大量迴圈。
 
 ## 資料與權限
 
 `PlayerExperienceRules` 只有純計算，不讀 Unity 場景、Fusion 或存檔，也不授權 Client 修改結果。未來 Phase 6-B／C 的 State Authority 應提供玩家存活快照、敵人經驗及擊殺者，再使用此規則更新權威玩家進度。HUD 只讀同步結果。
 
-`PlayerRunProgressionData.PendingRewardCount` 隨本輪進度保存。Host 存檔版本升為 2；舊版 v1 讀入時補零並轉為 v2，之後寫回使用 v2。失敗呼叫既有 `ResetRunProgression()` 時待選數歸零。Client 仍無本機寫檔權。
+`PlayerRunProgressionData.PendingRewardCount` 隨本輪進度保存。Host 存檔版本升為 2；舊版 v1 讀入時補零並轉為 v2，之後寫回使用 v2。目前 v4 失敗呼叫 `ResetRunProgression()` 後，下一輪有一次開局抽選，屬性與被動清空。Client 仍無本機寫檔權。
 
 ## 驗證
 
@@ -32,3 +32,16 @@
 Phase 6-B 應先讓玩家等級、經驗與待選數由 State Authority 持續保存並同步，跨死亡重生及 SafeHouse／Game 場景切換仍正確。其後 Phase 6-C 再從 Enemy 死亡事件發放經驗。Phase 5 暫緩，Enemy 經驗先提供獨立數值入口，日後再接 Enemy Level。
 
 閱讀順序：[140 長期藍圖](140_遊戲流程存檔關卡成長與長期藍圖.md) → 本文件 → `PlayerExperienceRules.cs` → `GameSaveData.cs`／`JsonGameSaveRepository.cs` → `PlayerExperienceRulesTests.cs`／`GameSaveRepositoryTests.cs` → [154 HUD 設計](154_戰鬥HUD視覺配置第一版.md)。
+
+
+## 2026-10-16 局部更新
+
+新輪等級一、一次開局抽選，待選經驗繼續累積。現行 schema v4 見 [168 角色成長、被動與掉落](168_角色成長被動與技能掉落.md)，上方 v2 為早期切片歷史。
+
+## 2026-10-17 Inspector 逐級經驗（局部核對）
+
+最後核對日期：2026-10-17。核對來源：PlayerExperienceSettings、PlayerExperienceRules、GameLogic、DevelopmentLevelUpRules、LocalPlayerRewardHUD。
+相關文件：[160 操作與正式規則](160_Phase6_經驗與獎勵數值調整手冊.md)、[驗證紀錄](Validation/ExperienceTable/README.md)。
+
+經驗需求由共用 Settings 逐級填寫；超出表格固定沿用最後一筆，不新增滿級。主要 GameLogic 在 Session 初始化保存獨立快照，Host 計算正式升級與 F8；NetworkPlayerExperience 增加 RequiredExperience，HUD 讀同步門檻，Client 不自行推算。切換場景不重讀表，Host／Client 必須同版。超額、待領獎勵、既有候選與存檔 schema 保留；詳細設定、舊進度處理和驗證邊界見 160 及驗證紀錄。
+

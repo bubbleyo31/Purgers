@@ -39,6 +39,8 @@ public abstract class EnemyChaseMotor :
     protected float bodyHeight =
         1.8f;
 
+    protected virtual float CollisionBaseOffset => 0f;
+
     [SerializeField]
     [Min(0.001f)]
     [Tooltip("碰撞保留間距，公尺。")]
@@ -188,13 +190,17 @@ public abstract class EnemyChaseMotor :
         PhysicsScene physics =
             Runner.GetPhysicsScene();
 
+        if (!IsMovementStartClear(physics, from)) return false;
+
+        Vector3 capsuleOrigin = from + Vector3.up * CollisionBaseOffset;
+
         Vector3 bottom =
-            from +
+            capsuleOrigin +
             Vector3.up *
             (bodyRadius + collisionSkin);
 
         Vector3 top =
-            from +
+            capsuleOrigin +
             Vector3.up *
             Mathf.Max(
                 bodyRadius + collisionSkin,
@@ -261,7 +267,9 @@ public abstract class EnemyChaseMotor :
         return true;
     }
 
-    protected bool IsSegmentClear(
+    protected virtual bool IsMovementStartClear(PhysicsScene physics, Vector3 rootPosition) => true;
+
+    protected virtual bool IsSegmentClear(
         Vector3 from,
         Vector3 to
     )
@@ -273,6 +281,8 @@ public abstract class EnemyChaseMotor :
         {
             return true;
         }
+
+        from += Vector3.up * CollisionBaseOffset;
 
         Vector3 bottom =
             from + Vector3.up * bodyRadius;

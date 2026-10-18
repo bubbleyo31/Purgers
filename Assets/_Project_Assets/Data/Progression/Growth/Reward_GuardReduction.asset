@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da3361bca07116044af1dc0ef46a900c, type: 3}
+  m_Name: Reward_GuardReduction
+  m_EditorClassIdentifier: 
+  stableRewardId: growth.guardreduction
+  category: 4
+  minimumPlayerLevel: 1
+  weight: 1
+  repeatPolicy: 1
+  abilityDefinition: {fileID: 0}
+  description: "\u63D0\u9AD8\u683C\u6A94\u6E1B\u50B7\u6BD4\u4F8B\uFF0C\u57FA\u790E\u70BA
+    40%\u3002"
+  weaponProfession: 0
+  weaponDisplayName: 
+  weaponIcon: {fileID: 0}
+  growthKind: 16
+  growthValues:
+  - 0.15
+  - 0.2
+  - 0.3
+  - 0.4
+  - 0.5
+  growthDisplayName: "\u9632\u79A6\u6E1B\u50B7"
+  growthIcon: {fileID: 0}
+  growthRankBackground: {fileID: 0}
+  growthRankCenter: {x: 0.5, y: 0.5}
+  growthRankSize: {x: 0.4, y: 0.3}
+  growthIconScale: 1

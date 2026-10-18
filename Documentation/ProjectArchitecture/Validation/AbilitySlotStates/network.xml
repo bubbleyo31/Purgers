@@ -1,0 +1,205 @@
+<test-suite type="TestSuite" id="1000" name="Purgers" fullname="Purgers" runstate="Runnable" testcasecount="1156" result="Passed" start-time="2026-10-17 20:20:39Z" end-time="2026-10-17 20:21:39Z" duration="60.271964" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0"><properties /><test-suite type="Assembly" id="2437" name="Assembly-CSharp-Editor.dll" fullname="M:/UnityProject/Purgers/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll" runstate="Runnable" testcasecount="1156" result="Passed" start-time="2026-10-17 20:20:45Z" end-time="2026-10-17 20:21:39Z" duration="54.401498" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0"><properties><property name="_PID" value="3564" /><property name="_APPDOMAIN" value="Unity Child Domain" /><property name="platform" value="EditMode" /></properties><test-suite type="TestFixture" id="1079" name="AbilityToggleInputTests" fullname="AbilityToggleInputTests" classname="AbilityToggleInputTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-10-17 20:20:46Z" end-time="2026-10-17 20:21:39Z" duration="52.844295" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0"><properties><property name="Category" value="PurgersRegression" /></properties><test-case id="1084" name="SlotHudHostClientRecastCooldownLateJoinAndReconnect" fullname="AbilityToggleInputTests.SlotHudHostClientRecastCooldownLateJoinAndReconnect" methodname="SlotHudHostClientRecastCooldownLateJoinAndReconnect" classname="AbilityToggleInputTests" runstate="Explicit" seed="736275882" result="Passed" start-time="2026-10-17 20:20:29Z" end-time="2026-10-17 20:21:39Z" duration="70.178555" asserts="0"><properties><property name="_JOINTYPE" value="UnityCombinatorial" /><property name="_SKIPREASON" value="需要 Photon，依 Editor 順位獨立執行技能槽 Host/Client 驗證" /></properties><output><![CDATA[[玩家職業變更]
+玩家：[Player:1]
+原職業：None
+新職業：Attack
+職業定義：PD_Attack
+勾索最大充能：3
+勾索每格恢復時間：1
+擊殺回充：1
+[玩家職業]
+玩家：[Player:1]
+目前職業：Attack
+職業定義：PD_Attack
+勾索最大充能：3
+勾索每格恢復時間：1
+擊殺回充：1
+State Authority：True
+Input Authority：True
+[Combat Feedback Source Binding]
+Player：[Player:1]
+Profession：Attack
+Runtime：無
+訂閱來源數：0
+[PlayerHitFeedbackController] 已訂閱本地戰鬥回饋。
+LocalAttackPerformed：✓
+LocalHitConfirmed：✓
+[Player Health] Spawned
+Player：[Player:1]
+Current Health：100.0
+Maximum Health：100.0
+State Authority：True
+Input Authority：True
+[Support Player Pull Receiver] Spawned
+Player：KCC_Player(Clone)
+Input Authority：[Player:1]
+State Authority：True
+[Player Ability Loadout] 已套用。
+Player：[Player:1]
+來源：權威能力清單
+能力數：0
+[ViewModel ADS Animation] Initialized
+ViewModel：手與槍械01(Clone)
+Animator：RifleVine_Arms_Draft03
+Layer：ADS
+State：Aim
+Speed Parameter：AimPlaybackSpeed
+[ViewModel ADS Animation] Aim Controller Binding
+ViewModel：手與槍械01(Clone)
+Aim Controller：NULL
+Aim Requested：False
+[ViewModel ADS Animation] Aim Controller Binding
+ViewModel：手與槍械01(Clone)
+Aim Controller：NULL
+Aim Requested：False
+[第一人稱 ViewModel Aim 綁定]
+職業：Attack
+ViewModel：手與槍械01(Clone)
+Aim Controller：等待 Runtime
+[ProfessionViewModelManager] 職業「Attack」的 ViewModel 已建立，但目前尚未取得對應 Runtime Weapon。
+Runtime：尚未同步
+Runtime Profession：None
+等待 Profession Runtime Weapon。
+[第一人稱 ViewModel]
+已載入職業：Attack
+Prefab：手與槍械01
+生成物件：手與槍械01(Clone)
+<color=#73ACE5>[Fusion/ [上午 04:21:06] ]</color> <color=#9EB5CD>Toggle Host</color>[P1]: RegisterUniqueIdPlayerMapping actorid:2 id:165853226767875818, player:[Player:2]
+[玩家職業]
+玩家：[Player:1]
+目前職業：Attack
+職業定義：PD_Attack
+勾索最大充能：3
+勾索每格恢復時間：1
+擊殺回充：1
+State Authority：False
+Input Authority：False
+[Player Health] Spawned
+Player：[Player:1]
+Current Health：100.0
+Maximum Health：100.0
+State Authority：False
+Input Authority：False
+[Support Player Pull Receiver] Spawned
+Player：KCC_Player(Clone)
+Input Authority：[Player:1]
+State Authority：False
+<color=#73ACE5>[Fusion/ [上午 04:21:23] ]</color> <color=#9EB5CD>Toggle Host</color>[P1]: RegisterUniqueIdPlayerMapping actorid:3 id:8902456825544370473, player:[Player:3]
+[玩家職業]
+玩家：[Player:1]
+目前職業：Attack
+職業定義：PD_Attack
+勾索最大充能：3
+勾索每格恢復時間：1
+擊殺回充：1
+State Authority：False
+Input Authority：False
+[Player Health] Spawned
+Player：[Player:1]
+Current Health：100.0
+Maximum Health：100.0
+State Authority：False
+Input Authority：False
+[Support Player Pull Receiver] Spawned
+Player：KCC_Player(Clone)
+Input Authority：[Player:1]
+State Authority：False
+[玩家職業變更]
+玩家：[Player:3]
+原職業：None
+新職業：Attack
+職業定義：PD_Attack
+勾索最大充能：3
+勾索每格恢復時間：1
+擊殺回充：1
+[玩家職業]
+玩家：[Player:3]
+目前職業：Attack
+職業定義：PD_Attack
+勾索最大充能：3
+勾索每格恢復時間：1
+擊殺回充：1
+State Authority：True
+Input Authority：False
+[Combat Feedback Source Binding]
+Player：[Player:3]
+Profession：Attack
+Runtime：無
+訂閱來源數：0
+[Player Health] Spawned
+Player：[Player:3]
+Current Health：100.0
+Maximum Health：100.0
+State Authority：True
+Input Authority：False
+[Support Player Pull Receiver] Spawned
+Player：KCC_Player(Clone)
+Input Authority：[Player:3]
+State Authority：True
+[Player Ability Loadout] 已套用。
+Player：[Player:3]
+來源：權威能力清單
+能力數：0
+[ViewModel ADS Animation] Aim Controller Binding
+ViewModel：手與槍械01(Clone)
+Aim Controller：NULL
+Aim Requested：False
+[第一人稱 ViewModel]
+移除職業：Attack
+物件：手與槍械01(Clone)
+[ViewModel ADS Animation] Initialized
+ViewModel：手與槍械01(Clone)
+Animator：RifleVine_Arms_Draft03
+Layer：ADS
+State：Aim
+Speed Parameter：AimPlaybackSpeed
+[ViewModel ADS Animation] Aim Controller Binding
+ViewModel：手與槍械01(Clone)
+Aim Controller：NULL
+Aim Requested：False
+[ViewModel ADS Animation] Aim Controller Binding
+ViewModel：手與槍械01(Clone)
+Aim Controller：NULL
+Aim Requested：False
+[第一人稱 ViewModel Aim 綁定]
+職業：Attack
+ViewModel：手與槍械01(Clone)
+Aim Controller：等待 Runtime
+[ProfessionViewModelManager] 職業「Attack」的 ViewModel 已建立，但目前尚未取得對應 Runtime Weapon。
+Runtime：尚未同步
+Runtime Profession：None
+等待 Profession Runtime Weapon。
+[第一人稱 ViewModel]
+已載入職業：Attack
+Prefab：手與槍械01
+生成物件：手與槍械01(Clone)
+[玩家職業]
+玩家：[Player:3]
+目前職業：Attack
+職業定義：PD_Attack
+勾索最大充能：3
+勾索每格恢復時間：1
+擊殺回充：1
+State Authority：False
+Input Authority：True
+[PlayerHitFeedbackController] 已訂閱本地戰鬥回饋。
+LocalAttackPerformed：✓
+LocalHitConfirmed：✓
+[Player Health] Spawned
+Player：[Player:3]
+Current Health：100.0
+Maximum Health：100.0
+State Authority：False
+Input Authority：True
+[Support Player Pull Receiver] Spawned
+Player：KCC_Player(Clone)
+Input Authority：[Player:3]
+State Authority：False
+[ViewModel ADS Animation] Aim Controller Binding
+ViewModel：手與槍械01(Clone)
+Aim Controller：NULL
+Aim Requested：False
+[第一人稱 ViewModel]
+移除職業：Attack
+物件：手與槍械01(Clone)
+[Spectator] 本地玩家已重生或觀戰控制器已停用，退出觀戰。
+]]></output></test-case></test-suite></test-suite></test-suite>

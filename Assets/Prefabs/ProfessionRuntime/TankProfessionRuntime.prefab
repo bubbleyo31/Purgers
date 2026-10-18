@@ -118,7 +118,7 @@ MonoBehaviour:
     StartupDuration: 0.09
     ActiveDuration: 0
     RecoveryDuration: 0.328
-    Damage: 35
+    Damage: 200
     MaximumTargets: 0
     Range: 6
     SearchRadius: 10
@@ -135,7 +135,7 @@ MonoBehaviour:
     StartupDuration: 0.09
     ActiveDuration: 0
     RecoveryDuration: 0.328
-    Damage: 35
+    Damage: 200
     MaximumTargets: 0
     Range: 6
     SearchRadius: 10
@@ -152,7 +152,7 @@ MonoBehaviour:
     StartupDuration: 0.271
     ActiveDuration: 0.271
     RecoveryDuration: 0.72
-    Damage: 70
+    Damage: 300
     MaximumTargets: 0
     Range: 6
     SearchRadius: 10
@@ -187,9 +187,9 @@ MonoBehaviour:
   _SwingSequence: 0
   _InterruptedSequence: 0
   enablePreparedDash: 1
-  preparedDashRange: 25
+  preparedDashRange: 12
   preparedDashSpeed: 100
-  preparedDashStopDistance: 1
+  preparedDashStopDistance: 4
   preparedDashAimHeight: 1.6
   preparedDashTimeout: 0.7
   preparedDashEnemyMask:
@@ -197,10 +197,25 @@ MonoBehaviour:
     m_Bits: 512
   preparedDashObstructionMask:
     serializedVersion: 2
-    m_Bits: 4294966875
+    m_Bits: 4294966299
   preparedDashAimHalfAngle: 15
   _PreparedDashDurationSeconds: 0
   _PreparedDashElapsedSeconds: 0
+  preparedDashIndicator:
+    enabled: 1
+    bracketColor: {r: 1, g: 0.502, b: 0.141, a: 1}
+    bracketWidth: 5
+    bracketCornerLength: 24
+    bracketPadding: 12
+    largeEnemySize: 4
+    bracketSmoothSeconds: 0.06
+    ringColor: {r: 0.827, g: 0.749, b: 0.561, a: 0.55}
+    ringWidth: 0.15
+    ringSegments: 96
+    ringFadeSeconds: 0.24
+    ringRefreshSeconds: 0.01
+    groundHeightTolerance: 1.5
+    groundJoinHeight: 0.6
 --- !u!114 &400024891662209625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,10 +231,10 @@ MonoBehaviour:
   ownerPlayer: {fileID: 0}
   guardMovementInputMultiplier: 0.3
   maximumGuardStamina: 100
-  guardDamageReduction: 0.7
+  guardDamageReduction: 0.4
   staminaRecoveryDelay: 3
   staminaRecoveryFractionPerSecond: 0.25
-  brokenCooldownDuration: 10
+  brokenCooldownDuration: 5
   debugGuard: 1
   _CurrentPhase: 0
   _CurrentStamina: 0
@@ -237,7 +252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ownerPlayer: {fileID: 0}
   maximumCharges: 1
-  rechargeDuration: 3
+  rechargeDuration: 1.5
   dashSpeed: 100
   dashDistance: 20
   quickDashWorldStartCue: {fileID: 11400000, guid: 2bc3344b3b33332439f72e7b7781e366,

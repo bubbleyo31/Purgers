@@ -11,7 +11,7 @@ using UnityEngine;
 /// </summary>
 [DisallowMultipleComponent]
 [RequireComponent(typeof(NetworkObject))]
-public class PlayerAbilityRuntime :
+public partial class PlayerAbilityRuntime :
     NetworkBehaviour
 {
     [Header("能力定義")]
@@ -188,6 +188,7 @@ public class PlayerAbilityRuntime :
     public override void Spawned()
     {
         spawned = true;
+        liveRuntimes.Add(this);
         if (Object.HasStateAuthority)
         {
             ResetCameraRecoil();
@@ -196,6 +197,7 @@ public class PlayerAbilityRuntime :
         }
         ResolveModule();
         TryBindModule();
+        boundOwner = OwnerPlayerObject;
         RefreshProfessionAvailabilityNow();
     }
 
@@ -203,6 +205,7 @@ public class PlayerAbilityRuntime :
     /// <summary>各端皆重試尚未解析的 Owner；遠端 Proxy 不依賴輸入或本機 HUD 才恢復綁定。</summary>
     public override void Render()
     {
+        if (spawned && Object != null && Object.IsValid) RenderLoot();
         if (spawned && Object != null && Object.IsValid && !moduleBound && TryBindModule())
             RefreshProfessionAvailabilityNow();
     }
@@ -223,6 +226,8 @@ public class PlayerAbilityRuntime :
             );
         }
 
+        liveRuntimes.Remove(this);
+        if (lootVisual != null) Destroy(lootVisual.gameObject);
         spawned = false;
         module =
             null;
@@ -243,6 +248,8 @@ public class PlayerAbilityRuntime :
     /// </summary>
     public void Simulate(NetInput input, NetworkButtons previousButtons)
     {
+        if (spawned && (IsWorldLoot || TransferCooldownRemaining > 0)) return;
+        RefreshLootBinding();
         ProcessCameraRecoilRecovery();
         SimulateModule(input, previousButtons);
         // 即使資格不符或按鍵被阻擋，已成功觸發的後座力仍完成施加／回正。
@@ -514,6 +521,13 @@ public class PlayerAbilityRuntime :
             lastProfessionAvailability.Value !=
                 isAvailable)
         {
+            if (!isAvailable && spawned && Object != null && Object.IsValid && Object.HasStateAuthority &&
+                OwnerPlayer != null && OwnerPlayer.GetComponent<PlayerActionGate>()?.IsCaptured == true)
+            {
+                RemainingMovementRecoil = Vector3.zero;
+                MovementRecoilSeconds = 0f;
+                MovementRecoilLifetime = TickTimer.None;
+            }
             module?.SetProfessionAvailable(
                 isAvailable
             );
@@ -528,6 +542,7 @@ public class PlayerAbilityRuntime :
 
     private bool IsCurrentProfessionAllowed()
     {
+        if (!spawned || IsWorldLoot) return false;
         Player ownerPlayer =
             OwnerPlayer;
 
@@ -537,6 +552,11 @@ public class PlayerAbilityRuntime :
         {
             return false;
         }
+
+        if (ownerPlayer.Health != null && ownerPlayer.Health.Object != null &&
+            ownerPlayer.Health.Object.IsValid && !ownerPlayer.Health.IsAlive) return false;
+        var captureGate = ownerPlayer.GetComponent<PlayerActionGate>();
+        if (captureGate != null && captureGate.IsCaptured) return false;
 
         return definition.IsProfessionAllowed(
             ownerPlayer.Profession.CurrentProfession

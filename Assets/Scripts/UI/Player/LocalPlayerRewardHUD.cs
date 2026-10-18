@@ -22,6 +22,7 @@ public sealed class LocalPlayerRewardHUD : MonoBehaviour
         public TMP_Text mouseButton;
         public Image icon;
         public TMP_Text fallbackIcon;
+        public GrowthRewardRankView rankView;
     }
 
     [Header("本機 Runner 與獎勵資料")]
@@ -57,9 +58,13 @@ public sealed class LocalPlayerRewardHUD : MonoBehaviour
 
     private InputManager inputManager;
     private StageHudController ownerStageHud;
+    private Purgers.GameFlow.SafeHouse.SafeHouseHudController ownerSafeHouseHud;
     private bool loggedAmbiguousRunner;
 
     public bool CanPresentRewardSelection =>
+        IsHudConfigured && !LocalPlayerSpectatorController.IsObserving(runner);
+
+    private bool IsHudConfigured =>
         isActiveAndEnabled && rewardCatalog != null &&
         experienceGroup != null && experienceBar != null &&
         levelLabel != null && experienceLabel != null &&
@@ -77,6 +82,7 @@ public sealed class LocalPlayerRewardHUD : MonoBehaviour
     private void Awake()
     {
         ownerStageHud = GetComponentInParent<StageHudController>();
+        ownerSafeHouseHud = GetComponentInParent<Purgers.GameFlow.SafeHouse.SafeHouseHudController>();
         if (rewardCatalog == null)
             rewardCatalog = Resources.Load<PlayerRewardCatalog>(
                 "Progression/PlayerRewardCatalog");
@@ -97,7 +103,7 @@ public sealed class LocalPlayerRewardHUD : MonoBehaviour
 
     private void Update()
     {
-        if (!TryResolveRunner() || !CanPresentRewardSelection)
+        if (!TryResolveRunner() || !IsHudConfigured)
         {
             SetWindowVisible(false);
             SetPromptVisible(false);
@@ -105,11 +111,13 @@ public sealed class LocalPlayerRewardHUD : MonoBehaviour
             return;
         }
 
+        PlayerRef viewed = LocalPlayerSpectatorController.ViewedPlayer(runner);
+        bool observing = viewed != runner.LocalPlayer;
         GameLogic logic = GameLogic.GetPrimaryForRunner(runner);
-        if (logic == null ||
-            !logic.TryGetPlayerExperience(runner.LocalPlayer,
-                out PlayerExperienceState experience) ||
-            !logic.TryGetPlayerRewardDraft(runner.LocalPlayer,
+        if (viewed == PlayerRef.None || logic == null ||
+            !logic.TryGetPlayerExperience(viewed,
+                out PlayerExperienceState experience, out int requiredExperience) ||
+            !logic.TryGetPlayerRewardDraft(viewed,
                 out PlayerRewardNetworkState draft))
         {
             SetWindowVisible(false);
@@ -119,9 +127,15 @@ public sealed class LocalPlayerRewardHUD : MonoBehaviour
         }
 
         SetExperienceVisible(true);
-        RefreshExperience(experience, draft.ChoiceCount);
+        RefreshExperience(experience, draft.ChoiceCount, requiredExperience);
         bool pending = experience.PendingRewards > 0;
         RefreshExperienceStyle(pending);
+        if (observing)
+        {
+            SetWindowVisible(false);
+            SetPromptVisible(false);
+            return;
+        }
         SetPromptVisible(pending && !inputManager.IsRewardSelectionActive);
         if (pending && altPrompt != null && !inputManager.IsRewardSelectionActive)
         {
@@ -139,7 +153,9 @@ public sealed class LocalPlayerRewardHUD : MonoBehaviour
 
     private bool TryResolveRunner()
     {
-        if (ownerStageHud != null)
+        if (ownerSafeHouseHud != null)
+            runner = ownerSafeHouseHud.HudRunner;
+        else if (ownerStageHud != null)
             runner = ownerStageHud.HudRunner;
         else if (runner == null || !runner.IsRunning)
         {
@@ -187,29 +203,28 @@ public sealed class LocalPlayerRewardHUD : MonoBehaviour
         }
         if (CanPresentRewardSelection)
             inputManager.RegisterRewardHud(this);
+        else
+            inputManager.UnregisterRewardHud(this);
         return true;
     }
 
     private void RefreshExperience(
-        PlayerExperienceState experience, int choiceCount)
+        PlayerExperienceState experience, int choiceCount, int required)
     {
         int level = Mathf.Max(1, experience.Level);
-        int required = PlayerExperienceRules.RequiredExperience(level);
         if (experienceBar != null)
         {
             experienceBar.interactable = false;
             experienceBar.minValue = 0f;
             experienceBar.maxValue = 1f;
             experienceBar.SetValueWithoutNotify(
-                experience.PendingRewards > 0
-                    ? 1f
-                    : Mathf.Clamp01((float)experience.Experience / required));
+                Mathf.Clamp01((float)experience.Experience / required));
         }
         if (levelLabel != null)
             levelLabel.text = level.ToString();
         if (experienceLabel != null)
             experienceLabel.text = experience.PendingRewards > 0
-                ? $"待選獎勵 ×{experience.PendingRewards}"
+                ? $"{experience.Experience} / {required} · 待選 ×{experience.PendingRewards}"
                 : $"{experience.Experience} / {required}";
         if (altPromptLabel != null)
         {
@@ -265,15 +280,35 @@ public sealed class LocalPlayerRewardHUD : MonoBehaviour
         if (!found)
             return;
 
+        int displayRank = 1;
         card.title.text = reward.DisplayName;
         card.description.text = reward.Description;
+        if (reward.IsImplementedGrowthReward && PlayerGrowthRules.IsAttribute(reward.GrowthKind))
+        {
+            var logic = GameLogic.GetPrimaryForRunner(runner);
+            int rank = logic != null ? logic.GetPlayerGrowth(runner.LocalPlayer).Rank(reward.GrowthKind) : 0;
+            int next = Mathf.Min(rank + 1, PlayerGrowthRules.MaximumRank(reward.GrowthKind));
+            displayRank = next;
+            card.title.text = $"{reward.DisplayName} · {next} 階";
+            bool percent = reward.GrowthKind == PlayerGrowthKind.ReloadSpeed || reward.GrowthKind == PlayerGrowthKind.MeleeSpeed ||
+                reward.GrowthKind == PlayerGrowthKind.GrappleCost || reward.GrowthKind == PlayerGrowthKind.FocusCooldown || reward.GrowthKind == PlayerGrowthKind.HitCooldown ||
+                reward.GrowthKind == PlayerGrowthKind.GuardCooldown;
+            float value = reward.GrowthValue(next);
+            string formatted = percent ? $"{value * 100:0.#}%" : $"{value:0.#}";
+            if (reward.GrowthKind == PlayerGrowthKind.GuardReduction) formatted = $"+{value * 100:0.#} 個百分點";
+            if (reward.GrowthKind == PlayerGrowthKind.GuardStamina) formatted = $"+{value:0.#}";
+            card.description.text = reward.Description + $"\n升階後：{formatted}（本輪保留）";
+        }
         card.mouseButton.text = mouseButton;
-        Sprite icon = reward.HudIcon;
+        Sprite icon = card.rankView != null && reward.IsImplementedGrowthReward &&
+            PlayerGrowthRules.IsAttribute(reward.GrowthKind) && reward.GrowthRankBackground != null
+            ? reward.GrowthRankBackground : reward.HudIcon;
         if (card.icon != null)
         {
             card.icon.enabled = icon != null;
             card.icon.sprite = icon;
         }
+        if (card.rankView != null) card.rankView.Present(reward, displayRank);
         if (card.fallbackIcon != null)
             card.fallbackIcon.gameObject.SetActive(icon == null);
     }

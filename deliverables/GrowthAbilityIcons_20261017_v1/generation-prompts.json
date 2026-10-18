@@ -1,0 +1,120 @@
+{
+  "generator": "built-in image_gen",
+  "stage": "15 initial drafts",
+  "icons": [
+    {
+      "id": "S01_NotToday",
+      "name": "不是今天",
+      "file": "S01_NotToday.png",
+      "prompt": "Use case: logo-brand. Create ONE square game HUD skill icon, not a sheet. Pure solid white pictogram on genuinely transparent background. Minimal bold geometric silhouette, clean smooth hard edges, consistent thick shapes, readable at 64 pixels. Centered composition with 12 percent clear margins. No gray, no colors, no black fill, no background, no texture, no distressed edges, no noise, no scattered flecks, no glow, no shading, no tiny detail, no text unless explicitly requested. White shapes with transparent negative spaces. Subject: A large angular shield outline encloses a solid heart. A single sharp diagonal incoming impact strikes the outside upper-right shield edge and breaks into TWO short bold deflection strokes. Heart and shield remain intact, expressing blocking a fatal blow. No numeral.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-de2ed7b6-ca3a-4081-91de-53a9cc774736.png"
+    },
+    {
+      "id": "S02_SelfRevive",
+      "name": "我自己來",
+      "file": "S02_SelfRevive.png",
+      "prompt": "Use case: logo-brand. Create ONE square game HUD skill icon, not a sheet. Pure solid white pictogram on genuinely transparent background. Minimal bold geometric silhouette, clean smooth hard edges, consistent thick shapes, readable at 64 pixels. Centered composition with 12 percent clear margins. No gray, no colors, no black fill, no background, no texture, no distressed edges, no noise, no scattered flecks, no glow, no shading, no tiny detail, no text unless explicitly requested. White shapes with transparent negative spaces. Subject: A simplified hooded protective-suit player silhouette in three-quarter view, one knee low and the other leg planted, one hand pushing from the ground as the body rises. A single broad curved upward arrow behind the person reinforces self-revival. Minimal visor cutout, no face detail, no floor shadow. No numeral.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-86054dd4-6ffb-4e48-aba3-bdc67ce06c3c.png"
+    },
+    {
+      "id": "S03_Adrenaline",
+      "name": "腎上腺素",
+      "file": "S03_Adrenaline.png",
+      "prompt": "Use case: logo-brand. Create ONE square game HUD skill icon, not a sheet. Pure solid white pictogram on genuinely transparent background. Minimal bold geometric silhouette, clean smooth hard edges, consistent thick shapes, readable at 64 pixels. Centered composition with 12 percent clear margins. No gray, no colors, no black fill, no background, no texture, no distressed edges, no noise, no scattered flecks, no glow, no shading, no tiny detail, no text unless explicitly requested. White shapes with transparent negative spaces. Subject: A large heart OUTLINE in the foreground, mostly empty inside except a small low horizontal fill segment at its bottom representing critically low health. Behind it three short angular upward arrows fan up, one tallest center, two lower sides, expressing rising damage. Clear readable silhouette. No numeral.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-7643f613-1b9a-4adc-bbef-410c93e6a3c8.png"
+    },
+    {
+      "id": "S04_CarnivorousTree",
+      "name": "食人樹",
+      "file": "S04_CarnivorousTree.png",
+      "prompt": "Use case: logo-brand. Create ONE square game HUD skill icon, not a sheet. Pure solid white pictogram on genuinely transparent background. Minimal bold geometric silhouette, clean smooth hard edges, consistent thick shapes, readable at 64 pixels. Centered composition with 12 percent clear margins. No gray, no colors, no black fill, no background, no texture, no distressed edges, no noise, no scattered flecks, no glow, no shading, no tiny detail, no text unless explicitly requested. White shapes with transparent negative spaces. Subject: A compact monstrous TREE CROWN with three large angular leafy lobes and a short thick trunk. The crown has a wide open mouth with FOUR large sharp triangular teeth, two above and two below. A single white blood droplet beneath the open mouth is being drawn toward it; leave clear negative space around droplet. Strong recognizable toothed tree canopy, not a skull, no eyes needed. No numeral.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-20190ead-ea19-49d8-be48-5e54290224e1.png"
+    },
+    {
+      "id": "S05_HardChoice",
+      "name": "真難抉擇",
+      "file": "S05_HardChoice.png",
+      "prompt": "Use case: logo-brand. Create ONE square game HUD skill icon, not a sheet. Pure solid white pictogram on genuinely transparent background. Minimal bold geometric silhouette, clean smooth hard edges, consistent thick shapes, readable at 64 pixels. Centered composition with 12 percent clear margins. No gray, no colors, no black fill, no background, no texture, no distressed edges, no noise, no scattered flecks, no glow, no shading, no tiny detail, no text unless explicitly requested. White shapes with transparent negative spaces. Subject: A bold slightly tilted square die with exactly three large transparent circular pips, surrounded on two sides by ONE broad almost-circular cycling arrow with a clear arrowhead. Random periodic skill activation. Minimal flat pictogram, not realistic 3D. No numeral.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-c9c38476-6088-4434-81d1-b43d601a3ee1.png"
+    },
+    {
+      "id": "S06_JohnWick",
+      "name": "約翰維克",
+      "file": "S06_JohnWick.png",
+      "prompt": "Use case: logo-brand. Create ONE square game HUD skill icon, not a sheet. Pure solid white pictogram on genuinely transparent background. Minimal bold geometric silhouette, clean smooth hard edges, consistent thick shapes, readable at 64 pixels. Centered composition with 12 percent clear margins. No gray, no colors, no black fill, no background, no texture, no distressed edges, no noise, no scattered flecks, no glow, no shading, no tiny detail, no text unless explicitly requested. White shapes with transparent negative spaces. Subject: Two chunky semiautomatic pistol silhouettes crossed diagonally, muzzles upper-left and upper-right, grips lower center. Beneath them THREE upright cartridges side-by-side, large simple rounded tips, visually separate. Balanced compact emblem. No person or face. No numeral.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-30aac6e9-85e5-4c7b-8a9c-7bea6c6df3c3.png"
+    },
+    {
+      "id": "A01_MaxHealth_I",
+      "name": "最大生命 I",
+      "maxLevel": 5,
+      "file": "A01_MaxHealth_I.png",
+      "prompt": "Use case: logo-brand. Create ONE square game HUD skill icon, not a sheet. Pure solid white pictogram on genuinely transparent background. Minimal bold geometric silhouette, clean smooth hard edges, consistent thick shapes, readable at 64 pixels. Centered composition with 12 percent clear margins. No gray, no colors, no black fill, no background, no texture, no distressed edges, no noise, no scattered flecks, no glow, no shading, no tiny detail, no text unless explicitly requested. White shapes with transparent negative spaces. Subject: A thick large HEART OUTLINE frames the central numeral. Keep the inner heart cavity empty except the numeral. No medical cross. This is a level-I attribute icon. The EXACT single Roman numeral \"I\" must sit at the geometric CENTER of the image, large and extremely legible: a bold upright vertical stem with distinct wide horizontal top and bottom bars, about 30 percent of canvas height. Solid white numeral, completely isolated by transparent padding on all sides. No decorative object may overlap or touch the numeral. Arrange the attribute symbols AROUND this central clear area, leaving enough center width for later II, III, IV, V. No other letters or numbers.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-c6da5771-ba67-4aba-a1e7-30661da7aa92.png"
+    },
+    {
+      "id": "A02_ReloadSpeed_I",
+      "name": "換彈速度 I",
+      "maxLevel": 4,
+      "file": "A02_ReloadSpeed_I.png",
+      "prompt": "Use case: logo-brand. Create ONE square game HUD skill icon, not a sheet. Pure solid white pictogram on genuinely transparent background. Minimal bold geometric silhouette, clean smooth hard edges, consistent thick shapes, readable at 64 pixels. Centered composition with 12 percent clear margins. No gray, no colors, no black fill, no background, no texture, no distressed edges, no noise, no scattered flecks, no glow, no shading, no tiny detail, no text unless explicitly requested. White shapes with transparent negative spaces. Subject: A small slanted rifle magazine at upper-left and a thick nearly circular reload arrow surrounding the central numeral; arrowhead at lower-right. Magazine has only two short negative-space grooves. Clearly a reload symbol. This is a level-I attribute icon. The EXACT single Roman numeral \"I\" must sit at the geometric CENTER of the image, large and extremely legible: a bold upright vertical stem with distinct wide horizontal top and bottom bars, about 30 percent of canvas height. Solid white numeral, completely isolated by transparent padding on all sides. No decorative object may overlap or touch the numeral. Arrange the attribute symbols AROUND this central clear area, leaving enough center width for later II, III, IV, V. No other letters or numbers.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-db8f6aa6-c18f-48cf-ae55-f37f1eef541f.png"
+    },
+    {
+      "id": "A03_MeleeSpeed_I",
+      "name": "近戰攻速 I",
+      "maxLevel": 4,
+      "file": "A03_MeleeSpeed_I.png",
+      "prompt": "Create a minimal white-on-transparent fantasy game inventory attribute emblem. Square canvas. Large bold Roman numeral \"I\" at exact center, with horizontal top and bottom bars and generous clear space. To its outer left is one simple stylized short sword silhouette, pointing upward, entirely separated from the numeral. Two sweeping curved motion strokes around the top and right suggest speed. Only these graphic symbols. Flat clean white pictogram shapes, thick strokes, no scene, no people, no combat depiction, no gore, no texture, no gray, no background. Keep all shapes inside 12 percent margins. Numeral must remain very legible at small HUD size.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-cc893438-a025-4c9a-83ac-e1f53449c1c2.png"
+    },
+    {
+      "id": "A04_MagazineCapacity_I",
+      "name": "彈匣容量 I",
+      "maxLevel": 4,
+      "file": "A04_MagazineCapacity_I.png",
+      "prompt": "Use case: logo-brand. Create ONE square game HUD skill icon, not a sheet. Pure solid white pictogram on genuinely transparent background. Minimal bold geometric silhouette, clean smooth hard edges, consistent thick shapes, readable at 64 pixels. Centered composition with 12 percent clear margins. No gray, no colors, no black fill, no background, no texture, no distressed edges, no noise, no scattered flecks, no glow, no shading, no tiny detail, no text unless explicitly requested. White shapes with transparent negative spaces. Subject: A large upright wide rifle MAGAZINE OUTLINE serves as the framing shape, THREE cartridge tips protrude from its top edge. The magazine interior is empty except the centered numeral, no other vertical markings that might resemble digits. This is a level-I attribute icon. The EXACT single Roman numeral \"I\" must sit at the geometric CENTER of the image, large and extremely legible: a bold upright vertical stem with distinct wide horizontal top and bottom bars, about 30 percent of canvas height. Solid white numeral, completely isolated by transparent padding on all sides. No decorative object may overlap or touch the numeral. Arrange the attribute symbols AROUND this central clear area, leaving enough center width for later II, III, IV, V. No other letters or numbers.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-2457770e-472e-4263-9fdb-f981481e910a.png"
+    },
+    {
+      "id": "A05_GrappleEnergy_I",
+      "name": "鈎索能量減耗 I",
+      "maxLevel": 5,
+      "file": "A05_GrappleEnergy_I.png",
+      "prompt": "Use case: logo-brand. Create ONE square game HUD skill icon, not a sheet. Pure solid white pictogram on genuinely transparent background. Minimal bold geometric silhouette, clean smooth hard edges, consistent thick shapes, readable at 64 pixels. Centered composition with 12 percent clear margins. No gray, no colors, no black fill, no background, no texture, no distressed edges, no noise, no scattered flecks, no glow, no shading, no tiny detail, no text unless explicitly requested. White shapes with transparent negative spaces. Subject: A large angular barbed grappling hook curls around the left and lower outer perimeter, a compact lightning bolt at upper-right and a short MINUS sign below the bolt on the outer-right. The hook, lightning and minus all remain outside the central numeral's reserved area. This is a level-I attribute icon. The EXACT single Roman numeral \"I\" must sit at the geometric CENTER of the image, large and extremely legible: a bold upright vertical stem with distinct wide horizontal top and bottom bars, about 30 percent of canvas height. Solid white numeral, completely isolated by transparent padding on all sides. No decorative object may overlap or touch the numeral. Arrange the attribute symbols AROUND this central clear area, leaving enough center width for later II, III, IV, V. No other letters or numbers.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-56811bac-461c-49fe-a130-adc37c53c218.png"
+    },
+    {
+      "id": "A06_FocusCooldown_I",
+      "name": "專注技能冷卻減免 I",
+      "maxLevel": 5,
+      "file": "A06_FocusCooldown_I.png",
+      "prompt": "Use case: logo-brand. Create ONE square game HUD skill icon, not a sheet. Pure solid white pictogram on genuinely transparent background. Minimal bold geometric silhouette, clean smooth hard edges, consistent thick shapes, readable at 64 pixels. Centered composition with 12 percent clear margins. No gray, no colors, no black fill, no background, no texture, no distressed edges, no noise, no scattered flecks, no glow, no shading, no tiny detail, no text unless explicitly requested. White shapes with transparent negative spaces. Subject: A pair of sharp narrow focused EYES sit across the TOP of the icon above the central numeral. A broad circular return arrow frames left, bottom and right around the numeral, expressing focus-skill cooldown reduction. Keep eyes well separated from numeral. This is a level-I attribute icon. The EXACT single Roman numeral \"I\" must sit at the geometric CENTER of the image, large and extremely legible: a bold upright vertical stem with distinct wide horizontal top and bottom bars, about 30 percent of canvas height. Solid white numeral, completely isolated by transparent padding on all sides. No decorative object may overlap or touch the numeral. Arrange the attribute symbols AROUND this central clear area, leaving enough center width for later II, III, IV, V. No other letters or numbers.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-485db99e-ecc1-4f71-a07f-5f8e59c67361.png"
+    },
+    {
+      "id": "A07_GrappleCooldown_I",
+      "name": "鈎索技能冷卻減免 I",
+      "maxLevel": 5,
+      "file": "A07_GrappleCooldown_I.png",
+      "prompt": "Use case: logo-brand. Create ONE square game HUD skill icon, not a sheet. Pure solid white pictogram on genuinely transparent background. Minimal bold geometric silhouette, clean smooth hard edges, consistent thick shapes, readable at 64 pixels. Centered composition with 12 percent clear margins. No gray, no colors, no black fill, no background, no texture, no distressed edges, no noise, no scattered flecks, no glow, no shading, no tiny detail, no text unless explicitly requested. White shapes with transparent negative spaces. Subject: A small angular BARBED GRAPPLING HOOK sits across the TOP, above the numeral. A broad circular return arrow frames left, bottom and right around the central numeral. Clearly distinguish the hooked top symbol from eyes or lightning. This is a level-I attribute icon. The EXACT single Roman numeral \"I\" must sit at the geometric CENTER of the image, large and extremely legible: a bold upright vertical stem with distinct wide horizontal top and bottom bars, about 30 percent of canvas height. Solid white numeral, completely isolated by transparent padding on all sides. No decorative object may overlap or touch the numeral. Arrange the attribute symbols AROUND this central clear area, leaving enough center width for later II, III, IV, V. No other letters or numbers.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-cb7fa881-fa63-43eb-b086-a80f466b0601.png"
+    },
+    {
+      "id": "A08_OutOfCombatRegen_I",
+      "name": "脫戰每秒回血 I",
+      "maxLevel": 5,
+      "file": "A08_OutOfCombatRegen_I.png",
+      "prompt": "Use case: logo-brand. Create ONE square game HUD skill icon, not a sheet. Pure solid white pictogram on genuinely transparent background. Minimal bold geometric silhouette, clean smooth hard edges, consistent thick shapes, readable at 64 pixels. Centered composition with 12 percent clear margins. No gray, no colors, no black fill, no background, no texture, no distressed edges, no noise, no scattered flecks, no glow, no shading, no tiny detail, no text unless explicitly requested. White shapes with transparent negative spaces. Subject: A large thick heart OUTLINE frames the central numeral. A clearly readable medical PLUS CROSS is attached at upper-right outside the heart cavity. TWO short upward flow arrows rise just outside the left edge, representing continuous healing. Keep center clear. This is a level-I attribute icon. The EXACT single Roman numeral \"I\" must sit at the geometric CENTER of the image, large and extremely legible: a bold upright vertical stem with distinct wide horizontal top and bottom bars, about 30 percent of canvas height. Solid white numeral, completely isolated by transparent padding on all sides. No decorative object may overlap or touch the numeral. Arrange the attribute symbols AROUND this central clear area, leaving enough center width for later II, III, IV, V. No other letters or numbers.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-3c03f0d8-56ea-4890-952c-0fb527bf36f0.png"
+    },
+    {
+      "id": "A09_RegenDelay_I",
+      "name": "脫戰回血等待時間縮短 I",
+      "maxLevel": 5,
+      "file": "A09_RegenDelay_I.png",
+      "prompt": "Use case: logo-brand. Create ONE square game HUD skill icon, not a sheet. Pure solid white pictogram on genuinely transparent background. Minimal bold geometric silhouette, clean smooth hard edges, consistent thick shapes, readable at 64 pixels. Centered composition with 12 percent clear margins. No gray, no colors, no black fill, no background, no texture, no distressed edges, no noise, no scattered flecks, no glow, no shading, no tiny detail, no text unless explicitly requested. White shapes with transparent negative spaces. Subject: A small heart sits at upper-left on the perimeter of a broad clock-like CIRCULAR ARC around the central numeral. A pair of compact fast-forward chevrons sits on the outer-right perimeter, pointing clockwise/downward. A short clock hand detail stays near the top rim, never crosses the center. Express shorter waiting time before health regeneration. This is a level-I attribute icon. The EXACT single Roman numeral \"I\" must sit at the geometric CENTER of the image, large and extremely legible: a bold upright vertical stem with distinct wide horizontal top and bottom bars, about 30 percent of canvas height. Solid white numeral, completely isolated by transparent padding on all sides. No decorative object may overlap or touch the numeral. Arrange the attribute symbols AROUND this central clear area, leaving enough center width for later II, III, IV, V. No other letters or numbers.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-cce5028c-2dea-4e7d-9ab9-6c9cdaa478ea.png"
+    }
+  ]
+}

@@ -119,7 +119,7 @@ public sealed class WeaponRewardTests
             else if (reward.IsImplementedAbilityReward) abilities++;
         }
         Assert.That(weapons, Is.EqualTo(3));
-        Assert.That(abilities, Is.EqualTo(14));
+        Assert.That(abilities, Is.EqualTo(15));
     }
 
     [Test]

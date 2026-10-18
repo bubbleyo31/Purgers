@@ -77,6 +77,15 @@ public sealed class EnemyRangedProjectileAttack :
     [SerializeField]
     [Tooltip("開啟後輸出 Projectile Spawn 成功或設定缺失。")]
     private bool debugProjectileAttack;
+    [SerializeField, Tooltip("預設關閉。開啟時上一發（包含已反彈／Impact）Despawn 前不能開始下一次攻擊；既有冷卻仍須完成。只在反彈護盾敵人開啟。")]
+    private bool waitForPreviousProjectile;
+    [Networked] public NetworkObject OutstandingProjectile { get; private set; }
+    private bool attackSpawned;
+    public bool HasOutstandingProjectile => attackSpawned && Object != null && Object.IsValid && OutstandingProjectile != null && OutstandingProjectile.IsValid;
+    public override bool SupportsBetweenActionAiming => waitForPreviousProjectile;
+    public override bool SupportsRememberedTargetAiming => waitForPreviousProjectile;
+    public override void AimBetweenActions(in EnemyCombatContext context) { FaceTarget(context); }
+    public override void Despawned(NetworkRunner runner,bool hasState) { attackSpawned=false; }
 
     [Networked]
     public TickTimer PhaseTimer
@@ -111,11 +120,13 @@ public sealed class EnemyRangedProjectileAttack :
 
     public override void Spawned()
     {
+        attackSpawned=true;
         if (Object.HasStateAuthority)
         {
             PhaseTimer = TickTimer.None;
             CooldownTimer = TickTimer.None;
             ProjectileSequence = 0;
+            OutstandingProjectile = null;
         }
     }
 
@@ -123,14 +134,14 @@ public sealed class EnemyRangedProjectileAttack :
         NetworkRunner runner
     )
     {
-        return CooldownTimer.ExpiredOrNotRunning(runner);
+        return (!waitForPreviousProjectile || !HasOutstandingProjectile) && CooldownTimer.ExpiredOrNotRunning(runner);
     }
 
     public override bool CanStartOption(
         in EnemyCombatContext context
     )
     {
-        return projectilePrefab.IsValid;
+        return projectilePrefab.IsValid && (!waitForPreviousProjectile || !HasOutstandingProjectile);
     }
 
     public override void PauseSimulationTick()
@@ -242,6 +253,7 @@ public sealed class EnemyRangedProjectileAttack :
         // 先把真正需要的網路物件複製到區域變數，也讓 callback 不必依賴
         // 外層 context 的生命週期。
         NetworkObject ownerEnemy = context.Actor.Object;
+        NetworkObject homingTarget = context.Target;
 
         NetworkObject projectile = Runner.Spawn(
             projectilePrefab,
@@ -264,9 +276,12 @@ public sealed class EnemyRangedProjectileAttack :
                         projectileLifetimeSeconds,
                         sequence
                     );
+                    behaviour.SetHomingTargetBeforeSpawn(homingTarget);
                 }
             }
         );
+
+        OutstandingProjectile = projectile;
 
         if (debugProjectileAttack)
         {

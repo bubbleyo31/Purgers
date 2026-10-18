@@ -31,6 +31,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7055992972218809371}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1 &7009631818632856809
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4515042047331108506}
+  m_Layer: 0
+  m_Name: EnemyHealthBarAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4515042047331108506
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7009631818632856809}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.17391968, y: 11.778169, z: 0.026611328}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 68012412611644953}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1260758117179951900
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2733,7 +2764,7 @@ PrefabInstance:
     - target: {fileID: 7094443144932554358, guid: c076e2eaedb126a45936a2d47daa0e84,
         type: 3}
       propertyPath: NetworkedBehaviours.Array.size
-      value: 16
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 7094443144932554358, guid: c076e2eaedb126a45936a2d47daa0e84,
         type: 3}
@@ -2804,7 +2835,7 @@ PrefabInstance:
         type: 3}
       propertyPath: NetworkedBehaviours.Array.data[16]
       value: 
-      objectReference: {fileID: 4506425106154536486}
+      objectReference: {fileID: 3536046474778459954}
     - target: {fileID: 7094443144932554358, guid: c076e2eaedb126a45936a2d47daa0e84,
         type: 3}
       propertyPath: NetworkedBehaviours.Array.data[17]
@@ -2918,6 +2949,10 @@ PrefabInstance:
     - {fileID: 4572211729385784017, guid: c076e2eaedb126a45936a2d47daa0e84, type: 3}
     - {fileID: 6745316681942654950, guid: c076e2eaedb126a45936a2d47daa0e84, type: 3}
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7705653821546839728, guid: c076e2eaedb126a45936a2d47daa0e84,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4515042047331108506}
     - targetCorrespondingSourceObject: {fileID: 1561445177044942110, guid: c076e2eaedb126a45936a2d47daa0e84,
         type: 3}
       insertIndex: -1
@@ -2927,6 +2962,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1946597194294222940}
+    - targetCorrespondingSourceObject: {fileID: 5378541382959265429, guid: c076e2eaedb126a45936a2d47daa0e84,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3536046474778459954}
     - targetCorrespondingSourceObject: {fileID: 900432771643364133, guid: c076e2eaedb126a45936a2d47daa0e84,
         type: 3}
       insertIndex: -1
@@ -2936,6 +2975,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 4593990386060467133}
   m_SourcePrefab: {fileID: 100100000, guid: c076e2eaedb126a45936a2d47daa0e84, type: 3}
+--- !u!4 &68012412611644953 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7705653821546839728, guid: c076e2eaedb126a45936a2d47daa0e84,
+    type: 3}
+  m_PrefabInstance: {fileID: 7646650092235452585}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &905450177520006283 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7390008541806986274, guid: c076e2eaedb126a45936a2d47daa0e84,
@@ -2990,6 +3035,8 @@ MonoBehaviour:
   beamHitMask:
     serializedVersion: 2
     m_Bits: 65
+  useWindupStageRatio: 1
+  trackingStageRatio: 0.45454547
   trackingSeconds: 0.4
   trackingTargetRefreshIntervalSeconds: 0.1
   lockedDelaySeconds: 0.48
@@ -3010,6 +3057,25 @@ MonoBehaviour:
   _BeamVisualEndPoint: {x: 0, y: 0, z: 0}
   _BeamShotSequence: 74
   _LastShotHitPlayer: 1
+  _ShotStartPoint: {x: 0, y: 0, z: 0}
+  _ShotEndPoint: {x: 0, y: 0, z: 0}
+  _ShotVisualDuration: 0
+--- !u!114 &3536046474778459954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2358251621128898108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72d4a3a43a9133b4f92a9dfa84523fab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displayMode: 2
+  headAnchor: {fileID: 4515042047331108506}
+  bodyCenter: {x: -0.17391968, y: 6.9362636, z: 0.026611328}
+  bodySize: {x: 6.6733665, y: 9.58381, z: 7.6951447}
 --- !u!114 &3325173908090288271 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4916593458610210854, guid: c076e2eaedb126a45936a2d47daa0e84,
@@ -3255,6 +3321,75 @@ MonoBehaviour:
   beamAttack: {fileID: 1946597194294222940}
   combatDecision: {fileID: 3992856390387790385}
   lineRenderer: {fileID: 5725618704427947699}
+  presentation:
+    aimWidth: 0.025
+    chargeWidth: 0.075
+    shotWidth: 0.3
+    aimColor: {r: 0.55, g: 0.85, b: 0.8, a: 0.6}
+    chargeColor: {r: 0.02, g: 0.45, b: 0.34, a: 1}
+    shotColor: {r: 0.12, g: 2, b: 1.6, a: 1}
+    coreColor: {r: 2, g: 2.5, b: 2.3, a: 1}
+    coreWidthRatio: 0.28
+    collapse:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    lineMaterial: {fileID: 2100000, guid: 15caa7673af687b4a99bbed50706c513, type: 2}
+    particles:
+      enabled: 1
+      prefab: {fileID: 0}
+      material: {fileID: 2100000, guid: d71b2c5be938a674b9e43da38046e2b7, type: 2}
+      muzzleCount: 18
+      beamCount: 48
+      endCount: 22
+      lifetime: 0.18
+      size: 0.045
+      speed: 2.5
+      radius: 0.12
+      color: {r: 0.2, g: 2, b: 1.65, a: 1}
+    audio:
+      prepare:
+        cue: {fileID: 0}
+        clipIndex: 0
+        pitch: 1
+        volume: 1
+      aim:
+        cue: {fileID: 0}
+        clipIndex: 0
+        pitch: 1
+        volume: 1
+      charge:
+        cue: {fileID: 0}
+        clipIndex: 0
+        pitch: 1
+        volume: 1
+      fire:
+        cue: {fileID: 0}
+        clipIndex: 0
+        pitch: 1
+        volume: 1
+      loopAim: 1
+      loopCharge: 1
   onBeamFired:
     m_PersistentCalls:
       m_Calls: []

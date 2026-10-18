@@ -1,0 +1,74 @@
+diff --git a/Temp/GrowthSlabApply_20261017/Assets/Prefabs/UI/StageHUD.prefab b/Assets/Prefabs/UI/StageHUD.prefab
+index 4d98b0c..4952f4e 100644
+--- a/Temp/GrowthSlabApply_20261017/Assets/Prefabs/UI/StageHUD.prefab
++++ b/Assets/Prefabs/UI/StageHUD.prefab
+@@ -1127,8 +1127,8 @@ MonoBehaviour:
+       m_Calls: []
+   m_text: 
+   m_isRightToLeft: 0
+-  m_fontAsset: {fileID: 11400000, guid: 4d97499441997964489bcfbd0cb2e486, type: 2}
+-  m_sharedMaterial: {fileID: -6285160484716614813, guid: 4d97499441997964489bcfbd0cb2e486,
++  m_fontAsset: {fileID: 11400000, guid: bf254c7f254c9a4429c8beebf35e484d, type: 2}
++  m_sharedMaterial: {fileID: 4140942422529455679, guid: bf254c7f254c9a4429c8beebf35e484d,
+     type: 2}
+   m_fontSharedMaterials: []
+   m_fontMaterial: {fileID: 0}
+@@ -1300,8 +1300,8 @@ MonoBehaviour:
+       m_Calls: []
+   m_text: 
+   m_isRightToLeft: 0
+-  m_fontAsset: {fileID: 11400000, guid: 4d97499441997964489bcfbd0cb2e486, type: 2}
+-  m_sharedMaterial: {fileID: -6285160484716614813, guid: 4d97499441997964489bcfbd0cb2e486,
++  m_fontAsset: {fileID: 11400000, guid: bf254c7f254c9a4429c8beebf35e484d, type: 2}
++  m_sharedMaterial: {fileID: 4140942422529455679, guid: bf254c7f254c9a4429c8beebf35e484d,
+     type: 2}
+   m_fontSharedMaterials: []
+   m_fontMaterial: {fileID: 0}
+@@ -5390,8 +5390,8 @@ MonoBehaviour:
+       m_Calls: []
+   m_text: 
+   m_isRightToLeft: 0
+-  m_fontAsset: {fileID: 11400000, guid: 4d97499441997964489bcfbd0cb2e486, type: 2}
+-  m_sharedMaterial: {fileID: -6285160484716614813, guid: 4d97499441997964489bcfbd0cb2e486,
++  m_fontAsset: {fileID: 11400000, guid: bf254c7f254c9a4429c8beebf35e484d, type: 2}
++  m_sharedMaterial: {fileID: 4140942422529455679, guid: bf254c7f254c9a4429c8beebf35e484d,
+     type: 2}
+   m_fontSharedMaterials: []
+   m_fontMaterial: {fileID: 0}
+diff --git a/Temp/GrowthSlabApply_20261017/Assets/Scenes/SafeHouse.unity b/Assets/Scenes/SafeHouse.unity
+index 1c00d5a..0fb9f03 100644
+--- a/Temp/GrowthSlabApply_20261017/Assets/Scenes/SafeHouse.unity
++++ b/Assets/Scenes/SafeHouse.unity
+@@ -1074,8 +1074,8 @@ MonoBehaviour:
+       m_Calls: []
+   m_text: 
+   m_isRightToLeft: 0
+-  m_fontAsset: {fileID: 11400000, guid: 4d97499441997964489bcfbd0cb2e486, type: 2}
+-  m_sharedMaterial: {fileID: -6285160484716614813, guid: 4d97499441997964489bcfbd0cb2e486,
++  m_fontAsset: {fileID: 11400000, guid: bf254c7f254c9a4429c8beebf35e484d, type: 2}
++  m_sharedMaterial: {fileID: 4140942422529455679, guid: bf254c7f254c9a4429c8beebf35e484d,
+     type: 2}
+   m_fontSharedMaterials: []
+   m_fontMaterial: {fileID: 0}
+@@ -7277,8 +7277,8 @@ MonoBehaviour:
+       m_Calls: []
+   m_text: 
+   m_isRightToLeft: 0
+-  m_fontAsset: {fileID: 11400000, guid: 4d97499441997964489bcfbd0cb2e486, type: 2}
+-  m_sharedMaterial: {fileID: -6285160484716614813, guid: 4d97499441997964489bcfbd0cb2e486,
++  m_fontAsset: {fileID: 11400000, guid: bf254c7f254c9a4429c8beebf35e484d, type: 2}
++  m_sharedMaterial: {fileID: 4140942422529455679, guid: bf254c7f254c9a4429c8beebf35e484d,
+     type: 2}
+   m_fontSharedMaterials: []
+   m_fontMaterial: {fileID: 0}
+@@ -9400,8 +9400,8 @@ MonoBehaviour:
+       m_Calls: []
+   m_text: 
+   m_isRightToLeft: 0
+-  m_fontAsset: {fileID: 11400000, guid: 4d97499441997964489bcfbd0cb2e486, type: 2}
+-  m_sharedMaterial: {fileID: -6285160484716614813, guid: 4d97499441997964489bcfbd0cb2e486,
++  m_fontAsset: {fileID: 11400000, guid: bf254c7f254c9a4429c8beebf35e484d, type: 2}
++  m_sharedMaterial: {fileID: 4140942422529455679, guid: bf254c7f254c9a4429c8beebf35e484d,
+     type: 2}
+   m_fontSharedMaterials: []
+   m_fontMaterial: {fileID: 0}

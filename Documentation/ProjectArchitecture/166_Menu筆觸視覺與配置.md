@@ -1,4 +1,4 @@
-﻿# Menu 筆觸主選單與子視窗 V2 配置
+# Menu 筆觸主選單與子視窗 V2 配置
 
 > 最後局部核對：2026-10-03  
 > 核對來源：`Assets/Scenes/_Menu.unity`、`Assets/Scripts/MenuImplementation/MenuBrushButtonVisual.cs`、`Assets/Scripts/Editor/MenuBrushStyleBuilder.cs`  
@@ -128,3 +128,8 @@ Highlight 必須使用有 Sprite 的 Image，Type=Filled、Method=Horizontal、O
 聚焦 9/9 通過；完整回歸仍有既有 6 項失敗，並非全套通過。實際截圖、測試數與保護原未儲存 Scene 的方式見 [MenuWindowsV2 驗證](Validation/MenuWindowsV2/README.md)。
 
 - 2026-10-03：子視窗 V2 完成 Scene 套用、獨立 V2 存檔列、只讀摘要與 UI 流程驗證。
+## 2026-10-18 ESC 與玩家設定（正式整合／局部核對）
+
+2026-10-18 使用者明確授權後，已接入正式主選單與遊戲 ESC。Q／E 群組改鍵、投票優先、每玩家模式與本機保存沿 [104 完整規則](104_ESC選單與玩家設定.md)；實際責任入口、資產及驗證邊界見 [正式整合紀錄](Validation/PlayerSettings/README.md)。舊固定鍵名僅表示初始綁定，舊 ESC／Enter 切換游標與第二次跑步鍵不取消的描述已被取代。
+### 2026-10-18 玩家設定視覺例外
+依使用者修訂，正式 PlayerSettingsMenu／ESC 不使用筆刷底圖，採深橄欖、米白及金色純色選取；FPS／延遲移至畫面右上角同風格資訊卡，舊 SessionCodeOverlay 整體停用。其餘主選單按鈕與子視窗沿原美術，不作全域替換。正式規則見 [104](104_ESC選單與玩家設定.md)。

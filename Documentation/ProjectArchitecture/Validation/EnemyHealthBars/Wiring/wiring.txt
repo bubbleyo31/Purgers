@@ -1,0 +1,10 @@
+Enemy_Melee_A | mode=Large | center=(0.013, 2.666, -0.081) | size=(2.798, 4.899, 3.541) | anchor=(0.013, 5.165, -0.081)
+Enemy_Melee_B | mode=Large | center=(-0.096, 2.786, 0.608) | size=(2.884, 4.899, 3.214) | anchor=(-0.096, 5.285, 0.608)
+Enemy_Ranged_A | mode=Large | center=(-0.174, 6.936, 0.027) | size=(6.673, 9.584, 7.695) | anchor=(-0.174, 11.778, 0.027)
+Enemy_Ranged_B | mode=Large | center=(-0.174, 6.936, 0.027) | size=(6.673, 9.584, 7.695) | anchor=(-0.174, 11.778, 0.027)
+Enemy_Ranged_C_Beam | mode=Large | center=(-0.174, 6.936, 0.027) | size=(6.673, 9.584, 7.695) | anchor=(-0.174, 11.778, 0.027)
+Enemy_Ranged_C_Projectile | mode=Large | center=(-0.174, 6.936, 0.027) | size=(6.673, 9.584, 7.695) | anchor=(-0.174, 11.778, 0.027)
+Enemy_Ranged_Reflector | mode=Normal | center=(0.000, 2.039, 0.000) | size=(1.183, 3.529, 1.000) | anchor=(0.000, 3.854, 0.000)
+Enemy_Flytrap | mode=Normal | center=(0.000, 0.500, 0.000) | size=(3.000, 2.143, 3.000) | anchor=(0.000, 1.621, 0.000)
+Enemy_Suicide | mode=Normal | center=(0.000, 0.500, 0.000) | size=(2.000, 2.000, 2.000) | anchor=(0.000, 1.550, 0.000)
+_Menu/GameplayHUD Canvas/PlayerHUDCanvas/EnemyHealthBarDisplay | saved; Boss/base unchanged

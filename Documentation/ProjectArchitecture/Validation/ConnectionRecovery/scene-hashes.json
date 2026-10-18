@@ -1,0 +1,16 @@
+[
+  {
+    "Algorithm": "SHA256",
+    "Hash": "D2C5197C6DAA171DB35DBE257DD8E71CF706DA7E43E4B2734F12C78794939216",
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Scenes\\_Menu.unity",
+    "AfterHash": "D2C5197C6DAA171DB35DBE257DD8E71CF706DA7E43E4B2734F12C78794939216",
+    "Unchanged": true
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "63BACBFF8E212A8228958DF143C6198557A9AA4B449233756BDD7A82416F2E81",
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\UI\\Menu.prefab",
+    "AfterHash": "63BACBFF8E212A8228958DF143C6198557A9AA4B449233756BDD7A82416F2E81",
+    "Unchanged": true
+  }
+]

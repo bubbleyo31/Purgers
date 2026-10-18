@@ -1,0 +1,9 @@
+Purgers | Failed(Child) | passed=0 failed=1 skipped=0 | One or more child tests had errors | 
+M:/UnityProject/Purgers/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll | Failed(Child) | passed=0 failed=1 skipped=0 | One or more child tests had errors | 
+GrowthIconIntegrationTests | Failed(Child) | passed=0 failed=1 skipped=0 | One or more child tests had errors | 
+GrowthIconIntegrationTests.ApprovedSlabRanksFitEachTierAndKeepInkCentres | Failed | passed=0 failed=1 skipped=0 |   Expected string length 69 but was 71. Strings differ at index 26.
+  Expected: "...oject_Assets/UI/GrowthIcons/Fonts/PurgersRankSlab SDF.asset"
+  But was:  "...oject_Assets/UI/BattleHUD/Fonts/NotoSansTC-Bold HUD SDF.asset"
+  ------------------------------^
+ | at GrowthIconIntegrationTests.ApprovedSlabRanksFitEachTierAndKeepInkCentres () [0x0015e] in M:\UnityProject\Purgers\Assets\Scripts\Editor\Tests\GrowthIconIntegrationTests.cs:152
+

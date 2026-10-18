@@ -1,0 +1,36 @@
+PASS Runner starts: Ok
+PASS Runner starts: Ok
+PASS downed immediately clears enemy chase target
+PASS Runner starts: Ok
+PASS late join receives downed lifetime without replaying death
+PASS lethal hit downs without Died or despawn
+PASS default 30 second downed lifetime
+PASS downed remains extraction required
+PASS actual stage extraction counts downed and healthy members: 2
+PASS client cannot authoritatively kill or revive
+PASS additional damage cannot kill downed player
+PASS bleedout clock paused while rescuing; before=13.39063 after=13.39063 rescuer=KCC_Player(Clone) (Fusion.NetworkObject) progress=0.859375 reason=
+PASS rescuer and progress replicate to client
+PASS rescuer damage does not cancel
+PASS release resets progress
+PASS distance resets progress
+PASS occlusion resets progress
+PASS full uninterrupted five second rescue required
+PASS revive retains same object with 35 percent maximum HP
+PASS revive starts five second previous aggro delay
+PASS held rescue E cannot leak into ability after revive
+PASS old aggro does not relock before five seconds without detection
+PASS previous enemy relocks at five seconds
+PASS normal sight overrides five second delay early
+PASS unobstructed attack distance overrides delay outside sight
+PASS out of map death emits Died once
+PASS combat death does not use original automatic respawn timer
+PASS dead excluded from extraction
+PASS actual stage extraction excludes despawned dead member
+PASS team wipe waits two seconds rather than immediate death
+PASS scene return creates healthy player
+PASS original automatic respawn path still works
+PASS natural timeout starts at full thirty seconds
+PASS healthy teammate present does not prevent thirty second death
+PASS real SafeHouseFlow overrides enabled rescue mode
+PASS safehouse automatically respawns without downed rescue

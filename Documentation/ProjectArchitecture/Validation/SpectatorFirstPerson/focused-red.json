@@ -1,0 +1,44 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "db9d0687537440679e8c14d72ab9956f",
+      "status": "failed",
+      "mode": "EditMode",
+      "started_unix_ms": 1791947025632,
+      "finished_unix_ms": 1791947026981,
+      "last_update_unix_ms": 1791947026981,
+      "progress": {
+        "completed": 3,
+        "total": 867,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1791947026594,
+        "last_finished_test_full_name": "SpectatorPresentationTests.RespawnTargetReplacesSpectatorSnapshot",
+        "last_finished_unix_ms": 1791947026595,
+        "stuck_suspected": false,
+        "editor_is_focused": true,
+        "blocked_reason": null,
+        "failures_so_far": [
+          {
+            "full_name": "SpectatorPresentationTests.ChildOwnerDoesNotFeedBackIntoCameraPose",
+            "message": "  觀戰必須提交世界座標快照，不能追隨相機自己的子物件。\r\n  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "SpectatorPresentationTests.ClearingOwnerStopsApplyingOldSnapshot",
+            "message": "  觀戰必須提交世界座標快照，不能追隨相機自己的子物件。\r\n  Expected: not null\r\n  But was:  null\r\n"
+          },
+          {
+            "full_name": "SpectatorPresentationTests.RespawnTargetReplacesSpectatorSnapshot",
+            "message": "  觀戰必須提交世界座標快照，不能追隨相機自己的子物件。\r\n  Expected: not null\r\n  But was:  null\r\n"
+          }
+        ],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": null
+    },
+    "hint": null
+  }
+}

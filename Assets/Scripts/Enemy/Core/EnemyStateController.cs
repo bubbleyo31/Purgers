@@ -264,6 +264,7 @@ public sealed partial class EnemyStateController :
             ControlStateSequence =
                 1;
             ResetAbilityControl();
+        BulletTimeHudClock = default;
         }
     }
 
@@ -277,6 +278,7 @@ public sealed partial class EnemyStateController :
 
         SynchronizeDeathState();
         TickAbilityControl();
+        TickStatusHud();
     }
 
     public override void Despawned(

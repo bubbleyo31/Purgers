@@ -34,3 +34,7 @@ Phase 4 前置-1：Player 與 PlayerMovement 消費 NetInput.BlockedControls，�
 
 
 2026-10-02：PlayerGrappleCharges 改為玩家等級制使用能量；GrappleEnergyRules 為純規則。設定與網路生命週期見 [鈎索架構](../../../Documentation/ProjectArchitecture/30_鈎索系統.md)。
+
+## 2026-10-13 安全屋限制與 HUD（局部）
+
+安全屋 Q／E 經 PlayerActionGate 封鎖，玩家友傷／自傷經既有 DamageReceiverUtility／PlayerHealth 拒絕；普通武器與 ALT 獎勵維持。SafeHouseHudController.HudRunner 可供技能／經驗子 HUD 綁定；2026-10-13 已依使用者授權接到正式 SafeHouse 場景，保留原安全屋資訊。詳見 Documentation/ProjectArchitecture/145_PrePhase4-2_安全屋鍵盤準備與HUD.md 及 Validation/SafeHouseGameplay/README.md。

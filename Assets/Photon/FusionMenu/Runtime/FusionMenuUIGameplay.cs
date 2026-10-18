@@ -58,6 +58,8 @@ namespace Fusion.Menu {
     /// </summary>
     protected Coroutine _updateUsernamesCoroutine;
 
+    [SerializeField] private bool _useUnifiedGameplayMenu;
+
     partial void AwakeUser();
     partial void InitUser();
     partial void ShowUser();
@@ -86,6 +88,7 @@ namespace Fusion.Menu {
     public override void Show() {
       base.Show();
       ShowUser();
+      if (_useUnifiedGameplayMenu) { _sessionGameObject.SetActive(false); _playersGameObject.SetActive(false); _disconnectButton.gameObject.SetActive(false); return; }
 
       if (Config.CodeGenerator != null && Config.CodeGenerator.IsValid(Connection.SessionName)) {
         // Only show the session UI if it is a party code

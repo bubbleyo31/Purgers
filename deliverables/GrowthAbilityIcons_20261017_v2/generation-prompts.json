@@ -1,0 +1,169 @@
+{
+  "generator": "built-in image_gen",
+  "date": "2026-10-17",
+  "icons": [
+    {
+      "id": "A01_MaxHealth_I",
+      "name": "最大生命 I",
+      "file": "A01_MaxHealth_I.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v1/A01_MaxHealth_I.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "A02_ReloadSpeed_I",
+      "name": "換彈速度 I",
+      "refs": [
+        "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-48c1915d-bf6e-46eb-b900-f0e7c1b34f3f.png"
+      ],
+      "prompt": "One square white silhouette game skill icon on genuine transparent background. Match supplied icon family. Bold readable shapes, clear spacing, no color, gradients or decorative additions. Edit this magazine capacity icon to express FAST RELOADING. Preserve same upright magazine and bold central Roman I, clearly separated. REMOVE upper-right plus. Add ONE thick straight UPWARD ARROW immediately to the RIGHT of magazine, from baseplate level pointing toward magazine feed lips, representing inserting the magazine upward. Two short horizontal motion dashes below the arrow tail. No surrounding circular arrow, no separate miniature magazine. Magazine and arrow fit with generous transparent margins. Keep simple recognizable magazine outline.",
+      "file": "A02_ReloadSpeed_I.png",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-98418119-ca91-4b4c-a776-c1169f03a1cd.png",
+      "status": "revised"
+    },
+    {
+      "id": "A03_MeleeSpeed_I",
+      "name": "近戰攻速 I",
+      "file": "A03_MeleeSpeed_I.png",
+      "refs": [
+        "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v1/A03_MeleeSpeed_I.png",
+        "M:/UnityProject/Purgers/deliverables/Art/Chainsaw_ThreeView_Rebuild01/Previews/01_Chainsaw_Side.png"
+      ],
+      "prompt": "One square white silhouette game skill icon on genuine transparent background. Match supplied icon family. Bold readable shapes, clear spacing, no color, gradients or decorative additions. Image1 edit layout; image2 exact chainsaw reference. Replace left sword with CHAINSAW: short angular motor housing and loop handle lower-left, long rounded-end guide bar rising left with few LARGE spaced triangular chain teeth. Match reference housing and bar proportions simplified. No sword crossguard or pointed blade. Keep ONE sweeping upper-right motion arc, remove second arc. Keep bold central Roman I unchanged, clear and isolated.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-52ec122d-85c4-41f0-b3b2-30fd725f3c16.png",
+      "status": "revised"
+    },
+    {
+      "id": "A04_MagazineCapacity_I",
+      "name": "彈匣容量 I",
+      "file": "A04_MagazineCapacity_I.png",
+      "refs": [
+        "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v1/A04_MagazineCapacity_I.png"
+      ],
+      "prompt": "One square white silhouette game skill icon on genuine transparent background. Match supplied icon family. Bold readable shapes, clear spacing, no color, gradients or decorative additions. Simplify to ONE clearly recognizable upright box rifle MAGAZINE with upper-right PLUS. Thick magazine outline, modest curvature, broad flat baseplate, narrow feed lips at top with ONE horizontal cartridge seated between lips. REMOVE three upright bullets. Keep bold white Roman I at center inside magazine's transparent interior. Separate large white + just outside upper right. No arrows, circles or loose bullets. Centered with generous margin.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-48c1915d-bf6e-46eb-b900-f0e7c1b34f3f.png",
+      "status": "revised"
+    },
+    {
+      "id": "A05_GrappleEnergy_I",
+      "name": "鈎索能量減耗 I",
+      "refs": [
+        "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-caf9b0a6-1aab-444f-b578-98c2c95c85a7.png"
+      ],
+      "prompt": "One square white silhouette game skill icon on genuine transparent background. Match supplied icon family. Bold readable shapes, clear spacing, no color, gradients or decorative additions. Derive attribute icon from this EXACT shared grapple logo: retain the same single J hook, two barbs, hexagonal eye and short smooth cable. Scale entire existing logo uniformly to 75% canvas so there is space at upper right. Add a large clear white MINUS sign at upper-right, isolated. Add bold white Roman numeral I inside hook's open central cavity, upright vertical with wide top/bottom bars; legible, no overlap with hook. No lightning, chain, circular arrow or other symbols. Keep exact shared hook geometry.",
+      "file": "A05_GrappleEnergy_I.png",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-9595d6ad-c029-4912-8f80-d9cbd6137812.png",
+      "status": "revised"
+    },
+    {
+      "id": "A06_FocusCooldown_I",
+      "name": "專注技能冷卻減免 I",
+      "file": "A06_FocusCooldown_I.png",
+      "refs": [
+        "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v1/A06_FocusCooldown_I.png",
+        "M:/UnityProject/Purgers/Assets/_Project_Assets/UI/GrappleAbilityIcons/02_AerialSlow_Focus.png"
+      ],
+      "prompt": "One square white silhouette game skill icon on genuine transparent background. Match supplied icon family. Bold readable shapes, clear spacing, no color, gradients or decorative additions. Edit the FIRST image, using the SECOND image solely as the replacement upper symbol. Replace eyes with a SMALL full floating-player pictogram. Keep numeral I and circular arrow at exactly their original position and size in FIRST image. The small player's feet must end ABOVE the top of I with visible gap. Fit the entire player into the former eye area at the top; player height no more than one-quarter canvas. Keep original airborne pose and protective suit. This is an inventory symbol layout, no scene. Do not reflow or move anything in lower two-thirds of image. Only replace eyes; keep I and arrow.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-ba6cf598-1251-490b-85f1-364df4f6dcdc.png",
+      "status": "revised"
+    },
+    {
+      "id": "A07_GrappleCooldown_I",
+      "name": "鈎索技能冷卻減免 I",
+      "refs": [
+        "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-caf9b0a6-1aab-444f-b578-98c2c95c85a7.png"
+      ],
+      "prompt": "One square white silhouette game skill icon on genuine transparent background. Match supplied icon family. Bold readable shapes, clear spacing, no color, gradients or decorative additions. Derive attribute icon from this EXACT shared grapple logo: retain same single J hook, two barbs, hexagonal eye and short smooth cable. Scale entire existing logo uniformly to 75% canvas so upper-right has space. Add bold white right-facing fast-forward chevrons >> at UPPER RIGHT, separate. Add bold white Roman numeral I inside open central hook cavity, upright with wide horizontal top/bottom bars, no overlap. No circular arrow, clock, lightning, chains or other symbols. Shared hook silhouette must remain identical.",
+      "file": "A07_GrappleCooldown_I.png",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-d61880e6-71e3-48e5-aa7c-e9a756fb09b7.png",
+      "status": "revised"
+    },
+    {
+      "id": "A08_OutOfCombatRegen_I",
+      "name": "脫戰每秒回血 I",
+      "file": "A08_OutOfCombatRegen_I.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v1/A08_OutOfCombatRegen_I.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "A09_RegenDelay_I",
+      "name": "脫戰回血等待縮短 I",
+      "file": "A09_RegenDelay_I.png",
+      "refs": [
+        "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v1/A08_OutOfCombatRegen_I.png"
+      ],
+      "prompt": "One square white silhouette game skill icon on genuine transparent background. Match supplied icon family. Bold readable shapes, clear spacing, no color, gradients or decorative additions. Exact edit of supplied approved regeneration icon: keep heart outline, upper-right medical PLUS and central I unchanged. Replace ONLY lower-left two upward arrows with two bold right-facing fast-forward CHEVRONS reading >> occupying same lower-left area. No shafts, no up arrowheads. No clock, hands, ticks or outer circle. All other composition stays unchanged.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-96327801-c210-4f04-b53c-802b7adfd0a7.png",
+      "status": "revised"
+    },
+    {
+      "id": "B01_GrappleBase",
+      "name": "鈎索共用基礎圖示",
+      "file": "B01_GrappleBase.png",
+      "refs": [
+        "M:/UnityProject/Purgers/Assets/_Project_Assets/UI/GrappleAbilityIcons/03_GrappleHit_Pull.png"
+      ],
+      "prompt": "One square white silhouette game skill icon on genuine transparent background. Match supplied icon family. Bold readable shapes, clear spacing, no color, gradients or decorative additions. Create shared grapple pictogram for energy bar based directly on approved angular J hook. Preserve hexagonal attachment eye, faceted shaft, long point and TWO inward barbs. Add ONE short thick smooth cable exiting eye curving lower-left, no chain. Large clear inner cavity reserved for future numerals. 15% margin. No numbers, plus/minus, arrows, border. Do not turn hook into anchor.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-caf9b0a6-1aab-444f-b578-98c2c95c85a7.png",
+      "status": "revised"
+    },
+    {
+      "id": "S01_NotToday",
+      "name": "不是今天",
+      "file": "S01_NotToday.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v1/S01_NotToday.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "S02_SelfRevive",
+      "name": "我自己來",
+      "file": "S02_SelfRevive.png",
+      "refs": [
+        "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v1/S02_SelfRevive.png",
+        "M:/UnityProject/Purgers/Assets/_Project_Assets/UI/AbilityIcons/E_V4/08_Blink.png"
+      ],
+      "prompt": "One square white silhouette game skill icon on genuine transparent background. Match supplied icon family. Bold readable shapes, clear spacing, no color, gradients or decorative additions. Image1 is edit target pose, image2 exact approved character design. Replace ONLY character design in image1 using image2 hazmat worker: broad single goggles, TWO distinct round respirator cheek filters, smooth protective hood, shoulder harness, waist belt, gloves and tall boots. Keep one planted bent leg, one kneeling leg, hand pushing ground, rising posture and the single upward arrow behind. Same gas-mask character as image2, not armored soldier or astronaut. Simplify details with broad negative space. No weapon or dash trails.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-da269f96-59bb-44e7-b41e-798daf5e7caa.png",
+      "status": "revised"
+    },
+    {
+      "id": "S03_Adrenaline",
+      "name": "腎上腺素",
+      "file": "S03_Adrenaline.png",
+      "refs": [
+        "C:/Users/hsuai/AppData/Local/Temp/codex-clipboard-a782b7a2-b22c-4aab-a01e-989e7c3844b0.png"
+      ],
+      "prompt": "One square white silhouette game skill icon on genuine transparent background. Match supplied icon family. Bold readable shapes, clear spacing, no color, gradients or decorative additions. Redesign adrenaline perk following reference composition: stylized ANATOMICAL HEART with big branching arteries at upper-left, ONE SYRINGE diagonally entering its upper-right side and pointing down-left. Plunger upper right, barrel readable, few broad tick cutouts. Heart has 3-4 broad branching vein cutouts, no tiny anatomy. Combined emblem centered occupying 70% canvas. Original interpretation. No love-heart outline, arrows or numeral.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-861f39bf-2d47-4f72-9c39-1895ecde3fda.png",
+      "status": "revised"
+    },
+    {
+      "id": "S04_CarnivorousTree",
+      "name": "食人樹",
+      "file": "S04_CarnivorousTree.png",
+      "refs": [
+        "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v1/S04_CarnivorousTree.png"
+      ],
+      "prompt": "One square white silhouette game skill icon on genuine transparent background. Match supplied icon family. Bold readable shapes, clear spacing, no color, gradients or decorative additions. Precise edit: KEEP outer tree crown silhouette, trunk and lower central blood drop. REPLACE confusing central cutout with clearly OPEN MOUTH: clean transparent horizontal cavity with THREE large white pointed teeth descending from top jaw and TWO rising from bottom jaw. Teeth attached to jaws, generous gaps, recognizable bite rather than star/cracks. Keep drop beneath mouth separate from teeth. No eyes. Only modify interior.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-cb1391dd-0190-4e45-8e58-1478f0848f73.png",
+      "status": "revised"
+    },
+    {
+      "id": "S05_HardChoice",
+      "name": "真難抉擇",
+      "file": "S05_HardChoice.png",
+      "source": "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v1/S05_HardChoice.png",
+      "status": "unchanged"
+    },
+    {
+      "id": "S06_JohnWick",
+      "name": "約翰維克",
+      "file": "S06_JohnWick.png",
+      "refs": [
+        "M:/UnityProject/Purgers/deliverables/GrowthAbilityIcons_20261017_v1/S06_JohnWick.png"
+      ],
+      "prompt": "One square white silhouette game skill icon on genuine transparent background. Match supplied icon family. Bold readable shapes, clear spacing, no color, gradients or decorative additions. Keep TWO crossed pistols and three cartridges below. Correct handgun silhouette logic: EACH semiautomatic pistol has ONE straight top slide/barrel aligned to outward upper muzzle, ONE grip descending from REAR of slide, ONE trigger guard below slide just FORWARD of grip, and ONE trigger inside guard. Two identical mirrored coherent pistol profiles with clear center overlap/occlusion. No backward barrels, disconnected guards, duplicate grips or impossible fused parts. Muzzles upper outer corners, grips lower outer corners. Simplify small grooves/hardware. Preserve overall crossed composition.",
+      "source": "C:\\Users\\hsuai\\.codex\\generated_images\\01a10231-df42-7443-bbb3-1f6359cb38be\\exec-3354ad9d-331d-47dc-81f7-60058bc5bfab.png",
+      "status": "revised"
+    }
+  ]
+}

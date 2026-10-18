@@ -1,0 +1,102 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "project": "M:/UnityProject/Purgers/Assets",
+      "dirtyCatalog": false,
+      "dirtyDefinition": false,
+      "scene": "Assets/Scenes/_Menu.unity",
+      "sceneDirty": false,
+      "rewards": [
+        {
+          "id": "grapple.hit.mark",
+          "path": "Assets/_Project_Assets/Data/Progression/Reward_AttackGrappleMark.asset",
+          "json": "{\"MonoBehaviour\":{\"m_Enabled\":true,\"m_EditorHideFlags\":0,\"m_Name\":\"Reward_AttackGrappleMark\",\"m_EditorClassIdentifier\":\"\",\"stableRewardId\":\"grapple.hit.mark\",\"category\":1,\"minimumPlayerLevel\":1,\"weight\":1,\"repeatPolicy\":1,\"abilityDefinition\":{\"fileID\":11400000,\"guid\":\"c1e5ce072e76a674cba6ded31bb90cf1\",\"type\":2},\"description\":\"鈎索命中敵人後標記目標；短時間內你對目標的傷害視為暴頭。\",\"weaponProfession\":0,\"weaponDisplayName\":\"\",\"weaponIcon\":{\"instanceID\":0}}}"
+        },
+        {
+          "id": "grapple.hit.gather",
+          "path": "Assets/_Project_Assets/Data/Progression/Reward_TankGrappleGather.asset",
+          "json": "{\"MonoBehaviour\":{\"m_Enabled\":true,\"m_EditorHideFlags\":0,\"m_Name\":\"Reward_TankGrappleGather\",\"m_EditorClassIdentifier\":\"\",\"stableRewardId\":\"grapple.hit.gather\",\"category\":1,\"minimumPlayerLevel\":1,\"weight\":1,\"repeatPolicy\":1,\"abilityDefinition\":{\"fileID\":11400000,\"guid\":\"b6e4a486560cfac45bf62f5eef2c4316\",\"type\":2},\"description\":\"鈎索命中敵人後，以目標為中心聚集附近敵人。\",\"weaponProfession\":0,\"weaponDisplayName\":\"\",\"weaponIcon\":{\"instanceID\":0}}}"
+        },
+        {
+          "id": "grapple.hit.pull",
+          "path": "Assets/_Project_Assets/Data/Progression/Reward_SupportGrapplePull.asset",
+          "json": "{\"MonoBehaviour\":{\"m_Enabled\":true,\"m_EditorHideFlags\":0,\"m_Name\":\"Reward_SupportGrapplePull\",\"m_EditorClassIdentifier\":\"\",\"stableRewardId\":\"grapple.hit.pull\",\"category\":1,\"minimumPlayerLevel\":1,\"weight\":1,\"repeatPolicy\":1,\"abilityDefinition\":{\"fileID\":11400000,\"guid\":\"800e711b4848ab3439c6c22380045715\",\"type\":2},\"description\":\"鈎索命中敵人後，將目標拉向你。\",\"weaponProfession\":0,\"weaponDisplayName\":\"\",\"weaponIcon\":{\"instanceID\":0}}}"
+        },
+        {
+          "id": "grapple.focus.aerial_slow",
+          "path": "Assets/_Project_Assets/Data/Progression/Reward_SupportAerial.asset",
+          "json": "{\"MonoBehaviour\":{\"m_Enabled\":true,\"m_EditorHideFlags\":0,\"m_Name\":\"Reward_SupportAerial\",\"m_EditorClassIdentifier\":\"\",\"stableRewardId\":\"grapple.focus.aerial_slow\",\"category\":2,\"minimumPlayerLevel\":1,\"weight\":1,\"repeatPolicy\":1,\"abilityDefinition\":{\"fileID\":11400000,\"guid\":\"d58a3d1bc46e89e41a1e20107808e7aa\",\"type\":2},\"description\":\"鈎索飛行時按住瞄準，進入短暫空中緩速專注。\",\"weaponProfession\":0,\"weaponDisplayName\":\"\",\"weaponIcon\":{\"instanceID\":0}}}"
+        },
+        {
+          "id": "active.grenade",
+          "path": "Assets/_Project_Assets/Data/PlayerAbility/Active/Rewards/Grenade.asset",
+          "json": "{\"MonoBehaviour\":{\"m_Enabled\":true,\"m_EditorHideFlags\":0,\"m_Name\":\"Grenade\",\"m_EditorClassIdentifier\":\"\",\"stableRewardId\":\"active.grenade\",\"category\":2,\"minimumPlayerLevel\":1,\"weight\":1,\"repeatPolicy\":1,\"abilityDefinition\":{\"fileID\":11400000,\"guid\":\"daabd16af8e7bf14fab4cfd5db908847\",\"type\":2},\"description\":\"拋出碰撞即爆的榴彈。爆炸受牆壁阻擋；自身全額受傷，隊友受到 35% 傷害。\",\"weaponProfession\":0,\"weaponDisplayName\":\"\",\"weaponIcon\":{\"instanceID\":0}}}"
+        },
+        {
+          "id": "active.piercingcannon",
+          "path": "Assets/_Project_Assets/Data/PlayerAbility/Active/Rewards/PiercingCannon.asset",
+          "json": "{\"MonoBehaviour\":{\"m_Enabled\":true,\"m_EditorHideFlags\":0,\"m_Name\":\"PiercingCannon\",\"m_EditorClassIdentifier\":\"\",\"stableRewardId\":\"active.piercingcannon\",\"category\":2,\"minimumPlayerLevel\":1,\"weight\":1,\"repeatPolicy\":1,\"abilityDefinition\":{\"fileID\":11400000,\"guid\":\"acb9a5880071f9546abad5a8fdef3487\",\"type\":2},\"description\":\"短暫準備後射出直線攻擊，穿透敵人並逐次降低 25% 傷害，無法穿牆。\",\"weaponProfession\":0,\"weaponDisplayName\":\"\",\"weaponIcon\":{\"instanceID\":0}}}"
+        },
+        {
+          "id": "active.shockwave",
+          "path": "Assets/_Project_Assets/Data/PlayerAbility/Active/Rewards/Shockwave.asset",
+          "json": "{\"MonoBehaviour\":{\"m_Enabled\":true,\"m_EditorHideFlags\":0,\"m_Name\":\"Shockwave\",\"m_EditorClassIdentifier\":\"\",\"stableRewardId\":\"active.shockwave\",\"category\":2,\"minimumPlayerLevel\":1,\"weight\":1,\"repeatPolicy\":1,\"abilityDefinition\":{\"fileID\":11400000,\"guid\":\"cf178912b91467b49a2149d704878790\",\"type\":2},\"description\":\"向前打出寬幅衝擊並擊退敵人。撞牆追加一次傷害與 1 秒暈眩。\",\"weaponProfession\":0,\"weaponDisplayName\":\"\",\"weaponIcon\":{\"instanceID\":0}}}"
+        },
+        {
+          "id": "active.shield",
+          "path": "Assets/_Project_Assets/Data/PlayerAbility/Active/Rewards/Shield.asset",
+          "json": "{\"MonoBehaviour\":{\"m_Enabled\":true,\"m_EditorHideFlags\":0,\"m_Name\":\"Shield\",\"m_EditorClassIdentifier\":\"\",\"stableRewardId\":\"active.shield\",\"category\":2,\"minimumPlayerLevel\":1,\"weight\":1,\"repeatPolicy\":1,\"abilityDefinition\":{\"fileID\":11400000,\"guid\":\"3f1a27a01af85f2449c795f13dfcbb94\",\"type\":2},\"description\":\"獲得最大生命值 25% 的護盾。1 級持續 1.5 秒，每級增加 0.5 秒。\",\"weaponProfession\":0,\"weaponDisplayName\":\"\",\"weaponIcon\":{\"instanceID\":0}}}"
+        },
+        {
+          "id": "active.healingpack",
+          "path": "Assets/_Project_Assets/Data/PlayerAbility/Active/Rewards/HealingPack.asset",
+          "json": "{\"MonoBehaviour\":{\"m_Enabled\":true,\"m_EditorHideFlags\":0,\"m_Name\":\"HealingPack\",\"m_EditorClassIdentifier\":\"\",\"stableRewardId\":\"active.healingpack\",\"category\":2,\"minimumPlayerLevel\":1,\"weight\":1,\"repeatPolicy\":1,\"abilityDefinition\":{\"fileID\":11400000,\"guid\":\"8f37b3044910f2e438d29316751c4061\",\"type\":2},\"description\":\"拋出保留 10 秒的治療包。隊友回復投擲者等級 ×10，自用效果減半；滿血不消耗。\",\"weaponProfession\":0,\"weaponDisplayName\":\"\",\"weaponIcon\":{\"instanceID\":0}}}"
+        },
+        {
+          "id": "active.ricochet",
+          "path": "Assets/_Project_Assets/Data/PlayerAbility/Active/Rewards/Ricochet.asset",
+          "json": "{\"MonoBehaviour\":{\"m_Enabled\":true,\"m_EditorHideFlags\":0,\"m_Name\":\"Ricochet\",\"m_EditorClassIdentifier\":\"\",\"stableRewardId\":\"active.ricochet\",\"category\":2,\"minimumPlayerLevel\":1,\"weight\":1,\"repeatPolicy\":1,\"abilityDefinition\":{\"fileID\":11400000,\"guid\":\"989db7fb4ab9e324d9376424bd54fae5\",\"type\":2},\"description\":\"射出最多反彈三次的子彈，每次反彈傷害翻倍；也會全額傷害自己與隊友。\",\"weaponProfession\":0,\"weaponDisplayName\":\"\",\"weaponIcon\":{\"instanceID\":0}}}"
+        },
+        {
+          "id": "active.experience",
+          "path": "Assets/_Project_Assets/Data/PlayerAbility/Active/Rewards/Experience.asset",
+          "json": "{\"MonoBehaviour\":{\"m_Enabled\":true,\"m_EditorHideFlags\":0,\"m_Name\":\"Experience\",\"m_EditorClassIdentifier\":\"\",\"stableRewardId\":\"active.experience\",\"category\":2,\"minimumPlayerLevel\":1,\"weight\":1,\"repeatPolicy\":1,\"abilityDefinition\":{\"fileID\":11400000,\"guid\":\"e6ee058cb0834f34585138bd210fd918\",\"type\":2},\"description\":\"5 秒內自己獲得的經驗與受到的傷害都翻倍。效果結束才開始冷卻。\",\"weaponProfession\":0,\"weaponDisplayName\":\"\",\"weaponIcon\":{\"instanceID\":0}}}"
+        },
+        {
+          "id": "active.blink",
+          "path": "Assets/_Project_Assets/Data/PlayerAbility/Active/Rewards/Blink.asset",
+          "json": "{\"MonoBehaviour\":{\"m_Enabled\":true,\"m_EditorHideFlags\":0,\"m_Name\":\"Blink\",\"m_EditorClassIdentifier\":\"\",\"stableRewardId\":\"active.blink\",\"category\":2,\"minimumPlayerLevel\":1,\"weight\":1,\"repeatPolicy\":1,\"abilityDefinition\":{\"fileID\":11400000,\"guid\":\"d57bde0db24b2f641a8ab393869ee053\",\"type\":2},\"description\":\"先按 E 待命，5 秒內再次按 E 依方向快速衝刺，無方向則向前；遇到障礙停止。\",\"weaponProfession\":0,\"weaponDisplayName\":\"\",\"weaponIcon\":{\"instanceID\":0}}}"
+        },
+        {
+          "id": "active.bullettime",
+          "path": "Assets/_Project_Assets/Data/PlayerAbility/Active/Rewards/BulletTime.asset",
+          "json": "{\"MonoBehaviour\":{\"m_Enabled\":true,\"m_EditorHideFlags\":0,\"m_Name\":\"BulletTime\",\"m_EditorClassIdentifier\":\"\",\"stableRewardId\":\"active.bullettime\",\"category\":2,\"minimumPlayerLevel\":1,\"weight\":1,\"repeatPolicy\":1,\"abilityDefinition\":{\"fileID\":11400000,\"guid\":\"a1817cbaee779a04b8bc0742a1f4920e\",\"type\":2},\"description\":\"固定範圍名單持續 2 秒：敵人暫停，玩家移動放慢但攻擊與轉向正常；傷害於結束結算。\",\"weaponProfession\":0,\"weaponDisplayName\":\"\",\"weaponIcon\":{\"instanceID\":0}}}"
+        },
+        {
+          "id": "active.precisionlock",
+          "path": "Assets/_Project_Assets/Data/PlayerAbility/Active/Rewards/PrecisionLock.asset",
+          "json": "{\"MonoBehaviour\":{\"m_Enabled\":true,\"m_EditorHideFlags\":0,\"m_Name\":\"PrecisionLock\",\"m_EditorClassIdentifier\":\"\",\"stableRewardId\":\"active.precisionlock\",\"category\":2,\"minimumPlayerLevel\":1,\"weight\":1,\"repeatPolicy\":1,\"abilityDefinition\":{\"fileID\":11400000,\"guid\":\"2801d2c6f09f6824d8516db270d4d6e0\",\"type\":2},\"description\":\"2 秒內遠程武器自動鎖定準星附近可見敵人；持近戰武器不能使用。\",\"weaponProfession\":0,\"weaponDisplayName\":\"\",\"weaponIcon\":{\"instanceID\":0}}}"
+        },
+        {
+          "id": "weapon.attack",
+          "path": "Assets/_Project_Assets/Data/Progression/Reward_WeaponAttack.asset",
+          "json": "{\"MonoBehaviour\":{\"m_Enabled\":true,\"m_EditorHideFlags\":0,\"m_Name\":\"Reward_WeaponAttack\",\"m_EditorClassIdentifier\":\"\",\"stableRewardId\":\"weapon.attack\",\"category\":3,\"minimumPlayerLevel\":1,\"weight\":1,\"repeatPolicy\":1,\"abilityDefinition\":{\"instanceID\":0},\"description\":\"裝備步槍，保留瞄準、換彈與 F 近戰。換裝滿彈匣，Q／E 不變。\",\"weaponProfession\":1,\"weaponDisplayName\":\"Attack 步槍\",\"weaponIcon\":{\"fileID\":21300000,\"guid\":\"8094f05be6080ce42b725801d5404d01\",\"type\":3}}}"
+        },
+        {
+          "id": "weapon.tank",
+          "path": "Assets/_Project_Assets/Data/Progression/Reward_WeaponTank.asset",
+          "json": "{\"MonoBehaviour\":{\"m_Enabled\":true,\"m_EditorHideFlags\":0,\"m_Name\":\"Reward_WeaponTank\",\"m_EditorClassIdentifier\":\"\",\"stableRewardId\":\"weapon.tank\",\"category\":3,\"minimumPlayerLevel\":1,\"weight\":1,\"repeatPolicy\":1,\"abilityDefinition\":{\"instanceID\":0},\"description\":\"裝備電鋸，保留連段、格擋與 F 衝刺。F 回充延續，Q／E 不變。\",\"weaponProfession\":2,\"weaponDisplayName\":\"Tank 電鋸\",\"weaponIcon\":{\"fileID\":21300000,\"guid\":\"ddfe9f76c39ffe249a37127bc335c23b\",\"type\":3}}}"
+        },
+        {
+          "id": "weapon.support",
+          "path": "Assets/_Project_Assets/Data/Progression/Reward_WeaponSupport.asset",
+          "json": "{\"MonoBehaviour\":{\"m_Enabled\":true,\"m_EditorHideFlags\":0,\"m_Name\":\"Reward_WeaponSupport\",\"m_EditorClassIdentifier\":\"\",\"stableRewardId\":\"weapon.support\",\"category\":3,\"minimumPlayerLevel\":1,\"weight\":1,\"repeatPolicy\":1,\"abilityDefinition\":{\"instanceID\":0},\"description\":\"裝備 SMG，可傷害敵人並治療隊友。保留瞄準、換彈與 F 近戰，換裝滿彈匣。\",\"weaponProfession\":3,\"weaponDisplayName\":\"Support SMG\",\"weaponIcon\":{\"fileID\":21300000,\"guid\":\"b0e7b3f23d81b5a4f8624484b8c0804a\",\"type\":3}}}"
+        }
+      ],
+      "definition": "{\"MonoBehaviour\":{\"m_Enabled\":true,\"m_EditorHideFlags\":0,\"m_Name\":\"GrappleSpike\",\"m_EditorClassIdentifier\":\"\",\"abilityId\":\"grapple.spike\",\"displayName\":\"鈎索尖刺\",\"hudIcon\":{\"instanceID\":0},\"category\":2,\"runtimePrefab\":{\"fileID\":5559295565356094482,\"guid\":\"05f312dbafa3bac48a56db91a49b7d20\",\"type\":3},\"includeAdditionalGrappleTargetMask\":false,\"professionRule\":{\"restrictProfession\":false,\"allowedProfessions\":0},\"allowDuplicateEquip\":false,\"exclusiveGroupIds\":[],\"incompatibleAbilities\":[],\"executionPriority\":150,\"requiresRangedWeapon\":false,\"enhancementDefinition\":{\"instanceID\":0}}}"
+    },
+    "compiler": "codedom"
+  }
+}

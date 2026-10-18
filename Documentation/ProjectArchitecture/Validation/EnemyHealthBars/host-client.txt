@@ -1,0 +1,25 @@
+PASS Runner starts: Ok
+PASS Runner first tick
+PASS host presents spawned live enemy
+PASS authoritative damage immediately presents 76 percent
+PASS Runner starts: Ok
+PASS Runner first tick
+PASS late join reads existing 76 percent snapshot without historical RPC
+PASS client is not health authority
+PASS client damage request cannot mutate health
+PASS HUDs never mix Runner targets
+PASS each peer independently hides offscreen enemy
+PASS returning camera restores client bar
+PASS large body remains visible when head leaves frame
+PASS opaque wall immediately hides large enemy bar
+PASS host physics wall does not occlude client physics scene
+PASS bar returns after wall clears
+PASS explicit hidden mode excludes inherited Boss presentation
+PASS normal presentation can resume
+PASS client disconnect leaves host presentation intact
+PASS Runner starts: Ok
+PASS Runner first tick
+PASS reconnect initializes current health instead of stale UI state
+PASS death hides bars on every peer
+PASS despawn removes registered target
+PASS despawn leaves no orphan bar

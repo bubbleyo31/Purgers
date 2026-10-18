@@ -1,0 +1,51 @@
+PASS connect Host
+PASS Runner connected
+PASS Runner first tick
+PASS Host player ready
+PASS connect Client
+PASS Runner connected
+PASS Runner first tick
+PASS Client player on Host
+PASS Client replica ready
+PASS authority and input are separate
+PASS equip owned active ability: 
+PASS grant growth through existing owner
+PASS owned ability replicates to Client
+PASS cooldown reaches input authority
+PASS cooldown seconds and denominator agree
+PASS Client cannot mutate loadout authority
+PASS name HP and growth snapshots agree
+PASS 20 live ticks with team-window control mask
+PASS movement continues while team window blocks combat
+PASS Host rejects blocked look input
+PASS Host filters combat and skill buttons
+PASS cooldown continues behind panel
+PASS change weapon through existing owner
+PASS weapon change replicates
+PASS real panel displays synchronized player name
+PASS real panel displays current or retained weapon
+PASS real panel displays owned skills including death snapshot
+PASS real panel displays acquired growth
+PASS real panel displays synchronized cooldown number
+PASS connect Client
+PASS Runner connected
+PASS Runner first tick
+PASS late join receives equipped runtime
+PASS late join receives authoritative cooldown denominator
+PASS late join does not restart cooldown fill
+PASS real panel displays synchronized player name
+PASS real panel displays current or retained weapon
+PASS real panel displays owned skills including death snapshot
+PASS real panel displays acquired growth
+PASS real panel displays synchronized cooldown number
+PASS authoritative death
+PASS death retains display-only owned skill snapshot
+PASS real panel displays synchronized player name
+PASS real panel displays current or retained weapon
+PASS real panel displays owned skills including death snapshot
+PASS real panel displays acquired growth
+PASS connect Client
+PASS Runner connected
+PASS Runner first tick
+PASS reconnected observer receives death snapshot
+PASS growth survives death and reconnect

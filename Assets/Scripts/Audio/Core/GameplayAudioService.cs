@@ -25,7 +25,7 @@ using UnityEngine.Audio;
 /// 4. 修改 Gameplay State。
 /// </summary>
 [DisallowMultipleComponent]
-public class GameplayAudioService :
+public partial class GameplayAudioService :
     MonoBehaviour
 {
     public static GameplayAudioService Instance
@@ -226,6 +226,7 @@ public class GameplayAudioService :
 
     private void LateUpdate()
     {
+        UpdateWorldLoops();
         /*
          * 從後往前移除，
          * 避免 RemoveAt 後尚未檢查的 Index 發生偏移。
@@ -283,6 +284,7 @@ public class GameplayAudioService :
         if (Instance == this)
         {
             StopAllLocalLoops();
+            StopAllWorldLoops();
 
             Instance =
                 null;

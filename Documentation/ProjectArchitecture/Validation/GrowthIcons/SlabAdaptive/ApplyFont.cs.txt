@@ -1,0 +1,43 @@
+if(EditorApplication.isPlayingOrWillChangePlaymode)throw new Exception("Requires Edit Mode");
+for(int i=0;i<UnityEngine.SceneManagement.SceneManager.sceneCount;i++)if(UnityEngine.SceneManagement.SceneManager.GetSceneAt(i).isDirty)throw new Exception("Dirty scene");
+const string fontPath="Assets/_Project_Assets/UI/GrowthIcons/Fonts/PurgersRankSlab SDF.asset";
+AssetDatabase.ImportAsset("Assets/_Project_Assets/UI/GrowthIcons/Fonts/PurgersRankSlab.ttf",ImportAssetOptions.ForceSynchronousImport);
+var font=AssetDatabase.LoadAssetAtPath<TMPro.TMP_FontAsset>(fontPath);
+if(font==null){
+var source=AssetDatabase.LoadAssetAtPath<Font>("Assets/_Project_Assets/UI/GrowthIcons/Fonts/PurgersRankSlab.ttf");
+font=TMPro.TMP_FontAsset.CreateFontAsset(source,128,12,UnityEngine.TextCore.LowLevel.GlyphRenderMode.SDFAA,512,512);
+if(font==null||!font.TryAddCharacters("IV _"))throw new Exception("Failed to build rank font");
+font.name="PurgersRankSlab SDF";
+font.boldStyle=0;font.boldSpacing=0;
+font.atlasPopulationMode=TMPro.AtlasPopulationMode.Static;
+font.atlasTexture.name="PurgersRankSlab Atlas";font.material.name="PurgersRankSlab Material";
+font.atlasTexture.hideFlags=HideFlags.None;font.material.hideFlags=HideFlags.None;
+AssetDatabase.CreateAsset(font,fontPath);
+AssetDatabase.AddObjectToAsset(font.atlasTexture,font);
+AssetDatabase.AddObjectToAsset(font.material,font);
+EditorUtility.SetDirty(font);AssetDatabase.SaveAssetIfDirty(font);
+}
+int count=0;
+System.Action<GameObject> apply=root=>{
+foreach(var hud in root.GetComponentsInChildren<LocalPlayerRewardHUD>(true)){
+var so=new SerializedObject(hud);
+foreach(var key in new[]{"leftCard","middleCard","rightCard"}){
+var card=so.FindProperty(key);
+var view=card.FindPropertyRelative("rankView").objectReferenceValue as GrowthRewardRankView;
+if(view==null)throw new Exception("Missing rank view "+key);
+var label=new SerializedObject(view).FindProperty("rankLabel").objectReferenceValue as TMPro.TMP_Text;
+if(label==null)throw new Exception("Missing rank label "+key);
+label.font=font;label.fontSharedMaterial=font.material;EditorUtility.SetDirty(label);count++;
+}}};
+var prefab=PrefabUtility.LoadPrefabContents(GrowthIconSetup.StagePath);
+try{apply(prefab);PrefabUtility.SaveAsPrefabAsset(prefab,GrowthIconSetup.StagePath);}
+finally{PrefabUtility.UnloadPrefabContents(prefab);}
+var original=UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+var scene=UnityEngine.SceneManagement.SceneManager.GetSceneByPath("Assets/Scenes/SafeHouse.unity");
+bool opened=!scene.IsValid()||!scene.isLoaded;
+if(opened)scene=UnityEditor.SceneManagement.EditorSceneManager.OpenScene("Assets/Scenes/SafeHouse.unity",UnityEditor.SceneManagement.OpenSceneMode.Additive);
+try{foreach(var root in scene.GetRootGameObjects())apply(root);
+UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(scene);
+UnityEditor.SceneManagement.EditorSceneManager.SaveScene(scene);
+}finally{if(opened)UnityEditor.SceneManagement.EditorSceneManager.CloseScene(scene,true);if(original.IsValid()&&original.isLoaded)UnityEngine.SceneManagement.SceneManager.SetActiveScene(original);}
+return "Applied rank font to "+count+" labels; atlas="+font.atlasWidth+"x"+font.atlasHeight+"; characters="+font.characterTable.Count;

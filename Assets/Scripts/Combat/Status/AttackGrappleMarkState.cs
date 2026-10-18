@@ -123,6 +123,18 @@ public class AttackGrappleMarkState :
     // =====================================================================
     #region Fusion
 
+    [Networked, Capacity(MaximumConcurrentMarkers)]
+    private NetworkDictionary<PlayerRef, float> MarkHudSpans => default;
+    private bool statusSpawned;
+    public override void Spawned() => statusSpawned = true;
+    public override void Despawned(NetworkRunner runner, bool hasState) => statusSpawned = false;
+    public StatusEffectSnapshot GetMarkStatus(PlayerRef observer)
+    {
+        if (!statusSpawned || Object == null || !Object.IsValid || observer.IsNone || Runner == null ||
+            !ActiveMarks.TryGet(observer, out var timer) || !MarkHudSpans.TryGet(observer, out float span)) return default;
+        return StatusEffectSnapshot.FromTimer(StatusEffectKind.Mark, Runner, timer, span);
+    }
+
     public override void FixedUpdateNetwork()
     {
         if (Object == null ||
@@ -218,6 +230,8 @@ public class AttackGrappleMarkState :
         {
             marks[attacker] =
                 newTimer;
+            var spans = MarkHudSpans;
+            spans.Set(attacker, newTimer.RemainingTime(Runner) ?? 0f);
 
             if (debugMark)
             {
@@ -260,6 +274,8 @@ public class AttackGrappleMarkState :
             attacker,
             newTimer
         );
+        var newSpans = MarkHudSpans;
+        newSpans.Set(attacker, newTimer.RemainingTime(Runner) ?? 0f);
 
         if (debugMark)
         {
@@ -535,6 +551,8 @@ public class AttackGrappleMarkState :
             marks.Remove(
                 player
             );
+            var spans = MarkHudSpans;
+            spans.Remove(player);
 
             if (debugMark)
             {

@@ -18,3 +18,10 @@
 - 網路同步：搜尋 `[Networked]`、`[Rpc(`、`HasStateAuthority`、`IsSceneAuthority`。
 - 場景綁定：由 `[SerializeField]` 欄位名稱回到 Unity Inspector 找同名引用。
 
+
+## 雷射本機呈現（2026-10-18）
+
+- BeamPresentationSettings：各 Prefab 獨立的粗細、顏色、粒子及四階段聲音；含純規則與事件去重。
+- BeamPresentationRuntime／.Particles：共用線段、亮核、火花；沿 GameplayAudioService，不擁有傷害或權威階段。
+- 完整設定與驗證：Documentation/ProjectArchitecture/108_雷射四階段視聽呈現.md。
+

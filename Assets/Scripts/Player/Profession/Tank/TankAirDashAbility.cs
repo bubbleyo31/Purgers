@@ -126,7 +126,7 @@ public enum TankAirDashCompletionReason : byte
 [DisallowMultipleComponent]
 public class TankAirDashAbility :
     NetworkBehaviour,
-    IPlayerAbilityRuntimeModule,
+    IPlayerAbilityRuntimeModule, IPlayerAbilityCooldownSource,
     ICombatDamageFeedbackSource
 {
     /// <summary>
@@ -569,6 +569,12 @@ public class TankAirDashAbility :
         get;
         set;
     }
+
+    public bool HudCanPress => Object != null && Object.IsValid && Runner != null && professionAvailable &&
+        ownerPlayer != null && ownerPlayer.Health != null && ownerPlayer.Health.IsAlive &&
+        ownerMovement != null && ownerMovement.KCC != null && ownerStateMachine != null &&
+        ownerStateMachine.CurrentState == PlayerMovementState.GrappleAirborne && !IsDashing && !IsOnCooldown &&
+        !(ownerPlayer.Grapple != null && ownerPlayer.Grapple.BlocksProfessionAimInput);
 
     /// <summary>
     /// Enemy Dash 成功到達後的 AOE Sequence。
@@ -2800,6 +2806,8 @@ public class TankAirDashAbility :
     ///
     /// 未來 HUD 可以直接使用。
     /// </summary>
+    [Networked] private float CooldownDuration { get; set; }
+    public float CooldownDurationSeconds => Object != null && Object.IsValid ? CooldownDuration : 0f;
     public float CooldownRemainingSeconds =>
         Runner != null
             ? AbilityCooldownTimer
@@ -2877,6 +2885,7 @@ public class TankAirDashAbility :
             }
         }
 
+        CooldownDuration = Mathf.Max(0, duration);
         if (duration <= 0f)
         {
             AbilityCooldownTimer =

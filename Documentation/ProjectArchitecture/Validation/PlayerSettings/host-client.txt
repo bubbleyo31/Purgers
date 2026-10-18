@@ -1,0 +1,36 @@
+PASS connect Host
+PASS runner connected
+PASS runner ready
+PASS connect Client
+PASS runner connected
+PASS runner ready
+PASS Client input authority spawn
+PASS Client has input authority; Host owns state
+PASS Client hold mode starts sprint on Host
+PASS Client hold release cancels with Host local toggle default
+PASS toggle first press
+PASS toggle release received
+PASS toggle survives key release
+PASS toggle second press cancels
+PASS release before next sprint
+PASS sprint restarts
+PASS stopping movement cancels sprint
+PASS crouch requested
+PASS menu input releases grapple through production Player
+PASS menu preserves existing crouch
+PASS menu clears sprint
+PASS world continues ticking behind menu
+PASS menu does not freeze gravity
+PASS release snapshot reaches Client
+PASS connect Client
+PASS runner connected
+PASS runner ready
+PASS reconnected observer receives existing player
+PASS reconnect does not revive sprint
+PASS late snapshot does not revive grapple
+PASS production UI identifies Client
+PASS Client pause menu opens
+PASS Client sees leave without save
+PASS Client leaves through production settings and MenuConnection
+PASS Client leave preserves Host and writes no world save
+PASS Client return clears menu lock

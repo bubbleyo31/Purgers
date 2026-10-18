@@ -1,0 +1,7 @@
+{
+  "Pixels": 627200,
+  "Changed": 14889,
+  "DeltaOver16": 0,
+  "MaxChannelDelta": 5,
+  "MeanChannelDelta": 0.024499893707482994
+}

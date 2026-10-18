@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using Fusion;
 using UnityEngine;
 using Purgers.GameFlow.Control;
 
 /// <summary>獨立 E 技能的施放階段；技能結果只由 State Authority 執行。</summary>
 [RequireComponent(typeof(PlayerAbilityRuntime))]
-public abstract class PlayerActiveAbilityBase : NetworkBehaviour, IPlayerAbilityRuntimeModule, IPlayerAbilityHudState
+public abstract class PlayerActiveAbilityBase : NetworkBehaviour, IPlayerAbilityRuntimeModule, IPlayerAbilityHudState, IPlayerAbilityCooldownSource
 {
     [Header("共用 E 技能設定")]
     [SerializeField, Min(0f), Tooltip("冷卻秒數；各技能在自己的結束事件才開始倒數。0 代表無冷卻。")]
@@ -27,6 +27,8 @@ public abstract class PlayerActiveAbilityBase : NetworkBehaviour, IPlayerAbility
     [Networked] protected TickTimer PhaseTimer { get; set; }
     [Networked] protected float PhaseDurationSeconds { get; set; }
     [Networked] protected TickTimer CooldownTimer { get; set; }
+    [Networked] private float CooldownDuration { get; set; }
+    public float CooldownDurationSeconds => Ready ? CooldownDuration : 0f;
     [Networked] public int ActivationSequence { get; protected set; }
 
     protected Player Owner { get; private set; }
@@ -37,12 +39,30 @@ public abstract class PlayerActiveAbilityBase : NetworkBehaviour, IPlayerAbility
     public PlayerAbilityCategory AbilityCategory => PlayerAbilityCategory.GrappleFocus;
     public bool HasReservedEnhancement => GetComponent<PlayerAbilityRuntime>().Definition != null && GetComponent<PlayerAbilityRuntime>().Definition.HasReservedEnhancement;
     public float CooldownRemainingSeconds => Ready ? CooldownTimer.RemainingTime(Runner) ?? 0f : 0f;
+    public bool HudCanEndActive => Ready && Phase == PlayerActiveAbilityPhase.Active && CanEndOnActivePress;
+    public virtual bool HudCanRecast => false;
+    public bool HudCanPress
+    {
+        get
+        {
+            if (!IsUsable || (Owner.GetComponent<PlayerActionGate>()?.IsBlocked(PlayerActionBlockMask.QuickAction) ?? false)) return false;
+            if (Phase == PlayerActiveAbilityPhase.Armed) return HudCanRecast;
+            if (Phase == PlayerActiveAbilityPhase.Active) return CanEndOnActivePress;
+            if (Phase != PlayerActiveAbilityPhase.Ready || CooldownRemainingSeconds > 0f) return false;
+            foreach (var condition in useConditions)
+                if (condition != null && (!(condition is IPlayerAbilityUseCondition rule) || !rule.CanActivate(Owner))) return false;
+            // Current CanBegin overrides only read qualification/configuration; never submit an activation from HUD.
+            return CanBegin(default);
+        }
+    }
     public float ActiveRemainingSeconds => Ready ? PhaseTimer.RemainingTime(Runner) ?? 0f : 0f;
     public bool IsAbilityActive => Ready && Phase != PlayerActiveAbilityPhase.Ready;
     public PlayerAbilityTimedHudState TimedHudState => Ready
         ? ActiveAbilityHudRules.Create(Phase, ActiveRemainingSeconds, PhaseDurationSeconds) : default;
     public virtual bool IsUsable => Ready && ProfessionAvailable && Owner.Health != null &&
-        Owner.Health.IsAlive && PlayerAbilityQualification.IsAllowed(Owner, GetComponent<PlayerAbilityRuntime>().Definition);
+        Owner.Health.IsAlive &&
+        !(Owner.GetComponent<PlayerActionGate>()?.IsBlocked(PlayerActionBlockMask.ActiveAbility) ?? false) &&
+        PlayerAbilityQualification.IsAllowed(Owner, GetComponent<PlayerAbilityRuntime>().Definition);
 
     public virtual void BindOwnerPlayer(Player ownerPlayer) { Owner = ownerPlayer; }
     public virtual void SetProfessionAvailable(bool isAvailable)
@@ -85,6 +105,23 @@ public abstract class PlayerActiveAbilityBase : NetworkBehaviour, IPlayerAbility
         PhaseTimer = TickTimer.CreateFromSeconds(Runner, Mathf.Max(0f, castDelaySeconds));
         if (castDelaySeconds <= 0f) CompleteCast();
     }
+    public bool TryAutomaticActivation(NetInput input)
+    {
+        if (!Authority || !IsUsable) return false;
+        input.Buttons.Set(InputButton.Ability1, true);
+        if (Phase != PlayerActiveAbilityPhase.Armed)
+        {
+            int before = ActivationSequence;
+            SimulateAbility(input, default);
+            if (Phase != PlayerActiveAbilityPhase.Armed) return ActivationSequence != before;
+        }
+        // 待命型（閃現）直接使用這個 tick 的方向；失敗保留一次待施放。
+        Vector2? aim = GetReleaseAim();
+        bool released = OnArmedPress(input);
+        if (released) GetComponent<PlayerAbilityRuntime>().ApplyAbilityRecoil(PlayerAbilityRecoilEvent.AfterCast, aim);
+        return released;
+    }
+
     public override void FixedUpdateNetwork()
     {
         if (!Authority) return;
@@ -130,7 +167,8 @@ public abstract class PlayerActiveAbilityBase : NetworkBehaviour, IPlayerAbility
         Phase = PlayerActiveAbilityPhase.Ready;
         PhaseDurationSeconds = 0f;
         PhaseTimer = TickTimer.None;
-        CooldownTimer = TickTimer.CreateFromSeconds(Runner, Mathf.Max(0f, cooldownSeconds));
+        CooldownDuration = Purgers.Progression.PlayerGrowth.Cooldown(Owner, AbilityCategory, cooldownSeconds);
+        CooldownTimer = TickTimer.CreateFromSeconds(Runner, CooldownDuration);
     }
     protected int PlayerLevel
     {

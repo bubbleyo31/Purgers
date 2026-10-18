@@ -1776,6 +1776,8 @@ public class TankQuickDashAbility :
         }
 
 
+        EnemyProjectileReflection.ReflectDash(ownerPlayer, center, rotation, extents, ownerMovement.GetAimDirection());
+
         dashHits.Clear();
 
 

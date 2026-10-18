@@ -9,7 +9,7 @@ using Assert = NUnit.Framework.Assert;
 
 /// <summary>有效 Fusion 物件的受控輸入／結算測試；不等同獨立 Host／Client。</summary>
 [Category("PurgersRegression")]
-public sealed class AbilityToggleInputTests
+public sealed partial class AbilityToggleInputTests
 {
     private NetworkRunner runner;
     private Player player;
@@ -348,6 +348,10 @@ public sealed class AbilityToggleInputTests
         if (host) runner = peer; else client = peer;
         peer.ProvideInput = true;
         var events = peer.gameObject.AddComponent<NetworkEvents>();
+        // Runtime-created NetworkEvents has no serialized UnityEvents; initialize AOI callbacks too.
+        foreach (var field in typeof(NetworkEvents).GetFields(Flags))
+            if (typeof(UnityEngine.Events.UnityEventBase).IsAssignableFrom(field.FieldType) && field.GetValue(events) == null)
+                field.SetValue(events, System.Activator.CreateInstance(field.FieldType));
         events.OnInput = new NetworkEvents.InputEvent();
         events.OnInput.AddListener((r, input) => { var data = new NetInput(); data.Buttons.Set(InputButton.Ability1, !host && clientPress); input.Set(data); });
         var config = NetworkProjectConfig.Deserialize(NetworkProjectConfig.Serialize(NetworkProjectConfig.Global));

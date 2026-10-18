@@ -26,3 +26,10 @@ Host 玩家首次加入時，從 `GameSaveRuntimeContext.ActiveSave` 的 `host` 
 ## 2026-10-02 鈎索使用能量局部更新
 
 `PlayerGrappleCharges` 沿用舊元件改為玩家等級制使用能量，1 級 50、每級 +25；合法發射扣 1，尚未釋放且拉動自己時每秒扣 1。無自然／擊殺回充；耗盡不取消本次移動。Host 讀主要 `GameLogic` 的玩家等級套用容量，Input Authority 沿用預測消耗，HUD 只讀同步比例。升級補滿／補差額可在玩家 Prefab Inspector 切換；死亡重生及正式安全屋／關卡轉場補滿。左下動能增傷獨立。保留舊元件 GUID 與職業舊欄位，未重建 Scene／Prefab；設定、遷移邊界與驗收順序見 [30](30_鈎索系統.md)，證據見 [130](130_回歸驗證與審查狀態.md)。
+
+
+## 2026-10-16 成長獎勵與技能掉落局部核對
+
+GameLogic 權威狀態新增階級與被動 bitset，與 XP／候選一起跨角色生成及正式場景流轉；新輪 PendingRewards=1。Host 存檔 v4、訪客原有 session-only 政策不變。 詳見 [168 角色成長、被動與掉落](168_角色成長被動與技能掉落.md)。
+
+實作／資產與測試證據分開列於 168，未宣稱獨立多程序聯機或 Build 驗收。

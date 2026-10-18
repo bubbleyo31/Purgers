@@ -1,0 +1,182 @@
+[
+  {
+    "File": "A01_MaxHealth_I.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "File": "A02_ReloadSpeed_I.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "File": "A03_MeleeSpeed_I.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "File": "A04_MagazineCapacity_I.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "File": "A05_GrappleEnergy_I.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": [
+      0,
+      0,
+      0,
+      1
+    ]
+  },
+  {
+    "File": "A06_FocusCooldown_I.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "File": "A07_GrappleCooldown_I.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "File": "A08_OutOfCombatRegen_I.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "File": "A09_RegenDelay_I.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "File": "S01_NotToday.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "File": "S02_SelfRevive.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "File": "S03_Adrenaline.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "File": "S04_CarnivorousTree.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "File": "S05_HardChoice.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "File": "S06_JohnWick.png",
+    "Width": 1254,
+    "Height": 1254,
+    "Format": "Format32bppArgb",
+    "CornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+]

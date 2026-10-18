@@ -131,6 +131,15 @@ public class LocalPlayerHealthSlider :
     /// 重生後會換成全新的 PlayerHealth 實例。
     /// </summary>
     private PlayerHealth boundHealth;
+    private StatusEffectListView statusView;
+    private LocalPlayerGuardHUD guardView;
+    private LocalPlayerBattleAbilityHUD castHud;
+    private RectTransform castBoundsRoot;
+    private UnityEngine.UI.Graphic[] castGraphics;
+    private readonly Vector3[] castCorners = new Vector3[4];
+    private float nextCastHudLookup;
+    private StatusEffectSources statusSources;
+    private readonly StatusEffectSnapshot[] statusBuffer = new StatusEffectSnapshot[StatusEffectSources.Capacity];
 
     [Header("護盾額外血格")]
     [SerializeField, Tooltip("原本生命 UI 的 LocalHealthSegmentView；護盾沿相同輪廓接在生命格右側，淡金色且使用同一每格血量。空白時只顯示原血量，遷移工具可補上引用。")]
@@ -245,10 +254,14 @@ public class LocalPlayerHealthSlider :
 
         RefreshSliderIfChanged();
         RefreshShield();
+        RefreshStatusHud();
     }
 
     private void OnDisable()
     {
+        if (guardView != null) guardView.Clear();
+        if (statusView != null) statusView.Clear();
+        statusSources = null;
         if (healthSegmentView != null) healthSegmentView.ResetPresentation();
         boundHealth =
             null;
@@ -291,8 +304,7 @@ public class LocalPlayerHealthSlider :
             return false;
         }
 
-        if (runner.TryGetPlayerObject(
-                runner.LocalPlayer,
+        if (LocalPlayerSpectatorController.TryGetViewedPlayerObject(runner,
                 out NetworkObject playerObject
             ) == false ||
             playerObject == null ||
@@ -319,6 +331,7 @@ public class LocalPlayerHealthSlider :
     {
         boundHealth =
             newHealth;
+        statusSources = new StatusEffectSources(newHealth.gameObject);
         if (healthSegmentView != null) healthSegmentView.ResetPresentation();
 
         ResetDisplayedValueCache();
@@ -340,6 +353,9 @@ public class LocalPlayerHealthSlider :
 
     private void UnbindCurrentHealth()
     {
+        if (guardView != null) guardView.Clear();
+        if (statusView != null) statusView.Clear();
+        statusSources = null;
         if (healthSegmentView != null) healthSegmentView.ResetPresentation();
         if (boundHealth != null &&
             debugHealthUI)
@@ -489,6 +505,54 @@ public class LocalPlayerHealthSlider :
                 this
             );
         }
+    }
+
+    private void RefreshStatusHud()
+    {
+        var settings = StatusEffectHudSettings.Default;
+        // PlayerHUDController 是與準心共用 ReferenceFrame 的全畫面容器。
+        // 不掛在準心 Graphic 底下，避免準心換色或隱藏影響狀態。
+        RectTransform anchor = transform as RectTransform;
+        if (settings == null || anchor == null || boundHealth == null || !visualVisible || statusSources == null)
+        { if (statusView != null) statusView.Clear(); if (guardView != null) guardView.Clear(); return; }
+        if (statusView == null) statusView = StatusEffectListView.Create(anchor);
+        if (guardView == null) guardView = LocalPlayerGuardHUD.Create(anchor);
+        var player = boundHealth.GetComponent<Player>();
+        var guard = boundHealth.Object != null && boundHealth.Object.IsValid && boundHealth.IsAlive
+            ? PlayerAbilityQualification.GetGuardWeapon(player) : null;
+        var snapshot = guard != null ? new GuardHudSnapshot(true,guard.IsGuarding,guard.IsBrokenCooldown,
+            guard.CurrentStamina,guard.MaximumGuardStamina,guard.RecoveryDelayRemainingSeconds,guard.BrokenCooldownRemainingSeconds) : default;
+        float width = Mathf.Min(anchor.rect.width,settings.selfWidth);
+        float leadingHeight = guardView.Present(snapshot,settings,width);
+        int count = statusSources.Read(runner.LocalPlayer, statusBuffer);
+        statusView.Present(statusBuffer, count, settings, width, true, leadingHeight);
+        float offset = LocalPlayerGuardHUD.ResolveCrosshairOffset(settings,leadingHeight,statusView.VisibleCount,ReadCastTop(anchor));
+        guardView.SetCrosshairOffset(offset);
+        statusView.SetSelfCrosshairOffset(offset,leadingHeight);
+    }
+
+    private float ReadCastTop(RectTransform anchor)
+    {
+        if (castHud == null && Time.unscaledTime >= nextCastHudLookup)
+        {
+            castHud = FindObjectOfType<LocalPlayerBattleAbilityHUD>();
+            nextCastHudLookup = Time.unscaledTime + .5f;
+        }
+        var root = castHud != null ? castHud.VisibleTimedAbilityRect : null;
+        if (root == null) return float.NegativeInfinity;
+        if (castBoundsRoot != root)
+        {
+            castBoundsRoot = root;
+            castGraphics = root.GetComponentsInChildren<UnityEngine.UI.Graphic>(true);
+        }
+        float top = float.NegativeInfinity;
+        foreach (var graphic in castGraphics)
+        {
+            if (graphic == null || !graphic.isActiveAndEnabled) continue;
+            graphic.rectTransform.GetWorldCorners(castCorners);
+            for (int i=0;i<4;i++) top = Mathf.Max(top,anchor.InverseTransformPoint(castCorners[i]).y);
+        }
+        return top;
     }
 
     private void RefreshShield()

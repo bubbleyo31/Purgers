@@ -1,0 +1,59 @@
+{
+  "scope": "One measured background Play Mode entry and exit in Assets/Scenes/_Menu.unity. Initial sandbox run could not observe desktop foreground and is excluded.",
+  "monitor": "Windows EVENT_SYSTEM_FOREGROUND hook plus 10 ms polling; read-only, no activation APIs.",
+  "foreground": {
+    "startUtc": "2026-10-17T14:13:46.0140662Z",
+    "endUtc": "2026-10-17T14:15:06.0289850Z",
+    "hwnd": 2493790,
+    "pid": 51552,
+    "process": "msedge",
+    "transitions": 0
+  },
+  "playRequestUtc": {
+    "current_time": "2026-10-17 14:14:06 UTC"
+  },
+  "runtimeA": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "utc": "2026-10-17T14:14:37.9310492Z",
+        "playing": true,
+        "paused": false,
+        "frameCount": 3822,
+        "realtime": 29.1783714,
+        "focused": false,
+        "scene": "Assets/Scenes/_Menu.unity"
+      },
+      "compiler": "codedom"
+    }
+  },
+  "runtimeB": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "utc": "2026-10-17T14:14:45.87674Z",
+        "playing": true,
+        "paused": false,
+        "frameCount": 5066,
+        "realtime": 37.1187248,
+        "focused": false
+      },
+      "compiler": "codedom"
+    }
+  },
+  "stopRequestUtc": {
+    "current_time": "2026-10-17 14:14:47 UTC"
+  },
+  "final": {
+    "playing": false,
+    "paused": false,
+    "focused": false,
+    "scene": "Assets/Scenes/_Menu.unity",
+    "dirty": false,
+    "utc": "2026-10-17T14:15:04.0574759Z"
+  },
+  "sceneSha256BeforeAndAfter": "D2C5197C6DAA171DB35DBE257DD8E71CF706DA7E43E4B2734F12C78794939216",
+  "limitations": "No proof for other layouts, scenes, dialogs, Scene View captures, independent Players or every fullscreen application. No gameplay regression suite run."
+}

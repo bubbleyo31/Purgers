@@ -11,7 +11,8 @@ namespace Purgers.GameFlow.Control
         Movement = 1,
         Look = 2,
         AllInput = 4,
-        Gameplay = 8
+        Gameplay = 8,
+        Combat = 16
     }
 
     /// <summary>Each acquisition has its own identity, even when reasons match.</summary>
@@ -56,6 +57,9 @@ namespace Purgers.GameFlow.Control
         public static bool BlocksGameplay(PlayerControlMask mask) =>
             (mask & (PlayerControlMask.Gameplay | PlayerControlMask.AllInput)) != 0;
 
+        public static bool BlocksCombat(PlayerControlMask mask) =>
+            (mask & (PlayerControlMask.Combat | PlayerControlMask.Gameplay | PlayerControlMask.AllInput)) != 0;
+
         public static void Filter(ref NetInput input, PlayerControlMask mask)
         {
             input.BlockedControls |= mask;
@@ -66,6 +70,16 @@ namespace Purgers.GameFlow.Control
                 input.Direction = Vector2.zero;
                 input.LookDelta = Vector2.zero;
                 return;
+            }
+            if (BlocksCombat(mask))
+            {
+                input.Buttons.Set(InputButton.Fire, false);
+                input.Buttons.Set(InputButton.Aim, false);
+                input.Buttons.Set(InputButton.Reload, false);
+                input.Buttons.Set(InputButton.Grapple, false);
+                input.Buttons.Set(InputButton.Ability1, false);
+                input.Buttons.Set(InputButton.Ability2, false);
+                input.Buttons.Set(InputButton.QuickAction, false);
             }
             if (BlocksLook(mask))
                 input.LookDelta = Vector2.zero;

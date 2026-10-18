@@ -1,0 +1,8 @@
+PASS No Runner: goggles hidden in menu
+PASS Existing Host/Client spectator scenario: 通過
+PASS Host local first-person shows goggles
+PASS Late-joining Client local first-person shows goggles
+PASS Client death switches goggles source to observed teammate
+FAIL System.Exception: Respawn rebinds goggles to own player
+  at FirstPersonGogglesVerification.Check (System.Boolean ok, System.String message) [0x0001f] in M:\UnityProject\Purgers\Assets\Scripts\Editor\FirstPersonGogglesVerification.cs:20 
+  at FirstPersonGogglesVerification.Begin () [0x00440] in M:\UnityProject\Purgers\Assets\Scripts\Editor\FirstPersonGogglesVerification.cs:67 

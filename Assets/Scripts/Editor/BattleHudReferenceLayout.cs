@@ -309,11 +309,11 @@ public static class BattleHudReferenceLayout
             foreach(string name in new[]{"GrappleBackground","GrappleFill"}){PdfBox(R(battle,name),"GrappleOuter");R(battle,name).GetComponent<Image>().sprite=Shape("GrappleExact");}
             R(battle,"GrappleBackground").GetComponent<Image>().color=DarkBlue;R(battle,"GrappleFill").GetComponent<Image>().color=Blue;
             Box(R(battle,"EmptyGrappleMark"),925,936,80,13.826f);R(battle,"EmptyGrappleMark").localEulerAngles=new Vector3(0,0,45);
-            Box(R(battle,"GrappleKey"),943,992.67f,44,49);Image(R(battle,"GrappleKey"),Shape("Key"),Color.clear);
+            Box(R(battle,"GrappleKey"),943,992.67f,44,49);var grappleKeyBackground=Image(R(battle,"GrappleKey"),Shape("Key"),new Color32(204,190,199,255));
             Full(R(battle,"GrappleKey/Label"));Text(R(battle,"GrappleKey/Label"),35.575f,Color.black);CjkWeight(R(battle,"GrappleKey/Label"));
-            Set(battle.GetComponent<LocalPlayerBattleAbilityHUD>(),"grappleKeyBackground",null);
+            Set(battle.GetComponent<LocalPlayerBattleAbilityHUD>(),"grappleKeyBackground",grappleKeyBackground);
             Set(battle.GetComponent<LocalPlayerBattleAbilityHUD>(),"focusIconOffset",Vector2.zero);
-            Set(battle.GetComponent<LocalPlayerBattleAbilityHUD>(),"focusKeyOffset",new Vector2(-4.5877f,0));
+            Set(battle.GetComponent<LocalPlayerBattleAbilityHUD>(),"focusKeyOffset",Vector2.zero);
             var slots=R(battle,"AbilitySlots");var slotShape=P("SkillSlot");const float step=121.3927f;
             Box(slots,slotShape.x,slotShape.y,slotShape.width+step,slotShape.height);
             var layout=slots.GetComponent<HorizontalLayoutGroup>();
@@ -502,3 +502,4 @@ public static class BattleHudReferenceLayout
         }
     }
 }
+

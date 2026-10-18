@@ -1,0 +1,13 @@
+Player: anchor height=2.15, body=8, missing scripts=0
+HUD: count=1, settings assigned, full rect, scale=1, canvas=ScreenSpaceOverlay
+Balanced: feature=1 active, shader assigned, features=2, map=1
+HighFidelity: feature=1 active, shader assigned, features=2, map=1
+Performant: feature=1 active, shader assigned, features=1, map=0
+Scene dirty=False; compiling=False
+Balanced: feature map saved, entries=2
+HighFidelity: feature map saved, entries=2
+Performant: feature map saved, entries=1
+Balanced: reimported feature map matches all subassets
+HighFidelity: reimported feature map matches all subassets
+Performant: reimported feature map matches all subassets
+Console/scene verification: _Menu dirty=False

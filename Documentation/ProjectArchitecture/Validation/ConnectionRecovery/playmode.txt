@@ -1,0 +1,19 @@
+2026-10-17T14:03:55.6490907Z UI cancellation
+2026-10-17T14:03:55.8164975Z PASS cancel button receives UI raycast: SecondaryButton,WindowPanelV2,WindowDimV2
+2026-10-17T14:03:55.8475250Z PASS cancel button finishes bounded connection
+2026-10-17T14:03:55.8485261Z PASS cancelled attempt never succeeds
+2026-10-17T14:03:56.3516176Z PASS cancel returns to real main menu
+2026-10-17T14:03:56.3526175Z PASS cancel releases input lock
+2026-10-17T14:03:56.3526175Z UI timeout
+2026-10-17T14:03:57.8662688Z PASS timeout reports reason
+2026-10-17T14:03:57.8672698Z PASS timeout returns to main menu
+2026-10-17T14:03:57.8672698Z Photon Best Host
+2026-10-17T14:04:20.0751607Z PASS Best Host connected: 
+2026-10-17T14:04:20.0761618Z PASS room code matches actual Host region=asia
+2026-10-17T14:04:20.0771640Z Photon Client Join
+2026-10-17T14:04:36.7236666Z PASS Client ignores different preference and joins Host: 
+2026-10-17T14:04:36.7761537Z PASS Client disconnect cleans Runner
+2026-10-17T14:04:53.2618517Z PASS Client reconnect succeeds: 
+2026-10-17T14:04:53.3547126Z PASS Host close still delivers RoomClosed
+2026-10-17T14:04:53.3547126Z COMPLETE
+remaining runners=0, inputBlocked=False

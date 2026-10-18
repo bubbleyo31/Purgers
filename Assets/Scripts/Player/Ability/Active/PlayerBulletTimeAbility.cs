@@ -46,6 +46,8 @@ public sealed class PlayerBulletTimeAbility : PlayerActiveAbilityBase
 
     public bool IsSessionActive => spawned && Object != null && Object.IsValid && Runner != null &&
         Phase == PlayerActiveAbilityPhase.Active && !PhaseTimer.ExpiredOrNotRunning(Runner);
+    internal TickTimer StatusDeadline => IsSessionActive ? PhaseTimer : TickTimer.None;
+    internal float StatusSpan => IsSessionActive ? PhaseDurationSeconds : 0f;
     public float PlayerMovementMultiplier => Mathf.Clamp(playerMovementMultiplier, 0.01f, 1f);
     public Color OverlayColor => overlayColor;
     public float OverlayOpacity => Mathf.Clamp(overlayOpacity, 0f, 0.6f);

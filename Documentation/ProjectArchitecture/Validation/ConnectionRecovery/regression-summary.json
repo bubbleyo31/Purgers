@@ -1,0 +1,43 @@
+{
+  "run": {
+    "type": "TestSuite",
+    "id": "1000",
+    "name": "Purgers",
+    "fullname": "Purgers",
+    "runstate": "Runnable",
+    "testcasecount": "1055",
+    "result": "Failed",
+    "site": "Child",
+    "start-time": "2026-10-17 14:02:34Z",
+    "end-time": "2026-10-17 14:02:39Z",
+    "duration": "5.903003",
+    "total": "1040",
+    "passed": "1035",
+    "failed": "4",
+    "inconclusive": "0",
+    "skipped": "1",
+    "asserts": "0"
+  },
+  "failures": [
+    {
+      "name": "BossStageAssetTests.GameSceneContainsBossAssetWiring",
+      "message": "  Expected: same as <MapChunk_Boss (MapChunk)>\n  But was:  <MapChunk_Boss (MapChunk)>\n",
+      "stack": "at BossStageAssetTests.GameSceneContainsBossAssetWiring () [0x000bc] in M:\\UnityProject\\Purgers\\Assets\\Scripts\\Editor\\Tests\\BossStageAssetTests.cs:96\n"
+    },
+    {
+      "name": "EnemyFlytrapAssetTests.TimingDefaultsMatchApprovedRules",
+      "message": "  Expected: 0.5f\n  But was:  0.25f\n",
+      "stack": "at EnemyFlytrapAssetTests.TimingDefaultsMatchApprovedRules () [0x00034] in M:\\UnityProject\\Purgers\\Assets\\Scripts\\Editor\\Tests\\EnemyFlytrapAssetTests.cs:36\n"
+    },
+    {
+      "name": "EnemyReflectorAssetTests.SeparatePrefabUsesExistingCombatAndHealthOwners",
+      "message": "  Expected: greater than 10.0f\n  But was:  10.0f\n",
+      "stack": "at EnemyReflectorAssetTests.SeparatePrefabUsesExistingCombatAndHealthOwners () [0x000b6] in M:\\UnityProject\\Purgers\\Assets\\Scripts\\Editor\\Tests\\EnemyReflectorAssetTests.cs:23\n"
+    },
+    {
+      "name": "ReloadCameraRuntimeTests.SpawnedLocalWeaponsDriveOnlyPresentationAndUnbindClearsIt",
+      "message": "System.NullReferenceException : Object reference not set to an instance of an object",
+      "stack": "  at ReloadCameraRuntimeTests.Field (System.Object o, System.String n, System.Object v) [0x00000] in M:\\UnityProject\\Purgers\\Assets\\Scripts\\Editor\\Tests\\ReloadCameraRuntimeTests.cs:20 \n  at ReloadCameraRuntimeTests+<SpawnedLocalWeaponsDriveOnlyPresentationAndUnbindClearsIt>d__8.MoveNext () [0x00549] in M:\\UnityProject\\Purgers\\Assets\\Scripts\\Editor\\Tests\\ReloadCameraRuntimeTests.cs:80 \n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
+    }
+  ]
+}

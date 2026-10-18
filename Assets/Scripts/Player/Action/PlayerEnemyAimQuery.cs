@@ -64,7 +64,7 @@ public static class PlayerEnemyAimQuery
     public static bool TryGetLocal(Player owner, Vector3 origin, Vector3 direction, float distance,
         LayerMask enemyMask, LayerMask obstructionMask, ref RaycastHit[] buffer)
     {
-        if (owner == null || owner.Object == null || !owner.Object.IsValid || !owner.Object.HasInputAuthority ||
+        if (owner == null || owner.Object == null || !owner.Object.IsValid || !LocalPlayerSpectatorController.IsViewedObject(owner.Object) ||
             owner.Runner == null || (owner.Health != null && !owner.Health.IsAlive)) return false;
         int count = ActiveAbilityPhysics.SphereCastSorted(owner.Runner.GetPhysicsScene(), origin, direction, distance,
             0f, enemyMask.value | obstructionMask.value, owner.Object, ref buffer);

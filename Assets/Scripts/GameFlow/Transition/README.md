@@ -22,3 +22,9 @@ Host 必須同時通過地圖準備、SceneManager 非忙碌、所有仍連線�
 詳見 [Phase 4 前置-1 配置與驗證](../../../../Documentation/ProjectArchitecture/144_PrePhase4-1_共用控制與轉場.md)。
 
 離線玩家會從 LoadedPlayers 移除，避免反覆加入離線留下舊條目。Stage HUD 在 Initializing 顯示等待載入，不會把未建立計時器顯示為不限時。
+
+- 2026-10-16 局部核對：MenuUIController 在連線 Loading Show 啟用後，設定既有 Loading Canvas 的 Override Sorting=true、最高 Sorting Layer／32766，讓小地圖與其他現有遊戲 HUD 位於下方。ScreenFadeLayer 的 32767 與載入交接規則不變；無 Scene／Prefab 遷移。設定與證據見架構文件 144 的「連線載入動畫的 UI 排序」。
+
+## 2026-10-18 全滅特例
+
+一般切場保持原規則；AllPlayersDead 新增 Wipe partial：BeginWipe 淡黑／淡音 1.5 秒，兩者完成後停留 2 秒；StageFlow 等目前連線玩家完成回報後呼叫原 LoadScene。BeginLoad 保持全黑／靜音，相機就緒後恢復 1.5 秒，Cancel 釋放自身票證及增益。詳見架構文件 144 及 Validation/SpectatorSwitch。

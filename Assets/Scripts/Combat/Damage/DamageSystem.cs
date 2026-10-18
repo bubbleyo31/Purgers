@@ -839,6 +839,9 @@ public static class DamageReceiverUtility
     {
         if (!TryPrepareDamage(hitObject, request, out PreparedDamageSnapshot pending, out result))
             return false;
+        // 安全屋拒絕先於延後結算，不能將友傷留到離開安全屋後才扣。
+        if (pending.Receiver is PlayerHealth safeHealth && safeHealth.RejectsSafeHousePlayerDamage(pending.Request))
+            return TryResolvePreparedDamage(pending, out result);
         if (PlayerBulletTimeSessionRegistry.TryDeferDamage(pending, out result))
             return true;
         return TryResolvePreparedDamage(pending, out result);
@@ -987,6 +990,7 @@ public static class DamageReceiverUtility
         }
     }
 
+        Purgers.Progression.PlayerGrowth.ModifyDamage(ref resolvedRequest);
         pending = new PreparedDamageSnapshot(hitObject, resolvedRequest,
             targetReceiver, targetReceiverBehaviour, sourceBehaviours);
         result = default;
@@ -1017,6 +1021,22 @@ public static class DamageReceiverUtility
                 DamageRejectReason.NotStateAuthority);
             NotifyOutgoingDamageResolved(sourceBehaviours, result);
             return true;
+        }
+        // 先拒絕玩家友傷／自傷，不能消耗 Guard、護盾或觸發受擊回饋。
+        if (targetReceiver is PlayerHealth safeHealth && safeHealth.RejectsSafeHousePlayerDamage(resolvedRequest))
+        {
+            result = DamageResult.CreateRejected(resolvedRequest, pending.TargetObject, DamageRejectReason.FriendlyFireBlocked);
+            NotifyOutgoingDamageResolved(sourceBehaviours, result);
+            return true;
+        }
+        if (targetReceiver is PlayerHealth growthHealth)
+        {
+            growthHealth.NotifyGrowthCombat();
+            if (growthHealth.IsNotTodayInvulnerable)
+            {
+                result = DamageResult.CreateRejected(resolvedRequest, pending.TargetObject, DamageRejectReason.FullyBlocked, true, true);
+                NotifyOutgoingDamageResolved(sourceBehaviours, result); return true;
+            }
         }
         MonoBehaviour[] behaviours = pending.HitObject.GetComponentsInParent<MonoBehaviour>(true);
 
@@ -1170,6 +1190,8 @@ public static class DamageReceiverUtility
                         NetworkObject
                     >();
         }
+
+        Purgers.Progression.PlayerGrowth.Resolved(result);
 
         // Receiver 接受或拒絕的結果都已結算完成，統一通知一次。
         // NoReceiver 不會進入此處；FullyBlocked 已在上方通知後返回。

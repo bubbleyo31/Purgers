@@ -76,9 +76,17 @@ MonoBehaviour:
     movementEnabled: 0
     movementTiming: 0
     movementSpeed: 0
+    movementDecayDuration: 0.2
     movementLocalDirection: {x: 0, y: 0, z: -1}
   _OwnerPlayerObject: {fileID: 0}
   _LoadoutSlotIndex: 0
+  _IsWorldLoot:
+    _value: 0
+  _IsBonusCast:
+    _value: 0
+  _LootPosition: {x: 0, y: 0, z: 0}
+  _SkillLevel: 0
+  _RequiredPlayerLevel: 0
 --- !u!114 &3543074204030490733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,6 +125,76 @@ MonoBehaviour:
   beamVisibleSeconds: 0.15
   beamWidth: 0.08
   beamColor: {r: 0.3, g: 1, b: 0.95, a: 1}
+  aimStageRatio: 0.55
+  presentation:
+    aimWidth: 0.025
+    chargeWidth: 0.075
+    shotWidth: 0.3
+    aimColor: {r: 0.55, g: 0.85, b: 0.8, a: 0.6}
+    chargeColor: {r: 0.02, g: 0.45, b: 0.34, a: 1}
+    shotColor: {r: 0.12, g: 2, b: 1.6, a: 1}
+    coreColor: {r: 2, g: 2.5, b: 2.3, a: 1}
+    coreWidthRatio: 0.28
+    collapse:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    lineMaterial: {fileID: 2100000, guid: 15caa7673af687b4a99bbed50706c513, type: 2}
+    particles:
+      enabled: 1
+      prefab: {fileID: 0}
+      material: {fileID: 2100000, guid: d71b2c5be938a674b9e43da38046e2b7, type: 2}
+      muzzleCount: 18
+      beamCount: 48
+      endCount: 22
+      lifetime: 0.18
+      size: 0.045
+      speed: 2.5
+      radius: 0.12
+      color: {r: 0.2, g: 2, b: 1.65, a: 1}
+    audio:
+      prepare:
+        cue: {fileID: 0}
+        clipIndex: 0
+        pitch: 1
+        volume: 1
+      aim:
+        cue: {fileID: 0}
+        clipIndex: 0
+        pitch: 1
+        volume: 1
+      charge:
+        cue: {fileID: 0}
+        clipIndex: 0
+        pitch: 1
+        volume: 1
+      fire:
+        cue: {fileID: 0}
+        clipIndex: 0
+        pitch: 1
+        volume: 1
+      loopAim: 1
+      loopCharge: 1
   fireVfx:
     prefab: {fileID: 0}
     anchor: {fileID: 0}

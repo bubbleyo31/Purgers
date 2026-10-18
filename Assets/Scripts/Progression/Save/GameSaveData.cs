@@ -5,7 +5,7 @@ namespace Purgers.Progression
 {
     public static class GameSaveSchema
     {
-        public const int CurrentVersion = 3;
+        public const int CurrentVersion = 5;
         public const int DefaultCycleLength = 4;
         public const string HostPlayerId = "host";
     }
@@ -127,6 +127,12 @@ namespace Purgers.Progression
         public int PlayerLevel = 1;
         public int CurrentExperience;
         public int PendingRewardCount;
+        public int GrowthRanks;
+        // v5 追加；舊 v1～v4 缺欄位時為零，不重新解讀原 GrowthRanks。
+        public int DefenseGrowthRanks;
+        public int HeldPassiveBits;
+        public int EquippedHitLevel = 1;
+        public int EquippedFocusLevel = 1;
         public List<string> PendingRewardCandidateIds = new List<string>();
         public List<string> AcquiredRewardIds = new List<string>();
         public string EquippedGrappleHitId = string.Empty;
@@ -144,7 +150,7 @@ namespace Purgers.Progression
                 StablePlayerId = stablePlayerId,
                 PlayerLevel = 1,
                 CurrentExperience = 0,
-                PendingRewardCount = 0
+                PendingRewardCount = 1
             };
         }
 

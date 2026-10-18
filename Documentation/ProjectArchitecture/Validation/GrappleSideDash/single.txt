@@ -1,0 +1,17 @@
+PASS Runner starts: Ok
+PASS positive insufficient energy drains to zero
+PASS shared cooldown starts immediately
+MEASURE free flight (-20.001, -4.717, 11.192)
+PASS 20 m finite left increment
+PASS forward inertia and gravity continue
+PASS no persistent dash side velocity
+PASS opposite double tap cannot bypass cooldown
+PASS zero energy rejects new dash
+PASS turning camera during dash does not reverse heading
+PASS successful attached dash releases rope
+PASS rope release preserves forward velocity
+MEASURE wall flight (-4.150, -13.397, 5.762)
+PASS whole-body diagonal sweep stops at wall
+PASS collision retains cost and cooldown
+PASS movement lock rejects without spending
+PASS unlock does not replay buffered double tap

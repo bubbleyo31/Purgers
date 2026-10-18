@@ -1,4 +1,4 @@
-using Fusion;
+﻿using Fusion;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -910,10 +910,21 @@ public class SupportSMG :
     public int MagazineCapacity =>
         Mathf.Max(
             1,
-            magazineCapacity
+            magazineCapacity + Purgers.Progression.PlayerGrowth.MagazineBonus(ownerPlayer)
         );
 
-    public float ReloadDurationSeconds => Mathf.Max(0f, reloadDuration);
+    [Networked] private float ReloadDurationSnapshot { get; set; }
+    [Networked] private int GrowthMagazineApplied { get; set; }
+    /// <summary>未加速的校準換彈秒數，供 ViewModel 計算本次動畫倍率。</summary>
+    public float BaseReloadDurationSeconds => Mathf.Max(0f, reloadDuration);
+    public float ReloadDurationSeconds => IsReloading ? ReloadDurationSnapshot : Purgers.Progression.PlayerGrowth.Reload(ownerPlayer, reloadDuration);
+    public void RefreshGrowthMagazine()
+    {
+        if (Object == null || !Object.IsValid || !Object.HasStateAuthority) return;
+        int bonus = Purgers.Progression.PlayerGrowth.MagazineBonus(ownerPlayer);
+        MagazineAmmo = Mathf.Clamp(MagazineAmmo + Mathf.Max(0, bonus - GrowthMagazineApplied), 0, MagazineCapacity);
+        GrowthMagazineApplied = bonus;
+    }
 
 
     public bool HasInfiniteReserveAmmo =>
@@ -1096,6 +1107,7 @@ public class SupportSMG :
 
     private void InitializeWeapon()
     {
+        GrowthMagazineApplied = Purgers.Progression.PlayerGrowth.MagazineBonus(ownerPlayer);
         MagazineAmmo =
             MagazineCapacity;
 
@@ -1330,6 +1342,7 @@ public class SupportSMG :
         // =============================================================
 
         ShotSequence++;
+        ownerPlayer?.GetComponent<PlayerActionGate>()?.NotifyGunshot();
 
 
         // =============================================================
@@ -1546,8 +1559,11 @@ public class SupportSMG :
         // Fusion Lag Compensation
         // =============================================================
 
+        bool playerShotResolved=false;
+        bool shotQueryValid=false;
         if (Runner.LagCompensation != null)
         {
+            shotQueryValid=true;
             HitOptions options =
                 HitOptions.IncludePhysX |
                 HitOptions.IgnoreInputAuthority;
@@ -1589,6 +1605,8 @@ public class SupportSMG :
                     hit.Point;
 
 
+                if (EnemyProjectilePlayerShot.Resolve(ownerPlayer, origin, direction, ref tracerEndPoint)) return tracerEndPoint;
+                playerShotResolved=true;
                 ProcessHit(
                     hit,
                     direction
@@ -1596,8 +1614,8 @@ public class SupportSMG :
             }
 
 
-            return
-                tracerEndPoint;
+            if (shotQueryValid && !playerShotResolved) EnemyProjectilePlayerShot.Resolve(ownerPlayer, origin, direction, ref tracerEndPoint);
+            return tracerEndPoint;
         }
 
 
@@ -1607,8 +1625,8 @@ public class SupportSMG :
 
         if (allowPhysicsFallback == false)
         {
-            return
-                tracerEndPoint;
+            if (shotQueryValid && !playerShotResolved) EnemyProjectilePlayerShot.Resolve(ownerPlayer, origin, direction, ref tracerEndPoint);
+            return tracerEndPoint;
         }
 
 
@@ -1619,11 +1637,12 @@ public class SupportSMG :
         if (physicsScene.IsValid() ==
             false)
         {
-            return
-                tracerEndPoint;
+            if (shotQueryValid && !playerShotResolved) EnemyProjectilePlayerShot.Resolve(ownerPlayer, origin, direction, ref tracerEndPoint);
+            return tracerEndPoint;
         }
 
 
+        shotQueryValid=true;
         if (physicsScene.Raycast(
                 origin,
                 direction,
@@ -1656,6 +1675,8 @@ public class SupportSMG :
                     physicsHit;
 
 
+                if (EnemyProjectilePlayerShot.Resolve(ownerPlayer, origin, direction, ref tracerEndPoint)) return tracerEndPoint;
+                playerShotResolved=true;
                 ProcessHit(
                     convertedHit,
                     direction
@@ -1664,8 +1685,8 @@ public class SupportSMG :
         }
 
 
-        return
-            tracerEndPoint;
+        if (shotQueryValid && !playerShotResolved) EnemyProjectilePlayerShot.Resolve(ownerPlayer, origin, direction, ref tracerEndPoint);
+        return tracerEndPoint;
     }
 
 
@@ -2418,7 +2439,8 @@ public class SupportSMG :
         }
 
 
-        if (reloadDuration <= 0f)
+        ReloadDurationSnapshot = Purgers.Progression.PlayerGrowth.Reload(ownerPlayer, reloadDuration);
+        if (ReloadDurationSnapshot <= 0f)
         {
             CompleteReload();
 
@@ -2434,7 +2456,7 @@ public class SupportSMG :
         ReloadTimer =
             TickTimer.CreateFromSeconds(
                 Runner,
-                reloadDuration
+                ReloadDurationSnapshot
             );
 
 

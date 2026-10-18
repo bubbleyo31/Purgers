@@ -1,0 +1,15 @@
+PASS Runner starts: Ok
+PASS Runner starts: Ok
+PASS production local health HUD exists
+PASS rifle excludes guard attributes
+PASS equip chainsaw: 
+PASS serialized base 40 percent / 100
+PASS bound client HUD shows guard
+PASS authority blocks 40 and spends 40
+PASS client HUD value follows replicated 60 / 100
+PASS Input Authority cannot apply damage modifier result
+PASS guarding never regenerates
+PASS release starts base three second wait
+FAIL System.TimeoutException: normal recovery continues while gameplay input is blocked
+  at RewardGrowthRuntimeVerification.Until (System.Func`1[TResult] predicate, System.String label, System.Single seconds) [0x00036] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\RewardGrowthRuntimeVerification.cs:31 
+  at RewardGrowthRuntimeVerification.BeginGuard () [0x00b63] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\RewardGrowthRuntimeVerification.Guard.cs:69 

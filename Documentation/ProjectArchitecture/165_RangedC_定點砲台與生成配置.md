@@ -29,11 +29,11 @@ Ranged C 有兩個獨立類型，各只掛一種攻擊，不在同一隻砲台�
 
 ## 正式 Encounter 的人工配置
 
-1. 開啟欲配置的 MapChunk Prefab，在既有流程建立／選取 `EnemySpawnZone`。`Locomotion Kind` 選 **Stationary**；不選 Ground 或 Free Flying。
+1. 開啟欲配置的 MapChunk Prefab，在既有流程建立／選取 `EnemySpawnZone`。混合清單選砲台 Prefab 後自動辨識 **Stationary**；舊版空混合清單仍可手選 Locomotion Kind。
 2. `Enemy Prefabs` 指定上述其中一份。若想讓此位置隨機二選一，可放兩份；每隻仍只使用其自己的攻擊。
-3. 將 Zone Transform 與 `Spawn Box Center` 對齊要放砲台的位置。**Stationary 固定使用 `Transform.TransformPoint(Spawn Box Center)`**，不隨機取樣、不貼地、不查巡邏路徑。`Spawn Box Size` 不控制定點的散布；Gizmo 顯示中心球與朝向線。Zone 旋轉也是初始出生朝向。
+3. 調整 Zone Transform、`Spawn Box Center` 與 `Spawn Box Size`，使整個出生盒落在可放置砲台的範圍。**2026-10-14 修訂：Stationary 也在 Box 內隨機散布**，不自動貼地、不查巡邏路徑；Gizmo 顯示完整出生盒，Zone 旋轉也是初始出生朝向。
 4. `Flying Patrol Area` 留空，飛行巡邏盒設定對 Stationary 不生效。地面與飛行區的既有巡邏規則保留；只有存在有效 Ground Zone 時，Director 才等待逐 Chunk 地面巡邏區。
-5. 定點建議 `Enemies Per Activation = 1`。需要多個砲台位置時建立多個 Zone；同一 Zone 的多次候選仍是同一中心，會受到原占用檢查限制。
+5. 可在同一 Zone 設定多隻砲台；每隻在 Box 內隨機取點，遇占用會換點重試，最多 Candidate Attempts 次。仍受 Director 上限、期限與出生安全檢查限制。定點只表示出生後不自主位移，不再表示所有砲台共用同一出生中心。
 6. Gate、全場／每區預算、全員遮擋、最近五區鎖定、逐隻生成間隔及脫戰清理全部沿用 [164](164_Phase10_怪物生成區與Encounter守則.md)。人工指定位置不代表必定生成；位置曝光、太近、被占用或不在穿越前方，仍會拒絕。
 7. 由使用者檢查 Root 支撐高度、身體不穿牆／平台、槍口不埋牆。Stationary 不會使用地面或飛行導航替你校正幾何位置。出生遮擋仍是既有固定高度幾何檢查，實際大模型／高平台需目視驗證。
 

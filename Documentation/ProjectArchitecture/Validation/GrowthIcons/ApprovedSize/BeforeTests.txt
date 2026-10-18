@@ -1,0 +1,18 @@
+Purgers | Failed(Child) | passed=0 failed=3 skipped=0 | One or more child tests had errors | 
+M:/UnityProject/Purgers/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll | Failed(Child) | passed=0 failed=3 skipped=0 | One or more child tests had errors | 
+GrowthIconIntegrationTests | Failed(Child) | passed=0 failed=3 skipped=0 | One or more child tests had errors | 
+GrowthIconIntegrationTests.ApprovedAttributeSamplingUsesMipmapsWithoutCompression | Failed | passed=0 failed=1 skipped=0 |   最大生命
+  Expected: True
+  But was:  False
+ | at GrowthIconIntegrationTests.ApprovedAttributeSamplingUsesMipmapsWithoutCompression () [0x00040] in M:\UnityProject\Purgers\Assets\Scripts\Editor\Tests\GrowthIconIntegrationTests.cs:171
+
+GrowthIconIntegrationTests.ApprovedAttributesUseFormalSizeAndCompleteUvs | Failed | passed=0 failed=1 skipped=0 |   最大生命
+  Expected: 68.8580017f +/- 0.00999999978f
+  But was:  49.7579803f
+ | at GrowthIconIntegrationTests.ApprovedAttributesUseFormalSizeAndCompleteUvs () [0x000bf] in M:\UnityProject\Purgers\Assets\Scripts\Editor\Tests\GrowthIconIntegrationTests.cs:105
+
+GrowthIconIntegrationTests.ApprovedRanksKeepStableSizeAndInkCentres | Failed | passed=0 failed=1 skipped=0 |   Tier must not resize glyphs
+  Expected: 20.4527702f +/- 0.00100000005f
+  But was:  18.9965248f
+ | at GrowthIconIntegrationTests.ApprovedRanksKeepStableSizeAndInkCentres () [0x00176] in M:\UnityProject\Purgers\Assets\Scripts\Editor\Tests\GrowthIconIntegrationTests.cs:153
+

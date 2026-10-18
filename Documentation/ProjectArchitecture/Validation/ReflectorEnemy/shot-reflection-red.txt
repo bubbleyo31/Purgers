@@ -1,0 +1,44 @@
+PASS Runner starts: Ok
+PASS Ground spawn accepts existing patrol contract
+PASS active Ground AI does not patrol or chase
+PASS stationary Ground enemy still turns to shoot
+PASS autonomous movement disabled by existing owner
+PASS one living shot blocks repeated attacks beyond cooldown
+PASS shooting down does not reflect
+PASS Impact lifetime still blocks a new attack
+PASS reflect live outstanding shot
+PASS reflected shot continues to block next attack
+PASS shot expiry releases existing attack controller
+PASS full shield blocks rear damage
+PASS full shield blocks front damage
+PASS another shooter's projectile cannot open this shield
+PASS near-target homing activates
+PASS authoritative melee volume reflects projectile
+PASS reflection follows aim and clears homing
+PASS same projectile cannot reflect twice
+PASS reflection accepted with arbitrary aimed direction
+PASS reflected impact causes no HP damage
+PASS stun locks movement rotation and attacks
+PASS reflection opening rejects knockback without changing other enemies
+PASS stunned transform remains still
+PASS opening has orange front shield and hidden rear shield
+PASS Shield_Left stays orange during opening
+PASS Shield_Right stays orange during opening
+PASS Shield_Top stays orange during opening
+PASS Shield_Bottom stays orange during opening
+PASS five remaining sides block damage: (0.00, 0.00, -1.00)
+PASS five remaining sides block damage: (-1.00, 0.00, 0.00)
+PASS five remaining sides block damage: (1.00, 0.00, 0.00)
+PASS five remaining sides block damage: (0.00, 1.00, 0.00)
+PASS five remaining sides block damage: (0.00, -1.00, 0.00)
+PASS rear hit damages existing health during opening
+PASS recovery restores blue rear shield
+PASS Shield_Left recovers blue
+PASS Shield_Right recovers blue
+PASS Shield_Top recovers blue
+PASS Shield_Bottom recovers blue
+PASS restored shield blocks rear damage again
+FAIL configured recovery: System.InvalidOperationException: Rifle reflects nearest projectile without destroying it or piercing
+  at EnemyReflectorRuntimeVerification.Check (System.Boolean ok, System.String name) [0x0001f] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\EnemyReflectorRuntimeVerification.cs:24 
+  at EnemyReflectorRuntimeVerification.VerifyRifleCounterplay (Player player, Fusion.NetworkObject enemy) [0x00126] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\EnemyReflectorRuntimeVerification.cs:135 
+  at EnemyReflectorRuntimeVerification.Begin (System.Boolean multiplayer) [0x00dec] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\EnemyReflectorRuntimeVerification.cs:80 

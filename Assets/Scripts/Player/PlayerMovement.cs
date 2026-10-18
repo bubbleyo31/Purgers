@@ -97,6 +97,9 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("滑鼠視角靈敏度。此數值乘上 NetInput.LookDelta。")]
     private float lookSensitivity = 2f;
 
+    /// <summary>本機視覺估算玩家主動轉頭速度；不改寫 KCC Look。</summary>
+    public float LookSensitivity => Mathf.Abs(lookSensitivity);
+
     #endregion
 
     // =====================================================================
@@ -261,6 +264,8 @@ public class PlayerMovement : MonoBehaviour
         hasUpwardAbilityRecoil = false;
         if (abilityOwner == null) abilityOwner = GetComponent<Player>();
         if (abilityOwner == null || abilityOwner.Object == null || !abilityOwner.Object.IsValid) return;
+        var captureGate = abilityOwner.GetComponent<PlayerActionGate>();
+        if (captureGate != null && captureGate.ApplyCaptureMotion(data)) return;
         var weaponRuntime = abilityOwner.ProfessionRuntimeManager != null ? abilityOwner.ProfessionRuntimeManager.CurrentRuntimeObject : null;
         var preparedMelee = weaponRuntime != null && weaponRuntime.IsValid ? weaponRuntime.GetComponent<TankMeleeCombo>() : null;
         Vector3 preparedVelocity = Vector3.zero;
@@ -283,7 +288,7 @@ public class PlayerMovement : MonoBehaviour
         {
             var manager = abilityOwner.AbilityRuntimeManager;
             Vector3 recoilDelta = manager.ConsumeMovementRecoil(data.DeltaTime);
-            bool suppressed = preparedDash || HasActiveAbilityDash ||
+            bool suppressed = preparedDash || HasActiveAbilityDash || (abilityOwner.Grapple != null && abilityOwner.Grapple.IsSideDashing) ||
                 (abilityOwner.SupportGrapplePlayerPullReceiver != null && abilityOwner.SupportGrapplePlayerPullReceiver.IsPullActive) ||
                 (abilityOwner.Grapple != null && abilityOwner.Grapple.IsNormalPlayerPullAttached) ||
                 (manager.TryGetActiveModule<TankAirDashAbility>(out var tank) && tank.IsDashing);
@@ -307,6 +312,8 @@ public class PlayerMovement : MonoBehaviour
             float groundMultiplier = explosionGate != null ? explosionGate.ExplosionGroundSpeedMultiplier : 1f;
             data.ExternalDelta += data.KinematicVelocity * data.DeltaTime * (groundMultiplier - 1f);
         }
+        if (!preparedDash && !HasActiveAbilityDash && abilityOwner.Grapple != null)
+            abilityOwner.Grapple.ApplySideDashMotion(targetKcc, data);
         float multiplier = Mathf.Clamp01(PlayerBulletTimeSessionRegistry.GetPlayerMovementMultiplier(abilityOwner));
         if (multiplier < 1f)
             data.ExternalDelta = data.ExternalDelta * multiplier + data.DesiredVelocity * data.DeltaTime * (multiplier - 1f);

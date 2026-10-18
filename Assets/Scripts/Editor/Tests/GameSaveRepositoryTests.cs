@@ -26,6 +26,36 @@ public sealed class GameSaveRepositoryTests
     }
 
     [Test]
+    public void GrowthAndTransferredSkillLevelsSurviveDiskRoundTrip()
+    {
+        var repository = new JsonGameSaveRepository(testDirectory);
+        var created = repository.CreateNew("Growth round trip");
+        Assert.That(created.Success, Is.True, created.Error);
+        var growth = new PlayerGrowthState();
+        growth.TryAcquire(PlayerGrowthKind.MaximumHealth);
+        growth.TryAcquire(PlayerGrowthKind.MaximumHealth);
+        growth.TryAcquire(PlayerGrowthKind.SelfRescue);
+        growth.TryAcquire(PlayerGrowthKind.GuardStamina);
+        growth.TryAcquire(PlayerGrowthKind.GuardReduction);
+        growth.TryAcquire(PlayerGrowthKind.GuardCooldown);
+        var entry = created.Value.RunProgression.PlayerProgressionEntries[0];
+        entry.GrowthRanks = growth.Ranks; entry.HeldPassiveBits = growth.Passives;
+        entry.DefenseGrowthRanks = growth.DefenseRanks;
+        PlayerRewardSaveBridge.WriteHost(created.Value, new PlayerRewardSaveSnapshot("hit", "focus", null, null, null, 3, 4));
+        var written = repository.Write(created.Value);
+        Assert.That(written.Success, Is.True, written.Error);
+        var loaded = repository.Load(created.Value.SaveId);
+        Assert.That(loaded.Success, Is.True, loaded.Error);
+        entry = loaded.Value.RunProgression.PlayerProgressionEntries[0];
+        Assert.That(entry.GrowthRanks, Is.EqualTo(growth.Ranks));
+        Assert.That(entry.HeldPassiveBits, Is.EqualTo(growth.Passives));
+        Assert.That(entry.DefenseGrowthRanks, Is.EqualTo(growth.DefenseRanks));
+        var snapshot = PlayerRewardSaveBridge.ReadHost(loaded.Value);
+        Assert.That(snapshot.HitLevel, Is.EqualTo(3));
+        Assert.That(snapshot.FocusLevel, Is.EqualTo(4));
+    }
+
+    [Test]
     public void CreateListLoadAndOverwriteRoundTrip()
     {
         DateTime firstWrite = new DateTime(
@@ -102,6 +132,7 @@ public sealed class GameSaveRepositoryTests
         GameSaveData oldSave = GameSaveData.CreateNew(
             Guid.NewGuid().ToString("N"), "Old", DateTime.UtcNow);
         oldSave.SaveVersion = 1;
+        oldSave.RunProgression.PlayerProgressionEntries[0].PendingRewardCount = 0;
         oldSave.RunProgression.PlayerProgressionEntries[0].PlayerLevel = 3;
         Directory.CreateDirectory(testDirectory);
         File.WriteAllText(
@@ -135,11 +166,31 @@ public sealed class GameSaveRepositoryTests
         var loaded = new JsonGameSaveRepository(testDirectory).Load(oldSave.SaveId);
 
         Assert.That(loaded.Success, Is.True, loaded.Error);
-        Assert.That(loaded.Value.SaveVersion, Is.EqualTo(3));
+        Assert.That(loaded.Value.SaveVersion, Is.EqualTo(GameSaveSchema.CurrentVersion));
         Assert.That(loaded.Value.RunProgression.PlayerProgressionEntries[0]
             .PendingRewardCandidateIds, Is.Empty);
         Assert.That(loaded.Value.RunProgression.PlayerProgressionEntries[0]
             .PendingRewardCount, Is.EqualTo(1));
+    }
+
+    [Test]
+    public void VersionFourWithoutDefenseFieldPreservesLegacyGrowth()
+    {
+        var oldSave = GameSaveData.CreateNew(Guid.NewGuid().ToString("N"), "Old V4", DateTime.UtcNow);
+        oldSave.SaveVersion = 4;
+        var entry = oldSave.RunProgression.PlayerProgressionEntries[0];
+        entry.GrowthRanks = 87654; entry.HeldPassiveBits = 21;
+        Directory.CreateDirectory(testDirectory);
+        string json = JsonUtility.ToJson(oldSave).Replace("\"DefenseGrowthRanks\":0,", "");
+        Assert.That(json, Does.Not.Contain("DefenseGrowthRanks"));
+        File.WriteAllText(Path.Combine(testDirectory, oldSave.SaveId + ".json"), json);
+        var loaded = new JsonGameSaveRepository(testDirectory).Load(oldSave.SaveId);
+        Assert.That(loaded.Success, Is.True, loaded.Error);
+        Assert.That(loaded.Value.SaveVersion, Is.EqualTo(GameSaveSchema.CurrentVersion));
+        entry = loaded.Value.RunProgression.PlayerProgressionEntries[0];
+        Assert.That(entry.DefenseGrowthRanks, Is.Zero);
+        Assert.That(entry.GrowthRanks, Is.EqualTo(87654));
+        Assert.That(entry.HeldPassiveBits, Is.EqualTo(21));
     }
 
     [Test]
@@ -159,7 +210,7 @@ public sealed class GameSaveRepositoryTests
 
         loaded.Value.ResetRunProgression();
         Assert.That(loaded.Value.RunProgression.PlayerProgressionEntries[0]
-            .PendingRewardCount, Is.Zero);
+            .PendingRewardCount, Is.EqualTo(1));
     }
 
     [Test]

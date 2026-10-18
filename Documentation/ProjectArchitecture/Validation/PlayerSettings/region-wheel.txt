@@ -1,0 +1,4 @@
+PASS real region list: one standard wheel unit moves 80 UI units (2 rows); reverse restores position.
+PASS bottom=0, top=1; native movement mode=Elastic unchanged.
+PASS other dropdown sensitivity remains 1; saved settings and camera sensitivity untouched.
+PASS native pointer selection after scrolling updates draft.

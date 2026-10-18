@@ -69,7 +69,10 @@ public enum PlayerActionBlockMask : int
     ///
     /// 一般戰鬥能力應盡量避免使用。
     /// </summary>
-    Look = 1 << 6
+    Look = 1 << 6,
+
+    /// <summary>禁止 E 主動技能；與 F QuickAction 分開。</summary>
+    ActiveAbility = 1 << 7
 }
 
 /// <summary>
