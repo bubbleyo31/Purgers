@@ -1,0 +1,5 @@
+Unregistered: Assets/Scenes/Game.unity :: EnemySpawnZone
+EnemySpawnZone (7): Enemy_Ranged_A：空間取樣通過，找到 16 個相通巡邏點。
+Enemy_Ranged_B：空間取樣通過，找到 16 個相通巡邏點。
+僅代表本次、目前載入的幾何；不保證玩家遮擋、距離、預算或動態占用通過。
+Random unchanged=True, scene dirty unchanged=True

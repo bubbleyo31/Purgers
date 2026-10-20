@@ -28,6 +28,53 @@ namespace Purgers.GameFlow.Stage
         public float Radius => Mathf.Max(0.5f, radius);
         public MapChunk OwnerChunk => GetComponentInParent<MapChunk>();
 
+        /// <summary>
+        /// Resolve the side from the nearest horizontal connector, independent of
+        /// point names, chunk pivot, translation or yaw. Ambiguous authoring fails closed.
+        /// </summary>
+        public bool TryGetConnectorSide(out ConnectorSide side)
+        {
+            side = default;
+            MapChunk chunk = OwnerChunk;
+            if (chunk == null)
+                return false;
+
+            float nearestDistance = float.PositiveInfinity;
+            int foundSides = 0;
+            bool ambiguous = false;
+            foreach (MapConnector connector in chunk.GetComponentsInChildren<MapConnector>(true))
+            {
+                if (connector.GetComponentInParent<MapChunk>() != chunk)
+                    continue;
+
+                int connectorSide = (int)connector.Side;
+                if (connectorSide < 0 || connectorSide >= 4 ||
+                    (foundSides & (1 << connectorSide)) != 0)
+                {
+                    return false;
+                }
+
+                foundSides |= 1 << connectorSide;
+                Vector3 delta = connector.transform.position - transform.position;
+                float distance = delta.x * delta.x + delta.z * delta.z;
+                if (float.IsNaN(distance) || float.IsInfinity(distance))
+                    return false;
+
+                if (Mathf.Approximately(distance, nearestDistance))
+                {
+                    ambiguous = true;
+                }
+                else if (distance < nearestDistance)
+                {
+                    nearestDistance = distance;
+                    side = connector.Side;
+                    ambiguous = false;
+                }
+            }
+
+            return foundSides == 0b1111 && !ambiguous;
+        }
+
         public bool Contains(Vector3 worldPosition)
         {
             Vector3 center = transform.position;

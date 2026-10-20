@@ -1,0 +1,8 @@
+{
+  "source": "Observed through Unity MCP after ScreenEdgeRuntimeVerification.Begin completed; not an NUnit result",
+  "status": "通過",
+  "stage": "disconnect clears",
+  "scope": "Same Editor, real Fusion Host and Client, real player prefab and runtime presenter",
+  "momentum": "Host test injection followed by real network replication; natural movement charging not tested",
+  "cleanup": "Final Editor audit confirms zero remaining NetworkRunner objects and EditMode"
+}

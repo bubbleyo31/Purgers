@@ -13,7 +13,7 @@ using TMPro;
 public sealed partial class LocalTeamInfoPanel : MonoBehaviour
 {
     static readonly Dictionary<NetworkRunner, LocalTeamInfoPanel> panels = new Dictionary<NetworkRunner, LocalTeamInfoPanel>();
-    public const uint CombatBindings = (1u << (int)PlayerBinding.Grapple) | (1u << (int)PlayerBinding.Interact) |
+    public const uint CombatBindings = (1u << (int)PlayerBinding.FocusZ) | (1u << (int)PlayerBinding.FocusX) | (1u << (int)PlayerBinding.Grapple) | (1u << (int)PlayerBinding.Interact) |
         (1u << (int)PlayerBinding.Fire) | (1u << (int)PlayerBinding.Aim) | (1u << (int)PlayerBinding.Reload) |
         (1u << (int)PlayerBinding.QuickAction) | (1u << (int)PlayerBinding.Rewards);
     NetworkRunner runner;

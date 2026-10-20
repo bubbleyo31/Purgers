@@ -1,5 +1,7 @@
 # Phase 4-C：最後 Chunk 撤離與地面 NavMesh 可到達性
 
+> **2026-10-21 撤離位置限制（局部核對）**：普通關單 Chunk 排除玩家出生入口側；多 Chunk 仍只選唯一末端，因此不會落在出生 Chunk，並排除末端入口與所有開放接縫方向。既有候選由最近的水平 Connector 辨識方向，不依賴名稱或新增資產引用。完整規則與驗證邊界見下方第 6 節。
+
 > **後續狀態（2026-09-22）**：Phase 4-D 已把撤離結果集中到 `NetworkMapState.SelectedExtractionIndex`，並以獨立 Host／延遲晚加入 Client 驗證最後 Chunk 與選擇一致；本文件保留 Phase 4-C 決策邊界。詳見 [151](151_Phase4-D_NetworkMapState完整拓撲同步.md)。
 
 > 最後核對日期：2026-09-22（程式與 MSBuild 局部核對）  
@@ -60,6 +62,22 @@ Client 不呼叫撤離路徑查詢，不以 Physics、Chunk 順序或畫面位�
 6. 獨立 Windows Client 與晚加入／重連：確認相同撤離點與小地圖綠點，Client Console 不出現撤離 NavMesh／Seed 抽選行為。
 7. 自然走入撤離點並完成 3 秒全員撤離，確認既有成功提交與回安全屋流程不變。
 
+## 6. 2026-10-21 出生入口與地圖接縫排除
+
+最後核對日期：2026-10-21（本節程式局部核對）
+核對來源：`StageRules.IsExtractionPlacementAllowed`、`StageExtractionPoint.TryGetConnectorSide`、`StageFlowController.TryInitializeStage`。
+
+- 使用 `NetworkMapState` 已發布的 `ChunkCount`、`FinalChunkIndex`、末端 `EntrySide`／`OpenSides`；沿用線性拓撲，不建立第二套地圖路由。
+- 單 Chunk 的 `EntrySide` 是本輪玩家出生入口；多 Chunk 末端的 `EntrySide` 是連回前一 Chunk 的入口。兩者均不得成為撤離方向，任何 `OpenSides` 所標示的接縫方向也不得選取。
+- 必須位於 `chunkCount - 1` 的末端；多 Chunk 因此必定位於出生 Chunk 以外的地圖。沒有合法候選時維持 `Initializing`，不回退到起始／中間 Chunk。
+- `StageExtractionPoint` 依本身位置與所屬 Chunk 四個 Connector 的水平距離辨識最近方向；保留 Connector 的局部 `Side` 語意，所以 Chunk 平移／繞 Y 旋轉不改結果。不以 `PointId` 或物件名稱判定。
+- 缺少／重複／無效方向 Connector、非有限距離或最近方向等距時，該候選不合法。新候選需明確靠近其中一側；本規則沒有新增任意中央撤離點的方向語意。
+- 額外排除 `Contains(initialSpawnPose.position)`，避免撤離範圍與實際出生位置重疊；之後仍須通過原本完整地面 NavMesh 路徑檢查。
+- 只在 State Authority 建立合法索引集合。Host／Client 完整候選排序不變，`SelectedExtractionIndex` 仍指向完整清單。未新增 RPC、Networked 欄位、Scene／Prefab 引用或修改撤離倒數與成功提交。
+
+驗證證據與未驗邊界見 [ExtractionPlacement](Validation/ExtractionPlacement/README.md)。
+
 ## 變更紀錄
 
 - 2026-09-22：完成 Phase 4-C 程式接線與編譯層驗證；Unity Test Runner 與 Host／Client Runtime 證據待補。
+- 2026-10-21：新增出生入口、實際出生範圍及地圖接縫排除，沿用末端 Chunk 與權威索引同步。

@@ -36,6 +36,73 @@ public sealed class HudKeyPromptTests
         Assert.IsNotNull(image.sprite); Assert.Greater(image.color.a, .9f);
     }
 
+    [Test] public void EnergyAndAbilityUseTheSameKeycapAppearance()
+    {
+        var energy = Field<Image>("grappleKeyBackground");
+        var energyLabel = Field<TMP_Text>("grappleKeyLabel");
+        var template = Field<GameObject>("slotTemplate");
+        var ability = template.transform.Find("Key").GetComponent<Image>();
+        var abilityLabel = ability.GetComponentInChildren<TMP_Text>(true);
+        new HudKeyPromptLayout(energyLabel, energy, null).Refresh(KeyCode.Q);
+        new HudKeyPromptLayout(abilityLabel, ability, null).Refresh(KeyCode.Q);
+        Assert.AreSame(ability.sprite, energy.sprite, "Energy must use the common keycap artwork");
+        Assert.AreEqual(ability.color, energy.color);
+        Assert.AreSame(abilityLabel.font, energyLabel.font);
+        Assert.AreEqual(abilityLabel.alignment, energyLabel.alignment);
+        Assert.AreEqual(abilityLabel.fontStyle, energyLabel.fontStyle);
+        Assert.AreEqual(abilityLabel.rectTransform.offsetMin, energyLabel.rectTransform.offsetMin);
+        Assert.AreEqual(abilityLabel.rectTransform.offsetMax, energyLabel.rectTransform.offsetMax);
+    }
+
+    [Test] public void InactiveKeycapsMeasureFullSizeBeforeFirstEnable()
+    {
+        var template = Field<GameObject>("slotTemplate");
+        template.SetActive(false);
+        var image = template.transform.Find("Key").GetComponent<Image>();
+        var label = image.GetComponentInChildren<TMP_Text>(true);
+        label.isOrthographic = false;
+        var layout = new HudKeyPromptLayout(label, image, null);
+        layout.Refresh(KeyCode.Tab);
+        Assert.Greater(layout.Width, 45, "Inactive uGUI must not measure with the TMP 3D 0.1 scale");
+        template.SetActive(true);
+        label.ForceMeshUpdate();
+        Assert.IsFalse(label.isTextOverflowing);
+        Assert.Greater(label.fontSize, 18, "First activation must retain a readable key label");
+    }
+
+    [Test] public void PrefabZeroScaleDoesNotCollapseRelativePlacement()
+    {
+        root.transform.localScale = Vector3.zero;
+        var template = Field<GameObject>("slotTemplate");
+        var image = template.transform.Find("Key").GetComponent<Image>();
+        new HudKeyPromptLayout(image.GetComponentInChildren<TMP_Text>(true), image, template.transform as RectTransform).Refresh(KeyCode.E);
+        Assert.AreEqual(0, image.rectTransform.anchoredPosition.x, .01f);
+        Assert.AreEqual(-99, image.rectTransform.anchoredPosition.y, .01f);
+    }
+
+    [Test] public void ChangingSharedStyleRefreshesExistingKeycapsWithoutRebinding()
+    {
+        var style = Object.Instantiate(HudKeyPromptStyle.Shared);
+        try
+        {
+            var energy = Field<Image>("grappleKeyBackground");
+            var template = Field<GameObject>("slotTemplate");
+            var ability = template.transform.Find("Key").GetComponent<Image>();
+            var a = new HudKeyPromptLayout(Field<TMP_Text>("grappleKeyLabel"), energy, null, style);
+            var b = new HudKeyPromptLayout(ability.GetComponentInChildren<TMP_Text>(true), ability, null, style);
+            a.Refresh(KeyCode.Q); b.Refresh(KeyCode.Q);
+            style.background = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/_Project_Assets/UI/BattleHUD/Layout/Key.png");
+            style.minimumWidth = 80;
+            style.readyColor = Color.cyan;
+            typeof(HudKeyPromptStyle).GetMethod("OnValidate", Private).Invoke(style, null);
+            a.Refresh(KeyCode.Q); b.Refresh(KeyCode.Q);
+            Assert.AreSame(style.background, energy.sprite); Assert.AreSame(energy.sprite, ability.sprite);
+            Assert.AreEqual(80, a.Width); Assert.AreEqual(a.Width, b.Width);
+            Assert.AreEqual(Color.cyan, energy.color); Assert.AreEqual(energy.color, ability.color);
+        }
+        finally { Object.DestroyImmediate(style); }
+    }
+
     [TestCase(false)] [TestCase(true)]
     public void RebindingPreservesArtworkFitsTextAndRestoresSingleLetter(bool energy)
     {

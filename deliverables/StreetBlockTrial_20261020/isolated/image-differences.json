@@ -1,0 +1,20 @@
+[
+  {
+    "a": "spawn-before",
+    "b": "spawn-before-noise",
+    "meanAbsoluteChannelDifference": 0.0,
+    "changedPercent": 0.0,
+    "over3Percent": 0.0,
+    "over10Percent": 0.0,
+    "max": 0
+  },
+  {
+    "a": "spawn-before",
+    "b": "spawn-after",
+    "meanAbsoluteChannelDifference": 0.00040959362139917694,
+    "changedPercent": 0.09293016975308642,
+    "over3Percent": 0.000626929012345679,
+    "over10Percent": 0.00019290123456790122,
+    "max": 36
+  }
+]

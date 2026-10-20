@@ -26,6 +26,8 @@ public sealed class StatusEffectHudSettings : ScriptableObject
     public float selfWidth = 280;
     [Min(0), Tooltip("異常第一列頂端與畫面中心準心的距離，Canvas 單位；不移動生命條。")]
     public float selfCrosshairOffset = 80;
+    [Tooltip("自己異常與格檔區相對畫面中心的水平偏移；可用 HUD 排版工具拖曳。")]
+    public float selfHorizontalOffset;
     [Header("格檔耐力（與自己異常列共用區域）")]
     [Range(8,24), Tooltip("格檔狀態與耐力數字的字級；只影響格檔列，標籤高度隨字級保留空間。")]
     public float guardFontSize = 14;

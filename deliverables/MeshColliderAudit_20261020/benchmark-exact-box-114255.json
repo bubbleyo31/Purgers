@@ -1,0 +1,76 @@
+{
+    "utc": "2026-10-20T11:42:50.2697349Z",
+    "scope": "Editor Play Mode; isolated, deterministic synthetic physics A/B",
+    "root": "Map(Z:-263)",
+    "strategy": "exact closed cuboids only; no merging or convex hulls",
+    "sourceColliders": 8558,
+    "candidateMeshColliders": 6074,
+    "candidateBoxColliders": 2484,
+    "unchangedColliders": 6074,
+    "probeCount": 12000,
+    "probeMismatches": 16,
+    "rayHitMismatches": 0,
+    "rayDistanceMismatches": 0,
+    "sphereMismatches": 8,
+    "capsuleMismatches": 8,
+    "dynamicBodiesPerScene": 32,
+    "sampledSteps": 180,
+    "sourceTriangles": 756336,
+    "candidateTriangles": 726528,
+    "maxRayDistanceError": 0.001596212387084961,
+    "baselineSetupMs": 974.2444,
+    "candidateSetupMs": 1602.2156,
+    "baselineQueries": {
+        "meanMs": 2.1514811111111098,
+        "p95Ms": 2.5329,
+        "maxMs": 2.8261000000000005
+    },
+    "candidateQueries": {
+        "meanMs": 1.9338783333333328,
+        "p95Ms": 2.3995,
+        "maxMs": 3.0126
+    },
+    "baselineSimulation": {
+        "meanMs": 0.10608944444444443,
+        "p95Ms": 0.14930000000000002,
+        "maxMs": 0.1879
+    },
+    "candidateSimulation": {
+        "meanMs": 0.1170455555555555,
+        "p95Ms": 0.1976,
+        "maxMs": 0.3698
+    },
+    "excluded": [
+        "不是可證明的封閉長方體: 5876",
+        "凸形／Trigger／Rigidbody: 1",
+        "負縮放／剪切／退化變換: 197"
+    ],
+    "limitations": [
+        "不是正式 Host/Client、KCC、AI 或自然戰鬥的幀時間；不能據此斷言整體 FPS 或 MeshCollider 獨占成本。",
+        "只替換有八角點、六封閉面、十二外向三角形的精確長方體，不合併、不使用 Convex 包住建築。",
+        "射線/掃掠抽樣不是所有路徑的數學證明；仍須實際鉤索、行走及射擊驗收。",
+        "BoxCollider 與 MeshCollider 的內部起點／背面查詢語義可能不同，Collider 身分與 triangleIndex 也會改變。",
+        "建立耗時包含物件配置和可能的共用 cooking 快取，不等同冷啟動載入時間。",
+        "樣本為同一 Editor 的合成工作負載，需目標平台 Development Player 驗證。"
+    ],
+    "differenceExamples": [
+        "Capsule origin=(-98.28819, 9.238555, -83.26292) dir=(0.196288645, 0.332488447, 0.9224544) A=True/7.611609/立方体.1208 B=True/7.604516/下出生點_右排_對面_房子3",
+        "Sphere origin=(-144.191879, 35.73443, -174.003967) dir=(0.336305171, -0.5830185, -0.7395866) A=True/11.03848/立方体.629 B=True/11.03533/三棟橋房子",
+        "Sphere origin=(-58.7009468, 28.2790833, -325.377167) dir=(0.00753090344, 0.8141485, 0.580608) A=True/18.35866/立方体.827 B=True/18.35488/城牆_哨屆塔",
+        "Capsule origin=(-58.7009468, 28.2790833, -325.377167) dir=(0.00753090344, 0.8141485, 0.580608) A=True/17.41683/立方体.827 B=True/17.40658/城牆_哨屆塔",
+        "Capsule origin=(66.49793, 3.94156122, -313.2233) dir=(-0.331060231, -0.5732392, 0.7495305) A=True/2.450145/立方体.3081 B=True/2.448076/右出生點_對面_房子2",
+        "Sphere origin=(-159.388657, 19.7559338, -181.891846) dir=(0.7256775, -0.583337367, -0.3648421) A=True/10.13147/立方体.675 B=True/10.12685/三棟橋房子",
+        "Sphere origin=(23.7996635, 30.6888714, -71.66788) dir=(0.775060654, -0.3876915, -0.498975217) A=True/8.340581/立方体.934 B=True/8.334978/下出生點_左排_對面_橋房子1",
+        "Sphere origin=(-58.3112144, 2.02110481, 52.0004845) dir=(-0.033525072, 0.60285753, -0.7971443) A=True/9.4192/立方体.733 B=True/9.417198/下出生點_右排_房子1",
+        "Sphere origin=(-43.39943, -4.64360237, -377.740479) dir=(-0.253099084, 0.4567624, 0.8528241) A=True/17.64548/立方体.1515 B=True/17.6356/一棟橋房子",
+        "Capsule origin=(107.19577, 9.433224, -74.628624) dir=(0.0123256436, -0.52485466, -0.8511026) A=True/6.869777/立方体.1921 B=True/6.866483/下出生點_左排_對面_房子4 (1)",
+        "Sphere origin=(-51.3829231, 5.622983, -19.8841953) dir=(0.36589852, 0.7234112, 0.5854866) A=True/3.252518/立方体.346 B=True/3.249332/下出生點_右排_房子3",
+        "Capsule origin=(113.190216, 19.8610535, -73.01214) dir=(0.821257949, 0.269808054, 0.5027315) A=True/23.33606/立方体.732 B=True/23.33308/雙層房",
+        "Capsule origin=(-52.4466, 15.009819, -237.885666) dir=(0.120141275, 0.7877537, 0.604160666) A=True/3.250422/立方体.2421 B=True/3.248253/四層大房B",
+        "Sphere origin=(59.4802666, 21.8175278, -460.6468) dir=(0.313337952, -0.518126667, -0.795841753) A=True/6.714443/立方体.1119 B=True/6.710728/下出生點_右排_房子6",
+        "Capsule origin=(59.4802666, 21.8175278, -460.6468) dir=(0.313337952, -0.518126667, -0.795841753) A=True/6.65589/立方体.1119 B=True/6.652191/下出生點_右排_房子6",
+        "Capsule origin=(68.6410446, 16.5705833, -182.556992) dir=(0.387988865, -0.4358955, -0.8120712) A=True/8.189084/立方体.1707 B=True/8.182978/右出生點_對面_房子3"
+    ],
+    "maxSphereDistanceError": 0.009881973266601563,
+    "maxCapsuleDistanceError": 0.010255813598632813
+}

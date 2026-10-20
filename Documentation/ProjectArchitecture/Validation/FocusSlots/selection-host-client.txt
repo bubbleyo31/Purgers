@@ -1,0 +1,48 @@
+PASS Runner starts: Ok
+PASS Runner starts: Ok
+PASS new run begins with empty skill slots
+PASS empty slots still require explicit focus reward destination
+PASS fill E/Z/X: 
+PASS fill E/Z/X: 
+PASS fill E/Z/X: 
+PASS stable focus slot 0
+PASS stable focus slot 1
+PASS stable focus slot 2
+PASS remote fill: 
+PASS remote fill: 
+PASS remote fill: 
+PASS Input Authority cannot directly drop
+PASS Z only activates its own skill once
+PASS nonconflicting E and Z effects coexist
+PASS X activates third skill
+PASS X recast ends only X and starts its cooldown
+PASS client Z does not trigger E
+PASS ALT Z intent drops only Z
+PASS drop preserves E/X runtime identity
+PASS drop retains level and enters transfer cooldown
+PASS remembered loadout preserves hole
+PASS focus loot remains eligible with selected empty slot
+PASS E opening never auto-equips focus loot
+PASS pickup without destination rejected
+PASS stale loadout selection rejected
+PASS wrong loot identity rejected
+PASS client cannot directly award world loot
+PASS explicit world transfer fills Z with same runtime: 
+PASS owned skill acquisition rejected
+PASS full loadout cannot silently replace
+PASS pickup does not refresh cooldown
+PASS focus reward without slot preserves draft
+PASS full reward replaces selected Z: 
+PASS stale replacement revision rejected
+PASS reward replacement drops old skill
+PASS reward replacement preserves other runtime identities
+PASS full loadout still offers ground focus loot
+PASS ground pickup can replace selected occupied E: 
+PASS ground replacement drops only selected E
+PASS replayed confirmation cannot acquire twice
+PASS prepare remote empty Z
+PASS remote ground candidate
+PASS client chose occupied X while empty Z remained empty
+PASS client empty slot replicated
+PASS Runner starts: Ok
+PASS late join sees three correct slot identities

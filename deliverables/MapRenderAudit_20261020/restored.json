@@ -1,0 +1,38 @@
+{
+  "playing": false,
+  "compiling": false,
+  "scenes": [
+    {
+      "name": "_Menu",
+      "isDirty": false
+    }
+  ],
+  "vSync": 1,
+  "runInBackground": true,
+  "profiler": false,
+  "features": [
+    {
+      "name": "SSAO",
+      "isActive": true,
+      "dirty": false
+    },
+    {
+      "name": "TeammateOutline",
+      "isActive": true,
+      "dirty": false
+    }
+  ],
+  "shadowDistance": 150.0,
+  "shadowCascadeCount": 4,
+  "mainLightShadowmapResolution": 4096,
+  "renderScale": 1.0,
+  "pipelineDirty": false,
+  "cameraNames": [
+    "WorldCamera",
+    "WeaponCamera"
+  ],
+  "tempTargets": 0,
+  "sceneViewGizmos": [
+    true
+  ]
+}

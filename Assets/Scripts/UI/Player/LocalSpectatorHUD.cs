@@ -28,6 +28,7 @@ public sealed class LocalSpectatorHUD : MonoBehaviour
         public TMP_Text Name, State;
     }
     private readonly List<Card> cards = new List<Card>();
+    private HudKeyPromptLayout previousPrompt, nextPrompt;
     private void Update()
     {
         if (controller == null) controller = FindFirstObjectByType<LocalPlayerSpectatorController>();
@@ -36,6 +37,11 @@ public sealed class LocalSpectatorHUD : MonoBehaviour
             controller.Runner.IsRunning && !controller.IsTransitionBlocked;
         content.SetActive(visible);
         if (!visible) return;
+        // Spectator Q/E remain fixed by the existing spectator input contract.
+        if (previousPrompt == null && previousKey != null) previousPrompt = HudKeyPromptLayout.Inside(previousKey.GetComponent<TMP_Text>(), "‹");
+        if (nextPrompt == null && nextKey != null) nextPrompt = HudKeyPromptLayout.Inside(nextKey.GetComponent<TMP_Text>(), "›");
+        previousPrompt?.Refresh(KeyCode.Q); previousPrompt?.SetState(Input.GetKey(KeyCode.Q));
+        nextPrompt?.Refresh(KeyCode.E); nextPrompt?.SetState(Input.GetKey(KeyCode.E));
         var runner = controller.Runner;
         var logic = GameLogic.GetPrimaryForRunner(runner);
         var roster = controller.Candidates;

@@ -70,7 +70,7 @@ public sealed class TeamInfoRulesTests
         var loaded=JsonUtility.FromJson<PlayerSettingsData>(json); loaded.Normalize();
         Assert.IsFalse(loaded.teamInfoToggle); Assert.AreEqual(KeyCode.T,loaded.Key(PlayerBinding.Ready));
         loaded.teamInfoToggle=true; Assert.IsTrue(loaded.Copy().teamInfoToggle);
-        Assert.AreEqual(16,loaded.keys.Length);
+        Assert.AreEqual(18,loaded.keys.Length);
     }
     [Test] public void ClosingRearmsCombatWithoutConsumingMovement()
     {

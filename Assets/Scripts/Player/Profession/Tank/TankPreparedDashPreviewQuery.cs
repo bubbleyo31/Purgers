@@ -78,14 +78,24 @@ public sealed class TankPreparedDashPreviewQuery
         var hitbox = HitCollider.GetComponent<Hitbox>();
         if (hitbox != null && hitbox.enabled)
         {
-            Vector3 extents = hitbox.Type == HitboxTypes.Box ? hitbox.BoxExtents :
-                hitbox.Type == HitboxTypes.Sphere ? Vector3.one * hitbox.SphereRadius :
-                new Vector3(hitbox.CapsuleRadius, hitbox.CapsuleExtents + hitbox.CapsuleRadius, hitbox.CapsuleRadius);
-            bounds = new Bounds(hitbox.Offset, extents * 2f); matrix = hitbox.transform.localToWorldMatrix;
+            bounds = GetHitboxLocalBounds(hitbox); matrix = hitbox.transform.localToWorldMatrix;
         }
         else if (HitCollider is BoxCollider box)
         { bounds = new Bounds(box.center, box.size); matrix = box.transform.localToWorldMatrix; }
         else bounds = HitCollider.bounds;
         return true;
+    }
+
+    /// <summary>
+    /// 命中部位的局部包絡，旋轉與縮放仍由該 Hitbox 的矩陣處理。
+    /// 此版 Fusion 的 CapsuleExtents 是完整高度；半高至少等於半徑，與 Fusion 球端中心計算一致。
+    /// </summary>
+    public static Bounds GetHitboxLocalBounds(Hitbox hitbox)
+    {
+        float radius = Mathf.Abs(hitbox.CapsuleRadius);
+        Vector3 extents = hitbox.Type == HitboxTypes.Box ? hitbox.BoxExtents :
+            hitbox.Type == HitboxTypes.Sphere ? Vector3.one * Mathf.Abs(hitbox.SphereRadius) :
+            new Vector3(radius, Mathf.Max(hitbox.CapsuleExtents * .5f, radius), radius);
+        return new Bounds(hitbox.Offset, extents * 2f);
     }
 }

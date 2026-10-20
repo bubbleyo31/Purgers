@@ -18,8 +18,16 @@ MonoBehaviour:
   weight: 1
   repeatPolicy: 1
   abilityDefinition: {fileID: 0}
-  description: "\u88DD\u5099 SMG\uFF0C\u53EF\u50B7\u5BB3\u6575\u4EBA\u4E26\u6CBB\u7642\u968A\u53CB\u3002\u4FDD\u7559\u7784\u6E96\u3001\u63DB\u5F48\u8207
-    F \u8FD1\u6230\uFF0C\u63DB\u88DD\u6EFF\u5F48\u5323\u3002"
+  description: "\u88DD\u5099 SMG\uFF0C\u671D\u968A\u53CB\u5C04\u64CA\u53EF\u6CBB\u7642\u968A\u53CB\u3002\u53F3\u9375\u7784\u6E96\u3001R 
+    \u63DB\u5F48\u8207 F \u8FD1\u6230\u3002"
   weaponProfession: 3
   weaponDisplayName: Support SMG
   weaponIcon: {fileID: 21300000, guid: b0e7b3f23d81b5a4f8624484b8c0804a, type: 3}
+  growthKind: 0
+  growthValues: []
+  growthDisplayName: 
+  growthIcon: {fileID: 0}
+  growthRankBackground: {fileID: 0}
+  growthRankCenter: {x: 0.5, y: 0.5}
+  growthRankSize: {x: 0.4, y: 0.3}
+  growthIconScale: 1

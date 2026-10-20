@@ -74,3 +74,18 @@ Editor Play Mode／Development Build 中，在 Game 場景已顯示獎勵 HUD �
 
 經驗需求由共用 Settings 逐級填寫；超出表格固定沿用最後一筆，不新增滿級。主要 GameLogic 在 Session 初始化保存獨立快照，Host 計算正式升級與 F8；NetworkPlayerExperience 增加 RequiredExperience，HUD 讀同步門檻，Client 不自行推算。切換場景不重讀表，Host／Client 必須同版。超額、待領獎勵、既有候選與存檔 schema 保留；詳細設定、舊進度處理和驗證邊界見 160 及驗證紀錄。
 
+
+
+## 2026-10-20 三專注槽局部核對
+
+最後核對日期：2026-10-20（僅本次三槽變更）
+核對來源：Assets/Scripts/Player/Ability/Loadout、InputManager.FocusSlots、GameLogic、UI/Player、Settings、Progression/Save。
+
+ALT 選到滿槽專注技能後，切至獨立 FocusSkillReplacementWindow，沿原三張卡版面顯示已裝備圖示與 E／Z／X（支援改鍵），標題「替換」。按槽位鍵送出一次指定替換，放開 ALT 取消；同一按鍵被消耗到實際鬆開，不會同時丟棄或施放。[三專注槽實作與驗證](Validation/FocusSlots/README.md)。
+
+
+## 2026-10-21 專注技能指定槽位（局部核對）
+
+最後核對日期：2026-10-21。核對來源：InputManager.FocusSlots、PlayerAbilityRuntimeManager.Loot、LocalPlayerRewardHUD.Replacement、NetInput。
+
+專注獎勵選取後一律進入指定槽位面板，不再只限滿槽；放開 ALT 取消且保留待選獎勵。地面拾取共用相同面板，但不需要持續 ALT，右鍵取消。面板由 LocalPlayerRewardHUD 顯示，無待領獎勵時也可顯示地面選槽。[專注技能指定槽位](Validation/FocusSlots/Selection.md)。

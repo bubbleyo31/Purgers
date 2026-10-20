@@ -1,0 +1,139 @@
+{
+  "recordCount": 22,
+  "keyVariants": 176,
+  "missingScripts": 0,
+  "results": [
+    {
+      "source": "Assets/Prefabs/UI/StageHUD.prefab",
+      "path": "StageHUD/ReferenceFrame/BattleAbilityHUD/GrappleKey",
+      "style": true,
+      "variants": 8
+    },
+    {
+      "source": "Assets/Prefabs/UI/StageHUD.prefab",
+      "path": "StageHUD/ReferenceFrame/BattleAbilityHUD/AbilitySlots/AbilitySlotTemplate/Key",
+      "style": true,
+      "variants": 8
+    },
+    {
+      "source": "Assets/Prefabs/UI/StageHUD.prefab",
+      "path": "StageHUD/ReferenceFrame/Phase6RewardHud/ExperienceGroup/AltPrompt/PromptLabel/SharedPromptRow/Key/SharedKeycap",
+      "style": true,
+      "variants": 8
+    },
+    {
+      "source": "Assets/Prefabs/UI/StageHUD.prefab",
+      "path": "StageHUD/ReferenceFrame/Phase6RewardHud/ChoiceWindow/LeftCard/MouseButton/SharedKeycap",
+      "style": true,
+      "variants": 8
+    },
+    {
+      "source": "Assets/Prefabs/UI/StageHUD.prefab",
+      "path": "StageHUD/ReferenceFrame/Phase6RewardHud/ChoiceWindow/MiddleCard/MouseButton/SharedKeycap",
+      "style": true,
+      "variants": 8
+    },
+    {
+      "source": "Assets/Prefabs/UI/StageHUD.prefab",
+      "path": "StageHUD/ReferenceFrame/Phase6RewardHud/ChoiceWindow/RightCard/MouseButton/SharedKeycap",
+      "style": true,
+      "variants": 8
+    },
+    {
+      "source": "Assets/Prefabs/UI/PlayerRescueHUD.prefab",
+      "path": "PlayerRescueHUD/Content/Key",
+      "style": true,
+      "variants": 8
+    },
+    {
+      "source": "Assets/Prefabs/UI/SpectatorHUD.prefab",
+      "path": "SpectatorHUD/Content/Previous/SharedKeycap",
+      "style": true,
+      "variants": 8
+    },
+    {
+      "source": "Assets/Prefabs/UI/SpectatorHUD.prefab",
+      "path": "SpectatorHUD/Content/Next/SharedKeycap",
+      "style": true,
+      "variants": 8
+    },
+    {
+      "source": "Assets/Scenes/_Menu.unity",
+      "path": "GameplayHUD Canvas/PlayerHUDCanvas/ReferenceFrame/PlayerHUDController/WeaponHUDRoot/ReloadReminder/Keyboard_Image",
+      "style": true,
+      "variants": 8
+    },
+    {
+      "source": "Assets/Scenes/_Menu.unity",
+      "path": "GameplayHUD Canvas/PlayerHUDCanvas/ReferenceFrame/PlayerRescueHUD/Content/Key",
+      "style": true,
+      "variants": 8
+    },
+    {
+      "source": "Assets/Scenes/_Menu.unity",
+      "path": "GameplayHUD Canvas/PlayerHUDCanvas/ReferenceFrame/SpectatorHUD/Content/Previous/SharedKeycap",
+      "style": true,
+      "variants": 8
+    },
+    {
+      "source": "Assets/Scenes/_Menu.unity",
+      "path": "GameplayHUD Canvas/PlayerHUDCanvas/ReferenceFrame/SpectatorHUD/Content/Next/SharedKeycap",
+      "style": true,
+      "variants": 8
+    },
+    {
+      "source": "Assets/Scenes/SafeHouse.unity",
+      "path": "StartTerminal/WorldPrompt/PromptText/SharedPromptRow/Key/SharedKeycap",
+      "style": true,
+      "variants": 8
+    },
+    {
+      "source": "Assets/Scenes/SafeHouse.unity",
+      "path": "SafeHouseHUD/ReferenceFrame/BattleAbilityHUD/GrappleKey",
+      "style": true,
+      "variants": 8
+    },
+    {
+      "source": "Assets/Scenes/SafeHouse.unity",
+      "path": "SafeHouseHUD/ReferenceFrame/BattleAbilityHUD/AbilitySlots/AbilitySlotTemplate/Key",
+      "style": true,
+      "variants": 8
+    },
+    {
+      "source": "Assets/Scenes/SafeHouse.unity",
+      "path": "SafeHouseHUD/ReferenceFrame/TopLeftColumn/ReadyCheckSlot/ReadyCheckPanel/ReadyButton/Keycap",
+      "style": true,
+      "variants": 8
+    },
+    {
+      "source": "Assets/Scenes/SafeHouse.unity",
+      "path": "SafeHouseHUD/ReferenceFrame/TopLeftColumn/ReadyCheckSlot/ReadyCheckPanel/CancelKeycap",
+      "style": true,
+      "variants": 8
+    },
+    {
+      "source": "Assets/Scenes/SafeHouse.unity",
+      "path": "SafeHouseHUD/ReferenceFrame/Phase6RewardHud/ExperienceGroup/AltPrompt/PromptLabel/SharedPromptRow/Key/SharedKeycap",
+      "style": true,
+      "variants": 8
+    },
+    {
+      "source": "Assets/Scenes/SafeHouse.unity",
+      "path": "SafeHouseHUD/ReferenceFrame/Phase6RewardHud/ChoiceWindow/LeftCard/MouseButton/SharedKeycap",
+      "style": true,
+      "variants": 8
+    },
+    {
+      "source": "Assets/Scenes/SafeHouse.unity",
+      "path": "SafeHouseHUD/ReferenceFrame/Phase6RewardHud/ChoiceWindow/MiddleCard/MouseButton/SharedKeycap",
+      "style": true,
+      "variants": 8
+    },
+    {
+      "source": "Assets/Scenes/SafeHouse.unity",
+      "path": "SafeHouseHUD/ReferenceFrame/Phase6RewardHud/ChoiceWindow/RightCard/MouseButton/SharedKeycap",
+      "style": true,
+      "variants": 8
+    }
+  ]
+}

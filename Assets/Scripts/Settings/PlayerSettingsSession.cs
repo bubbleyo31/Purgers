@@ -8,7 +8,7 @@ namespace Purgers.Settings
 
     public sealed class PlayerSettingsSession
     {
-        public static readonly string[] Actions = { "向前移動", "向後移動", "向左移動", "向右移動", "跳躍", "跑步", "蹲下／滑鏟", "鈎索／Q 能力", "技能／互動／救援", "瞄準", "主武器攻擊", "換彈", "武器特殊動作", "獎勵選擇", "展開小地圖", "隊伍資訊／準備切換" };
+        public static readonly string[] Actions = { "向前移動", "向後移動", "向左移動", "向右移動", "跳躍", "跑步", "蹲下／滑鏟", "鈎索／Q 能力", "技能／互動／救援", "瞄準", "主武器攻擊", "換彈", "武器特殊動作", "獎勵選擇", "展開小地圖", "隊伍資訊／準備切換", "專注技能 Z 槽", "專注技能 X 槽" };
         public PlayerSettingsData Saved = new PlayerSettingsData();
         public PlayerSettingsData Draft;
         public SettingsScreen Screen = SettingsScreen.Game;

@@ -1,0 +1,29 @@
+PASS authored HUD present
+PASS Runner connects Ok
+PASS authoritative damage accepted 1
+PASS new owner suppresses only legacy healing LGG
+PASS host healing applies
+PASS Runner connects Ok
+PASS late join no old transient replay
+PASS client is input authority only
+PASS authoritative damage accepted 2
+PASS no damage event leaked to host viewer
+PASS client cannot authorize damage
+PASS client cannot authorize healing
+PASS repeated healing accepted
+PASS repeated healing accepted
+PASS repeated healing accepted
+PASS repeated healing accepted
+PASS repeated healing accepted
+PASS continuous healing bounded and visible
+PASS authoritative damage accepted 10
+PASS authoritative damage accepted 11
+PASS authoritative damage accepted 12
+PASS authoritative damage accepted 13
+PASS authoritative damage accepted 14
+PASS continuous damage bounded and visible
+PASS fully blocked hit creates no red injury
+PASS momentum belongs to correct local player
+PASS disable clears and releases legacy healing ownership
+PASS authoritative damage accepted 40
+PASS replacement has no old effect

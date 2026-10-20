@@ -74,6 +74,7 @@ public sealed partial class LocalTeamInfoPanel
         window = Rect(canvasRoot,"Fixed four player frame",0,0,1104,824);
         window.anchorMin = window.anchorMax = window.pivot = Vector2.one * .5f;
         window.sizeDelta = settings.windowSize;
+        window.anchoredPosition = settings.windowOffset;
         window.localScale = Vector3.one * settings.scale;
         // Inner reference plane remains fixed: the four rows never depend on roster count.
         var plane = Rect(window,"Reference plane",0,0,1104,824);

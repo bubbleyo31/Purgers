@@ -1,0 +1,34 @@
+{
+  "scope": "Isolated Editor presentation; no natural input, no Spawned network lifecycle, no preferences saved.",
+  "passed": 4,
+  "results": [
+    {
+      "key": "E",
+      "label": "E",
+      "width": 32.0,
+      "fontSize": 19.3,
+      "scale": 1.0
+    },
+    {
+      "key": "RightControl",
+      "label": "RIGHTCONTROL",
+      "width": 104.0,
+      "fontSize": 11.05,
+      "scale": 1.0
+    },
+    {
+      "key": "Mouse4",
+      "label": "側鍵 2",
+      "width": 75.16,
+      "fontSize": 19.3,
+      "scale": 1.0
+    },
+    {
+      "key": "None",
+      "label": "—",
+      "width": 35.07,
+      "fontSize": 19.3,
+      "scale": 1.0
+    }
+  ]
+}

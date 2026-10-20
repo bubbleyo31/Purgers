@@ -1,0 +1,54 @@
+{
+  "mapId": 2403688,
+  "pos": "(-29.10, 0.00, -263.20)",
+  "boundsCenter": "(-20.50, 41.39, -263.20)",
+  "boundsSize": "(634.36, 129.89, 615.83)",
+  "renderers": 9346,
+  "active": 8558,
+  "meshColliders": 6109,
+  "boxes": 2449,
+  "lodGroups": 0,
+  "materialSlots": 8558,
+  "distinctMaterials": 40,
+  "shadows": [
+    {
+      "mode": "On",
+      "count": 8558
+    }
+  ],
+  "staticBatched": 0,
+  "staticFlags": [
+    {
+      "flags": "0",
+      "count": 8557
+    },
+    {
+      "flags": "NavigationStatic",
+      "count": 1
+    }
+  ],
+  "shaders": [
+    {
+      "name": "Universal Render Pipeline/Lit",
+      "slots": 8558
+    }
+  ],
+  "rootChildren": [
+    {
+      "name": "MapChunk_Boss",
+      "pos": "(-29.10, 0.00, -263.20)"
+    },
+    {
+      "name": "MapChunk_Prototype",
+      "pos": "(-29.10, 0.00, -263.20)"
+    }
+  ],
+  "lights": [
+    {
+      "name": "Directional Light",
+      "type": "Directional",
+      "shadows": "Soft",
+      "intensity": 2.0
+    }
+  ]
+}

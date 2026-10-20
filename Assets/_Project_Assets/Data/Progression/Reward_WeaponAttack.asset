@@ -18,8 +18,16 @@ MonoBehaviour:
   weight: 1
   repeatPolicy: 1
   abilityDefinition: {fileID: 0}
-  description: "\u88DD\u5099\u6B65\u69CD\uFF0C\u4FDD\u7559\u7784\u6E96\u3001\u63DB\u5F48\u8207
-    F \u8FD1\u6230\u3002\u63DB\u88DD\u6EFF\u5F48\u5323\uFF0CQ\uFF0FE \u4E0D\u8B8A\u3002"
+  description: "\u88DD\u5099\u6B65\u69CD\uFF0C\u53F3\u9375\u7784\u6E96\u3001R \u63DB\u5F48\u8207
+    F \u8FD1\u6230\u3002"
   weaponProfession: 1
   weaponDisplayName: "Attack \u6B65\u69CD"
   weaponIcon: {fileID: 21300000, guid: 8094f05be6080ce42b725801d5404d01, type: 3}
+  growthKind: 0
+  growthValues: []
+  growthDisplayName: 
+  growthIcon: {fileID: 0}
+  growthRankBackground: {fileID: 0}
+  growthRankCenter: {x: 0.5, y: 0.5}
+  growthRankSize: {x: 0.4, y: 0.3}
+  growthIconScale: 1

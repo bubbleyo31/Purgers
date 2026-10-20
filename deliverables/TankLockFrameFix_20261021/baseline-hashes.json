@@ -1,0 +1,18 @@
+[
+  {
+    "Path": "Assets/Scripts/Editor/Tests/TankPreparedDashIndicatorTests.cs",
+    "Hash": "8B4D6F9FBCC5694E8B730F3BA0B36568F359ABFBB04661018AB8102A44307F3F"
+  },
+  {
+    "Path": "Assets/Scripts/Player/Profession/Tank/TankPreparedDashPreviewQuery.cs",
+    "Hash": "D997E60C07A906C67BBF9A34E9F4F804CC8B1207E8ADE56EA31D04BFAA6AEBE0"
+  },
+  {
+    "Path": "Assets/Scripts/UI/Player/TankPreparedDashIndicatorRules.cs",
+    "Hash": "0233833C7B2CB8207B7F6B2545E719A19D479BEFD646489A2225E7F75E95920A"
+  },
+  {
+    "Path": "Assets/Scripts/UI/Player/LocalTankPreparedDashIndicator.cs",
+    "Hash": "6112D4A959F5157FFD38AEBE34CF23F278760444DDF844C220A5FE857032A568"
+  }
+]

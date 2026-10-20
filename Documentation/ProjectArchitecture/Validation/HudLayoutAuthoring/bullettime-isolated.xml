@@ -1,0 +1,144 @@
+<test-suite type="TestSuite" id="1000" name="Purgers" fullname="Purgers" runstate="Runnable" testcasecount="1281" result="Failed" site="Child" start-time="2026-10-19 09:05:04Z" end-time="2026-10-19 09:05:09Z" duration="5.674841" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0"><properties /><failure><message><![CDATA[One or more child tests had errors]]></message></failure><test-suite type="Assembly" id="2594" name="Assembly-CSharp-Editor.dll" fullname="M:/UnityProject/Purgers/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll" runstate="Runnable" testcasecount="1281" result="Failed" site="Child" start-time="2026-10-19 09:05:07Z" end-time="2026-10-19 09:05:09Z" duration="1.985493" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0"><properties><property name="_PID" value="11400" /><property name="_APPDOMAIN" value="Unity Child Domain" /><property name="platform" value="EditMode" /></properties><failure><message><![CDATA[One or more child tests had errors]]></message></failure><test-suite type="TestFixture" id="1079" name="AbilityToggleInputTests" fullname="AbilityToggleInputTests" classname="AbilityToggleInputTests" runstate="Runnable" testcasecount="5" result="Failed" site="Child" start-time="2026-10-19 09:05:07Z" end-time="2026-10-19 09:05:09Z" duration="1.696590" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0"><properties><property name="Category" value="PurgersRegression" /></properties><failure><message><![CDATA[One or more child tests had errors]]></message></failure><test-case id="1082" name="BulletTimeSecondPressUsesNormalFinishAndResolvesDamageExactlyOnce" fullname="AbilityToggleInputTests.BulletTimeSecondPressUsesNormalFinishAndResolvesDamageExactlyOnce" methodname="BulletTimeSecondPressUsesNormalFinishAndResolvesDamageExactlyOnce" classname="AbilityToggleInputTests" runstate="Runnable" seed="1171232279" result="Failed" start-time="2026-10-19 09:04:57Z" end-time="2026-10-19 09:05:09Z" duration="11.895361" asserts="0"><properties><property name="_JOINTYPE" value="UnityCombinatorial" /></properties><failure><message><![CDATA[Unhandled log message: '[Error] [Player Hit Feedback] LocalHitConfirmed 已收到，但是 FirstPersonHitCameraShake.Singleton = NULL。
+所以目前無法播放命中 Camera Shake。'. Use UnityEngine.TestTools.LogAssert.Expect]]></message><stack-trace><![CDATA[PlayerHitFeedbackController:OnLocalHitConfirmed (CombatHitFeedbackData) (at Assets/Scripts/Combat/Feedback/PlayerHitFeedbackController.cs:217)
+PlayerCombatFeedbackRelay:RPC_ReceiveConfirmedHit (single,single,byte,byte,byte,bool,bool,bool,bool,UnityEngine.Vector3,int,int,int,bool) (at Assets/Scripts/Combat/Feedback/PlayerCombatFeedbackRelay.cs:1065)
+PlayerCombatFeedbackRelay:OnDamageConfirmed (DamageResult) (at Assets/Scripts/Combat/Feedback/PlayerCombatFeedbackRelay.cs:854)
+PlayerCombatFeedbackRelay:ReportAbilityDamage (DamageResult) (at Assets/Scripts/Combat/Feedback/PlayerCombatFeedbackRelay.cs:810)
+PlayerBulletTimeAbility:FlushPendingDamage () (at Assets/Scripts/Player/Ability/Active/PlayerBulletTimeAbility.cs:201)
+PlayerBulletTimeAbility:FinishAbility () (at Assets/Scripts/Player/Ability/Active/PlayerBulletTimeAbility.cs:137)
+PlayerActiveAbilityBase:SimulateAbility (NetInput,Fusion.NetworkButtons) (at Assets/Scripts/Player/Ability/Active/PlayerActiveAbilityBase.cs:84)
+AbilityToggleInputTests/<BulletTimeSecondPressUsesNormalFinishAndResolvesDamageExactlyOnce>d__12:MoveNext () (at Assets/Scripts/Editor/Tests/AbilityToggleInputTests.cs:208)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+]]></stack-trace></failure><output><![CDATA[[PlayerLocalView] 場景中找不到 CameraFollow。
+[玩家職業變更]
+玩家：[Player:0]
+原職業：None
+新職業：Attack
+職業定義：PD_Attack
+勾索最大充能：3
+勾索每格恢復時間：1
+擊殺回充：1
+[玩家職業]
+玩家：[Player:0]
+目前職業：Attack
+職業定義：PD_Attack
+勾索最大充能：3
+勾索每格恢復時間：1
+擊殺回充：1
+State Authority：True
+Input Authority：True
+[Combat Feedback Source Binding]
+Player：[Player:0]
+Profession：Attack
+Runtime：無
+訂閱來源數：0
+[PlayerHitFeedbackController] 已訂閱本地戰鬥回饋。
+LocalAttackPerformed：✓
+LocalHitConfirmed：✓
+[Player Health] Spawned
+Player：[Player:0]
+Current Health：100.0
+Maximum Health：100.0
+State Authority：True
+Input Authority：True
+[Support Player Pull Receiver] Spawned
+Player：KCC_Player(Clone)
+Input Authority：[Player:0]
+State Authority：True
+[Player Health Local Damage]
+Applied Damage：7.00
+Blocked Damage：0.00
+Damage Type：Ability
+Attacker：[Player:0]
+Source：KCC_Player(Clone)
+Source Position：(1000.00, 100.00, 1000.00)
+Direction To Source：(0.00, 0.00, 0.00)
+Killed：False
+[Player Health] Damage Applied
+Player：[Player:0]
+Requested Damage：7.00
+Applied Damage：7.00
+Blocked Damage：0.00
+Was Blocked：False
+Health：93.00 / 100.00
+Killed：False
+Damage Type：Ability
+Feedback ID：None
+Attacker：[Player:0]
+Source NetworkObject：KCC_Player(Clone)
+Has Source Position：True
+Source Position：(1000.00, 100.00, 1000.00)
+Direction To Source：(0.00, 0.00, 0.00)
+Sequence：0
+[Player Hit Feedback] 收到 LocalHitConfirmed。
+Damage Type：Ability
+Applied Damage：7.00
+Effective Damage：True
+Headshot：False
+Kill：False
+Sequence：0
+[Player Hit Feedback] LocalHitConfirmed 已收到，但是 FirstPersonHitCameraShake.Singleton = NULL。
+所以目前無法播放命中 Camera Shake。
+[Player Hit Feedback] FirstPersonHitMarker.Singleton = NULL。
+[Local Combat Feedback] 收到正式命中。
+Requested Damage：7.00
+Applied Damage：7.00
+Damage Type：Ability
+Feedback ID：None
+Hit Zone：None
+Headshot：False
+Kill：False
+Blocked：False
+Effective Damage：True
+Hit Point：(0.00, 0.00, 0.00)
+Sequence：0
+只有攻擊者本人應該收到這次 Presentation Feedback。
+[Player Health Local Damage]
+Applied Damage：7.00
+Blocked Damage：0.00
+Damage Type：Ability
+Attacker：[Player:0]
+Source：KCC_Player(Clone)
+Source Position：(1000.00, 100.00, 1000.00)
+Direction To Source：(0.00, 0.00, 0.00)
+Killed：False
+[Player Health] Damage Applied
+Player：[Player:0]
+Requested Damage：7.00
+Applied Damage：7.00
+Blocked Damage：0.00
+Was Blocked：False
+Health：86.00 / 100.00
+Killed：False
+Damage Type：Ability
+Feedback ID：None
+Attacker：[Player:0]
+Source NetworkObject：KCC_Player(Clone)
+Has Source Position：True
+Source Position：(1000.00, 100.00, 1000.00)
+Direction To Source：(0.00, 0.00, 0.00)
+Sequence：0
+[Player Hit Feedback] 收到 LocalHitConfirmed。
+Damage Type：Ability
+Applied Damage：7.00
+Effective Damage：True
+Headshot：False
+Kill：False
+Sequence：0
+[Player Hit Feedback] LocalHitConfirmed 已收到，但是 FirstPersonHitCameraShake.Singleton = NULL。
+所以目前無法播放命中 Camera Shake。
+[Player Hit Feedback] FirstPersonHitMarker.Singleton = NULL。
+[Local Combat Feedback] 收到正式命中。
+Requested Damage：7.00
+Applied Damage：7.00
+Damage Type：Ability
+Feedback ID：None
+Hit Zone：None
+Headshot：False
+Kill：False
+Blocked：False
+Effective Damage：True
+Hit Point：(0.00, 0.00, 0.00)
+Sequence：0
+只有攻擊者本人應該收到這次 Presentation Feedback。
+]]></output></test-case></test-suite></test-suite></test-suite>

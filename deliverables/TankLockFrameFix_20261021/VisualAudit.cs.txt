@@ -1,0 +1,144 @@
+// 由 MCP execute_code 以方法內容執行；只建立暫時預覽物件，不保存場景或資產。
+var output = "M:/UnityProject/Purgers/deliverables/TankLockFrameFix_20261021";
+var lines = new System.Collections.Generic.List<string>();
+var scene = UnityEditor.SceneManagement.EditorSceneManager.NewPreviewScene();
+var previousRT = UnityEngine.RenderTexture.active;
+UnityEngine.GameObject owner = null, cameraGO = null;
+UnityEngine.RenderTexture rt = null;
+try
+{
+    cameraGO = new UnityEngine.GameObject("frame audit camera", typeof(UnityEngine.Camera));
+    UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(cameraGO, scene);
+    var camera = cameraGO.GetComponent<UnityEngine.Camera>();
+    camera.enabled = false; camera.scene = scene; camera.clearFlags = UnityEngine.CameraClearFlags.SolidColor;
+    camera.backgroundColor = UnityEngine.Color.black; camera.cullingMask = 1 << 31;
+    rt = new UnityEngine.RenderTexture(800, 600, 24);
+    camera.targetTexture = rt; camera.fieldOfView = 60f; camera.nearClipPlane = .3f;
+    // 真正 A/B 資產的動畫姿勢：每個 clip 的五個時間點，同步更新原有碰撞姿勢 owner。
+    foreach (string variant in new[] { "A", "B" })
+    {
+        var prefab = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>(
+            "Assets/Prefabs/Enemy/Variants/Enemy_Ranged_" + variant + ".prefab");
+        var clone = UnityEngine.Object.Instantiate(prefab);
+        UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(clone, scene);
+        try
+        {
+            var animator = clone.GetComponentInChildren<UnityEngine.Animator>();
+            var pose = clone.GetComponent<EnemyJellyfishCollisionPose>();
+            int samples = 0, projections = 0, oversized = 0;
+            foreach (var clip in animator.runtimeAnimatorController.animationClips.Distinct())
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    clip.SampleAnimation(animator.gameObject, clip.length * i / 4f);
+                    pose.RefreshPose();
+                    foreach (var capsule in clone.GetComponentsInChildren<UnityEngine.CapsuleCollider>())
+                    {
+                        var hitbox = capsule.GetComponent<Fusion.Hitbox>();
+                        if (hitbox == null || hitbox.Type != Fusion.HitboxTypes.Capsule) continue;
+                        var bounds = TankPreparedDashPreviewQuery.GetHitboxLocalBounds(hitbox);
+                        if (UnityEngine.Mathf.Abs(bounds.size.y - capsule.height) > .001f ||
+                            UnityEngine.Mathf.Abs(bounds.size.x - capsule.radius * 2f) > .001f)
+                            throw new System.Exception("Pose bounds mismatch: " + variant + "/" + clip.name + "/" + capsule.name);
+                        foreach (float pitch in new[] { -50f, 0f, 50f })
+                        foreach (float yaw in new[] { -70f, 0f, 70f })
+                        foreach (float distance in new[] { .4f, 2f, 4f, 8f, 12f })
+                        {
+                            camera.transform.rotation = UnityEngine.Quaternion.Euler(pitch, yaw, 0);
+                            camera.transform.position = hitbox.transform.TransformPoint(bounds.center) - camera.transform.forward * distance;
+                            UnityEngine.Rect projected;
+                            if (!TankPreparedDashIndicatorRules.TryProject(camera, bounds, hitbox.transform.localToWorldMatrix, 12, out projected))
+                                throw new System.Exception("Centered capsule lost projection");
+                            if (float.IsNaN(projected.width) || float.IsInfinity(projected.width) ||
+                                float.IsNaN(projected.height) || float.IsInfinity(projected.height))
+                                throw new System.Exception("Non-finite projection");
+                            if (UnityEngine.Mathf.Abs(projected.xMin - camera.pixelRect.xMin) < .01f &&
+                                UnityEngine.Mathf.Abs(projected.xMax - camera.pixelRect.xMax) < .01f &&
+                                UnityEngine.Mathf.Abs(projected.yMin - camera.pixelRect.yMin) < .01f &&
+                                UnityEngine.Mathf.Abs(projected.yMax - camera.pixelRect.yMax) < .01f)
+                                throw new System.Exception("Projection snapped to fullscreen");
+                            if (projected.width > camera.pixelWidth && projected.height > camera.pixelHeight) oversized++;
+                            projections++;
+                        }
+                        samples++;
+                    }
+                }
+            }
+            if (samples == 0) throw new System.Exception("No animation samples");
+            lines.Add("PASS " + variant + " animated capsule samples=" + samples);
+            lines.Add("PASS " + variant + " projections=" + projections + " oversized-unclamped=" + oversized);
+        }
+        finally { UnityEngine.Object.DestroyImmediate(clone); }
+    }
+
+    camera.transform.rotation = UnityEngine.Quaternion.identity;
+    camera.transform.position = new UnityEngine.Vector3(20000, 20000, 20000);
+    owner = new UnityEngine.GameObject("frame audit owner", typeof(LocalTankPreparedDashIndicator));
+    UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(owner, scene);
+    var indicator = owner.GetComponent<LocalTankPreparedDashIndicator>();
+    var ensure = typeof(LocalTankPreparedDashIndicator).GetMethod("EnsureBracket",
+        System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+    ensure.Invoke(indicator, new object[] { camera });
+    var canvas = owner.GetComponentInChildren<UnityEngine.Canvas>();
+    canvas.renderMode = UnityEngine.RenderMode.ScreenSpaceCamera; canvas.worldCamera = camera; canvas.planeDistance = 1f;
+    foreach (var child in owner.GetComponentsInChildren<UnityEngine.Transform>()) child.gameObject.layer = 31;
+    UnityEngine.Canvas.ForceUpdateCanvases();
+    ensure.Invoke(indicator, new object[] { camera });
+    var graphic = owner.GetComponentInChildren<TankTargetBracketGraphic>();
+    var mask = graphic.GetComponentInParent<UnityEngine.UI.RectMask2D>();
+    graphic.SetStyle(new UnityEngine.Color(1f, .502f, .141f, 1f), 5, 24);
+    var cases = new[] {
+        new UnityEngine.Rect(250, 200, 300, 200),
+        new UnityEngine.Rect(-200, 200, 700, 200),
+        new UnityEngine.Rect(-100, -100, 1000, 800)
+    };
+    var names = new[] { "normal", "partial-offscreen", "oversized" };
+    for (int c = 0; c < cases.Length; c++)
+    {
+        UnityEngine.Vector2 point;
+        UnityEngine.RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            mask.rectTransform, cases[c].center, camera, out point);
+        graphic.rectTransform.anchoredPosition = point;
+        graphic.rectTransform.sizeDelta = cases[c].size;
+        graphic.enabled = true; graphic.SetAllDirty();
+        UnityEngine.Canvas.ForceUpdateCanvases(); mask.PerformClipping();
+        camera.Render();
+        UnityEngine.RenderTexture.active = rt;
+        var image = new UnityEngine.Texture2D(800, 600, UnityEngine.TextureFormat.RGB24, false);
+        try
+        {
+            image.ReadPixels(new UnityEngine.Rect(0, 0, 800, 600), 0, 0); image.Apply();
+            int colored = 0, edge = 0;
+            var pixels = image.GetPixels32();
+            for (int p = 0; p < pixels.Length; p++)
+            {
+                if (pixels[p].r < 120 || pixels[p].g < 40) continue;
+                colored++;
+                int x = p % 800, y = p / 800;
+                if (x < 20 || x >= 780 || y < 20 || y >= 580) edge++;
+            }
+            System.IO.File.WriteAllBytes(output + "/" + names[c] + ".png", image.EncodeToPNG());
+            lines.Add("DRAW " + names[c] + " colored=" + colored + " edge=" + edge);
+            if (c < 2 && colored < 100) throw new System.Exception("Expected visible frame: " + names[c]);
+            if (c == 2 && colored != 0) throw new System.Exception("Oversized frame should be clipped");
+            if (edge != 0) throw new System.Exception("Unexpected screen-edge frame: " + names[c]);
+        }
+        finally { UnityEngine.Object.DestroyImmediate(image); }
+    }
+    lines.Add("PASS rendered frame clipping");
+}
+finally
+{
+    UnityEngine.RenderTexture.active = previousRT;
+    if (owner != null)
+    {
+        var canvas = owner.GetComponentInChildren<UnityEngine.Canvas>();
+        if (canvas != null) UnityEngine.Object.DestroyImmediate(canvas.gameObject);
+        UnityEngine.Object.DestroyImmediate(owner);
+    }
+    if (cameraGO != null) UnityEngine.Object.DestroyImmediate(cameraGO);
+    if (rt != null) { rt.Release(); UnityEngine.Object.DestroyImmediate(rt); }
+    UnityEditor.SceneManagement.EditorSceneManager.ClosePreviewScene(scene);
+    System.IO.File.WriteAllLines(output + "/visual-audit.txt", lines);
+}
+return lines.ToArray();

@@ -31,13 +31,20 @@ public class LocalPlayerSpeedSlider : MonoBehaviour
 
     [Header("最高強化樣式")]
     [SerializeField] private Color normalGaugeColor = new Color(0.12f, 0.58f, 1f, 1f);
-    [SerializeField] private Color maximumBoostGaugeColor = new Color(1f, 0.48f, 0.08f, 1f);
+    [SerializeField] private Color maximumBoostGaugeColor = new Color32(37, 255, 217, 255);
     [SerializeField] private Color normalLabelColor = Color.white;
     [SerializeField] private Color maximumBoostLabelColor = new Color(1f, 0.82f, 0.2f, 1f);
     [SerializeField, Min(1f)] private float normalLabelFontSize = 24f;
-    [SerializeField, Min(1f)] private float maximumBoostLabelFontSize = 36f;
+    [SerializeField, HideInInspector] private float maximumBoostLabelFontSize = 36f; // Legacy serialized field; fixed text size now uses normalLabelFontSize.
     [SerializeField] private Vector2 normalGaugeSize = new Vector2(380f, 14f);
-    [SerializeField] private Vector2 maximumBoostGaugeSize = new Vector2(440f, 22f);
+    [SerializeField, HideInInspector] private Vector2 maximumBoostGaugeSize = new Vector2(440f, 22f); // Legacy serialized field; fixed gauge uses normalGaugeSize.
+
+    [Header("量條內流光")]
+    [SerializeField, Min(0f), Tooltip("未滿值時的內部流速；不影響動能與傷害。")]
+    private float gaugeFlowSpeed = .5f;
+    [SerializeField, Min(1f), Tooltip("最高強化時的流速倍率，預設 2 倍；切換時保留流動相位。")]
+    private float maximumBoostFlowSpeedMultiplier = 2f;
+    [SerializeField, Range(0f, 1f)] private float gaugeFlowStrength = .7f;
 
     [Header("顯示行為")]
     [SerializeField, Tooltip("本機 PlayerObject 不存在時隱藏整組增益 HUD。")]
@@ -58,6 +65,9 @@ public class LocalPlayerSpeedSlider : MonoBehaviour
     private bool visualVisible;
     private bool maximumBoostStyleApplied;
     private bool extractionPromptVisible;
+    private Material gaugeFlowMaterial;
+    private Material originalGaugeMaterial;
+    private float gaugeFlowPhase;
 
     private void Awake()
     {
@@ -109,7 +119,7 @@ public class LocalPlayerSpeedSlider : MonoBehaviour
 
         RefreshEnergyGauge();
         RefreshDamageBonus();
-        RefreshMaximumBoostPulse();
+        RefreshGaugeFlow(Time.unscaledDeltaTime);
         RefreshExtractionPrompt();
     }
 
@@ -119,11 +129,17 @@ public class LocalPlayerSpeedSlider : MonoBehaviour
         boundEnergy = null;
         stageFlowController = null;
         lastDisplayedEnergy = float.NaN;
+        ReleaseGaugeFlow();
     }
+
+    private void OnDestroy() => ReleaseGaugeFlow();
 
     private void OnValidate()
     {
         speedChangeEpsilon = Mathf.Max(0f, speedChangeEpsilon);
+        gaugeFlowSpeed = Mathf.Max(0f, gaugeFlowSpeed);
+        maximumBoostFlowSpeedMultiplier = Mathf.Max(1f, maximumBoostFlowSpeedMultiplier);
+        gaugeFlowStrength = Mathf.Clamp01(gaugeFlowStrength);
         normalLabelFontSize = Mathf.Max(1f, normalLabelFontSize);
         maximumBoostLabelFontSize = Mathf.Max(1f, maximumBoostLabelFontSize);
         normalGaugeSize = new Vector2(Mathf.Max(1f, normalGaugeSize.x), Mathf.Max(1f, normalGaugeSize.y));
@@ -173,6 +189,7 @@ public class LocalPlayerSpeedSlider : MonoBehaviour
         speedSlider.SetValueWithoutNotify(0f);
         SetDamageBonusText(1f);
         ApplyMaximumBoostStyle(false, false);
+        ReleaseGaugeFlow();
         SetExtractionPromptVisible(false);
         SetVisualVisible(!hideWhilePlayerMissing);
     }
@@ -220,26 +237,56 @@ public class LocalPlayerSpeedSlider : MonoBehaviour
 
         if (damageBonusLabel != null)
         {
-            damageBonusLabel.fontSize = active ? maximumBoostLabelFontSize : normalLabelFontSize;
+            damageBonusLabel.fontSize = normalLabelFontSize;
             damageBonusLabel.color = active ? maximumBoostLabelColor : normalLabelColor;
         }
         if (gaugeRect != null)
-            gaugeRect.sizeDelta = active ? maximumBoostGaugeSize : normalGaugeSize;
+            gaugeRect.sizeDelta = normalGaugeSize;
         if (gaugeFillImage != null)
             gaugeFillImage.color = active ? maximumBoostGaugeColor : normalGaugeColor;
     }
 
-    private void RefreshMaximumBoostPulse()
+    private void RefreshGaugeFlow(float deltaTime)
     {
-        float pulse = maximumBoostStyleApplied
-            ? 0.5f + 0.5f * Mathf.Sin(Time.unscaledTime * 5f)
-            : 0f;
-        if (gaugeRect != null)
-            gaugeRect.localScale = Vector3.one *
-                (maximumBoostStyleApplied ? 1.02f + pulse * 0.04f : 1f);
-        if (gaugeFillImage != null && maximumBoostStyleApplied)
-            gaugeFillImage.color = Color.Lerp(maximumBoostGaugeColor,
-                new Color(1f, 0.7f, 0.18f, maximumBoostGaugeColor.a), pulse);
+        if (gaugeFillImage == null) return;
+        if (gaugeFlowMaterial == null)
+        {
+            var shader = Resources.Load<Shader>("Presentation/MomentumGaugeFlow");
+            if (shader == null || !shader.isSupported) return;
+            originalGaugeMaterial = gaugeFillImage.material;
+            gaugeFlowMaterial = new Material(shader) { hideFlags = HideFlags.HideAndDontSave };
+            gaugeFillImage.material = gaugeFlowMaterial;
+        }
+        float rate = gaugeFlowSpeed * (maximumBoostStyleApplied ? maximumBoostFlowSpeedMultiplier : 1f);
+        gaugeFlowPhase = Mathf.Repeat(gaugeFlowPhase + Mathf.Max(0, deltaTime) * rate, 1f);
+        ApplyGaugeFlowProperties(gaugeFlowMaterial);
+        // uGUI may derive a separate stencil material for an ancestor Mask.
+        Material rendered = gaugeFillImage.materialForRendering;
+        if (rendered != gaugeFlowMaterial) ApplyGaugeFlowProperties(rendered);
+    }
+
+    private void ApplyGaugeFlowProperties(Material material)
+    {
+        if (material == null) return;
+        material.SetFloat("_Phase", gaugeFlowPhase);
+        material.SetFloat("_Strength", gaugeFlowStrength);
+        Sprite sprite = gaugeFillImage.overrideSprite;
+        material.SetVector("_SpriteUVRect", sprite != null
+            ? UnityEngine.Sprites.DataUtility.GetOuterUV(sprite) : new Vector4(0, 0, 1, 1));
+    }
+
+    private void ReleaseGaugeFlow()
+    {
+        if (gaugeFlowMaterial != null)
+        {
+            if (gaugeFillImage != null && gaugeFillImage.material == gaugeFlowMaterial)
+                gaugeFillImage.material = originalGaugeMaterial;
+            if (Application.isPlaying) Destroy(gaugeFlowMaterial);
+            else DestroyImmediate(gaugeFlowMaterial);
+        }
+        gaugeFlowMaterial = null;
+        originalGaugeMaterial = null;
+        gaugeFlowPhase = 0;
     }
 
     private void RefreshExtractionPrompt()

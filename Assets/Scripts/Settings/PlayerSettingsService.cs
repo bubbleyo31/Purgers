@@ -17,7 +17,7 @@ namespace Purgers.Settings
         {
             if (IsInitialized) return;
             current = initial.Copy();
-            try { if (File.Exists(Path)) { var saved = JsonUtility.FromJson<PlayerSettingsData>(File.ReadAllText(Path)); if (saved != null && saved.version == 1) current = saved; } }
+            try { if (File.Exists(Path)) { var saved = JsonUtility.FromJson<PlayerSettingsData>(File.ReadAllText(Path)); if (saved != null && (saved.version == 1 || saved.version == 2)) current = saved; } }
             catch (Exception e) { Debug.LogWarning("[PlayerSettings] 偏好讀取失敗，使用初始值：" + e.Message); }
             current.Normalize(); IsInitialized = true;
         }

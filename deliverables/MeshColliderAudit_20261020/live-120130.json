@@ -1,0 +1,148 @@
+{
+    "utc": "2026-10-20T12:01:30.6818932Z",
+    "scope": "Live Editor Play Mode; all physics scenes and collider types",
+    "limitation": "不是 MeshCollider 獨占時間；Main Thread 含等待與 Editor 影響。available=false 或 samples=0 是不可量測，不是零成本。沒有玩家或 Runner 的樣本不能代表戰鬥。",
+    "seconds": 10.061896600000182,
+    "framesElapsed": 686,
+    "runningRunners": 0,
+    "players": 0,
+    "enabledMapMeshes": 8558,
+    "enabledMapBoxes": 0,
+    "counters": [
+        {
+            "name": "Main Thread",
+            "unit": "milliseconds",
+            "available": true,
+            "samples": 686,
+            "mean": 14.569711807580188,
+            "p95": 16.0212,
+            "max": 21.8045
+        },
+        {
+            "name": "Physics.Simulate",
+            "unit": "milliseconds",
+            "available": true,
+            "samples": 686,
+            "mean": 0.0628587463556851,
+            "p95": 0.1081,
+            "max": 0.5608
+        },
+        {
+            "name": "Physics.FetchResults",
+            "unit": "milliseconds",
+            "available": true,
+            "samples": 686,
+            "mean": 0.006010495626822164,
+            "p95": 0.0097,
+            "max": 0.0488
+        },
+        {
+            "name": "Physics.Raycast",
+            "unit": "milliseconds",
+            "available": true,
+            "samples": 686,
+            "mean": 0.0,
+            "p95": 0.0,
+            "max": 0.0
+        },
+        {
+            "name": "Physics.RaycastNonAlloc",
+            "unit": "milliseconds",
+            "available": true,
+            "samples": 686,
+            "mean": 0.0,
+            "p95": 0.0,
+            "max": 0.0
+        },
+        {
+            "name": "Physics.SphereCast",
+            "unit": "milliseconds",
+            "available": true,
+            "samples": 686,
+            "mean": 0.0,
+            "p95": 0.0,
+            "max": 0.0
+        },
+        {
+            "name": "Physics.SphereCastNonAlloc",
+            "unit": "milliseconds",
+            "available": true,
+            "samples": 686,
+            "mean": 0.0,
+            "p95": 0.0,
+            "max": 0.0
+        },
+        {
+            "name": "Physics.CapsuleCast",
+            "unit": "milliseconds",
+            "available": true,
+            "samples": 686,
+            "mean": 0.0,
+            "p95": 0.0,
+            "max": 0.0
+        },
+        {
+            "name": "Physics.CapsuleCastNonAlloc",
+            "unit": "milliseconds",
+            "available": true,
+            "samples": 686,
+            "mean": 0.0,
+            "p95": 0.0,
+            "max": 0.0
+        },
+        {
+            "name": "Physics.OverlapCapsuleNonAlloc",
+            "unit": "milliseconds",
+            "available": true,
+            "samples": 686,
+            "mean": 0.0,
+            "p95": 0.0,
+            "max": 0.0
+        },
+        {
+            "name": "Physics Queries",
+            "unit": "Count",
+            "available": true,
+            "samples": 686,
+            "mean": 0.0,
+            "p95": 0.0,
+            "max": 0.0
+        },
+        {
+            "name": "Active Dynamic Bodies",
+            "unit": "Count",
+            "available": true,
+            "samples": 686,
+            "mean": 0.0,
+            "p95": 0.0,
+            "max": 0.0
+        },
+        {
+            "name": "Static Colliders",
+            "unit": "Count",
+            "available": true,
+            "samples": 686,
+            "mean": 14806.354227405247,
+            "p95": 17114.0,
+            "max": 17114.0
+        },
+        {
+            "name": "Mesh.Bake PhysX CollisionData",
+            "unit": "milliseconds",
+            "available": true,
+            "samples": 686,
+            "mean": 0.0,
+            "p95": 0.0,
+            "max": 0.0
+        },
+        {
+            "name": "Mesh.Bake Scaled Mesh PhysX CollisionData",
+            "unit": "milliseconds",
+            "available": true,
+            "samples": 686,
+            "mean": 0.0,
+            "p95": 0.0,
+            "max": 0.0
+        }
+    ]
+}

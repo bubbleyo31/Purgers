@@ -1,0 +1,35 @@
+{
+  "source": "Unity Graphics.Blit; static historical screenshot",
+  "modes": {
+    "single": {
+      "frames": 40,
+      "fps": 20,
+      "duration_seconds": 2.0,
+      "start_end_same": true,
+      "at_1_5_seconds_active": false,
+      "gif_bytes": 2247840
+    },
+    "continuous": {
+      "frames": 88,
+      "fps": 20,
+      "duration_seconds": 4.4,
+      "start_end_same": true,
+      "at_1_5_seconds_active": true,
+      "gif_bytes": 7504193
+    }
+  },
+  "center_alpha_max": 0,
+  "center_rgb_difference_max": 0,
+  "top_alpha": 90,
+  "bottom_alpha": 92,
+  "pixels_alpha_above_8_old": 589703,
+  "pixels_alpha_above_8_new": 446643,
+  "hud_rect_rgb_difference_max": {
+    "minimap": 0,
+    "quest": 0,
+    "ability_q": 0,
+    "ability_e": 0
+  },
+  "hud_foreground_samples_unchanged": true,
+  "damage_control_difference_max": 0
+}

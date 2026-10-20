@@ -1,0 +1,22 @@
+{
+  "clones": 0,
+  "forcedHidden": 0,
+  "enabledMapRenderers": 8558,
+  "renderScale": 1.0,
+  "msaaSampleCount": 1,
+  "shadowDistance": 50.0,
+  "shadowCascadeCount": 1,
+  "mainLightShadowmapResolution": 1024,
+  "features": [
+    {
+      "name": "SSAO",
+      "isActive": true,
+      "dirty": false
+    },
+    {
+      "name": "TeammateOutline",
+      "isActive": true,
+      "dirty": false
+    }
+  ]
+}

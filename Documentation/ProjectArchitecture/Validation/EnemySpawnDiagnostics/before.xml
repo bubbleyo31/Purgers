@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="6" result="Failed(Child)" total="6" passed="0" failed="6" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-20 14:38:42Z" end-time="2026-10-20 14:38:42Z" duration="0.1184229">
+  <test-suite type="TestSuite" id="2567" name="Purgers" fullname="Purgers" runstate="Runnable" testcasecount="1252" result="Failed" site="Child" start-time="2026-10-20 14:38:42Z" end-time="2026-10-20 14:38:42Z" duration="0.118423" total="6" passed="0" failed="6" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="4127" name="Assembly-CSharp-Editor.dll" fullname="M:/CodexWorktrees/spawn-zone-inspector/Purgers/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll" runstate="Runnable" testcasecount="1252" result="Failed" site="Child" start-time="2026-10-20 14:38:42Z" end-time="2026-10-20 14:38:42Z" duration="0.089614" total="6" passed="0" failed="6" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="22272" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestFixture" id="3175" name="EnemySpawnDiagnosticsTests" fullname="EnemySpawnDiagnosticsTests" classname="EnemySpawnDiagnosticsTests" runstate="Runnable" testcasecount="6" result="Failed" site="Child" start-time="2026-10-20 14:38:42Z" end-time="2026-10-20 14:38:42Z" duration="0.056131" total="6" passed="0" failed="6" inconclusive="0" skipped="0" asserts="0">
+        <properties>
+          <property name="Category" value="PurgersRegression" />
+        </properties>
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-case id="3179" name="ConfigurationInspectionDoesNotConsumeGameplayRandom" fullname="EnemySpawnDiagnosticsTests.ConfigurationInspectionDoesNotConsumeGameplayRandom" methodname="ConfigurationInspectionDoesNotConsumeGameplayRandom" classname="EnemySpawnDiagnosticsTests" runstate="Runnable" seed="1598251161" result="Failed" start-time="2026-10-20 14:38:42Z" end-time="2026-10-20 14:38:42Z" duration="0.023515" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[  Inspector configuration diagnostics must exist.
+  Expected: not null
+  But was:  null
+]]></message>
+            <stack-trace><![CDATA[at EnemySpawnDiagnosticsTests.Validate () [0x00019] in M:\CodexWorktrees\spawn-zone-inspector\Purgers\Assets\Scripts\Editor\Tests\EnemySpawnDiagnosticsTests.cs:33
+at EnemySpawnDiagnosticsTests.ConfigurationInspectionDoesNotConsumeGameplayRandom () [0x00016] in M:\CodexWorktrees\spawn-zone-inspector\Purgers\Assets\Scripts\Editor\Tests\EnemySpawnDiagnosticsTests.cs:76
+]]></stack-trace>
+          </failure>
+        </test-case>
+        <test-case id="3178" name="ExplicitZeroChanceListDoesNotFallBackToLegacy" fullname="EnemySpawnDiagnosticsTests.ExplicitZeroChanceListDoesNotFallBackToLegacy" methodname="ExplicitZeroChanceListDoesNotFallBackToLegacy" classname="EnemySpawnDiagnosticsTests" runstate="Runnable" seed="457235934" result="Failed" start-time="2026-10-20 14:38:42Z" end-time="2026-10-20 14:38:42Z" duration="0.001245" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[  Inspector configuration diagnostics must exist.
+  Expected: not null
+  But was:  null
+]]></message>
+            <stack-trace><![CDATA[at EnemySpawnDiagnosticsTests.Validate () [0x00019] in M:\CodexWorktrees\spawn-zone-inspector\Purgers\Assets\Scripts\Editor\Tests\EnemySpawnDiagnosticsTests.cs:33
+at EnemySpawnDiagnosticsTests.ExplicitZeroChanceListDoesNotFallBackToLegacy () [0x00046] in M:\CodexWorktrees\spawn-zone-inspector\Purgers\Assets\Scripts\Editor\Tests\EnemySpawnDiagnosticsTests.cs:65
+]]></stack-trace>
+          </failure>
+        </test-case>
+        <test-case id="3176" name="MissingChunkGateAndCandidatesAreAllReportedTogether" fullname="EnemySpawnDiagnosticsTests.MissingChunkGateAndCandidatesAreAllReportedTogether" methodname="MissingChunkGateAndCandidatesAreAllReportedTogether" classname="EnemySpawnDiagnosticsTests" runstate="Runnable" seed="1894510360" result="Failed" start-time="2026-10-20 14:38:42Z" end-time="2026-10-20 14:38:42Z" duration="0.000611" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[  Inspector configuration diagnostics must exist.
+  Expected: not null
+  But was:  null
+]]></message>
+            <stack-trace><![CDATA[at EnemySpawnDiagnosticsTests.Validate () [0x00019] in M:\CodexWorktrees\spawn-zone-inspector\Purgers\Assets\Scripts\Editor\Tests\EnemySpawnDiagnosticsTests.cs:33
+at EnemySpawnDiagnosticsTests.MissingChunkGateAndCandidatesAreAllReportedTogether () [0x00000] in M:\CodexWorktrees\spawn-zone-inspector\Purgers\Assets\Scripts\Editor\Tests\EnemySpawnDiagnosticsTests.cs:40
+]]></stack-trace>
+          </failure>
+        </test-case>
+        <test-case id="3177" name="NestedZoneGateDoesNotHideMissingOwnGate" fullname="EnemySpawnDiagnosticsTests.NestedZoneGateDoesNotHideMissingOwnGate" methodname="NestedZoneGateDoesNotHideMissingOwnGate" classname="EnemySpawnDiagnosticsTests" runstate="Runnable" seed="1123946276" result="Failed" start-time="2026-10-20 14:38:42Z" end-time="2026-10-20 14:38:42Z" duration="0.001586" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[  Inspector configuration diagnostics must exist.
+  Expected: not null
+  But was:  null
+]]></message>
+            <stack-trace><![CDATA[at EnemySpawnDiagnosticsTests.Validate () [0x00019] in M:\CodexWorktrees\spawn-zone-inspector\Purgers\Assets\Scripts\Editor\Tests\EnemySpawnDiagnosticsTests.cs:33
+at EnemySpawnDiagnosticsTests.NestedZoneGateDoesNotHideMissingOwnGate () [0x00055] in M:\CodexWorktrees\spawn-zone-inspector\Purgers\Assets\Scripts\Editor\Tests\EnemySpawnDiagnosticsTests.cs:56
+]]></stack-trace>
+          </failure>
+        </test-case>
+        <test-case id="3181" name="RuntimeHistoryIsBoundedAndKeepsLatestReason" fullname="EnemySpawnDiagnosticsTests.RuntimeHistoryIsBoundedAndKeepsLatestReason" methodname="RuntimeHistoryIsBoundedAndKeepsLatestReason" classname="EnemySpawnDiagnosticsTests" runstate="Runnable" seed="636717563" result="Failed" start-time="2026-10-20 14:38:42Z" end-time="2026-10-20 14:38:42Z" duration="0.004678" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[  Expected: not null
+  But was:  null
+]]></message>
+            <stack-trace><![CDATA[at EnemySpawnDiagnosticsTests.RuntimeHistoryIsBoundedAndKeepsLatestReason () [0x0006f] in M:\CodexWorktrees\spawn-zone-inspector\Purgers\Assets\Scripts\Editor\Tests\EnemySpawnDiagnosticsTests.cs:102
+]]></stack-trace>
+          </failure>
+        </test-case>
+        <test-case id="3180" name="RuntimeRejectionIsRetainedWithConsoleDebugDisabled" fullname="EnemySpawnDiagnosticsTests.RuntimeRejectionIsRetainedWithConsoleDebugDisabled" methodname="RuntimeRejectionIsRetainedWithConsoleDebugDisabled" classname="EnemySpawnDiagnosticsTests" runstate="Runnable" seed="1475657620" result="Failed" start-time="2026-10-20 14:38:42Z" end-time="2026-10-20 14:38:42Z" duration="0.001610" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[  Rejection must be visible without enabling Console logging.
+  Expected: not null
+  But was:  null
+]]></message>
+            <stack-trace><![CDATA[at EnemySpawnDiagnosticsTests.RuntimeRejectionIsRetainedWithConsoleDebugDisabled () [0x00054] in M:\CodexWorktrees\spawn-zone-inspector\Purgers\Assets\Scripts\Editor\Tests\EnemySpawnDiagnosticsTests.cs:89
+]]></stack-trace>
+          </failure>
+        </test-case>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

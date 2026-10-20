@@ -1,0 +1,34 @@
+PASS Runner first tick
+PASS Runner first tick
+PASS default runtime
+PASS equip Tank: 
+PASS Tank owner binding
+PASS input owner replica
+PASS Client input with Host gameplay authority
+PASS automatic local presentation binding
+PASS Host has no Client-owned target frame
+PASS enemy replica
+PASS frozen target frame
+PASS frame identifies actual selected child collider
+PASS preview does not attack or damage
+PASS frame contains no text
+PASS exactly one target frame
+PASS ground ring fades in
+PASS ground mesh and supported URP shader are active
+PASS actual jump input makes KCC airborne
+PASS airborne fades ground ring completely
+PASS landing restores ring and frame
+PASS local query finds direct target
+PASS large target geometry is available
+PASS large enemy frames selected box instead of aggregate body
+PASS range restriction hides frame
+PASS red crosshair still identifies distant enemy
+PASS wall hides target frame
+PASS frame returns after obstruction removed
+PASS release removes target frame
+PASS release fades ring out
+PASS Runner first tick
+PASS late join receives Tank
+PASS late observer does not receive another player's frame
+PASS switch weapon through existing authority owner
+PASS weapon change removes local presentation

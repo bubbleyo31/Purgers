@@ -358,6 +358,7 @@ public class Player :
             sprintController?.ForceResetSprint();
             grapple.CancelFromSpecialAbility(false, false);
         }
+        abilityRuntimeManager?.FilterFocusDropInput(ref input, PreviousButtons);
         health?.FilterRescueInput(ref input);
         abilityRuntimeManager?.FilterLootInput(ref input);
         var captureGate = GetComponent<PlayerActionGate>();
@@ -676,7 +677,7 @@ public class Player :
         // 只遮罩 Gameplay E，安全屋終端機仍使用自己的互動入口。
         var abilityGate = GetComponent<PlayerActionGate>();
         if (abilityGate != null && abilityGate.IsBlocked(PlayerActionBlockMask.ActiveAbility))
-            input.Buttons.Set(InputButton.Ability1, false);
+            PlayerAbilityRuntimeManager.ClearFocusButtons(ref input.Buttons);
 
         NetInput professionInput =
             input;
@@ -685,7 +686,7 @@ public class Player :
         if (movementLocked && profession.CurrentProfession != PlayerProfessionType.Attack)
         {
             professionInput.Buttons.Set(InputButton.Aim, false);
-            professionInput.Buttons.Set(InputButton.Ability1, false);
+            PlayerAbilityRuntimeManager.ClearFocusButtons(ref professionInput.Buttons);
         }
 
         if (grapple.BlocksProfessionAimInput)
@@ -694,7 +695,7 @@ public class Player :
                 InputButton.Aim,
                 false
             );
-            professionInput.Buttons.Set(InputButton.Ability1, false);
+            PlayerAbilityRuntimeManager.ClearFocusButtons(ref professionInput.Buttons);
         }
 
         // -------------------------------------------------------------

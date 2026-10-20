@@ -1,0 +1,145 @@
+[
+  {
+    "name": "GuardReduction",
+    "rank": 1,
+    "label": "I",
+    "fontSize": 27.3393269,
+    "inkWidth": 11.7540417,
+    "inkHeight": 20.5044956,
+    "centerError": 0.0,
+    "fill": 0.94,
+    "side": 64.15674
+  },
+  {
+    "name": "GuardReduction",
+    "rank": 2,
+    "label": "II",
+    "fontSize": 24.3810959,
+    "inkWidth": 22.9168015,
+    "inkHeight": 18.2858219,
+    "centerError": 0.0,
+    "fill": 0.939999938,
+    "side": 64.15674
+  },
+  {
+    "name": "GuardReduction",
+    "rank": 3,
+    "label": "III",
+    "fontSize": 15.8052235,
+    "inkWidth": 22.9168015,
+    "inkHeight": 11.8539181,
+    "centerError": 0.0,
+    "fill": 0.939999938,
+    "side": 64.15674
+  },
+  {
+    "name": "GuardReduction",
+    "rank": 4,
+    "label": "IV",
+    "fontSize": 21.02525,
+    "inkWidth": 22.9168034,
+    "inkHeight": 15.7689371,
+    "centerError": 0.0,
+    "fill": 0.94,
+    "side": 64.15674
+  },
+  {
+    "name": "GuardReduction",
+    "rank": 5,
+    "label": "V",
+    "fontSize": 27.3393269,
+    "inkWidth": 15.855608,
+    "inkHeight": 20.5044956,
+    "centerError": 0.0,
+    "fill": 0.94,
+    "side": 64.15674
+  },
+  {
+    "name": "GuardStamina",
+    "rank": 1,
+    "label": "I",
+    "fontSize": 27.3393269,
+    "inkWidth": 11.7540417,
+    "inkHeight": 20.5044956,
+    "centerError": 0.0,
+    "fill": 0.94,
+    "side": 64.15674
+  },
+  {
+    "name": "GuardStamina",
+    "rank": 2,
+    "label": "II",
+    "fontSize": 24.3810959,
+    "inkWidth": 22.9168015,
+    "inkHeight": 18.2858219,
+    "centerError": 0.0,
+    "fill": 0.939999938,
+    "side": 64.15674
+  },
+  {
+    "name": "GuardStamina",
+    "rank": 3,
+    "label": "III",
+    "fontSize": 15.8052235,
+    "inkWidth": 22.9168015,
+    "inkHeight": 11.8539181,
+    "centerError": 0.0,
+    "fill": 0.939999938,
+    "side": 64.15674
+  },
+  {
+    "name": "GuardCooldown",
+    "rank": 1,
+    "label": "I",
+    "fontSize": 24.1229172,
+    "inkWidth": 10.3712053,
+    "inkHeight": 18.0921879,
+    "centerError": 0.0,
+    "fill": 0.939999938,
+    "side": 64.15674
+  },
+  {
+    "name": "GuardCooldown",
+    "rank": 2,
+    "label": "II",
+    "fontSize": 24.1229172,
+    "inkWidth": 22.67413,
+    "inkHeight": 18.0921879,
+    "centerError": 0.0,
+    "fill": 0.939999938,
+    "side": 64.15674
+  },
+  {
+    "name": "GuardCooldown",
+    "rank": 3,
+    "label": "III",
+    "fontSize": 16.637043,
+    "inkWidth": 24.1228981,
+    "inkHeight": 12.4777822,
+    "centerError": 0.0,
+    "fill": 0.939999938,
+    "side": 64.15674
+  },
+  {
+    "name": "GuardCooldown",
+    "rank": 4,
+    "label": "IV",
+    "fontSize": 22.131794,
+    "inkWidth": 24.1228981,
+    "inkHeight": 16.5988464,
+    "centerError": 0.0,
+    "fill": 0.939999938,
+    "side": 64.15674
+  },
+  {
+    "name": "GuardCooldown",
+    "rank": 5,
+    "label": "V",
+    "fontSize": 24.1229172,
+    "inkWidth": 13.9902315,
+    "inkHeight": 18.0921879,
+    "centerError": 0.0,
+    "fill": 0.939999938,
+    "side": 64.15674
+  }
+]

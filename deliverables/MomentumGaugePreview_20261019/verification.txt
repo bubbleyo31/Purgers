@@ -1,0 +1,11 @@
+Source=Assets/_Project_Assets/UI/BattleHUD/Layout/Momentum.png
+FullColor=#25FFD9
+SampleRGB=37,255,217
+NormalTimeDifferences=43954
+FullAnimatedPixels=67258
+OutsideSilhouetteChanges=0
+Frames=96
+FramesPerSecond=24
+FixedRenderSize=1124x100
+PreviewOnly=true
+Passed=True

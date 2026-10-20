@@ -1,0 +1,3433 @@
+{
+  "count": 424,
+  "colliderCount": 11795,
+  "beforeHash": "D1-D4-AA-97-7E-B4-2F-90-FD-67-03-CE-1B-08-7E-8A-57-BE-F2-E3-53-6A-E4-C6-F3-D1-4C-C9-B2-C9-3B-A3",
+  "parents": [
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2",
+      "position": "(-29.10, 0.00, -263.20)"
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3",
+      "position": "(-29.10, 0.00, -263.20)"
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3",
+      "position": "(-29.10, 0.00, -263.20)"
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4",
+      "position": "(-29.10, 0.00, -263.20)"
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2",
+      "position": "(-29.10, 0.00, -263.20)"
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3",
+      "position": "(-29.10, 0.00, -263.20)"
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4",
+      "position": "(-29.10, 0.00, -263.20)"
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)",
+      "position": "(-17.10, -0.10, -42.90)"
+    }
+  ],
+  "renderers": [
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/柱体.240",
+      "id": -4054076,
+      "mesh": "柱体.240",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/柱体.241",
+      "id": -4054086,
+      "mesh": "柱体.241",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/柱体.242",
+      "id": -4054096,
+      "mesh": "柱体.242",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/柱体.243",
+      "id": -4054106,
+      "mesh": "柱体.243",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/柱体.244",
+      "id": -4054116,
+      "mesh": "柱体.244",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/柱体.245",
+      "id": -4054126,
+      "mesh": "柱体.245",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/柱体.246",
+      "id": -4054136,
+      "mesh": "柱体.246",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/柱体.247",
+      "id": -4054146,
+      "mesh": "柱体.247",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/柱体.248",
+      "id": -4054156,
+      "mesh": "柱体.248",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/柱体.249",
+      "id": -4054166,
+      "mesh": "柱体.249",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/柱体.250",
+      "id": -4054176,
+      "mesh": "柱体.250",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/球体.069",
+      "id": -4054186,
+      "mesh": "球体.069",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/球体.070",
+      "id": -4054196,
+      "mesh": "球体.070",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/球体.071",
+      "id": -4054206,
+      "mesh": "球体.071",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/球体.072",
+      "id": -4054216,
+      "mesh": "球体.072",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.392",
+      "id": -4054226,
+      "mesh": "立方体.392",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.395",
+      "id": -4054236,
+      "mesh": "立方体.395",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.399",
+      "id": -4054246,
+      "mesh": "立方体.399",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.402",
+      "id": -4054256,
+      "mesh": "立方体.402",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.409",
+      "id": -4054266,
+      "mesh": "立方体.409",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.414",
+      "id": -4054276,
+      "mesh": "立方体.414",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.416",
+      "id": -4054286,
+      "mesh": "立方体.416",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.417",
+      "id": -4054296,
+      "mesh": "立方体.417",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.427",
+      "id": -4054306,
+      "mesh": "立方体.427",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.428",
+      "id": -4054316,
+      "mesh": "立方体.428",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.429",
+      "id": -4054326,
+      "mesh": "立方体.429",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.430",
+      "id": -4054336,
+      "mesh": "立方体.430",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.431",
+      "id": -4054346,
+      "mesh": "立方体.431",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.432",
+      "id": -4054356,
+      "mesh": "立方体.432",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.433",
+      "id": -4054366,
+      "mesh": "立方体.433",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.434",
+      "id": -4054376,
+      "mesh": "立方体.434",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.435",
+      "id": -4054386,
+      "mesh": "立方体.435",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.436",
+      "id": -4054396,
+      "mesh": "立方体.436",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.437",
+      "id": -4054406,
+      "mesh": "立方体.437",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.438",
+      "id": -4054416,
+      "mesh": "立方体.438",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.439",
+      "id": -4054426,
+      "mesh": "立方体.439",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.440",
+      "id": -4054438,
+      "mesh": "立方体.440",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.441",
+      "id": -4054450,
+      "mesh": "立方体.441",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.442",
+      "id": -4054460,
+      "mesh": "立方体.442",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.443",
+      "id": -4054470,
+      "mesh": "立方体.443",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.448",
+      "id": -4054480,
+      "mesh": "立方体.448",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.449",
+      "id": -4054490,
+      "mesh": "立方体.449",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.450",
+      "id": -4054500,
+      "mesh": "立方体.450",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.455",
+      "id": -4054510,
+      "mesh": "立方体.455",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.460",
+      "id": -4054520,
+      "mesh": "立方体.460",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.461",
+      "id": -4054530,
+      "mesh": "立方体.461",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.468",
+      "id": -4054540,
+      "mesh": "立方体.468",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.470",
+      "id": -4054550,
+      "mesh": "立方体.470",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.471",
+      "id": -4054560,
+      "mesh": "立方体.471",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.472",
+      "id": -4054570,
+      "mesh": "立方体.472",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.473",
+      "id": -4054580,
+      "mesh": "立方体.473",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.474",
+      "id": -4054590,
+      "mesh": "立方体.474",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.475",
+      "id": -4054600,
+      "mesh": "立方体.475",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.477",
+      "id": -4054610,
+      "mesh": "立方体.477",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.478",
+      "id": -4054622,
+      "mesh": "立方体.478",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.479",
+      "id": -4054634,
+      "mesh": "立方体.479",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.480",
+      "id": -4054644,
+      "mesh": "立方体.480",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.481",
+      "id": -4054656,
+      "mesh": "立方体.481",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.482",
+      "id": -4054666,
+      "mesh": "立方体.482",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.483",
+      "id": -4054676,
+      "mesh": "立方体.483",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.485",
+      "id": -4054686,
+      "mesh": "立方体.485",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.486",
+      "id": -4054696,
+      "mesh": "立方体.486",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.487",
+      "id": -4054706,
+      "mesh": "立方体.487",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.488",
+      "id": -4054718,
+      "mesh": "立方体.488",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.489",
+      "id": -4054730,
+      "mesh": "立方体.489",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.490",
+      "id": -4054740,
+      "mesh": "立方体.490",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.491",
+      "id": -4054752,
+      "mesh": "立方体.491",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.492",
+      "id": -4054762,
+      "mesh": "立方体.492",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.493",
+      "id": -4054774,
+      "mesh": "立方体.493",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.506",
+      "id": -4054786,
+      "mesh": "立方体.506",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2/立方体.1900",
+      "id": -4054798,
+      "mesh": "立方体.1900",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/柱体.048",
+      "id": -4054812,
+      "mesh": "柱体.048",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/柱体.049",
+      "id": -4054822,
+      "mesh": "柱体.049",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/柱体.050",
+      "id": -4054832,
+      "mesh": "柱体.050",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/柱体.051",
+      "id": -4054842,
+      "mesh": "柱体.051",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/柱体.052",
+      "id": -4054852,
+      "mesh": "柱体.052",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/柱体.053",
+      "id": -4054862,
+      "mesh": "柱体.053",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/球体.012",
+      "id": -4054872,
+      "mesh": "球体.012",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/球体.013",
+      "id": -4054882,
+      "mesh": "球体.013",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/球体.014",
+      "id": -4054892,
+      "mesh": "球体.014",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/球体.020",
+      "id": -4054902,
+      "mesh": "球体.020",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/球体.109",
+      "id": -4054912,
+      "mesh": "球体.109",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/球体.110",
+      "id": -4054922,
+      "mesh": "球体.110",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.039",
+      "id": -4054932,
+      "mesh": "立方体.039",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.467",
+      "id": -4054944,
+      "mesh": "立方体.467",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.508",
+      "id": -4054954,
+      "mesh": "立方体.508",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.510",
+      "id": -4054964,
+      "mesh": "立方体.510",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.517",
+      "id": -4054974,
+      "mesh": "立方体.517",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.518",
+      "id": -4054986,
+      "mesh": "立方体.518",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.519",
+      "id": -4054998,
+      "mesh": "立方体.519",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.520",
+      "id": -4055010,
+      "mesh": "立方体.520",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.521",
+      "id": -4055022,
+      "mesh": "立方体.521",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.522",
+      "id": -4055032,
+      "mesh": "立方体.522",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.523",
+      "id": -4055042,
+      "mesh": "立方体.523",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.524",
+      "id": -4055052,
+      "mesh": "立方体.524",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.525",
+      "id": -4055064,
+      "mesh": "立方体.525",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.526",
+      "id": -4055074,
+      "mesh": "立方体.526",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.527",
+      "id": -4055084,
+      "mesh": "立方体.527",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.528",
+      "id": -4055094,
+      "mesh": "立方体.528",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.530",
+      "id": -4055104,
+      "mesh": "立方体.530",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.531",
+      "id": -4055114,
+      "mesh": "立方体.531",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.532",
+      "id": -4055124,
+      "mesh": "立方体.532",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.533",
+      "id": -4055134,
+      "mesh": "立方体.533",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.534",
+      "id": -4055144,
+      "mesh": "立方体.534",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.535",
+      "id": -4055154,
+      "mesh": "立方体.535",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.536",
+      "id": -4055166,
+      "mesh": "立方体.536",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.537",
+      "id": -4055178,
+      "mesh": "立方体.537",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.538",
+      "id": -4055190,
+      "mesh": "立方体.538",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.540",
+      "id": -4055202,
+      "mesh": "立方体.540",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.541",
+      "id": -4055212,
+      "mesh": "立方体.541",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.542",
+      "id": -4055222,
+      "mesh": "立方体.542",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.543",
+      "id": -4055232,
+      "mesh": "立方体.543",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.544",
+      "id": -4055244,
+      "mesh": "立方体.544",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.545",
+      "id": -4055254,
+      "mesh": "立方体.545",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.546",
+      "id": -4055264,
+      "mesh": "立方体.546",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.547",
+      "id": -4055274,
+      "mesh": "立方体.547",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.548",
+      "id": -4055286,
+      "mesh": "立方体.548",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.549",
+      "id": -4055298,
+      "mesh": "立方体.549",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.550",
+      "id": -4055310,
+      "mesh": "立方体.550",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.551",
+      "id": -4055320,
+      "mesh": "立方体.551",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.552",
+      "id": -4055330,
+      "mesh": "立方体.552",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.553",
+      "id": -4055340,
+      "mesh": "立方体.553",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.554",
+      "id": -4055352,
+      "mesh": "立方体.554",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.555",
+      "id": -4055362,
+      "mesh": "立方体.555",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.556",
+      "id": -4055372,
+      "mesh": "立方体.556",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.557",
+      "id": -4055382,
+      "mesh": "立方体.557",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.558",
+      "id": -4055394,
+      "mesh": "立方体.558",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.559",
+      "id": -4055404,
+      "mesh": "立方体.559",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.560",
+      "id": -4055414,
+      "mesh": "立方体.560",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.561",
+      "id": -4055424,
+      "mesh": "立方体.561",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子2-1-3/立方体.562",
+      "id": -4055434,
+      "mesh": "立方体.562",
+      "materials": [
+        "下出生點_右排6-1-3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/柱体.342",
+      "id": -4055450,
+      "mesh": "柱体.342",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/柱体.362",
+      "id": -4055460,
+      "mesh": "柱体.362",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/柱体.363",
+      "id": -4055470,
+      "mesh": "柱体.363",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/柱体.364",
+      "id": -4055480,
+      "mesh": "柱体.364",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/柱体.365",
+      "id": -4055490,
+      "mesh": "柱体.365",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/柱体.366",
+      "id": -4055500,
+      "mesh": "柱体.366",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/柱体.367",
+      "id": -4055510,
+      "mesh": "柱体.367",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/柱体.368",
+      "id": -4055520,
+      "mesh": "柱体.368",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/柱体.369",
+      "id": -4055530,
+      "mesh": "柱体.369",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/柱体.370",
+      "id": -4055540,
+      "mesh": "柱体.370",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/柱体.371",
+      "id": -4055550,
+      "mesh": "柱体.371",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/球体.105",
+      "id": -4055560,
+      "mesh": "球体.105",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/球体.106",
+      "id": -4055570,
+      "mesh": "球体.106",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/球体.107",
+      "id": -4055580,
+      "mesh": "球体.107",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/球体.108",
+      "id": -4055590,
+      "mesh": "球体.108",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.075",
+      "id": -4055600,
+      "mesh": "立方体.075",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.076",
+      "id": -4055610,
+      "mesh": "立方体.076",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.077",
+      "id": -4055620,
+      "mesh": "立方体.077",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.078",
+      "id": -4055630,
+      "mesh": "立方体.078",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.079",
+      "id": -4055640,
+      "mesh": "立方体.079",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.080",
+      "id": -4055650,
+      "mesh": "立方体.080",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.081",
+      "id": -4055660,
+      "mesh": "立方体.081",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.082",
+      "id": -4055670,
+      "mesh": "立方体.082",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.083",
+      "id": -4055680,
+      "mesh": "立方体.083",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.084",
+      "id": -4055690,
+      "mesh": "立方体.084",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.085",
+      "id": -4055700,
+      "mesh": "立方体.085",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.086",
+      "id": -4055710,
+      "mesh": "立方体.086",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.087",
+      "id": -4055720,
+      "mesh": "立方体.087",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.088",
+      "id": -4055730,
+      "mesh": "立方体.088",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.089",
+      "id": -4055740,
+      "mesh": "立方体.089",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.090",
+      "id": -4055750,
+      "mesh": "立方体.090",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.091",
+      "id": -4055760,
+      "mesh": "立方体.091",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.092",
+      "id": -4055770,
+      "mesh": "立方体.092",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.093",
+      "id": -4055780,
+      "mesh": "立方体.093",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.094",
+      "id": -4055790,
+      "mesh": "立方体.094",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.095",
+      "id": -4055800,
+      "mesh": "立方体.095",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.096",
+      "id": -4055812,
+      "mesh": "立方体.096",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.097",
+      "id": -4055824,
+      "mesh": "立方体.097",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.098",
+      "id": -4055834,
+      "mesh": "立方体.098",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.099",
+      "id": -4055844,
+      "mesh": "立方体.099",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.100",
+      "id": -4055854,
+      "mesh": "立方体.100",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.101",
+      "id": -4055864,
+      "mesh": "立方体.101",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.102",
+      "id": -4055874,
+      "mesh": "立方体.102",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.103",
+      "id": -4055884,
+      "mesh": "立方体.103",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.104",
+      "id": -4055894,
+      "mesh": "立方体.104",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.105",
+      "id": -4055904,
+      "mesh": "立方体.105",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.106",
+      "id": -4055914,
+      "mesh": "立方体.106",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.107",
+      "id": -4055924,
+      "mesh": "立方体.107",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.108",
+      "id": -4055934,
+      "mesh": "立方体.108",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.109",
+      "id": -4055944,
+      "mesh": "立方体.109",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.110",
+      "id": -4055954,
+      "mesh": "立方体.110",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.112",
+      "id": -4055964,
+      "mesh": "立方体.112",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.113",
+      "id": -4055974,
+      "mesh": "立方体.113",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.114",
+      "id": -4055984,
+      "mesh": "立方体.114",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.129",
+      "id": -4055996,
+      "mesh": "立方体.129",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.130",
+      "id": -4056008,
+      "mesh": "立方体.130",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.131",
+      "id": -4056018,
+      "mesh": "立方体.131",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.132",
+      "id": -4056030,
+      "mesh": "立方体.132",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.133",
+      "id": -4056040,
+      "mesh": "立方体.133",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.134",
+      "id": -4056050,
+      "mesh": "立方体.134",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.135",
+      "id": -4056060,
+      "mesh": "立方体.135",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.136",
+      "id": -4056070,
+      "mesh": "立方体.136",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.137",
+      "id": -4056080,
+      "mesh": "立方体.137",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.140",
+      "id": -4056092,
+      "mesh": "立方体.140",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.141",
+      "id": -4056104,
+      "mesh": "立方体.141",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.142",
+      "id": -4056114,
+      "mesh": "立方体.142",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.164",
+      "id": -4056126,
+      "mesh": "立方体.164",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.165",
+      "id": -4056136,
+      "mesh": "立方体.165",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.166",
+      "id": -4056148,
+      "mesh": "立方体.166",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.167",
+      "id": -4056160,
+      "mesh": "立方体.167",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.333",
+      "id": -4056172,
+      "mesh": "立方体.333",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子3/立方体.336",
+      "id": -4056182,
+      "mesh": "立方体.336",
+      "materials": [
+        "下出生點_左排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/柱体.058",
+      "id": -4056196,
+      "mesh": "柱体.058",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/柱体.061",
+      "id": -4056206,
+      "mesh": "柱体.061",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/柱体.062",
+      "id": -4056216,
+      "mesh": "柱体.062",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/球体.021",
+      "id": -4056226,
+      "mesh": "球体.021",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/球体.022",
+      "id": -4056236,
+      "mesh": "球体.022",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/立方体.049",
+      "id": -4056246,
+      "mesh": "立方体.049",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/立方体.054",
+      "id": -4056256,
+      "mesh": "立方体.054",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/立方体.318",
+      "id": -4056266,
+      "mesh": "立方体.318",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/立方体.375",
+      "id": -4056276,
+      "mesh": "立方体.375",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/立方体.571",
+      "id": -4056286,
+      "mesh": "立方体.571",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/立方体.576",
+      "id": -4056296,
+      "mesh": "立方体.576",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/立方体.577",
+      "id": -4056306,
+      "mesh": "立方体.577",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/立方体.578",
+      "id": -4056316,
+      "mesh": "立方体.578",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/立方体.579",
+      "id": -4056326,
+      "mesh": "立方体.579",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/立方体.580",
+      "id": -4056336,
+      "mesh": "立方体.580",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/立方体.581",
+      "id": -4056346,
+      "mesh": "立方体.581",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/立方体.582",
+      "id": -4056356,
+      "mesh": "立方体.582",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/立方体.583",
+      "id": -4056366,
+      "mesh": "立方体.583",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/立方体.584",
+      "id": -4056376,
+      "mesh": "立方体.584",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/立方体.585",
+      "id": -4056386,
+      "mesh": "立方体.585",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/立方体.639",
+      "id": -4056396,
+      "mesh": "立方体.639",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/立方体.662",
+      "id": -4056406,
+      "mesh": "立方体.662",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/立方体.663",
+      "id": -4056416,
+      "mesh": "立方体.663",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/立方体.664",
+      "id": -4056426,
+      "mesh": "立方体.664",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/立方体.665",
+      "id": -4056436,
+      "mesh": "立方体.665",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/立方体.666",
+      "id": -4056446,
+      "mesh": "立方体.666",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/立方体.667",
+      "id": -4056456,
+      "mesh": "立方体.667",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子4/立方体.2031",
+      "id": -4056466,
+      "mesh": "立方体.2031",
+      "materials": [
+        "下出生點_左排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/柱体.063",
+      "id": -4046462,
+      "mesh": "柱体.063",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/柱体.064",
+      "id": -4046472,
+      "mesh": "柱体.064",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/球体.025",
+      "id": -4046482,
+      "mesh": "球体.025",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/球体.026",
+      "id": -4046492,
+      "mesh": "球体.026",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/立方体.334",
+      "id": -4046502,
+      "mesh": "立方体.334",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/立方体.586",
+      "id": -4046512,
+      "mesh": "立方体.586",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/立方体.587",
+      "id": -4046522,
+      "mesh": "立方体.587",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/立方体.588",
+      "id": -4046532,
+      "mesh": "立方体.588",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/立方体.589",
+      "id": -4046542,
+      "mesh": "立方体.589",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/立方体.590",
+      "id": -4046554,
+      "mesh": "立方体.590",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/立方体.591",
+      "id": -4046566,
+      "mesh": "立方体.591",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/立方体.593",
+      "id": -4046576,
+      "mesh": "立方体.593",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/立方体.594",
+      "id": -4046588,
+      "mesh": "立方体.594",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/立方体.595",
+      "id": -4046598,
+      "mesh": "立方体.595",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/立方体.596",
+      "id": -4046608,
+      "mesh": "立方体.596",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/立方体.597",
+      "id": -4046618,
+      "mesh": "立方体.597",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/立方体.598",
+      "id": -4046630,
+      "mesh": "立方体.598",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/立方体.599",
+      "id": -4046642,
+      "mesh": "立方体.599",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/立方体.600",
+      "id": -4046652,
+      "mesh": "立方体.600",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/立方体.601",
+      "id": -4046664,
+      "mesh": "立方体.601",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/立方体.602",
+      "id": -4046676,
+      "mesh": "立方体.602",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/立方体.635",
+      "id": -4046686,
+      "mesh": "立方体.635",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/立方体.636",
+      "id": -4046696,
+      "mesh": "立方体.636",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/立方体.637",
+      "id": -4046706,
+      "mesh": "立方体.637",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子2/立方体.638",
+      "id": -4046716,
+      "mesh": "立方体.638",
+      "materials": [
+        "下出生點_右排2"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/柱体.037",
+      "id": -4046730,
+      "mesh": "柱体.037",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/柱体.039",
+      "id": -4046740,
+      "mesh": "柱体.039",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/球体.006",
+      "id": -4046750,
+      "mesh": "球体.006",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/球体.007",
+      "id": -4046760,
+      "mesh": "球体.007",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/球体.008",
+      "id": -4046770,
+      "mesh": "球体.008",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/球体.009",
+      "id": -4046780,
+      "mesh": "球体.009",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.304",
+      "id": -4046790,
+      "mesh": "立方体.304",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.312",
+      "id": -4046800,
+      "mesh": "立方体.312",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.313",
+      "id": -4046810,
+      "mesh": "立方体.313",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.314",
+      "id": -4046822,
+      "mesh": "立方体.314",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.315",
+      "id": -4046834,
+      "mesh": "立方体.315",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.316",
+      "id": -4046844,
+      "mesh": "立方体.316",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.319",
+      "id": -4046854,
+      "mesh": "立方体.319",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.321",
+      "id": -4046864,
+      "mesh": "立方体.321",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.322",
+      "id": -4046874,
+      "mesh": "立方体.322",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.323",
+      "id": -4046884,
+      "mesh": "立方体.323",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.327",
+      "id": -4046894,
+      "mesh": "立方体.327",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.328",
+      "id": -4046906,
+      "mesh": "立方体.328",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.329",
+      "id": -4046918,
+      "mesh": "立方体.329",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.330",
+      "id": -4046928,
+      "mesh": "立方体.330",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.331",
+      "id": -4046938,
+      "mesh": "立方体.331",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.332",
+      "id": -4046950,
+      "mesh": "立方体.332",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.337",
+      "id": -4046962,
+      "mesh": "立方体.337",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.338",
+      "id": -4046972,
+      "mesh": "立方体.338",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.342",
+      "id": -4046984,
+      "mesh": "立方体.342",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.343",
+      "id": -4046994,
+      "mesh": "立方体.343",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.344",
+      "id": -4047004,
+      "mesh": "立方体.344",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.345",
+      "id": -4047014,
+      "mesh": "立方体.345",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.346",
+      "id": -4047026,
+      "mesh": "立方体.346",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.347",
+      "id": -4047036,
+      "mesh": "立方体.347",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.348",
+      "id": -4047048,
+      "mesh": "立方体.348",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.349",
+      "id": -4047060,
+      "mesh": "立方体.349",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.350",
+      "id": -4047072,
+      "mesh": "立方体.350",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.351",
+      "id": -4047084,
+      "mesh": "立方体.351",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.352",
+      "id": -4047096,
+      "mesh": "立方体.352",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.353",
+      "id": -4047108,
+      "mesh": "立方体.353",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.354",
+      "id": -4047120,
+      "mesh": "立方体.354",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.355",
+      "id": -4047132,
+      "mesh": "立方体.355",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.356",
+      "id": -4047144,
+      "mesh": "立方体.356",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.357",
+      "id": -4047156,
+      "mesh": "立方体.357",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.358",
+      "id": -4047168,
+      "mesh": "立方体.358",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.359",
+      "id": -4047180,
+      "mesh": "立方体.359",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.360",
+      "id": -4047192,
+      "mesh": "立方体.360",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.361",
+      "id": -4047204,
+      "mesh": "立方体.361",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.362",
+      "id": -4047216,
+      "mesh": "立方体.362",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.363",
+      "id": -4047228,
+      "mesh": "立方体.363",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.364",
+      "id": -4047240,
+      "mesh": "立方体.364",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.365",
+      "id": -4047252,
+      "mesh": "立方体.365",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.366",
+      "id": -4047264,
+      "mesh": "立方体.366",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.367",
+      "id": -4047274,
+      "mesh": "立方体.367",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.368",
+      "id": -4047284,
+      "mesh": "立方体.368",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.369",
+      "id": -4047294,
+      "mesh": "立方体.369",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.370",
+      "id": -4047304,
+      "mesh": "立方体.370",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.371",
+      "id": -4047316,
+      "mesh": "立方体.371",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.372",
+      "id": -4047326,
+      "mesh": "立方体.372",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.373",
+      "id": -4047336,
+      "mesh": "立方体.373",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.374",
+      "id": -4047346,
+      "mesh": "立方体.374",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.376",
+      "id": -4047356,
+      "mesh": "立方体.376",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.377",
+      "id": -4047366,
+      "mesh": "立方体.377",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.379",
+      "id": -4047376,
+      "mesh": "立方体.379",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子3/立方体.1084",
+      "id": -4047386,
+      "mesh": "立方体.1084",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/柱体.034",
+      "id": -4047400,
+      "mesh": "柱体.034",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/球体.005",
+      "id": -4047410,
+      "mesh": "球体.005",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.266",
+      "id": -4047420,
+      "mesh": "立方体.266",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.267",
+      "id": -4047430,
+      "mesh": "立方体.267",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.268",
+      "id": -4047442,
+      "mesh": "立方体.268",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.269",
+      "id": -4047452,
+      "mesh": "立方体.269",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.270",
+      "id": -4047464,
+      "mesh": "立方体.270",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.271",
+      "id": -4047476,
+      "mesh": "立方体.271",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.272",
+      "id": -4047488,
+      "mesh": "立方体.272",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.273",
+      "id": -4047498,
+      "mesh": "立方体.273",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.274",
+      "id": -4047510,
+      "mesh": "立方体.274",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.275",
+      "id": -4047520,
+      "mesh": "立方体.275",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.276",
+      "id": -4047530,
+      "mesh": "立方体.276",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.277",
+      "id": -4047540,
+      "mesh": "立方体.277",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.278",
+      "id": -4047550,
+      "mesh": "立方体.278",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.279",
+      "id": -4047560,
+      "mesh": "立方体.279",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.280",
+      "id": -4047570,
+      "mesh": "立方体.280",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.281",
+      "id": -4047580,
+      "mesh": "立方体.281",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.282",
+      "id": -4047592,
+      "mesh": "立方体.282",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.283",
+      "id": -4047602,
+      "mesh": "立方体.283",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.284",
+      "id": -4047614,
+      "mesh": "立方体.284",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.285",
+      "id": -4047624,
+      "mesh": "立方体.285",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.286",
+      "id": -4047634,
+      "mesh": "立方体.286",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.287",
+      "id": -4047644,
+      "mesh": "立方体.287",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.288",
+      "id": -4047654,
+      "mesh": "立方体.288",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.289",
+      "id": -4047664,
+      "mesh": "立方体.289",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.290",
+      "id": -4047676,
+      "mesh": "立方体.290",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.291",
+      "id": -4047688,
+      "mesh": "立方体.291",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.292",
+      "id": -4047698,
+      "mesh": "立方体.292",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.293",
+      "id": -4047708,
+      "mesh": "立方体.293",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.294",
+      "id": -4047720,
+      "mesh": "立方体.294",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.295",
+      "id": -4047730,
+      "mesh": "立方体.295",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.296",
+      "id": -4047740,
+      "mesh": "立方体.296",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.297",
+      "id": -4047750,
+      "mesh": "立方体.297",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.298",
+      "id": -4047760,
+      "mesh": "立方体.298",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.299",
+      "id": -4047770,
+      "mesh": "立方体.299",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.305",
+      "id": -4047780,
+      "mesh": "立方体.305",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.306",
+      "id": -4047790,
+      "mesh": "立方体.306",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.307",
+      "id": -4047800,
+      "mesh": "立方体.307",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.308",
+      "id": -4047810,
+      "mesh": "立方体.308",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.309",
+      "id": -4047820,
+      "mesh": "立方体.309",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.310",
+      "id": -4047830,
+      "mesh": "立方体.310",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.311",
+      "id": -4047840,
+      "mesh": "立方体.311",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.339",
+      "id": -4047852,
+      "mesh": "立方体.339",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.340",
+      "id": -4047862,
+      "mesh": "立方体.340",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_右排_房子4/立方体.341",
+      "id": -4047872,
+      "mesh": "立方体.341",
+      "materials": [
+        "下出生點_右排4"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/柱体.037",
+      "id": -4110928,
+      "mesh": "柱体.037",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/柱体.039",
+      "id": -4110938,
+      "mesh": "柱体.039",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/球体.006",
+      "id": -4110948,
+      "mesh": "球体.006",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/球体.007",
+      "id": -4110958,
+      "mesh": "球体.007",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/球体.008",
+      "id": -4110968,
+      "mesh": "球体.008",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/球体.009",
+      "id": -4110978,
+      "mesh": "球体.009",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.304",
+      "id": -4110988,
+      "mesh": "立方体.304",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.312",
+      "id": -4110998,
+      "mesh": "立方体.312",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.313",
+      "id": -4111008,
+      "mesh": "立方体.313",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.314",
+      "id": -4111020,
+      "mesh": "立方体.314",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.315",
+      "id": -4111032,
+      "mesh": "立方体.315",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.316",
+      "id": -4111042,
+      "mesh": "立方体.316",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.319",
+      "id": -4111052,
+      "mesh": "立方体.319",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.321",
+      "id": -4111062,
+      "mesh": "立方体.321",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.322",
+      "id": -4111072,
+      "mesh": "立方体.322",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.323",
+      "id": -4111082,
+      "mesh": "立方体.323",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.327",
+      "id": -4111092,
+      "mesh": "立方体.327",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.328",
+      "id": -4111104,
+      "mesh": "立方体.328",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.329",
+      "id": -4111116,
+      "mesh": "立方体.329",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.330",
+      "id": -4111126,
+      "mesh": "立方体.330",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.331",
+      "id": -4111136,
+      "mesh": "立方体.331",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.332",
+      "id": -4111148,
+      "mesh": "立方体.332",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.337",
+      "id": -4111160,
+      "mesh": "立方体.337",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.338",
+      "id": -4111170,
+      "mesh": "立方体.338",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.342",
+      "id": -4111182,
+      "mesh": "立方体.342",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.343",
+      "id": -4111192,
+      "mesh": "立方体.343",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.344",
+      "id": -4111202,
+      "mesh": "立方体.344",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.345",
+      "id": -4111212,
+      "mesh": "立方体.345",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.346",
+      "id": -4111224,
+      "mesh": "立方体.346",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.347",
+      "id": -4111236,
+      "mesh": "立方体.347",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.348",
+      "id": -4111248,
+      "mesh": "立方体.348",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.349",
+      "id": -4111260,
+      "mesh": "立方体.349",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.350",
+      "id": -4111272,
+      "mesh": "立方体.350",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.351",
+      "id": -4111284,
+      "mesh": "立方体.351",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.352",
+      "id": -4111296,
+      "mesh": "立方体.352",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.353",
+      "id": -4111308,
+      "mesh": "立方体.353",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.354",
+      "id": -4111320,
+      "mesh": "立方体.354",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.355",
+      "id": -4111332,
+      "mesh": "立方体.355",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.356",
+      "id": -4111344,
+      "mesh": "立方体.356",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.357",
+      "id": -4111356,
+      "mesh": "立方体.357",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.358",
+      "id": -4111368,
+      "mesh": "立方体.358",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.359",
+      "id": -4111380,
+      "mesh": "立方体.359",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.360",
+      "id": -4111392,
+      "mesh": "立方体.360",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.361",
+      "id": -4111404,
+      "mesh": "立方体.361",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.362",
+      "id": -4111416,
+      "mesh": "立方体.362",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.363",
+      "id": -4111428,
+      "mesh": "立方体.363",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.364",
+      "id": -4111440,
+      "mesh": "立方体.364",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.365",
+      "id": -4111452,
+      "mesh": "立方体.365",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.366",
+      "id": -4111464,
+      "mesh": "立方体.366",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.367",
+      "id": -4111474,
+      "mesh": "立方体.367",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.368",
+      "id": -4111484,
+      "mesh": "立方体.368",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.369",
+      "id": -4111494,
+      "mesh": "立方体.369",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.370",
+      "id": -4111504,
+      "mesh": "立方体.370",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.371",
+      "id": -4111516,
+      "mesh": "立方体.371",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.372",
+      "id": -4111526,
+      "mesh": "立方体.372",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.373",
+      "id": -4111536,
+      "mesh": "立方体.373",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.374",
+      "id": -4111546,
+      "mesh": "立方体.374",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.376",
+      "id": -4111556,
+      "mesh": "立方体.376",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.377",
+      "id": -4111566,
+      "mesh": "立方体.377",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.379",
+      "id": -4111576,
+      "mesh": "立方体.379",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/煙囪三層房 (1)/立方体.1084",
+      "id": -4111586,
+      "mesh": "立方体.1084",
+      "materials": [
+        "下出生點_右排3"
+      ]
+    }
+  ]
+}

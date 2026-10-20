@@ -61,6 +61,28 @@ namespace Purgers.Enemy.Encounter
         public bool UsesEnemyEntries => enemyEntries != null && enemyEntries.Length > 0;
         public IReadOnlyList<EnemySpawnEntry> EnemyEntries => enemyEntries;
 
+#if UNITY_EDITOR
+        // Editor 專用且不序列化：不寫入 Scene／Prefab，也不參與網路同步。
+        private readonly List<string> inspectorEvents = new List<string>(8);
+        public IReadOnlyList<string> InspectorEvents => inspectorEvents.AsReadOnly();
+#endif
+        [System.Diagnostics.Conditional("UNITY_EDITOR")]
+        public void RecordInspectorEvent(string message)
+        {
+#if UNITY_EDITOR
+            if (inspectorEvents.Count == 8) inspectorEvents.RemoveAt(0);
+            inspectorEvents.Add($"[{Time.time:0.00}s] {message}");
+#endif
+        }
+
+        [System.Diagnostics.Conditional("UNITY_EDITOR")]
+        public void ClearInspectorEvents()
+        {
+#if UNITY_EDITOR
+            inspectorEvents.Clear();
+#endif
+        }
+
         public bool RequireSpawnOcclusion => requireSpawnOcclusion;
         public EnemyLocomotionKind LocomotionKind => locomotionKind;
         public EnemyPatrolArea FlyingPatrolArea => flyingPatrolArea;

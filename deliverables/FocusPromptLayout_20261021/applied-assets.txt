@@ -1,0 +1,4 @@
+Assets/Prefabs/UI/StageHUD.prefab focus StageHUD/ReferenceFrame/BattleAbilityHUD
+Assets/Prefabs/UI/StageHUD.prefab reward StageHUD/ReferenceFrame/Phase6RewardHud/ExperienceGroup/AltPrompt/PromptLabel
+Assets/Scenes/SafeHouse.unity focus SafeHouseHUD/ReferenceFrame/BattleAbilityHUD
+Assets/Scenes/SafeHouse.unity reward SafeHouseHUD/ReferenceFrame/Phase6RewardHud/ExperienceGroup/AltPrompt/PromptLabel

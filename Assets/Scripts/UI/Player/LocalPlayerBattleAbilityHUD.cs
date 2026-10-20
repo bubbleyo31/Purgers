@@ -43,9 +43,9 @@ public sealed partial class LocalPlayerBattleAbilityHUD : MonoBehaviour
     private Color activeBarColor = new Color(.25f, 1f, .9f, 1f);
 
     [Header("已確認技能槽配色")]
-    [SerializeField, Tooltip("可用技能與未按下鍵帽的暖米白底色。")]
+    [SerializeField, Tooltip("可用技能的暖米白底色；鍵帽統一由 HudKeyPromptStyle 設定。")]
     private Color slotReadyColor = new Color32(241, 237, 217, 255);
-    [SerializeField, Tooltip("按住對應按鍵時的柔黃底色。")]
+    [SerializeField, HideInInspector] // Legacy serialized value; keycaps now use HudKeyPromptStyle.
     private Color slotPressedColor = new Color32(213, 196, 94, 255);
     [SerializeField, Tooltip("技能不可用時的低明度底色；不改技能資格。")]
     private Color slotUnavailableColor = new Color32(111, 115, 99, 255);
@@ -127,6 +127,7 @@ public sealed partial class LocalPlayerBattleAbilityHUD : MonoBehaviour
 
     private void Hide()
     {
+        ResetFocusManagementPresentation();
         if (timedAbilityRoot != null) timedAbilityRoot.SetActive(false);
         if (visualGroup != null) visualGroup.alpha = 0f;
         foreach (SlotView view in views)
@@ -193,30 +194,29 @@ public sealed partial class LocalPlayerBattleAbilityHUD : MonoBehaviour
         if (emptyGrappleMark != null) emptyGrappleMark.SetActive(!charges.HasCharge || blocked);
         KeyCode key = inputManager != null ? inputManager.GrappleKey : KeyCode.Q;
         grapplePromptLayout?.Refresh(key);
-        if (grappleKeyBackground != null)
-            grappleKeyBackground.color = blocked ? slotUnavailableColor : (!observing && Input.GetKey(key))
-                ? new Color(0.2f, 0.78f, 0.95f, 0.95f)
-                : new Color32(204, 190, 199, 255);
+        grapplePromptLayout?.SetState(!observing && Input.GetKey(key), blocked || key == KeyCode.None);
     }
 
     private void RefreshSlots(PlayerAbilityRuntimeManager manager)
     {
         int shown = 0;
-        // 命中能力靠左，專注能力靠右；同類多槽保持 Loadout 原序。
-        for (int pass = 0; pass < 2; pass++)
+        for (int slot = 0; slot < PlayerAbilityRuntimeManager.MaximumAbilityRuntimeSlots; slot++)
         {
-            PlayerAbilityCategory category = pass == 0
-                ? PlayerAbilityCategory.GrappleHit : PlayerAbilityCategory.GrappleFocus;
-            for (int slot = 0; slot < PlayerAbilityRuntimeManager.MaximumAbilityRuntimeSlots; slot++)
-            {
-                PlayerAbilityRuntime runtime = manager.GetEquippedRuntimeAtSlot(slot);
-                if (runtime == null || runtime.Definition == null ||
-                    runtime.Definition.Category != category) continue;
-                SlotView view = GetView(shown++);
-                if (view != null) BindView(view, runtime, category);
-            }
+            var runtime = manager.GetEquippedRuntimeAtSlot(slot);
+            if (runtime == null || runtime.Definition == null || runtime.Definition.Category != PlayerAbilityCategory.GrappleHit) continue;
+            var view = GetView(shown++);
+            if (view != null) BindView(view, runtime, PlayerAbilityCategory.GrappleHit);
+        }
+        for (int slot = 0; slot < FocusAbilitySlotRules.SlotCount; slot++)
+        {
+            var view = GetView(shown++);
+            if (view == null) continue;
+            var runtime = manager.GetFocusRuntime(slot);
+            if (runtime != null) BindView(view, runtime, PlayerAbilityCategory.GrappleFocus);
+            else BindEmptyFocusView(view, slot);
         }
         for (int i = shown; i < views.Count; i++) { views[i].Root.SetActive(false); views[i].Pulse.Reset(); }
+        RefreshFocusManagementPresentation();
     }
 
     private SlotView GetView(int index)
@@ -277,14 +277,11 @@ public sealed partial class LocalPlayerBattleAbilityHUD : MonoBehaviour
         AbilitySlotPresentationState state = AbilitySlotHudSnapshot.Read(runtime, IsLocalSlotInputBlocked(runtime));
         PresentSlotState(view, state, runtime);
         KeyCode key = category == PlayerAbilityCategory.GrappleFocus
-            ? (inputManager != null ? inputManager.GrappleFocusKey : KeyCode.E)
+            ? (inputManager != null ? inputManager.FocusKey(runtime.FocusSlotIndex) : Purgers.Settings.PlayerSettingsService.Key(runtime.FocusSlotIndex == 1 ? Purgers.Settings.PlayerBinding.FocusZ : runtime.FocusSlotIndex == 2 ? Purgers.Settings.PlayerBinding.FocusX : Purgers.Settings.PlayerBinding.Interact))
             : (inputManager != null ? inputManager.GrappleKey : KeyCode.Q);
         bool blocked = !state.CanPress;
         view.PromptLayout?.Refresh(key);
-        if (view.KeyBackground != null)
-            view.KeyBackground.color = blocked ? slotUnavailableColor : (!observing && Input.GetKey(key))
-                ? slotPressedColor
-                : slotReadyColor;
+        view.PromptLayout?.SetState(!observing && Input.GetKey(key), blocked || key == KeyCode.None);
         if (view.Background != null)
             view.Background.color = state.Phase == AbilitySlotVisualPhase.Cooling || state.Phase == AbilitySlotVisualPhase.Ready ||
                 state.CanPress ? slotReadyColor : slotUnavailableColor;

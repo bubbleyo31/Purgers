@@ -59,19 +59,29 @@ public partial class GameLogic
         foreach (var pair in Players)
             if (pair.Value != null && pair.Value.Health != null) pair.Value.Health.TickGrowthStateAuthority();
     }
-    public void RecordEquippedAbility(Player owner, PlayerAbilityRuntime runtime)
+    public void RecordEquippedAbility(Player owner, PlayerAbilityRuntime runtime) => RecordEquippedAbilities(owner);
+    public void RecordEquippedAbilities(Player owner)
     {
-        if (Object == null || !Object.HasStateAuthority || owner == null || runtime == null ||
+        if (Object == null || !Object.HasStateAuthority || owner == null || owner.AbilityRuntimeManager == null ||
             !PlayerRewardDrafts.TryGet(owner.Object.InputAuthority, out var draft) || rewardCatalog == null) return;
-        foreach (var reward in rewardCatalog.Rewards)
+        draft.EquippedGrappleHitId = string.Empty; draft.EquippedHitLevel = 1;
+        for (int i = 0; i < FocusAbilitySlotRules.SlotCount; i++) draft.SetFocus(i, string.Empty, 1);
+        for (int slot = 0; slot < PlayerAbilityRuntimeManager.MaximumAbilityRuntimeSlots; slot++)
         {
-            if (reward == null || reward.AbilityDefinition != runtime.Definition) continue;
-            if (reward.Category == RewardCategory.GrappleHit)
-            { draft.EquippedGrappleHitId = reward.StableRewardId; draft.EquippedHitLevel = runtime.SkillLevel; }
-            else
-            { draft.EquippedGrappleFocusId = reward.StableRewardId; draft.EquippedFocusLevel = runtime.SkillLevel; }
-            PlayerRewardDrafts.Set(owner.Object.InputAuthority, draft); return;
+            var runtime = owner.AbilityRuntimeManager.GetEquippedRuntimeAtSlot(slot);
+            if (runtime == null || runtime.Definition == null) continue;
+            foreach (var reward in rewardCatalog.Rewards)
+            {
+                if (reward == null || reward.AbilityDefinition != runtime.Definition) continue;
+                if (reward.Category == RewardCategory.GrappleHit)
+                { draft.EquippedGrappleHitId = reward.StableRewardId; draft.EquippedHitLevel = runtime.SkillLevel; }
+                else if (reward.Category == RewardCategory.GrappleFocus)
+                    draft.SetFocus(runtime.FocusSlotIndex, reward.StableRewardId, runtime.SkillLevel);
+                break;
+            }
         }
+        PlayerRewardDrafts.Set(owner.Object.InputAuthority, draft);
+        restoredRewardLoadoutByPlayer[owner.Object.InputAuthority] = owner;
     }
     public PlayerAbilityDefinition DrawBonusFocusAbility(Player owner, int sequence)
     {

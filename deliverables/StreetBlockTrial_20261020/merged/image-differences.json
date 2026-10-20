@@ -1,0 +1,74 @@
+[
+  {
+    "a": "spawn-before",
+    "b": "spawn-before-noise",
+    "meanAbsoluteChannelDifference": 0.0,
+    "changedPercent": 0.0,
+    "over3Percent": 0.0,
+    "over10Percent": 0.0,
+    "max": 0
+  },
+  {
+    "a": "spawn-before",
+    "b": "spawn-after",
+    "meanAbsoluteChannelDifference": 0.000417309670781893,
+    "changedPercent": 0.090904706790123455,
+    "over3Percent": 0.00057870370370370367,
+    "over10Percent": 0.00033757716049382714,
+    "max": 36
+  },
+  {
+    "a": "approach-before",
+    "b": "approach-noise",
+    "meanAbsoluteChannelDifference": 0.0,
+    "changedPercent": 0.0,
+    "over3Percent": 0.0,
+    "over10Percent": 0.0,
+    "max": 0
+  },
+  {
+    "a": "approach-before",
+    "b": "approach-after",
+    "meanAbsoluteChannelDifference": 0.0,
+    "changedPercent": 0.0,
+    "over3Percent": 0.0,
+    "over10Percent": 0.0,
+    "max": 0
+  },
+  {
+    "a": "left-front-before",
+    "b": "left-front-noise",
+    "meanAbsoluteChannelDifference": 0.0,
+    "changedPercent": 0.0,
+    "over3Percent": 0.0,
+    "over10Percent": 0.0,
+    "max": 0
+  },
+  {
+    "a": "left-front-before",
+    "b": "left-front-after",
+    "meanAbsoluteChannelDifference": 1.286008230452675E-06,
+    "changedPercent": 0.00038580246913580245,
+    "over3Percent": 0.0,
+    "over10Percent": 0.0,
+    "max": 1
+  },
+  {
+    "a": "right-front-before",
+    "b": "right-front-noise",
+    "meanAbsoluteChannelDifference": 0.0,
+    "changedPercent": 0.0,
+    "over3Percent": 0.0,
+    "over10Percent": 0.0,
+    "max": 0
+  },
+  {
+    "a": "right-front-before",
+    "b": "right-front-after",
+    "meanAbsoluteChannelDifference": 0.00038660622427983538,
+    "changedPercent": 0.095823688271604937,
+    "over3Percent": 0.0010127314814814814,
+    "over10Percent": 0.0,
+    "max": 6
+  }
+]

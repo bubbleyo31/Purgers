@@ -209,7 +209,7 @@ MonoBehaviour:
     bracketPadding: 12
     largeEnemySize: 4
     bracketSmoothSeconds: 0.06
-    ringColor: {r: 0.827, g: 0.749, b: 0.561, a: 0.55}
+    ringColor: {r: 0.05882353, g: 0.45199853, b: 0.70980394, a: 0.8509804}
     ringWidth: 0.15
     ringSegments: 96
     ringFadeSeconds: 0.24

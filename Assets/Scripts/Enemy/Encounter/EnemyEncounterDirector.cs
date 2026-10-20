@@ -242,8 +242,10 @@ namespace Purgers.Enemy.Encounter
                         continue;
 
                     EnemySpawnApproachGate[] gates = zone.GetGates();
+                    zone.ClearInspectorEvents();
                     if (gates.Length == 0)
                     {
+                        zone.RecordInspectorEvent("登記失敗：缺少啟動 Gate。");
                         Debug.LogError($"[Enemy Encounter] {zone.name} 缺少啟動 Gate，無法登記。", zone);
                         continue;
                     }
@@ -289,6 +291,7 @@ namespace Purgers.Enemy.Encounter
             }
             catch (Exception exception) when (exception is ArgumentException || exception is InvalidOperationException)
             {
+                zone.RecordInspectorEvent($"飛行候選 {candidatePrefab} 排除：{exception.Message}");
                 Debug.LogError($"[Enemy Encounter] {zone.name} 飛行巡邏設定失敗：{exception.Message}", zone);
                 return false;
             }
@@ -305,6 +308,7 @@ namespace Purgers.Enemy.Encounter
                 (from, to) => IsFlyingPassageClear(profiles, physics, from, to));
             if (points.Count < 2)
             {
+                zone.RecordInspectorEvent($"飛行候選 {candidatePrefab} 排除：找不到至少 2 個可從出生盒連通的空中節點；檢查盒體重疊、取樣密度、膠囊尺寸與 Obstacle Mask。");
                 Debug.LogWarning($"[Enemy Encounter] {zone.name} 無法自動建立飛行巡邏區：" +
                     "找不到至少 2 個可從出生盒連通的空中節點。請檢查出生盒與巡邏盒重疊、取樣密度、" +
                     "Enemy Prefab 的膠囊尺寸及 Obstacle Mask。此飛行候選停用，其他候選與區域照常。", zone);
@@ -438,7 +442,11 @@ namespace Purgers.Enemy.Encounter
 
             if (chosen == null) return;
             BuildActivationBatches(chosen);
-            if (pendingBatches.Count == 0) return; // 全部未抽中，不鎖區、不留下補發。
+            if (pendingBatches.Count == 0)
+            {
+                chosen.Zone.RecordInspectorEvent("本次穿越沒有抽中可用候選；檢查機率與候選排除原因。不會鎖區或補發。");
+                return;
+            }
             pendingZone = chosen;
             pendingGate = chosenGate;
             pendingForward = chosenForward;
@@ -454,6 +462,9 @@ namespace Purgers.Enemy.Encounter
             if (pendingZone == null || Time.time > pendingExpiresAt ||
                 !TryGetPlayer(pendingPlayer, out _))
             {
+                if (pendingZone != null)
+                    pendingZone.Zone.RecordInspectorEvent(Time.time > pendingExpiresAt
+                        ? "剩餘生成取消：啟動期限已到。" : "剩餘生成取消：觸發玩家已離開或死亡。");
                 CancelPendingActivation();
                 return;
             }
@@ -519,11 +530,16 @@ namespace Purgers.Enemy.Encounter
                         !actor.TryInitializePatrolBeforeSpawn(candidate.PatrolArea))
                     {
                         setupValid = false;
+                        zone.Zone.RecordInspectorEvent($"{candidate.PrefabName} 出生前契約失敗：核對 Definition 移動類型與 Patrol Brain／Navigator 配置。");
                         Debug.LogError("[Enemy Encounter] Prefab 移動類型或出生前巡邏契約無效；Stationary 必須移除巡邏／追逐 Brain 與 Navigator。", spawnedObject);
                     }
                 });
 
-            if (spawned == null) return false;
+            if (spawned == null)
+            {
+                zone.Zone.RecordInspectorEvent($"{candidate.PrefabName} 生成失敗：Runner.Spawn 未回傳物件。");
+                return false;
+            }
             if (!setupValid)
             {
                 Runner.Despawn(spawned);
@@ -531,6 +547,7 @@ namespace Purgers.Enemy.Encounter
             }
 
             ownedEnemies.Add(new OwnedEnemy { Object = spawned, Zone = zone.Zone });
+            zone.Zone.RecordInspectorEvent($"✓ 成功生成 {candidate.PrefabName} [{candidate.Kind}]，位置 {position}。");
             if (debugEncounter)
                 Debug.Log($"[Enemy Encounter] {zone.Zone.name} 生成 {candidate.PrefabName} [{candidate.Kind}]，位置 {position}。", zone.Zone);
             nextSpawnTime = Time.time + minimumSecondsBetweenSpawns;
@@ -539,6 +556,7 @@ namespace Purgers.Enemy.Encounter
 
         private void LogSkip(EnemySpawnZone zone, string reason)
         {
+            zone.RecordInspectorEvent("生成拒絕：" + reason);
             if (debugEncounter)
                 Debug.Log($"[Enemy Encounter] {zone.name} 跳過：{reason}。", zone);
         }
@@ -553,7 +571,7 @@ namespace Purgers.Enemy.Encounter
             position = default;
             // 每個候選只記錄第一個拒絕原因；維持原有檢查順序及短路行為。
             int navRejected = 0, supportRejected = 0, boundsRejected = 0, patrolRejected = 0;
-            int distanceRejected = 0, forwardRejected = 0, occupiedRejected = 0, visibilityRejected = 0;
+            int distanceRejected = 0, forwardRejected = 0, occupiedRejected = 0, visibilityRejected = 0, nearRejected = 0;
             for (int attempt = 0; attempt < candidateAttempts; attempt++)
             {
                 Vector3 candidate = zone.Zone.RandomPoint(profile.Kind);
@@ -581,17 +599,24 @@ namespace Purgers.Enemy.Encounter
                 { forwardRejected++; continue; }
                 if (IsOccupied(candidate))
                 { occupiedRejected++; continue; }
-                if (!PassesPlayerVisibilityChecks(Runner.GetPhysicsScene(), candidate, zone.Zone.RequireSpawnOcclusion))
-                { visibilityRejected++; continue; }
+                if (!EvaluatePlayerVisibility(Runner.GetPhysicsScene(), candidate, zone.Zone.RequireSpawnOcclusion, out bool tooNear))
+                {
+                    if (tooNear) nearRejected++; else visibilityRejected++;
+                    continue;
+                }
 
                 position = candidate;
                 return true;
             }
-            if (debugEncounter)
+            bool recordFailure = debugEncounter;
+#if UNITY_EDITOR
+            recordFailure = true;
+#endif
+            if (recordFailure)
                 LogSkip(zone.Zone, $"{profile.PrefabName} [{profile.Kind}] 出生取樣 {candidateAttempts} 次全部失敗；" +
                     $"NavMesh={navRejected}、貼地={supportRejected}、盒外={boundsRejected}、巡邏路徑={patrolRejected}、" +
                     $"超出最遠距離={distanceRejected}、不在前方={forwardRejected}、占用={occupiedRejected}、" +
-                    $"玩家過近／遮擋={visibilityRejected}；遮擋要求={zone.Zone.RequireSpawnOcclusion}；" +
+                    $"玩家過近={nearRejected}、遮擋不足={visibilityRejected}；遮擋要求={zone.Zone.RequireSpawnOcclusion}；" +
                     $"玩家={player.Position}、穿越方向={approachForward}");
             return false;
         }
@@ -623,13 +648,21 @@ namespace Purgers.Enemy.Encounter
 
         private bool PassesPlayerVisibilityChecks(
             PhysicsScene physicsScene, Vector3 position, bool requireOcclusion)
+            => EvaluatePlayerVisibility(physicsScene, position, requireOcclusion, out _);
+
+        private bool EvaluatePlayerVisibility(
+            PhysicsScene physicsScene, Vector3 position, bool requireOcclusion, out bool tooNear)
         {
+            tooNear = false;
             if (players.Count == 0 || (requireOcclusion && worldOcclusionMask.value == 0)) return false;
             foreach (PlayerSnapshot player in players)
             {
                 Vector3 eye = player.Position + Vector3.up * 1.5f;
                 if (Vector3.Distance(player.Position, position) < minimumPlayerDistance)
+                {
+                    tooNear = true;
                     return false;
+                }
                 // 關閉視線限制也不能略過任一玩家的最小出生距離。
                 if (!requireOcclusion) continue;
                 for (int sample = 0; sample < 3; sample++)

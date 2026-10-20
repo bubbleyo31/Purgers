@@ -1,0 +1,6 @@
+[36.93s] 生成拒絕：Enemy_Melee_A [Ground] 出生取樣 256 次全部失敗；NavMesh=221、貼地=35、盒外=0、巡邏路徑=0、超出最遠距離=0、不在前方=0、占用=0、玩家過近=0、遮擋不足=0；遮擋要求=False；玩家=(2211.32, 0.19, 1744.56)、穿越方向=(0.00, 0.00, 1.00)
+[36.93s] ✓ 成功生成 Enemy_Ranged_A [FreeFlying]，位置 (2217.11, 10.63, 1804.63)。
+[38.01s] ✓ 成功生成 Enemy_Ranged_A [FreeFlying]，位置 (2210.47, 20.79, 1821.95)。
+[38.82s] ✓ 成功生成 Enemy_Ranged_C_Projectile [Stationary]，位置 (2200.37, 11.30, 1811.96)。
+[39.64s] ✓ 成功生成 Enemy_Ranged_C_Projectile [Stationary]，位置 (2203.27, 5.54, 1808.00)。
+[40.45s] ✓ 成功生成 Enemy_Ranged_C_Projectile [Stationary]，位置 (2211.64, 5.57, 1806.64)。

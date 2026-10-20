@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="44" result="Passed" total="44" passed="44" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.3562744">
+  <test-suite type="TestSuite" id="2567" name="Purgers" fullname="Purgers" runstate="Runnable" testcasecount="1252" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.356274" total="44" passed="44" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <test-suite type="Assembly" id="4127" name="Assembly-CSharp-Editor.dll" fullname="M:/CodexWorktrees/spawn-zone-inspector/Purgers/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll" runstate="Runnable" testcasecount="1252" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.326257" total="44" passed="44" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="40648" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+      </properties>
+      <test-suite type="TestFixture" id="2958" name="EnemyEncounterRulesTests" fullname="EnemyEncounterRulesTests" classname="EnemyEncounterRulesTests" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.071470" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties>
+          <property name="Category" value="PurgersRegression" />
+        </properties>
+        <test-case id="2965" name="CrossingOutsideRectangleOrRemainingOnOneSideDoesNotTrigger" fullname="EnemyEncounterRulesTests.CrossingOutsideRectangleOrRemainingOnOneSideDoesNotTrigger" methodname="CrossingOutsideRectangleOrRemainingOnOneSideDoesNotTrigger" classname="EnemyEncounterRulesTests" runstate="Runnable" seed="1992565045" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.013044" asserts="0">
+          <properties />
+        </test-case>
+        <test-case id="2964" name="FastSegmentCrossesDirectionalGateOnlyInConfiguredDirection" fullname="EnemyEncounterRulesTests.FastSegmentCrossesDirectionalGateOnlyInConfiguredDirection" methodname="FastSegmentCrossesDirectionalGateOnlyInConfiguredDirection" classname="EnemyEncounterRulesTests" runstate="Runnable" seed="118797228" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.006804" asserts="0">
+          <properties />
+        </test-case>
+        <test-suite type="ParameterizedMethod" id="2963" name="GateDirectionOptionPreservesSingleDirectionAndAllowsReverse" fullname="EnemyEncounterRulesTests.GateDirectionOptionPreservesSingleDirectionAndAllowsReverse" classname="EnemyEncounterRulesTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.023485" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="2959" name="GateDirectionOptionPreservesSingleDirectionAndAllowsReverse(False,1,True)" fullname="EnemyEncounterRulesTests.GateDirectionOptionPreservesSingleDirectionAndAllowsReverse(False,1,True)" methodname="GateDirectionOptionPreservesSingleDirectionAndAllowsReverse" classname="EnemyEncounterRulesTests" runstate="Runnable" seed="495793891" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.018890" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="2960" name="GateDirectionOptionPreservesSingleDirectionAndAllowsReverse(False,-1,False)" fullname="EnemyEncounterRulesTests.GateDirectionOptionPreservesSingleDirectionAndAllowsReverse(False,-1,False)" methodname="GateDirectionOptionPreservesSingleDirectionAndAllowsReverse" classname="EnemyEncounterRulesTests" runstate="Runnable" seed="404565045" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.000515" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="2961" name="GateDirectionOptionPreservesSingleDirectionAndAllowsReverse(True,1,True)" fullname="EnemyEncounterRulesTests.GateDirectionOptionPreservesSingleDirectionAndAllowsReverse(True,1,True)" methodname="GateDirectionOptionPreservesSingleDirectionAndAllowsReverse" classname="EnemyEncounterRulesTests" runstate="Runnable" seed="1858404832" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.000321" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="2962" name="GateDirectionOptionPreservesSingleDirectionAndAllowsReverse(True,-1,True)" fullname="EnemyEncounterRulesTests.GateDirectionOptionPreservesSingleDirectionAndAllowsReverse(True,-1,True)" methodname="GateDirectionOptionPreservesSingleDirectionAndAllowsReverse" classname="EnemyEncounterRulesTests" runstate="Runnable" seed="761959965" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.000284" asserts="0">
+            <properties />
+          </test-case>
+        </test-suite>
+        <test-case id="2968" name="GroundSpawnProjectsNavMeshHeightToNearbyCollider" fullname="EnemyEncounterRulesTests.GroundSpawnProjectsNavMeshHeightToNearbyCollider" methodname="GroundSpawnProjectsNavMeshHeightToNearbyCollider" classname="EnemyEncounterRulesTests" runstate="Runnable" seed="943181817" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.003485" asserts="0">
+          <properties />
+        </test-case>
+        <test-case id="2967" name="LockedZoneCannotConsumeAnotherSlot" fullname="EnemyEncounterRulesTests.LockedZoneCannotConsumeAnotherSlot" methodname="LockedZoneCannotConsumeAnotherSlot" classname="EnemyEncounterRulesTests" runstate="Runnable" seed="1174395967" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.003161" asserts="0">
+          <properties />
+        </test-case>
+        <test-case id="2966" name="SixthSuccessfulZoneUnlocksOldestAndRelockRotates" fullname="EnemyEncounterRulesTests.SixthSuccessfulZoneUnlocksOldestAndRelockRotates" methodname="SixthSuccessfulZoneUnlocksOldestAndRelockRotates" classname="EnemyEncounterRulesTests" runstate="Runnable" seed="367918692" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.000903" asserts="0">
+          <properties />
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="2983" name="EnemyFlyingPatrolPlannerTests" fullname="EnemyFlyingPatrolPlannerTests" classname="EnemyFlyingPatrolPlannerTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.051124" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties>
+          <property name="Category" value="PurgersRegression" />
+        </properties>
+        <test-case id="2986" name="ActualLargeFlyingCapsuleRejectsCeilingThatSmallCapsuleCouldFitUnder" fullname="EnemyFlyingPatrolPlannerTests.ActualLargeFlyingCapsuleRejectsCeilingThatSmallCapsuleCouldFitUnder" methodname="ActualLargeFlyingCapsuleRejectsCeilingThatSmallCapsuleCouldFitUnder" classname="EnemyFlyingPatrolPlannerTests" runstate="Runnable" seed="600524340" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.006725" asserts="0">
+          <properties />
+        </test-case>
+        <test-case id="2984" name="FreeFlyingUsesAutomaticAreaOnlyWhenManualReferenceIsEmpty" fullname="EnemyFlyingPatrolPlannerTests.FreeFlyingUsesAutomaticAreaOnlyWhenManualReferenceIsEmpty" methodname="FreeFlyingUsesAutomaticAreaOnlyWhenManualReferenceIsEmpty" classname="EnemyFlyingPatrolPlannerTests" runstate="Runnable" seed="614101935" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.003294" asserts="0">
+          <properties />
+        </test-case>
+        <test-case id="2991" name="NonOverlappingSpawnAndPatrolVolumesFailClosed" fullname="EnemyFlyingPatrolPlannerTests.NonOverlappingSpawnAndPatrolVolumesFailClosed" methodname="NonOverlappingSpawnAndPatrolVolumesFailClosed" classname="EnemyFlyingPatrolPlannerTests" runstate="Runnable" seed="270570714" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.003988" asserts="0">
+          <properties />
+        </test-case>
+        <test-case id="2990" name="OccupiedVolumeAndIsolatedPointsDoNotProduceAnArea" fullname="EnemyFlyingPatrolPlannerTests.OccupiedVolumeAndIsolatedPointsDoNotProduceAnArea" methodname="OccupiedVolumeAndIsolatedPointsDoNotProduceAnArea" classname="EnemyFlyingPatrolPlannerTests" runstate="Runnable" seed="1171094650" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.002678" asserts="0">
+          <properties />
+        </test-case>
+        <test-case id="2987" name="OpenVolumeProducesBoundedDeterministicPointsIncludingSpawnVolume" fullname="EnemyFlyingPatrolPlannerTests.OpenVolumeProducesBoundedDeterministicPointsIncludingSpawnVolume" methodname="OpenVolumeProducesBoundedDeterministicPointsIncludingSpawnVolume" classname="EnemyFlyingPatrolPlannerTests" runstate="Runnable" seed="1976046885" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.006081" asserts="0">
+          <properties />
+        </test-case>
+        <test-case id="2985" name="PrefabCapsuleQueriesRejectWallsAndOccupiedPointsWithoutSpawnedLifecycle" fullname="EnemyFlyingPatrolPlannerTests.PrefabCapsuleQueriesRejectWallsAndOccupiedPointsWithoutSpawnedLifecycle" methodname="PrefabCapsuleQueriesRejectWallsAndOccupiedPointsWithoutSpawnedLifecycle" classname="EnemyFlyingPatrolPlannerTests" runstate="Runnable" seed="1611112991" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.013132" asserts="0">
+          <properties />
+        </test-case>
+        <test-case id="2989" name="TruncationPreservesReachabilityInsteadOfDroppingBridgePoints" fullname="EnemyFlyingPatrolPlannerTests.TruncationPreservesReachabilityInsteadOfDroppingBridgePoints" methodname="TruncationPreservesReachabilityInsteadOfDroppingBridgePoints" classname="EnemyFlyingPatrolPlannerTests" runstate="Runnable" seed="1150904268" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.006371" asserts="0">
+          <properties />
+        </test-case>
+        <test-case id="2988" name="WallSeparatesComponentsAndKeepsOnlySpawnReachableSide" fullname="EnemyFlyingPatrolPlannerTests.WallSeparatesComponentsAndKeepsOnlySpawnReachableSide" methodname="WallSeparatesComponentsAndKeepsOnlySpawnReachableSide" classname="EnemyFlyingPatrolPlannerTests" runstate="Runnable" seed="288753139" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.003692" asserts="0">
+          <properties />
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="3159" name="EnemySpawnCompositionTests" fullname="EnemySpawnCompositionTests" classname="EnemySpawnCompositionTests" runstate="Runnable" testcasecount="13" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.018711" total="13" passed="13" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties>
+          <property name="Category" value="PurgersRegression" />
+        </properties>
+        <test-case id="3174" name="AllEnemyKindsScatterInsideMixedZoneRegardlessOfLegacyKind" fullname="EnemySpawnCompositionTests.AllEnemyKindsScatterInsideMixedZoneRegardlessOfLegacyKind" methodname="AllEnemyKindsScatterInsideMixedZoneRegardlessOfLegacyKind" classname="EnemySpawnCompositionTests" runstate="Runnable" seed="299749675" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.003460" asserts="0">
+          <properties />
+        </test-case>
+        <test-suite type="ParameterizedMethod" id="3168" name="ChanceHasExactBoundariesAndReturnsTheConfiguredCount" fullname="EnemySpawnCompositionTests.ChanceHasExactBoundariesAndReturnsTheConfiguredCount" classname="EnemySpawnCompositionTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.003462" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="3161" name="ChanceHasExactBoundariesAndReturnsTheConfiguredCount(0.0f,0.0f,0)" fullname="EnemySpawnCompositionTests.ChanceHasExactBoundariesAndReturnsTheConfiguredCount(0.0f,0.0f,0)" methodname="ChanceHasExactBoundariesAndReturnsTheConfiguredCount" classname="EnemySpawnCompositionTests" runstate="Runnable" seed="695353439" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.001011" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3162" name="ChanceHasExactBoundariesAndReturnsTheConfiguredCount(0.0f,1.0f,0)" fullname="EnemySpawnCompositionTests.ChanceHasExactBoundariesAndReturnsTheConfiguredCount(0.0f,1.0f,0)" methodname="ChanceHasExactBoundariesAndReturnsTheConfiguredCount" classname="EnemySpawnCompositionTests" runstate="Runnable" seed="2007708809" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.000154" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3163" name="ChanceHasExactBoundariesAndReturnsTheConfiguredCount(100.0f,0.0f,7)" fullname="EnemySpawnCompositionTests.ChanceHasExactBoundariesAndReturnsTheConfiguredCount(100.0f,0.0f,7)" methodname="ChanceHasExactBoundariesAndReturnsTheConfiguredCount" classname="EnemySpawnCompositionTests" runstate="Runnable" seed="1248786844" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.000088" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3164" name="ChanceHasExactBoundariesAndReturnsTheConfiguredCount(100.0f,1.0f,7)" fullname="EnemySpawnCompositionTests.ChanceHasExactBoundariesAndReturnsTheConfiguredCount(100.0f,1.0f,7)" methodname="ChanceHasExactBoundariesAndReturnsTheConfiguredCount" classname="EnemySpawnCompositionTests" runstate="Runnable" seed="332813398" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.000082" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3165" name="ChanceHasExactBoundariesAndReturnsTheConfiguredCount(60.0f,0.599f,7)" fullname="EnemySpawnCompositionTests.ChanceHasExactBoundariesAndReturnsTheConfiguredCount(60.0f,0.599f,7)" methodname="ChanceHasExactBoundariesAndReturnsTheConfiguredCount" classname="EnemySpawnCompositionTests" runstate="Runnable" seed="642779125" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.000079" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3166" name="ChanceHasExactBoundariesAndReturnsTheConfiguredCount(60.0f,0.6f,0)" fullname="EnemySpawnCompositionTests.ChanceHasExactBoundariesAndReturnsTheConfiguredCount(60.0f,0.6f,0)" methodname="ChanceHasExactBoundariesAndReturnsTheConfiguredCount" classname="EnemySpawnCompositionTests" runstate="Runnable" seed="1329207564" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.000078" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3167" name="ChanceHasExactBoundariesAndReturnsTheConfiguredCount(60.0f,0.9f,0)" fullname="EnemySpawnCompositionTests.ChanceHasExactBoundariesAndReturnsTheConfiguredCount(60.0f,0.9f,0)" methodname="ChanceHasExactBoundariesAndReturnsTheConfiguredCount" classname="EnemySpawnCompositionTests" runstate="Runnable" seed="5275674" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.000075" asserts="0">
+            <properties />
+          </test-case>
+        </test-suite>
+        <test-suite type="ParameterizedMethod" id="3173" name="DirectorSnapshotsEachSelectedCountAndCancellationRemovesThePlan" fullname="EnemySpawnCompositionTests.DirectorSnapshotsEachSelectedCountAndCancellationRemovesThePlan" classname="EnemySpawnCompositionTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.008179" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="3171" name="DirectorSnapshotsEachSelectedCountAndCancellationRemovesThePlan(True)" fullname="EnemySpawnCompositionTests.DirectorSnapshotsEachSelectedCountAndCancellationRemovesThePlan(True)" methodname="DirectorSnapshotsEachSelectedCountAndCancellationRemovesThePlan" classname="EnemySpawnCompositionTests" runstate="Runnable" seed="1464281601" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.006745" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3172" name="DirectorSnapshotsEachSelectedCountAndCancellationRemovesThePlan(False)" fullname="EnemySpawnCompositionTests.DirectorSnapshotsEachSelectedCountAndCancellationRemovesThePlan(False)" methodname="DirectorSnapshotsEachSelectedCountAndCancellationRemovesThePlan" classname="EnemySpawnCompositionTests" runstate="Runnable" seed="702966304" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.000509" asserts="0">
+            <properties />
+          </test-case>
+        </test-suite>
+        <test-case id="3169" name="IndependentChancesCanBothSucceedOrBothFailWithoutNormalization" fullname="EnemySpawnCompositionTests.IndependentChancesCanBothSucceedOrBothFailWithoutNormalization" methodname="IndependentChancesCanBothSucceedOrBothFailWithoutNormalization" classname="EnemySpawnCompositionTests" runstate="Runnable" seed="2055829765" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.000341" asserts="0">
+          <properties />
+        </test-case>
+        <test-case id="3170" name="InvalidPrefabAndNonFiniteChanceCannotProduceEnemies" fullname="EnemySpawnCompositionTests.InvalidPrefabAndNonFiniteChanceCannotProduceEnemies" methodname="InvalidPrefabAndNonFiniteChanceCannotProduceEnemies" classname="EnemySpawnCompositionTests" runstate="Runnable" seed="758114664" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.000376" asserts="0">
+          <properties />
+        </test-case>
+        <test-case id="3160" name="ZoneExposesIndependentChanceAndCountWithoutDiscardingLegacyPrefabs" fullname="EnemySpawnCompositionTests.ZoneExposesIndependentChanceAndCountWithoutDiscardingLegacyPrefabs" methodname="ZoneExposesIndependentChanceAndCountWithoutDiscardingLegacyPrefabs" classname="EnemySpawnCompositionTests" runstate="Runnable" seed="691261457" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.000732" asserts="0">
+          <properties />
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="3175" name="EnemySpawnDiagnosticsTests" fullname="EnemySpawnDiagnosticsTests" classname="EnemySpawnDiagnosticsTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.027451" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties>
+          <property name="Category" value="PurgersRegression" />
+        </properties>
+        <test-case id="3179" name="ConfigurationInspectionDoesNotConsumeGameplayRandom" fullname="EnemySpawnDiagnosticsTests.ConfigurationInspectionDoesNotConsumeGameplayRandom" methodname="ConfigurationInspectionDoesNotConsumeGameplayRandom" classname="EnemySpawnDiagnosticsTests" runstate="Runnable" seed="302451421" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.009434" asserts="0">
+          <properties />
+        </test-case>
+        <test-case id="3178" name="ExplicitZeroChanceListDoesNotFallBackToLegacy" fullname="EnemySpawnDiagnosticsTests.ExplicitZeroChanceListDoesNotFallBackToLegacy" methodname="ExplicitZeroChanceListDoesNotFallBackToLegacy" classname="EnemySpawnDiagnosticsTests" runstate="Runnable" seed="308633464" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.004177" asserts="0">
+          <properties />
+        </test-case>
+        <test-case id="3176" name="MissingChunkGateAndCandidatesAreAllReportedTogether" fullname="EnemySpawnDiagnosticsTests.MissingChunkGateAndCandidatesAreAllReportedTogether" methodname="MissingChunkGateAndCandidatesAreAllReportedTogether" classname="EnemySpawnDiagnosticsTests" runstate="Runnable" seed="1248347420" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.000709" asserts="0">
+          <properties />
+        </test-case>
+        <test-case id="3177" name="NestedZoneGateDoesNotHideMissingOwnGate" fullname="EnemySpawnDiagnosticsTests.NestedZoneGateDoesNotHideMissingOwnGate" methodname="NestedZoneGateDoesNotHideMissingOwnGate" classname="EnemySpawnDiagnosticsTests" runstate="Runnable" seed="578546278" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.001367" asserts="0">
+          <properties />
+        </test-case>
+        <test-case id="3181" name="RuntimeHistoryIsBoundedAndKeepsLatestReason" fullname="EnemySpawnDiagnosticsTests.RuntimeHistoryIsBoundedAndKeepsLatestReason" methodname="RuntimeHistoryIsBoundedAndKeepsLatestReason" classname="EnemySpawnDiagnosticsTests" runstate="Runnable" seed="72081586" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.008333" asserts="0">
+          <properties />
+        </test-case>
+        <test-case id="3180" name="RuntimeRejectionIsRetainedWithConsoleDebugDisabled" fullname="EnemySpawnDiagnosticsTests.RuntimeRejectionIsRetainedWithConsoleDebugDisabled" methodname="RuntimeRejectionIsRetainedWithConsoleDebugDisabled" classname="EnemySpawnDiagnosticsTests" runstate="Runnable" seed="636493687" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.001060" asserts="0">
+          <properties />
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="3182" name="EnemySpawnOcclusionTests" fullname="EnemySpawnOcclusionTests" classname="EnemySpawnOcclusionTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.019532" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties>
+          <property name="Category" value="PurgersRegression" />
+        </properties>
+        <test-suite type="ParameterizedMethod" id="3191" name="SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer" fullname="EnemySpawnOcclusionTests.SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer" classname="EnemySpawnOcclusionTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.016414" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="3184" name="SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(True,False,10.0f,False,False)" fullname="EnemySpawnOcclusionTests.SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(True,False,10.0f,False,False)" methodname="SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer" classname="EnemySpawnOcclusionTests" runstate="Runnable" seed="1240982211" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.009703" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3185" name="SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(False,False,10.0f,False,True)" fullname="EnemySpawnOcclusionTests.SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(False,False,10.0f,False,True)" methodname="SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer" classname="EnemySpawnOcclusionTests" runstate="Runnable" seed="1933628771" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.000860" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3186" name="SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(True,True,10.0f,False,True)" fullname="EnemySpawnOcclusionTests.SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(True,True,10.0f,False,True)" methodname="SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer" classname="EnemySpawnOcclusionTests" runstate="Runnable" seed="569658333" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.000653" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3187" name="SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(False,True,10.0f,False,True)" fullname="EnemySpawnOcclusionTests.SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(False,True,10.0f,False,True)" methodname="SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer" classname="EnemySpawnOcclusionTests" runstate="Runnable" seed="81640270" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.000425" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3188" name="SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(False,False,7.0f,False,False)" fullname="EnemySpawnOcclusionTests.SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(False,False,7.0f,False,False)" methodname="SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer" classname="EnemySpawnOcclusionTests" runstate="Runnable" seed="1164490121" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.000342" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3189" name="SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(False,False,10.0f,True,False)" fullname="EnemySpawnOcclusionTests.SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(False,False,10.0f,True,False)" methodname="SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer" classname="EnemySpawnOcclusionTests" runstate="Runnable" seed="1441877200" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.000702" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3190" name="SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(True,True,10.0f,True,False)" fullname="EnemySpawnOcclusionTests.SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer(True,True,10.0f,True,False)" methodname="SwitchBypassesOnlyOcclusionAndKeepsDistanceToEveryPlayer" classname="EnemySpawnOcclusionTests" runstate="Runnable" seed="477804868" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.000739" asserts="0">
+            <properties />
+          </test-case>
+        </test-suite>
+        <test-case id="3183" name="ZoneRequiresOcclusionByDefaultAndAllowsInspectorOptOut" fullname="EnemySpawnOcclusionTests.ZoneRequiresOcclusionByDefaultAndAllowsInspectorOptOut" methodname="ZoneRequiresOcclusionByDefaultAndAllowsInspectorOptOut" classname="EnemySpawnOcclusionTests" runstate="Runnable" seed="1990790504" result="Passed" start-time="2026-10-20 14:40:29Z" end-time="2026-10-20 14:40:29Z" duration="0.001344" asserts="0">
+          <properties />
+        </test-case>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

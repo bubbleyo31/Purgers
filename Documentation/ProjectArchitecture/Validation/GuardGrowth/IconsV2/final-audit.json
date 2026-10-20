@@ -1,0 +1,243 @@
+{
+  "checks": 39,
+  "results": [
+    {
+      "card": "LeftCard",
+      "attribute": "GuardReduction",
+      "rank": 1,
+      "centerError": 0.0
+    },
+    {
+      "card": "LeftCard",
+      "attribute": "GuardReduction",
+      "rank": 2,
+      "centerError": 0.0
+    },
+    {
+      "card": "LeftCard",
+      "attribute": "GuardReduction",
+      "rank": 3,
+      "centerError": 0.0
+    },
+    {
+      "card": "LeftCard",
+      "attribute": "GuardReduction",
+      "rank": 4,
+      "centerError": 0.0
+    },
+    {
+      "card": "LeftCard",
+      "attribute": "GuardReduction",
+      "rank": 5,
+      "centerError": 0.0
+    },
+    {
+      "card": "LeftCard",
+      "attribute": "GuardStamina",
+      "rank": 1,
+      "centerError": 0.0
+    },
+    {
+      "card": "LeftCard",
+      "attribute": "GuardStamina",
+      "rank": 2,
+      "centerError": 0.0
+    },
+    {
+      "card": "LeftCard",
+      "attribute": "GuardStamina",
+      "rank": 3,
+      "centerError": 0.0
+    },
+    {
+      "card": "LeftCard",
+      "attribute": "GuardCooldown",
+      "rank": 1,
+      "centerError": 0.0
+    },
+    {
+      "card": "LeftCard",
+      "attribute": "GuardCooldown",
+      "rank": 2,
+      "centerError": 0.0
+    },
+    {
+      "card": "LeftCard",
+      "attribute": "GuardCooldown",
+      "rank": 3,
+      "centerError": 0.0
+    },
+    {
+      "card": "LeftCard",
+      "attribute": "GuardCooldown",
+      "rank": 4,
+      "centerError": 0.0
+    },
+    {
+      "card": "LeftCard",
+      "attribute": "GuardCooldown",
+      "rank": 5,
+      "centerError": 0.0
+    },
+    {
+      "card": "MiddleCard",
+      "attribute": "GuardReduction",
+      "rank": 1,
+      "centerError": 0.0
+    },
+    {
+      "card": "MiddleCard",
+      "attribute": "GuardReduction",
+      "rank": 2,
+      "centerError": 0.0
+    },
+    {
+      "card": "MiddleCard",
+      "attribute": "GuardReduction",
+      "rank": 3,
+      "centerError": 0.0
+    },
+    {
+      "card": "MiddleCard",
+      "attribute": "GuardReduction",
+      "rank": 4,
+      "centerError": 0.0
+    },
+    {
+      "card": "MiddleCard",
+      "attribute": "GuardReduction",
+      "rank": 5,
+      "centerError": 0.0
+    },
+    {
+      "card": "MiddleCard",
+      "attribute": "GuardStamina",
+      "rank": 1,
+      "centerError": 0.0
+    },
+    {
+      "card": "MiddleCard",
+      "attribute": "GuardStamina",
+      "rank": 2,
+      "centerError": 0.0
+    },
+    {
+      "card": "MiddleCard",
+      "attribute": "GuardStamina",
+      "rank": 3,
+      "centerError": 0.0
+    },
+    {
+      "card": "MiddleCard",
+      "attribute": "GuardCooldown",
+      "rank": 1,
+      "centerError": 0.0
+    },
+    {
+      "card": "MiddleCard",
+      "attribute": "GuardCooldown",
+      "rank": 2,
+      "centerError": 0.0
+    },
+    {
+      "card": "MiddleCard",
+      "attribute": "GuardCooldown",
+      "rank": 3,
+      "centerError": 0.0
+    },
+    {
+      "card": "MiddleCard",
+      "attribute": "GuardCooldown",
+      "rank": 4,
+      "centerError": 0.0
+    },
+    {
+      "card": "MiddleCard",
+      "attribute": "GuardCooldown",
+      "rank": 5,
+      "centerError": 0.0
+    },
+    {
+      "card": "RightCard",
+      "attribute": "GuardReduction",
+      "rank": 1,
+      "centerError": 0.0
+    },
+    {
+      "card": "RightCard",
+      "attribute": "GuardReduction",
+      "rank": 2,
+      "centerError": 0.0
+    },
+    {
+      "card": "RightCard",
+      "attribute": "GuardReduction",
+      "rank": 3,
+      "centerError": 0.0
+    },
+    {
+      "card": "RightCard",
+      "attribute": "GuardReduction",
+      "rank": 4,
+      "centerError": 0.0
+    },
+    {
+      "card": "RightCard",
+      "attribute": "GuardReduction",
+      "rank": 5,
+      "centerError": 0.0
+    },
+    {
+      "card": "RightCard",
+      "attribute": "GuardStamina",
+      "rank": 1,
+      "centerError": 0.0
+    },
+    {
+      "card": "RightCard",
+      "attribute": "GuardStamina",
+      "rank": 2,
+      "centerError": 0.0
+    },
+    {
+      "card": "RightCard",
+      "attribute": "GuardStamina",
+      "rank": 3,
+      "centerError": 0.0
+    },
+    {
+      "card": "RightCard",
+      "attribute": "GuardCooldown",
+      "rank": 1,
+      "centerError": 0.0
+    },
+    {
+      "card": "RightCard",
+      "attribute": "GuardCooldown",
+      "rank": 2,
+      "centerError": 0.0
+    },
+    {
+      "card": "RightCard",
+      "attribute": "GuardCooldown",
+      "rank": 3,
+      "centerError": 0.0
+    },
+    {
+      "card": "RightCard",
+      "attribute": "GuardCooldown",
+      "rank": 4,
+      "centerError": 0.0
+    },
+    {
+      "card": "RightCard",
+      "attribute": "GuardCooldown",
+      "rank": 5,
+      "centerError": 0.0
+    }
+  ],
+  "scene": "Assets/Scenes/_Menu.unity",
+  "playing": false,
+  "compiling": false,
+  "runnerCount": 1
+}

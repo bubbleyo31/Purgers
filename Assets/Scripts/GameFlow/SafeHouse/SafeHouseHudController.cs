@@ -44,6 +44,7 @@ namespace Purgers.GameFlow.SafeHouse
         private int hudStageLevel;
         private int hudSceneHandle;
         private bool hasHudClaim;
+        private HudKeyPromptLayout readyPrompt, cancelPrompt;
 
         /// <summary>子層玩家 HUD 共用安全屋的 Runner 與生命週期，不另搶 HUD ownership。</summary>
         public NetworkRunner HudRunner => hasHudClaim ? hudRunner : null;
@@ -153,8 +154,7 @@ namespace Purgers.GameFlow.SafeHouse
 
             if (readyButton)
             {
-                var keycap = readyButton.transform.Find("Keycap");
-                if (keycap) PlayerSettingsService.SetPrompt(keycap.GetComponentInChildren<TMP_Text>(true), PlayerBinding.Ready);
+                RefreshKeyPrompts();
             }
 
             if (readyButtonLabel)
@@ -244,8 +244,7 @@ namespace Purgers.GameFlow.SafeHouse
                 readyTimerLabel.text = string.Empty;
             if (readyButton)
             {
-                var keycap = readyButton.transform.Find("Keycap");
-                if (keycap) PlayerSettingsService.SetPrompt(keycap.GetComponentInChildren<TMP_Text>(true), PlayerBinding.Ready);
+                RefreshKeyPrompts();
             }
 
             if (readyButtonLabel)
@@ -254,6 +253,32 @@ namespace Purgers.GameFlow.SafeHouse
                 readyButton.interactable = false;
 
             SetReadyPanelVisible(false);
+        }
+
+        private void RefreshKeyPrompts()
+        {
+            if (readyPrompt == null && readyButton != null)
+            {
+                var cap = readyButton.transform.Find("Keycap");
+                if (cap != null) readyPrompt = new HudKeyPromptLayout(cap.GetComponentInChildren<TMP_Text>(true), cap.GetComponent<Image>(), null);
+            }
+            if (cancelPrompt == null && readyPanelRoot != null)
+            {
+                var cap = readyPanelRoot.transform.Find("CancelKeycap");
+                if (cap != null) cancelPrompt = new HudKeyPromptLayout(cap.GetComponentInChildren<TMP_Text>(true), cap.GetComponent<Image>(), null);
+            }
+            var key = PlayerSettingsService.Key(PlayerBinding.Ready);
+            readyPrompt?.Refresh(key);
+            readyPrompt?.SetState(Input.GetKey(key), key == KeyCode.None);
+            cancelPrompt?.Refresh(KeyCode.Escape);
+            cancelPrompt?.SetState(Input.GetKey(KeyCode.Escape));
+            if (readyButton != null && readyPrompt != null)
+                HudKeyPromptLayout.PlaceDescriptionAfter(readyButtonLabel, readyButton.transform.Find("Keycap").GetComponent<Image>());
+            if (readyPanelRoot != null && cancelPrompt != null)
+            {
+                var hint = readyPanelRoot.transform.Find("CancelHint");
+                if (hint != null) HudKeyPromptLayout.PlaceDescriptionAfter(hint.GetComponent<TMP_Text>(), readyPanelRoot.transform.Find("CancelKeycap").GetComponent<Image>());
+            }
         }
 
         private void OnReadyPressed()

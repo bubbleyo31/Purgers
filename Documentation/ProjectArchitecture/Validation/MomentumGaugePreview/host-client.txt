@@ -1,0 +1,12 @@
+PASS Runner connects Ok
+PASS host authority
+PASS Runner connects Ok
+PASS client input authority only
+PASS partial values keep normal color and speed
+PASS partial client gauge animates
+PASS full client color 25FFD9
+PASS client full state does not leak to host HUD
+PASS full state keeps size and scale
+PASS late HUD owns separate material
+PASS disable releases flow material
+RESULT 通過

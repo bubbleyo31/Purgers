@@ -1,0 +1,61 @@
+{
+    "utc": "2026-10-20T11:47:39.7582032Z",
+    "scope": "Editor Play Mode; isolated, deterministic synthetic physics A/B",
+    "root": "Map(Z:-263)",
+    "strategy": "exact closed cuboids only; no merging or convex hulls",
+    "sourceColliders": 8558,
+    "candidateMeshColliders": 6109,
+    "candidateBoxColliders": 2449,
+    "unchangedColliders": 6109,
+    "probeCount": 12000,
+    "probeMismatches": 0,
+    "rayHitMismatches": 0,
+    "rayDistanceMismatches": 0,
+    "sphereMismatches": 0,
+    "capsuleMismatches": 0,
+    "dynamicBodiesPerScene": 32,
+    "sampledSteps": 180,
+    "sourceTriangles": 756336,
+    "candidateTriangles": 726948,
+    "maxRayDistanceError": 0.001596212387084961,
+    "baselineSetupMs": 1072.0221000000001,
+    "candidateSetupMs": 1822.4550000000002,
+    "baselineQueries": {
+        "meanMs": 2.1471311111111119,
+        "p95Ms": 2.3608000000000004,
+        "maxMs": 2.5901
+    },
+    "candidateQueries": {
+        "meanMs": 1.9378522222222219,
+        "p95Ms": 2.2937000000000005,
+        "maxMs": 2.4385000000000005
+    },
+    "baselineSimulation": {
+        "meanMs": 0.11504888888888891,
+        "p95Ms": 0.1688,
+        "maxMs": 0.21980000000000003
+    },
+    "candidateSimulation": {
+        "meanMs": 0.1221172222222222,
+        "p95Ms": 0.2049,
+        "maxMs": 0.2541
+    },
+    "excluded": [
+        "不是可證明的封閉長方體: 5876",
+        "實測掃掠差異，保留原 MeshCollider: 35",
+        "凸形／Trigger／Rigidbody: 1",
+        "負縮放／剪切／退化變換: 197"
+    ],
+    "limitations": [
+        "不是正式 Host/Client、KCC、AI 或自然戰鬥的幀時間；不能據此斷言整體 FPS 或 MeshCollider 獨占成本。",
+        "只替換有八角點、六封閉面、十二外向三角形的精確長方體，不合併、不使用 Convex 包住建築。",
+        "射線/掃掠抽樣不是所有路徑的數學證明；仍須實際鉤索、行走及射擊驗收。",
+        "BoxCollider 與 MeshCollider 的內部起點／背面查詢語義可能不同，Collider 身分與 triangleIndex 也會改變。",
+        "建立耗時包含物件配置和可能的共用 cooking 快取，不等同冷啟動載入時間。",
+        "樣本為同一 Editor 的合成工作負載，需目標平台 Development Player 驗證。"
+    ],
+    "differenceExamples": [],
+    "additionalExcludedMeshKeys": [],
+    "maxSphereDistanceError": 0.0017337799072265626,
+    "maxCapsuleDistanceError": 0.0019521713256835938
+}

@@ -205,3 +205,18 @@ Debug Encounter 開啟時，生成與預算拒絕包含實際 Prefab 名稱及�
 校準後水母的碰撞包絡低於 Root 2.65 公尺。EnemyEncounterDirector 對每個飛行候選，將既有出生盒的取樣視為包絡底部基準，再加 Navigator.SpawnRootOffset 到實際 Root；自動飛行巡邏的出生種子也使用同一偏移，且仍須通過原巡邏盒範圍、占用、可達、前方、距離及遮擋檢查。此補償由 bodyBaseOffset 推導，不新增生成 owner、不改 MapChunk 出生盒。零偏移飛行資產、Ground／Stationary 維持原位置規則。
 
 MapChunk_Prototype 八區以新包絡直接使用舊 Root 高度時均為 0 可達點；補償後均恢復 16 點。詳見[校準設定與驗證](Validation/JellyfishCollision/README.md)。
+
+## 2026-10-20 EnemySpawnZone Inspector 診斷
+
+局部核對：`EnemySpawnZoneEditor.Diagnostics.cs`、`EnemySpawnZoneDiagnostics.cs`、`EnemyEncounterDirector.Diagnostics.cs` 與原有 Zone／Director／Composition。
+
+選取 Zone 後，元件最上方的「生成合法性診斷」每 0.75 秒更新，不需開 Console 或 Debug Encounter。
+
+- **編輯模式**：檢查所屬 MapChunk、有效 Gate、出生盒與縮放、混合／舊清單、Prefab／Fusion 登記、移動類型／出生前元件契約、地面預烘焙資料、人工飛行 Area，以及同場景唯一 Director 的遮罩、數量／期限衝突。配置錯誤會一起列出；某條目被排除不代表其他有效條目也不能生成。
+- **檢查飛行空間**：按鈕沿用 `EnemyFlyingPatrolPlanner` 與各 Prefab 的 `EnemyFlyingPatrolNavigator.IsPassageClear`，包含負底部 Root 偏移。只檢查目前載入的 PhysicsScene，不建立 Area 或 GameObject。結果是帶時間的手動快照，移動物件／修改設定後要重按。人工 Area 的完整出生可達性仍待 Host 驗證。
+- **Play 目前狀態**：選取實際 Host Chunk 下的 Zone，唯讀顯示 Director 生命週期、關卡階段、登記、候選、數量上限、存活玩家、分批期限、FIFO 與全場生成間隔。Client 明確顯示需到 Host 查詢；未 Spawn 時不讀 Networked 狀態。
+- **本次 Play 最近結果**：最多保留 8 筆登記／候選排除、未抽中、成功生成、取樣失敗、出生前契約失敗與到期取消。取樣失敗列出第一拒絕原因次數，玩家過近與遮擋不足分開計數；沿用原短路檢查順序，並非每個條件的獨立失敗率。
+
+「配置初檢通過」不等於保證生成。地面實際 NavMesh／貼地／巡邏路徑、全員距離與遮擋、動態占用仍由正式 Host 生成流程決定；Prefab 模式缺少 Director 或執行中資料時顯示待驗證。歷史成功／失敗與目前狀態分開顯示，避免把舊結果當作即時合法性。
+
+診斷歷史只存在 Editor 記憶體，不序列化、不新增 RPC／Networked 欄位、不消耗隨機序列，不修改 Scene／Prefab／數值。原有 Debug Encounter Console 開關保留；Inspector 不依賴它。驗證與待驗邊界見 [Inspector 診斷驗證](Validation/EnemySpawnDiagnostics/README.md)。

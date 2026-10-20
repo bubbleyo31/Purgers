@@ -45,7 +45,7 @@ public partial class PlayerHealth
         if (delay <= 0) { RegenerationInitialized = false; return; }
         if (!RegenerationInitialized) NotifyGrowthCombat();
         if (GetInput(out NetInput input) && !PlayerControlLocks.BlocksCombat(input.BlockedControls) &&
-            (input.Buttons.IsSet(InputButton.Fire) || input.Buttons.IsSet(InputButton.Ability1) || input.Buttons.IsSet(InputButton.QuickAction)))
+            (input.Buttons.IsSet(InputButton.Fire) || input.Buttons.IsSet(InputButton.Ability1) || input.Buttons.IsSet(InputButton.Ability2) || input.Buttons.IsSet(InputButton.Ability3) || input.Buttons.IsSet(InputButton.QuickAction)))
             NotifyGrowthCombat();
         if (RegenerationWait.ExpiredOrNotRunning(Runner) && CurrentHealth < MaximumHealth)
             RestoreHealth(PlayerGrowth.Value(GrowthOwner, PlayerGrowthKind.RegenerationRate) * Runner.DeltaTime, out _);

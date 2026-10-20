@@ -14,6 +14,8 @@ public sealed class PlayerAbilityLootVisual : MonoBehaviour
     private SpriteRenderer frame;
     private TextMeshPro label;
     private Sprite solidSprite;
+    private HudKeyPromptRow pickupPrompt;
+    private GameObject pickupPromptRoot;
 
     public void Bind(PlayerAbilityRuntime source)
     {
@@ -60,6 +62,21 @@ public sealed class PlayerAbilityLootVisual : MonoBehaviour
         if (label.fontMaterial.HasProperty(ShaderUtilities.ID_FaceDilate))
             label.fontMaterial.SetFloat(ShaderUtilities.ID_FaceDilate, .12f);
         label.outlineWidth = .10f; label.outlineColor = new Color32(15, 15, 12, 255);
+        // World-space prompt uses the same uGUI keycap art as the screen HUD.
+        var promptCanvas = new GameObject("PickupPrompt", typeof(RectTransform), typeof(Canvas));
+        pickupPromptRoot = promptCanvas;
+        promptCanvas.transform.SetParent(billboard, false);
+        promptCanvas.transform.localPosition = new Vector3(0, frameCenterY + 1.15f, -.03f);
+        promptCanvas.transform.localScale = Vector3.one * .01f;
+        promptCanvas.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
+        var promptRect = (RectTransform)promptCanvas.transform;
+        promptRect.sizeDelta = new Vector2(480, 40);
+        var promptText = new GameObject("Prompt", typeof(RectTransform), typeof(TextMeshProUGUI)).GetComponent<TMP_Text>();
+        promptText.transform.SetParent(promptCanvas.transform, false);
+        promptText.font = label.font;
+        promptText.color = new Color32(241, 237, 217, 255);
+        promptText.rectTransform.sizeDelta = promptRect.sizeDelta;
+        pickupPrompt = new HudKeyPromptRow(promptText, true);
         RefreshLabel(false);
     }
 
@@ -93,8 +110,13 @@ public sealed class PlayerAbilityLootVisual : MonoBehaviour
         float remaining = ready ? runtime.LootCooldownRemaining : 0f;
         int level = ready ? Mathf.Max(1, runtime.SkillLevel) : 1;
         string suffix = remaining > 0 ? $" · {remaining:0.0}s" : string.Empty;
-        string prompt = highlighted ? "\n[E] 拾取 / 替換" : string.Empty;
-        label.text = $"{runtime.Definition.DisplayName} Lv.{level}{suffix}{prompt}";
+        label.text = $"{runtime.Definition.DisplayName} Lv.{level}{suffix}";
+        if (pickupPromptRoot != null) pickupPromptRoot.SetActive(highlighted);
+        if (highlighted && pickupPrompt != null)
+        {
+            var key = Purgers.Settings.PlayerSettingsService.Key(Purgers.Settings.PlayerBinding.Interact);
+            pickupPrompt.Refresh(key, "拾取 / 替換", Input.GetKey(key));
+        }
     }
 
     private void OnDestroy()

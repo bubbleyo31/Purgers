@@ -1,0 +1,8 @@
+PASS A animated capsule samples=160
+PASS A projections=7200 oversized-unclamped=4808
+PASS B animated capsule samples=160
+PASS B projections=7200 oversized-unclamped=4808
+DRAW normal colored=1175 edge=0
+DRAW partial-offscreen colored=569 edge=0
+DRAW oversized colored=0 edge=0
+PASS rendered frame clipping

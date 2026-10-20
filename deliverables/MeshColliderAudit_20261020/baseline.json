@@ -1,0 +1,35 @@
+{
+  "dateLocal": "2026-10-20",
+  "scope": "Loaded Editor scene snapshot, not runtime profiling",
+  "scene": "Assets/Scenes/Game.unity",
+  "root": "Map(Z:-263)",
+  "playing": false,
+  "profilerRecording": false,
+  "meshColliders": 9338,
+  "enabledAndActive": 8558,
+  "sourceTriangleInstances": 829320,
+  "activeSourceTriangleInstances": 756336,
+  "convex": 1,
+  "attachedRigidbody": 0,
+  "triggers": 0,
+  "uniqueActiveSourceMeshes": 3118,
+  "activeSourceMeshMemoryBytes": 40600304,
+  "memoryCaveat": "Shared source mesh memory, not isolated collider or PhysX cooked-mesh memory.",
+  "activeTriangleBuckets": [
+    { "sourceTriangles": "<=12", "colliders": 4038, "triangleInstances": 48432 },
+    { "sourceTriangles": "13-100", "colliders": 2495, "triangleInstances": 78536 },
+    { "sourceTriangles": "101-500", "colliders": 1871, "triangleInstances": 442048 },
+    { "sourceTriangles": ">500", "colliders": 154, "triangleInstances": 187320 }
+  ],
+  "activeLayers": { "Default": 8558 },
+  "cookingOptionsAll9338": "CookForFasterSimulation, EnableMeshCleaning, WeldColocatedVertices, UseFastMidphase",
+  "loadedAutoAddMeshColliderComponents": 0,
+  "performanceConclusion": "Undetermined; representative Play Mode or Player timings not captured.",
+  "pending": [
+    "Confirm new versus existing optimizer and target scope.",
+    "Confirm exact-surface versus bounded-error collision requirements.",
+    "Capture runtime simulation, queries, cooking, frame timing and allocations.",
+    "Validate geometry and gameplay query semantics before applying optimization."
+  ],
+  "gameplayOrAssetChanges": false
+}

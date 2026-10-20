@@ -17,7 +17,7 @@
 | [LocalPlayerGrappleAimIndicator.cs](./LocalPlayerGrappleAimIndicator.cs) | LocalPlayerGrappleAimIndicator, GrappleAimIndicatorState | `LocalPlayerGrappleAimIndicator` 的主要實作入口。 |
 | [LocalMinimapController.cs](./LocalMinimapController.cs) | LocalMinimapController | 區塊貼圖快取／裁切、高度灰階、探索 dirty 更新、M 展開與獨立 UI 標記；只讀 NetworkMapState／EnemyActor。 |
 | [LocalPlayerHealthSlider.cs](./LocalPlayerHealthSlider.cs) | LocalPlayerHealthSlider | `LocalPlayerHealthSlider` 的主要實作入口。 |
-| [LocalPlayerSpeedSlider.cs](./LocalPlayerSpeedSlider.cs) | LocalPlayerSpeedSlider | 中下方動能增傷量條、最高強化樣式與本機撤離提示；只讀本機玩家，消失／重生重新綁定。舊類名為序列化相容性保留。 |
+| [LocalPlayerSpeedSlider.cs](./LocalPlayerSpeedSlider.cs) | LocalPlayerSpeedSlider | 固定尺寸動能增傷量條；未滿慢速流光，最高強化變色加速。沿本機／觀戰來源與撤離提示，消失時釋放臨時材質。舊類名為序列化相容性保留。 |
 | [PlayerGrappleMomentumEnergyDebugHUD.cs](./PlayerGrappleMomentumEnergyDebugHUD.cs) | PlayerGrappleMomentumEnergyDebugHUD | 預設關閉的詳細開發診斷，不取代正式 uGUI 動能增傷 UI。 |
 
 ## 快速查找

@@ -28,8 +28,9 @@ MonoBehaviour:
   - 200
   - 300
   growthDisplayName: "\u9632\u79A6\u8010\u529B"
-  growthIcon: {fileID: 0}
-  growthRankBackground: {fileID: 0}
-  growthRankCenter: {x: 0.5, y: 0.5}
-  growthRankSize: {x: 0.4, y: 0.3}
-  growthIconScale: 1
+  growthIcon: {fileID: 21300000, guid: c18c7ee8fea3f344fb2fde2f8c87c13c, type: 3}
+  growthRankBackground: {fileID: 21300000, guid: 9243af85fbc574c408d9561a0e9763ef,
+    type: 3}
+  growthRankCenter: {x: 0.5, y: 0.45}
+  growthRankSize: {x: 0.38, y: 0.34}
+  growthIconScale: 1.2893757

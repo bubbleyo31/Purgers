@@ -372,9 +372,9 @@ public partial class GameLogic :
         InputManager localInput = Runner.GetComponent<InputManager>();
         if (localInput != null && Runner.LocalPlayer.IsRealPlayer &&
             localInput.TryConsumeHostRewardChoice(
-                out int rewardRevision, out int rewardChoiceIndex))
+                out int rewardRevision, out int rewardChoiceIndex, out int replacementSlot))
             TryClaimRewardStateAuthority(Runner.LocalPlayer,
-                rewardRevision, rewardChoiceIndex, out _);
+                rewardRevision, rewardChoiceIndex, out _, replacementSlot);
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
         if (IsPrimaryForRunner && localInput != null &&
             Runner.LocalPlayer.IsRealPlayer &&
@@ -708,11 +708,20 @@ public partial class GameLogic :
                 info.Source, draftRevision, choiceIndex, out _);
     }
 
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority, Channel = RpcChannel.Reliable)]
+    public void RPC_RequestRewardChoiceAtFocusSlot(int revision, int choice, int focusSlot, RpcInfo info = default)
+    {
+        if (info.Source != PlayerRef.None)
+            TryClaimRewardStateAuthority(info.Source, revision, choice, out _, focusSlot);
+    }
+
     public bool TryClaimRewardStateAuthority(
         PlayerRef player, int draftRevision, int choiceIndex,
-        out string failureReason)
+        out string failureReason, int replacementFocusSlot = -1)
     {
         failureReason = string.Empty;
+        if (replacementFocusSlot < -1 || replacementFocusSlot >= FocusAbilitySlotRules.SlotCount)
+        { failureReason = "替換槽無效。"; return false; }
         if (Object == null || !Object.HasStateAuthority ||
             !IsPrimaryForRunner ||
             !PlayerExperiences.TryGet(player, out NetworkPlayerExperience xp) ||
@@ -738,6 +747,11 @@ public partial class GameLogic :
             return false;
         }
 
+        if (replacementFocusSlot >= 0 && (!reward.IsImplementedAbilityReward || reward.Category != RewardCategory.GrappleFocus))
+        { failureReason = "此獎勵不接受專注替換槽。"; return false; }
+        var claimGate = playerBehaviour.GetComponent<PlayerActionGate>();
+        if (claimGate != null && (claimGate.IsCaptured || claimGate.IsBlocked(PlayerActionBlockMask.ActiveAbility)))
+        { failureReason = "玩家目前無法換裝。"; return false; }
         // 武器獎勵沿用既有職業 Runtime；不重建獨立 Q/E。
         if (reward.IsImplementedGrowthReward)
         {
@@ -753,7 +767,7 @@ public partial class GameLogic :
         }
         else
         {
-            var currentAbility = playerBehaviour.AbilityRuntimeManager.GetCategoryRuntime(reward.AbilityDefinition.Category);
+            var currentAbility = playerBehaviour.AbilityRuntimeManager.GetEquippedRuntime(reward.AbilityDefinition);
             if (currentAbility != null && currentAbility.Definition == reward.AbilityDefinition)
             { failureReason = "已裝備此技能；待選獎勵保留。"; return false; }
             // 候選建立後仍可能換武器；失敗不扣待選數、不改候選或取得紀錄。
@@ -763,17 +777,17 @@ public partial class GameLogic :
                 return false;
             }
 
-            if (!playerBehaviour.AbilityRuntimeManager
-                .TryEquipRewardAbilityStateAuthority(
-                    reward.AbilityDefinition, out failureReason))
-                return false;
+            bool equipped = reward.Category == RewardCategory.GrappleFocus
+                ? playerBehaviour.AbilityRuntimeManager.TryEquipFocusRewardStateAuthority(reward.AbilityDefinition, replacementFocusSlot, out failureReason)
+                : replacementFocusSlot == -1 && playerBehaviour.AbilityRuntimeManager.TryEquipRewardAbilityStateAuthority(reward.AbilityDefinition, out failureReason);
+            if (!equipped) return false;
 
-            var equippedRuntime = playerBehaviour.AbilityRuntimeManager.GetCategoryRuntime(reward.AbilityDefinition.Category);
+            var equippedRuntime = playerBehaviour.AbilityRuntimeManager.GetEquippedRuntime(reward.AbilityDefinition);
             equippedRuntime.RequiredPlayerLevel = reward.MinimumPlayerLevel;
             if (reward.Category == RewardCategory.GrappleHit)
             { draft.EquippedGrappleHitId = rewardId; draft.EquippedHitLevel = equippedRuntime.SkillLevel; }
             else
-            { draft.EquippedGrappleFocusId = rewardId; draft.EquippedFocusLevel = equippedRuntime.SkillLevel; }
+            { draft.SetFocus(equippedRuntime.FocusSlotIndex, rewardId, equippedRuntime.SkillLevel); }
         }
 
         if (!acquiredRewardIdsByPlayer.TryGetValue(player,
@@ -892,7 +906,8 @@ public partial class GameLogic :
             new PlayerRewardSaveSnapshot(
                 draft.EquippedGrappleHitId.ToString(),
                 draft.EquippedGrappleFocusId.ToString(),
-                choices, acquiredIds, GetSavedWeaponId(Runner.LocalPlayer), draft.EquippedHitLevel, draft.EquippedFocusLevel));
+                choices, acquiredIds, GetSavedWeaponId(Runner.LocalPlayer), draft.EquippedHitLevel, draft.EquippedFocusLevel,
+                draft.EquippedFocusZId.ToString(), draft.EquippedFocusXId.ToString(), draft.EquippedFocusZLevel, draft.EquippedFocusXLevel));
         WriteHostGrowth(save);
         return true;
     }
@@ -977,6 +992,8 @@ public partial class GameLogic :
         {
             EquippedHitLevel = rewards.HitLevel, EquippedFocusLevel = rewards.FocusLevel,
             EquippedGrappleHitId = rewards.EquippedGrappleHitId,
+            EquippedFocusZId = rewards.FocusZId, EquippedFocusXId = rewards.FocusXId,
+            EquippedFocusZLevel = rewards.FocusZLevel, EquippedFocusXLevel = rewards.FocusXLevel,
             EquippedGrappleFocusId = rewards.EquippedGrappleFocusId
         };
         SavedProfessions.Set(player, WeaponRewardRules.ResolveSavedWeapon(rewards.EquippedWeaponId));
@@ -1114,7 +1131,9 @@ public partial class GameLogic :
             if (!TryRestoreRewardAbility(manager,
                     draft.EquippedGrappleHitId.ToString(), draft.EquippedHitLevel) ||
                 !TryRestoreRewardAbility(manager,
-                    draft.EquippedGrappleFocusId.ToString(), draft.EquippedFocusLevel))
+                    draft.EquippedGrappleFocusId.ToString(), draft.EquippedFocusLevel, 0) ||
+                !TryRestoreRewardAbility(manager, draft.EquippedFocusZId.ToString(), draft.EquippedFocusZLevel, 1) ||
+                !TryRestoreRewardAbility(manager, draft.EquippedFocusXId.ToString(), draft.EquippedFocusXLevel, 2))
                 continue;
 
             restoredRewardLoadoutByPlayer[pair.Key] = playerBehaviour;
@@ -1122,7 +1141,7 @@ public partial class GameLogic :
     }
 
     private bool TryRestoreRewardAbility(
-        PlayerAbilityRuntimeManager manager, string rewardId, int skillLevel)
+        PlayerAbilityRuntimeManager manager, string rewardId, int skillLevel, int focusSlot = -1)
     {
         if (string.IsNullOrEmpty(rewardId))
             return true;
@@ -1131,8 +1150,15 @@ public partial class GameLogic :
                 out PlayerRewardDefinition reward) ||
             !reward.IsImplementedAbilityReward)
             return false;
-        if (!manager.TryEquipRewardAbilityStateAuthority(reward.AbilityDefinition, out _)) return false;
-        var runtime = manager.GetCategoryRuntime(reward.AbilityDefinition.Category);
+        var runtime = manager.GetEquippedRuntime(reward.AbilityDefinition);
+        if (runtime == null)
+        {
+            bool restored = reward.Category == RewardCategory.GrappleFocus
+                ? manager.TryEquipFocusRewardStateAuthority(reward.AbilityDefinition, focusSlot, out _)
+                : manager.TryEquipRewardAbilityStateAuthority(reward.AbilityDefinition, out _);
+            if (!restored) return false;
+            runtime = manager.GetEquippedRuntime(reward.AbilityDefinition);
+        }
         runtime.SkillLevel = Mathf.Max(1, skillLevel); runtime.RequiredPlayerLevel = reward.MinimumPlayerLevel;
         return true;
     }

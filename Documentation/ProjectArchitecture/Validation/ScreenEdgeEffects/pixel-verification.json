@@ -1,0 +1,31 @@
+{
+  "source": "Actual UGUI shader plus cloned real HUD via offscreen camera; no screenshot mask",
+  "solid_hud_samples": 169544,
+  "modes": {
+    "healing": {
+      "center_rgb_difference_max": 0,
+      "solid_hud_difference_max": 1,
+      "has_effect": true
+    },
+    "damage": {
+      "center_rgb_difference_max": 0,
+      "solid_hud_difference_max": 1,
+      "has_effect": true
+    },
+    "momentum": {
+      "center_rgb_difference_max": 0,
+      "solid_hud_difference_max": 1,
+      "has_effect": true
+    },
+    "combined": {
+      "center_rgb_difference_max": 0,
+      "solid_hud_difference_max": 1,
+      "has_effect": true
+    }
+  },
+  "shared_shader_parity": {
+    "healing": 0,
+    "damage": 0,
+    "momentum": 0
+  }
+}

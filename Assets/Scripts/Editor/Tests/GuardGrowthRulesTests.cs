@@ -83,6 +83,6 @@ public sealed class GuardGrowthRulesTests
         entry.GrowthRanks=123; entry.DefenseGrowthRanks=351; entry.HeldPassiveBits=63;
         save.ResetRunProgression(); entry=save.RunProgression.PlayerProgressionEntries[0];
         Assert.That(entry.GrowthRanks,Is.Zero); Assert.That(entry.DefenseGrowthRanks,Is.Zero);
-        Assert.That(entry.HeldPassiveBits,Is.Zero); Assert.That(GameSaveSchema.CurrentVersion,Is.EqualTo(5));
+        Assert.That(entry.HeldPassiveBits,Is.Zero); Assert.That(GameSaveSchema.CurrentVersion,Is.EqualTo(6));
     }
 }

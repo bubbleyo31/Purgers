@@ -1,0 +1,23 @@
+{
+  "source": "Unity Graphics.Blit; historical screenshot, no runtime integration",
+  "frames": 145,
+  "fps": 25,
+  "duration_seconds": 5.8,
+  "center_alpha_max": 0,
+  "center_rgb_difference_max": 0,
+  "all_frames_center_unchanged": true,
+  "hud_rect_rgb_difference_max": {
+    "minimap": 0,
+    "quest": 0,
+    "ability_q": 0,
+    "ability_e": 0
+  },
+  "hud_foreground_samples_unchanged": true,
+  "top_alpha": 80,
+  "bottom_alpha": 80,
+  "start_end_same": true,
+  "full_state_has_motion": true,
+  "healing_control_difference_max": 0,
+  "damage_control_difference_max": 0,
+  "gif_bytes": 13293992
+}

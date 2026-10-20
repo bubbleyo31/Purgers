@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52dcfe7ef17809048836c134671af152, type: 3}
+  m_Name: ScreenEdgeEffects
+  m_EditorClassIdentifier: 
+  shader: {fileID: 4800000, guid: 6a01fa2155f1110418965843c2e6d04e, type: 3}
+  effectsEnabled: 1
+  healing:
+    tint: {r: 0.9130374, g: 0.9245283, b: 0.06541473, a: 0.36862746}
+    strength: 0.06
+    width: 0.116
+    verticalWidth: 0.03
+    corners: 1
+    symbols: 12
+    fadeIn: 0.1
+    hold: 0.16
+    fadeOut: 0.7
+  damage:
+    tint: {r: 0.96, g: 0.16, b: 0.1, a: 1}
+    strength: 0.43
+    width: 0.105
+    verticalWidth: 0.087
+    corners: 0.5
+    symbols: 0
+    fadeIn: 0.035
+    hold: 0.065
+    fadeOut: 0.52
+  momentum:
+    tint: {r: 0.1462264, g: 1, b: 0.85263824, a: 1}
+    strength: 0.35
+    width: 0.067
+    verticalWidth: 0.075
+    corners: 0.6
+    symbols: 0
+    fadeIn: 0.16
+    hold: 0
+    fadeOut: 0.65
+  motionRate: 3
+  maximumOpacity: 0.75
+  prioritySuppression: 0.75

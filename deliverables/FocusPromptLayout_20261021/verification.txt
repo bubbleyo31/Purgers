@@ -1,0 +1,5 @@
+Assets/Prefabs/UI/StageHUD.prefab focus configuration PASS
+Assets/Prefabs/UI/StageHUD.prefab reward references/description PASS
+Assets/Scenes/SafeHouse.unity focus configuration PASS
+Assets/Scenes/SafeHouse.unity reward references/description PASS
+Actual HUD owner creates styled row, applies offset, fades whole row, and hides on reset: PASS (isolated Editor invocation)

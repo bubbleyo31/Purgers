@@ -41,3 +41,41 @@
 收尾：Runtime 驗證 Status=Passed、Runner=0、已退出 Play Mode；Assets/Scenes/_Menu.unity isDirty=false。新檔 .meta 均由 Unity 產生；沒有保存 Scene／Prefab。
 
 未涵蓋：Standalone Build、兩個獨立程序、自然斷線重連、自然遊玩及每個正式大型敵人資產視覺驗收。死亡／控制封鎖有資格規則測試，本輪未另做自然死亡／觀戰輸入操作。
+
+## 2026-10-21 近距離鎖定框修正
+
+最後核對日期：2026-10-21（局部核對）。修正已整合至主專案，沒有保存或修改 Scene／Prefab。規則與設定見 [48](../../48_Tank預備衝刺與共用敵人準心.md#2026-10-21-近距離部位框修正局部核對)。
+
+### 問題與修正
+
+專案內 Fusion.Runtime.dll 的 CapsuleTopCenter／CapsuleBottomCenter 以 `Max(CapsuleExtents × 0.5, AbsCapsuleRadius) - AbsCapsuleRadius` 決定球端中心，證實 CapsuleExtents 為完整高度。原 UI 把完整高度加半徑再乘二，A／B 正式長觸鬚的局部框高約為 Collider 高度的 2.49～2.74 倍；近距離投影後再將四邊夾至相機 pixelRect，形成螢幕四角框。
+
+現改為正確局部膠囊包絡，保留原部位 Offset 與矩陣；投影返回未夾到螢幕的真實框界，由 Runtime 自動生成的 RectMask2D 裁切相機 viewport 外框線。四角全在畫面外時沒有可見框線，不額外建立標記，也不改原 Host 衝刺／攻擊／傷害。
+
+### 本輪證據
+
+所有結果保存在 [TankLockFrameFix_20261021](../../../../deliverables/TankLockFrameFix_20261021/)；測試在已整合修正的 `M:\UnityProject\Purgers` Editor 執行，不把主專案 Editor 的結果冒充隔離工作樹驗證。
+
+- Test-only 舊版：33 項中 25 通過、8 失敗；新增尺寸入口、原始投影邊界及 viewport mask 的案例皆實際失敗。[XML](../../../../deliverables/TankLockFrameFix_20261021/before.xml)／[摘要](../../../../deliverables/TankLockFrameFix_20261021/before-summary.txt)。job `134090517f5d4631910c05371ce3ec3c`。
+- 修正後聚焦：60／60 通過，含提示 33、原衝刺 9、衝刺時序 9、預備 3、水母資產配置 3、水母姿勢 3。[XML](../../../../deliverables/TankLockFrameFix_20261021/focused.xml)／[摘要](../../../../deliverables/TankLockFrameFix_20261021/focused-summary.txt)。job `4855ace8107940f09ceac9c44fb86c66`。確認測試結果中的新案例確實執行，且整合後類型已載入。
+- 完整 PurgersRegression：實際 1322 項，1316 通過、4 失敗、2 跳過，**不是全綠**。[XML](../../../../deliverables/TankLockFrameFix_20261021/regression.xml)／[摘要](../../../../deliverables/TankLockFrameFix_20261021/regression-summary.txt)。job `bcee7ca75af04cc981719f3a98d82d4d` 的 MCP 進度停在 34，採本輪 UTC `2026-10-20T16:49:56Z` RunFinished 寫出的 XML，不採過期 polling 數字。
+- A／B 正式 Prefab 暫時 Clone：每隻 160 個動畫膠囊取樣符合實際 Collider 尺寸；每個取樣測 5 個相機到部位中心距離（0.4／2／4／8／12）、3 個俯仰（-50／0／50）與 3 個水平角（-70／0／70），各 7200 組投影。全部有限值，沒有框界被壓成相機 pixelRect。[探測程式](../../../../deliverables/TankLockFrameFix_20261021/VisualAudit.cs.txt)／[結果](../../../../deliverables/TankLockFrameFix_20261021/visual-audit.txt)。這是幾何取樣，不表示每組都具備正式選敵／衝刺資格。
+- 正式 Graphic／RectMask2D 離屏渲染：正常框 1175 個顯色像素、部分出畫面 569、四角全在外 0；三者螢幕邊緣 20 px 範圍皆無顯色像素。[正常](../../../../deliverables/TankLockFrameFix_20261021/normal.png)／[部分出畫面](../../../../deliverables/TankLockFrameFix_20261021/partial-offscreen.png)／[超大框](../../../../deliverables/TankLockFrameFix_20261021/oversized.png) 均已目視檢查。首次探測相機未設定 preview scene，導致正常框也空白，屬探測配置失敗；指定 camera.scene 後三個控制案例通過。
+- 同 Editor 受控 Host／Client：34 個檢查點通過，含 Host 權威／Client Input Authority、本機唯一框、預覽不扣血、牆遮擋、正常 Jump 輸入、放開收起、晚加入旁觀者無他人框，以及換武器銷毀。[紀錄](../../../../deliverables/TankLockFrameFix_20261021/host-client.txt)／[離屏圖](../../../../deliverables/TankLockFrameFix_20261021/host-client.png)。沿既有測試器，目標為 Enemy_Melee_A 的受控子 Collider；不冒充 A／B 自然多人實戰驗收。
+
+### 完整回歸的四項失敗
+
+- `BossStageAssetTests.GameSceneContainsBossAssetWiring`：Boss Chunk 同名但資產引用不同。
+- `EnemyFlytrapAssetTests.TimingDefaultsMatchApprovedRules`：期待 0.5，實際 0.25。
+- `EnemyReflectorAssetTests.SeparatePrefabUsesExistingCombatAndHealthOwners`：期待 >80，實際 75。
+- `ReloadCameraRuntimeTests.SpawnedLocalWeaponsDriveOnlyPresentationAndUnbindClearsIt`：NullReferenceException。
+
+這四項在本輪仍失敗，本次未修改相關程式或資產；不宣稱與所有歷史失敗訊息完全相同。兩項跳過為 AbilityToggleInputTests 的 Explicit 聯機測試，不算通過。
+
+### 收尾與待驗
+
+本次修改未產生新的編譯錯誤；編譯階段仍有既有 BattleHudReferenceLayout 的 TextureImporter.spritesheet obsolete 警告。受控多人測試另產生暫時 Enemy 無 Patrol Area、Attack Runtime 同 Tick Spawn／Despawn 警告；最後 Console 無 error。
+
+背景測試前已查核既有 Game View 為 PlayUnfocused 且 Run In Background 開啟，沒有呼叫 Focus／Show 或桌面點擊。退出本輪 Play Mode，Runner 已清理；自然 A／B 靠近與切換部位、自然斷線重連、Standalone Build／獨立程序仍待驗，不能由本輪幾何／受控測試替代。
+
+工作樹保留於 `M:\CodexWorktrees\tank-lock-frame-fix\Purgers`（Codex 相容路徑經 C: Junction 指向 M:）；本輪未建立額外 Unity Library，結果檔在主專案 M: deliverables。修正檔在工作樹與主專案一致；02 職責總表只在原檔精準更新本次三行，保留主專案其他未提交文件內容。未提交、未自動封存工作樹。

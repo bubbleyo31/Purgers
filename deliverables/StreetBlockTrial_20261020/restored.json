@@ -1,0 +1,22 @@
+{
+  "playing": false,
+  "scenes": [
+    {
+      "name": "_Menu",
+      "isDirty": false
+    }
+  ],
+  "name": "URP-HighFidelity",
+  "msaaSampleCount": 4,
+  "shadowDistance": 150.0,
+  "shadowCascadeCount": 4,
+  "mainLightShadowmapResolution": 4096,
+  "pipelineDirty": false,
+  "vSync": 1,
+  "profiler": false,
+  "temporaryTargets": 0,
+  "cameras": [
+    "WorldCamera",
+    "WeaponCamera"
+  ]
+}

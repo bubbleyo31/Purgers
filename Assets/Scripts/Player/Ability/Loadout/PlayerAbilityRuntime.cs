@@ -107,6 +107,8 @@ public partial class PlayerAbilityRuntime :
     }
 
 
+    [Networked] public int FocusSlotIndex { get; set; }
+
     private MonoBehaviour moduleBehaviour;
     private IPlayerAbilityRuntimeModule module;
     private bool moduleBound;

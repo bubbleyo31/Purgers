@@ -1,0 +1,96 @@
+// Diagnostic snippet for Unity MCP execute_code; no production scripts or assets edited.
+var cam = GameObject.Find("MapRenderAuditCamera").GetComponent<Camera>();
+var data = cam.GetComponent<UnityEngine.Rendering.Universal.UniversalAdditionalCameraData>();
+var originalRT = cam.targetTexture;
+var smallRT = new RenderTexture(960,540,24,RenderTextureFormat.ARGBHalf);
+smallRT.antiAliasing=4; smallRT.Create();
+var pt=typeof(UnityEngine.Rendering.Universal.UniversalRenderPipeline).GetNestedType("Profiling",BindingFlags.NonPublic);
+var sampler=(UnityEngine.Rendering.ProfilingSampler)pt.GetMethod("TryGetOrAddCameraSampler",BindingFlags.Public|BindingFlags.Static).Invoke(null,new object[]{cam});
+sampler.enableRecording=true;
+var views=UnityEditor.SceneView.sceneViews.Cast<UnityEditor.SceneView>().ToArray();
+var gizmos=views.Select(v=>v.drawGizmos).ToArray();
+foreach(var v in views) v.drawGizmos=false;
+var masks=new Dictionary<Camera,int>();
+var flags=new Dictionary<Camera,CameraClearFlags>();
+Action<UnityEngine.Rendering.ScriptableRenderContext,Camera> begin=(ctx,c)=>{
+ if(c.cameraType!=CameraType.SceneView)return;
+ masks[c]=c.cullingMask;flags[c]=c.clearFlags;
+ c.cullingMask=0;c.clearFlags=CameraClearFlags.SolidColor;
+};
+Action<UnityEngine.Rendering.ScriptableRenderContext,Camera> end=(ctx,c)=>{
+ if(!masks.ContainsKey(c))return;
+ c.cullingMask=masks[c];c.clearFlags=flags[c];masks.Remove(c);flags.Remove(c);
+};
+UnityEngine.Rendering.RenderPipelineManager.beginCameraRendering+=begin;
+UnityEngine.Rendering.RenderPipelineManager.endCameraRendering+=end;
+var names=new[]{"Main Thread","CPU Render Thread Frame Time","GPU Frame Time","Draw Calls Count","Batches Count","SetPass Calls Count","Triangles Count","Vertices Count","Inl_UniversalRenderTotal","MainLightShadow","Inl_MainLightShadow","DrawOpaqueObjects","Inl_DrawOpaqueObjects","Gfx.WaitForPresentOnGfxThread","Gfx.WaitForGfxCommandsFromMainThread","Physics.Simulate","UniversalRenderPipeline.RenderSingleCameraInternal: MapRenderAuditCamera","Inl_UniversalRenderPipeline.RenderSingleCameraInternal: MapRenderAuditCamera"};
+var handles=new List<Unity.Profiling.LowLevel.Unsafe.ProfilerRecorderHandle>();
+Unity.Profiling.LowLevel.Unsafe.ProfilerRecorderHandle.GetAvailable(handles);
+var desc=handles.Select(Unity.Profiling.LowLevel.Unsafe.ProfilerRecorderHandle.GetDescription).ToArray();
+var output=new List<object>();
+var rendererBounds=GameObject.Find("Map(Z:-263)").GetComponentsInChildren<Renderer>().Where(r=>r.enabled).Select(r=>r.bounds).ToArray();
+var cases=new[]{
+ new {name="N-city",pos=new Vector3(-29.60f,4.6f,21.87f),yaw=180f,shadows=true,half=false},
+ new {name="N-open",pos=new Vector3(-29.60f,4.6f,21.87f),yaw=0f,shadows=true,half=false},
+ new {name="N-city-noShadows",pos=new Vector3(-29.60f,4.6f,21.87f),yaw=180f,shadows=false,half=false},
+ new {name="N-city-halfResolution",pos=new Vector3(-29.60f,4.6f,21.87f),yaw=180f,shadows=true,half=true},
+ new {name="N-city-repeat",pos=new Vector3(-29.60f,4.6f,21.87f),yaw=180f,shadows=true,half=false},
+ new {name="N-city-noShadows-repeat",pos=new Vector3(-29.60f,4.6f,21.87f),yaw=180f,shadows=false,half=false},
+ new {name="N-open-repeat",pos=new Vector3(-29.60f,4.6f,21.87f),yaw=0f,shadows=true,half=false},
+ new {name="E-city",pos=new Vector3(276.98f,4.6f,-246.63f),yaw=270f,shadows=true,half=false},
+ new {name="E-open",pos=new Vector3(276.98f,4.6f,-246.63f),yaw=90f,shadows=true,half=false},
+ new {name="S-city",pos=new Vector3(-10.89f,4.6f,-544.85f),yaw=0f,shadows=true,half=false},
+ new {name="S-open",pos=new Vector3(-10.89f,4.6f,-544.85f),yaw=180f,shadows=true,half=false},
+ new {name="W-city",pos=new Vector3(-326.30f,4.6f,-262.90f),yaw=90f,shadows=true,half=false},
+ new {name="W-open",pos=new Vector3(-326.30f,4.6f,-262.90f),yaw=270f,shadows=true,half=false}
+};
+Func<System.Threading.Tasks.Task> run=async()=>{
+ try{
+ foreach(var item in cases){
+  if(!EditorApplication.isPlaying || cam==null) throw new Exception("Play mode stopped");
+  cam.transform.position=item.pos;cam.transform.rotation=Quaternion.Euler(0,item.yaw,0);
+  cam.targetTexture=item.half?smallRT:originalRT; data.renderShadows=item.shadows;
+  System.IO.File.WriteAllText("deliverables/MapRenderAudit_20261020/progress.txt",item.name);
+  await System.Threading.Tasks.Task.Delay(1500);
+  var records=names.Select(n=>{var d=desc.First(x=>x.Name==n);return Unity.Profiling.ProfilerRecorder.StartNew(d.Category,n,2048);}).ToArray();
+  try {
+   int frame=Time.frameCount;double start=EditorApplication.timeSinceStartup;
+   var gpu=new List<object>();var gpuTimes=new List<double>();var cpuTimes=new List<double>();
+   int lastFrame=-1;
+   while(EditorApplication.timeSinceStartup-start<3.5){
+    await System.Threading.Tasks.Task.Delay(40);
+    if(!EditorApplication.isPlaying || cam==null)throw new Exception("Play mode stopped");
+    if(Time.frameCount==lastFrame)continue;lastFrame=Time.frameCount;
+    gpu.Add(new{frame=lastFrame,sampler.gpuSampleCount,sampler.gpuElapsedTime,sampler.cpuSampleCount,sampler.cpuElapsedTime,sampler.inlineCpuSampleCount,sampler.inlineCpuElapsedTime});
+    if(sampler.gpuSampleCount>0)gpuTimes.Add(sampler.gpuElapsedTime);
+    if(sampler.inlineCpuSampleCount>0)cpuTimes.Add(sampler.inlineCpuElapsedTime);
+   }
+   foreach(var r in records)r.Stop();
+   var planes=GeometryUtility.CalculateFrustumPlanes(cam);
+   var counters=records.Select((r,i)=>{
+     var v=r.ToArray().Select(s=>(double)s.Value).OrderBy(x=>x).ToArray();
+     return new{name=names[i],valid=r.Valid,unit=desc.First(x=>x.Name==names[i]).UnitType.ToString(),samples=v.Length,mean=v.Length>0?v.Average():0,p95=v.Length>0?v[(int)Math.Ceiling(v.Length*.95)-1]:0,min=v.Length>0?v[0]:0,max=v.Length>0?v.Last():0};
+   }).ToArray();
+   var row=new{item.name,pos=item.pos.ToString(),item.yaw,item.shadows,width=cam.targetTexture.width,height=cam.targetTexture.height,cam.fieldOfView,cam.cullingMask,frustumRenderers=rendererBounds.Count(b=>GeometryUtility.TestPlanesAABB(planes,b)),frames=Time.frameCount-frame,seconds=EditorApplication.timeSinceStartup-start,cameraGpuMs=gpuTimes.Count>0?gpuTimes.Average():-1,cameraInlineCpuMs=cpuTimes.Count>0?cpuTimes.Average():-1,counters,gpuSamples=gpu};
+   output.Add(row);
+   System.IO.File.WriteAllText("deliverables/MapRenderAudit_20261020/measurements.json",Newtonsoft.Json.JsonConvert.SerializeObject(output,Newtonsoft.Json.Formatting.Indented));
+  }finally {foreach(var r in records)r.Dispose();}
+  if(item.name=="N-city" || item.name=="N-open" || item.name=="N-city-noShadows"){
+   var prev=RenderTexture.active; RenderTexture.active=cam.targetTexture;
+   var tex=new Texture2D(cam.targetTexture.width,cam.targetTexture.height,TextureFormat.RGB24,false);
+   try{tex.ReadPixels(new Rect(0,0,tex.width,tex.height),0,0);tex.Apply();System.IO.File.WriteAllBytes("deliverables/MapRenderAudit_20261020/"+item.name+".png",tex.EncodeToPNG());}
+   finally{UnityEngine.Object.Destroy(tex);RenderTexture.active=prev;}
+  }
+ }
+ System.IO.File.WriteAllText("deliverables/MapRenderAudit_20261020/progress.txt","complete");
+ }catch(Exception ex){System.IO.File.WriteAllText("deliverables/MapRenderAudit_20261020/error.txt",ex.ToString());}
+ finally{
+  UnityEngine.Rendering.RenderPipelineManager.beginCameraRendering-=begin;
+  UnityEngine.Rendering.RenderPipelineManager.endCameraRendering-=end;
+  foreach(var pair in masks)if(pair.Key!=null){pair.Key.cullingMask=pair.Value;pair.Key.clearFlags=flags[pair.Key];}
+  for(int i=0;i<views.Length;i++)if(views[i]!=null)views[i].drawGizmos=gizmos[i];
+  if(cam!=null){cam.targetTexture=originalRT;data.renderShadows=true;}
+  sampler.enableRecording=false;smallRT.Release();UnityEngine.Object.Destroy(smallRT);
+ }
+};
+run();return "13 controlled cases started; approximately 70 seconds; settings restored in finally";

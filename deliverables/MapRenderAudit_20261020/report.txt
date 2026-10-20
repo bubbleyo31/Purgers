@@ -1,0 +1,133 @@
+Game / Map(Z:-263) rendering diagnosis — 2026-10-20
+
+Conclusion
+The stationary camera reversal symptom was reproduced at all four active
+MapChunk_Prototype entrance spawn points. Rendering workload, especially the
+number of object/pass submissions, is the principal cause of the measured
+difference. SSAO's depth/normal prepass substantially amplifies that workload.
+Main-light shadows contribute, but removing shadows alone does not eliminate it.
+Physics simulation is only approximately 0.03–0.08 ms/frame in this idle test.
+
+CPU versus GPU
+The evidence prioritizes CPU/render submission and geometry/pass count over
+pixel shading/fill-rate:
+- Main-thread URP render CPU duration rises from approximately 1.7 to 11.7 ms.
+- ScriptableRenderContext.Submit alone is 9.47 ms in the confirmed city baseline,
+  falling to 6.05 ms without SSAO. These scopes include submission/synchronization;
+  they are elapsed durations, not measurements of CPU utilization or exclusive work.
+- Halving both render-target dimensions (quarter pixel count) gives essentially
+  no improvement in the first controlled comparison: render CPU 11.94 -> 11.80 ms,
+  camera GPU median 11.09 -> 10.70 ms, draw calls unchanged around 18,159.
+- GPU elapsed time also rises with the city view. GPU timing can include bubbles
+  while waiting for work. It should not be added to CPU duration.
+- NVIDIA whole-device samples during the SSAO comparison showed 6–40% GPU use and
+  variable 255–1710 MHz graphics clocks. These samples are supporting context,
+  not a Unity-exclusive utilization measurement or controlled clock benchmark.
+The data establish a submission/pass-count bottleneck; they do not prove that
+all cost is CPU-only or exclude GPU geometry work.
+
+Selected results (mean CPU scope durations; median camera GPU duration)
+Condition                  Draw calls     CPU URP ms     Camera GPU ms
+North entrance, outward          633           1.70              3.44
+North city, confirmed         18,190          11.68             10.99
+North city, shadows off       15,627           9.31              8.64
+North city, SSAO off          10,376           8.11              7.68
+North city, SSAO+shadows off    7,818           6.65              6.25
+
+Rows come from separate controlled segments; small baseline variation exists.
+Repeated original city samples: render CPU 11.24–11.94 ms.
+Shader/pass changes were temporary diagnostic interventions, not optimization
+recommendations already applied to the project.
+
+Map inventory
+8,558 active MeshRenderers; 8,558 material slots; 40 distinct materials.
+3,118 distinct source meshes; 756,336 triangle instances.
+All 8,558 renderers cast shadows. No LODGroups. No static batches observed;
+8,557 objects have no static flags, one has NavigationStatic only.
+SRP Batcher is enabled; dynamic batching is disabled. None of the 40 materials
+has enableInstancing set. SRP Batcher does not imply these objects become one draw.
+Do not infer that simply enabling instancing will help: SRP compatibility,
+mesh reuse, per-object data, culling granularity and memory must be evaluated.
+
+High Fidelity URP settings:
+render scale 1, HDR enabled, MSAA 4x, main-light shadows 4096, four cascades,
+shadow distance 150, soft shadows enabled.
+SSAO active; serialized Source=1, AfterOpaque=false, Downsample=false.
+DepthNormalPrepass measured approximately 5.1–5.5 ms inclusive CPU samples in
+the SSAO comparison and zero after SSAO was disabled. This sample may include
+work on more than one thread and must not be added to parent CPU scopes.
+TeammateOutline feature remained active for every condition.
+
+Method and scope
+19 completed condition segments, 5,312 frame-count advances.
+Unity 2022.3.62f1, D3D11, Ryzen 5 3600, RTX 3060 Ti.
+Existing _Menu was clean and was the only initially loaded scene.
+Game was loaded additively for the audit, entered PlayUnfocused, and made the
+runtime active scene. No network session or player was spawned.
+Diagnostic Camera copied WorldCamera settings (FOV 70); default 1920x1080
+ARGBHalf render target with MSAA 4x; no HUD, weapon overlay, or camera postprocess.
+VSync temporarily disabled to avoid a refresh-rate ceiling.
+North position (-29.60,4.60,21.87), yaw 180 city / 0 outward.
+East  (276.98,4.60,-246.63), yaw 270 city / 90 outward.
+South (-10.89,4.60,-544.85), yaw 0 city / 180 outward.
+West  (-326.30,4.60,-262.90), yaw 90 city / 270 outward.
+Positions derive from active entrance spawn points plus 1.6 world units up.
+Camera remained stationary within each city/outward pair.
+
+The Editor Scene View was also rendering. During measured segments its camera
+mask was temporarily set to zero immediately before rendering, then restored
+after rendering; gizmos were temporarily disabled. This removes its scene
+geometry contribution while leaving some Editor overhead.
+Global render counters include remaining scene content and Editor overhead;
+they are not an exact per-Map draw-call attribution. Camera-specific URP GPU
+samples were also collected (one GPU sample per sampled diagnostic frame).
+No Scene View screenshot, focus, click or foreground action was used.
+
+Initial segments: 1.5 s warmup, >=3.5 s capture each.
+Confirmation: 5 s warmup, >=5 s capture each.
+CPU/count counters retained per-frame aggregates in ProfilerRecorder.
+Camera GPU values sampled approximately every 40 ms with frame-ID deduplication.
+One early SSAO-off GPU timestamp was 3471.65 ms, inconsistent with frame cadence.
+It remains in raw data and is not silently deleted. That segment's GPU mean
+is not used for conclusions. Longer-warmup confirmation was stable:
+SSAO off GPU median 7.68, P95 8.96, max 10.29 ms; baseline median 10.99,
+P95 13.42, max 14.17 ms.
+
+Limitations
+This is a controlled background Editor rendering comparison, not a Development
+Player capture of actual multiplayer gameplay. Full Editor frame times cannot
+be translated into promised in-game FPS. It omits actual player/HUD/postprocess
+and combat workload, and GPU power management varied. No production optimization,
+collision streaming, geometry merge, bake, scene save or prefab save was made.
+
+Next optimization priorities to review, not implemented
+1. Reduce the number of objects/passes submitted in the city view. Evaluate the
+   SSAO depth/normal requirement and acceptable alternative settings first.
+2. Evaluate visibility/occlusion and spatial grouping of building renderers;
+   any grouping must preserve useful culling granularity. The current map has
+   no LODGroup coverage or occluder/occludee static flags.
+3. Evaluate shadow distance/cascade/object participation against visual needs.
+4. Re-measure the chosen change in a Development Player and actual gameplay.
+Collider activation is not the first intervention suggested by this evidence.
+
+Artifacts
+inventory.json, geometry.json: source inventory.
+measurements.json: four entrances, shadow and half-resolution conditions.
+ssao-measurements.json: SSAO/shadow interventions and original GPU outlier.
+confirm-measurements.json: longer-warmup confirmation.
+summary.csv: compact table derived from all 19 segments.
+gpu-utilization.csv: whole-device NVIDIA observations.
+N-city.png, N-open.png, N-city-noShadows.png: offscreen diagnostic images.
+setup.cs.txt, measure.cs.txt, measure-ssao.cs.txt, measure-confirm.cs.txt:
+exact executed diagnostic snippets (confirmation snippet's returned text says
+"4 cases"; its actual cases array contains two and JSON confirms two).
+pilot.json and north-city.png: preliminary run WITH Scene View contribution;
+do not use as final performance evidence.
+
+Restoration verified (restored.json)
+Stopped Play Mode, removed diagnostic camera/render target, closed only the
+temporarily loaded Game scene. Original clean _Menu remains with WorldCamera
+and WeaponCamera enabled. SSAO and TeammateOutline active; feature/pipeline
+assets not dirty. Original shadow parameters, render scale, VSync=1,
+runInBackground=true and Profiler disabled restored. Scene View gizmos restored.
+No new worktree or Library cache. Approximately 6.2 MB of audit artifacts on M:.

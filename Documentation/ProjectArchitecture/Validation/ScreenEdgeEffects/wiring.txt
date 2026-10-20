@@ -1,0 +1,4 @@
+_Menu/GameplayHUD Canvas/PlayerHUDCanvas/ScreenEdgeEffects
+Canvas=-5, existing HUD untouched.
+Pre-existing component snapshots preserved=1794
+No selection/focus/Play Mode used.

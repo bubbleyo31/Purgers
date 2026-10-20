@@ -1,0 +1,29 @@
+PASS authored HUD present
+PASS Runner connects Ok
+PASS authoritative damage accepted 1
+PASS new owner suppresses only legacy healing LGG
+PASS host healing applies
+PASS Runner connects Ok
+PASS late join no old transient replay
+PASS client is input authority only
+PASS authoritative damage accepted 2
+PASS no damage event leaked to host viewer
+PASS client cannot authorize damage
+PASS client cannot authorize healing
+PASS repeated healing accepted
+PASS repeated healing accepted
+PASS repeated healing accepted
+PASS repeated healing accepted
+PASS repeated healing accepted
+PASS continuous healing bounded and visible
+PASS authoritative damage accepted 10
+PASS authoritative damage accepted 11
+PASS authoritative damage accepted 12
+PASS authoritative damage accepted 13
+PASS authoritative damage accepted 14
+PASS continuous damage bounded and visible
+PASS fully blocked hit creates no red injury
+FAIL partial energy replicated: System.TimeoutException: partial energy replicated
+  at ScreenEdgeRuntimeVerification.Until (System.Func`1[TResult] predicate, System.String stage) [0x00035] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\ScreenEdgeRuntimeVerification.cs:45 
+  at ScreenEdgeRuntimeVerification.Begin () [0x00cdd] in M:\UnityProject\Purgers\Assets\Scripts\Tool\Testing\ScreenEdgeRuntimeVerification.cs:100 
+RESULT 失敗; final stage=partial energy replicated

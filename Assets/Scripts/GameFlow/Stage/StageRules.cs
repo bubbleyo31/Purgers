@@ -184,6 +184,27 @@ namespace Purgers.GameFlow.Stage
                    candidateChunkIndex == finalChunkIndex;
         }
 
+        public static bool IsExtractionPlacementAllowed(
+            int candidateChunkIndex,
+            int finalChunkIndex,
+            int chunkCount,
+            int candidateSide,
+            int entrySide,
+            int openSides)
+        {
+            // The validated linear topology starts at index 0 and ends at count - 1.
+            // Its entry is the player spawn side for one chunk, and the incoming
+            // connection for a later chunk. Never fall back to the starting chunk.
+            return chunkCount > 0 &&
+                   finalChunkIndex == chunkCount - 1 &&
+                   IsExtractionCandidateInFinalChunk(candidateChunkIndex, finalChunkIndex) &&
+                   candidateSide >= 0 && candidateSide < 4 &&
+                   entrySide >= 0 && entrySide < 4 &&
+                   (openSides & ~0b1111) == 0 &&
+                   candidateSide != entrySide &&
+                   (openSides & (1 << candidateSide)) == 0;
+        }
+
         public static int SelectExtractionCandidateIndex(
             int runSeed,
             IReadOnlyList<int> eligibleCandidateIndices)

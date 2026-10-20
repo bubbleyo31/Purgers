@@ -1,0 +1,48 @@
+{
+  "source": "Unity Graphics.Blit; historical static gameplay background",
+  "modes": {
+    "single": {
+      "frames": 70,
+      "fps": 25,
+      "duration_seconds": 2.8,
+      "center_alpha_max": 0,
+      "center_rgb_difference_max": 0,
+      "hud_rect_rgb_difference_max": {
+        "minimap": 0,
+        "quest": 0,
+        "ability_q": 0,
+        "ability_e": 0
+      },
+      "hud_foreground_samples_unchanged": true,
+      "top_alpha": 127,
+      "bottom_alpha": 118,
+      "start_end_same": true,
+      "at_1_2_seconds_active": false,
+      "gif_bytes": 1286257
+    },
+    "continuous": {
+      "frames": 125,
+      "fps": 25,
+      "duration_seconds": 5.0,
+      "center_alpha_max": 0,
+      "center_rgb_difference_max": 0,
+      "hud_rect_rgb_difference_max": {
+        "minimap": 0,
+        "quest": 0,
+        "ability_q": 0,
+        "ability_e": 0
+      },
+      "hud_foreground_samples_unchanged": true,
+      "top_alpha": 107,
+      "bottom_alpha": 99,
+      "start_end_same": true,
+      "at_1_2_seconds_active": true,
+      "gif_bytes": 6668241
+    }
+  },
+  "healing_control_difference_max": 0,
+  "ultrawide_size": [
+    1680,
+    720
+  ]
+}

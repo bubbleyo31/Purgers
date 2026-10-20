@@ -52,10 +52,11 @@ namespace Purgers.Progression
             {
                 if (reward == null || !reward.IsImplementedReward ||
                     string.IsNullOrWhiteSpace(reward.StableRewardId) ||
+                    reward.StableRewardId.Length > PlayerRewardNetworkState.MaximumRewardIdLength ||
                     !ids.Add(reward.StableRewardId))
                 {
                     pool = Array.Empty<RewardDraftEntry>();
-                    error = "獎勵清單含空值、重複 ID 或尚未實作的獎勵類別。";
+                    error = "獎勵清單含空值、重複／超過 32 字元的 ID 或尚未實作的獎勵類別。";
                     return false;
                 }
 

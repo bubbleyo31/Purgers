@@ -11,7 +11,7 @@ using UnityEngine.UI;
 /// never decides or applies a reward. StageHUD owns its serialized UI tree.
 /// </summary>
 [DisallowMultipleComponent]
-public sealed class LocalPlayerRewardHUD : MonoBehaviour
+public sealed partial class LocalPlayerRewardHUD : MonoBehaviour
 {
     [Serializable]
     private sealed class ChoiceCard
@@ -23,6 +23,7 @@ public sealed class LocalPlayerRewardHUD : MonoBehaviour
         public Image icon;
         public TMP_Text fallbackIcon;
         public GrowthRewardRankView rankView;
+        [NonSerialized] public HudKeyPromptLayout promptLayout;
     }
 
     [Header("本機 Runner 與獎勵資料")]
@@ -57,6 +58,7 @@ public sealed class LocalPlayerRewardHUD : MonoBehaviour
         new Color(1f, 0.82f, 0.2f, 1f);
 
     private InputManager inputManager;
+    private HudKeyPromptRow rewardPromptRow;
     private StageHudController ownerStageHud;
     private Purgers.GameFlow.SafeHouse.SafeHouseHudController ownerSafeHouseHud;
     private bool loggedAmbiguousRunner;
@@ -146,9 +148,10 @@ public sealed class LocalPlayerRewardHUD : MonoBehaviour
 
         bool showChoices = pending && inputManager.IsRewardSelectionActive &&
             draft.ChoiceCount > 0;
-        SetWindowVisible(showChoices);
-        if (showChoices)
-            RefreshChoices(draft);
+        bool replacing = inputManager.FocusSlotSelectionPending;
+        SetWindowVisible(showChoices && !replacing);
+        ShowReplacementWindow(replacing);
+        if (showChoices && !replacing) RefreshChoices(draft);
     }
 
     private bool TryResolveRunner()
@@ -228,13 +231,13 @@ public sealed class LocalPlayerRewardHUD : MonoBehaviour
                 : $"{experience.Experience} / {required}";
         if (altPromptLabel != null)
         {
-            string key = inputManager != null
-                ? inputManager.RewardHoldKeyLabel : "ALT";
+            KeyCode key = inputManager != null
+                ? inputManager.RewardHoldKey : Purgers.Settings.PlayerSettingsService.Key(Purgers.Settings.PlayerBinding.Rewards);
             bool pressed = inputManager != null &&
                 inputManager.IsRewardHoldKeyPressed;
-            altPromptLabel.text = choiceCount > 0
-                ? $"按住 <color=#{(pressed ? "38D8F0" : "FFFFFF")}>{key}</color> 選擇獎勵"
-                : "獎勵候選準備中";
+            if (rewardPromptRow == null) rewardPromptRow = new HudKeyPromptRow(altPromptLabel);
+            if (choiceCount > 0) rewardPromptRow.RefreshWithPrefix(key, "按住", "選擇升級獎勵", pressed);
+            else rewardPromptRow.ShowMessage("獎勵候選準備中");
         }
     }
 
@@ -299,7 +302,10 @@ public sealed class LocalPlayerRewardHUD : MonoBehaviour
             if (reward.GrowthKind == PlayerGrowthKind.GuardStamina) formatted = $"+{value:0.#}";
             card.description.text = reward.Description + $"\n升階後：{formatted}（本輪保留）";
         }
-        card.mouseButton.text = mouseButton;
+        if (card.promptLayout == null) card.promptLayout = HudKeyPromptLayout.Inside(card.mouseButton);
+        KeyCode choiceKey = mouseButton == "左鍵" ? KeyCode.Mouse0 : mouseButton == "中鍵" ? KeyCode.Mouse2 : KeyCode.Mouse1;
+        card.promptLayout.Refresh(choiceKey);
+        card.promptLayout.SetState(Input.GetKey(choiceKey));
         Sprite icon = card.rankView != null && reward.IsImplementedGrowthReward &&
             PlayerGrowthRules.IsAttribute(reward.GrowthKind) && reward.GrowthRankBackground != null
             ? reward.GrowthRankBackground : reward.HudIcon;
@@ -335,6 +341,7 @@ public sealed class LocalPlayerRewardHUD : MonoBehaviour
 
     private void SetWindowVisible(bool visible)
     {
+        if (!visible && replacementWindow != null) replacementWindow.gameObject.SetActive(false);
         if (choiceWindowGroup != null)
         {
             choiceWindowGroup.alpha = visible ? 1f : 0f;

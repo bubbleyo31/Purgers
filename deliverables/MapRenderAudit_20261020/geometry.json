@@ -1,0 +1,309 @@
+{
+  "triangles": 756336,
+  "uniqueMeshes": 3118,
+  "meshInstances": 8558,
+  "materials": [
+    {
+      "name": "D點_房子1",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "D點_房子2",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "D點_房子3",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "D點_房子4",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "Lit",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "D點_房子5",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "下出生點_右排_對面1",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "下出生點_右排_對面2",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "下出生點_右排_對面3",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "下出生點_右排_對面4",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "下出生點_右排2",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "下出生點_右排1",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "下出生點_左排6",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "下出生點_右排3",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "下出生點_右排4",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "下出生點_右排5",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "下出生點_右排6",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "下出生點_右排6-1-3",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "下出生點_右排7",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "下出生點_左排2",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "下出生點_左排_對面3",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "下出生點_左排_對面4",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "下出生點_左排_對面5",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "下出生點_左排1",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "下出生點_左排4",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "下出生點_左排5",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "下出生點_左排7",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "右出生點_右排3",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "右出生點_左排_橋房子6",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "右出生點_右排_房子5",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "右出生點_左排_房子2",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "右出生點_對面3",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "右出生點_左排_房子4",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "右出生點_左排_房子5",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "城牆_哨屆塔",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "樓梯",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "城牆_塔樓3",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "後面建築",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "TNT",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    },
+    {
+      "name": "Brick",
+      "enableInstancing": false,
+      "renderQueue": 2000,
+      "passCount": 7
+    }
+  ],
+  "rendererCountsByParent": [
+    {
+      "path": "MapChunk_Prototype/場景模型v1/右出生點_對面_房子3",
+      "directRenderers": 110
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v2(客製化區2)/右出生點_對面_房子3",
+      "directRenderers": 110
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/右出生點_對面_房子3",
+      "directRenderers": 110
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/右出生點_對面_房子2",
+      "directRenderers": 100
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/右出生點_左排_房子2",
+      "directRenderers": 100
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v2(客製化區2)/右出生點_對面_房子2",
+      "directRenderers": 100
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v2(客製化區2)/右出生點_左排_房子2",
+      "directRenderers": 100
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/四層大房B",
+      "directRenderers": 100
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/右出生點_對面_房子2",
+      "directRenderers": 100
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/四層大房B",
+      "directRenderers": 100
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/四層大房B (1)",
+      "directRenderers": 100
+    },
+    {
+      "path": "MapChunk_Prototype/額外自建/四層大房B (2)",
+      "directRenderers": 100
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/下出生點_左排_房子1",
+      "directRenderers": 86
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v1/右出生點_左排_房子1",
+      "directRenderers": 86
+    },
+    {
+      "path": "MapChunk_Prototype/場景模型v2(客製化區1)/四層小房A",
+      "directRenderers": 86
+    }
+  ]
+}

@@ -18,14 +18,21 @@ public partial class PlayerAbilityRuntimeManager
         { var runtime = GetEquippedRuntimeAtSlot(i); if (runtime != null && runtime.Definition.Category == category) return runtime; }
         return null;
     }
-    private bool TryEquipSingleStateAuthority(PlayerAbilityDefinition selected, PlayerAbilityRuntime incoming, out string error)
+    private bool TryEquipSingleStateAuthority(PlayerAbilityDefinition selected, PlayerAbilityRuntime incoming, out string error, int requestedFocusSlot = -1)
     {
         error = string.Empty;
         if (Object == null || !Object.HasStateAuthority || !StartingLoadoutApplied || LoadoutRevision <= 0 || selected == null || startingLoadout == null)
         { error = "能力管理器尚未就緒。"; return false; }
         var definitions = new List<PlayerAbilityDefinition>();
-        var previous = GetCategoryRuntime(selected.Category);
-        if (previous != null && previous.Definition == selected && incoming == null) return true;
+        if (!FocusAbilitySlotRules.CanAcquire(selected.AbilityId, GetEquippedAbilityIds()))
+        { error = "已持有此技能；重複技能強化與重複裝備尚未啟用。"; return false; }
+        bool focus = selected.Category == PlayerAbilityCategory.GrappleFocus;
+        int focusSlot = requestedFocusSlot == -1 ? FirstEmptyFocusSlot : requestedFocusSlot;
+        if (focus && !FocusAbilitySlotRules.IsSlot(focusSlot))
+        { error = "專注槽已滿，請選擇替換槽或先丟棄一項技能。"; return false; }
+        if (!focus && requestedFocusSlot != -1)
+        { error = "只有專注技能可指定 E／Z／X 槽。"; return false; }
+        var previous = focus ? GetFocusRuntime(focusSlot) : GetCategoryRuntime(selected.Category);
         int slot = previous != null ? previous.LoadoutSlotIndex : -1;
         for (int i = 0; i < MaximumAbilityRuntimeSlots; i++)
         {
@@ -39,12 +46,13 @@ public partial class PlayerAbilityRuntimeManager
         if (prefab == null || !prefab.ValidateConfiguration(selected, out error)) return false;
         if (incoming == null)
         {
-            var created = SpawnAbilityRuntime(new SpawnPlanEntry { SlotIndex = slot, Definition = selected });
+            var created = SpawnAbilityRuntime(new SpawnPlanEntry { SlotIndex = slot, FocusSlot = focus ? focusSlot : -1, Definition = selected });
             if (created == null) { error = "技能生成失敗，原裝備保留。"; return false; }
             incoming = created.GetComponent<PlayerAbilityRuntime>(); incoming.SkillLevel = 1; incoming.RequiredPlayerLevel = 1;
         }
         if (previous != null) previous.DropToWorld(ResolveDropPosition(), lootWorldMask.value);
         ActiveAbilityRuntimeObjects.Set(slot, incoming.Object);
+        incoming.FocusSlotIndex = focus ? focusSlot : -1;
         incoming.EquipFromWorld(Object, slot);
         LoadoutRevision++;
         return true;
@@ -77,6 +85,8 @@ public partial class PlayerAbilityRuntimeManager
         PlayerAbilityRuntime best = null; float bestDot = .65f;
         foreach (var runtime in PlayerAbilityRuntime.LiveRuntimes)
         {
+            if (runtime != null && runtime.Definition != null &&
+                GetEquippedRuntime(runtime.Definition) != null) continue;
             if (runtime == null || runtime.Object == null || !runtime.Object.IsValid || runtime.Runner != Runner || !runtime.IsWorldLoot) continue;
             Vector3 delta = runtime.LootPosition - origin;
             if (delta.magnitude > lootPickupDistance) continue;
@@ -91,9 +101,35 @@ public partial class PlayerAbilityRuntimeManager
         }
         return best;
     }
+    public bool TryPickupFocusLootStateAuthority(NetworkId target, int slot, int revision, out string error)
+    {
+        error = "掉落技能或槽位已變更，請重新選擇。";
+        if (Object == null || !Object.IsValid || !Object.HasStateAuthority ||
+            !FocusAbilitySlotRules.IsSlot(slot) || LoadoutRevision != revision) return false;
+        var owner = GetComponent<Player>();
+        var gate = GetComponent<PlayerActionGate>();
+        if (owner == null || owner.Health == null || !owner.Health.IsAlive ||
+            owner.Health.FindRescueCandidate() != null ||
+            (gate != null && (gate.IsCaptured || gate.IsBlocked(PlayerActionBlockMask.ActiveAbility)))) return false;
+        var loot = FindLootCandidate();
+        if (loot == null || loot.Object.Id != target || !loot.IsWorldLoot ||
+            loot.Definition.Category != PlayerAbilityCategory.GrappleFocus) return false;
+        var logic = GameLogic.GetPrimaryForRunner(Runner);
+        if (logic == null || !logic.TryGetPlayerExperience(Object.InputAuthority, out var xp) ||
+            xp.Level < loot.RequiredPlayerLevel || !PlayerAbilityQualification.IsAllowed(owner, loot.Definition)) return false;
+        if (!TryEquipSingleStateAuthority(loot.Definition, loot, out error, slot)) return false;
+        logic.RecordEquippedAbility(owner, loot);
+        return true;
+    }
     public void FilterLootInput(ref NetInput input)
     {
         if (Object == null || !Object.IsValid) return;
+        if (input.FocusLootTarget.IsValid && !input.SettingsMenuOpen &&
+            !PlayerControlLocks.BlocksCombat(input.BlockedControls))
+        {
+            TryPickupFocusLootStateAuthority(input.FocusLootTarget, input.FocusLootSlot, input.FocusLootLoadoutRevision, out _);
+            ClearFocusButtons(ref input.Buttons);
+        }
         bool held = input.Buttons.IsSet(InputButton.Ability1);
         if (!held) { LootEConsumed = false; return; }
         if (PlayerControlLocks.BlocksGameplay(input.BlockedControls)) return;
@@ -102,7 +138,8 @@ public partial class PlayerAbilityRuntimeManager
         if (!LootEConsumed && loot != null)
         {
             LootEConsumed = true;
-            if (Object.HasStateAuthority)
+            // Opening the local picker must never acquire focus loot. Hit-skill pickup is unchanged.
+            if (Object.HasStateAuthority && loot.Definition.Category != PlayerAbilityCategory.GrappleFocus)
             {
                 var logic = GameLogic.GetPrimaryForRunner(Runner);
                 if (logic != null && logic.TryGetPlayerExperience(Object.InputAuthority, out var xp) &&

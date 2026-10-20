@@ -84,6 +84,7 @@ public partial class PlayerAbilityRuntimeManager :
     private struct SpawnPlanEntry
     {
         public int SlotIndex;
+        public int FocusSlot;
         public PlayerAbilityDefinition Definition;
     }
 
@@ -320,8 +321,8 @@ public string[] GetEquippedAbilityIds()
         var actionGate = GetComponent<PlayerActionGate>();
         if (actionGate != null && actionGate.IsBlocked(PlayerActionBlockMask.ActiveAbility))
         {
-            input.Buttons.Set(InputButton.Ability1, false);
-            legacyInput.Buttons.Set(InputButton.Ability1, false);
+            ClearFocusButtons(ref input.Buttons);
+            ClearFocusButtons(ref legacyInput.Buttons);
         }
         RefreshOrderedRuntimeCache();
 
@@ -339,10 +340,19 @@ public string[] GetEquippedAbilityIds()
 
             if (runtime.IsBonusCast) continue;
             // 新 E 不沿用舊空中技能的鈎索／職業過濾；全域控制鎖已由 Player 與技能共用入口處理。
-            runtime.Simulate(
-                runtime.TryGetModule<PlayerActiveAbilityBase>(out _) ? input : legacyInput,
-                previousButtons
-            );
+            var routed = runtime.TryGetModule<PlayerActiveAbilityBase>(out _) ? input : legacyInput;
+            var previous = previousButtons;
+            if (runtime.Definition.Category == PlayerAbilityCategory.GrappleFocus)
+            {
+                var button = FocusButton(runtime.FocusSlotIndex);
+                bool held = FocusAbilitySlotRules.IsSlot(runtime.FocusSlotIndex) && routed.Buttons.IsSet(button);
+                bool wasHeld = FocusAbilitySlotRules.IsSlot(runtime.FocusSlotIndex) && previous.IsSet(button);
+                ClearFocusButtons(ref routed.Buttons);
+                ClearFocusButtons(ref previous);
+                routed.Buttons.Set(InputButton.Ability1, held);
+                previous.Set(InputButton.Ability1, wasHeld);
+            }
+            runtime.Simulate(routed, previous);
         }
         TickBonusAbility(input);
     }
@@ -469,6 +479,7 @@ public string[] GetEquippedAbilityIds()
     private void BuildAndSortSpawnPlan(IReadOnlyList<PlayerAbilityDefinition> abilities)
     {
         spawnPlan.Clear();
+        int focusSlot = 0;
 
         for (int i = 0;
             i < abilities.Count;
@@ -478,6 +489,7 @@ public string[] GetEquippedAbilityIds()
                 new SpawnPlanEntry
                 {
                     SlotIndex = i,
+                    FocusSlot = abilities[i].Category == PlayerAbilityCategory.GrappleFocus ? focusSlot++ : -1,
                     Definition = abilities[i]
                 }
             );
@@ -537,6 +549,7 @@ public string[] GetEquippedAbilityIds()
                         PlayerAbilityRuntime
                     >();
 
+                if (runtime != null) runtime.FocusSlotIndex = entry.FocusSlot;
                 runtime?.InitializeBeforeSpawn(
                     Object,
                     entry.SlotIndex

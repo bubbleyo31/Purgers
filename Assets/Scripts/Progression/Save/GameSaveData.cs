@@ -5,7 +5,7 @@ namespace Purgers.Progression
 {
     public static class GameSaveSchema
     {
-        public const int CurrentVersion = 5;
+        public const int CurrentVersion = 6;
         public const int DefaultCycleLength = 4;
         public const string HostPlayerId = "host";
     }
@@ -133,6 +133,9 @@ namespace Purgers.Progression
         public int HeldPassiveBits;
         public int EquippedHitLevel = 1;
         public int EquippedFocusLevel = 1;
+        // v6: preserve old E fields; empty Z/X retain their positions across saves.
+        public string EquippedFocusZId = string.Empty, EquippedFocusXId = string.Empty;
+        public int EquippedFocusZLevel = 1, EquippedFocusXLevel = 1;
         public List<string> PendingRewardCandidateIds = new List<string>();
         public List<string> AcquiredRewardIds = new List<string>();
         public string EquippedGrappleHitId = string.Empty;
@@ -166,6 +169,10 @@ namespace Purgers.Progression
             EquippedGrappleHitId = EquippedGrappleHitId ?? string.Empty;
             EquippedGrappleFocusId = EquippedGrappleFocusId ?? string.Empty;
             EquippedWeaponId = EquippedWeaponId ?? string.Empty;
+            EquippedFocusZId = EquippedFocusZId ?? string.Empty;
+            EquippedFocusXId = EquippedFocusXId ?? string.Empty;
+            EquippedFocusZLevel = Math.Max(1, EquippedFocusZLevel);
+            EquippedFocusXLevel = Math.Max(1, EquippedFocusXLevel);
             AcquiredCharacterBonusIds =
                 AcquiredCharacterBonusIds ?? new List<string>();
             InventoryItemIds = InventoryItemIds ?? new List<string>();

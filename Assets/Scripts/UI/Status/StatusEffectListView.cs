@@ -39,7 +39,7 @@ public sealed class StatusEffectListView : MonoBehaviour
         foreach (var row in rows) row.Root.gameObject.SetActive(false);
     }
     public void SetSelfCrosshairOffset(float offset, float leadingHeight) =>
-        ((RectTransform)transform).anchoredPosition = new Vector2(0,-offset-leadingHeight);
+        ((RectTransform)transform).anchoredPosition = new Vector2(((RectTransform)transform).anchoredPosition.x,-offset-leadingHeight);
     public void Present(StatusEffectSnapshot[] snapshots, int count, StatusEffectHudSettings settings, float width, bool self, float selfLeadingHeight = 0)
     {
         if (settings == null || snapshots == null) { Clear(); return; }
@@ -52,7 +52,7 @@ public sealed class StatusEffectListView : MonoBehaviour
         var rect = (RectTransform)transform;
         rect.anchorMin = rect.anchorMax = new Vector2(.5f, self ? .5f : 1);
         rect.pivot = new Vector2(.5f, self ? 1 : 0);
-        rect.anchoredPosition = new Vector2(0, self ? -Mathf.Max(0, settings.selfCrosshairOffset) - Mathf.Max(0,selfLeadingHeight) : Mathf.Max(0, settings.healthGap));
+        rect.anchoredPosition = new Vector2(self ? settings.selfHorizontalOffset : 0, self ? -Mathf.Max(0, settings.selfCrosshairOffset) - Mathf.Max(0,selfLeadingHeight) : Mathf.Max(0, settings.healthGap));
         int shown = 0;
         for (int i = 0; i < count; i++)
         {

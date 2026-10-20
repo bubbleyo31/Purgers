@@ -15,11 +15,11 @@ namespace Purgers.GameFlow.SafeHouse
 
         [Tooltip("提示內容；留空時不會自動改字。")]
         [SerializeField] private TMP_Text promptLabel;
+        private HudKeyPromptRow promptRow;
 
         private void Awake()
         {
-            if (promptLabel)
-                promptLabel.text = $"按 {PlayerSettingsService.Label(PlayerBinding.Interact)} 開始遊戲";
+            RefreshPrompt();
 
             SetPromptVisible(false);
         }
@@ -31,11 +31,19 @@ namespace Purgers.GameFlow.SafeHouse
                 flowController != null &&
                 flowController.CanLocalHostOpenReadyCheck();
 
-            if (promptLabel) promptLabel.text = $"按 {PlayerSettingsService.Label(PlayerBinding.Interact)} 開始遊戲";
+            RefreshPrompt();
             SetPromptVisible(canInteract);
 
             if (canInteract && PlayerSettingsService.Down(PlayerBinding.Interact))
                 flowController.RequestOpenReadyCheck();
+        }
+
+        private void RefreshPrompt()
+        {
+            if (promptLabel == null) return;
+            if (promptRow == null) promptRow = new HudKeyPromptRow(promptLabel, true);
+            var key = PlayerSettingsService.Key(PlayerBinding.Interact);
+            promptRow.Refresh(key, "開始遊戲", Input.GetKey(key));
         }
 
         private void OnDisable()

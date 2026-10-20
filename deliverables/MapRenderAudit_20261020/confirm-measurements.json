@@ -1,0 +1,2425 @@
+[
+  {
+    "name": "N-city-noSSAO-confirm",
+    "pos": "(-29.60, 4.60, 21.87)",
+    "yaw": 180.0,
+    "shadows": true,
+    "ao": false,
+    "width": 1920,
+    "height": 1080,
+    "fieldOfView": 70.0,
+    "cullingMask": 759,
+    "frustumRenderers": 7847,
+    "frames": 336,
+    "seconds": 5.0413832000012917,
+    "cameraGpuMs": 7.8213302876268118,
+    "cameraInlineCpuMs": 1.5060705340334348,
+    "counters": [
+      {
+        "name": "Inl_ScriptableRenderContext.Submit",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 337,
+        "mean": 6048568.2492581606,
+        "p95": 6967800.0,
+        "min": 0.0,
+        "max": 8409700.0
+      },
+      {
+        "name": "RenderLoop.DrawSRPBatcher",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 337,
+        "mean": 7085257.8635014836,
+        "p95": 8503900.0,
+        "min": 0.0,
+        "max": 11199500.0
+      },
+      {
+        "name": "DepthNormalPrepass",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 337,
+        "mean": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      {
+        "name": "Inl_DepthNormalPrepass",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 337,
+        "mean": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      {
+        "name": "SSAO",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 337,
+        "mean": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      {
+        "name": "Inl_SSAO",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 337,
+        "mean": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      {
+        "name": "CullScriptable",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 337,
+        "mean": 1445974.1839762612,
+        "p95": 1682800.0,
+        "min": 0.0,
+        "max": 1798400.0
+      },
+      {
+        "name": "WaitForJobGroupID",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 337,
+        "mean": 2037642.4332344213,
+        "p95": 2357100.0,
+        "min": 0.0,
+        "max": 2584500.0
+      },
+      {
+        "name": "Main Thread",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 337,
+        "mean": 14807692.878338279,
+        "p95": 16432800.0,
+        "min": 0.0,
+        "max": 18101000.0
+      },
+      {
+        "name": "CPU Render Thread Frame Time",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 337,
+        "mean": 5019967.3590504453,
+        "p95": 5529400.0,
+        "min": 0.0,
+        "max": 6242700.0
+      },
+      {
+        "name": "GPU Frame Time",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 337,
+        "mean": 8331111.9970326405,
+        "p95": 9571328.0,
+        "min": 0.0,
+        "max": 10758144.0
+      },
+      {
+        "name": "Draw Calls Count",
+        "valid": true,
+        "unit": "Count",
+        "samples": 337,
+        "mean": 10376.118694362018,
+        "p95": 10407.0,
+        "min": 0.0,
+        "max": 10407.0
+      },
+      {
+        "name": "Batches Count",
+        "valid": true,
+        "unit": "Count",
+        "samples": 337,
+        "mean": 10376.118694362018,
+        "p95": 10407.0,
+        "min": 0.0,
+        "max": 10407.0
+      },
+      {
+        "name": "SetPass Calls Count",
+        "valid": true,
+        "unit": "Count",
+        "samples": 337,
+        "mean": 68.795252225519292,
+        "p95": 69.0,
+        "min": 0.0,
+        "max": 69.0
+      },
+      {
+        "name": "Triangles Count",
+        "valid": true,
+        "unit": "Count",
+        "samples": 337,
+        "mean": 915037.67359050445,
+        "p95": 917761.0,
+        "min": 0.0,
+        "max": 917761.0
+      },
+      {
+        "name": "Vertices Count",
+        "valid": true,
+        "unit": "Count",
+        "samples": 337,
+        "mean": 1210101.5074183976,
+        "p95": 1213703.0,
+        "min": 0.0,
+        "max": 1213703.0
+      },
+      {
+        "name": "Inl_UniversalRenderTotal",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 337,
+        "mean": 8106654.5994065283,
+        "p95": 9218800.0,
+        "min": 0.0,
+        "max": 10580400.0
+      },
+      {
+        "name": "MainLightShadow",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 337,
+        "mean": 2795984.2729970329,
+        "p95": 3391000.0,
+        "min": 0.0,
+        "max": 3926200.0
+      },
+      {
+        "name": "Inl_MainLightShadow",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 337,
+        "mean": 29794.362017804153,
+        "p95": 34800.0,
+        "min": 0.0,
+        "max": 60500.0
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 337,
+        "mean": 7206907.715133531,
+        "p95": 8647700.0,
+        "min": 0.0,
+        "max": 11324900.0
+      },
+      {
+        "name": "Inl_DrawOpaqueObjects",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 337,
+        "mean": 14306.52818991098,
+        "p95": 16600.0,
+        "min": 0.0,
+        "max": 19600.0
+      },
+      {
+        "name": "Gfx.WaitForPresentOnGfxThread",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 337,
+        "mean": 281628.78338278929,
+        "p95": 529100.0,
+        "min": 0.0,
+        "max": 694400.0
+      },
+      {
+        "name": "Gfx.WaitForGfxCommandsFromMainThread",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 337,
+        "mean": 8680865.87537092,
+        "p95": 10053200.0,
+        "min": 2186100.0,
+        "max": 11689000.0
+      },
+      {
+        "name": "Physics.Simulate",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 337,
+        "mean": 61200.890207715136,
+        "p95": 103900.0,
+        "min": 0.0,
+        "max": 194800.0
+      },
+      {
+        "name": "UniversalRenderPipeline.RenderSingleCameraInternal: MapRenderAuditCamera",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 337,
+        "mean": 10593351.928783383,
+        "p95": 12445100.0,
+        "min": 0.0,
+        "max": 15405900.0
+      },
+      {
+        "name": "Inl_UniversalRenderPipeline.RenderSingleCameraInternal: MapRenderAuditCamera",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 337,
+        "mean": 1499993.7685459941,
+        "p95": 1778200.0,
+        "min": 0.0,
+        "max": 1973000.0
+      }
+    ],
+    "gpuSamples": [
+      {
+        "frame": 34455,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.128512,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.0863,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4537
+      },
+      {
+        "frame": 34458,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.673856,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 12.1076,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4405
+      },
+      {
+        "frame": 34461,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.453696,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 11.344,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4443
+      },
+      {
+        "frame": 34464,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.305664,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 11.6697,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3924
+      },
+      {
+        "frame": 34467,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.956928,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 11.0684,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4171
+      },
+      {
+        "frame": 34470,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.489984,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.8751,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5203
+      },
+      {
+        "frame": 34473,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.995392,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.7595,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4154
+      },
+      {
+        "frame": 34476,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.985152,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.4115,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.246
+      },
+      {
+        "frame": 34479,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.465408,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.8054,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4528
+      },
+      {
+        "frame": 34482,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.808,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 11.6484,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4909
+      },
+      {
+        "frame": 34485,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.54176,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 11.1328,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5681
+      },
+      {
+        "frame": 34488,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.35744,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 12.0693,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6395
+      },
+      {
+        "frame": 34491,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.83872,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.869,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.8332
+      },
+      {
+        "frame": 34494,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.436288,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.7093,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6702
+      },
+      {
+        "frame": 34497,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.973888,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.9232,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3888
+      },
+      {
+        "frame": 34500,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.503872,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.1224,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4277
+      },
+      {
+        "frame": 34503,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.26016,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 11.323,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4532
+      },
+      {
+        "frame": 34506,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 9.401344,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 11.6913,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4092
+      },
+      {
+        "frame": 34509,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.670208,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 11.7435,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3372
+      },
+      {
+        "frame": 34512,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.09984,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 11.8301,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3514
+      },
+      {
+        "frame": 34515,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.313408,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 11.6449,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5351
+      },
+      {
+        "frame": 34518,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.430144,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 12.1925,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5549
+      },
+      {
+        "frame": 34521,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.5264,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.9815,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6399
+      },
+      {
+        "frame": 34524,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.794688,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 11.5979,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6015
+      },
+      {
+        "frame": 34527,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.61856,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 15.406,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4592
+      },
+      {
+        "frame": 34530,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.310336,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.4804,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4154
+      },
+      {
+        "frame": 34533,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.437312,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.6649,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4251
+      },
+      {
+        "frame": 34536,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.569408,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.4908,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4556
+      },
+      {
+        "frame": 34539,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.927808,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.0472,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3741
+      },
+      {
+        "frame": 34542,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.31488,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.6076,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.552
+      },
+      {
+        "frame": 34545,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.698432,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.4954,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3902
+      },
+      {
+        "frame": 34548,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.050688,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.7953,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4482
+      },
+      {
+        "frame": 34551,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.712768,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.1139,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3945
+      },
+      {
+        "frame": 34554,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.571456,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 11.6738,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3083
+      },
+      {
+        "frame": 34557,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.095296,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.136,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5163
+      },
+      {
+        "frame": 34560,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.832576,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.376,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5705
+      },
+      {
+        "frame": 34563,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.153088,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.5015,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6276
+      },
+      {
+        "frame": 34566,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.161856,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.8191,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.7037
+      },
+      {
+        "frame": 34569,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.34208,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.134,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6247
+      },
+      {
+        "frame": 34572,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.287808,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 11.4659,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4258
+      },
+      {
+        "frame": 34575,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.379968,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.5665,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5037
+      },
+      {
+        "frame": 34578,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.000512,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.4927,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4541
+      },
+      {
+        "frame": 34581,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.59808,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.4889,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4121
+      },
+      {
+        "frame": 34584,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.896064,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.3918,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.39
+      },
+      {
+        "frame": 34587,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.964672,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.8781,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4442
+      },
+      {
+        "frame": 34590,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.503872,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 11.0444,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5055
+      },
+      {
+        "frame": 34593,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.136704,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.3955,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6111
+      },
+      {
+        "frame": 34596,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.953856,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 11.963,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4975
+      },
+      {
+        "frame": 34599,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.421952,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.0972,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.893
+      },
+      {
+        "frame": 34602,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.225344,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.4632,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6898
+      },
+      {
+        "frame": 34605,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.422976,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.1959,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5281
+      },
+      {
+        "frame": 34608,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.045568,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.7355,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.63
+      },
+      {
+        "frame": 34611,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.236608,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.3064,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.8538
+      },
+      {
+        "frame": 34614,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.165952,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.5815,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5766
+      },
+      {
+        "frame": 34617,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.323648,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.9537,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5093
+      },
+      {
+        "frame": 34620,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.44288,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.912,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3635
+      },
+      {
+        "frame": 34623,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.02976,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.3401,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6097
+      },
+      {
+        "frame": 34626,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.483392,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.6792,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3473
+      },
+      {
+        "frame": 34629,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.8064,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.0911,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3799
+      },
+      {
+        "frame": 34632,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.80288,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.5858,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.395
+      },
+      {
+        "frame": 34635,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.843264,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.8651,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4095
+      },
+      {
+        "frame": 34638,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.795712,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 8.9192,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3978
+      },
+      {
+        "frame": 34641,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.942144,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.1093,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4923
+      },
+      {
+        "frame": 34644,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.645184,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.9817,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3845
+      },
+      {
+        "frame": 34647,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.707072,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 12.1058,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.7825
+      },
+      {
+        "frame": 34650,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.2871037,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.659,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.7303
+      },
+      {
+        "frame": 34653,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.561216,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.8357,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6141
+      },
+      {
+        "frame": 34656,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.519232,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 11.5392,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4299
+      },
+      {
+        "frame": 34659,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.117824,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.6031,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5323
+      },
+      {
+        "frame": 34662,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.643584,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.1456,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3053
+      },
+      {
+        "frame": 34665,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 9.025536,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.1086,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3473
+      },
+      {
+        "frame": 34668,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 9.360384,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.1891,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.489
+      },
+      {
+        "frame": 34671,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.534592,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.8409,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3014
+      },
+      {
+        "frame": 34674,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.832576,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.9116,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3427
+      },
+      {
+        "frame": 34677,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.402496,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.931,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.483
+      },
+      {
+        "frame": 34680,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.476224,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 12.4783,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6442
+      },
+      {
+        "frame": 34683,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.717888,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.7211,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.728
+      },
+      {
+        "frame": 34686,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.766016,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.717,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.7646
+      },
+      {
+        "frame": 34689,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.263232,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 11.1657,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5849
+      },
+      {
+        "frame": 34692,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.440384,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.3073,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4064
+      },
+      {
+        "frame": 34695,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.293376,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.3988,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4129
+      },
+      {
+        "frame": 34698,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 6.966272,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.2159,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4266
+      },
+      {
+        "frame": 34701,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.57248,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.4178,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4552
+      },
+      {
+        "frame": 34704,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.610368,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.6732,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4329
+      },
+      {
+        "frame": 34707,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.88992,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.8523,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.382
+      },
+      {
+        "frame": 34710,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.11008,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.3766,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3561
+      },
+      {
+        "frame": 34713,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.84896,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.9215,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3337
+      },
+      {
+        "frame": 34716,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.791616,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 11.1181,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4391
+      },
+      {
+        "frame": 34719,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.276992,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.321,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4362
+      },
+      {
+        "frame": 34722,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.945664,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.7087,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6698
+      },
+      {
+        "frame": 34725,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.642112,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 13.1309,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.657
+      },
+      {
+        "frame": 34728,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.729152,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 11.8608,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.8201
+      },
+      {
+        "frame": 34731,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.424,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 12.7039,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.8093
+      },
+      {
+        "frame": 34734,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.184384,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.7324,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6991
+      },
+      {
+        "frame": 34737,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.79776,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.1034,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3447
+      },
+      {
+        "frame": 34740,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.110656,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.8082,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4239
+      },
+      {
+        "frame": 34743,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.217152,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.3368,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3935
+      },
+      {
+        "frame": 34746,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.24992,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.2994,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5156
+      },
+      {
+        "frame": 34749,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.973888,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.9717,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.373
+      },
+      {
+        "frame": 34752,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.68,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.0011,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5468
+      },
+      {
+        "frame": 34755,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.378368,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.0516,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4557
+      },
+      {
+        "frame": 34758,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.0833282,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.65,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3777
+      },
+      {
+        "frame": 34761,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 8.357888,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 11.0473,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4047
+      },
+      {
+        "frame": 34764,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.30624,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 11.5269,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4571
+      },
+      {
+        "frame": 34767,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.108608,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 11.4737,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6509
+      },
+      {
+        "frame": 34770,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 6.92736,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.3445,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.8199
+      },
+      {
+        "frame": 34773,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.482368,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 11.1361,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5351
+      },
+      {
+        "frame": 34776,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.568384,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 11.1,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6258
+      },
+      {
+        "frame": 34779,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.589888,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.3075,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6428
+      },
+      {
+        "frame": 34782,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.479296,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.8599,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6163
+      },
+      {
+        "frame": 34785,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.754752,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 9.7932,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6019
+      },
+      {
+        "frame": 34788,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 7.419904,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 10.1924,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4258
+      }
+    ]
+  },
+  {
+    "name": "N-city-baseline-confirm",
+    "pos": "(-29.60, 4.60, 21.87)",
+    "yaw": 180.0,
+    "shadows": true,
+    "ao": true,
+    "width": 1920,
+    "height": 1080,
+    "fieldOfView": 70.0,
+    "cullingMask": 759,
+    "frustumRenderers": 7847,
+    "frames": 270,
+    "seconds": 5.3929688000025635,
+    "cameraGpuMs": 11.126363663924367,
+    "cameraInlineCpuMs": 1.5907178966622604,
+    "counters": [
+      {
+        "name": "Inl_ScriptableRenderContext.Submit",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 271,
+        "mean": 9469329.5202952027,
+        "p95": 11430100.0,
+        "min": 0.0,
+        "max": 16501000.0
+      },
+      {
+        "name": "RenderLoop.DrawSRPBatcher",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 271,
+        "mean": 13124607.01107011,
+        "p95": 16217500.0,
+        "min": 0.0,
+        "max": 24532700.0
+      },
+      {
+        "name": "DepthNormalPrepass",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 271,
+        "mean": 5437405.1660516607,
+        "p95": 7166400.0,
+        "min": 0.0,
+        "max": 10795000.0
+      },
+      {
+        "name": "Inl_DepthNormalPrepass",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 271,
+        "mean": 7680.4428044280439,
+        "p95": 9100.0,
+        "min": 0.0,
+        "max": 13200.0
+      },
+      {
+        "name": "SSAO",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 271,
+        "mean": 111583.76383763837,
+        "p95": 140700.0,
+        "min": 0.0,
+        "max": 227500.0
+      },
+      {
+        "name": "Inl_SSAO",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 271,
+        "mean": 31810.701107011071,
+        "p95": 37600.0,
+        "min": 0.0,
+        "max": 40500.0
+      },
+      {
+        "name": "CullScriptable",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 271,
+        "mean": 1468401.47601476,
+        "p95": 1703100.0,
+        "min": 0.0,
+        "max": 1902200.0
+      },
+      {
+        "name": "WaitForJobGroupID",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 271,
+        "mean": 2117063.0996309961,
+        "p95": 2482700.0,
+        "min": 0.0,
+        "max": 2711100.0
+      },
+      {
+        "name": "Main Thread",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 271,
+        "mean": 18483554.243542437,
+        "p95": 21369200.0,
+        "min": 0.0,
+        "max": 26580700.0
+      },
+      {
+        "name": "CPU Render Thread Frame Time",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 271,
+        "mean": 7147718.0774907749,
+        "p95": 8119700.0,
+        "min": 0.0,
+        "max": 8998700.0
+      },
+      {
+        "name": "GPU Frame Time",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 271,
+        "mean": 11661769.210332103,
+        "p95": 13918208.0,
+        "min": 0.0,
+        "max": 18468864.0
+      },
+      {
+        "name": "Draw Calls Count",
+        "valid": true,
+        "unit": "Count",
+        "samples": 271,
+        "mean": 18189.630996309963,
+        "p95": 18257.0,
+        "min": 0.0,
+        "max": 18257.0
+      },
+      {
+        "name": "Batches Count",
+        "valid": true,
+        "unit": "Count",
+        "samples": 271,
+        "mean": 18189.630996309963,
+        "p95": 18257.0,
+        "min": 0.0,
+        "max": 18257.0
+      },
+      {
+        "name": "SetPass Calls Count",
+        "valid": true,
+        "unit": "Count",
+        "samples": 271,
+        "mean": 92.656826568265686,
+        "p95": 93.0,
+        "min": 0.0,
+        "max": 93.0
+      },
+      {
+        "name": "Triangles Count",
+        "valid": true,
+        "unit": "Count",
+        "samples": 271,
+        "mean": 1607288.0811808119,
+        "p95": 1613241.0,
+        "min": 0.0,
+        "max": 1613241.0
+      },
+      {
+        "name": "Vertices Count",
+        "valid": true,
+        "unit": "Count",
+        "samples": 271,
+        "mean": 2124689.7785977861,
+        "p95": 2132559.0,
+        "min": 0.0,
+        "max": 2132559.0
+      },
+      {
+        "name": "Inl_UniversalRenderTotal",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 271,
+        "mean": 11678494.095940959,
+        "p95": 13770100.0,
+        "min": 0.0,
+        "max": 18993800.0
+      },
+      {
+        "name": "MainLightShadow",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 271,
+        "mean": 3035428.0442804429,
+        "p95": 3674600.0,
+        "min": 0.0,
+        "max": 5336100.0
+      },
+      {
+        "name": "Inl_MainLightShadow",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 271,
+        "mean": 29478.228782287824,
+        "p95": 37400.0,
+        "min": 0.0,
+        "max": 61200.0
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 271,
+        "mean": 7930033.9483394837,
+        "p95": 9898100.0,
+        "min": 0.0,
+        "max": 14039400.0
+      },
+      {
+        "name": "Inl_DrawOpaqueObjects",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 271,
+        "mean": 11660.885608856088,
+        "p95": 13700.0,
+        "min": 0.0,
+        "max": 18700.0
+      },
+      {
+        "name": "Gfx.WaitForPresentOnGfxThread",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 271,
+        "mean": 237263.46863468635,
+        "p95": 517800.0,
+        "min": 0.0,
+        "max": 710400.0
+      },
+      {
+        "name": "Gfx.WaitForGfxCommandsFromMainThread",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 271,
+        "mean": 10302414.022140222,
+        "p95": 12029400.0,
+        "min": 2178900.0,
+        "max": 17529900.0
+      },
+      {
+        "name": "Physics.Simulate",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 271,
+        "mean": 79589.298892988925,
+        "p95": 117900.0,
+        "min": 0.0,
+        "max": 227400.0
+      },
+      {
+        "name": "UniversalRenderPipeline.RenderSingleCameraInternal: MapRenderAuditCamera",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 271,
+        "mean": 17213116.605166052,
+        "p95": 21216400.0,
+        "min": 0.0,
+        "max": 30396900.0
+      },
+      {
+        "name": "Inl_UniversalRenderPipeline.RenderSingleCameraInternal: MapRenderAuditCamera",
+        "valid": true,
+        "unit": "TimeNanoseconds",
+        "samples": 271,
+        "mean": 1588040.2214022139,
+        "p95": 1860700.0,
+        "min": 0.0,
+        "max": 2161700.0
+      }
+    ],
+    "gpuSamples": [
+      {
+        "frame": 35064,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.6383362,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 16.8204,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.7955
+      },
+      {
+        "frame": 35067,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.88512,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 16.5349,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6009
+      },
+      {
+        "frame": 35070,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 12.0279036,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 18.0116,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6846
+      },
+      {
+        "frame": 35073,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.7182083,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 17.4891,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4944
+      },
+      {
+        "frame": 35076,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.31168,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 18.7175,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3847
+      },
+      {
+        "frame": 35078,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 12.7242241,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 22.5103,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6296
+      },
+      {
+        "frame": 35081,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.4007683,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 16.1473,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5936
+      },
+      {
+        "frame": 35084,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.6782722,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 14.5426,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4717
+      },
+      {
+        "frame": 35087,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.4529924,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 17.6885,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4112
+      },
+      {
+        "frame": 35090,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.7493763,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 19.1656,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5917
+      },
+      {
+        "frame": 35093,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 13.4430723,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 16.5786,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5546
+      },
+      {
+        "frame": 35096,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.9393921,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 20.2436,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.8294
+      },
+      {
+        "frame": 35099,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.17696,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 18.8325,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.8189
+      },
+      {
+        "frame": 35102,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 13.52192,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 18.345,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5854
+      },
+      {
+        "frame": 35104,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 12.053504,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 20.0395,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6531
+      },
+      {
+        "frame": 35106,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 13.156352,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 21.2165,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5309
+      },
+      {
+        "frame": 35108,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 14.1742077,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 21.5362,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.702
+      },
+      {
+        "frame": 35110,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 13.4236164,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 21.3662,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.7836
+      },
+      {
+        "frame": 35112,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 13.9499521,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 20.5033,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.7327
+      },
+      {
+        "frame": 35114,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 13.16352,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 18.3403,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5215
+      },
+      {
+        "frame": 35116,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.8251524,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 19.6456,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5878
+      },
+      {
+        "frame": 35118,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 12.9044476,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 21.3333,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5143
+      },
+      {
+        "frame": 35121,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 9.931776,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 17.3168,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.9048
+      },
+      {
+        "frame": 35124,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.0192642,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 15.9902,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6641
+      },
+      {
+        "frame": 35127,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.3233919,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 17.3023,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4517
+      },
+      {
+        "frame": 35130,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.56096,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 16.7612,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6147
+      },
+      {
+        "frame": 35133,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.20256,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 15.9999,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.7407
+      },
+      {
+        "frame": 35136,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 12.3197441,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 17.0325,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6582
+      },
+      {
+        "frame": 35139,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.6168318,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 16.4233,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.7996
+      },
+      {
+        "frame": 35142,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.9168644,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 15.642,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5443
+      },
+      {
+        "frame": 35145,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.7176323,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 16.259,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3889
+      },
+      {
+        "frame": 35148,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.78784,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 16.8359,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.7698
+      },
+      {
+        "frame": 35151,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.4888325,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 16.5998,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4334
+      },
+      {
+        "frame": 35154,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.3899517,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 16.4636,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4468
+      },
+      {
+        "frame": 35157,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.31008,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 19.9375,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4524
+      },
+      {
+        "frame": 35160,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.0704641,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 18.056,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4527
+      },
+      {
+        "frame": 35163,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 9.96864,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 15.6746,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4865
+      },
+      {
+        "frame": 35166,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.2973442,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 17.8402,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5506
+      },
+      {
+        "frame": 35169,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 9.520128,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 16.9638,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.8492
+      },
+      {
+        "frame": 35172,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.0417919,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 17.3747,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5015
+      },
+      {
+        "frame": 35175,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.5691519,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 16.7606,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5581
+      },
+      {
+        "frame": 35178,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.7591677,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 16.4169,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5684
+      },
+      {
+        "frame": 35181,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 9.747456,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 16.1079,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3889
+      },
+      {
+        "frame": 35184,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.30656,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 16.2453,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5532
+      },
+      {
+        "frame": 35187,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.5216,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 17.4065,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3857
+      },
+      {
+        "frame": 35190,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.0714884,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 17.2679,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4081
+      },
+      {
+        "frame": 35193,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 9.974784,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 16.6885,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.572
+      },
+      {
+        "frame": 35196,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 12.32896,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 16.6059,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5144
+      },
+      {
+        "frame": 35199,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 9.534464,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 20.3815,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.8753
+      },
+      {
+        "frame": 35202,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.7458563,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 15.2901,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4999
+      },
+      {
+        "frame": 35205,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.43968,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 15.607,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4455
+      },
+      {
+        "frame": 35208,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.3075838,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 19.0097,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.7241
+      },
+      {
+        "frame": 35211,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.00448,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 16.5842,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4276
+      },
+      {
+        "frame": 35214,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.3182716,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 14.8739,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4303
+      },
+      {
+        "frame": 35217,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.1943684,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 17.3161,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.7415
+      },
+      {
+        "frame": 35220,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.2676477,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 17.9731,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4597
+      },
+      {
+        "frame": 35223,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.7934084,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 16.1871,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4647
+      },
+      {
+        "frame": 35226,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.3301125,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 20.1722,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.8008
+      },
+      {
+        "frame": 35229,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 9.357312,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 14.4112,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4815
+      },
+      {
+        "frame": 35232,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.15136,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 15.3443,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5162
+      },
+      {
+        "frame": 35235,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.6926079,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 17.484,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.461
+      },
+      {
+        "frame": 35238,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 9.93792,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 15.7029,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.8353
+      },
+      {
+        "frame": 35241,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 9.88672,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 15.5082,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5135
+      },
+      {
+        "frame": 35244,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.33728,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 15.1643,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3845
+      },
+      {
+        "frame": 35247,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.6219521,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 19.3839,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3494
+      },
+      {
+        "frame": 35250,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.5906563,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 17.7526,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4733
+      },
+      {
+        "frame": 35253,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.8138876,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 17.439,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5816
+      },
+      {
+        "frame": 35256,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.9199362,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 20.0155,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3486
+      },
+      {
+        "frame": 35259,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 9.667584,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 16.1899,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5454
+      },
+      {
+        "frame": 35262,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.427392,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 16.1957,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4174
+      },
+      {
+        "frame": 35265,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.613184,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 20.4094,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5618
+      },
+      {
+        "frame": 35268,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.7499523,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 17.4513,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.7104
+      },
+      {
+        "frame": 35271,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 9.623552,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 14.5097,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5606
+      },
+      {
+        "frame": 35274,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.4878082,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 16.8538,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3911
+      },
+      {
+        "frame": 35277,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.2543364,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 16.647,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.685
+      },
+      {
+        "frame": 35280,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 9.890816,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 16.667,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.3901
+      },
+      {
+        "frame": 35283,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.6229763,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 14.334,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4865
+      },
+      {
+        "frame": 35286,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.0428162,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 18.6111,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.4293
+      },
+      {
+        "frame": 35289,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 9.500672,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 15.8926,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6885
+      },
+      {
+        "frame": 35292,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.0935678,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 15.4526,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6436
+      },
+      {
+        "frame": 35295,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.99616,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 18.9916,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.536
+      },
+      {
+        "frame": 35298,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 12.553216,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 17.8532,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.8333
+      },
+      {
+        "frame": 35301,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.7847681,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 18.0541,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.628
+      },
+      {
+        "frame": 35303,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.0448637,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 17.5467,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.9329
+      },
+      {
+        "frame": 35305,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.79296,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 18.1949,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5401
+      },
+      {
+        "frame": 35308,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 12.34432,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 19.0289,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.8607
+      },
+      {
+        "frame": 35310,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 12.2705917,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 21.3116,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6466
+      },
+      {
+        "frame": 35313,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.2148476,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 15.2409,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5379
+      },
+      {
+        "frame": 35316,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 12.5265923,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 19.2905,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5116
+      },
+      {
+        "frame": 35319,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 10.99264,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 22.834,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.7603
+      },
+      {
+        "frame": 35321,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 13.30176,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 18.0062,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 2.1618
+      },
+      {
+        "frame": 35323,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.5210238,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 25.7551,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.7157
+      },
+      {
+        "frame": 35326,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 9.956352,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 17.0725,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.6264
+      },
+      {
+        "frame": 35328,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.2291842,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 19.4433,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.5315
+      },
+      {
+        "frame": 35331,
+        "gpuSampleCount": 1,
+        "gpuElapsedTime": 11.172864,
+        "cpuSampleCount": 2,
+        "cpuElapsedTime": 17.8265,
+        "inlineCpuSampleCount": 1,
+        "inlineCpuElapsedTime": 1.8406
+      }
+    ]
+  }
+]

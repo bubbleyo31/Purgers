@@ -1181,8 +1181,7 @@ public partial class TankMeleeCombo :
          * Client Prediction 不會再送出第二次。
          */
         TryPlayWorldSwing(
-            CurrentStep,
-            GetMeleeOrigin()
+            CurrentStep
         );
 
         // =============================================================
@@ -1298,11 +1297,10 @@ public partial class TankMeleeCombo :
     }
 
     /// <summary>
-    /// 依 Tank Combo Step 選擇並廣播一次世界揮擊聲。
+    /// 依 Tank Combo Step 廣播世界揮擊聲，音檔播放期間持續跟隨 Player。
     /// </summary>
     private void TryPlayWorldSwing(
-        TankMeleeComboStep step,
-        Vector3 worldPosition
+        TankMeleeComboStep step
     )
     {
         if (Object == null ||
@@ -1367,9 +1365,8 @@ public partial class TankMeleeCombo :
         }
 
         networkAudioEmitter
-            .PlayWorldOneShotFromStateAuthority(
+            .PlayFollowingWorldOneShotFromStateAuthority(
                 selectedCue,
-                worldPosition,
                 worldSwingVolumeScale
             );
     }

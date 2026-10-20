@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="35" result="Passed" total="35" passed="35" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-20 16:12:23Z" end-time="2026-10-20 16:12:25Z" duration="1.9545623">
+  <test-suite type="TestSuite" id="2580" name="Purgers" fullname="Purgers" runstate="Runnable" testcasecount="1262" result="Passed" start-time="2026-10-20 16:12:23Z" end-time="2026-10-20 16:12:25Z" duration="1.954562" total="35" passed="35" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <test-suite type="Assembly" id="4153" name="Assembly-CSharp-Editor.dll" fullname="M:/CodexWorktrees/extraction-placement/Purgers/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll" runstate="Runnable" testcasecount="1262" result="Passed" start-time="2026-10-20 16:12:23Z" end-time="2026-10-20 16:12:25Z" duration="1.918968" total="35" passed="35" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="36964" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+      </properties>
+      <test-suite type="TestFixture" id="3882" name="StageRulesTests" fullname="StageRulesTests" classname="StageRulesTests" runstate="Runnable" testcasecount="35" result="Passed" start-time="2026-10-20 16:12:23Z" end-time="2026-10-20 16:12:25Z" duration="1.894401" total="35" passed="35" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties>
+          <property name="Category" value="PurgersRegression" />
+        </properties>
+        <test-suite type="ParameterizedMethod" id="3886" name="AuthoredExtractionCandidatesKeepThreeLegalSidesForEveryEntry" fullname="StageRulesTests.AuthoredExtractionCandidatesKeepThreeLegalSidesForEveryEntry" classname="StageRulesTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-20 16:12:23Z" end-time="2026-10-20 16:12:25Z" duration="1.840146" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="3883" name="AuthoredExtractionCandidatesKeepThreeLegalSidesForEveryEntry(1)" fullname="StageRulesTests.AuthoredExtractionCandidatesKeepThreeLegalSidesForEveryEntry(1)" methodname="AuthoredExtractionCandidatesKeepThreeLegalSidesForEveryEntry" classname="StageRulesTests" runstate="Runnable" seed="919536460" result="Passed" start-time="2026-10-20 16:12:23Z" end-time="2026-10-20 16:12:25Z" duration="1.533077" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3884" name="AuthoredExtractionCandidatesKeepThreeLegalSidesForEveryEntry(2)" fullname="StageRulesTests.AuthoredExtractionCandidatesKeepThreeLegalSidesForEveryEntry(2)" methodname="AuthoredExtractionCandidatesKeepThreeLegalSidesForEveryEntry" classname="StageRulesTests" runstate="Runnable" seed="867761764" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.153729" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3885" name="AuthoredExtractionCandidatesKeepThreeLegalSidesForEveryEntry(3)" fullname="StageRulesTests.AuthoredExtractionCandidatesKeepThreeLegalSidesForEveryEntry(3)" methodname="AuthoredExtractionCandidatesKeepThreeLegalSidesForEveryEntry" classname="StageRulesTests" runstate="Runnable" seed="1814749493" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.143030" asserts="0">
+            <properties />
+          </test-case>
+        </test-suite>
+        <test-case id="3911" name="BossRuntimePlanOwnsMapObjectiveExtractionAndDefaultTiming" fullname="StageRulesTests.BossRuntimePlanOwnsMapObjectiveExtractionAndDefaultTiming" methodname="BossRuntimePlanOwnsMapObjectiveExtractionAndDefaultTiming" classname="StageRulesTests" runstate="Runnable" seed="1878696914" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.007328" asserts="0">
+          <properties />
+        </test-case>
+        <test-case id="3912" name="BossTimeLimitCanBeEnabledWithoutChangingBossIdentity" fullname="StageRulesTests.BossTimeLimitCanBeEnabledWithoutChangingBossIdentity" methodname="BossTimeLimitCanBeEnabledWithoutChangingBossIdentity" classname="StageRulesTests" runstate="Runnable" seed="1809579749" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000530" asserts="0">
+          <properties />
+        </test-case>
+        <test-suite type="ParameterizedMethod" id="3918" name="CycleRulesMatchConfiguredLoop" fullname="StageRulesTests.CycleRulesMatchConfiguredLoop" classname="StageRulesTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.010109" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="3913" name="CycleRulesMatchConfiguredLoop(1,4,1,0,False)" fullname="StageRulesTests.CycleRulesMatchConfiguredLoop(1,4,1,0,False)" methodname="CycleRulesMatchConfiguredLoop" classname="StageRulesTests" runstate="Runnable" seed="250650592" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.001441" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3914" name="CycleRulesMatchConfiguredLoop(2,4,2,1,False)" fullname="StageRulesTests.CycleRulesMatchConfiguredLoop(2,4,2,1,False)" methodname="CycleRulesMatchConfiguredLoop" classname="StageRulesTests" runstate="Runnable" seed="107923892" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000356" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3915" name="CycleRulesMatchConfiguredLoop(4,4,4,3,True)" fullname="StageRulesTests.CycleRulesMatchConfiguredLoop(4,4,4,3,True)" methodname="CycleRulesMatchConfiguredLoop" classname="StageRulesTests" runstate="Runnable" seed="2020433895" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000091" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3916" name="CycleRulesMatchConfiguredLoop(5,4,1,0,False)" fullname="StageRulesTests.CycleRulesMatchConfiguredLoop(5,4,1,0,False)" methodname="CycleRulesMatchConfiguredLoop" classname="StageRulesTests" runstate="Runnable" seed="1050738209" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000085" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3917" name="CycleRulesMatchConfiguredLoop(8,4,4,3,True)" fullname="StageRulesTests.CycleRulesMatchConfiguredLoop(8,4,4,3,True)" methodname="CycleRulesMatchConfiguredLoop" classname="StageRulesTests" runstate="Runnable" seed="2101355271" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000088" asserts="0">
+            <properties />
+          </test-case>
+        </test-suite>
+        <test-suite type="ParameterizedMethod" id="3924" name="ExtractionCandidatesBelongOnlyToPublishedFinalChunk" fullname="StageRulesTests.ExtractionCandidatesBelongOnlyToPublishedFinalChunk" classname="StageRulesTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.001495" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="3921" name="ExtractionCandidatesBelongOnlyToPublishedFinalChunk(2,2,True)" fullname="StageRulesTests.ExtractionCandidatesBelongOnlyToPublishedFinalChunk(2,2,True)" methodname="ExtractionCandidatesBelongOnlyToPublishedFinalChunk" classname="StageRulesTests" runstate="Runnable" seed="599869245" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000443" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3922" name="ExtractionCandidatesBelongOnlyToPublishedFinalChunk(0,2,False)" fullname="StageRulesTests.ExtractionCandidatesBelongOnlyToPublishedFinalChunk(0,2,False)" methodname="ExtractionCandidatesBelongOnlyToPublishedFinalChunk" classname="StageRulesTests" runstate="Runnable" seed="292516045" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000100" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3923" name="ExtractionCandidatesBelongOnlyToPublishedFinalChunk(2,-1,False)" fullname="StageRulesTests.ExtractionCandidatesBelongOnlyToPublishedFinalChunk(2,-1,False)" methodname="ExtractionCandidatesBelongOnlyToPublishedFinalChunk" classname="StageRulesTests" runstate="Runnable" seed="429008858" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000090" asserts="0">
+            <properties />
+          </test-case>
+        </test-suite>
+        <test-suite type="ParameterizedMethod" id="3890" name="ExtractionExcludesEntrySideAndKeepsOtherFinalChunkSides" fullname="StageRulesTests.ExtractionExcludesEntrySideAndKeepsOtherFinalChunkSides" classname="StageRulesTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.001382" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="3887" name="ExtractionExcludesEntrySideAndKeepsOtherFinalChunkSides(1,0,0)" fullname="StageRulesTests.ExtractionExcludesEntrySideAndKeepsOtherFinalChunkSides(1,0,0)" methodname="ExtractionExcludesEntrySideAndKeepsOtherFinalChunkSides" classname="StageRulesTests" runstate="Runnable" seed="82937306" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000441" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3888" name="ExtractionExcludesEntrySideAndKeepsOtherFinalChunkSides(2,1,3)" fullname="StageRulesTests.ExtractionExcludesEntrySideAndKeepsOtherFinalChunkSides(2,1,3)" methodname="ExtractionExcludesEntrySideAndKeepsOtherFinalChunkSides" classname="StageRulesTests" runstate="Runnable" seed="568852931" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000129" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3889" name="ExtractionExcludesEntrySideAndKeepsOtherFinalChunkSides(3,2,2)" fullname="StageRulesTests.ExtractionExcludesEntrySideAndKeepsOtherFinalChunkSides(3,2,2)" methodname="ExtractionExcludesEntrySideAndKeepsOtherFinalChunkSides" classname="StageRulesTests" runstate="Runnable" seed="1274501170" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000116" asserts="0">
+            <properties />
+          </test-case>
+        </test-suite>
+        <test-suite type="ParameterizedMethod" id="3897" name="ExtractionRejectsStartingChunkConnectedSidesAndInvalidMetadata" fullname="StageRulesTests.ExtractionRejectsStartingChunkConnectedSidesAndInvalidMetadata" classname="StageRulesTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.001833" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="3891" name="ExtractionRejectsStartingChunkConnectedSidesAndInvalidMetadata(0,1,2,1,0,1)" fullname="StageRulesTests.ExtractionRejectsStartingChunkConnectedSidesAndInvalidMetadata(0,1,2,1,0,1)" methodname="ExtractionRejectsStartingChunkConnectedSidesAndInvalidMetadata" classname="StageRulesTests" runstate="Runnable" seed="974645039" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000413" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3892" name="ExtractionRejectsStartingChunkConnectedSidesAndInvalidMetadata(0,0,2,1,0,1)" fullname="StageRulesTests.ExtractionRejectsStartingChunkConnectedSidesAndInvalidMetadata(0,0,2,1,0,1)" methodname="ExtractionRejectsStartingChunkConnectedSidesAndInvalidMetadata" classname="StageRulesTests" runstate="Runnable" seed="1982648641" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000091" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3893" name="ExtractionRejectsStartingChunkConnectedSidesAndInvalidMetadata(1,1,2,2,0,5)" fullname="StageRulesTests.ExtractionRejectsStartingChunkConnectedSidesAndInvalidMetadata(1,1,2,2,0,5)" methodname="ExtractionRejectsStartingChunkConnectedSidesAndInvalidMetadata" classname="StageRulesTests" runstate="Runnable" seed="1938175596" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000079" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3894" name="ExtractionRejectsStartingChunkConnectedSidesAndInvalidMetadata(0,0,1,-1,0,0)" fullname="StageRulesTests.ExtractionRejectsStartingChunkConnectedSidesAndInvalidMetadata(0,0,1,-1,0,0)" methodname="ExtractionRejectsStartingChunkConnectedSidesAndInvalidMetadata" classname="StageRulesTests" runstate="Runnable" seed="1972781130" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000074" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3895" name="ExtractionRejectsStartingChunkConnectedSidesAndInvalidMetadata(0,0,1,4,0,0)" fullname="StageRulesTests.ExtractionRejectsStartingChunkConnectedSidesAndInvalidMetadata(0,0,1,4,0,0)" methodname="ExtractionRejectsStartingChunkConnectedSidesAndInvalidMetadata" classname="StageRulesTests" runstate="Runnable" seed="1361899347" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000071" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3896" name="ExtractionRejectsStartingChunkConnectedSidesAndInvalidMetadata(0,0,1,1,-1,0)" fullname="StageRulesTests.ExtractionRejectsStartingChunkConnectedSidesAndInvalidMetadata(0,0,1,1,-1,0)" methodname="ExtractionRejectsStartingChunkConnectedSidesAndInvalidMetadata" classname="StageRulesTests" runstate="Runnable" seed="1749878995" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000074" asserts="0">
+            <properties />
+          </test-case>
+        </test-suite>
+        <test-case id="3919" name="ExtractionRequiresEveryLivingPlayerInside" fullname="StageRulesTests.ExtractionRequiresEveryLivingPlayerInside" methodname="ExtractionRequiresEveryLivingPlayerInside" classname="StageRulesTests" runstate="Runnable" seed="1958676323" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000290" asserts="0">
+          <properties />
+        </test-case>
+        <test-case id="3920" name="ExtractionSelectionIsDeterministicAndReturnsOnlyEligibleCandidate" fullname="StageRulesTests.ExtractionSelectionIsDeterministicAndReturnsOnlyEligibleCandidate" methodname="ExtractionSelectionIsDeterministicAndReturnsOnlyEligibleCandidate" classname="StageRulesTests" runstate="Runnable" seed="1755378555" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000661" asserts="0">
+          <properties />
+        </test-case>
+        <test-suite type="ParameterizedMethod" id="3902" name="ExtractionSideUsesChunkConnectorsAfterTranslationAndRotation" fullname="StageRulesTests.ExtractionSideUsesChunkConnectorsAfterTranslationAndRotation" classname="StageRulesTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.008123" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="3898" name="ExtractionSideUsesChunkConnectorsAfterTranslationAndRotation(0.0f)" fullname="StageRulesTests.ExtractionSideUsesChunkConnectorsAfterTranslationAndRotation(0.0f)" methodname="ExtractionSideUsesChunkConnectorsAfterTranslationAndRotation" classname="StageRulesTests" runstate="Runnable" seed="1964412547" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.004340" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3899" name="ExtractionSideUsesChunkConnectorsAfterTranslationAndRotation(90.0f)" fullname="StageRulesTests.ExtractionSideUsesChunkConnectorsAfterTranslationAndRotation(90.0f)" methodname="ExtractionSideUsesChunkConnectorsAfterTranslationAndRotation" classname="StageRulesTests" runstate="Runnable" seed="1977347852" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000875" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3900" name="ExtractionSideUsesChunkConnectorsAfterTranslationAndRotation(180.0f)" fullname="StageRulesTests.ExtractionSideUsesChunkConnectorsAfterTranslationAndRotation(180.0f)" methodname="ExtractionSideUsesChunkConnectorsAfterTranslationAndRotation" classname="StageRulesTests" runstate="Runnable" seed="1378306576" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000753" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3901" name="ExtractionSideUsesChunkConnectorsAfterTranslationAndRotation(270.0f)" fullname="StageRulesTests.ExtractionSideUsesChunkConnectorsAfterTranslationAndRotation(270.0f)" methodname="ExtractionSideUsesChunkConnectorsAfterTranslationAndRotation" classname="StageRulesTests" runstate="Runnable" seed="7431528" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000652" asserts="0">
+            <properties />
+          </test-case>
+        </test-suite>
+        <test-suite type="ParameterizedMethod" id="3910" name="RuntimePlanSeparatesBossFromOrdinaryTopology" fullname="StageRulesTests.RuntimePlanSeparatesBossFromOrdinaryTopology" classname="StageRulesTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.006903" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="3903" name="RuntimePlanSeparatesBossFromOrdinaryTopology(1,4,Ordinary,1,0)" fullname="StageRulesTests.RuntimePlanSeparatesBossFromOrdinaryTopology(1,4,Ordinary,1,0)" methodname="RuntimePlanSeparatesBossFromOrdinaryTopology" classname="StageRulesTests" runstate="Runnable" seed="1654696515" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.003856" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3904" name="RuntimePlanSeparatesBossFromOrdinaryTopology(2,4,Ordinary,2,1)" fullname="StageRulesTests.RuntimePlanSeparatesBossFromOrdinaryTopology(2,4,Ordinary,2,1)" methodname="RuntimePlanSeparatesBossFromOrdinaryTopology" classname="StageRulesTests" runstate="Runnable" seed="1435572367" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000529" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3905" name="RuntimePlanSeparatesBossFromOrdinaryTopology(3,4,Ordinary,3,2)" fullname="StageRulesTests.RuntimePlanSeparatesBossFromOrdinaryTopology(3,4,Ordinary,3,2)" methodname="RuntimePlanSeparatesBossFromOrdinaryTopology" classname="StageRulesTests" runstate="Runnable" seed="149012438" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000108" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3906" name="RuntimePlanSeparatesBossFromOrdinaryTopology(4,4,Boss,4,0)" fullname="StageRulesTests.RuntimePlanSeparatesBossFromOrdinaryTopology(4,4,Boss,4,0)" methodname="RuntimePlanSeparatesBossFromOrdinaryTopology" classname="StageRulesTests" runstate="Runnable" seed="987066715" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000092" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3907" name="RuntimePlanSeparatesBossFromOrdinaryTopology(5,4,Ordinary,1,0)" fullname="StageRulesTests.RuntimePlanSeparatesBossFromOrdinaryTopology(5,4,Ordinary,1,0)" methodname="RuntimePlanSeparatesBossFromOrdinaryTopology" classname="StageRulesTests" runstate="Runnable" seed="1818835341" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000091" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3908" name="RuntimePlanSeparatesBossFromOrdinaryTopology(4,5,UnsupportedOrdinary,4,3)" fullname="StageRulesTests.RuntimePlanSeparatesBossFromOrdinaryTopology(4,5,UnsupportedOrdinary,4,3)" methodname="RuntimePlanSeparatesBossFromOrdinaryTopology" classname="StageRulesTests" runstate="Runnable" seed="1135238734" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000165" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="3909" name="RuntimePlanSeparatesBossFromOrdinaryTopology(5,5,Boss,5,0)" fullname="StageRulesTests.RuntimePlanSeparatesBossFromOrdinaryTopology(5,5,Boss,5,0)" methodname="RuntimePlanSeparatesBossFromOrdinaryTopology" classname="StageRulesTests" runstate="Runnable" seed="1679674591" result="Passed" start-time="2026-10-20 16:12:25Z" end-time="2026-10-20 16:12:25Z" duration="0.000193" asserts="0">
+            <properties />
+          </test-case>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

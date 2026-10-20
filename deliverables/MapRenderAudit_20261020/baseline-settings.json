@@ -1,0 +1,73 @@
+{
+  "pipeline": "URP-HighFidelity",
+  "renderScale": 1.0,
+  "msaaSampleCount": 4,
+  "supportsHDR": true,
+  "shadowDistance": 150.0,
+  "shadowCascadeCount": 4,
+  "mainLightShadowmapResolution": 4096,
+  "supportsSoftShadows": true,
+  "useSRPBatcher": true,
+  "vSync": 1,
+  "target": -1,
+  "profiler": false,
+  "profileEditor": false,
+  "areas": [
+    {
+      "name": "CPU",
+      "enabled": false
+    },
+    {
+      "name": "GPU",
+      "enabled": false
+    },
+    {
+      "name": "Rendering",
+      "enabled": true
+    },
+    {
+      "name": "Memory",
+      "enabled": true
+    },
+    {
+      "name": "Audio",
+      "enabled": true
+    },
+    {
+      "name": "Video",
+      "enabled": true
+    },
+    {
+      "name": "Physics",
+      "enabled": true
+    },
+    {
+      "name": "Physics2D",
+      "enabled": true
+    },
+    {
+      "name": "NetworkMessages",
+      "enabled": true
+    },
+    {
+      "name": "NetworkOperations",
+      "enabled": true
+    },
+    {
+      "name": "UI",
+      "enabled": true
+    },
+    {
+      "name": "UIDetails",
+      "enabled": true
+    },
+    {
+      "name": "GlobalIllumination",
+      "enabled": true
+    },
+    {
+      "name": "VirtualTexturing",
+      "enabled": true
+    }
+  ]
+}

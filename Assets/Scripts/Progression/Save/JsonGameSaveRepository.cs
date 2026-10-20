@@ -265,6 +265,7 @@ namespace Purgers.Progression
                     case 3:
                     case 4:
                     case 5:
+                    case 6:
                     {
                         GameSaveData save =
                             JsonUtility.FromJson<GameSaveData>(json);

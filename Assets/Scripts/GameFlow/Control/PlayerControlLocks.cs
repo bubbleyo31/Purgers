@@ -64,6 +64,7 @@ namespace Purgers.GameFlow.Control
         {
             input.BlockedControls |= mask;
             mask = input.BlockedControls;
+            if (BlocksCombat(mask)) input.FocusLootTarget = default;
             if (BlocksGameplay(mask))
             {
                 input.Buttons = default;
@@ -79,6 +80,10 @@ namespace Purgers.GameFlow.Control
                 input.Buttons.Set(InputButton.Grapple, false);
                 input.Buttons.Set(InputButton.Ability1, false);
                 input.Buttons.Set(InputButton.Ability2, false);
+                input.Buttons.Set(InputButton.Ability3, false);
+                input.Buttons.Set(InputButton.DropFocusE, false);
+                input.Buttons.Set(InputButton.DropFocusZ, false);
+                input.Buttons.Set(InputButton.DropFocusX, false);
                 input.Buttons.Set(InputButton.QuickAction, false);
             }
             if (BlocksLook(mask))

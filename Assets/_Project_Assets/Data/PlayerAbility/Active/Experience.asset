@@ -23,8 +23,7 @@ MonoBehaviour:
     restrictProfession: 0
     allowedProfessions: 0
   allowDuplicateEquip: 0
-  exclusiveGroupIds:
-  - GrappleFocusMovementAuthority
+  exclusiveGroupIds: []
   incompatibleAbilities: []
   executionPriority: 120
   requiresRangedWeapon: 0

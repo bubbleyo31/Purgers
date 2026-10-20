@@ -113,3 +113,23 @@ MonoBehaviour、Fusion weaving、序列化與多人時序仍需 Play Mode／Host
 - 2026-09-18：依現有多人架構選用三個低侵入診斷套件，固定 MCP for Unity 與 ParrelSync 現有 commit，建立跨 Agent 專案規則；未改寫任何 Runtime 遊戲系統。
 
 - 2026-10-07：依使用者要求加入四角面優先、面數／材質／貼圖成本與交付統計的預設美術規則。
+
+<a id="storage-worktrees"></a>
+## 7. 儲存位置與工作樹（2026-10-19 定案）
+
+使用者要求工作樹及其他大型工作資料能放 M 槽就先放 M 槽。全域及專案 `AGENTS.md` 均保存此規範；此節只補充位置與驗證責任，不改遊戲或 Unity 資產。
+
+| 類型 | 預設實體位置 |
+|---|---|
+| Codex 工作樹 | `M:\CodexWorktrees` |
+| 隔離 Unity Library／測試快取 | `M:\CodexUnityCaches\<task>`，各工作樹獨立 |
+| 其他大型暫存、下載、建置、匯出與效能擷取 | `M:\CodexData\<type-or-task>`，或已在 M 槽的專案內 |
+
+既有 `C:\Users\hsuai\.codex\worktrees` 保留為指向 M 槽的 Junction，讓聊天及 Git 保持原路徑；不需手改 Codex 資料庫。建立新工作樹前核對連結與 M 槽可用空間，不刪連結後在 C 槽重建目錄。M 槽離線時不可默默回退到 C 槽。
+
+工具有正式輸出／快取位置設定時優先使用；程序暫存採程序範圍的 TEMP/TMP，不修改 Windows 全域 TEMP/TMP、pagefile、AppData 或整個 CODEX_HOME。平台固定路徑與正在使用的 runtime 不強搬，應回報限制及 C 槽成本。
+
+排隊／唯讀任務不預建整份工作樹；正式開始時才建立或復用。並行寫入依然隔離，不為省空間共用可寫入的 Unity Library。搬移先停止寫入，保留所有未提交／未追蹤及必要忽略檔案；逐檔比對內容、核對 Git HEAD/status 及內部 Junction，再釋放舊副本。完成整合後依授權封存，不能因閒置而直接刪除。
+
+本機遷移稽核與逐檔 SHA256：`M:\CodexData\StorageMigration_20261019`。實際完成狀態以該目錄 `result.json`、`git-before.json`、`git-after.json` 及 `verified-files.json` 為準；規範定案不等於某次搬移已完成。
+2026-10-19 遷移完成：6 份工作樹共 40,396 個檔案逐檔 SHA256 一致（約 12.85 GiB 資料），原 C 路徑的 Junction 寫入與直接 M 路徑 Git 狀態已核對；C 槽可用空間由 3.93 增至 16.94 GiB。既有未提交／未追蹤內容保留，未修改遊戲行為。證據見上述本機稽核目錄的 result.json／post-check.json。

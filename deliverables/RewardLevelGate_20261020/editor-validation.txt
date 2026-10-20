@@ -1,0 +1,60 @@
+獎勵等級限制：Editor 驗證（2026-10-20，Asia/Taipei）
+
+定案與變更範圍
+- 保留 GameLogic.EnsureRewardDraft 的 targetLevel = Max(1, Level - PendingRewards + 1)。
+- 正式獎勵池 36 項均為 MinimumPlayerLevel = 1；指定四類共 24 項：
+  鈎索 4、專注 11、武器 3、一次性 6；另有 12 項角色屬性。
+- 未修改玩法程式、獎勵資產、Scene、Prefab、UI 或描述。
+- 本輪開始前後 git status 清單一致；36 份獎勵資產 SHA256 與前輪離線查核一致。
+
+本輪證據
+1. editor-focused.json
+   Unity MCP EditMode 聚焦 38/38 Passed，0 Failed、0 Skipped。
+   測試群組：RewardDraftRulesTests、PlayerRewardCatalogTests、RewardGrowthTests、
+   WeaponRewardTests、PlayerRewardSaveBridgeTests。
+   Job: ea13b23322eb47199741aacfb3621992。
+2. editor-live-audit.json
+   Unity Editor 實際載入 36 份有效獎勵，全數門檻為 1。
+   對正式載入的 RewardDraftRules 執行 1,440 次邊界檢查，全部通過。
+   四類 × 門檻 1/5 × 門檻前/恰達/超過 × 被動機率 0/1 × 30 seeds。
+   門檻 5 僅使用記憶體 RewardDraftEntry，不修改正式資產。
+3. editor-regression.xml
+   完整 PurgersRegression：1278 total、1272 Passed、4 Failed、2 Skipped。
+   來源為本輪 Unity RunFinished 真實 XML，不以 MCP 殘留進度判定成功。
+   最終 Job: a611161e8b7f46c191dd28b1ef61d445。
+   最終 XML 原始位置：
+   Temp/GuardGrowthVerification/RewardLevelGate_20261020_regression.xml。
+   使用專案既有 GuardGrowthTestResults.Arm，以獨立名稱保存，沒有修改該工具。
+
+完整回歸失敗（本輪沒有擴大修復）
+- BossStageAssetTests.GameSceneContainsBossAssetWiring：
+  Expected same MapChunk_Boss instance，實際引用不同。
+- EnemyFlytrapAssetTests.TimingDefaultsMatchApprovedRules：
+  Expected 0.5，actual 0.25。
+- EnemyReflectorAssetTests.SeparatePrefabUsesExistingCombatAndHealthOwners：
+  Expected greater than 80，actual 75。
+- ReloadCameraRuntimeTests.SpawnedLocalWeaponsDriveOnlyPresentationAndUnbindClearsIt：
+  NullReferenceException。
+前三個舊模組與換彈鏡頭失敗名稱可對照 Validation/GuardGrowth/README.md；
+Reflector 本輪的 80/75 訊息以 Validation/HudLayoutAuthoring/README.md 為相符基線，
+不可混稱與 GuardGrowth 較早的 10/10 數值完全相同。
+
+略過
+- AbilityToggleInputTests.HostClientInputLateJoinAndReconnectUseAuthoritativeToggleState
+- AbilityToggleInputTests.SlotHudHostClientRecastCooldownLateJoinAndReconnect
+均為需獨立啟動 Photon 受控驗證的 Explicit 案例。
+
+工具恢復與收尾
+- 前兩次全回歸跨 Domain Reload 後 MCP 進度殘留，臨時回呼註冊也會遺失，
+  因此未採用其不完整結果。改用既有可跨重載記錄器取得最終 XML。
+- 確認 RunFinished 與 Editor 閒置後清除殘留 MCP job。
+- 移除本輪臨時結果回呼與 TestRunnerApi 物件；持久記錄器已自動解除 Arm。
+- 最終 Editor 位於 M:/UnityProject/Purgers，_Menu 未 dirty，未播放、未編譯；
+  Console 的 error CS 查詢為 0。未宣稱另行執行乾淨建置。
+- 不呼叫 Focus、開啟 EditorWindow、桌面鍵鼠或 Scene View 截圖。
+- 無新增工作樹或獨立 Unity Library。證據保留在本 M 槽目錄及上述小型 Temp 輸出。
+
+驗證界線
+本輪完成 Editor 聚焦、Editor 記憶體規則／資產查核及完整 EditMode 回歸。
+完整回歸非全綠。未執行本功能的 Host/Client、晚加入、重連、獨立程序、
+自然領取操作或 Build；不把 EditMode 中個別網路案例視為這些驗收的替代。

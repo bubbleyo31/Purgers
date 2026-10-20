@@ -18,7 +18,7 @@ public static class TankPreparedDashIndicatorRules
     static Vector3 Corner(Bounds box, int index) => box.center + Vector3.Scale(box.extents,
         new Vector3((index & 1) == 0 ? -1 : 1, (index & 2) == 0 ? -1 : 1, (index & 4) == 0 ? -1 : 1));
 
-    /// <summary>先裁切近裁面再投影；不把相機後方角點鏡射到 HUD，也不把整個大型敵人縮成假部位。</summary>
+    /// <summary>先裁切近裁面再投影；保留畫面外的真實邊界，由 UI viewport 裁切框線，不將角點搬到螢幕邊緣。</summary>
     public static bool TryProject(Camera camera, Bounds localBounds, Matrix4x4 localToWorld, float padding, out Rect rect)
     {
         rect = default;
@@ -46,8 +46,7 @@ public static class TankPreparedDashIndicatorRules
         // Reject off-screen geometry before adding padding; never invent a screen-edge target.
         if (max.x <= viewport.xMin || min.x >= viewport.xMax || max.y <= viewport.yMin || min.y >= viewport.yMax) return false;
         padding = Mathf.Max(0f, padding);
-        rect = Rect.MinMaxRect(Mathf.Max(viewport.xMin, min.x - padding), Mathf.Max(viewport.yMin, min.y - padding),
-            Mathf.Min(viewport.xMax, max.x + padding), Mathf.Min(viewport.yMax, max.y + padding));
+        rect = Rect.MinMaxRect(min.x - padding, min.y - padding, max.x + padding, max.y + padding);
         return rect.width > 0f && rect.height > 0f;
     }
 

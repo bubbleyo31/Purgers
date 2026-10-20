@@ -40,7 +40,7 @@ public sealed class TankPreparedDashIndicatorTests
         => Assert.That(Call("UseHitRegion", explicitlyLarge, new Bounds(Vector3.zero, new Vector3(1, height, 1)), 4f), Is.EqualTo(expected));
 
     [Test]
-    public void ProjectionFitsObjectAndClipsAgainstCameraViewport()
+    public void ProjectionFitsObjectInsideCameraViewport()
     {
         var go = new GameObject("projection camera", typeof(Camera));
         try
@@ -70,8 +70,10 @@ public sealed class TankPreparedDashIndicatorTests
             Assert.That(Call("TryProject", args), Is.EqualTo(expected));
             if (expected)
             {
-                Rect rect = (Rect)args[4]; Assert.That(float.IsNaN(rect.width), Is.False);
-                Assert.That(rect.width, Is.InRange(0, camera.pixelRect.width + .001f)); Assert.That(rect.height, Is.InRange(0, camera.pixelRect.height + .001f));
+                Rect rect = (Rect)args[4];
+                Assert.That(float.IsNaN(rect.width) || float.IsInfinity(rect.width), Is.False);
+                Assert.That(float.IsNaN(rect.height) || float.IsInfinity(rect.height), Is.False);
+                Assert.That(rect.width, Is.GreaterThan(0)); Assert.That(rect.height, Is.GreaterThan(0));
             }
         }
         finally { UnityEngine.Object.DestroyImmediate(go); }
@@ -158,6 +160,129 @@ public sealed class TankPreparedDashIndicatorTests
             }
         }
         finally { UnityEngine.Object.DestroyImmediate(go); }
+    }
+
+    // 真正的膠囊定義與正式 A/B 資產一起核對，避免只重寫一遍 UI 的公式。
+    static Bounds HitboxBounds(Fusion.Hitbox hitbox)
+    {
+        var method = typeof(TankPreparedDashPreviewQuery).GetMethod("GetHitboxLocalBounds",
+            BindingFlags.Public | BindingFlags.Static);
+        Assert.That(method, Is.Not.Null, "部位框需要沿 Fusion 的實際局部幾何。");
+        return (Bounds)method.Invoke(null, new object[] { hitbox });
+    }
+
+    [TestCase("A")]
+    [TestCase("B")]
+    public void JellyfishCapsuleFramesMatchActualColliderHeight(string variant)
+    {
+        var prefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(
+            "Assets/Prefabs/Enemy/Variants/Enemy_Ranged_" + variant + ".prefab");
+        Assert.That(prefab, Is.Not.Null);
+        int count = 0;
+        foreach (var capsule in prefab.GetComponentsInChildren<CapsuleCollider>(true))
+        {
+            var hitbox = capsule.GetComponent<Fusion.Hitbox>();
+            if (hitbox == null || hitbox.Type != Fusion.HitboxTypes.Capsule) continue;
+            Bounds bounds = HitboxBounds(hitbox);
+            Assert.That(bounds.center, Is.EqualTo(capsule.center), capsule.name);
+            Assert.That(bounds.size.y, Is.EqualTo(capsule.height).Within(.0001f), capsule.name);
+            Assert.That(bounds.size.x, Is.EqualTo(capsule.radius * 2).Within(.0001f), capsule.name);
+            Assert.That(bounds.size.z, Is.EqualTo(capsule.radius * 2).Within(.0001f), capsule.name);
+            count++;
+        }
+        Assert.That(count, Is.EqualTo(4), "每個正式水母 Prefab 有四個長觸鬚膠囊。");
+    }
+
+    [TestCase(7.15f, 2.64f)]
+    [TestCase(1f, 2f)]
+    public void CapsuleBoundsContainFusionEndpointsWithoutExtraHeight(float height, float radius)
+    {
+        var go = new GameObject("capsule bounds", typeof(Fusion.Hitbox));
+        try
+        {
+            var hitbox = go.GetComponent<Fusion.Hitbox>();
+            hitbox.Type = Fusion.HitboxTypes.Capsule;
+            hitbox.CapsuleExtents = height; hitbox.CapsuleRadius = radius;
+            hitbox.Offset = new Vector3(1, 2, 3);
+            Bounds bounds = HitboxBounds(hitbox);
+            const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
+            Vector3 top = (Vector3)typeof(Fusion.Hitbox).GetProperty("CapsuleTopCenter", flags).GetValue(hitbox);
+            Vector3 bottom = (Vector3)typeof(Fusion.Hitbox).GetProperty("CapsuleBottomCenter", flags).GetValue(hitbox);
+            Assert.That(bounds.max.y, Is.EqualTo(top.y + radius).Within(.0001f));
+            Assert.That(bounds.min.y, Is.EqualTo(bottom.y - radius).Within(.0001f));
+        }
+        finally { UnityEngine.Object.DestroyImmediate(go); }
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public void OversizedProjectionKeepsRealEdgesInsteadOfMakingFullscreenCorners(bool crossesNearPlane)
+    {
+        var go = new GameObject("close target camera", typeof(Camera));
+        try
+        {
+            var camera = go.GetComponent<Camera>();
+            camera.pixelRect = new Rect(100, 50, 800, 600); camera.aspect = 4f / 3f;
+            camera.fieldOfView = 60; camera.nearClipPlane = .3f;
+            var bounds = new Bounds(new Vector3(0, 0, crossesNearPlane ? .4f : 3f), new Vector3(12, 12, 1));
+            Assert.That(TankPreparedDashIndicatorRules.TryProject(camera, bounds, Matrix4x4.identity, 0, out var rect), Is.True);
+            Assert.That(rect.xMin, Is.LessThan(camera.pixelRect.xMin));
+            Assert.That(rect.xMax, Is.GreaterThan(camera.pixelRect.xMax));
+            Assert.That(rect.yMin, Is.LessThan(camera.pixelRect.yMin));
+            Assert.That(rect.yMax, Is.GreaterThan(camera.pixelRect.yMax));
+        }
+        finally { UnityEngine.Object.DestroyImmediate(go); }
+    }
+
+    [Test]
+    public void PartialOffscreenProjectionDoesNotMoveItsOutsideEdgeOntoViewport()
+    {
+        var go = new GameObject("partial target camera", typeof(Camera));
+        try
+        {
+            var camera = go.GetComponent<Camera>();
+            camera.pixelRect = new Rect(0, 0, 800, 600); camera.aspect = 4f / 3f; camera.fieldOfView = 60;
+            Assert.That(TankPreparedDashIndicatorRules.TryProject(camera,
+                new Bounds(new Vector3(6, 0, 8), new Vector3(4, 2, 1)), Matrix4x4.identity, 0, out var rect), Is.True);
+            Assert.That(rect.xMin, Is.InRange(camera.pixelRect.xMin, camera.pixelRect.xMax));
+            Assert.That(rect.xMax, Is.GreaterThan(camera.pixelRect.xMax));
+        }
+        finally { UnityEngine.Object.DestroyImmediate(go); }
+    }
+
+    [Test]
+    public void BracketClipsToCurrentCameraViewportWithoutReceivingInput()
+    {
+        var go = new GameObject("indicator viewport", typeof(LocalTankPreparedDashIndicator));
+        var cameraObject = new GameObject("viewport camera", typeof(Camera));
+        try
+        {
+            var indicator = go.GetComponent<LocalTankPreparedDashIndicator>();
+            var camera = cameraObject.GetComponent<Camera>();
+            var ensure = typeof(LocalTankPreparedDashIndicator).GetMethod("EnsureBracket", BindingFlags.Instance | BindingFlags.NonPublic);
+            foreach (Rect viewport in new[] { new Rect(100, 50, 640, 480), new Rect(20, 30, 320, 240) })
+            {
+                camera.pixelRect = viewport;
+                ensure.Invoke(indicator, new object[] { camera });
+                Canvas.ForceUpdateCanvases();
+                var graphic = go.GetComponentInChildren<TankTargetBracketGraphic>();
+                Assert.That(graphic, Is.Not.Null);
+                var mask = graphic.GetComponentInParent<UnityEngine.UI.RectMask2D>();
+                Assert.That(mask, Is.Not.Null, "原始投影四角必須由相機 viewport 裁切，不能拉回螢幕邊緣。");
+                Assert.That(graphic.raycastTarget, Is.False);
+                var corners = new Vector3[4]; mask.rectTransform.GetWorldCorners(corners);
+                Assert.That(corners[0].x, Is.EqualTo(camera.pixelRect.xMin).Within(.1f));
+                Assert.That(corners[0].y, Is.EqualTo(camera.pixelRect.yMin).Within(.1f));
+                Assert.That(corners[2].x, Is.EqualTo(camera.pixelRect.xMax).Within(.1f));
+                Assert.That(corners[2].y, Is.EqualTo(camera.pixelRect.yMax).Within(.1f));
+            }
+        }
+        finally
+        {
+            var canvas = go.GetComponentInChildren<Canvas>();
+            if (canvas != null) UnityEngine.Object.DestroyImmediate(canvas.gameObject);
+            UnityEngine.Object.DestroyImmediate(go); UnityEngine.Object.DestroyImmediate(cameraObject);
+        }
     }
 
     [TestCase(true, true, 0f, true)]

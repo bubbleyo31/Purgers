@@ -310,3 +310,22 @@ PlayerAbilityRuntime 的可用性新增有效已生成 Owner 的健康條件，�
 最後核對日期：2026-10-18。核對來源：LocalPlayerBattleAbilityHUD.States、AbilitySlotHudSnapshot 與原技能 Runtime。
 
 右下技能格沿用既有 PlayerAbilityRuntime.TryReadPresentation／IPlayerAbilityCooldownSource 的剩餘與總長。新增技能唯讀 HudCanPress／HudCanRecast／HudCanEndActive 提示，正式受理仍在原技能與 ActionGate。未變更 Loadout、冷卻起點、掉落／拾取、再按結算或權威結果。 完整定案、Inspector 與驗證邊界見 [107 右下技能槽狀態呈現](107_右下技能槽狀態呈現.md)。
+
+
+## 2026-10-20 三專注槽局部核對
+
+最後核對日期：2026-10-20（僅本次三槽變更）
+核對來源：Assets/Scripts/Player/Ability/Loadout、InputManager.FocusSlots、GameLogic、UI/Player、Settings、Progression/Save。
+
+本次取代舊單專注槽行為：開局三槽皆開放，空槽按 E→Z→X 填入，FocusSlotIndex 與內部 LoadoutSlotIndex 分開。Simulation 將每槽按鍵與 previousButtons 路由到原模組 Ability1 介面，模組本身不另建輸入讀取。
+
+ALT 加新按下的槽位鍵由 Host 丟棄該技能，走既有 DropToWorld 保留等級／冷卻；取消 ALT 不會讓仍按著的技能鍵漏出施放。死亡、捕獲、ActionGate 與控制鎖沿原規則。獎勵滿槽必須明確選替換槽；地面拾取目前需要空槽，重複技能拒收。重複技能強化／共享 CD 只保留 CanAcquire 政策入口，未啟用。
+
+PlayerRewardNetworkState 保存 E／Z／X 與等級，GameLogic.RecordEquippedAbilities 保留空洞，存檔 v6 舊 E 欄位不改名。每個獎勵 ID 上限 32 字元；Catalog 建池拒絕過長 ID，正式最長 ID 25，保留原 12 人字典容量。[三專注槽實作與驗證](Validation/FocusSlots/README.md)。
+
+
+## 2026-10-21 專注技能指定槽位（局部核對）
+
+最後核對日期：2026-10-21。核對來源：InputManager.FocusSlots、PlayerAbilityRuntimeManager.Loot、LocalPlayerRewardHUD.Replacement、NetInput。
+
+取代前版自動填空：玩家透過獎勵或地面取得專注技能皆必須明確指定 E／Z／X；有空槽仍可選擇替換其他占用槽。TryEquipFocusRewardStateAuthority 拒絕 -1。地面 FindLootCandidate 不因滿槽而隱藏專注候選，按 E 不直接裝備；確認後才檢查目前 LoadoutRevision 和指定掉落物。內部初始化／恢復用的既有低階換裝 API 保留，不代表玩家介面可以自動領取。[專注技能指定槽位](Validation/FocusSlots/Selection.md)。

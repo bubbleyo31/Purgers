@@ -1,0 +1,32 @@
+[
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Scripts\\UI\\Player\\LocalPlayerSpeedSlider.cs",
+    "Before": "C395F7ACFC3F9737334A239A4C38ACB877C8F49E9DE1BC8ED976C9AA8F632286",
+    "After": "C395F7ACFC3F9737334A239A4C38ACB877C8F49E9DE1BC8ED976C9AA8F632286",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Scenes\\_Menu.unity",
+    "Before": "D4CD7E064C7849FDDB46D87C085A469E77B309A0D98BDDB9E6CC108C16712704",
+    "After": "D4CD7E064C7849FDDB46D87C085A469E77B309A0D98BDDB9E6CC108C16712704",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\UI\\BattleHUD\\Layout\\Momentum.png",
+    "Before": "356F3C9020B8640F5E6BA34BEE5BB6D0DD20848F52A768AAE772F669432D9F9D",
+    "After": "356F3C9020B8640F5E6BA34BEE5BB6D0DD20848F52A768AAE772F669432D9F9D",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Resources\\Presentation\\ScreenEdgeEffects.asset",
+    "Before": "96DFFEADE10DBC3B9A9F427647EE02DEDF2B737A4513F6767EAD1B96006DEBE1",
+    "After": "96DFFEADE10DBC3B9A9F427647EE02DEDF2B737A4513F6767EAD1B96006DEBE1",
+    "Unchanged": true
+  },
+  {
+    "Path": "M:\\UnityProject\\Purgers\\Assets\\Prefabs\\UI\\ScreenEdgeEffects.prefab",
+    "Before": "60AB3695123344783FBDD09AF986708837AB6F691CBBF95656E94950D5746F2A",
+    "After": "60AB3695123344783FBDD09AF986708837AB6F691CBBF95656E94950D5746F2A",
+    "Unchanged": true
+  }
+]

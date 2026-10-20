@@ -1,0 +1,23 @@
+{
+  "source": "Unity execute_code after rendering and RunFinished",
+  "date": "2026-10-19",
+  "continuousWeightAudit": {
+    "intervals": [0.35, 0.5, 0.55, 0.75, 1.0, 1.2],
+    "floor": 0.32,
+    "sampleRangeSeconds": [0, 5],
+    "sampleStepSeconds": 0.001,
+    "bounded": true,
+    "tailMonotonic": true,
+    "maxWeight": 0.84
+  },
+  "shaderMessages": [],
+  "scene": "Assets/Scenes/_Menu.unity",
+  "sceneDirty": false,
+  "playing": false,
+  "focused": {"total": 20, "passed": 20, "failed": 0},
+  "regression": {"total": 1235, "passed": 1229, "failed": 4, "skipped": 2},
+  "failureNamesMatchPreviousHealingRun": true,
+  "runtimeIntegrated": false,
+  "naturalGameplayVerified": false,
+  "buildVerified": false
+}

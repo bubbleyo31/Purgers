@@ -108,7 +108,13 @@ public enum InputButton
     /// 這是持續按住型輸入：
     /// 按住時保持蹲下，符合速度與地面條件時進入滑鏟。
     /// </summary>
-    Crouch = 9
+    Crouch = 9,
+
+    // Append only: preserve existing serialized/network button values.
+    Ability3 = 10,
+    DropFocusE = 11,
+    DropFocusZ = 12,
+    DropFocusX = 13
 }
 
 /// <summary>
@@ -122,6 +128,10 @@ public enum InputButton
 /// </summary>
 public struct NetInput : INetworkInput
 {
+    // Confirmed world-loot intent only. The Host revalidates target, distance and loadout revision.
+    public NetworkId FocusLootTarget;
+    public int FocusLootSlot;
+    public int FocusLootLoadoutRevision;
     public byte SettingsModes;
     public NetworkBool SettingsMenuOpen;
     // Transmitted with the input tick, so Host and prediction use the same gates.

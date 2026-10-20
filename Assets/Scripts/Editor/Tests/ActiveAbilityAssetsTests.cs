@@ -29,7 +29,7 @@ public sealed class ActiveAbilityAssetsTests
     }
 
     [Test]
-    public void NewAbilitiesConflictWithBothLegacyESkills()
+    public void NonMovementFocusCoexistsWhileMovementFocusStillConflicts()
     {
         var grenade = AssetDatabase.LoadAssetAtPath<PlayerAbilityDefinition>("Assets/_Project_Assets/Data/PlayerAbility/Active/Grenade.asset");
         Assert.That(grenade, Is.Not.Null);
@@ -37,7 +37,10 @@ public sealed class ActiveAbilityAssetsTests
         {
             var old = AssetDatabase.LoadAssetAtPath<PlayerAbilityDefinition>("Assets/_Project_Assets/Data/PlayerAbility/Definitions/" + key + ".asset");
             Assert.That(old, Is.Not.Null);
-            Assert.That(grenade.ConflictsWith(old), Is.True, key);
+            Assert.That(grenade.ConflictsWith(old), Is.False, key);
+            var blink = AssetDatabase.LoadAssetAtPath<PlayerAbilityDefinition>("Assets/_Project_Assets/Data/PlayerAbility/Active/Blink.asset");
+            Assert.That(blink, Is.Not.Null);
+            Assert.That(blink.ConflictsWith(old), Is.True, "Movement authority must remain exclusive: " + key);
         }
     }
 }

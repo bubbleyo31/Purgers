@@ -1,0 +1,57 @@
+{
+    "utc": "2026-10-20T11:34:59.6498593Z",
+    "scope": "Editor Play Mode; isolated, deterministic synthetic physics A/B",
+    "root": "Map(Z:-263)",
+    "cellSize": 16.0,
+    "sourceColliders": 8558,
+    "candidateColliders": 2018,
+    "groups": 1228,
+    "unchangedColliders": 790,
+    "probeCount": 12000,
+    "probeMismatches": 1692,
+    "rayHitMismatches": 0,
+    "rayDistanceMismatches": 6,
+    "sphereMismatches": 625,
+    "capsuleMismatches": 1061,
+    "dynamicBodiesPerScene": 32,
+    "sampledSteps": 180,
+    "sourceTriangles": 756336,
+    "candidateTriangles": 756336,
+    "maxWorldVertexError": 0.00020471813331823796,
+    "maxRayDistanceError": 0.009928703308105469,
+    "baselineSetupMs": 936.9069000000001,
+    "candidateSetupMs": 806.6828,
+    "baselineQueries": {
+        "meanMs": 2.137805555555556,
+        "p95Ms": 2.4013,
+        "maxMs": 2.487
+    },
+    "candidateQueries": {
+        "meanMs": 1.9374627777777778,
+        "p95Ms": 2.201,
+        "maxMs": 2.3279
+    },
+    "baselineSimulation": {
+        "meanMs": 0.11588833333333332,
+        "p95Ms": 0.16970000000000003,
+        "maxMs": 0.23850000000000003
+    },
+    "candidateSimulation": {
+        "meanMs": 0.12088555555555551,
+        "p95Ms": 0.2048,
+        "maxMs": 0.4137
+    },
+    "excluded": [
+        "凸形／Trigger／Rigidbody: 1",
+        "負縮放／剪切／退化變換: 197",
+        "單一物件群組: 592"
+    ],
+    "limitations": [
+        "不是正式 Host/Client、KCC、AI 或自然戰鬥的幀時間；不能據此斷言整體 FPS 或 MeshCollider 獨占成本。",
+        "保留三角面，不使用 Convex 或減面；浮點轉換容許誤差上限 0.001 世界單位。",
+        "射線/掃掠抽樣不是所有路徑的數學證明；幾何逐頂點與三角索引保留是主要保形依據。",
+        "合併會改變 Collider 身分與 triangleIndex；命中父階層保留，仍須實際鉤索、行走及射擊驗收。",
+        "建立耗時包含物件配置和可能的共用 cooking 快取，不等同冷啟動載入時間。",
+        "樣本為同一 Editor 的合成工作負載，需目標平台 Development Player 驗證。"
+    ]
+}

@@ -80,6 +80,13 @@ MonoBehaviour:
     movementLocalDirection: {x: 0, y: 0, z: -1}
   _OwnerPlayerObject: {fileID: 0}
   _LoadoutSlotIndex: 0
+  _IsWorldLoot:
+    _value: 0
+  _IsBonusCast:
+    _value: 0
+  _LootPosition: {x: 0, y: 0, z: 0}
+  _SkillLevel: 0
+  _RequiredPlayerLevel: 0
 --- !u!114 &73162917256363455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,8 +112,8 @@ MonoBehaviour:
   cooldownSeconds: 3
   repeatHitSeconds: 0.5
   includeReleaseMomentum: 0
-  knockbackDistance: 0.6
-  knockbackSpeed: 6
+  knockbackDistance: 8
+  knockbackSpeed: 30
   spikeVisualPrefab: {fileID: 8174495396799764749, guid: f84871e87e4f6b245b85607f7c91d286,
     type: 3}
   _EffectEndTick: 0

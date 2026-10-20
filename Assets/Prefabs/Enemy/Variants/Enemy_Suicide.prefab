@@ -799,7 +799,7 @@ MonoBehaviour:
   enemyActor: {fileID: 2369938509579232069}
   eyePoint: {fileID: 0}
   fallbackEyeHeight: 1.65
-  sightDistance: 40
+  sightDistance: 80
   horizontalFieldOfView: 160
   verticalFieldOfView: 160
   occlusionMask:

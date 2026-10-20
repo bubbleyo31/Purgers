@@ -1,9 +1,131 @@
 using NUnit.Framework;
 using Purgers.GameFlow.Stage;
+using UnityEngine;
 
 [Category("PurgersRegression")]
 public sealed class StageRulesTests
 {
+    [TestCase(1)]
+    [TestCase(2)]
+    [TestCase(3)]
+    public void AuthoredExtractionCandidatesKeepThreeLegalSidesForEveryEntry(int chunkCount)
+    {
+        var prefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(
+            "Assets/Prefabs/Map/MapChunk_Prototype.prefab");
+        Assert.That(prefab, Is.Not.Null);
+        var instance = Object.Instantiate(prefab);
+        try
+        {
+            var points = instance.GetComponentsInChildren<StageExtractionPoint>(true);
+            Assert.That(points.Length, Is.EqualTo(4));
+            System.Array.Sort(points, (a, b) => string.CompareOrdinal(a.PointId, b.PointId));
+
+            for (int entry = 0; entry < 4; entry++)
+            {
+                var eligible = new System.Collections.Generic.List<int>();
+                for (int index = 0; index < points.Length; index++)
+                {
+                    Assert.That(points[index].OwnerChunk, Is.Not.Null, points[index].PointId);
+                    Assert.That(points[index].TryGetConnectorSide(out ConnectorSide side),
+                        Is.True, points[index].PointId);
+                    if (StageRules.IsExtractionPlacementAllowed(
+                        chunkCount - 1, chunkCount - 1, chunkCount, (int)side,
+                        entry, chunkCount > 1 ? 1 << entry : 0))
+                    {
+                        eligible.Add(index);
+                    }
+                }
+                Assert.That(eligible.Count, Is.EqualTo(3));
+                for (int seed = 0; seed < 128; seed++)
+                {
+                    int selected = StageRules.SelectExtractionCandidateIndex(seed, eligible);
+                    Assert.That(eligible, Does.Contain(selected));
+                    Assert.That(points[selected].TryGetConnectorSide(out ConnectorSide side), Is.True);
+                    Assert.That((int)side, Is.Not.EqualTo(entry));
+                }
+            }
+        }
+        finally
+        {
+            Object.DestroyImmediate(instance);
+        }
+    }
+
+    [TestCase(1, 0, 0)]
+    [TestCase(2, 1, 3)]
+    [TestCase(3, 2, 2)]
+    public void ExtractionExcludesEntrySideAndKeepsOtherFinalChunkSides(
+        int chunkCount, int finalChunkIndex, int entrySide)
+    {
+        int openSides = chunkCount > 1 ? 1 << entrySide : 0;
+        for (int side = 0; side < 4; side++)
+        {
+            Assert.That(StageRules.IsExtractionPlacementAllowed(
+                finalChunkIndex, finalChunkIndex, chunkCount,
+                side, entrySide, openSides), Is.EqualTo(side != entrySide));
+        }
+    }
+
+    [TestCase(0, 1, 2, 1, 0, 1)]
+    [TestCase(0, 0, 2, 1, 0, 1)]
+    [TestCase(1, 1, 2, 2, 0, 5)]
+    [TestCase(0, 0, 1, -1, 0, 0)]
+    [TestCase(0, 0, 1, 4, 0, 0)]
+    [TestCase(0, 0, 1, 1, -1, 0)]
+    public void ExtractionRejectsStartingChunkConnectedSidesAndInvalidMetadata(
+        int candidateChunk, int finalChunk, int count,
+        int side, int entry, int openSides)
+    {
+        Assert.That(StageRules.IsExtractionPlacementAllowed(
+            candidateChunk, finalChunk, count, side, entry, openSides), Is.False);
+    }
+
+    [TestCase(0f)]
+    [TestCase(90f)]
+    [TestCase(180f)]
+    [TestCase(270f)]
+    public void ExtractionSideUsesChunkConnectorsAfterTranslationAndRotation(float yaw)
+    {
+        var root = new GameObject("Extraction test chunk");
+        try
+        {
+            root.AddComponent<MapChunk>();
+            root.transform.SetPositionAndRotation(
+                new Vector3(630f, 15f, -420f), Quaternion.Euler(0f, yaw, 0f));
+            Vector3[] anchors =
+            {
+                Vector3.forward * 250f, Vector3.right * 250f,
+                Vector3.back * 250f, Vector3.left * 250f
+            };
+            for (int side = 0; side < 4; side++)
+            {
+                var anchor = new GameObject("Connector");
+                anchor.transform.SetParent(root.transform, false);
+                anchor.transform.localPosition = anchors[side];
+                var connector = anchor.AddComponent<MapConnector>();
+                var serialized = new UnityEditor.SerializedObject(connector);
+                serialized.FindProperty("side").intValue = side;
+                serialized.ApplyModifiedPropertiesWithoutUndo();
+            }
+            var pointObject = new GameObject("Arbitrary point name");
+            pointObject.transform.SetParent(root.transform, false);
+            var point = pointObject.AddComponent<StageExtractionPoint>();
+            for (int side = 0; side < 4; side++)
+            {
+                point.transform.localPosition = anchors[side] * 0.9f + Vector3.up * 3f;
+                Assert.That(point.TryGetConnectorSide(out ConnectorSide resolved), Is.True);
+                Assert.That((int)resolved, Is.EqualTo(side));
+            }
+            point.transform.localPosition = Vector3.zero;
+            Assert.That(point.TryGetConnectorSide(out _), Is.False,
+                "Equidistant connectors must not silently pick an arbitrary side.");
+        }
+        finally
+        {
+            Object.DestroyImmediate(root);
+        }
+    }
+
     [TestCase(1, 4, StageRuntimeKind.Ordinary, 1, 0)]
     [TestCase(2, 4, StageRuntimeKind.Ordinary, 2, 1)]
     [TestCase(3, 4, StageRuntimeKind.Ordinary, 3, 2)]

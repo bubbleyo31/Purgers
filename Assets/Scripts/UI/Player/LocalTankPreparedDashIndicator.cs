@@ -8,6 +8,7 @@ public sealed partial class LocalTankPreparedDashIndicator : MonoBehaviour
     TankMeleeCombo source;
     Camera explicitCamera;
     Canvas canvas;
+    RectTransform bracketViewport;
     TankTargetBracketGraphic bracket;
     readonly TankPreparedDashPreviewQuery query = new TankPreparedDashPreviewQuery();
     Collider displayedCollider;
@@ -70,8 +71,7 @@ public sealed partial class LocalTankPreparedDashIndicator : MonoBehaviour
                 Mathf.Lerp(displayedRect.xMax, rect.xMax, t), Mathf.Lerp(displayedRect.yMax, rect.yMax, t));
         }
         displayedCollider = query.HitCollider; hasRect = true;
-        var root = (RectTransform)canvas.transform;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(root, displayedRect.center, canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera, out var point);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(bracketViewport, displayedRect.center, canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera, out var point);
         bracket.rectTransform.anchoredPosition = point;
         bracket.rectTransform.sizeDelta = displayedRect.size;
         bracket.SetStyle(settings.bracketColor, settings.bracketWidth * pixels, settings.bracketCornerLength * pixels);
@@ -85,12 +85,23 @@ public sealed partial class LocalTankPreparedDashIndicator : MonoBehaviour
             var root = new GameObject("Local Tank target frame", typeof(RectTransform), typeof(Canvas));
             root.transform.SetParent(transform, false);
             canvas = root.GetComponent<Canvas>(); canvas.renderMode = RenderMode.ScreenSpaceOverlay; canvas.sortingOrder = 10;
+            // 保留真實投影框的位置，只裁掉相機視窗外的線段；不把超大目標變成全螢幕四角框。
+            var viewport = new GameObject("Target viewport", typeof(RectTransform), typeof(UnityEngine.UI.RectMask2D));
+            viewport.transform.SetParent(root.transform, false);
+            bracketViewport = (RectTransform)viewport.transform;
+            bracketViewport.anchorMin = bracketViewport.anchorMax = bracketViewport.pivot = Vector2.one * .5f;
             var child = new GameObject("Target corners", typeof(RectTransform), typeof(TankTargetBracketGraphic));
-            child.transform.SetParent(root.transform, false); bracket = child.GetComponent<TankTargetBracketGraphic>();
+            child.transform.SetParent(bracketViewport, false); bracket = child.GetComponent<TankTargetBracketGraphic>();
             bracket.rectTransform.anchorMin = bracket.rectTransform.anchorMax = bracket.rectTransform.pivot = Vector2.one * .5f;
             bracket.raycastTarget = false;
         }
         canvas.targetDisplay = camera.targetDisplay;
+        // 每次更新以支援視窗大小或 camera.pixelRect 變更，Overlay Canvas 沒有 CanvasScaler。
+        var canvasRoot = (RectTransform)canvas.transform;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRoot, camera.pixelRect.center,
+            canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera, out var center);
+        bracketViewport.anchoredPosition = center;
+        bracketViewport.sizeDelta = camera.pixelRect.size;
     }
 
     void HideBracket() { if (bracket != null) bracket.enabled = false; hasRect = false; displayedCollider = null; query.Clear(); }
@@ -98,7 +109,7 @@ public sealed partial class LocalTankPreparedDashIndicator : MonoBehaviour
     public void Shutdown()
     {
         HideImmediately(); source = null;
-        if (canvas != null) { canvas.gameObject.SetActive(false); Destroy(canvas.gameObject); canvas = null; bracket = null; }
+        if (canvas != null) { canvas.gameObject.SetActive(false); Destroy(canvas.gameObject); canvas = null; bracket = null; bracketViewport = null; }
         ReleaseGround();
     }
     void OnDisable() => HideImmediately();

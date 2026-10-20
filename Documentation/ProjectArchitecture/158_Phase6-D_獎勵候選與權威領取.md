@@ -58,3 +58,11 @@ Host 存檔升至 v3，新增待選候選 ID、已領 ID、已裝鈎索能力 ID
 目前池為 18 既有裝備加 15 成長（9 屬性、6 被動），共 33。依目標等級配置成長／裝備格，每成長格獨立 5% 被動，可跨組補位。Host 按類型發放，技能只替換同槽並掉落。schema v4 保存成長與技能等級；上方 v3／只含技能切片為歷史。 詳見 [168 角色成長、被動與掉落](168_角色成長被動與技能掉落.md)。
 
 實作／資產與測試證據分開列於 168，未宣稱獨立多程序聯機或 Build 驗收。
+
+
+## 2026-10-20 三專注槽局部核對
+
+最後核對日期：2026-10-20（僅本次三槽變更）
+核對來源：Assets/Scripts/Player/Ability/Loadout、InputManager.FocusSlots、GameLogic、UI/Player、Settings、Progression/Save。
+
+候選排除玩家目前所有已裝備技能；丟棄後之後的新抽選可再次出現，已生成的候選不另重抽。新增 RPC_RequestRewardChoiceAtFocusSlot，Host 校驗候選版本、分類、目標槽與可換裝狀態；失敗保留原獎勵，成功才扣除。完整三槽、存檔與同步限制見 [三專注槽實作與驗證](Validation/FocusSlots/README.md)。

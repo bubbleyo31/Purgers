@@ -1,0 +1,223 @@
+{
+  "utc": "2026-10-20T13:21:06.9204220Z",
+  "checksPassed": 1440,
+  "loadedAssetCount": 36,
+  "assets": [
+    {
+      "id": "grapple.hit.mark",
+      "category": "GrappleHit",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Reward_AttackGrappleMark.asset"
+    },
+    {
+      "id": "grapple.hit.gather",
+      "category": "GrappleHit",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Reward_TankGrappleGather.asset"
+    },
+    {
+      "id": "grapple.hit.pull",
+      "category": "GrappleHit",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Reward_SupportGrapplePull.asset"
+    },
+    {
+      "id": "grapple.focus.aerial_slow",
+      "category": "GrappleFocus",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Reward_SupportAerial.asset"
+    },
+    {
+      "id": "active.grenade",
+      "category": "GrappleFocus",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/PlayerAbility/Active/Rewards/Grenade.asset"
+    },
+    {
+      "id": "active.piercingcannon",
+      "category": "GrappleFocus",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/PlayerAbility/Active/Rewards/PiercingCannon.asset"
+    },
+    {
+      "id": "active.shockwave",
+      "category": "GrappleFocus",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/PlayerAbility/Active/Rewards/Shockwave.asset"
+    },
+    {
+      "id": "active.shield",
+      "category": "GrappleFocus",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/PlayerAbility/Active/Rewards/Shield.asset"
+    },
+    {
+      "id": "active.healingpack",
+      "category": "GrappleFocus",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/PlayerAbility/Active/Rewards/HealingPack.asset"
+    },
+    {
+      "id": "active.ricochet",
+      "category": "GrappleFocus",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/PlayerAbility/Active/Rewards/Ricochet.asset"
+    },
+    {
+      "id": "active.experience",
+      "category": "GrappleFocus",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/PlayerAbility/Active/Rewards/Experience.asset"
+    },
+    {
+      "id": "active.blink",
+      "category": "GrappleFocus",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/PlayerAbility/Active/Rewards/Blink.asset"
+    },
+    {
+      "id": "active.bullettime",
+      "category": "GrappleFocus",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/PlayerAbility/Active/Rewards/BulletTime.asset"
+    },
+    {
+      "id": "active.precisionlock",
+      "category": "GrappleFocus",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/PlayerAbility/Active/Rewards/PrecisionLock.asset"
+    },
+    {
+      "id": "weapon.attack",
+      "category": "Weapon",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Reward_WeaponAttack.asset"
+    },
+    {
+      "id": "weapon.tank",
+      "category": "Weapon",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Reward_WeaponTank.asset"
+    },
+    {
+      "id": "weapon.support",
+      "category": "Weapon",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Reward_WeaponSupport.asset"
+    },
+    {
+      "id": "grapple.spike",
+      "category": "GrappleHit",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Reward_GrappleSpike.asset"
+    },
+    {
+      "id": "growth.maximumhealth",
+      "category": "CharacterBonus",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Growth/Reward_MaximumHealth.asset"
+    },
+    {
+      "id": "growth.reloadspeed",
+      "category": "CharacterBonus",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Growth/Reward_ReloadSpeed.asset"
+    },
+    {
+      "id": "growth.meleespeed",
+      "category": "CharacterBonus",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Growth/Reward_MeleeSpeed.asset"
+    },
+    {
+      "id": "growth.magazinecapacity",
+      "category": "CharacterBonus",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Growth/Reward_MagazineCapacity.asset"
+    },
+    {
+      "id": "growth.grapplecost",
+      "category": "CharacterBonus",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Growth/Reward_GrappleCost.asset"
+    },
+    {
+      "id": "growth.focuscooldown",
+      "category": "CharacterBonus",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Growth/Reward_FocusCooldown.asset"
+    },
+    {
+      "id": "growth.hitcooldown",
+      "category": "CharacterBonus",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Growth/Reward_HitCooldown.asset"
+    },
+    {
+      "id": "growth.regenerationrate",
+      "category": "CharacterBonus",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Growth/Reward_RegenerationRate.asset"
+    },
+    {
+      "id": "growth.regenerationdelay",
+      "category": "CharacterBonus",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Growth/Reward_RegenerationDelay.asset"
+    },
+    {
+      "id": "growth.nottoday",
+      "category": "OneShotAbility",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Growth/Reward_NotToday.asset"
+    },
+    {
+      "id": "growth.selfrescue",
+      "category": "OneShotAbility",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Growth/Reward_SelfRescue.asset"
+    },
+    {
+      "id": "growth.adrenaline",
+      "category": "OneShotAbility",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Growth/Reward_Adrenaline.asset"
+    },
+    {
+      "id": "growth.carnivoroustree",
+      "category": "OneShotAbility",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Growth/Reward_CarnivorousTree.asset"
+    },
+    {
+      "id": "growth.indecision",
+      "category": "OneShotAbility",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Growth/Reward_Indecision.asset"
+    },
+    {
+      "id": "growth.johnwick",
+      "category": "OneShotAbility",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Growth/Reward_JohnWick.asset"
+    },
+    {
+      "id": "growth.guardreduction",
+      "category": "CharacterBonus",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Growth/Reward_GuardReduction.asset"
+    },
+    {
+      "id": "growth.guardstamina",
+      "category": "CharacterBonus",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Growth/Reward_GuardStamina.asset"
+    },
+    {
+      "id": "growth.guardcooldown",
+      "category": "CharacterBonus",
+      "minimum": 1,
+      "path": "Assets/_Project_Assets/Data/Progression/Growth/Reward_GuardCooldown.asset"
+    }
+  ]
+}

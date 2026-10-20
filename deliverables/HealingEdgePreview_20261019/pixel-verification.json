@@ -1,0 +1,25 @@
+{
+  "source": "Unity Graphics.Blit; historical static gameplay background",
+  "frame_count": 88,
+  "fps": 20,
+  "duration_seconds": 4.4,
+  "center_alpha_max": 0,
+  "center_rgb_difference_max": 0,
+  "edge_alpha_max": 146,
+  "start_end_same": true,
+  "animation_changes": true,
+  "ultrawide_size": [
+    1680,
+    720
+  ],
+  "gif_bytes": 7167690,
+  "hud_rgb_difference_max": {
+    "minimap": 0,
+    "quest": 0,
+    "ability_q": 0,
+    "ability_e": 0
+  },
+  "hud_foreground_samples_unchanged": true,
+  "top_alpha": 94,
+  "bottom_alpha": 94
+}

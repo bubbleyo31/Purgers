@@ -52,7 +52,7 @@ public sealed class LocalPlayerGuardHUD : MonoBehaviour
         if (float.IsNegativeInfinity(castTop)) return usual;
         return Mathf.Min(usual, -castTop - 8 - stack);
     }
-    public void SetCrosshairOffset(float offset) => root.anchoredPosition = new Vector2(0,-offset);
+    public void SetCrosshairOffset(float offset) => root.anchoredPosition = new Vector2(root.anchoredPosition.x,-offset);
     /// <summary>回傳此列佔用高度，既有異常列向下排；隱藏時回零，不留下空位。</summary>
     public float Present(in GuardHudSnapshot snapshot, StatusEffectHudSettings settings, float width)
     {
@@ -65,7 +65,7 @@ public sealed class LocalPlayerGuardHUD : MonoBehaviour
         float height = Mathf.Max(2,settings.guardBarHeight);
         float labelHeight = Mathf.Max(20,Mathf.Ceil(label.fontSize * 1.5f));
         const float labelGap = 6;
-        root.anchoredPosition = new Vector2(0,-Mathf.Max(0,settings.selfCrosshairOffset));
+        root.anchoredPosition = new Vector2(settings.selfHorizontalOffset,-Mathf.Max(0,settings.selfCrosshairOffset));
         root.sizeDelta = new Vector2(width,labelHeight+labelGap+height);
         label.rectTransform.anchoredPosition = new Vector2(start,0);
         label.rectTransform.sizeDelta = new Vector2(barWidth*.62f,labelHeight);

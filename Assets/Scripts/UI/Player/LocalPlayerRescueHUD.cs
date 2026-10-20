@@ -18,6 +18,7 @@ public sealed class LocalPlayerRescueHUD : MonoBehaviour
     private Image progressRing;
     [SerializeField, Tooltip("E 按鍵與方形背景根物件；僅救援者顯示，倒地者不顯示。")]
     private GameObject keyPrompt;
+    private HudKeyPromptLayout promptLayout;
 
     private void Update()
     {
@@ -36,12 +37,19 @@ public sealed class LocalPlayerRescueHUD : MonoBehaviour
         if (target == null) { Show(false); return; }
         Show(true);
         string interactionKey = Purgers.Settings.PlayerSettingsService.Label(Purgers.Settings.PlayerBinding.Interact);
-        if (keyPrompt) { var label = keyPrompt.GetComponentInChildren<TMP_Text>(true); Purgers.Settings.PlayerSettingsService.SetPrompt(label, Purgers.Settings.PlayerBinding.Interact); }
+        string holdPrompt = keyPrompt != null ? "按住" : $"按住 {interactionKey}";
+        if (keyPrompt)
+        {
+            if (promptLayout == null) promptLayout = new HudKeyPromptLayout(keyPrompt.GetComponentInChildren<TMP_Text>(true), keyPrompt.GetComponent<Image>(), null);
+            var key = Purgers.Settings.PlayerSettingsService.Key(Purgers.Settings.PlayerBinding.Interact);
+            promptLayout.Refresh(key);
+            promptLayout.SetState(Input.GetKey(key), key == KeyCode.None);
+        }
         bool rescuing = target.Rescuer != null && target.Rescuer.IsValid;
         if (keyPrompt != null) keyPrompt.SetActive(!own.IsDowned || (own.CanSelfRescue && !rescuing));
         if (statusText != null) statusText.text = own.IsDowned
-            ? (rescuing ? "正在被救援" : own.CanSelfRescue ? $"按住 {interactionKey} 自救" : "已倒地 · 等待隊友救援")
-            : (rescuing ? $"救援中 · 持續按住 {interactionKey}" : $"按住 {interactionKey} 救援隊友");
+            ? (rescuing ? "正在被救援" : own.CanSelfRescue ? $"{holdPrompt} 自救" : "已倒地 · 等待隊友救援")
+            : (rescuing ? $"救援中 · 持續{holdPrompt}" : $"{holdPrompt} 救援隊友");
         if (timeText != null) timeText.text = own.IsSelfRescuing ? $"{Mathf.Max(0f, own.SelfRescueDuration - own.SelfRescueElapsed):0.0} 秒" : rescuing
             ? $"{Mathf.Max(0f, target.RescueDurationSeconds - target.RescueElapsedSeconds):0.0} 秒"
             : $"倒地剩餘 {target.DisplayDownedSeconds:0.0} 秒";

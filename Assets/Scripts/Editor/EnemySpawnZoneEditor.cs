@@ -6,11 +6,12 @@ using UnityEngine;
 
 /// <summary>混合清單的移動類型只讀 Prefab Definition；不回寫敵人或舊版 Zone 設定。</summary>
 [CustomEditor(typeof(EnemySpawnZone)), CanEditMultipleObjects]
-public sealed class EnemySpawnZoneEditor : Editor
+public sealed partial class EnemySpawnZoneEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
+        DrawDiagnostics();
         EditorGUILayout.HelpBox("混合清單的 Locomotion Kind 由各敵人 Prefab 的 EnemyDefinition 自動辨識，不需要手動選擇。", MessageType.Info);
         bool mixedMode = targets.All(item => ((EnemySpawnZone)item).UsesEnemyEntries);
         var property = serializedObject.GetIterator();
@@ -23,7 +24,7 @@ public sealed class EnemySpawnZoneEditor : Editor
             using (new EditorGUI.DisabledScope(property.name == "m_Script"))
                 EditorGUILayout.PropertyField(property, true);
         }
-        serializedObject.ApplyModifiedProperties();
+        if (serializedObject.ApplyModifiedProperties()) diagnosticCache.Clear();
     }
 }
 

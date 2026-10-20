@@ -1,0 +1,1150 @@
+{
+  "frame": 9294,
+  "cam": true,
+  "cameras": [
+    "MapRenderAuditCamera"
+  ],
+  "counters": [
+    {
+      "name": "Main Thread",
+      "Valid": true,
+      "Count": 237,
+      "mean": 20676408.438818567,
+      "last": 19445800
+    },
+    {
+      "name": "CPU Render Thread Frame Time",
+      "Valid": true,
+      "Count": 237,
+      "mean": 8093743.8396624476,
+      "last": 7203600
+    },
+    {
+      "name": "GPU Frame Time",
+      "Valid": true,
+      "Count": 237,
+      "mean": 13207422.375527427,
+      "last": 11683840
+    },
+    {
+      "name": "Draw Calls Count",
+      "Valid": true,
+      "Count": 237,
+      "mean": 18179.96624472574,
+      "last": 18257
+    },
+    {
+      "name": "Batches Count",
+      "Valid": true,
+      "Count": 237,
+      "mean": 18179.96624472574,
+      "last": 18257
+    },
+    {
+      "name": "SetPass Calls Count",
+      "Valid": true,
+      "Count": 237,
+      "mean": 92.607594936708864,
+      "last": 93
+    },
+    {
+      "name": "Triangles Count",
+      "Valid": true,
+      "Count": 237,
+      "mean": 1606434.0759493671,
+      "last": 1613241
+    },
+    {
+      "name": "Vertices Count",
+      "Valid": true,
+      "Count": 237,
+      "mean": 2123560.8607594939,
+      "last": 2132559
+    },
+    {
+      "name": "UniversalRenderTotal",
+      "Valid": true,
+      "Count": 237,
+      "mean": 0.0,
+      "last": 0
+    },
+    {
+      "name": "Inl_UniversalRenderTotal",
+      "Valid": true,
+      "Count": 237,
+      "mean": 13508709.282700421,
+      "last": 12664000
+    },
+    {
+      "name": "MainLightShadow",
+      "Valid": true,
+      "Count": 237,
+      "mean": 4672726.5822784808,
+      "last": 4428900
+    },
+    {
+      "name": "Inl_MainLightShadow",
+      "Valid": true,
+      "Count": 237,
+      "mean": 58464.556962025315,
+      "last": 53600
+    },
+    {
+      "name": "DrawOpaqueObjects",
+      "Valid": true,
+      "Count": 237,
+      "mean": 7873727.0042194091,
+      "last": 7269200
+    },
+    {
+      "name": "Inl_DrawOpaqueObjects",
+      "Valid": true,
+      "Count": 237,
+      "mean": 11714.767932489451,
+      "last": 11300
+    },
+    {
+      "name": "Gfx.WaitForPresentOnGfxThread",
+      "Valid": true,
+      "Count": 237,
+      "mean": 407823.20675105485,
+      "last": 396200
+    },
+    {
+      "name": "Gfx.WaitForGfxCommandsFromMainThread",
+      "Valid": true,
+      "Count": 237,
+      "mean": 11348939.240506329,
+      "last": 10755900
+    },
+    {
+      "name": "Physics.Simulate",
+      "Valid": true,
+      "Count": 237,
+      "mean": 93357.805907173,
+      "last": 77800
+    }
+  ],
+  "gpuRows": [
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 6861000,
+        "gpuNs": 2110464,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 8762400,
+        "gpuNs": 9591808,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 22100,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 5254500,
+        "gpuNs": 1341440,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 10185000,
+        "gpuNs": 6392832,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 21700,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 4976000,
+        "gpuNs": 1610752,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 8768200,
+        "gpuNs": 6389760,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 17000,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 5831700,
+        "gpuNs": 1437696,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 10296500,
+        "gpuNs": 6203392,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 17800,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 4398600,
+        "gpuNs": 1940480,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 8394400,
+        "gpuNs": 5953536,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 16100,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 4468300,
+        "gpuNs": 1059840,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 6850300,
+        "gpuNs": 4403200,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 14200,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 5432400,
+        "gpuNs": 1454080,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 8484500,
+        "gpuNs": 6554624,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 15200,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 4801500,
+        "gpuNs": 1164288,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 7620300,
+        "gpuNs": 6083584,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 21900,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 4836800,
+        "gpuNs": 1997824,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 6518200,
+        "gpuNs": 9554944,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 14400,
+        "gpuNs": 1024,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 4412200,
+        "gpuNs": 1451008,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 6503900,
+        "gpuNs": 5603328,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 14000,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 5189500,
+        "gpuNs": 821248,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 8783300,
+        "gpuNs": 6089728,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 14300,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 4502600,
+        "gpuNs": 1485824,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 6234400,
+        "gpuNs": 5450752,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 17500,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 4072700,
+        "gpuNs": 1142784,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 7530900,
+        "gpuNs": 5854208,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 14500,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 3736800,
+        "gpuNs": 1116160,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 7233000,
+        "gpuNs": 5413888,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 13500,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 4345900,
+        "gpuNs": 833536,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 6817100,
+        "gpuNs": 6313984,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 14900,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 4743400,
+        "gpuNs": 1107968,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 7322300,
+        "gpuNs": 5838848,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 14500,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 4452800,
+        "gpuNs": 1512448,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 6632400,
+        "gpuNs": 5380096,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 14200,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 4006300,
+        "gpuNs": 861184,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 7418700,
+        "gpuNs": 5642240,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 14700,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 4560400,
+        "gpuNs": 861184,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 7231500,
+        "gpuNs": 5781504,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 16300,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 4865200,
+        "gpuNs": 1106944,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 7219700,
+        "gpuNs": 5315584,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 15000,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 4136200,
+        "gpuNs": 1281024,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 6948900,
+        "gpuNs": 5482496,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 15400,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 4183100,
+        "gpuNs": 952320,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 6587300,
+        "gpuNs": 5339136,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 15000,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 3721700,
+        "gpuNs": 1257472,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 6728900,
+        "gpuNs": 5598208,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 13700,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 4324200,
+        "gpuNs": 1141760,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 8068100,
+        "gpuNs": 5347328,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 13800,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 3538100,
+        "gpuNs": 1308672,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 7137100,
+        "gpuNs": 5856256,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 15200,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 3816600,
+        "gpuNs": 1216512,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 7717200,
+        "gpuNs": 4994048,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 14200,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 4197200,
+        "gpuNs": 1138688,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 6929300,
+        "gpuNs": 5164032,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 13400,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 4915400,
+        "gpuNs": 1692672,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 7080300,
+        "gpuNs": 4878336,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 14400,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 4460600,
+        "gpuNs": 1557504,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 7182500,
+        "gpuNs": 5679104,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 15200,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ],
+    [
+      {
+        "name": "UniversalRenderTotal",
+        "isValid": true,
+        "cpuNs": 0,
+        "gpuNs": 0,
+        "sampleBlockCount": 0,
+        "gpuSampleBlockCount": 0
+      },
+      {
+        "name": "MainLightShadow",
+        "isValid": true,
+        "cpuNs": 4429300,
+        "gpuNs": 902144,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawOpaqueObjects",
+        "isValid": true,
+        "cpuNs": 7269200,
+        "gpuNs": 5295104,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      },
+      {
+        "name": "DrawTransparentObjects",
+        "isValid": true,
+        "cpuNs": 15000,
+        "gpuNs": 0,
+        "sampleBlockCount": 4,
+        "gpuSampleBlockCount": 2
+      }
+    ]
+  ]
+}

@@ -102,6 +102,7 @@ public class LocalPlayerWeaponHUD :
     [SerializeField] private Image reloadProgressFill;
     [SerializeField] private TMP_Text reloadKeyLabel;
     [SerializeField] private Image reloadKeyBackground;
+    private HudKeyPromptLayout reloadPromptLayout;
 
     [SerializeField]
     [Tooltip(
@@ -295,12 +296,10 @@ public class LocalPlayerWeaponHUD :
     {
         InputManager input = runner != null ? runner.GetComponent<InputManager>() : null;
         KeyCode key = input != null ? input.ReloadKey : KeyCode.R;
-        if (reloadKeyLabel != null)
-            Purgers.Settings.PlayerSettingsService.SetPrompt(reloadKeyLabel, key);
-        if (reloadKeyBackground != null)
-            reloadKeyBackground.color = Input.GetKey(key)
-                ? new Color(0.2f, 0.78f, 0.95f, 0.95f)
-                : new Color32(204, 190, 199, 255);
+        if (reloadPromptLayout == null && reloadKeyLabel != null)
+            reloadPromptLayout = new HudKeyPromptLayout(reloadKeyLabel, reloadKeyBackground, null);
+        reloadPromptLayout?.Refresh(key);
+        reloadPromptLayout?.SetState(Input.GetKey(key), key == KeyCode.None);
     }
 
     private void OnDisable()

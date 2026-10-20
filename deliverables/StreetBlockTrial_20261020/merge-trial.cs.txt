@@ -1,0 +1,135 @@
+// Temporary Play Mode-only street experiment. No scene/prefab saves.
+var dir="deliverables/StreetBlockTrial_20261020/merged/";System.IO.Directory.CreateDirectory(dir);
+var root=GameObject.Find("Map(Z:-263)");
+var houseNames=new[]{"下出生點_左排_房子2","下出生點_左排_房子2-1-3","下出生點_左排_房子3","下出生點_左排_房子4","下出生點_右排_房子2","下出生點_右排_房子3","下出生點_右排_房子4"};
+var parents=houseNames.Select(n=>root.transform.Find("MapChunk_Prototype/場景模型v1/"+n)).ToList();
+parents.Add(root.GetComponentsInChildren<Transform>().Where(t=>t.name=="煙囪三層房 (1)").OrderBy(t=>Vector3.Distance(t.GetComponentsInChildren<Renderer>().First().bounds.center,new Vector3(-16.59f,14.53f,-42.49f))).First());
+var sources=parents.SelectMany(t=>t.GetComponentsInChildren<MeshRenderer>()).Where(r=>r.enabled&&r.gameObject.activeInHierarchy).Distinct().ToArray();
+if(sources.Length!=424)throw new Exception("Scope changed: "+sources.Length);
+if(sources.Any(r=>r.HasPropertyBlock()||r.GetComponent<MeshFilter>()==null||r.lightmapIndex!=-1))throw new Exception("Unsupported renderer");
+var originalEnabled=sources.Select(r=>r.enabled).ToArray();
+var sourceMeshes=new HashSet<Mesh>(sources.Select(r=>r.GetComponent<MeshFilter>().sharedMesh));
+Func<string> collisionHash=()=>{
+ var text=string.Join("\n",root.GetComponentsInChildren<Collider>(true).OrderBy(c=>c.GetInstanceID()).Select(c=>c.GetInstanceID()+"|"+EditorJsonUtility.ToJson(c)+"|"+c.transform.localToWorldMatrix.ToString("R")).ToArray());
+ using(var sha=System.Security.Cryptography.SHA256.Create())return BitConverter.ToString(sha.ComputeHash(System.Text.Encoding.UTF8.GetBytes(text)));
+};
+var beforeHash=collisionHash();
+var colliderCount=root.GetComponentsInChildren<Collider>(true).Length;
+var clones=new List<GameObject>();
+var allocated=new HashSet<Mesh>();
+var meshCopies=new Dictionary<Mesh,Mesh>();
+Func<Mesh,Mesh> readableCopy=source=>{
+ Mesh found;if(meshCopies.TryGetValue(source,out found))return found;
+ var m=new Mesh();m.name="StreetAuditCopy_"+source.name;m.hideFlags=HideFlags.DontSave;
+ using(var a=MeshUtility.AcquireReadOnlyMeshData(source)){
+  var d=a[0];var attrs=source.GetVertexAttributes();
+  m.SetVertexBufferParams(d.vertexCount,attrs);
+  for(int stream=0;stream<source.vertexBufferCount;stream++){
+   var bytes=d.GetVertexData<byte>(stream);
+   m.SetVertexBufferData(bytes,0,0,bytes.Length,stream,UnityEngine.Rendering.MeshUpdateFlags.DontRecalculateBounds);
+  }
+  if(source.indexFormat==UnityEngine.Rendering.IndexFormat.UInt16){
+   var ids=d.GetIndexData<ushort>();m.SetIndexBufferParams(ids.Length,source.indexFormat);m.SetIndexBufferData(ids,0,0,ids.Length);
+  }else{
+   var ids=d.GetIndexData<uint>();m.SetIndexBufferParams(ids.Length,source.indexFormat);m.SetIndexBufferData(ids,0,0,ids.Length);
+  }
+  m.subMeshCount=d.subMeshCount;
+  for(int s=0;s<d.subMeshCount;s++)m.SetSubMesh(s,d.GetSubMesh(s),UnityEngine.Rendering.MeshUpdateFlags.DontRecalculateBounds);
+ }
+ m.bounds=source.bounds;meshCopies[source]=m;allocated.Add(m);return m;
+};
+var cam=GameObject.Find("MapRenderAuditCamera").GetComponent<Camera>();
+var pt=typeof(UnityEngine.Rendering.Universal.UniversalRenderPipeline).GetNestedType("Profiling",BindingFlags.NonPublic);
+var sampler=(UnityEngine.Rendering.ProfilingSampler)pt.GetMethod("TryGetOrAddCameraSampler",BindingFlags.Public|BindingFlags.Static).Invoke(null,new object[]{cam});
+sampler.enableRecording=true;
+var views=SceneView.sceneViews.Cast<SceneView>().ToArray();var gizmos=views.Select(v=>v.drawGizmos).ToArray();
+foreach(var v in views)v.drawGizmos=false;
+var masks=new Dictionary<Camera,int>();var clears=new Dictionary<Camera,CameraClearFlags>();
+Action<UnityEngine.Rendering.ScriptableRenderContext,Camera> begin=(ctx,c)=>{if(c.cameraType==CameraType.SceneView){masks[c]=c.cullingMask;clears[c]=c.clearFlags;c.cullingMask=0;c.clearFlags=CameraClearFlags.SolidColor;}};
+Action<UnityEngine.Rendering.ScriptableRenderContext,Camera> end=(ctx,c)=>{if(masks.ContainsKey(c)){c.cullingMask=masks[c];c.clearFlags=clears[c];masks.Remove(c);clears.Remove(c);}};
+UnityEngine.Rendering.RenderPipelineManager.beginCameraRendering+=begin;UnityEngine.Rendering.RenderPipelineManager.endCameraRendering+=end;
+var names=new[]{"Main Thread","CPU Render Thread Frame Time","Draw Calls Count","Batches Count","SetPass Calls Count","Triangles Count","Vertices Count","Inl_UniversalRenderTotal","Inl_ScriptableRenderContext.Submit","Physics.Simulate","Static Batches Count","Static Batched Draw Calls Count"};
+var handles=new List<Unity.Profiling.LowLevel.Unsafe.ProfilerRecorderHandle>();Unity.Profiling.LowLevel.Unsafe.ProfilerRecorderHandle.GetAvailable(handles);
+var desc=handles.Select(Unity.Profiling.LowLevel.Unsafe.ProfilerRecorderHandle.GetDescription).ToArray();
+var rows=new List<object>();var comparisons=new List<object>();var images=new Dictionary<string,Color32[]>();
+Action<string> capture=name=>{
+ var prev=RenderTexture.active;RenderTexture.active=cam.targetTexture;var tex=new Texture2D(1920,1080,TextureFormat.RGB24,false);
+ try{tex.ReadPixels(new Rect(0,0,1920,1080),0,0);tex.Apply();images[name]=tex.GetPixels32();System.IO.File.WriteAllBytes(dir+name+".png",tex.EncodeToPNG());}
+ finally{RenderTexture.active=prev;UnityEngine.Object.Destroy(tex);}
+};
+Action<string,string> compare=(a,b)=>{
+ var x=images[a];var y=images[b];long sum=0;int changed=0,over3=0,over10=0,max=0;
+ for(int i=0;i<x.Length;i++){int dr=Math.Abs(x[i].r-y[i].r),dg=Math.Abs(x[i].g-y[i].g),db=Math.Abs(x[i].b-y[i].b);int d=Math.Max(dr,Math.Max(dg,db));sum+=dr+dg+db;if(d>0)changed++;if(d>3)over3++;if(d>10)over10++;max=Math.Max(max,d);}
+ comparisons.Add(new{a,b,meanAbsoluteChannelDifference=sum/(double)(x.Length*3),changedPercent=100.0*changed/x.Length,over3Percent=100.0*over3/x.Length,over10Percent=100.0*over10/x.Length,max});
+};
+Action<bool> toggle=optimized=>{
+ for(int i=0;i<sources.Length;i++)sources[i].enabled=optimized?false:originalEnabled[i];
+ foreach(var go in clones)go.GetComponent<MeshRenderer>().enabled=optimized;
+};
+Func<string,System.Threading.Tasks.Task> measure=async label=>{
+ System.IO.File.WriteAllText(dir+"progress.txt",label);await System.Threading.Tasks.Task.Delay(3000);
+ var recs=names.Select(n=>{var d=desc.First(x=>x.Name==n);return Unity.Profiling.ProfilerRecorder.StartNew(d.Category,n,4096);}).ToArray();
+ try{
+  var gpu=new List<double>();int first=Time.frameCount,last=-1;double start=EditorApplication.timeSinceStartup;
+  while(EditorApplication.timeSinceStartup-start<5){await System.Threading.Tasks.Task.Delay(40);if(!EditorApplication.isPlaying)throw new Exception("Stopped");if(last==Time.frameCount)continue;last=Time.frameCount;if(sampler.gpuSampleCount==1)gpu.Add(sampler.gpuElapsedTime);}
+  foreach(var r in recs)r.Stop();
+  rows.Add(new{label,frames=Time.frameCount-first,seconds=EditorApplication.timeSinceStartup-start,gpu,counters=recs.Select((r,i)=>{var v=r.ToArray().Select(s=>(double)s.Value).OrderBy(x=>x).ToArray();return new{name=names[i],n=v.Length,mean=v.Average(),median=v[v.Length/2],p95=v[(int)Math.Ceiling(v.Length*.95)-1]};}).ToArray(),collisionHash=collisionHash()});
+  System.IO.File.WriteAllText(dir+"measurements.json",Newtonsoft.Json.JsonConvert.SerializeObject(rows,Newtonsoft.Json.Formatting.Indented));
+ }finally{foreach(var r in recs)r.Dispose();}
+};
+Func<System.Threading.Tasks.Task> run=async()=>{
+ try{
+  System.IO.File.WriteAllText(dir+"scope.json",Newtonsoft.Json.JsonConvert.SerializeObject(new{count=sources.Length,colliderCount,beforeHash,parents=parents.Select(t=>new{path=AnimationUtility.CalculateTransformPath(t,root.transform),position=t.position.ToString()}).ToArray(),renderers=sources.Select(r=>new{path=AnimationUtility.CalculateTransformPath(r.transform,root.transform),id=r.GetInstanceID(),mesh=r.GetComponent<MeshFilter>().sharedMesh.name,materials=r.sharedMaterials.Select(m=>m.name).ToArray()}).ToArray()},Newtonsoft.Json.Formatting.Indented));
+
+  long sourceTriangles=0,mergedTriangles=0;float maxWorldVertexError=0;
+  foreach(var group in sources.GroupBy(r=>r.transform.parent)){
+   var list=group.ToArray();var parent=group.Key;var first=list[0];
+   if(list.Any(r=>r.sharedMaterials.Length!=1||r.sharedMaterial!=first.sharedMaterial||r.GetComponent<MeshFilter>().sharedMesh.subMeshCount!=1))throw new Exception("Mixed material/submesh");
+   var ci=list.Select(r=>new CombineInstance{mesh=readableCopy(r.GetComponent<MeshFilter>().sharedMesh),subMeshIndex=0,transform=parent.worldToLocalMatrix*r.transform.localToWorldMatrix}).ToArray();
+   var merged=new Mesh();merged.name="StreetMerged_"+parent.name;merged.indexFormat=UnityEngine.Rendering.IndexFormat.UInt32;merged.hideFlags=HideFlags.DontSave;
+   merged.CombineMeshes(ci,true,true,false);allocated.Add(merged);
+   var resultVertices=merged.vertices;int offset=0;
+   for(int j=0;j<list.Length;j++){
+    var originalVertices=ci[j].mesh.vertices;
+    for(int v=0;v<originalVertices.Length;v++){
+     var expected=list[j].transform.TransformPoint(originalVertices[v]);
+     var actual=parent.TransformPoint(resultVertices[offset+v]);
+     maxWorldVertexError=Math.Max(maxWorldVertexError,Vector3.Distance(expected,actual));
+    }
+    offset+=originalVertices.Length;sourceTriangles+=(long)ci[j].mesh.GetIndexCount(0)/3;
+   }
+   if(offset!=merged.vertexCount)throw new Exception("Vertex count changed");
+   mergedTriangles+=(long)merged.GetIndexCount(0)/3;
+   var go=new GameObject("__StreetBatchTrial");go.layer=first.gameObject.layer;go.transform.SetParent(parent,false);go.AddComponent<MeshFilter>().sharedMesh=merged;
+   var mergedRenderer=go.AddComponent<MeshRenderer>();EditorUtility.CopySerialized(first,mergedRenderer);mergedRenderer.enabled=true;clones.Add(go);
+  }
+  if(sourceTriangles!=mergedTriangles||maxWorldVertexError>0.001f)throw new Exception("Geometry verification failed");
+  System.IO.File.WriteAllText(dir+"batch-result.json",Newtonsoft.Json.JsonConvert.SerializeObject(new{sourceRenderers=sources.Length,mergedRenderers=clones.Count,sourceTriangles,mergedTriangles,maxWorldVertexError,combinedMeshMemory=clones.Sum(g=>UnityEngine.Profiling.Profiler.GetRuntimeMemorySizeLong(g.GetComponent<MeshFilter>().sharedMesh)),workingMeshMemory=allocated.Sum(m=>UnityEngine.Profiling.Profiler.GetRuntimeMemorySizeLong(m))},Newtonsoft.Json.Formatting.Indented));
+  toggle(false);cam.transform.position=new Vector3(-29.6f,4.6f,21.87f);cam.transform.rotation=Quaternion.Euler(0,180,0);
+  await measure("before-1");capture("spawn-before");await System.Threading.Tasks.Task.Delay(200);capture("spawn-before-noise");
+  toggle(true);await measure("after-1");capture("spawn-after");compare("spawn-before","spawn-before-noise");compare("spawn-before","spawn-after");
+  toggle(false);await measure("before-2");toggle(true);await measure("after-2");
+  toggle(true);await measure("after-3");toggle(false);await measure("before-3");
+  var angles=new[]{
+   new{name="approach",pos=new Vector3(-29.6f,4.6f,-25),yaw=180f},
+   new{name="left-front",pos=new Vector3(-17,3,-15),yaw=90f},
+   new{name="right-front",pos=new Vector3(-42,3,-18),yaw=270f}
+  };
+  foreach(var angle in angles){cam.transform.position=angle.pos;cam.transform.rotation=Quaternion.Euler(0,angle.yaw,0);toggle(false);await System.Threading.Tasks.Task.Delay(1500);capture(angle.name+"-before");await System.Threading.Tasks.Task.Delay(200);capture(angle.name+"-noise");toggle(true);await System.Threading.Tasks.Task.Delay(1500);capture(angle.name+"-after");compare(angle.name+"-before",angle.name+"-noise");compare(angle.name+"-before",angle.name+"-after");}
+  System.IO.File.WriteAllText(dir+"image-differences.json",Newtonsoft.Json.JsonConvert.SerializeObject(comparisons,Newtonsoft.Json.Formatting.Indented));
+  if(collisionHash()!=beforeHash)throw new Exception("Collision fingerprint changed");
+  System.IO.File.WriteAllText(dir+"progress.txt","complete");
+ }catch(Exception ex){System.IO.File.WriteAllText(dir+"error.txt",ex.ToString());}
+ finally{
+  toggle(false);
+  foreach(var go in clones)if(go!=null)UnityEngine.Object.DestroyImmediate(go);
+  foreach(var m in allocated)if(m!=null&&!sourceMeshes.Contains(m))UnityEngine.Object.DestroyImmediate(m);
+  sampler.enableRecording=false;UnityEngine.Rendering.RenderPipelineManager.beginCameraRendering-=begin;UnityEngine.Rendering.RenderPipelineManager.endCameraRendering-=end;
+  foreach(var pair in masks)if(pair.Key!=null){pair.Key.cullingMask=pair.Value;pair.Key.clearFlags=clears[pair.Key];}
+  for(int i=0;i<views.Length;i++)if(views[i]!=null)views[i].drawGizmos=gizmos[i];
+  System.IO.File.WriteAllText(dir+"verification.json",Newtonsoft.Json.JsonConvert.SerializeObject(new{beforeHash,afterHash=collisionHash(),colliderCount,afterCount=root.GetComponentsInChildren<Collider>(true).Length,sourcesRestored=sources.Select((r,i)=>r.enabled==originalEnabled[i]).All(x=>x),clonesRemaining=root.GetComponentsInChildren<Transform>().Count(t=>t.name=="__StreetBatchTrial")},Newtonsoft.Json.Formatting.Indented));
+ }
+};
+run();return "Local 424-renderer per-building mesh merge trial started; approximately 65 seconds; automatic rollback";
+
+

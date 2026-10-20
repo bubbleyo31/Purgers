@@ -297,3 +297,6 @@ PlayerShockwaveVisual 保留材質／貼圖／Prefab 引用，改為上下同寬
 
 PlayerPiercingCannonAbility 在原 Casting 期間顯示細線／中線預告，Aim Stage Ratio 分段但不鎖準星；正式 Activate 仍取出手瞬間位置、方向。內建正式光束改為亮核、一次性粒子及粗細平滑歸零，新增 BeamDuration 同步分母。原 beamWidth／beamColor 保留為舊資料回退，正式調整移至 Presentation；fireVfx 自訂插槽仍可替代發射段。共用四個 GameplayAudioCue 接口目前留空，尚無正式音檔。完整 Inspector、責任與驗證見 [108](108_雷射四階段視聽呈現.md)／[紀錄](Validation/BeamPresentation/README.md)。
 
+## 2026-10-19 治療、受傷與速度動能增益外框正式接入（局部核對）
+
+PlayerAbilityColorGrading 新增 LocalPlayerScreenEdgeEffects.OwnsHealing(observedHealth) 的讓出條件：只有正式外框綁定同一玩家且 Shader／治療強度有效時，原治療 LGG 權重歸零，避免全畫面重複染綠；外框缺少／停用／治療強度零則保留舊 LGG。其他技能與保命調色仍由原系統管理。詳見 [112 玩家畫面外框](112_玩家畫面外框狀態效果.md)。

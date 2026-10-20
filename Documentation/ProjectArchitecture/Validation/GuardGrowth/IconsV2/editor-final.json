@@ -1,0 +1,15 @@
+{
+  "scene": "Assets/Scenes/_Menu.unity",
+  "sceneDirty": false,
+  "playing": false,
+  "compiling": false,
+  "sceneRunnerCount": 0,
+  "runners": [
+    {
+      "name": "Runner",
+      "persistent": true,
+      "sceneValid": false,
+      "running": false
+    }
+  ]
+}

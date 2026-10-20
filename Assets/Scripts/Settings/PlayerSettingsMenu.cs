@@ -338,9 +338,15 @@ namespace Purgers.Settings
         void Hint(RectTransform parent, string label, KeyCode key, float x, float y, float width)
         {
             var box = Image(parent, "Hint " + label, x, y, width, 48, key == KeyCode.None ? Red : Ink).rectTransform;
-            Text(box, label, 10, 4, width - 88, 40, 17, Muted);
-            Image(box, "Keycap", width - 82, 7, 74, 34, Gold);
-            Text(box, PlayerSettingsSession.KeyLabel(key), width - 80, 7, 70, 34, 16, Ink, TextAlignmentOptions.Center);
+            var actionLabel = Text(box, label, 10, 4, width - 88, 40, 17, Muted);
+            var cap = Image(box, "Keycap", width - 82, 8, 74, 32, Gold);
+            var capLabel = Text(cap.rectTransform, "", 0, 0, 74, 32, 21, Ink, TextAlignmentOptions.Center);
+            var layout = new HudKeyPromptLayout(capLabel, cap, null);
+            layout.Refresh(key);
+            cap.rectTransform.pivot = new Vector2(1, .5f);
+            cap.rectTransform.anchoredPosition = new Vector2(width - 10, -24);
+            actionLabel.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Mathf.Max(40, width - layout.Width - 28));
+            actionLabel.enableAutoSizing = true; actionLabel.fontSizeMax = 17; actionLabel.fontSizeMin = 12;
         }
         static void Stretch(RectTransform rect)
         {

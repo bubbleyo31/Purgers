@@ -1,0 +1,12 @@
+{
+  "focusPosition": [
+    -50.0,
+    103.0
+  ],
+  "focusColor": "78EE23",
+  "altPosition": [
+    131.0,
+    -1050.0
+  ],
+  "owner": "{\"MonoBehaviour\":{\"m_Enabled\":true,\"m_EditorHideFlags\":0,\"m_Name\":\"\",\"m_EditorClassIdentifier\":\"\",\"slotsRoot\":{\"instanceID\":0},\"slotTemplate\":{\"instanceID\":0},\"focusIconOffset\":{\"x\":0.0,\"y\":0.0},\"focusKeyOffset\":{\"x\":0.0,\"y\":0.0},\"grappleFill\":{\"instanceID\":0},\"emptyGrappleMark\":{\"instanceID\":0},\"grappleKeyLabel\":{\"instanceID\":0},\"grappleKeyBackground\":{\"instanceID\":0},\"visualGroup\":{\"instanceID\":0},\"timedAbilityRoot\":{\"instanceID\":0},\"timedAbilityFill\":{\"instanceID\":0},\"timedAbilityName\":{\"instanceID\":0},\"timedAbilityState\":{\"instanceID\":0},\"timedAbilitySeconds\":{\"instanceID\":0},\"castingBarColor\":{\"r\":1.0,\"g\":0.7799999713897705,\"b\":0.20000000298023225,\"a\":1.0},\"armedBarColor\":{\"r\":0.30000001192092898,\"g\":0.800000011920929,\"b\":1.0,\"a\":1.0},\"activeBarColor\":{\"r\":0.25,\"g\":1.0,\"b\":0.8999999761581421,\"a\":1.0},\"slotReadyColor\":{\"r\":0.9450980424880981,\"g\":0.929411768913269,\"b\":0.8509804010391235,\"a\":1.0},\"slotPressedColor\":{\"r\":0.8352941274642944,\"g\":0.7686274647712708,\"b\":0.3686274588108063,\"a\":1.0},\"slotUnavailableColor\":{\"r\":0.43529412150382998,\"g\":0.45098039507865908,\"b\":0.38823530077934267,\"a\":1.0},\"focusManagementRoot\":{\"instanceID\":0},\"focusManagementScale\":1.1799999475479127,\"focusManagementTransitionSeconds\":0.15000000596046449,\"focusManagementHintOffset\":{\"x\":0.0,\"y\":-40.0},\"cooldownShadeColor\":{\"r\":0.0,\"g\":0.0,\"b\":0.0,\"a\":0.6499999761581421},\"recastBorderColor\":{\"r\":0.8980392217636108,\"g\":0.8078431487083435,\"b\":0.45098039507865908,\"a\":1.0},\"activeBorderColor\":{\"r\":0.25,\"g\":1.0,\"b\":0.8999999761581421,\"a\":1.0},\"readyFlashColor\":{\"r\":1.0,\"g\":0.9599999785423279,\"b\":0.75,\"a\":1.0},\"readyFlashSeconds\":0.3199999928474426,\"stateBorderWidth\":3.0}}"
+}

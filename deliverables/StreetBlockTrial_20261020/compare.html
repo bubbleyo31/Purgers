@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-Hant">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>出生點街區｜局部渲染優化對照</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,"Microsoft JhengHei",sans-serif}
+body{margin:0;background:#10151b;color:#e6edf4;padding:28px}
+main{max-width:1440px;margin:auto}h1{font-size:26px;margin:0 0 12px}
+p{color:#b7c6d5;line-height:1.8;max-width:1050px}
+.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:22px 0}
+select,button{background:#20303e;border:1px solid #425c70;color:#fff;border-radius:7px;padding:10px;font:inherit}
+.comparison{position:relative;aspect-ratio:16/9;background:#000;overflow:hidden;border:1px solid #425c70;border-radius:8px}
+.comparison img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+#after{clip-path:inset(0 0 0 50%)}#line{position:absolute;left:50%;top:0;bottom:0;width:2px;background:#55dcbe;pointer-events:none}
+.label{position:absolute;top:14px;padding:7px 12px;background:#0a1724d9;border:1px solid #456176;border-radius:5px;font-size:14px;pointer-events:none}
+.beforeLabel{left:14px}.afterLabel{right:14px}
+input[type=range]{width:100%;accent-color:#55dcbe;margin:18px 0}
+.note{font-size:14px;color:#92a8bb}a{color:#8bcfff}.footer{padding-top:20px;border-top:1px solid #33414f}
+</style>
+<main>
+<h1>出生點前方 8 棟房子：原版／局部候選</h1>
+<p>同鏡頭、同解析度、同材質、同陰影與 SSAO。圖片未調色、未補光。拖動下方分隔線，或切換為完整原版／候選畫面。</p>
+<p><strong>結果：畫面幾乎一致，但整張畫面的效能收益有限。</strong>每棟合併的繪製呼叫約減少 5.0%，CPU 渲染平均約降低 3.0%，但波動範圍重疊；小群組繪製呼叫約減少 3.7%，CPU 未穩定改善。這些數據不足以宣稱實際遊玩 FPS 已改善。</p>
+<div class="controls">
+<label>方案 <select id="variant"><option value="cells">小空間群組：424 → 110 Renderer</option><option value="merged">每棟合併：424 → 8 Renderer</option></select></label>
+<label>鏡頭 <select id="view"><option value="spawn">出生點朝向城市</option><option value="approach">往道路前進</option><option value="left-front">左側建築近景</option><option value="right-front">右側建築近景</option></select></label>
+<button id="onlyBefore">只看原版</button><button id="split">左右對照</button><button id="onlyAfter">只看候選</button>
+</div>
+<div class="comparison">
+<img id="before" alt="原版街區">
+<img id="after" alt="局部優化候選">
+<div id="line"></div><span class="label beforeLabel">原版</span><span class="label afterLabel">局部候選</span>
+</div>
+<input id="slider" aria-label="原版與候選分隔線位置" type="range" min="0" max="100" value="50">
+<p class="note">兩個方案都保留 30,680 個原始三角面及三角形連接關係。這是渲染合併，不是碰撞網格合併；原本碰撞體與物件保留。小空間群組維持較細的剔除範圍，每棟合併則有較少的 Renderer。</p>
+<p class="footer">測試後已還原正式場景。時間與繪製數量的完整結果、測量限制及未驗項目見 <a href="report.txt">測試報告</a>；原始數據見 <a href="summary.csv">CSV</a>。不得把這個局部測試當成整張 Map 已完成優化。</p>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+function load(){const base=$("variant").value+"/"+$("view").value;$("before").src=base+"-before.png";$("after").src=base+"-after.png"}
+function set(value){$("slider").value=value;$("after").style.clipPath=`inset(0 0 0 ${value}%)`;$("line").style.left=value+"%"}
+$("variant").onchange=load;$("view").onchange=load;$("slider").oninput=e=>set(e.target.value);
+$("onlyBefore").onclick=()=>set(100);$("onlyAfter").onclick=()=>set(0);$("split").onclick=()=>set(50);load();
+</script>
+</html>

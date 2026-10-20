@@ -1,0 +1,26 @@
+{
+  "playing": true,
+  "features": [
+    {
+      "name": "SSAO",
+      "isActive": true
+    },
+    {
+      "name": "TeammateOutline",
+      "isActive": true
+    }
+  ],
+  "sceneViews": [
+    {
+      "drawGizmos": true,
+      "mask": -1
+    }
+  ],
+  "shadowDistance": 150.0,
+  "shadowCascadeCount": 4,
+  "mainLightShadowmapResolution": 4096,
+  "renderScale": 1.0,
+  "cameras": [
+    "MapRenderAuditCamera"
+  ]
+}

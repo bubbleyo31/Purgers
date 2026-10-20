@@ -1,0 +1,20 @@
+{
+  "playing": false,
+  "compiling": false,
+  "updating": false,
+  "runInBackground": true,
+  "scenes": [
+    {
+      "path": "Assets/Scenes/_Menu.unity",
+      "dirty": false,
+      "loaded": true
+    }
+  ],
+  "runningRunners": 0,
+  "gameViews": [
+    {
+      "name": "",
+      "behavior": "PlayUnfocused"
+    }
+  ]
+}

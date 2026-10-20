@@ -1,0 +1,10 @@
+{
+  "sourceRenderers": 424,
+  "mergedRenderers": 110,
+  "sourceTriangles": 30680,
+  "mergedTriangles": 30680,
+  "maxWorldVertexError": 3.05175781E-05,
+  "indexTopologyVerified": true,
+  "combinedMeshMemory": 2452800,
+  "workingMeshMemory": 5226432
+}

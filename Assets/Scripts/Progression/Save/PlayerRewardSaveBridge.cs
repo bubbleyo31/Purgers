@@ -7,6 +7,8 @@ namespace Purgers.Progression
     {
         public readonly int HitLevel;
         public readonly int FocusLevel;
+        public readonly string FocusZId, FocusXId;
+        public readonly int FocusZLevel, FocusXLevel;
         public readonly string EquippedWeaponId;
         public readonly string EquippedGrappleHitId;
         public readonly string EquippedGrappleFocusId;
@@ -14,8 +16,11 @@ namespace Purgers.Progression
         public readonly string[] AcquiredRewardIds;
 
         public PlayerRewardSaveSnapshot(string hitId, string focusId,
-            string[] pendingIds, string[] acquiredIds, string weaponId = null, int hitLevel = 1, int focusLevel = 1)
+            string[] pendingIds, string[] acquiredIds, string weaponId = null, int hitLevel = 1, int focusLevel = 1,
+            string focusZId = null, string focusXId = null, int focusZLevel = 1, int focusXLevel = 1)
         {
+            FocusZId = focusZId ?? string.Empty; FocusXId = focusXId ?? string.Empty;
+            FocusZLevel = Math.Max(1, focusZLevel); FocusXLevel = Math.Max(1, focusXLevel);
             HitLevel = Math.Max(1, hitLevel); FocusLevel = Math.Max(1, focusLevel);
             EquippedWeaponId = weaponId ?? string.Empty;
             EquippedGrappleHitId = hitId ?? string.Empty;
@@ -38,7 +43,8 @@ namespace Purgers.Progression
                 entry.EquippedGrappleHitId,
                 entry.EquippedGrappleFocusId,
                 entry.PendingRewardCandidateIds.ToArray(),
-                entry.AcquiredRewardIds.ToArray(), entry.EquippedWeaponId, entry.EquippedHitLevel, entry.EquippedFocusLevel);
+                entry.AcquiredRewardIds.ToArray(), entry.EquippedWeaponId, entry.EquippedHitLevel, entry.EquippedFocusLevel,
+                entry.EquippedFocusZId, entry.EquippedFocusXId, entry.EquippedFocusZLevel, entry.EquippedFocusXLevel);
         }
 
         public static void WriteHost(GameSaveData save,
@@ -57,6 +63,8 @@ namespace Purgers.Progression
             }
 
             entry.EquippedHitLevel = snapshot.HitLevel; entry.EquippedFocusLevel = snapshot.FocusLevel;
+            entry.EquippedFocusZId = snapshot.FocusZId; entry.EquippedFocusXId = snapshot.FocusXId;
+            entry.EquippedFocusZLevel = snapshot.FocusZLevel; entry.EquippedFocusXLevel = snapshot.FocusXLevel;
             entry.EquippedWeaponId = snapshot.EquippedWeaponId;
             entry.EquippedGrappleHitId = snapshot.EquippedGrappleHitId;
             entry.EquippedGrappleFocusId = snapshot.EquippedGrappleFocusId;

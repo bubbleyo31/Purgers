@@ -30,8 +30,9 @@ MonoBehaviour:
   - 0.2
   - 0.3
   growthDisplayName: "\u9632\u79A6\u51B7\u537B"
-  growthIcon: {fileID: 0}
-  growthRankBackground: {fileID: 0}
-  growthRankCenter: {x: 0.5, y: 0.5}
+  growthIcon: {fileID: 21300000, guid: c2872544f879a4c4ab1f619c14ee00fe, type: 3}
+  growthRankBackground: {fileID: 21300000, guid: e4f7c871ce18c044e914e5071e2c379a,
+    type: 3}
+  growthRankCenter: {x: 0.5, y: 0.365}
   growthRankSize: {x: 0.4, y: 0.3}
-  growthIconScale: 1
+  growthIconScale: 1.2893757

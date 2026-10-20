@@ -460,11 +460,22 @@ namespace Purgers.GameFlow.Stage
             var reachableCandidateIndices = new List<int>();
             MapRuntimeNavigationPrototype navigation =
                 mapRunSelection.Alignment.RuntimeNavigation;
+            Purgers.Map.MapChunkPlacement finalPlacement =
+                map.Placements[map.FinalChunkIndex];
 
             for (int index = 0; index < extractionPoints.Count; index++)
             {
                 StageExtractionPoint candidate = extractionPoints[index];
                 if (candidate != null &&
+                    !candidate.Contains(initialSpawnPose.position) &&
+                    candidate.TryGetConnectorSide(out ConnectorSide candidateSide) &&
+                    StageRules.IsExtractionPlacementAllowed(
+                        IndexOfChunk(map.Chunks, candidate.OwnerChunk),
+                        map.FinalChunkIndex,
+                        map.ChunkCount,
+                        (int)candidateSide,
+                        finalPlacement.EntrySide,
+                        finalPlacement.OpenSides) &&
                     navigation.TryResolveCompleteGroundPath(
                         initialSpawnPose.position,
                         candidate.transform.position,
@@ -486,7 +497,8 @@ namespace Purgers.GameFlow.Stage
                 {
                     loggedInitializationFailure = true;
                     Debug.LogError(
-                        "[StageFlow] 最後 Chunk 沒有可由關卡入口透過完整地面 NavMesh 路徑抵達的撤離點。",
+                        "[StageFlow] 最後 Chunk 沒有合法撤離點：候選必須避開出生區、入口側與地圖接縫，" +
+                        "具有唯一對應的 Connector 方向，且由關卡入口透過完整地面 NavMesh 路徑可達。",
                         this);
                 }
 

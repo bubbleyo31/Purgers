@@ -137,6 +137,8 @@ public sealed class PlayerAbilityColorGrading : MonoBehaviour
         if (!HasLocalLivingOwner || currentLocalOwner != this || settings == null ||
             camera == null || camera.cameraType != CameraType.Game || camera != ResolvePostCamera()) return;
         float heal = AbilityColorGradingRules.HealingPulse(Time.unscaledTime-lastHealTime, settings.healingPulseSeconds);
+        // 已配置外框時由外框承接治療，保留其餘 LGG；缺少／停用外框自動沿用舊效果。
+        if (LocalPlayerScreenEdgeEffects.OwnsHealing(observedHealth)) heal = 0f;
         Vector4 weights = new Vector4(Mathf.SmoothStep(0f,1f,bulletWeight) * settings.bulletTime.strength,
             Mathf.SmoothStep(0f,1f,precisionWeight) * settings.precisionLock.strength,
             Mathf.SmoothStep(0f,1f,experienceWeight) * settings.experience.strength, heal * settings.healing.strength);

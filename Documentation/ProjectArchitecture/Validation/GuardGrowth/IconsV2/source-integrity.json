@@ -1,0 +1,26 @@
+[
+  {
+    "name": "GuardReduction",
+    "source": "C:/Users/hsuai/.codex/generated_images/01a14d7c-60b5-75f0-8bcc-97d10c369fce/exec-57e16190-37c6-4dd9-8277-cbac6b863700.png",
+    "asset": "Assets/_Project_Assets/UI/GrowthIcons/GuardV2/RankBackgrounds/GuardReduction_Base.png",
+    "sourceSha256": "18A57AB57D35AA44B3EE8AD027B7497866153F19D4C027BAE06802CC0B5F00FF",
+    "assetSha256": "18A57AB57D35AA44B3EE8AD027B7497866153F19D4C027BAE06802CC0B5F00FF",
+    "identical": true
+  },
+  {
+    "name": "GuardCooldown",
+    "source": "C:/Users/hsuai/.codex/generated_images/01a14d7c-60b5-75f0-8bcc-97d10c369fce/exec-9f9249d2-d615-4147-b639-d2b05071183e.png",
+    "asset": "Assets/_Project_Assets/UI/GrowthIcons/GuardV2/RankBackgrounds/GuardCooldown_Base.png",
+    "sourceSha256": "928ECBE0A5683243B25049CA4C8EFEA44C65800B64248811DC53E15964B04BE3",
+    "assetSha256": "928ECBE0A5683243B25049CA4C8EFEA44C65800B64248811DC53E15964B04BE3",
+    "identical": true
+  },
+  {
+    "name": "GuardStamina",
+    "source": "C:/Users/hsuai/.codex/generated_images/01a14d7c-60b5-75f0-8bcc-97d10c369fce/exec-984a447d-f97f-4d71-8949-3294deb02462.png",
+    "asset": "Assets/_Project_Assets/UI/GrowthIcons/GuardV2/RankBackgrounds/GuardStamina_Base.png",
+    "sourceSha256": "69BFA3CDDE24D2EBF2A8CCDCC438FEDC399B30C5BAA72BF4E8BAB7591AC8C41C",
+    "assetSha256": "69BFA3CDDE24D2EBF2A8CCDCC438FEDC399B30C5BAA72BF4E8BAB7591AC8C41C",
+    "identical": true
+  }
+]

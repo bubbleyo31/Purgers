@@ -18,8 +18,15 @@ MonoBehaviour:
   weight: 1
   repeatPolicy: 1
   abilityDefinition: {fileID: 0}
-  description: "\u88DD\u5099\u96FB\u92F8\uFF0C\u4FDD\u7559\u9023\u6BB5\u3001\u683C\u64CB\u8207
-    F \u885D\u523A\u3002F \u56DE\u5145\u5EF6\u7E8C\uFF0CQ\uFF0FE \u4E0D\u8B8A\u3002"
+  description: "\u88DD\u5099\u96FB\u92F8\uFF0C\u4E09\u6BB5\u653B\u64CA\u6A21\u5F0F\uFF0C\u5E38\u6309\u653B\u64CA\u9375\u53EF\u84C4\u529B\uFF0C\u84C4\u529B\u653B\u64CA\u53EF\u5FEB\u901F\u8CBC\u8FD1\u6575\u4EBA\u3002"
   weaponProfession: 2
   weaponDisplayName: "Tank \u96FB\u92F8"
   weaponIcon: {fileID: 21300000, guid: ddfe9f76c39ffe249a37127bc335c23b, type: 3}
+  growthKind: 0
+  growthValues: []
+  growthDisplayName: 
+  growthIcon: {fileID: 0}
+  growthRankBackground: {fileID: 0}
+  growthRankCenter: {x: 0.5, y: 0.5}
+  growthRankSize: {x: 0.4, y: 0.3}
+  growthIconScale: 1

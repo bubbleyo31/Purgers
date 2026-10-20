@@ -84,3 +84,14 @@ PreparedDashDisplaced 加入受困判斷，與既有 Movement Gate 一起禁止�
 設定位於 TankProfessionRuntime 的 Tank Melee Combo → 本機預備距離圈與目標框；框色 #FF8024、1080p 粗細／角長／留白 5／24／12 像素、大型門檻 4 公尺、同部位平滑 0.06 秒。圈讀原 Prepared Dash Range，世界線寬 0.045 公尺、96 段、地面查詢間隔 0.08 秒、淡出 0.24 秒、地面取樣高差上下 1.5 公尺、相鄰高差上限 0.6 公尺。地面圈只是水平距離參考；缺地面與過大高差不連線，深度測試防止透牆。
 
 場景／Prefab 不需新增掛線或保存；本機呈現由 Runtime 建立並隨 Despawn 清理。單 Runner 使用 Camera.main，同 Editor 多 Runner 必須明確 SetWorldCamera，避免錯用他人的視角。實際測試及剩餘邊界見 [驗證紀錄](Validation/TankIndicator/README.md)。
+
+## 2026-10-21 近距離部位框修正（局部核對）
+
+核對來源：TankPreparedDashPreviewQuery、TankPreparedDashIndicatorRules、LocalTankPreparedDashIndicator、專案內 Fusion.Runtime.dll 與 Enemy_Ranged_A／B 正式資產。
+
+- `GetHitboxLocalBounds` 將此版 Fusion 的 CapsuleExtents 解讀為完整高度，膠囊半高取 `Max(CapsuleExtents × 0.5, Abs(CapsuleRadius))`；仍使用實際命中部位的 Offset／localToWorldMatrix。原先把完整高度再加半徑當成半高，造成 A／B 長觸鬚的框比碰撞部位過大。
+- 投影仍先裁切近裁面並拒絕完全在畫面外的目標，但保留可見目標超出畫面的原始框界，不將四邊夾到 pixelRect。Runtime Canvas 自動建立 RectMask2D viewport，跟隨世界相機 pixelRect 裁掉框線，含視窗大小變更及非全螢幕 viewport。
+- 只有在畫面內的原始四角線可見；四角全在畫面外時框線不可見，不表示目標喪失衝刺資格。不新增命中點標記、畫面邊緣箭頭或最大框尺寸，不改選敵／停靠／Host 傷害與位移。
+- 原有 Inspector 色彩、粗細、角長、留白、大型門檻與平滑設定維持。無新序列化欄位，無需調整 Scene／Prefab，也不應透過縮小敵人 Hitbox 或更改相機近裁面補償本問題。
+
+實作已整合；測試、離屏繪製與自然遊玩待驗邊界見 [本輪驗證](Validation/TankIndicator/README.md#2026-10-21-近距離鎖定框修正)。

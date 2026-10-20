@@ -105,6 +105,7 @@ namespace Purgers.Enemy.Encounter
             }
             catch (Exception exception) when (exception is ArgumentException || exception is InvalidOperationException)
             {
+                zone.Zone.RecordInspectorEvent($"候選 {prefab} 排除：{exception.Message}");
                 Debug.LogError($"[Enemy Encounter] {zone.Zone.name} 排除敵人 {prefab}：{exception.Message}", zone.Zone);
             }
             return true;

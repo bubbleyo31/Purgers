@@ -1,0 +1,168 @@
+ M AGENTS.md
+ M Assets/Prefabs/AbilityRuntime/GrappleSpikeRuntime.prefab
+ M Assets/Prefabs/Map/MapChunk_Prototype.prefab
+ M Assets/Prefabs/ProfessionRuntime/TankProfessionRuntime.prefab
+ M Assets/Prefabs/UI/PlayerRescueHUD.prefab
+ M Assets/Prefabs/UI/SpectatorHUD.prefab
+ M Assets/Prefabs/UI/StageHUD.prefab
+ M Assets/Scenes/Game.unity
+ M Assets/Scenes/SafeHouse.unity
+ M Assets/Scenes/_Menu.unity
+ M Assets/Scripts/Editor/HudKeyPromptPreview.cs
+ M Assets/Scripts/Editor/Tests/HudKeyPromptTests.cs
+ M Assets/Scripts/Editor/Tests/PlayerSettingsIntegrationTests.cs
+ M Assets/Scripts/GameFlow/SafeHouse/SafeHouseHudController.cs
+ M Assets/Scripts/GameFlow/SafeHouse/SafeHouseStartTerminalView.cs
+ M Assets/Scripts/Player/Ability/Active/PlayerAbilityColorGrading.cs
+ M Assets/Scripts/Settings/PlayerSettingsData.cs
+ M Assets/Scripts/Settings/PlayerSettingsMenu.cs
+ M Assets/Scripts/UI/Player/HudKeyPromptLayout.cs
+ M Assets/Scripts/UI/Player/LocalPlayerBattleAbilityHUD.cs
+ M Assets/Scripts/UI/Player/LocalPlayerGuardHUD.cs
+ M Assets/Scripts/UI/Player/LocalPlayerRescueHUD.cs
+ M Assets/Scripts/UI/Player/LocalPlayerRewardHUD.cs
+ M Assets/Scripts/UI/Player/LocalPlayerSpeedSlider.cs
+ M Assets/Scripts/UI/Player/LocalSpectatorHUD.cs
+ M Assets/Scripts/UI/Player/PlayerAbilityLootVisual.cs
+ M Assets/Scripts/UI/Player/README.md
+ M Assets/Scripts/UI/Player/Weapon/LocalPlayerWeaponHUD.cs
+ M Assets/Scripts/UI/Status/StatusEffectHudSettings.cs
+ M Assets/Scripts/UI/Status/StatusEffectListView.cs
+ M Assets/Scripts/UI/TeamInfo/LocalTeamInfoPanel.View.cs
+ M Assets/Scripts/UI/TeamInfo/TeamInfoPanelSettings.cs
+ M Assets/_Project_Assets/Data/Progression/Growth/Reward_GuardCooldown.asset
+ M Assets/_Project_Assets/Data/Progression/Growth/Reward_GuardReduction.asset
+ M Assets/_Project_Assets/Data/Progression/Growth/Reward_GuardStamina.asset
+ M "Assets/_Project_Assets/UI/BattleHUD/Fonts/NotoSansTC-Bold HUD SDF.asset"
+ M Assets/_Project_Assets/UI/PlayerSettings/PlayerSettingsFont.asset
+ M "Documentation/ProjectArchitecture/00_CHATGPT\345\277\253\351\200\237\350\256\200\345\217\226.md"
+ M "Documentation/ProjectArchitecture/01_\345\260\210\346\241\210\346\236\266\346\247\213\347\270\275\350\246\275_\347\265\246\351\226\213\347\231\274\350\200\205.md"
+ M "Documentation/ProjectArchitecture/02_\347\250\213\345\274\217\350\201\267\350\262\254\347\270\275\350\241\250.md"
+ M "Documentation/ProjectArchitecture/100_UI\350\247\200\346\210\260\350\210\207\350\201\212\345\244\251.md"
+ M "Documentation/ProjectArchitecture/104_ESC\351\201\270\345\226\256\350\210\207\347\216\251\345\256\266\350\250\255\345\256\232.md"
+ M "Documentation/ProjectArchitecture/105_\347\225\260\345\270\270\347\213\200\346\205\213\345\234\226\347\244\272\350\210\207\346\214\201\347\272\214\351\207\217\346\242\235.md"
+ M "Documentation/ProjectArchitecture/106_TAB\351\232\212\344\274\215\350\263\207\350\250\212\347\252\227.md"
+ M "Documentation/ProjectArchitecture/107_\345\217\263\344\270\213\346\212\200\350\203\275\346\247\275\347\213\200\346\205\213\345\221\210\347\217\276.md"
+ M "Documentation/ProjectArchitecture/109_\351\233\273\351\213\270\346\240\274\346\252\224\350\200\220\345\212\233\350\210\207\345\261\254\346\200\247\345\274\267\345\214\226.md"
+ M "Documentation/ProjectArchitecture/110_\345\240\264\346\231\257\345\267\245\345\205\267\350\210\207\351\201\270\345\226\256.md"
+ M "Documentation/ProjectArchitecture/130_\345\233\236\346\255\270\351\251\227\350\255\211\350\210\207\345\257\251\346\237\245\347\213\200\346\205\213.md"
+ M "Documentation/ProjectArchitecture/150_\351\226\213\347\231\274\345\267\245\345\205\267\350\210\207AI_Agent\345\267\245\344\275\234\346\265\201.md"
+ M "Documentation/ProjectArchitecture/167_\345\267\262\347\242\272\350\252\215HUD\347\276\216\350\241\223\350\210\207\346\225\264\346\240\274\350\241\200\351\207\217.md"
+ M "Documentation/ProjectArchitecture/168_\350\247\222\350\211\262\346\210\220\351\225\267\350\242\253\345\213\225\350\210\207\346\212\200\350\203\275\346\216\211\350\220\275.md"
+ M "Documentation/ProjectArchitecture/31_\351\210\216\347\264\242\345\213\225\350\203\275\350\210\207\345\202\267\345\256\263\345\200\215\347\216\207.md"
+ M "Documentation/ProjectArchitecture/43_E\346\212\200\350\203\275\350\246\226\350\246\272\350\210\207UI\351\205\215\347\275\256.md"
+ M "Documentation/ProjectArchitecture/49_\347\216\251\345\256\266\345\217\227\345\202\267\344\276\206\346\272\220\346\214\207\347\244\272.md"
+ M Documentation/ProjectArchitecture/Validation/GuardGrowth/README.md
+ M Documentation/ProjectArchitecture/Validation/HudKeycaps/README.md
+ M "Documentation/ProjectArchitecture/\351\227\234\351\215\265\350\251\236\350\246\217\345\211\207\347\264\242\345\274\225.md"
+?? Assets/Prefabs/UI/ScreenEdgeEffects.prefab
+?? Assets/Prefabs/UI/ScreenEdgeEffects.prefab.meta
+?? Assets/Resources/Presentation/HudKeyPromptStyle.asset
+?? Assets/Resources/Presentation/HudKeyPromptStyle.asset.meta
+?? Assets/Resources/Presentation/MomentumGaugeFlow.shader
+?? Assets/Resources/Presentation/MomentumGaugeFlow.shader.meta
+?? Assets/Resources/Presentation/ScreenEdgeEffects.asset
+?? Assets/Resources/Presentation/ScreenEdgeEffects.asset.meta
+?? Assets/Scripts/Editor/HealingEdgePreview.shader
+?? Assets/Scripts/Editor/HealingEdgePreview.shader.meta
+?? Assets/Scripts/Editor/HealingEdgePreviewWindow.Damage.cs
+?? Assets/Scripts/Editor/HealingEdgePreviewWindow.Damage.cs.meta
+?? Assets/Scripts/Editor/HealingEdgePreviewWindow.Speed.cs
+?? Assets/Scripts/Editor/HealingEdgePreviewWindow.Speed.cs.meta
+?? Assets/Scripts/Editor/HealingEdgePreviewWindow.cs
+?? Assets/Scripts/Editor/HealingEdgePreviewWindow.cs.meta
+?? Assets/Scripts/Editor/HudKeyPromptStyleSetup.cs
+?? Assets/Scripts/Editor/HudKeyPromptStyleSetup.cs.meta
+?? Assets/Scripts/Editor/HudLayoutSession.Samples.cs
+?? Assets/Scripts/Editor/HudLayoutSession.Samples.cs.meta
+?? Assets/Scripts/Editor/HudLayoutSession.cs
+?? Assets/Scripts/Editor/HudLayoutSession.cs.meta
+?? Assets/Scripts/Editor/HudLayoutVerification.cs
+?? Assets/Scripts/Editor/HudLayoutVerification.cs.meta
+?? Assets/Scripts/Editor/HudLayoutWorkspace.cs
+?? Assets/Scripts/Editor/HudLayoutWorkspace.cs.meta
+?? Assets/Scripts/Editor/MapMeshColliderBenchmark.cs
+?? Assets/Scripts/Editor/MapMeshColliderBenchmark.cs.meta
+?? Assets/Scripts/Editor/MapMeshColliderOptimizer.cs
+?? Assets/Scripts/Editor/MapMeshColliderOptimizer.cs.meta
+?? Assets/Scripts/Editor/MapMeshColliderWindow.cs
+?? Assets/Scripts/Editor/MapMeshColliderWindow.cs.meta
+?? Assets/Scripts/Editor/MapPhysicsMonitor.cs
+?? Assets/Scripts/Editor/MapPhysicsMonitor.cs.meta
+?? Assets/Scripts/Editor/MomentumGaugePreview.shader
+?? Assets/Scripts/Editor/MomentumGaugePreview.shader.meta
+?? Assets/Scripts/Editor/MomentumGaugePreviewWindow.cs
+?? Assets/Scripts/Editor/MomentumGaugePreviewWindow.cs.meta
+?? Assets/Scripts/Editor/ScreenEdgeEffectsSetup.cs
+?? Assets/Scripts/Editor/ScreenEdgeEffectsSetup.cs.meta
+?? Assets/Scripts/Editor/ScreenEdgeEffectsVerification.cs
+?? Assets/Scripts/Editor/ScreenEdgeEffectsVerification.cs.meta
+?? Assets/Scripts/Editor/Tests/HudLayoutAuthoringTests.cs
+?? Assets/Scripts/Editor/Tests/HudLayoutAuthoringTests.cs.meta
+?? Assets/Scripts/Editor/Tests/MapMeshColliderOptimizationTests.cs
+?? Assets/Scripts/Editor/Tests/MapMeshColliderOptimizationTests.cs.meta
+?? Assets/Scripts/Editor/Tests/MomentumGaugeFlowTests.cs
+?? Assets/Scripts/Editor/Tests/MomentumGaugeFlowTests.cs.meta
+?? Assets/Scripts/Editor/Tests/ScreenEdgeEffectsTests.cs
+?? Assets/Scripts/Editor/Tests/ScreenEdgeEffectsTests.cs.meta
+?? Assets/Scripts/Tool/Testing/MomentumGaugeRuntimeVerification.cs
+?? Assets/Scripts/Tool/Testing/MomentumGaugeRuntimeVerification.cs.meta
+?? Assets/Scripts/Tool/Testing/ScreenEdgeRuntimeVerification.cs
+?? Assets/Scripts/Tool/Testing/ScreenEdgeRuntimeVerification.cs.meta
+?? Assets/Scripts/UI/Player/HudKeyPromptRow.cs
+?? Assets/Scripts/UI/Player/HudKeyPromptRow.cs.meta
+?? Assets/Scripts/UI/Player/HudKeyPromptStyle.cs
+?? Assets/Scripts/UI/Player/HudKeyPromptStyle.cs.meta
+?? Assets/Scripts/UI/Player/LocalPlayerScreenEdgeEffects.cs
+?? Assets/Scripts/UI/Player/LocalPlayerScreenEdgeEffects.cs.meta
+?? Assets/Scripts/UI/Player/ScreenEdgeEffectsSettings.cs
+?? Assets/Scripts/UI/Player/ScreenEdgeEffectsSettings.cs.meta
+?? Assets/Scripts/UI/Player/ScreenEdgeGraphic.cs
+?? Assets/Scripts/UI/Player/ScreenEdgeGraphic.cs.meta
+?? Assets/Scripts/UI/Player/ScreenEdgePulse.cs
+?? Assets/Scripts/UI/Player/ScreenEdgePulse.cs.meta
+?? Assets/Shaders/Presentation.meta
+?? Assets/Shaders/Presentation/
+?? Assets/_Project_Assets/Models/Barrel.meta
+?? Assets/_Project_Assets/Models/Barrel/
+?? Assets/_Project_Assets/UI/GrowthIcons/GuardV2.meta
+?? Assets/_Project_Assets/UI/GrowthIcons/GuardV2/
+?? "Documentation/ProjectArchitecture/111_HUD\346\214\211\351\215\265\346\217\220\347\244\272\345\205\261\347\224\250\347\276\216\350\241\223\350\210\207\344\275\215\347\275\256.md"
+?? "Documentation/ProjectArchitecture/112_\347\216\251\345\256\266\347\225\253\351\235\242\345\244\226\346\241\206\347\213\200\346\205\213\346\225\210\346\236\234.md"
+?? "Documentation/ProjectArchitecture/113_HUD\347\267\250\350\274\257\346\250\241\345\274\217\346\216\222\347\211\210.md"
+?? Documentation/ProjectArchitecture/Validation/BattleHUD/momentum-gauge-full.png
+?? Documentation/ProjectArchitecture/Validation/BattleHUD/momentum-gauge-partial.png
+?? Documentation/ProjectArchitecture/Validation/BattleHUD/momentum-no-streaks-later.png
+?? Documentation/ProjectArchitecture/Validation/BattleHUD/momentum-no-streaks.png
+?? Documentation/ProjectArchitecture/Validation/BattleHUD/momentum-streaks-before.png
+?? Documentation/ProjectArchitecture/Validation/BattleHUD/screen-edge-before.png
+?? Documentation/ProjectArchitecture/Validation/BattleHUD/screen-edge-combined.png
+?? Documentation/ProjectArchitecture/Validation/BattleHUD/screen-edge-damage.png
+?? Documentation/ProjectArchitecture/Validation/BattleHUD/screen-edge-healing.png
+?? Documentation/ProjectArchitecture/Validation/BattleHUD/screen-edge-momentum.png
+?? Documentation/ProjectArchitecture/Validation/DamageEdgePreview/
+?? Documentation/ProjectArchitecture/Validation/GuardGrowth/IconsV2/
+?? Documentation/ProjectArchitecture/Validation/HealingEdgePreview/
+?? Documentation/ProjectArchitecture/Validation/HudKeycaps/HudKeycapsCatalog.png
+?? Documentation/ProjectArchitecture/Validation/HudKeycaps/HudKeycapsUnifiedPreview.png
+?? Documentation/ProjectArchitecture/Validation/HudKeycaps/PromptInventory.json
+?? Documentation/ProjectArchitecture/Validation/HudKeycaps/style-asset-audit.json
+?? Documentation/ProjectArchitecture/Validation/HudKeycaps/style-editor-final.json
+?? Documentation/ProjectArchitecture/Validation/HudKeycaps/style-focused-summary.txt
+?? Documentation/ProjectArchitecture/Validation/HudKeycaps/style-focused.xml
+?? Documentation/ProjectArchitecture/Validation/HudKeycaps/style-loot-prompt-audit.json
+?? Documentation/ProjectArchitecture/Validation/HudKeycaps/style-regression-summary.txt
+?? Documentation/ProjectArchitecture/Validation/HudKeycaps/style-regression.xml
+?? Documentation/ProjectArchitecture/Validation/HudLayoutAuthoring/
+?? Documentation/ProjectArchitecture/Validation/MomentumEdgePreview/
+?? Documentation/ProjectArchitecture/Validation/MomentumGaugePreview/
+?? Documentation/ProjectArchitecture/Validation/ScreenEdgeEffects/
+?? deliverables/DamageEdgePreview_20261019/
+?? deliverables/HealingEdgePreview_20261019/
+?? deliverables/MapRenderAudit_20261020/
+?? deliverables/MeshColliderAudit_20261020/
+?? deliverables/MomentumEdgePreview_20261019/
+?? deliverables/MomentumGaugePreview_20261019/
+?? deliverables/RewardLevelGate_20261020/
+?? deliverables/ScreenEdgeIntegration_20261019/
+?? deliverables/StreetBlockTrial_20261020/

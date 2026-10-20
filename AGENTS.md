@@ -85,3 +85,15 @@ These rules apply to Hermes, Codex, Claude Code, and other coding agents working
 - `PurgersRegression` runs with a non-zero test count and zero failures.
 - Scene/prefab edits have no missing scripts or broken serialized references.
 - Runtime or networking changes include the relevant Host/Client manual verification; EditMode tests alone are not enough.
+
+
+## 儲存位置與工作樹規範（2026-10-19）
+
+- 使用者已要求：工作樹及其他大型工作資料，能放 M 槽就優先放 M 槽，避免占滿 C 槽。
+- 工作樹實體根目錄採用 M:\CodexWorktrees；既有 C:\Users\hsuai\.codex\worktrees 路徑以目錄連結相容。建立前核對該連結仍指向 M 槽；不要刪除連結後在 C 槽重建實體工作樹。
+- Unity 隔離測試快取使用 M:\CodexUnityCaches\<task>；其他任務暫存、下載、建置、匯出、效能擷取與大型中間產物優先使用 M:\CodexData 下的具名任務目錄，或已在 M 槽的專案目錄。每個工作樹保有獨立 Library，不共用可寫入快取。
+- 優先使用工具正式支援的輸出／快取路徑設定；程序暫存需要改路徑時只對該程序設定 TEMP/TMP。不要為此改 Windows 全域 TEMP/TMP、pagefile、整個 AppData、使用者目錄或所有 CODEX_HOME。
+- 先核對 M 槽可用、空間足夠及路徑權限；不能放 M 槽時先說明原因與預估 C 槽成本，不默默產生大型 C 槽副本。受執行環境固定路徑限制時如實記錄。
+- 排隊、唯讀查核與單純討論不要預先建立完整工作樹。必要的並行實作仍須隔離；正式開始才建立，優先復用合適的既有工作樹。
+- 搬移前停止相關寫入，保留未提交、未追蹤及必要忽略檔案；核對檔案內容、Git 狀態、目錄連結與工具路徑，確認後才釋放舊副本。不可只因閒置就刪除。
+- 工作完成後回報新增工作樹／快取位置與後續保留需求；依使用者授權封存或清理，不自動刪除未整合成果。

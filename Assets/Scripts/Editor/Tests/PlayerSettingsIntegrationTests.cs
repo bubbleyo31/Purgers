@@ -132,7 +132,9 @@ public sealed class PlayerSettingsIntegrationTests
             sliders[0].value = 2.17f; Assert.AreEqual(2.17f, model.Draft.total, .001f);
             menu.GetComponentsInChildren<TMP_InputField>().First().onEndEdit.Invoke("999"); Assert.AreEqual(5, model.Draft.total);
             menu.SetTab(1); menu.Build(); menu.GetComponentsInChildren<Button>().Single(b => b.name == "Bind 8").onClick.Invoke(); model.Bind(KeyCode.J); menu.Build();
-            Assert.IsTrue(menu.GetComponentsInChildren<TMP_Text>().Any(t => t.transform.parent.name == "Hint 互動／救援" && t.text == "J"));
+            var hint = menu.GetComponentsInChildren<Image>().Single(i => i.name == "Hint 互動／救援");
+            Assert.IsTrue(hint.GetComponentsInChildren<TMP_Text>().Any(t => t.transform.parent.name == "Keycap" && t.text == "J"));
+            Assert.AreSame(HudKeyPromptStyle.Shared.background, hint.transform.Find("Keycap").GetComponent<Image>().sprite);
             var canvas = menu.GetComponentInChildren<Canvas>(); Assert.IsTrue(canvas.overrideSorting); Assert.AreEqual(32000, canvas.sortingOrder);
             Assert.AreEqual("Menu shade 60 percent", canvas.transform.GetChild(0).name);
             model.RequestSave(); model.Selected = 1; menu.Build();

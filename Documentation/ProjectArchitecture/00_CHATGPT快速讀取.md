@@ -1,3 +1,7 @@
+> **2026-10-19 畫面外框正式接入（局部核對）**：治療／受傷沿 PlayerHealth 實際結果事件；速度動能增益僅於既有動能量條達到滿格時顯示。單次與連續事件共用刷新包絡，只作用於本機，Canvas -5 放在 HUD 下方。Prefab／_Menu 已接線；設定、驗證與待驗邊界見 [112 玩家畫面外框](112_玩家畫面外框狀態效果.md)。
+
+> **2026-10-19 HUD 按鍵提示共用美術（局部核對）**：Energy Q、技能、換彈、救援、準備、觀戰、獎勵及互動鍵帽統一讀 HudKeyPromptStyle；原 HUD 持有綁定與顯示狀態。樣式入口、22 筆資產位置與動態提示見 [111 共用美術與位置](111_HUD按鍵提示共用美術與位置.md)，實際驗證見 [紀錄](Validation/HudKeycaps/README.md#2026-10-19-共用美術與全提示盤點)。
+
 > **2026-10-18 三種雷射四階段呈現（局部核對）**：遠程 B／定點 C Beam／玩家貫穿砲共用細線瞄準、中線蓄力、粗亮光束與粒子、收細至零。寬度／色彩／前搖比例／粒子及四階段音效接口各自 Inspector 可調；聲音沿 GameplayAudioService，傷害沿原 State Authority。正式資產已配置，音效 Cue 留空。設定見 [108](108_雷射四階段視聽呈現.md)，驗證及待驗邊界見 [紀錄](Validation/BeamPresentation/README.md)。
 
 > **2026-10-18 右下技能槽**：整格順時針冷卻遮罩＋置中白字，完成一次亮光；淡金二次施放與青色持續效果外框，保留原技能規則。沿 TAB 共用冷卻資料，不另開計時。先讀 [ABILITY-SLOT-STATE](關鍵詞規則索引.md#ability-slot-state)、[107 設定](107_右下技能槽狀態呈現.md) 與 [驗證](Validation/AbilitySlotStates/README.md)。
@@ -476,3 +480,21 @@ Tank 原 Runtime Render 提供唯讀預備快照，由 LocalTankPreparedDashIndi
 電鋸格檔沿用 TankGuardAbility，三項防禦普通屬性接既有成長／獎勵／存檔。自己格檔列與異常列共用 HUD 區域，施法條原位置保留；詳見 [109_電鋸格檔耐力與屬性強化](109_電鋸格檔耐力與屬性強化.md)。
 
 > **2026-10-18 HUD 改鍵提示**：鈎索能量及技能槽鍵帽在改鍵後保留原背景、依文字調整寬度，統一內距與上方間隔；長字縮小但不裁切。實作、尺寸與驗證見 [PLAYER-SETTINGS／HUD 鍵帽](關鍵詞規則索引.md#player-settings) 與 [167](167_已確認HUD美術與整格血量.md#2026-10-18-hud-改鍵提示鍵帽局部核對)。
+## 2026-10-19 HUD 編輯模式排版入口（局部核對）
+
+使用者已確認收錄 [HUD-EDITOR-LAYOUT](關鍵詞規則索引.md#hud-editor-layout)。`Tools > Purgers > UI > HUD 排版` 可在不進 Play 的情況下建立正式元件範例，使用 Rect Tool 拖曳後套用回原設定或指定 Scene／Prefab 容器。原美術、資料來源及動態排列沿用；未套用不改正式位置。操作與各類限制見 [113](113_HUD編輯模式排版.md)，驗證分級見 [紀錄](Validation/HudLayoutAuthoring/README.md)。
+
+
+## 2026-10-20 三專注槽局部核對
+
+最後核對日期：2026-10-20（僅本次三槽變更）
+核對來源：Assets/Scripts/Player/Ability/Loadout、InputManager.FocusSlots、GameLogic、UI/Player、Settings、Progression/Save。
+
+專注技能由原單槽擴為開局 E／Z／X 三槽；Host 仍透過 PlayerAbilityRuntimeManager 決定裝備／掉落，InputManager 只送意圖。ALT 滿槽獎勵先進獨立替換視窗，不自動換 E。設定 v2、存檔 v6 保留舊 E 與舊綁鍵，新增 Z／X。詳見 [三專注槽實作與驗證](Validation/FocusSlots/README.md)。
+
+
+## 2026-10-21 專注技能指定槽位（局部核對）
+
+最後核對日期：2026-10-21。核對來源：InputManager.FocusSlots、PlayerAbilityRuntimeManager.Loot、LocalPlayerRewardHUD.Replacement、NetInput。
+
+專注技能領取／地面拾取一律先選 E／Z／X 目的槽，即使三格全空也不自動填入。新版選槽面板獨立於獎勵卡，顯示已選技能、空槽「放入此槽」與占用槽「替換此技能」。此規則取代 2026-10-20 自動填空與滿槽才選的行為。[專注技能指定槽位](Validation/FocusSlots/Selection.md)。

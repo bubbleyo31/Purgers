@@ -34,7 +34,7 @@ using Purgers.GameFlow.Stage;
 ///
 /// 那些都應由各自遊戲系統判斷。
 /// </summary>
-public class InputManager :
+public partial class InputManager :
     SimulationBehaviour,
     IBeforeUpdate,
     INetworkRunnerCallbacks
@@ -97,7 +97,7 @@ public class InputManager :
     uint PhysicalHeld()
     {
         uint held = 0;
-        for (int i = 0; i < 16; i++)
+        for (int i = 0; i < PlayerSettingsService.Current.keys.Length; i++)
             if (PlayerSettingsService.Held((PlayerBinding)i)) held |= 1u << i;
         return held;
     }
@@ -138,8 +138,11 @@ public class InputManager :
         }
     }
 
-    public bool TryConsumeHostRewardChoice(out int revision, out int index)
+    public bool TryConsumeHostRewardChoice(out int revision, out int index) => TryConsumeHostRewardChoice(out revision, out index, out _);
+
+    public bool TryConsumeHostRewardChoice(out int revision, out int index, out int focusSlot)
     {
+        focusSlot = pendingHostReplacementSlot;
         revision = pendingHostRewardRevision;
         index = pendingHostRewardIndex;
         bool hasChoice = pendingHostRewardChoice;
@@ -183,6 +186,7 @@ public class InputManager :
         sideTapHistory.SideTapDirection = sideTapHistory.PreviousSideTapDirection = 0;
         resetInput = false;
         IsRewardSelectionActive = false;
+        CancelAllFocusSelection();
         pendingHostRewardChoice = false;
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
         pendingHostDebugLevelUp = false;
@@ -268,15 +272,17 @@ public class InputManager :
                 default;
 
             IsRewardSelectionActive = false;
+            CancelAllFocusSelection();
 
             return;
         }
 
         if (!teamOpen) RefreshRewardSelection();
-        else IsRewardSelectionActive = false;
-        if (IsRewardSelectionActive)
+        else { IsRewardSelectionActive = false; CancelAllFocusSelection(); }
+        if (!teamOpen) RefreshGroundFocusSelection();
+        if (IsRewardSelectionActive || FocusSelectionBlocksInput)
         {
-            uint combat = PlayerSettingsIntent.Bit(PlayerBinding.Fire) | PlayerSettingsIntent.Bit(PlayerBinding.Aim) | PlayerSettingsIntent.Bit(PlayerBinding.Interact);
+            uint combat = PlayerSettingsIntent.Bit(PlayerBinding.Fire) | PlayerSettingsIntent.Bit(PlayerBinding.Aim) | PlayerSettingsIntent.Bit(PlayerBinding.Interact) | PlayerSettingsIntent.Bit(PlayerBinding.FocusZ) | PlayerSettingsIntent.Bit(PlayerBinding.FocusX);
             settingsIntent.BlockHeld(physicalHeld & combat); allowedHeld &= ~combat;
         }
 
@@ -510,7 +516,7 @@ public class InputManager :
 
         /*
          * E 持續狀態交由能力 Runtime 判斷按下或按住；
-         * Ability2 暫時保留。選獎勵時不送出能力輸入。
+         * E／Z／X 由 RefreshFocusSlotInput 分槽；選獎勵時不送出施放輸入。
          */
         currentButtons.Set(
             InputButton.Ability1,
@@ -526,13 +532,22 @@ public class InputManager :
          *
          * 對 Jump、Grapple、Reload 這類很短的輸入尤其重要。
          */
+        RefreshFocusSlotInput(ref currentButtons);
+
         accumulatedInput.Buttons =
             new NetworkButtons(
                 accumulatedInput.Buttons.Bits |
                 currentButtons.Bits
             );
 
-        FilterRewardMouseInput(IsRewardSelectionActive, heldMouseButtons);
+        FilterRewardMouseInput(IsRewardSelectionActive || FocusSelectionBlocksInput, heldMouseButtons);
+        if (FocusSelectionBlocksInput)
+        {
+            accumulatedInput.Buttons.Set(InputButton.Grapple, false);
+            accumulatedInput.Buttons.Set(InputButton.QuickAction, false);
+            accumulatedInput.Buttons.Set(InputButton.Reload, false);
+            for (int slot = 0; slot < 3; slot++) accumulatedInput.Buttons.Set(PlayerAbilityRuntimeManager.DropButton(slot), false);
+        }
     }
 
     private void FilterRewardMouseInput(bool selectionActive, int heldMouseButtons)
@@ -547,12 +562,16 @@ public class InputManager :
         if (selectionActive || (PlayerSettingsService.Key(PlayerBinding.Aim) == KeyCode.Mouse1 && (rewardMouseButtonsBlockedUntilRelease & 2) != 0))
             accumulatedInput.Buttons.Set(InputButton.Aim, false);
         if (selectionActive)
-            accumulatedInput.Buttons.Set(InputButton.Ability1, false);
+            PlayerAbilityRuntimeManager.ClearFocusButtons(ref accumulatedInput.Buttons);
+        for (int slot = 0; slot < FocusAbilitySlotRules.SlotCount; slot++)
+            if ((focusConsumedUntilRelease & (1 << slot)) != 0)
+                accumulatedInput.Buttons.Set(PlayerAbilityRuntimeManager.FocusButton(slot), false);
     }
 
     private void RefreshRewardSelection()
     {
         IsRewardSelectionActive = false;
+        if (FocusLootSelectionPending) return; // A ground picker owns this frame before ALT/mouse reward input.
         if (rewardRunner == null || !rewardRunner.IsRunning ||
             !rewardRunner.LocalPlayer.IsRealPlayer ||
             registeredRewardHud == null ||
@@ -579,8 +598,21 @@ public class InputManager :
         bool altHeld = IsRewardHoldKeyPressed;
         IsRewardSelectionActive = RewardSelectionInputRules.IsSelectionActive(
             altHeld, experience.PendingRewards, draft.ChoiceCount);
-        if (!IsRewardSelectionActive)
+        if (!IsRewardSelectionActive) { CancelRewardReplacement(); return; }
+        if (RewardReplacementPending)
+        {
+            if (replacementRevision != draft.DraftRevision) { CancelRewardReplacement(); return; }
+            for (int slot = 0; slot < FocusAbilitySlotRules.SlotCount; slot++)
+            {
+                if (!Input.GetKeyDown(FocusKey(slot))) continue;
+                focusConsumedUntilRelease |= 1 << slot;
+                focusSelectionHandledFrame = Time.frameCount;
+                SubmitRewardChoice(logic, draft.DraftRevision, replacementChoice, slot);
+                CancelRewardReplacement();
+                return;
+            }
             return;
+        }
 
         int choiceIndex = RewardSelectionInputRules.GetChoiceIndex(
             draft.ChoiceCount,
@@ -590,14 +622,14 @@ public class InputManager :
         if (choiceIndex < 0)
             return;
 
-        if (logic.Object.HasStateAuthority)
+        if (registeredRewardHud.IsFocusReward(draft.GetChoice(choiceIndex)))
         {
-            pendingHostRewardRevision = draft.DraftRevision;
-            pendingHostRewardIndex = choiceIndex;
-            pendingHostRewardChoice = true;
+            selectedFocusDefinition = registeredRewardHud.GetFocusRewardDefinition(draft.GetChoice(choiceIndex));
+            replacementChoice = choiceIndex;
+            replacementRevision = draft.DraftRevision;
+            return;
         }
-        else
-            logic.RPC_RequestRewardChoice(draft.DraftRevision, choiceIndex);
+        SubmitRewardChoice(logic, draft.DraftRevision, choiceIndex, -1);
     }
 
 #if UNITY_EDITOR

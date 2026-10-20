@@ -1,0 +1,383 @@
+{
+  "success": true,
+  "message": "Test job status retrieved.",
+  "error": null,
+  "data": {
+    "job_id": "ea13b23322eb47199741aacfb3621992",
+    "status": "succeeded",
+    "mode": "EditMode",
+    "started_unix_ms": 1792502180108,
+    "finished_unix_ms": 1792502184723,
+    "last_update_unix_ms": 1792502184723,
+    "progress": {
+      "completed": 38,
+      "total": 1293,
+      "current_test_full_name": null,
+      "current_test_started_unix_ms": 1792502183784,
+      "last_finished_test_full_name": "WeaponRewardTests.WeaponIdsRoundTrip(Support,\"weapon.support\")",
+      "last_finished_unix_ms": 1792502183784,
+      "stuck_suspected": false,
+      "editor_is_focused": false,
+      "blocked_reason": null,
+      "failures_so_far": [],
+      "failures_capped": false
+    },
+    "error": null,
+    "result": {
+      "mode": "EditMode",
+      "summary": {
+        "total": 38,
+        "passed": 38,
+        "failed": 0,
+        "skipped": 0,
+        "durationSeconds": 0.8169518,
+        "resultState": "Passed"
+      },
+      "results": [
+        {
+          "name": "CurrentCatalogPreservesEquipmentAndAddsEighteenGrowthRewards",
+          "fullName": "PlayerRewardCatalogTests.CurrentCatalogPreservesEquipmentAndAddsEighteenGrowthRewards",
+          "state": "Passed",
+          "durationSeconds": 0.0548409,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "EveryFirstPoolAbilityCanReplaceItsCategoryInStartingLoadout",
+          "fullName": "PlayerRewardCatalogTests.EveryFirstPoolAbilityCanReplaceItsCategoryInStartingLoadout",
+          "state": "Passed",
+          "durationSeconds": 0.0015254,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "ExpandedPoolShowsThreeChoicesAndStillSupportsTwoChoiceLayout",
+          "fullName": "PlayerRewardCatalogTests.ExpandedPoolShowsThreeChoicesAndStillSupportsTwoChoiceLayout",
+          "state": "Passed",
+          "durationSeconds": 0.034218,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "HostDraftAndEquipmentRoundTripWithoutChangingExperience",
+          "fullName": "PlayerRewardSaveBridgeTests.HostDraftAndEquipmentRoundTripWithoutChangingExperience",
+          "state": "Passed",
+          "durationSeconds": 0.0014686,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "ResetRunClearsDraftAndEquipment",
+          "fullName": "PlayerRewardSaveBridgeTests.ResetRunClearsDraftAndEquipment",
+          "state": "Passed",
+          "durationSeconds": 0.0010363,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "CatalogOrderDoesNotChangeDraft",
+          "fullName": "RewardDraftRulesTests.CatalogOrderDoesNotChangeDraft",
+          "state": "Passed",
+          "durationSeconds": 0.0009061,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "CurrentlyEquippedRepeatableRewardIsExcluded",
+          "fullName": "RewardDraftRulesTests.CurrentlyEquippedRepeatableRewardIsExcluded",
+          "state": "Passed",
+          "durationSeconds": 0.0002185,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "RepeatableRewardMayReturnButZeroWeightCannot",
+          "fullName": "RewardDraftRulesTests.RepeatableRewardMayReturnButZeroWeightCannot",
+          "state": "Passed",
+          "durationSeconds": 0.0002529,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "SameSeedAndPoolProduceSameThreeDistinctCandidates",
+          "fullName": "RewardDraftRulesTests.SameSeedAndPoolProduceSameThreeDistinctCandidates",
+          "state": "Passed",
+          "durationSeconds": 0.0015025,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "TwoEligibleChoicesRemainTwoAndOwnedOncePerRunIsExcluded",
+          "fullName": "RewardDraftRulesTests.TwoEligibleChoicesRemainTwoAndOwnedOncePerRunIsExcluded",
+          "state": "Passed",
+          "durationSeconds": 0.0008896,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "AttributesAdvanceOneTierAndLeavePoolAtMaximum",
+          "fullName": "RewardGrowthTests.AttributesAdvanceOneTierAndLeavePoolAtMaximum",
+          "state": "Passed",
+          "durationSeconds": 0.0011955,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "DowningConsumesOnlySpecifiedPassivesAndTheyCanBeAcquiredAgain",
+          "fullName": "RewardGrowthTests.DowningConsumesOnlySpecifiedPassivesAndTheyCanBeAcquiredAgain",
+          "state": "Passed",
+          "durationSeconds": 0.0002811,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "DraftReservesGrowthAndEquipmentSlots(2,2)",
+          "fullName": "RewardGrowthTests.DraftReservesGrowthAndEquipmentSlots(2,2)",
+          "state": "Passed",
+          "durationSeconds": 0.0017033,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "DraftReservesGrowthAndEquipmentSlots(3,1)",
+          "fullName": "RewardGrowthTests.DraftReservesGrowthAndEquipmentSlots(3,1)",
+          "state": "Passed",
+          "durationSeconds": 0.0003335,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "DraftReservesGrowthAndEquipmentSlots(6,1)",
+          "fullName": "RewardGrowthTests.DraftReservesGrowthAndEquipmentSlots(6,1)",
+          "state": "Passed",
+          "durationSeconds": 0.0002956,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "NewRunHasOneOpeningRewardAndFailedRunClearsGrowth",
+          "fullName": "RewardGrowthTests.NewRunHasOneOpeningRewardAndFailedRunClearsGrowth",
+          "state": "Passed",
+          "durationSeconds": 0.0002969,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "NextTierValuesFitExistingRewardCards",
+          "fullName": "RewardGrowthTests.NextTierValuesFitExistingRewardCards",
+          "state": "Passed",
+          "durationSeconds": 0.0158405,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "PassiveSlotsAreIndependentAndFallbackDoesNotDuplicate",
+          "fullName": "RewardGrowthTests.PassiveSlotsAreIndependentAndFallbackDoesNotDuplicate",
+          "state": "Passed",
+          "durationSeconds": 0.0006688,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "SpeedAndReductionUseDifferentFormulasAndNeverBecomeNegative",
+          "fullName": "RewardGrowthTests.SpeedAndReductionUseDifferentFormulasAndNeverBecomeNegative",
+          "state": "Passed",
+          "durationSeconds": 0.0003696,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "WeaponOnlyRestrictsAvailabilityAndRegenerationRequiresUnlock",
+          "fullName": "RewardGrowthTests.WeaponOnlyRestrictsAvailabilityAndRegenerationRequiresUnlock",
+          "state": "Passed",
+          "durationSeconds": 0.0002434,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "ClearingDetachedTracersOnlyDestroysTheOwningWeaponsObjects",
+          "fullName": "WeaponRewardTests.ClearingDetachedTracersOnlyDestroysTheOwningWeaponsObjects",
+          "state": "Passed",
+          "durationSeconds": 0.0013092,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "FailedRunReturnsSavedWeaponToAttack",
+          "fullName": "WeaponRewardTests.FailedRunReturnsSavedWeaponToAttack",
+          "state": "Passed",
+          "durationSeconds": 0.0004013,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "HostWeaponSurvivesRewardSaveRoundTrip",
+          "fullName": "WeaponRewardTests.HostWeaponSurvivesRewardSaveRoundTrip",
+          "state": "Passed",
+          "durationSeconds": 0.0001973,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "MissingOrUnknownSaveUsesAttack(null)",
+          "fullName": "WeaponRewardTests.MissingOrUnknownSaveUsesAttack(null)",
+          "state": "Passed",
+          "durationSeconds": 0.0003889,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "MissingOrUnknownSaveUsesAttack(\"\")",
+          "fullName": "WeaponRewardTests.MissingOrUnknownSaveUsesAttack(\"\")",
+          "state": "Passed",
+          "durationSeconds": 0.0000546,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "MissingOrUnknownSaveUsesAttack(\"removed.weapon\")",
+          "fullName": "WeaponRewardTests.MissingOrUnknownSaveUsesAttack(\"removed.weapon\")",
+          "state": "Passed",
+          "durationSeconds": 0.0000449,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "ProductionCatalogIncludesAllThreeWeaponsWithoutRemovingAbilities",
+          "fullName": "WeaponRewardTests.ProductionCatalogIncludesAllThreeWeaponsWithoutRemovingAbilities",
+          "state": "Passed",
+          "durationSeconds": 0.0006043,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "RepeatableWeaponsExcludeCurrentAndReturnAfterReplacement",
+          "fullName": "WeaponRewardTests.RepeatableWeaponsExcludeCurrentAndReturnAfterReplacement",
+          "state": "Passed",
+          "durationSeconds": 0.000272,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "UnequippedChargesContinueSequentialRecharge(101.0d,0,103.0d)",
+          "fullName": "WeaponRewardTests.UnequippedChargesContinueSequentialRecharge(101.0d,0,103.0d)",
+          "state": "Passed",
+          "durationSeconds": 0.0014509,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "UnequippedChargesContinueSequentialRecharge(103.0d,1,108.0d)",
+          "fullName": "WeaponRewardTests.UnequippedChargesContinueSequentialRecharge(103.0d,1,108.0d)",
+          "state": "Passed",
+          "durationSeconds": 0.0000578,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "UnequippedChargesContinueSequentialRecharge(110.0d,2,113.0d)",
+          "fullName": "WeaponRewardTests.UnequippedChargesContinueSequentialRecharge(110.0d,2,113.0d)",
+          "state": "Passed",
+          "durationSeconds": 0.0000467,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "UnequippedChargesContinueSequentialRecharge(200.0d,3,0.0d)",
+          "fullName": "WeaponRewardTests.UnequippedChargesContinueSequentialRecharge(200.0d,3,0.0d)",
+          "state": "Passed",
+          "durationSeconds": 0.000043,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "ValidWeaponRewardCanEnterCatalog(Attack)",
+          "fullName": "WeaponRewardTests.ValidWeaponRewardCanEnterCatalog(Attack)",
+          "state": "Passed",
+          "durationSeconds": 0.0023056,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "ValidWeaponRewardCanEnterCatalog(Tank)",
+          "fullName": "WeaponRewardTests.ValidWeaponRewardCanEnterCatalog(Tank)",
+          "state": "Passed",
+          "durationSeconds": 0.0002197,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "ValidWeaponRewardCanEnterCatalog(Support)",
+          "fullName": "WeaponRewardTests.ValidWeaponRewardCanEnterCatalog(Support)",
+          "state": "Passed",
+          "durationSeconds": 0.000211,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "WeaponIdsRoundTrip(Attack,\"weapon.attack\")",
+          "fullName": "WeaponRewardTests.WeaponIdsRoundTrip(Attack,\"weapon.attack\")",
+          "state": "Passed",
+          "durationSeconds": 0.0004772,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "WeaponIdsRoundTrip(Tank,\"weapon.tank\")",
+          "fullName": "WeaponRewardTests.WeaponIdsRoundTrip(Tank,\"weapon.tank\")",
+          "state": "Passed",
+          "durationSeconds": 0.0000569,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "WeaponIdsRoundTrip(Support,\"weapon.support\")",
+          "fullName": "WeaponRewardTests.WeaponIdsRoundTrip(Support,\"weapon.support\")",
+          "state": "Passed",
+          "durationSeconds": 0.0000458,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        }
+      ]
+    }
+  },
+  "hint": null
+}

@@ -1,0 +1,237 @@
+{
+  "VerifiedAtUtc": "2026-10-20T13:02:55.4247655Z",
+  "Scope": "Offline compiled production RewardDraftRules; disk asset audit; static GameLogic routing check",
+  "RuleChecksPassed": 1560,
+  "CatalogAssetCount": 36,
+  "TargetCategoryAssetCount": 24,
+  "RulesSHA256": "ACA6DC88C2C20497426BAF2A8AF67AA28FF7DC7D72D0712E7A5E9839D71FD54B",
+  "GameLogicSHA256": "422552F983CEE74453AFE53C44EA4D6E95281E1114DE9526020940467B39A7AF",
+  "CatalogSHA256": "3EDA0CB07CAD12160794B0A46DC9A7D2BD2CBCF271700931FF52D7E545BE9D25",
+  "RewardLevelRouting": "Max(1, Level - PendingRewards + 1); static inspection only",
+  "NotRun": [
+    "Unity compilation",
+    "Unity EditMode tests",
+    "PurgersRegression",
+    "Host/Client",
+    "Build",
+    "Natural play"
+  ],
+  "Assets": [
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Reward_AttackGrappleMark.asset",
+      "Category": 1,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "EDB6FE5C0DFF81CA28F7A13935EA5AC00EF23C2B195D4C8593938E85B3682471"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Reward_TankGrappleGather.asset",
+      "Category": 1,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "9350A38ECE0A22C619FA771292B80D64B208F2E6A40C674B9920A1C24BBB6ABD"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Reward_SupportGrapplePull.asset",
+      "Category": 1,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "88D1507A861FE9FFBD62258CCCE5B278785B5ED32B4799F10957013B8A7385C9"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Reward_SupportAerial.asset",
+      "Category": 2,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "9DC0A55AB3C41C15FCA5EC65B86B10021E0751B4EC136D6622823F773819C3BB"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\PlayerAbility\\Active\\Rewards\\Grenade.asset",
+      "Category": 2,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "D4C2D287EAFC581915B1033AAE07C3710DB795EA662D1CBB31667DFE24A854DF"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\PlayerAbility\\Active\\Rewards\\PiercingCannon.asset",
+      "Category": 2,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "E8037D4772ACD0D3231B28203FA219A2AAB86042F48E02F1E5C319C69E8A0B8C"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\PlayerAbility\\Active\\Rewards\\Shockwave.asset",
+      "Category": 2,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "5300919AA172D57DCED841FA89C091BB34F7ABF3ED66508427FDC20B11EEDD7F"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\PlayerAbility\\Active\\Rewards\\Shield.asset",
+      "Category": 2,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "CF96AD0BFB946449D210328474B09347AE1D4DAC239572EDAA5F66415DD6CDFB"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\PlayerAbility\\Active\\Rewards\\HealingPack.asset",
+      "Category": 2,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "9790FF10D64C8742C0CFD156A9B6FFDE0E381DDE37726CC540D29574264EC93C"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\PlayerAbility\\Active\\Rewards\\Ricochet.asset",
+      "Category": 2,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "D318D4AF464C2F907D099E778035E57C367702467D743415833FBCD23F77A254"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\PlayerAbility\\Active\\Rewards\\Experience.asset",
+      "Category": 2,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "6AD72D915BF0C53F2AA4BFB1213A9A524E1415A6E64F0884CF582B5FCBA708F2"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\PlayerAbility\\Active\\Rewards\\Blink.asset",
+      "Category": 2,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "AC8E38AE3F0781D5F752B9CE982611ED741436EE12A9E348E25A7F664976658C"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\PlayerAbility\\Active\\Rewards\\BulletTime.asset",
+      "Category": 2,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "3CCA1B24CF6F2A99BE83D937663B475EDA3AB83E0E88A18EE069290950E5A4CD"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\PlayerAbility\\Active\\Rewards\\PrecisionLock.asset",
+      "Category": 2,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "6473BD0F744D93FE3C883D6CABF120985D657ACD38712671B938A79C22218FFD"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Reward_WeaponAttack.asset",
+      "Category": 3,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "D052C546B9F40AD61F25A989DABE2387A7B4C6B9C1A0410D16245C9D74939885"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Reward_WeaponTank.asset",
+      "Category": 3,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "C6E66CA3190713E5B7E8171340E091774B54EA7CFB29877D4AD9675B86717225"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Reward_WeaponSupport.asset",
+      "Category": 3,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "C282094DCA547BF1E4C1E2C842737FAFCB9764087C16B948F47832B131FA2FEC"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Reward_GrappleSpike.asset",
+      "Category": 1,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "ADA58833CF4F6F5B1A4B3F6152C9E95B8D5E4BBD43152F200395EE8BE7CE551C"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_MaximumHealth.asset",
+      "Category": 4,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "C518D6DA6BB30F193F0E8E389AA2ACBD0F2F0B1D967700612B16AE496C5FCD36"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_ReloadSpeed.asset",
+      "Category": 4,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "6E44449C6B55A8D863BCFF4B21A42BBE382ABB4E009EC3E876730124B1D7B3E6"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_MeleeSpeed.asset",
+      "Category": 4,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "CB9EE32DA0A9478354351C3188B386BE7EE8D84260F72E3B185FCE6486F88BBE"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_MagazineCapacity.asset",
+      "Category": 4,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "48AB5A25D7EF03B6D7842A9341621FC56ECCA0CADFB5814050C8A86A6C3704C9"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_GrappleCost.asset",
+      "Category": 4,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "C3E39E14B705DDF4CBFDFF751285B2ACE5624C55D684A54CA33DEC8C23A6F664"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_FocusCooldown.asset",
+      "Category": 4,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "720175B0B36AC649D73656FDD636ED0158FC5591DF04131B670BCBBF455667A8"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_HitCooldown.asset",
+      "Category": 4,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "CF10FCB7B6BC6E8DAE6A61C0D6E158ABB6C966AF80E59D680D7635F67BA3A114"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_RegenerationRate.asset",
+      "Category": 4,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "275E1077C6139B8D3D1D9F910C14220A27CB6A0B64885D521D51FCD7D5DE9D98"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_RegenerationDelay.asset",
+      "Category": 4,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "C7EB5C1A9033C78B2294C31E3E2D4E6F2D2E148CD9A391D65A25283CBAC43D68"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_NotToday.asset",
+      "Category": 5,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "D1DBC205777CCC401EF8CCE8EE0FA10324E13DBA2A808858BF66C90D64B4EFB6"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_SelfRescue.asset",
+      "Category": 5,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "0389463E1E467F023493AD5392F859AB8BF6478ABBAAFEC68CF54F0FDCDB77FD"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_Adrenaline.asset",
+      "Category": 5,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "8103021E46427BEE3614D82F5678874EF45EEDDB2EA6D07A8BB974AEFBBA4BEC"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_CarnivorousTree.asset",
+      "Category": 5,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "8D42D13899D6D07A958C1D75CB1500D264A05BC046B2A811D4A268A3552B9B9D"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_Indecision.asset",
+      "Category": 5,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "6CA905D7461AB428550AF0EA100530642CEF1859E5AC94D7CE91A18ACADDCA67"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_JohnWick.asset",
+      "Category": 5,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "3DB16F8073384E8835939384B35EEE3DF848D6D9BA8F730CD26D5967C4D9FFEF"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_GuardReduction.asset",
+      "Category": 4,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "30502F7145067F341F81B8F62A355933293372908565981F50DF7E563E554885"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_GuardStamina.asset",
+      "Category": 4,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "EC9E3114B7BF7EBD6A3C4AB87ED035E96DE77DF809C1929E3CDDF3AE2B8618B6"
+    },
+    {
+      "Path": "M:\\UnityProject\\Purgers\\Assets\\_Project_Assets\\Data\\Progression\\Growth\\Reward_GuardCooldown.asset",
+      "Category": 4,
+      "MinimumPlayerLevel": 1,
+      "SHA256": "74576253251FDFB8ED73AED1AAD735FAA8A45BE66417561F5B6701F955FE6609"
+    }
+  ]
+}
